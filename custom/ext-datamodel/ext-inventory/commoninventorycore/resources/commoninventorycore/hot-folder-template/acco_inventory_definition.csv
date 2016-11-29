@@ -1,0 +1,15 @@
+Acco_ClientInventory_Distribution;B2B ; ; ; STANDARD  ;AAA  ;SUNDAY ;default ;160  ;ONE ;US ;123 ;124 ;AAA ;Good
+                                        
+Acco_WithinCompany_InventoryDistribution  ;E000  ;E000  ;IND  ;   ;IBT  ;AAA  ;VMN01  ;SUPPLIER ;STANDARD  ;AAA  ;SUNDAY ;default  ;160  ;ONE ;US ;123 ;124 ;AAA  ;Good  ;       
+
+Acco_Supplier_AdvanceDefinition; ;3 ;4  ;DAYS  
+
+Acco_Company_AdvanceDefinition; ;true  ;3 ;3 
+
+Acco_Penalty_Charges;DELUXE ;DOUBLE_ROOM ;VEGETARIAN;DAYS;23-12-2015;; 
+
+Acco_Cutoff_And_Charges;12
+
+Acco_Company_Penalty_Charges;STANDARD ;DOUBLE_ROOM ;VEGETARIAN ;DAYS  ;23-12-2015
+
+Acco_Inventory_Definition;IN;1234;3;true;3;2;2;2;true;GTA;C001ST100;FREESALE

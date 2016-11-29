@@ -1,0 +1,9 @@
+$catalogVersion=catalogVersion(catalog(id),version)
+$productCategorySubType=productCategorySubType(code,$catalogVersion)
+INSERT_UPDATE ProductType;code[unique=true];$productCategorySubType;$catalogVersion
+;DAYCRUISE;C003ST001:EZ-IN:Staged;EZ-IN:Staged
+;NIGHTCRUISE;C003ST001:EZ-IN:Staged;EZ-IN:Staged
+;LUNCHCRUISE;C003ST001:EZ-IN:Staged;EZ-IN:Staged
+;DINNERCRUISE;C003ST001:EZ-IN:Staged;EZ-IN:Staged
+
+;SAILINGTOUR;C003ST002:EZ-IN:Staged;EZ-IN:Staged;Sailing

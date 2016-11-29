@@ -1,0 +1,40 @@
+$contentCatalog=operationsContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$jarResourceCms=$config-jarResourceCmsValue
+
+# Create PageTemplates
+# These define the layout for pages
+# "FrontendTemplateName" is used to define the JSP that should be used to render the page for pages with multiple possible layouts.
+# "RestrictedPageTypes" is used to restrict templates to page types
+
+INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true]						  ;name										;frontendTemplateName;restrictedPageTypes(code);active[default=true]
+						  ;						  ;CNKSearchViewFilterBookingPageTemplate ;CNK SearchViewFilter Booking PageTemplate;layout/cnkSearchViewFilterBookingLayoutPage;ContentPage
+						  
+						  
+UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true]		  ;velocityTemplate[translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+				   ;					   ;CNKSearchViewFilterBookingPageTemplate  ;$jarResourceCms/structure-view/structure_cnkSearchViewFilterBookingContentPageTemplate.vm
+				   
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='CNKSearchViewFilterBookingPageTemplate'];validComponentTypes(code);compTypeGroup(code)
+;Section1;;;wide
+;Section2A;;;narrow
+;Section2B;;;wide
+;Section3;;;wide
+;Footer;;;footer
+;TopHeaderSlot;;;wide
+
+
+# Create Content Slots
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active
+;;FooterSlot;Footer;true
+;;TopHeaderSlot;Top Header;true
+
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='CNKSearchViewFilterBookingPageTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;Footer-SearchViewFilterBookingContentPage;Footer;;FooterSlot;true
+;;TopHeaderSlot-SearchViewFilterBookingContentPage;TopHeaderSlot;;TopHeaderSlot;true
+
+
+				   

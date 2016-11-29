@@ -1,0 +1,56 @@
+$contentCatalog=operationsContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$jarResourceCms=$config-jarResourceCmsValue
+
+# Create PageTemplates
+# These define the layout for pages
+# "FrontendTemplateName" is used to define the JSP that should be used to render the page for pages with multiple possible layouts.
+# "RestrictedPageTypes" is used to restrict templates to page types
+
+INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true]				;name							;frontendTemplateName				 		;restrictedPageTypes(code);active[default=true]   
+						  ;						  ;ServiceOrderPageTemplate 	;Service Order Page Template	;serviceorder/serviceordertemplatepage		;ContentPage;                                      
+						  
+INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true]				;velocityTemplate[translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+						  ;						  ;ServiceOrderPageTemplate 	;$jarResourceCms/structure-view/structure_serviceOrderPageTemplate.vm
+						  
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='ServiceOrderPageTemplate'];validComponentTypes(code);compTypeGroup(code)
+;SiteLogo;;;logo
+;Section1;;;wide
+;Header;;;wide
+;Footer;;;wide
+
+# Create Content Slots
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active
+;;SiteLogoSlot;Default Site Logo Slot;true
+;;Section1-ServiceOrderSlot;Section 1;true
+;;Section1-ServiceOrderSearchSlot;Section 1;true
+
+# Content Slots
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
+;;SiteLogoSlot;LogoComponent
+
+				   
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true]					;position[unique=true];pageTemplate(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+									;						;SiteLogo-ServiceOrderPageTemplate	;SiteLogo			  ;ServiceOrderPageTemplate					;SiteLogoSlot							 ;true
+									
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true]			;name						;masterTemplate(uid,$contentCV)	;label					;defaultPage[default='true'];approvalStatus(code)[default='approved'];title[default='Cox & Kings']
+						 ;						 ;serviceOrderPage 			;Service Order Page   		;ServiceOrderPageTemplate		;/serviceorder																
+						 ;						 ;serviceOrderSearchPage 	;Service Order Search Page  ;ServiceOrderPageTemplate		;/serviceorder-search	
+						 				
+				
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]					;position[unique=true]	;page(uid,$contentCV)[unique=true][default='serviceOrderPage']		;contentSlot(uid,$contentCV)[unique=true];;;
+								;						;section1-serviceOrderPage			;Section1				;																 	;Section1-ServiceOrderSlot			     ;;;
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]					;position[unique=true]	;page(uid,$contentCV)[unique=true][default='serviceOrderSearchPage'];contentSlot(uid,$contentCV)[unique=true];;;
+								;						;section1-serviceOrderSearchPage	;Section1				;																 	;Section1-ServiceOrderSearchSlot		 ;;;
+								
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true]									;name												;active		;cmsComponents(&componentRef);;;
+						 ;						 ;Section1-ServiceOrderSlot					;Section1 Service Order Slot		  		;true		;ServiceOrderComponent;;;
+						 ;						 ;Section1-ServiceOrderSearchSlot			;Section1 Service Order Search Slot	  		;true		;ServiceOrderSearchComponent;;;
+
+INSERT_UPDATE JspIncludeComponent;$contentCV[unique=true]	;uid[unique=true]				;name							;page							;actions(uid,$contentCV)		;&componentRef
+								 ;							;ServiceOrderComponent			;Service Order Component		;serviceordercomponent.jsp		;								;ServiceOrderComponent
+								 ;							;ServiceOrderSearchComponent	;Service Order Search Component	;serviceordersearchcomponent.jsp;								;ServiceOrderSearchComponent

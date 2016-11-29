@@ -1,0 +1,45 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.product.transport.masters.core.setup.TransportProductSetup&\transportproductmasterscore\import\sampledata\images\96Wx96H
+
+# Media Folders
+INSERT_UPDATE MediaFolder;qualifier[unique=true];path[unique=true]
+;images;images
+
+INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier);&logoRef
+;emirateImage;$siteResource\appartment.png;;;images;emirateImageRef
+;indigoImage;$siteResource\bungalows.png;;;images;indigoImageRef
+;jetairwaysImage;$siteResource\chalet.png;;;images;jetairwaysImageRef
+
+########################### CruisePort ##########################
+INSERT_UPDATE CruisePort;$catalogVersion;code[unique=true];portCommonId;portAlias;portShortName;description;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];reason;copiedFrom;country(Country.isocode)[unique=true];portOfCall[unique=true];city(City.isocode)[unique=true];portType(PortType.code);localLanguage(isocode)[mode=append];currency(isocode)[mode=append];address(streetnumber,town,country(isocode),location(isocode));medias(Media.code);
+;;3100;202;New Port;SevPort;best Indian destination for cruise;01-01-2015;01-01-2016;reason ;;US;Flesland;AAA;MAJOR_PORT;en,hi;INR,USD;1480:Safegard:US:AAA;emirateImage
+;;3101;203;Port Alias;Kandla;The Port of Kandla Special Economic Zone was the first special economic zone to be established in India;01-01-2015;01-01-2016;reason;;US;Floro;AAA;MAJOR_PORT;;;;;indigoImage
+;;3102;204;Port;ParadipPort;Paradip Port is an artificial deep-water port on the East coast in India;01-01-2015;01-01-2016;reason;;US;Maloy Harbour;AAA;MAJOR_PORT;;;;;jetairwaysImage
+
+###########################  Address ##########################
+INSERT_UPDATE Address;owner(CruisePort.code);streetname;streetnumber[unique=true];postalcode;duplicate;town[unique=true];country(isocode)[unique=true];location(isocode)[unique=true]
+;3100;Crystal Drive;1480;18551;true;Safegard;US;AAA
+
+###########################  Route ##########################
+INSERT_UPDATE Route;distanceFromProperty;approximateDuration;description;drivingDirection;validFromTO[dateformat=dd-MM-yyyy hh:mm:ss];distanceUnit(code);from(Location.isocode)[unique=true];nameOfPlace[unique=true];modeOfTransport(code)[unique=true];transportType(ProductCategorySubType.code)[unique=true];cruisePort(code);associatedProperty
+;20;20;Distance from the Airport 3.5 miles;;24-04-2016 12:00:00,27-04-2016 12:00:00;km;AAA;;ROAD;;3100
+#;10;10;Distance from the Airport 3.5 miles;;24-04-2016 12:00:00,27-04-2016 12:00:00;mi;AAA;;ROAD;;3100
+
+########################### PortInfo ##########################
+
+INSERT_UPDATE PortInfo;owner(CruisePort.code)[unique=true];informationType(CruiseInformationType.code)[unique=true];description;cruisePort(code)
+;3100;BOARDING;The Port Info Description;3100
+;3100;DISEMBARKATION;The Port Info Description;3100
+
+################################ CruisePlaceDescription ##############################
+
+INSERT_UPDATE CruisePlaceDescription;owner(CruisePort.code)[unique=true];medias(Media.code)[mode=append];cruisePort(code);placeName[unique=true];distanceFromProperty;description;placeOfCategory(code)[unique=true]
+;3100;emirateImage;3100;Washington Convention Center;4 MI;;Museum
+;3100;indigoImage;3100;Washington Convention Center;4 MI;;Museum
+
+

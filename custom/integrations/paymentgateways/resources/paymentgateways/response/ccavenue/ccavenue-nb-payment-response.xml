@@ -1,0 +1,99 @@
+<response id='ccavenue_nb_payment_gateway_response'>
+	<response-attributes>
+	<response-attribute>
+			<name>encResp</name>
+			<validation-required-attributes>order_id,tracking_id,bank_ref_no,order_status,failure_message,payment_mode,card_name,status_code,status_message,currency,amount,vault,offer_type,offer_code,discount_value,mer_amount,eci_value,response_code</validation-required-attributes>
+			<read-from-bean>ccAvenueEncResDecorator</read-from-bean>	
+		</response-attribute>
+		<response-attribute>
+			<name>order_id</name>
+			<mapped-to>receiptNo</mapped-to>
+		</response-attribute>		
+		<response-attribute>
+			<name>tracking_id</name>
+			<mapped-to></mapped-to>
+		</response-attribute>
+		
+		<response-attribute>
+			<name>bank_ref_no</name>
+			<mapped-to>transactionID</mapped-to>
+		</response-attribute>
+		
+		<response-attribute>
+			<name>order_status</name>
+			<mapped-to>message</mapped-to>
+		</response-attribute>
+		
+		<response-attribute>
+			<name>failure_message</name>
+			<mapped-to></mapped-to>
+		</response-attribute>
+		
+		<response-attribute>
+			<name>payment_mode</name>
+			<mapped-to>paymentMode</mapped-to>
+		</response-attribute>
+		
+		<response-attribute>
+			<name>card_name</name>
+			<mapped-to>cardType</mapped-to>
+		</response-attribute>
+		
+		<response-attribute>
+			<name>status_code</name>
+			<mapped-to></mapped-to>
+		</response-attribute>
+		
+		<response-attribute>
+			<name>status_message</name>
+			<mapped-to></mapped-to>
+		</response-attribute>
+		
+		<response-attribute>
+			<name>currency</name>
+			<mapped-to>currency</mapped-to>
+		</response-attribute>
+		
+		<response-attribute>
+			<name>amount</name>
+			<mapped-to></mapped-to>
+		</response-attribute>
+		
+		<response-attribute>
+			<name>mer_amount</name>
+			<mapped-to>amount</mapped-to>
+		</response-attribute>
+		
+		<response-attribute>
+			<name>response_code</name>
+			<mapped-to>success</mapped-to>
+		</response-attribute>
+		
+		<response-attribute>
+			<name>vault</name>
+			<mapped-to></mapped-to>
+		</response-attribute>
+		
+		<response-attribute>
+			<name>discount_value</name>
+			<mapped-to></mapped-to>
+		</response-attribute>
+		
+		<response-attribute>
+			<name>offer_type</name>
+			<mapped-to></mapped-to>
+		</response-attribute>
+		
+		<response-attribute>
+			<name>offer_code</name>
+			<mapped-to></mapped-to>
+		</response-attribute>	
+		
+		<response-attribute>
+			<name>eci_value</name>
+			<mapped-to></mapped-to>
+		</response-attribute>
+				
+	</response-attributes>	
+</response>	
+	

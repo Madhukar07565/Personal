@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~ [y] hybris Platform
+  ~ 
+  ~ Copyright (c) 2000-2016 SAP SE
+  ~ All rights reserved.
+  ~ 
+  ~ This software is the confidential and proprietary information of SAP 
+  ~ Hybris ("Confidential Information"). You shall not disclose such 
+  ~ Confidential Information and shall use it only in accordance with the 
+  ~ terms of the license agreement you entered into with SAP Hybris.
+  -->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+	
+	<enumtypes>
+		<enumtype code="ClientCategory" dynamic="true">
+			<value code="ALLIANCE_PARTNERS"/>
+			<value code="FRANCHISEE"/>
+			<value code="CORPORATE"/>
+			<value code="INTER_COMPANY"/>
+			<value code="TRAVEL_AGENT"/>
+		</enumtype>
+		
+		<enumtype code="ClientSubCategory" dynamic="true">
+			<value code="BANKS"/>
+			<value code="CONSORTIUM"/>
+			<value code="CORPORATE"/>
+			<value code="DISTRIBUTOR"/>
+			<value code="FRANCHISEE"/>
+			<value code="GSA"/>
+			<value code="HBA"/>
+			<value code="MASTER_FRANCHISEE"/>
+			<value code="PORTALS"/>
+			<value code="PSA"/>
+			<value code="RETAILS"/>
+			<value code="SUB_FRANCHISEE"/>
+			<value code="TA"/>
+		</enumtype>
+			
+		<enumtype code="TrvlClientType" dynamic="true">
+			<value code="B2B" />
+			<value code="B2C" />
+			<value code="CORPORATE" />
+		</enumtype>
+			
+		<enumtype code="CompanyType" dynamic="true">
+			<value code="LIMITED"/>
+			<value code="PUBLIC"/>
+			<value code="PRIVATE"/>
+		</enumtype>
+			
+		<enumtype code="ModeOfRegistration" dynamic="true">
+			<value code="DIRECT"/>
+			<value code="PRESALE"/>
+		</enumtype>
+			
+		<enumtype code="TypeOfAssociation" dynamic="true">
+			<value code="MASTER_AGENT"/>
+			<value code="SUB_AGENT"/>
+			<value code="TRAVEL_AGENT"/>
+		</enumtype>
+			
+		<enumtype code="AffiliationNames" dynamic="true">
+			<value code="IATA"/>
+		</enumtype>
+		 
+		<enumtype code="LoginParameters" dynamic="true">
+			<value code="EMAIL"/>
+			<value code="PHONE_NO"/>
+		</enumtype>
+		
+		<enumtype code="LoginValidation" dynamic="true">
+			<value code="ANY1"/>
+			<value code="ANY2"/>
+			<value code="ALL"/>
+		</enumtype>
+		
+		<enumtype code="LoginType" dynamic="true">
+			<value code="NORMAL"/>
+			<value code="GUEST"/>
+		</enumtype>
+		
+		<enumtype code="CustomFields" dynamic="true">
+			<value code="DATE_OF_BIRTH"/>
+			<value code="MOBILE_NUMBER"/>
+			<value code="PAN"/>
+			<value code="SSN"/>
+			<value code="DRIVING_LICENCE"/>
+			<value code="EMPLOYEE_ID"/>
+		</enumtype>
+				
+		<enumtype code="ClientGroupCompany" dynamic="true">
+			<value code="TATA_GROUP"/>
+			<value code="STAR_GROUP"/>
+			<value code="BALAJI_GROUP"/>
+			<value code="ADANI_GROUP"/>
+			<value code="RELIANCE_GROUP"/>
+			<value code="BIRLA_GROUP"/>
+			<value code="MAHINDRA_GROUP"/>
+		</enumtype> 
+		
+		<enumtype code="CommunicationMode" dynamic="true">
+			<value code="EMAIL"/>
+			<value code="SMS"/>
+			<value code="SCREEN"/>
+		</enumtype>
+		
+		<enumtype code="AllowedThirdParties" dynamic="true">
+			<value code="FACEBOOK"/>
+			<value code="TWITTER"/>
+			<value code="GOOGLE"/>
+			<value code="LINKEDIN"/>
+		</enumtype>
+		
+		<enumtype code="InvoiceGeneration" autocreate="true"
+			generate="true">
+			<value code="AUTO" />
+			<value code="MANNUAL" />
+		</enumtype>
+		
+		<enumtype code="Status" autocreate="true" generate="true">
+			<value code="ACTIVE" />
+			<value code="INACTIVE" />
+			<value code="PENDING" />
+			<value code="APPROVED" />
+			<value code="DISBURSED" />
+			<value code="PAYMENT_REALISED" />
+			<value code="PAYMENT_NOT_REALISED" />
+		</enumtype>
+		
+		<enumtype code="SettlementSchedule" autocreate="true"
+			generate="true">
+			<value code="TRAVELDATE" />
+			<value code="BOOKINGDATE" />
+		</enumtype>
+		
+		<enumtype code="StandardCommercialType" autocreate="true"
+			generate="true">
+			<value code="COMMISSIONABLE" />
+			<value code="NON_COMMISSIONABLE" />
+		</enumtype>
+		
+		<enumtype code="OtherCommercialType" autocreate="true"
+			generate="true">
+			<value code="PLB" />
+			<value code="OVERRIDING_COMMERCIAL" />
+			<value code="LOOK_TO_BOOK" />
+		</enumtype>
+		
+		<enumtype code="CommercialSettlementType" autocreate="true"
+			generate="true">
+			<value code="CUT_AND_PAY" />
+			<value code="COMMISSIONABLE" />
+		</enumtype>
+		
+		<enumtype code="PaymentScheduleType" autocreate="true"
+			generate="true">
+			<value code="INITIAL_DEPOSIT_FOR_SECURITY" />
+			<value code="INITIAL_DEPOSIT_AS_DISTRIBUTION" />
+			<value code="PAYMENT_AGAINST_ALL_PNR" />
+		</enumtype>
+		
+		<enumtype code="PaymentDueDateCriteria" autocreate="true"
+			generate="true">
+			<value code="SUPPLIER_SETTLEMENT" />
+			<value code="FROM_BOOKING_DATE" />
+			<value code="PRIOR_TO_TRAVEL_DATE" />
+		</enumtype>
+		
+		<enumtype code="ClientDocument" autocreate="true"
+			generate="true">
+			<value code="VISA_FORM" />
+			<value code="PASSPORT" />
+			<value code="BTQ" />
+		</enumtype>
+		
+		<enumtype code="Information" autocreate="true"
+			generate="true">
+			<value code="SELLING_TIPS" />
+			<value code="BOARDING" />
+			<value code="DISEMBARKATION_INFORMATION" />
+			<value code="EMBARKATING_INFORMATION" />
+		</enumtype>
+		
+		<enumtype code="Grade" autocreate="true"
+			generate="true">
+			<value code="SENIOR_MANAGEMENT" />
+			<value code="MIDDLE_MANAGEMENT" />
+			<value code="GENERAL" />
+		</enumtype>
+				
+		<enumtype code="CostCentreCodes" autocreate="true"
+			generate="true">
+			<value code="OPERATIONS_AIR" />
+			<value code="OPERATIONS_NON_AIR" />
+			<value code="PRODUCTS_AIR" />
+			<value code="PRODUCTS_NON_AIR" />
+			<value code="SALES_AIR" />
+			<value code="SALES_NON_AIR" />
+			<value code="CALL_CENTER_AIR" />
+			<value code="CALL_CENTER_NON_AIR" />
+			<value code="MARKETING" />
+		</enumtype>
+
+		<enumtype code="RoleName" dynamic="true">
+			<description>Role of Staff</description>
+			<value code="ProductCreator"></value>
+			<value code="ProductApprover"></value>
+			<value code="Call_Center_Agent"></value>	
+		</enumtype>
+		
+		<enumtype code="KPI" dynamic="true">
+			<description>Key Performance Indicator</description>
+			<value code="Turnover"></value>
+			<value code="Enquiry_To_Booking"></value>
+			<value code="Number_Of_Enquires"></value>	
+			<value code="Sales"></value>	
+		</enumtype>
+		
+		<enumtype code="Equation" dynamic="true">
+			<description>Equation</description>
+			<value code="Less_Than"></value>
+			<value code="Less_Than_and_Equal_To"></value>
+			<value code="Equal_To"></value>	
+			<value code="Greater_Than"></value>
+			<value code="Greater_Than_and_Equal_To"></value>
+			<value code="Range_Inclusive"></value>
+			<value code="Range_Exclusive"></value>	
+		</enumtype>
+		
+		<enumtype code="PolicyParameterName" dynamic="true">
+			<value code="NUMBER_OF_RESULTS_TO_BE_SHOWN"></value>	
+		</enumtype>
+		
+		<enumtype code="Operator" dynamic="true">
+			<value code="NUMBER_OF_RESULTS_TO_BE_SHOWN"></value>	
+			<value code="LESS_THAN"></value>
+			<value code="LESS_THAN_AND_EQUAL_TO"></value>
+			<value code="EQUAL_TO"></value>	
+			<value code="GREATER_THAN"></value>
+			<value code="GREATER_THAN_AND_EQUAL_TO"></value>
+			<value code="RANGE_INCLUSIVE"></value>
+			<value code="RANGE_EXCLUSIVE"></value>	
+		</enumtype>
+		
+		<enumtype code="Relationship" dynamic="true">
+			<value code="FATHER"></value>	
+			<value code="MOTHER"></value>	
+			<value code="BROTHER"></value>	
+			<value code="SISTER"></value>	
+			<value code="SON"></value>	
+			<value code="DAUGHTER"></value>	
+		</enumtype>
+		
+		<enumtype code="NationalIdentificationType" dynamic="true">
+			<value code="PAN_CARD"></value>	
+			<value code="AADHAR_CARD"></value>	
+			<value code="DRIVING_LICENSE"></value>	
+			<value code="PASSPORT"></value>	
+		</enumtype>
+		
+		<enumtype code="EmployeeStatus" dynamic="true">
+			<value code="CONTRACT"></value>	
+			<value code="PROBATION"></value>	
+			<value code="PERMANENT"></value>	
+			<value code="RESIGNED"></value>	
+		</enumtype>
+		
+		<enumtype code="ProfileType" dynamic="true">
+			<value code="NORMAL"></value>	
+			<value code="VIP"></value>	
+			<value code="CIP"></value>		
+		</enumtype>
+		
+		<enumtype code="PassportType" dynamic="true">
+			<value code="REGULAR"></value>	
+			<value code="OFFICIAL"></value>	
+			<value code="DIPLOMATIC"></value>		
+		</enumtype>
+			
+		<enumtype code="Territory" dynamic="true">
+			<value code="SCHENGEN"></value>	
+		</enumtype>
+		
+		<enumtype code="VisaTypes" dynamic="true">
+			<value code="CONFERENCE"></value>	
+			<value code="EMPLOYMENT"></value>	
+			<value code="FAMIYL_REUNION"></value>	
+			<value code="HONYMOON"></value>	
+			<value code="LONG_STAY"></value>	
+			<value code="MEDICAL_TREATMENT"></value>	
+			<value code="SEAMEN"></value>	
+			<value code="SHORT_STAYS"></value>	
+			<value code="STUDIES"></value>	
+			<value code="TOURISM"></value>	
+			<value code="TRANSIT"></value>	
+			<value code="WORK"></value>		
+		</enumtype>
+		
+		<enumtype code="VisaCategory" dynamic="true">
+			<value code="SINGLE_ENTRY"></value>	
+			<value code="DOUBLE_ENTRY"></value>	
+			<value code="MULTIPLE_ENTRY"></value>	 
+			<value code="RE_ENTRY"></value>
+			<value code="TRANSIT"></value>
+		</enumtype>
+		
+		<enumtype code="MealPreference" dynamic="true">
+			<value code="NO_PREFERENCE"></value>
+		</enumtype>
+		
+		<enumtype code="SeatPreference" dynamic="true">
+			<value code="AISLE"></value>
+			<value code="WINDOW"></value>
+		</enumtype>
+		
+		<enumtype code="AirlineClass" dynamic="true">
+			<value code="BUSINESS"></value>
+			<value code="ECONOMY"></value>
+		</enumtype>
+		
+		<enumtype code="InsuranceCompany" dynamic="true">
+			<value code="NATIONAL_INSURANCE"></value>  
+			<value code="BAJAJ_ALLIANZ"></value>
+			<value code="TATA_AIG_INSURANCE"></value>
+		</enumtype>
+		
+		<enumtype code="InsuranceType" dynamic="true">
+			<value code="CORPORATE"></value>  
+			<value code="SENIOR_CITIZEN"></value>
+			<value code="LEISURE"></value>
+		</enumtype>
+		
+		<enumtype code="TrvlrBusOperator" dynamic="true">
+			<value code="NEETA_TOURS_AND_TRAVELS"></value>   
+			<value code="PATEL_TOURS_AND_TRAVELS"></value>
+			<value code="ROADLINK_TOUS_AND_TRAVELS"></value>
+			<value code="MANISH_TRAVELS"></value>
+			<value code="ROYAL_TRAVELS"></value>
+		</enumtype>
+		
+		<enumtype code="TrvlrProgram" dynamic="true">
+			<value code="STAR_ALLIANCE"></value>
+			<value code="JET_PRIVILAGE"></value>
+		</enumtype>
+		
+		<enumtype code="Identity" dynamic="true">
+			<value code="FAMILY_WITH_CHILDERN"></value>
+			<value code="FAMILY_WITH_TEEN"></value>
+			<value code="LARGE_FAMILY"></value>
+			<value code="SHOPPER"></value>
+			<value code="HONEYMOONER"></value>
+			<value code="FIRST_TIME_ABROAD"></value>
+			<value code="BUDGET_TRAVELLER"></value>
+			<value code="ADVENTURE_TRAVELLER"></value>
+			<value code="LUXURY_TRAVELLER"></value>
+		</enumtype>
+					
+		<enumtype code="TrvlrRating" dynamic="true">
+			<value code="ONE" />
+			<value code="TWO" />
+			<value code="THREE" />
+			<value code="FOUR" />
+			<value code="FIVE" />
+			<value code="SIX" />
+			<value code="SEVEN" />
+			<value code="STANDARD" />
+			<value code="SUPERIOR" />
+			<value code="DELUXE" />
+			<value code="LUXARY" />
+			<value code="BOUTIQUE" />
+		</enumtype>
+		
+		<enumtype generate="true" code="TrvlrAirlineType" autocreate="true">
+			<description>Defines the Airline Type </description>
+			<value code="LCC" />
+			<value code="FSC" />
+			<value code="BOTH" />
+		</enumtype>
+		
+		<enumtype code="TrvlrCarGroupType" autocreate="true" generate="true" dynamic="true">
+			<value code="A" />
+			<value code="B" />
+			<value code="C" />
+			<value code="D" />
+			<value code="E" />
+			<value code="F" />
+			<value code="G" />
+			<value code="H" />
+			<value code="I" />
+			<value code="J" />
+			<value code="K" />
+			<value code="L" />
+			<value code="M" />
+			<value code="N" />
+			<value code="O" />
+			<value code="P" />
+			<value code="Q" />
+			<value code="R" />
+			<value code="S" />
+			<value code="T" />
+			<value code="U" />
+			<value code="V" />
+			<value code="W" />
+			<value code="X" />
+			<value code="Y" />
+			<value code="Z" />
+		</enumtype>
+		
+		<enumtype code="TrvlrDocumentType" dynamic="true">
+			<value code="VISA"></value>	
+			<value code="PIO"></value>	
+			<value code="GREEN_CARD"></value>		
+		</enumtype>
+			
+		<enumtype code="AcrissCode" dynamic="true">
+			<value code="MCMN"></value>
+			<value code="ECMR"></value>
+			<value code="CDMR"></value>
+			<value code="IDMR"></value>
+			<value code="SDMR"></value>
+			<value code="NCMN"></value>
+			<value code="DDMR"></value>
+			<value code="HCMR"></value>
+		</enumtype>
+		
+		<enumtype code="SpecialRequest" dynamic="true">
+			<value code="WHEEL_CHAIR"></value>
+			<value code="BASENET"></value>
+		</enumtype>
+		
+		<enumtype code="SeatClass" dynamic="true">
+			<value code="AC" />
+			<value code="NON_AC" />
+			<value code="STANDARD" />
+			<value code="PREMIUM" />
+			<value code="EXCLUSIVE" />
+			<value code="SLEEPER" />
+			<value code="SECOND_CLASS" />
+		</enumtype>
+		
+		<enumtype code="CoachType" dynamic="true">
+			<value code="TBD"></value>
+		</enumtype>
+				
+		<enumtype code="CoachClass" dynamic="true">
+			<value code="TBD"></value>
+		</enumtype>	
+		
+		<enumtype code="CarCategory" dynamic="true">
+			<value code="TBD"></value>
+		</enumtype>
+		
+		<enumtype code="ContactDetailType" dynamic="true">
+			<value code="REGULAR"/>
+			<value code="AFTER_OFFICE_HOURS"/>
+			<value code="EMERGENCY"/>
+		</enumtype>		
+		
+ 		<enumtype code="ReportingSaleOfficeType" dynamic="true">
+			<value code="COMPANY"/>
+			<value code="FRANCHISEE"/>
+		</enumtype>
+		
+		<enumtype code="ClientKYCDocumentType" dynamic="true">
+			<value code="PAN"/>
+			<value code="TDS"/>
+			<value code="VAT"/>
+		</enumtype>	
+		
+		<enumtype code="BillingAmount" dynamic="true">
+			<value code="PER_PESSANGER"/>
+		</enumtype>
+			
+	</enumtypes>
+		
+	<itemtypes>
+
+	<typegroup name="Measure">
+			<itemtype code="Measure" extends="AbstractCommonMasterType"
+				jaloclass="com.cnk.travelogix.client.masters.core.jalo.Measure">
+				<deployment table="measure" typecode="21182" />
+				</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

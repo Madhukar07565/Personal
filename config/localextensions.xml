@@ -1,0 +1,28 @@
+<hybrisconfig xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='../bin/platform/resources/schemas/extensions.xsd'>
+	<extensions>
+		<path dir='${HYBRIS_BIN_DIR}' autoload='false' />
+		<path dir='${HYBRIS_BIN_DIR}/custom/ext-b2b' autoload='true' />
+		<path dir='${HYBRIS_BIN_DIR}/custom/ext-b2c' autoload='true' />
+		<path dir='${HYBRIS_BIN_DIR}/custom/ext-common' autoload='true' />
+		<path dir='${HYBRIS_BIN_DIR}/custom/ext-corporate' autoload='true' />
+		<path dir='${HYBRIS_BIN_DIR}/custom/ext-operations' autoload='true' />
+		<path dir='${HYBRIS_BIN_DIR}/custom/ext-datamodel' autoload='true' />
+		<path dir='${HYBRIS_BIN_DIR}/custom/ext-backoffice' autoload='true' />
+		<path dir='${HYBRIS_BIN_DIR}/custom/integrations' autoload='true' />
+		<path dir="${HYBRIS_BIN_DIR}/ext-integration/sap/core" autoload="false" />
+		<path dir="${HYBRIS_BIN_DIR}/ext-integration/sap/testsupport" autoload="false" />
+
+		<extension name='mcc' />
+		<extension name='backoffice' />
+		<extension name='b2badmincockpit' />
+		<extension name='yaddon' />
+		<extension name='solrserver' />
+		<extension name='acceleratorwebservicesaddon' />
+		<extension name='commerceorgaddon' />
+		<extension name='basecommerce' />
+		<extension name='platformwebservices' />
+		<extension name='storefrontaddon' />
+		<extension name='ccintegrationfacade'/>
+		<extension name='paymentgateways' />
+	</extensions>
+</hybrisconfig>

@@ -1,0 +1,19 @@
+
+#####   Supplier Market    ######
+INSERT_UPDATE SupplierMarket;active[allownull=true];approvalStatus(code,itemtype(code))[allownull=true];catalogVersion(catalog(id),version)[unique=true,allownull=true];code[unique=true,allownull=true];lockedBy(uid);name[lang=en];reason;remarks
+;true;approved:ArticleApprovalStatus;Default:Online;IND;;India;;
+;true;approved:ArticleApprovalStatus;Default:Online;ASIA;;Asia;;
+
+
+#####    Ancillary Rate Definition    ##### 
+INSERT_UPDATE AncillaryRateDefinition;clientType(code)[unique=true,allownull=true];cruiseItinerary(itineraryId);currency(isocode)[allownull=true];seasonality(code)[unique=true];supplierMarket(code)[unique=true,allownull=true];supplierancillaryrate(catalogVersion(catalog(id),version),code);travelPeriod[dateformat=dd.MM.yyyy hh:mm:ss];
+;B2B;;INR;PEAK_SEASON;IND;;11.05.2016 12:00:00,27.05.2016 12:00:00
+
+
+#####   Supplier Ancillary Rate    ###### 
+INSERT_UPDATE SupplierAncillaryRate;active[allownull=true];approvalStatus(code)[allownull=true];catalogVersion(catalog(id),version)[unique=true,allownull=true];code[unique=true,allownull=true];reason;remarks
+;true;approved;Default:Online;12345;Reason;Remark
+
+#####    Ancillary Rate Detail    ###### 
+INSERT_UPDATE AncillaryRateDetail;childAge(&Item);costPer(code);durationType(code);durationValue;paxType(code)[unique=true];seatingType;startTime[dateformat=dd.MM.yyyy hh:mm:ss];vehicleType(code)
+;;;HOURS;;SENIOR_CITIZEN;;;

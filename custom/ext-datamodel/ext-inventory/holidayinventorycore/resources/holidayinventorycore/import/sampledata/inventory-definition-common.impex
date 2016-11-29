@@ -1,0 +1,51 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+$dateformat=dd-MM-yyyy
+
+
+INSERT_UPDATE PaymentSchedule;paymentAdviceNo[unique=true];paymentType(code);amount;currency(isocode);remark;paymentDueDate[dateformat=$dateformat];paymentStatus(code);actualAmountPaid;balance;daysBeforeTravel
+;P101;ADVANCE;400;INR;;12-08-2016;NOTPAID;200;200;7
+
+INSERT_UPDATE CompanyInfo;$catalogVersion[unique=true];sbu(Company.uid)[unique=true];bu(Company.uid)[unique=true]
+;;E000;E000
+
+INSERT_UPDATE ListCutOffs;definedBy[unique=true](code);typeOfList(code);appliedOn(code);supplierCutOffDays[unique=true];bufferDays;noOfNTBAS;releaseTime
+;HOURS;FINAL;Prior_To_Travel;10;5;1;
+
+INSERT_UPDATE FreeOfCostSeatsOrTickets;slabType(code)[unique=true];fromValue[unique=true];toValue[unique=true];numberOfFrees;freeOfCostPercentage
+;NO_OF_BOOKINGS;8;7;6.5;70
+
+INSERT_UPDATE CutOffForFreeSale;definedBy(code)[unique=true];releaseDayOrHrs[unique=true];appliedOn(code)[unique=true]
+;DAYS;Days20;Prior_To_Travel
+
+INSERT_UPDATE CutOffsAndCharges;cutOffFromDay[unique=true];cutOffToDay[unique=true];amount[unique=true];currency(isocode);amountType(code);range(code)
+;6;5;700;INR;AMOUNT;ABOVE
+
+INSERT_UPDATE ChangeRequestCutOffsAndCharges;priceComponent[unique=true](code)
+;BASE_FARE
+
+INSERT_UPDATE ChangeRequestPenaltyCharges;definedBy(code)[unique=true];penaltyChangesFor(code)[unique=true];changeRequestCutOffsAndCharges(ChangeRequestCutOffsAndCharges.priceComponent(code))
+;DAYS;NAME_CHANGE;BASE_FARE
+
+#INSERT_UPDATE AssociateInventory;inventoryFor(code)[unique=true];productCategories[unique=true](code,$catalogVersion);productCategorySubType(code);products;variants;numberOfDistributedInventory
+#;HOLIDAY;C001,C002;C001ST001;HolidayProduct;;SetPackage;2.5
+
+INSERT_UPDATE PaymentInformation;currency(isocode);balFromLastPaymentAdv;amount[unique=true];paymentType;paymentDueDate[dateformat=$dateformat][unique=true];remark
+;INR;500;10000;;20-06-2016;
+
+INSERT_UPDATE PaymentDetailsVmpd;vmpdNumber[unique=true];currency(isocode);amount;amountPending;dateOfGeneration[dateformat=$dateformat];remark;
+;2562589;INR;100000;20000;10-09-2015;
+
+INSERT_UPDATE PrePaymentDetail;typeOfPayment(code)[unique=true];modeOfPayment(ModeOfPayment.code);drawnOn(Bank.code)[unique=true];paymentRefNo;finSystemRefNo;currency(isocode);amount;amountPending;date[dateformat=$dateformat];partPayment;remark
+#;FULL;creditcard;ICICIB;23456789;9876543;INR;675000;0;19-01-15;true;Payment done
+
+INSERT_UPDATE InventoryPaymentAdvice;$catalogVersion;paymentAdviceNo[unique=true];paymentStatus(code);inventoryID(HolidayInventoryDefinition.inventoryID);sbu(Company.uid);bu(Company.uid);supplierName(code);country(isocode);paymentInformation(PaymentInformation.amount,PaymentInformation.paymentDueDate[dateformat=$dateformat]);vmpdPaymentDetails(PaymentDetailsVmpd.vmpdNumber);prePaymentDetails(PrePaymentDetail.typeOfPayment(code),PrePaymentDetail.drawnOn(Bank.code));medias
+;;P301;PAID;Holiday_Inv_Def_0001;E000;E000;;IN;10000:20-06-2016;2562589;FULL:ICICIB
+
+
+
+
+
+

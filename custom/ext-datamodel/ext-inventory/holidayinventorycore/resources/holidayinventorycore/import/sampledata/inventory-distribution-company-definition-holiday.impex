@@ -1,0 +1,23 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$approved=approvalstatus(code)[default='approved']
+
+#this header has dependency of Airport sample data and company,companyMarket,supplier sample data 
+INSERT_UPDATE FlightInventoryDistribution;code[unique=true];distributedToCompany(uid);distributionCompany(uid);sbu(uid);bu(uid);distributionChannel;division;salesOffice;clientType(code);companyMarket(uid);clientName;clientGroup(code);value;settleWith(code);supplier(Supplier.code);tourDate[dateformat=$dateformat];pnrCode;departureDate[dateformat=$dateformat];origin(Airport.code);destination(Airport.code);airLine(FlightProduct.code)
+;ID003;E000;E000;E000;E000;;;;B2B;IND;OutBound;TATA_GROUP;3;SUPPLIER;Taj Hotel;09-03-2016;3MBFRB;09-03-2016;DWC;LCY;123
+
+#this header has a depenency on accomodation,company,companyMarket and supplier sample data 
+INSERT_UPDATE LandInventoryDistribution;code[unique=true];distributedToCompany(uid);distributionCompany(uid);sbu(uid);bu(uid);distributionChannel;division;salesOffice;clientType(code);companyMarket(uid);clientName;clientGroup(code);value;settleWith(code);supplier(Supplier.code);tourDate[dateformat=$dateformat];refNumber;city(isocode);accommodation(code)
+;ID004;E000;E000;E000;E000;;;;B2B;IND;OutBound;TATA_GROUP;3;SUPPLIER;Taj Hotel;09-03-2016;CO12535;BQH;87762
+
+#######################Import Company Header #####################################################
+INSERT_UPDATE CompanyAdvanceDefinition;companyAdvanceDefinitionId[unique=true];company(company.uid);blockOutFromDate[dateformat=$dateformat];blockOutToDate[dateformat=$dateformat];overBooking;typeOfList(code);cutOffDays
+;CAD001;E000;06-05-2016;09-05-2016;True;PRELIMINARY;3
+
+INSERT_UPDATE CompanyCutOffInventoryPenaltyCharge;penaltyChargeType(code)[unique=true];cutOffDays[unique=true];absolute;value;currency(isocode);priceComponent(NonAirPriceComponentType.code);minimumThreshold[unique=true];
+;NAME_CHANGE;3;True;25;INR;OTHER_CHARGES;5
+
+UPDATE CompanyAdvanceDefinition;companyAdvanceDefinitionId[unique=true];inventoryReleasePenaltyCharges(CompanyCutOffInventoryPenaltyCharge.penaltyChargeType(code),CompanyCutOffInventoryPenaltyCharge.cutOffDays,CompanyCutOffInventoryPenaltyCharge.minimumThreshold)
+;CAD001;NAME_CHANGE:3:5

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration" xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+	<context:annotation-config />
+
+	<bean id="baseDirectoryTravelogixActivitySubType" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogix/product/activitysubtype" />
+	</bean>
+
+
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesTravelogixActivitySubType" directory="#{baseDirectoryTravelogixActivitySubType}"
+		filename-regex="activity-subtype-detail-(\d+)\.csv" comparator="fileOrderComparatorActivitySubType">
+		<int:poller fixed-rate="100" />
+	</file:inbound-channel-adapter>
+
+	<bean id="fileOrderComparatorActivitySubType" class="de.hybris.platform.acceleratorservices.dataimport.batch.FileOrderComparator">
+		<property name="prefixPriority">
+			<map>
+				<!-- default priority is 0 -->
+				<entry key="activity-subtype-detail" value="150" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogixActivitySubType" reply-channel="travelogixActivitySubTypeBatchFilesProc"
+		directory="#{baseDirectoryTravelogixActivitySubType}/processing" delete-source-files="true" />
+
+	<int:service-activator input-channel="travelogixActivitySubTypeBatchFilesProc" output-channel="travelogixActivitySubTypeBatchFilesHeaderInit"
+		ref="travelogixActivitySubTypeHeaderSetupTask" method="execute" />
+
+	<bean id="travelogixActivitySubTypeHeaderSetupTask" class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogixActivitySubType" />
+	</bean>
+
+	<!-- 2) move the file to processing and setup header, partly site dependent -->
+	<int:service-activator input-channel="travelogixActivitySubTypeBatchFilesHeaderInit" output-channel="travelogixActivitySubTypeBatchFilesHeader"
+		ref="headerInitTask" method="execute" />
+
+	<bean id="headerInitTask" class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderInitTask">
+		<property name="sequenceIdParser" ref="batchSequenceIdParser" />
+		<property name="languageParser" ref="batchLanguageParser" />
+		<property name="fallbackLanguage" value="en" />
+	</bean>
+
+	<bean id="batchSequenceIdParser" class="de.hybris.platform.acceleratorservices.dataimport.batch.util.SequenceIdParser">
+		<property name="parser">
+			<bean class="de.hybris.platform.acceleratorservices.util.RegexParser">
+				<property name="regex" value="-(\d+)\.csv" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="travelogixActivitySubTypeBatchFilesHeader" output-channel="batchFilesTran"
+		ref="travelogixActivitySubTypeBatchTransformerTask" method="execute" />
+
+	<bean id="travelogixActivitySubTypeBatchTransformerTask" class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value=";" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+
+	<bean id="activitySubTypeDefaultHeader" class="java.lang.String">
+		<constructor-arg>
+			<value># ImpEx for importing data into $CATALOG$
+				$productCatalog=EZ-IN
+				$productCatalogName=ezeego1-IN
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+				$timeFormat=HH:MM
+
+			</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="batchActivityProductSubTypeeConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity-subtype-detail" p:converter-ref="batchActivityProductSubTypeConverter" />
+
+	<bean id="batchActivityProductSubTypeConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Activity Product SubType
+				#{activitySubTypeDefaultHeader}
+				INSERT_UPDATE ActivityProductSubType;$catalogVersion[unique=true];commonProductID[unique=true];code[unique=true];placeOfEvent(DestinationPointType.code);transferType(TransferType.code);productType(ProductType.code);startingPoint;endingPoint;duration[timeformat=$timeFormat];uniqueSellingPoint;isPickupAndDropOff;fromTime[timeformat=$timeFormat];toTime[timeformat=$timeFormat];exclusionDescription
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'ActivityProductSubType'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchActivityEntertainmentConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity-subtype-detail" p:converter-ref="batchActivityEntertainmentConverter" />
+
+	<bean id="batchActivityEntertainmentConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Activity Product SubType
+				#{activitySubTypeDefaultHeader}
+				INSERT_UPDATE Entertainment;entertainmentType(code)[unique=true];nameAndDescription(GeneralDescriptionInfo.name)[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Entertainment'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchActivityGuideConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity-subtype-detail" p:converter-ref="batchActivityGuideConverter" />
+
+	<bean id="batchActivityGuideConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Activity Product SubType
+				#{activitySubTypeDefaultHeader}
+				INSERT_UPDATE Guide;isDriver;audioCommentryAvailable[unique=true];description[unique=true];language(isocode)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Guide'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchActivityAttractionConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity-subtype-detail" p:converter-ref="batchActivityAttractionConverter" />
+
+	<bean id="batchActivityAttractionConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Activity Product SubType
+				#{activitySubTypeDefaultHeader}
+				INSERT_UPDATE Attraction;panaromic;sightSeeing;photoSpot[unique=true];duration[timeformat=$timeFormat][unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Attraction'" />
+			</bean>
+		</property>
+	</bean>
+
+
+	<bean id="batchActivityOperationDurationConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity-subtype-detail" p:converter-ref="batchActivityOperationDurationConverter" />
+
+	<bean id="batchActivityOperationDurationConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Activity Product SubType
+				#{activitySubTypeDefaultHeader}
+				INSERT_UPDATE OperationDuration;timeOfDay(code);supplierName(Supplier.code)[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'OperationDuration'" />
+			</bean>
+		</property>
+	</bean>
+
+
+
+	<!-- <bean id="batchActivityPickupAndDropOffConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping" 
+		p:mapping="activity-subtype-detail" p:converter-ref="batchActivityPickupAndDropOffConverter" /> <bean id="batchActivityPickupAndDropOffConverter" 
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter"> <property name="header"> <value> 
+		# Insert Activity Product SubType #{activitySubTypeDefaultHeader} INSERT_UPDATE PickupAndDropOff;code[unique=true];locationType;locationName;type(code);fromTo(code);pickUpAddress;contactDetails;supplierName(Supplier.code) 
+		</value> </property> <property name="impexRow"> <value>;{29};{30};{31};{32};{33};{34};{35};{36}</value> </property> </bean> -->
+</beans>
+	
+	
+	

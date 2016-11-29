@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+	
+<!-- The hybris platform provides one single Spring application context 
+		for beans located at the jalo layer. Each extension can add beans to this 
+		context by specifying them at this configuration file. You can use and/or 
+		redefine beans defined at configuration files of other extensions as well 
+		as adding new one. If you want to locate this file at a different location 
+		or want to use several files for better, structuring, please use the '<yourextension>.application-context' 
+		property at your project.properties file. There you can specify a comma separated 
+		list of files where first is tried to find a file per classpath and then 
+		per file system. If you want to configure beans for your web module please 
+		have a look at your web/webroot/WEB-INF/<extname>-web-spring.xml. -->
+
+	<!-- Example how to override a manager -->
+	<!-- <bean id="core.productManager" class="com.cnk.travelogix.client.config.jalo.ClientconfigProductManager" 
+		init-method="init" destroy-method="destroy" /> -->
+
+
+	<!-- Example how to configure the class to use for jalo session creation -->
+	<!-- <bean id="jalosession" class="de.hybris.platform.jalo.JaloSessionFactory"> 
+		<property name="targetClassName" value="com.cnk.travelogix.client.config.jalo.ClientconfigJaloSession"/> 
+		</bean> -->
+
+
+	<!-- Example how to override an item -->
+	<!-- <bean id="de.hybris.platform.jalo.product.Product" class="com.cnk.travelogix.client.config.jalo.ClientconfigProduct" 
+		scope="prototype" /> -->
+
+	<!-- Example how to register and use an AOP aspect Also see http://static.springframework.org/spring/docs/2.5.x/reference/aop.html -->
+
+	<!-- <bean id="clientconfigProfBean" class="com.cnk.travelogix.client.config.aop.ClientconfigProfilingAspect"/> 
+		<aop:config proxy-target-class="true"> <aop:aspect id="clientconfigProfAspect" 
+		ref="clientconfigProfBean" > <aop:pointcut id="profiledMethods" expression="execution(* 
+		getModificationTime(..))" /> <aop:around pointcut-ref="profiledMethods" method="profile" 
+		/> </aop:aspect> </aop:config> -->
+
+
+	<!-- some other examples of a pointcut that matches everything: <aop:pointcut 
+		id="profiledMethods" expression="bean(de.hybris.platform.jalo.user.Customer) 
+		&amp;&amp; !execution(* getPK(..))" /> <aop:pointcut id="profiledMethods" 
+		expression="execution(* *(..))" /> -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+	<bean id="clientConfigSystemSetup"
+		class="com.cnk.travelogix.client.config.setup.ClientConfigSystemSetup"
+		parent="abstractCoreSystemSetup" />
+
+	<bean id="documentManagementPrepareInterceptor"
+		class="com.cnk.travelogix.client.config.interceptors.DocumentManagementPrepareInterceptor">
+		<property name="documentIdService" ref="documentIdService" />
+	</bean>
+
+	<alias name="defaultDocumentManagementService" alias="documentIdService" />
+	<bean id="defaultDocumentManagementService"
+		class="com.cnk.travelogix.client.config.services.impl.DefaultDocumentManagementService">
+		<property name="keyGenerator" ref="documentIdKeyGenerator" />
+	</bean>
+
+	<bean id="documentManagementPrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="documentManagementPrepareInterceptor" />
+		<property name="typeCode" value="DocumentManagement" />
+	</bean>
+
+	<bean id="documentIdKeyGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="documentId" />
+		<property name="digits" value="8" />
+		<property name="start" value="00000001" />
+		<property name="numeric" value="true" />
+	</bean>
+
+	<bean id="clientKPIInfoPrepareInterceptor"
+		class="com.cnk.travelogix.client.config.interceptors.ClientKPIInfoPrepareInterceptor">
+		<property name="clientKPIService" ref="clientKPIService" />
+	</bean>
+
+	<bean id="clientKPIInfoPrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="clientKPIInfoPrepareInterceptor" />
+		<property name="typeCode" value="KPIInfo" />
+	</bean>
+	<alias name="defaultClientKPIService" alias="clientKPIService" />
+	<bean id="defaultClientKPIService"
+		class="com.cnk.travelogix.client.config.services.impl.DefaultClientKPIService">
+		<property name="keyGenerator" ref="kpiIdKeyGenerator" />
+	</bean>
+
+	<bean id="kpiIdKeyGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="kpiId" />
+		<property name="digits" value="8" />
+		<property name="start" value="00000001" />
+		<property name="numeric" value="true" />
+	</bean>
+
+	<!--PartPaymentMaster Bean Declaration -->
+
+	<bean id="partPaymentPrepareInterceptor"
+		class="com.cnk.travelogix.client.config.interceptors.PartPaymentPrepareInterceptor">
+		<property name="partPaymentService" ref="partPaymentService" />
+	</bean>
+
+	<bean id="partPaymentPrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="partPaymentPrepareInterceptor" />
+		<property name="typeCode" value="PartPaymentMasterConfig" />
+	</bean>
+
+	<alias name="defaultPartPaymentService" alias="partPaymentService" />
+	<bean id="defaultPartPaymentService"
+		class="com.cnk.travelogix.client.config.services.impl.DefaultPartPaymentService">
+		<property name="keyGenerator" ref="partPaymentKeyGenerator" />
+	</bean>
+
+	<bean id="partPaymentKeyGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="partPayment_Id" />
+		<property name="digits" value="8" />
+		<property name="start" value="00000001" />
+		<property name="numeric" value="true" />
+	</bean>
+	
+<!-- bean definition for timelimitmasterconfig -->
+	<bean id="timeLimitMasterPrepareInterceptor"
+		class="com.cnk.travelogix.client.config.interceptors.TimeLimitMasterPrepareInterceptor">
+		<property name="TimeLimitMasterService" ref="timeLimitMasterService" />
+	</bean>
+
+	<bean id="timeLimitMasterPrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="timeLimitMasterPrepareInterceptor" />
+		<property name="typeCode" value="TimeLimitMasterConfig" />
+	</bean>
+
+	<alias name="defaultTimeLimitMasterService" alias="timeLimitMasterService" />
+	<bean id="defaultTimeLimitMasterService"
+		class="com.cnk.travelogix.client.config.services.impl.DefaultTimeLimitMasterService">
+		<property name="keyGenerator" ref="timeLimitMasterConfigKeyGenerator" />
+	</bean>
+
+	<bean id="timeLimitMasterConfigKeyGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="timeLimitMasterConfig_timeLimitMasterId" />
+		<property name="digits" value="8" />
+		<property name="start" value="00000001" />
+		<property name="numeric" value="true" />
+	</bean>
+	
+	<bean id="mlmDistributionValidateInterceptor"
+  		class="com.cnk.travelogix.client.config.interceptors.MLMDistributionValidateInterceptor">
+ 	</bean>
+
+ 	<bean id="mlmDistributionValidateInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+  	scope="tenant">
+ 	<property name="interceptor" ref="mlmDistributionValidateInterceptor" />
+ 	<property name="typeCode" value="MLMDistribution" />
+ 	</bean>
+
+	<bean id="mlmDistributionInitDefaultInterceptor"
+    	class="com.cnk.travelogix.client.config.interceptors.MLMDistributionInitDefaultInterceptor">
+  	</bean>
+
+  <bean id="mlmDistributionInitDefaultInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+   	 scope="tenant">
+   		<property name="interceptor" ref="mlmDistributionInitDefaultInterceptor" />
+   		<property name="typeCode" value="MLMDistribution" />
+  </bean>
+
+</beans>

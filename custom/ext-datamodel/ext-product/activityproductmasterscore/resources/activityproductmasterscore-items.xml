@@ -1,0 +1,2389 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+	<collectiontypes>
+		<collectiontype elementtype="TravelogixPolicy"
+			code="ActivitiesPolicyCollection" type="collection" />
+		<collectiontype elementtype="PickupAndDropOff"
+			code="PickupAndDropOffCollection" />
+	</collectiontypes>
+	<enumtypes>
+		<enumtype code="Style" dynamic="true">
+			<description>Style</description>
+			<value code="BUFFET" />
+			<value code="SITTING" />
+		</enumtype>
+		<enumtype code="TypeOfDining" dynamic="true">
+			<description>Type of Dining</description>
+			<value code="UNIQUE" />
+			<value code="THEME" />
+		</enumtype>
+		<enumtype code="EventType" dynamic="true">
+			<description>Event Type</description>
+			<value code="REGULAR" />
+			<value code="SPECIAL" />
+		</enumtype>
+		<enumtype code="SpiceLevel" dynamic="true">
+			<description>Spice Level</description>
+			<value code="MILD" />
+			<value code="MEDIUM" />
+			<value code="SPICY" />
+			<value code="VERYSPICY" />
+		</enumtype>
+		<enumtype code="TypeOfService" dynamic="true">
+			<description>Type of Service</description>
+			<value code="TABLE" />
+			<value code="QUICK" />
+		</enumtype>
+		<enumtype code="CuisineType" dynamic="true">
+			<description>Cuisine Type</description>
+			<value code="CONTINENTAL" />
+		</enumtype>
+		<enumtype code="FoodType" dynamic="true">
+			<description>Food Type</description>
+			<value code="VEG" />
+			<value code="NON_VEG" />
+			<value code="DAIRY" />
+			<value code="BAKERY" />
+		</enumtype>
+		<enumtype code="SeatType" dynamic="true">
+			<description>Seat Type</description>
+			<value code="INDOOR" />
+			<value code="OUTDOOR" />
+		</enumtype>
+		<enumtype code="SeatingArrangement" dynamic="true">
+			<description>Seating Arrangement</description>
+			<value code="CAFETERIA" />
+			<value code="RESTAURANT" />
+			<value code="STYLESEATING" />
+		</enumtype>
+		<enumtype code="SeatingPurpose" dynamic="true">
+			<description>Seating Purpose</description>
+			<value code="COCKTAIL" />
+			<value code="DINING" />
+		</enumtype>
+		<enumtype code="MenuType" dynamic="true">
+			<description>Menu Type</description>
+			<value code="STARTERS" />
+			<value code="MAINCOURSE" />
+			<value code="DRINKS" />
+		</enumtype>
+		<enumtype code="EventAndTourType" dynamic="true">
+			<description>Events and Tours type</description>
+			<value code="SHOW" />
+			<value code="EVENT_AND_TOURS" />
+			<value code="RIDES" />
+			<value code="ENTERTAINMENT" />
+			<value code="ATTRACTION" />
+			<value code="CHARACTER_EXPERIENCE" />
+		</enumtype>
+		<enumtype code="VolumeUnit" dynamic="true">
+			<description>Volume units</description>
+			<value code="FIVE_HUNDRED_ML" />
+			<value code="PER_GLASS" />
+			<value code="PER_BOTTLE" />
+		</enumtype>
+		<enumtype code="WeightUnit">
+			<description>Weight units</description>
+			<value code="KG"/>
+			<value code="POUND"></value>
+		</enumtype>
+	</enumtypes>
+
+	<relations>
+		<relation code="DiningInfoToContactDetails" autocreate="true"
+			localized="false">
+			<sourceElement qualifier="restaurantContactDetail" type="DiningInfo"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="contactDetails" type="ContactDetails"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="DiningInfoToSeatingInfo" autocreate="true"
+			localized="false">
+			<sourceElement qualifier="restaurant" type="DiningInfo"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="seatingInfo" type="SeatingInfo"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="DiningInfoToMealDetail" autocreate="true"
+			localized="false">
+			<sourceElement qualifier="restaurant" type="DiningInfo"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="mealDetail" type="MealInfo"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+
+		<relation code="DiningInfoToReservationContactDetails"
+			autocreate="true" localized="false">
+			<sourceElement qualifier="restaurant" type="DiningInfo"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="reservationContactDetails"
+				type="ContactDetails" cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="DiningInfoToTimings" autocreate="true"
+			localized="false">
+			<sourceElement qualifier="restaurant" type="DiningInfo"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="timings" type="Timing"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="AssociatedPropertyToContactDetails"
+			autocreate="true" localized="false">
+			<sourceElement qualifier="associatedProperty" type="AssociatedProperty"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="contacts" type="ContactDetails"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="AssociatedPropertyToRoutes" autocreate="true"
+			localized="false">
+			<sourceElement qualifier="associatedProperty" type="AssociatedProperty"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="routes" type="Route"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<!-- <relation code="MiscellaneousInfoToAdditionalMiscellsneousInfos" autocreate="true" 
+			localized="false"> <sourceElement qualifier="miscellaneousInfo" type="MiscellaneousInfo" 
+			cardinality="one"> <modifiers /> </sourceElement> <targetElement qualifier="additionalMiscellsneousInfos" 
+			type="GeneralDescriptionInfo" cardinality="many"> <modifiers /> </targetElement> 
+			</relation> -->
+
+		<relation code="MiscellaneousInfoToMiscellanousRestrictions"
+			autocreate="true" localized="false">
+			<sourceElement qualifier="miscellaneousInfo" type="MiscellaneousInfo"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="miscellanousRestrictions"
+				type="MiscellaneousRestriction" cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityProductToEventsAndTourInfo"
+			autocreate="true" localized="false">
+			<sourceElement qualifier="activityProduct" type="ActivityProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="eventsAndTourInfo" type="EventsAndTourInfo"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityProductToPreArrivalInfo" autocreate="true"
+			localized="false">
+			<sourceElement qualifier="activityProduct" type="ActivityProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="preArrivalInfo" type="PreArrivalInfo"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityProductToOtherInfo" autocreate="true"
+			localized="false">
+			<sourceElement qualifier="activityProduct" type="ActivityProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="otherInfo" type="AdditionalActivityInfo"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="ActivityProductToProductDeactivationConfigs"
+			autocreate="true" localized="false">
+			<sourceElement qualifier="activityProduct" type="ActivityProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="productDeactivationConfigs"
+				type="DeactivationConfig" cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityProductToShoppingInfo" autocreate="true"
+			localized="false">
+			<sourceElement qualifier="activityProduct" type="ActivityProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="shoppingInfo" type="ShoppingInfo"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="ActivityProductToFacilities" autocreate="true"
+			localized="false">
+			<sourceElement qualifier="activityProduct" type="ActivityProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="facilities" type="Facility"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<!-- <relation code="DiningInfoToRestaurant" autocreate="true" localized="false"> 
+			<sourceElement qualifier="diningInfo" type="DiningInfo" cardinality="one"> 
+			<modifiers /> </sourceElement> <targetElement qualifier="restaurants" type="Restaurant" 
+			cardinality="many"> <modifiers /> </targetElement> </relation> -->
+
+		<relation code="ActivityProductToSuggestedAccommodations"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="activityProduct" type="ActivityProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="suggestedAccommodations"
+				type="SuggestedAccommodation" cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="DiningInfoToMealInfo" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="diningInfo" type="DiningInfo"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="mealInfo" type="MealInfo"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="MiscellaneousInfoToGeneralInfo" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="miscellaneousInfo" type="MiscellaneousInfo"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="generalInfo" type="GeneralDescriptionInfo"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityProductToGeneralInfo" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="activityProduct" type="ActivityProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="generalDescription" type="GeneralDescriptionInfo"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityProductToStaffInfo" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="activityProduct" type="ActivityProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="staffInformation" type="StaffInformation"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<!-- ####### Activity Product Sub type Relations ############ -->
+		<relation code="ActivityProductSubTypeToPickAndDropDetails"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="activityProductSubTypePickAndDropDetails" type="ActivityProductSubType"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="pickAndDropDetails" type="PickupAndDropOff"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityProductSubTypeToOperationDuration"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="activityProductSubTypeOperationDuration" type="ActivityProductSubType"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="operationDuration" type="OperationDuration"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityProductSubTypeToSeatingArrangement"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="activityProductSubTypeSeatingArrangement" type="ActivityProductSubType"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="seatingArrangement" type="SeatingInfo"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityProductSubTypeToAdditionalInfos"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="activityProductSubTypeAdditionalInfos" type="ActivityProductSubType"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="additionalInfos" type="AdditionalActivityInfo"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityProductSubTypeToInclusions"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="activityProductSubTypeInclusions" type="ActivityProductSubType"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="inclusions" type="Inclusion"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="InclusionToInclusiveForGuides" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="inclusionGuides" type="Inclusion"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="inclusiveForGuides" type="Guide"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="InclusionToAttractions" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="inclusionAttractions" type="Inclusion"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="attractions" type="Attraction"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="InclusionToInclusiveDinings" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="inclusion" type="Inclusion"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="inclusiveDinings" type="DiningInfo"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="InclusionToEntertainments" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="inclusionEntertainments" type="Inclusion"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="entertainments" type="Entertainment"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="InclusionToOtherInfo" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="inclusion" type="Inclusion"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="otherInfo" type="AdditionalActivityInfo"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="InclusionToSeatingInfo" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="inclusionSeatingInfo" type="Inclusion"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="seatingInfo" type="SeatingInfo"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation localized="false" code="InclusionToTypeOfInclusionActivites">
+			<sourceElement type="Inclusion" cardinality="one" qualifier="inclusionTypeOfInclusionActivites">
+				<modifiers/>
+			</sourceElement>
+			<targetElement type="AdditionalActivityInfo" cardinality="many" qualifier="typeOfInclusionActivites">
+				<modifiers/>
+			</targetElement>
+		</relation>
+
+		<relation code="EntertainmentToCastAndCrewInfo" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="entertainment" type="Entertainment"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="entertainmentCastAndCrew" type="AdditionalActivityInfo"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="EntertainmentToDayOfOperation" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="entertainment" type="Entertainment"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="entertainmentOperation" type="DayOfOperation"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityProductToMonthlyWeather" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="activityProduct" type="ActivityProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="monthlyWeather" type="MonthlyWeather"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="PreArrivalToDiningTips" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="preArrival" type="PreArrivalInfo"
+				cardinality="many">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="diningTips" type="DiningTips"
+				cardinality="one">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="ActivityComboProductToActivityComboProducts"
+			autocreate="true" generate="false" localized="false">
+			<deployment table="activitycombopos" typecode="23008" />
+			<sourceElement qualifier="activityComboProduct" type="ActivityComboProduct"
+				cardinality="many">
+				<modifiers optional="true" search="true" />
+			</sourceElement>
+			<targetElement qualifier="activityComboProducts" type="ActivityProductSubType"
+				cardinality="many">
+				<modifiers optional="true" search="true" />
+			</targetElement>
+		</relation>
+		<relation code="ActivityComboProductToLongDescription"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="activityComboProduct" type="ActivityComboProduct"
+				cardinality="one">
+				<modifiers optional="true" search="true" />
+			</sourceElement>
+			<targetElement qualifier="longDescription" type="DescriptionDetails"
+				cardinality="many">
+				<modifiers optional="true" search="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityComboProductToShortDescription"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="activityComboProduct" type="ActivityComboProduct"
+				cardinality="one">
+				<modifiers optional="true" search="true" />
+			</sourceElement>
+			<targetElement qualifier="shortDescription" type="DescriptionDetails"
+				cardinality="many">
+				<modifiers optional="true" search="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityComboProductToUpdates" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="activityComboProduct" type="ActivityComboProduct"
+				cardinality="one">
+				<modifiers optional="true" search="true" />
+			</sourceElement>
+			<targetElement qualifier="updates" type="DescriptionDetails"
+				cardinality="many">
+				<modifiers optional="true" search="true" />
+			</targetElement>
+		</relation>
+		<relation code="ActivityComboProductToDeactivationFromMarket"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="activityComboProduct" type="ActivityComboProduct"
+				cardinality="one">
+				<modifiers optional="true" search="true" />
+			</sourceElement>
+			<targetElement qualifier="deactivationFromMarket" type="DeactivationConfig"
+				cardinality="many">
+				<modifiers optional="true" search="true" />
+			</targetElement>
+		</relation>
+		<relation code="ShoppingInfoToDayOfOperation" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="shoppingInfo" type="ShoppingInfo"
+				cardinality="one">
+				<modifiers optional="true" search="true" />
+			</sourceElement>
+			<targetElement qualifier="shoppingDaysOfOperation" type="DayOfOperation"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation code="EventsAndTourInfoToDayOfOperation"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="eventsAndTourInfo" type="EventsAndTourInfo"
+				cardinality="one">
+				<modifiers optional="true" search="true" />
+			</sourceElement>
+			<targetElement qualifier="eventDaysOfOperation" type="DayOfOperation"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation code="ActivityProductToSupplierUpdates" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="activityProduct" type="ActivityProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="supplierUpdates" type="DescriptionDetails"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="ActivityProductToDiningInfo" autocreate="true"
+			generate="false" localized="false">
+			<deployment table="activityrestaurant" typecode="23061"/>
+			<sourceElement qualifier="activityProduct" type="ActivityProduct"
+				cardinality="many">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="restaurants" type="DiningInfo"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="ActivityProductToActivityDescription" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="activityProduct" type="ActivityProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="activityDescriptions" type="ActivityDescription"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation localized="false" code="ActivityProductSubTypeToActivityDescription" autocreate="true" generate="false">
+			<sourceElement type="ActivityProductSubType" cardinality="one" qualifier="activityProductSubTypeActivityDescription">
+				<modifiers/>
+			</sourceElement>
+			<targetElement type="ActivityDescription" cardinality="many" qualifier="activitySubTypeDesc">
+				<modifiers/>
+			</targetElement>
+		</relation>
+		<relation localized="false" code="ParticipantToTeamMemberDetails" autocreate="true" generate="false">
+			<sourceElement type="Participant" cardinality="one" qualifier="participant">
+				<modifiers/>
+			</sourceElement>
+			<targetElement type="TeamMemberDetails" cardinality="many" qualifier="teamMemberDetails">
+				<modifiers/>
+			</targetElement>
+		</relation>
+		<relation localized="false" code="AdditionalActivityInfoToParticipant" autocreate="true" generate="false">
+			<sourceElement type="AdditionalActivityInfo" cardinality="one" qualifier="additionalActivityInfoParticipant">
+				<modifiers/>
+			</sourceElement>
+			<targetElement type="Participant" cardinality="many" qualifier="participants">
+				<modifiers/>
+			</targetElement>
+		</relation>
+		<relation localized="false" code="AdditionalActivityInfoToAwardInfo" autocreate="true" generate="false">
+			<sourceElement type="AdditionalActivityInfo" cardinality="one" qualifier="additionalActivityInfoAwards">
+				<modifiers/>
+			</sourceElement>
+			<targetElement type="AwardInfo" cardinality="many" qualifier="awards">
+				<modifiers/>
+			</targetElement>
+		</relation>
+		<relation localized="false" code="AdditionalActivityInfoToPerformerInfo" autocreate="true" generate="false">
+			<sourceElement type="AdditionalActivityInfo" cardinality="one" qualifier="additionalActivityInfoPerformerInfo">
+				<modifiers/>
+			</sourceElement>
+			<targetElement type="GeneralDescriptionInfo" cardinality="many" qualifier="performerInfo">
+				<modifiers/>
+			</targetElement>
+		</relation>
+		<relation localized="false" code="AdditionalActivityInfoToOtherInfo" autocreate="true" generate="false">
+			<sourceElement type="AdditionalActivityInfo" cardinality="one" qualifier="additionalActivityInfoOtherInfo">
+				<modifiers/>
+			</sourceElement>
+			<targetElement type="GeneralDescriptionInfo" cardinality="many" qualifier="otherInfo">
+				<modifiers/>
+			</targetElement>
+		</relation>
+		<relation localized="false" code="AwardInfoToNominees" autocreate="true" generate="false">
+			<sourceElement type="AwardInfo" cardinality="one" qualifier="awardInfoNominees">
+				<modifiers/>
+			</sourceElement>
+			<targetElement type="GeneralDescriptionInfo" cardinality="many" qualifier="nominees">
+				<modifiers/>
+			</targetElement>
+		</relation>
+		<relation localized="false" code="ShowInfoToCastCrewInfo" autocreate="true" generate="false">
+			<sourceElement type="ShowInfo" cardinality="one" qualifier="ahowInfoCastCrewInfo">
+				<modifiers/>
+			</sourceElement>
+			<targetElement type="GeneralDescriptionInfo" cardinality="many" qualifier="castCrewInfo">
+				<modifiers/>
+			</targetElement>
+		</relation>
+		<relation localized="false" code="AdditionalActivityInfoToShowInfo" autocreate="true" generate="false">
+			<sourceElement type="AdditionalActivityInfo" cardinality="one" qualifier="additionalActivityInfoShowInfo">
+				<modifiers/>
+			</sourceElement>
+			<targetElement type="ShowInfo" cardinality="many" qualifier="showInfo">
+				<modifiers/>
+			</targetElement>
+		</relation>
+		<relation localized="false" code="AdditionalActivityInfoToSpaInfo" autocreate="true" generate="false">
+			<sourceElement type="AdditionalActivityInfo" cardinality="one" qualifier="additionalActivityInfoSpaInfo">
+				<modifiers/>
+			</sourceElement>
+			<targetElement type="SpaInfo" cardinality="many" qualifier="spaInfo">
+				<modifiers/>
+			</targetElement>
+		</relation>
+		<relation localized="false" code="ActivityProductSubTypeToTourItinerary" autocreate="true" generate="false">
+			<sourceElement type="ActivityProductSubType" cardinality="one" qualifier="activityProductSubTypeTourItinerary">
+				<modifiers/>
+			</sourceElement>
+			<targetElement type="TourItinerary" cardinality="many" qualifier="tourRouting">
+				<modifiers/>
+			</targetElement>
+		</relation>
+
+		
+	</relations>
+	<itemtypes>
+		<typegroup name="Activity">
+
+			<itemtype code="ActivityBrand"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.ActivityBrand">
+				<deployment table="activitybrands" typecode="21801" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="code">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="name">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ActivityChain"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.ActivityChain">
+				<deployment table="activitychains" typecode="21800" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="code">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="name">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="displayName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Address" qualifier="address">
+						<modifiers partof="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="description">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="email">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="url">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="EventsAndTourInfo" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.EventsAndTourInfo">
+				<description>Represents Events And Tour Info </description>
+				<deployment table="eventsandtourinfo" typecode="21057" />
+				<attributes>
+					<attribute qualifier="type" type="EventAndTourType">
+						<persistence type="property" />
+						<description>Event And Tour Type</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="name" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Duration.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="duration" type="java.lang.String">
+						<persistence type="property" />
+						<description>Duration.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Description</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="whereAbouts" type="java.lang.String">
+						<persistence type="property" />
+						<description>Where Abouts</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="location" type="java.lang.String">
+						<persistence type="property" />
+						<description>Location.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="reservation" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Reservation.</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="contactNumber" type="java.lang.String">
+						<persistence type="property" />
+						<description>Contact Number.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="interest" type="Interest">
+						<persistence type="property" />
+						<description>Interest.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="guestPolicies" type="java.lang.String">
+						<persistence type="property" />
+						<description>Guest Policies.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="unit" type="DistanceUnitMasterType">
+						<persistence type="property" />
+						<description>Unit</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="guestHeight" type="java.lang.String">
+						<persistence type="property" />
+						<description>Guest Height.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="ageRangeFromYear" type="java.lang.String">
+						<persistence type="property" />
+						<description>Age Range From Year.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="ageRangeFromMonth" type="Month">
+						<persistence type="property" />
+						<description>Age Range From Month</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="ageRangeToYear" type="java.lang.String">
+						<persistence type="property" />
+						<description>Age Range To Year</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="ageRangeToMonth" type="Month">
+						<persistence type="property" />
+						<description>Age Range To Month</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="thrillLevels" type="java.lang.String">
+						<persistence type="property" />
+						<description>Thrill Levels</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="accessibility" type="java.lang.String">
+						<persistence type="property" />
+						<description>Accessibility</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="knowBeforeYouGo" type="java.lang.String">
+						<persistence type="property" />
+						<description>Know Before You Go</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="remark" type="java.lang.String">
+						<persistence type="property" />
+						<description>Remark</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="media" type="MediaCollection">
+						<persistence type="property" />
+						<description>Media</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="ActivityProduct" autocreate="true" generate="true"
+				extends="Product"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.ActivityProduct">
+				<description>Activity Product </description>
+				<attributes>
+					<attribute qualifier="chain" type="ActivityChain">
+						<persistence type="property" />
+						<description>To show the Chain.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="brand" type="ActivityBrand">
+						<persistence type="property" />
+						<description>Brand.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="affiliation" type="Affiliation">
+						<persistence type="property" />
+						<description>Affiliation.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="modeOfTransport" type="ModeOfTransport">
+						<persistence type="property" />
+						<description>ModeOfTransport.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="miscellaneousInfo" type="MiscellaneousInfo">
+						<persistence type="property" />
+						<description>Miscellaneous Info</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="attachedPolicies" type="ActivitiesPolicyCollection">
+						<persistence type="property" />
+						<description>Attached Policies</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="parkMap" type="MediaCollection">
+						<persistence type="property" />
+						<description>Park Map.</description>
+						<modifiers />
+					</attribute>
+					<!-- <attribute qualifier="diningInfo" type="DiningInfo"> <persistence 
+						type="property" /> <description>Dining Info.</description> <modifiers /> 
+						</attribute> -->
+					<attribute qualifier="associatedProperty" type="AssociatedProperty">
+						<persistence type="property" />
+						<description>Associated Accommodation</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="contactDetail" type="ContactDetails">
+						<persistence type="property" />
+						<description>Product Contact Details</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="country" type="Country">
+						<persistence type="property" />
+						<description>Country</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="city" type="City">
+						<persistence type="property" />
+						<description>City</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="MonthlyWeather" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.MonthlyWeather">
+				<description>Weather Information</description>
+				<deployment table="monthlyweather" typecode="21205" />
+				<attributes>
+					<attribute qualifier="destinationWeather" type="java.lang.String">
+						<persistence type="property" />
+						<description>Destination Weather</description>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="minTemp" type="java.lang.String">
+						<persistence type="property" />
+						<description>Minimum Temperature.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="maxTemp" type="java.lang.String">
+						<persistence type="property" />
+						<description>Maximum Temperature.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="month" type="Month">
+						<persistence type="property" />
+						<description>Month</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="SuggestedAccommodation" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.SuggestedAccommodation">
+				<description>Suggested Accommodation </description>
+				<deployment table="suggestedaccommodation" typecode="21058" />
+				<attributes>
+					<attribute qualifier="country" type="Country">
+						<persistence type="property" />
+						<description>Country.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="city" type="City">
+						<persistence type="property" />
+						<description>City.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Description.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="productName" type="Accommodation">
+						<persistence type="property" />
+						<description>Product Name</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AssociatedProperty" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.AssociatedProperty">
+				<description>Associated Property </description>
+				<deployment table="associatedproperty" typecode="21059" />
+				<attributes>
+					<attribute qualifier="address" type="Address">
+						<persistence type="property" />
+						<description>Address.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="associatedAccoProduct" type="Accommodation">
+						<persistence type="property" />
+						<description>Associated Acco product</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ActivityDescription" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.ActivityDescription">
+				<description>Activity Description details</description>
+				<deployment table="activitydescription" typecode="21067" />
+				<attributes>
+					<attribute qualifier="fromToDate"
+						type="de.hybris.platform.util.StandardDateRange">
+						<persistence type="property" />
+						<description>From and To Date</description>
+					</attribute>
+					<attribute qualifier="shortDescription" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Short Description</description>
+					</attribute>
+					<attribute qualifier="longDescription" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Long Description</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="MiscellaneousInfo" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.MiscellaneousInfo">
+				<description>MiscellaneousInfo </description>
+				<deployment table="Miscellaneousinfo" typecode="21060" />
+			</itemtype>
+
+			<itemtype code="GeneralDescriptionInfo" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.GeneralDescription">
+				<description>General Description </description>
+				<deployment table="generaldescriptioninfo" typecode="21061" />
+
+				<attributes>
+					<attribute type="localized:java.lang.String" qualifier="name">
+						<description>Name</description>
+						<modifiers read="true" write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="description">
+						<description>Description</description>
+						<modifiers read="true" write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+
+			<itemtype code="DiningInfo" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.DiningInfo">
+				<description>Dining Restaurant Info </description>
+				<deployment table="dininginfo" typecode="21062" />
+				<attributes>
+					<attribute qualifier="restaurantName" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>RestaurantName.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="whereAbouts" type="java.lang.String">
+						<persistence type="property" />
+						<description>Where Abouts.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="location" type="java.lang.String">
+						<persistence type="property" />
+						<description>Location.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Description.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="other" type="OtherInfo">
+						<persistence type="property" />
+						<description>Other Restaurant Info.</description>
+						<modifiers />
+					</attribute>
+					<attribute type="Style" qualifier="style">
+						<description>Dining Style</description>
+						<persistence type="property"/>
+						<modifiers/>
+					</attribute>
+					<attribute qualifier="typeOfDining" type="TypeOfDining">
+						<persistence type="property" />
+						<description>Type Of Dining.</description>
+						<modifiers />
+					</attribute>
+					<attribute type="TypeOfService" qualifier="typeOfService">
+						<description>Type of services</description>
+						<persistence type="property"/>
+						<modifiers/>
+					</attribute>
+					<attribute type="MealType" qualifier="mealType">
+						<description>Meal type</description>
+						<persistence type="property"/>
+						<modifiers/>
+					</attribute>
+					<attribute type="CuisineType" qualifier="cuisineType">
+						<description>Dining cuisine type</description>
+						<persistence type="property"/>
+						<modifiers/>
+					</attribute>
+					<attribute type="FoodType" qualifier="foodType">
+						<description>Food Type</description>
+						<persistence type="property"/>
+						<modifiers/>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="chefRecommended">
+						<description>Chef recommended</description>
+						<persistence type="property"/>
+						<modifiers/>
+					</attribute>
+					<attribute type="SpiceLevel" qualifier="spiceLevel">
+						<description>Spice level</description>
+						<persistence type="property"/>
+						<modifiers/>
+					</attribute>
+					<attribute type="VolumeUnit" qualifier="unit">
+						<description>Unit</description>
+						<persistence type="property"/>
+						<modifiers/>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="MealInfo" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.MealInfo">
+				<description>Meal Info </description>
+				<deployment table="mealinfo" typecode="21063" />
+				<attributes>
+					<attribute qualifier="mealType" type="MealType">
+						<persistence type="property" />
+						<description>MealType</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="menuName" type="MenuName">
+						<persistence type="property" />
+						<description>Menu Name</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="menuItemName" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>MenuItemName.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Description.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="menuValidity"
+						type="de.hybris.platform.util.StandardDateRange">
+						<persistence type="property" />
+						<description>Date Range</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="media" type="MediaCollection">
+						<persistence type="property" />
+						<description>Media.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="spiceLevel" type="SpiceLevel">
+						<persistence type="property" />
+						<description>Spice Level.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="unit" type="VolumeUnit">
+						<persistence type="property" />
+						<description>Unit</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="timeFrom" type="java.lang.String">
+						<persistence type="property" />
+						<description>Time From.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="timeTo" type="java.lang.String">
+						<persistence type="property" />
+						<description>Time To.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="daysOfWeek" type="WeekDayCollection">
+						<persistence type="property" />
+						<description>Days Of Week.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="typeOfService" type="TypeOfService">
+						<persistence type="property" />
+						<description>TypeOfService.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="cuisineType" type="CuisineType">
+						<persistence type="property" />
+						<description>Cuisine Type</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="foodType" type="FoodType">
+						<persistence type="property" />
+						<description>FoodType.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="chefRecommended" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Chef Recommended.</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="SeatingInfo" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.SeatingInfo">
+				<description>Seating Info </description>
+				<deployment table="seatinginfo" typecode="21064" />
+				<attributes>
+					<attribute qualifier="seatType" type="SeatType">
+						<persistence type="property" />
+						<description>Seat Type</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="seatingArrangments" type="SeatingArrangement">
+						<persistence type="property" />
+						<description>Seating Arrangement</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="purpose" type="SeatingPurpose">
+						<persistence type="property" />
+						<description>Purpose</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="roomName" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Name</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="seatingCapacity" type="java.lang.String">
+						<persistence type="property" />
+						<description>Seating Capacity.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="dateRange"
+						type="de.hybris.platform.util.StandardDateRange">
+						<persistence type="property" />
+						<description>Date Range</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="media" type="MediaCollection">
+						<persistence type="property" />
+						<description>Media.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Description.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="rowNumber" type="java.lang.String">
+						<persistence type="property" />
+						<description>Row Number.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="seatFrom" type="java.lang.String">
+						<persistence type="property" />
+						<description>Seat From.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="seatTo" type="java.lang.String">
+						<persistence type="property" />
+						<description>Seat To.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="screenName" type="java.lang.String">
+						<persistence type="property" />
+						<description>Screen Name</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="seatingClass" type="java.lang.String">
+						<persistence type="property" />
+						<description>Seating Class</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="OtherInfo" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.OtherInfo">
+				<description>Other Info </description>
+				<deployment table="otherinfo" typecode="21065" />
+				<attributes>
+					<attribute qualifier="airCondition" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Air Condition.</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="smokingAllowed" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>smoking Allowed</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="notesOnSmoking" type="java.lang.String">
+						<persistence type="property" />
+						<description>Notes On Smoking.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="alcoholServed" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Alcohol Served.</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="petsAllowed" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Pets Allowed.</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="notesOnPets" type="java.lang.String">
+						<persistence type="property" />
+						<description>Notes On Pets.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="childrenAllowed" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Children Allowed.</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="notesOnChildren" type="java.lang.String">
+						<persistence type="property" />
+						<description>Notes On Children.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="seatingCapacity" type="java.lang.String">
+						<persistence type="property" />
+						<description>Seating Capacity.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="drinkOffpremisesAllow" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Drink Off premises Allow.</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="corkageApplicable" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Corkage Applicable.</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="ambience" type="java.lang.String">
+						<persistence type="property" />
+						<description>Ambience.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="theme" type="Theme">
+						<persistence type="property" />
+						<description>Theme.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="cuisineSpeciality" type="CuisineType">
+						<persistence type="property" />
+						<description>Cuisine Speciality</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="barAndLoungeAvailable" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Bar And Lounge Available.</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="noteOnTips" type="java.lang.String">
+						<persistence type="property" />
+						<description>Note On Tips.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="validAdimissionAllowed" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Valid Adimission Allowed.</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="typeOfDining" type="TypeOfDining">
+						<persistence type="property" />
+						<description>Type Of Dining.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="style" type="Style">
+						<persistence type="property" />
+						<description>Style</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="typeOfService" type="TypeOfService">
+						<persistence type="property" />
+						<description>Type Of Service</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="mealType" type="MealType">
+						<persistence type="property" />
+						<description>Meal Type</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="cuisineType" type="CuisineType">
+						<persistence type="property" />
+						<description>Cousine Type</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="menuType" type="MenuType">
+						<persistence type="property" />
+						<description>Menu Type</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="foodType" type="FoodType">
+						<persistence type="property" />
+						<description>Food Type</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="MiscellaneousRestriction" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.MiscellaneousRestriction">
+				<description>Miscellaneous Restriction </description>
+				<deployment table="miscellaneousrestriction" typecode="21066" />
+				<attributes>
+					<attribute qualifier="allow" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Allow.</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="note" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Note.</description>
+						<modifiers />
+					</attribute>
+					<!-- this can be uncommented after DescriptionRestriction master data 
+						is created -->
+					<attribute qualifier="descriptionRestriction" type="TravelogixRuleType">
+						<persistence type="property" />
+						<description>Description Restriction.</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<!-- <itemtype code="DiningInfo" autocreate="true" generate="true" extends="GenericItem" 
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.DiningInfo"> 
+				<description>Dining Info </description> <deployment table="dininginfo" typecode="21067" 
+				/> <attributes> <attribute qualifier="typeOfDining" type="TypeOfDining"> 
+				<persistence type="property" /> <description>Type Of Dining.</description> 
+				<modifiers /> </attribute> </attributes> </itemtype> -->
+			<itemtype code="ShoppingInfo" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.ShoppingInfo">
+				<description>Represents Shopping Info </description>
+				<deployment table="shoppinginfo" typecode="23017" />
+				<attributes>
+					<!-- auto ID which is generated by NumberSeries -->
+					<attribute qualifier="code" type="java.lang.String">
+						<modifiers write="true" read="true" optional="true"
+							unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="nameOfShop" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Name Of Shop.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="typeOfMerchandise" type="java.lang.String">
+						<persistence type="property" />
+						<description>Type Of Merchandise.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="nameOfItem" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Name Of Item.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Description</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="location" type="java.lang.String">
+						<persistence type="property" />
+						<description>Location</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="whereAbout" type="java.lang.String">
+						<persistence type="property" />
+						<description>Where About.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="paymentDetails" type="java.lang.String">
+						<persistence type="property" />
+						<description>Payment Details.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="reservation" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Reservation.</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="contactNumber" type="java.lang.String">
+						<persistence type="property" />
+						<description>Contact Number.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="reservationInfo" type="java.lang.String">
+						<persistence type="property" />
+						<description>Reservation Info.</description>
+						<modifiers />
+					</attribute>
+					<!-- <attribute qualifier="daysOfWeek" type="WeekDayCollection"> <persistence 
+						type="property" /> <description>Days Of Week</description> <modifiers /> 
+						</attribute> <attribute qualifier="openingTime" type="java.lang.String"> 
+						<persistence type="property" /> <description>Opening Time</description> <modifiers 
+						/> </attribute> -->
+					<attribute qualifier="notesOnOpeningTime" type="java.lang.String">
+						<persistence type="property" />
+						<description>Notes On Opening Time.</description>
+						<modifiers />
+					</attribute>
+					<!-- <attribute qualifier="closingTime" type="java.lang.String"> <persistence 
+						type="property" /> <description>Closing Time</description> <modifiers /> 
+						</attribute> -->
+					<attribute qualifier="notesOnClosingTime" type="java.lang.String">
+						<persistence type="property" />
+						<description>Notes On Closing Time.</description>
+						<modifiers />
+					</attribute>
+					<!-- <attribute qualifier="validity" type="de.hybris.platform.util.StandardDateRange"> 
+						<persistence type="property" /> <description>Date Range</description> <modifiers 
+						/> </attribute> -->
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Timing" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.Timing">
+				<description>Timing </description>
+				<deployment table="restauranttiming" typecode="24031" />
+				<attributes>
+					<attribute qualifier="eventType" type="EventType">
+						<persistence type="property" />
+						<description>Event Type</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="mealType" type="MealType">
+						<persistence type="property" />
+						<description>Meal Type</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="validity"
+						type="de.hybris.platform.util.StandardDateRange">
+						<persistence type="property" />
+						<description>Validity</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="openingTime" type="java.lang.String">
+						<persistence type="property" />
+						<description>Opening Time.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="notesOnOpeningTime" type="java.lang.String">
+						<persistence type="property" />
+						<description>Notes On Opening Time.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="closingTime" type="java.lang.String">
+						<persistence type="property" />
+						<description>Closing Time</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="notesOnClosingTime" type="java.lang.String">
+						<persistence type="property" />
+						<description>Notes On Closing Time.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="lastOrderTime" type="java.lang.String">
+						<persistence type="property" />
+						<description>Notes On Closing Time.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="remark" type="java.lang.String">
+						<persistence type="property" />
+						<description>Notes On Closing Time.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="daysOfWeek" type="WeekDayCollection">
+						<persistence type="property" />
+						<description>Days Of Week</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="code" type="java.lang.String">
+						<persistence type="property" />
+						<description>Code</description>
+						<modifiers />
+					</attribute>
+					<!-- <attribute qualifier="from" type="java.util.Date"> <persistence 
+						type="property" /> <description>From.</description> <modifiers /> </attribute> 
+						<attribute qualifier="to" type="java.util.Date"> <persistence type="property" 
+						/> <description>To.</description> <modifiers /> </attribute> -->
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AdditionalActivityInfo" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.AdditionalActivityInfo">
+				<description>AdditionalActivityInfo</description>
+				<deployment table="additionalactivityinfo" typecode="21069" />
+				<attributes>
+					<attribute qualifier="name" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Name</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Name</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="typeOfInfo" type="TravelogixRuleType">
+						<persistence type="property" />
+						<description>TypeOfInformation.</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="DiningTips" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.DiningTips">
+				<description>DiningTips</description>
+				<deployment table="diningtips" typecode="21102" />
+				<attributes>
+					<attribute qualifier="diningTipsId" type="java.lang.String">
+						<persistence type="property" />
+						<description>Dining tip ID.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="reservation" type="java.lang.String">
+						<persistence type="property" />
+						<description>Reservation.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="characterDining" type="java.lang.String">
+						<persistence type="property" />
+						<description>Character Dining.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="casualDining" type="java.lang.String">
+						<persistence type="property" />
+						<description>Casual Dining.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="signatureDining" type="java.lang.String">
+						<persistence type="property" />
+						<description>Signature Dining.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="specialAndUniqueDining" type="java.lang.String">
+						<persistence type="property" />
+						<description>Special And Unique Dining.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="quickServicesDining" type="java.lang.String">
+						<persistence type="property" />
+						<description>Quick Services Dining.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="barsAndLounges" type="java.lang.String">
+						<persistence type="property" />
+						<description>Bars And Lounges.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="disneyDiningPlan" type="java.lang.String">
+						<persistence type="property" />
+						<description>Disney Dining Plan.</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="PreArrivalInfo" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.PreArrivalInfo">
+				<description>PreArrivalInfo</description>
+				<deployment table="prearrivalinfo" typecode="21099" />
+				<attributes>
+					<attribute qualifier="name" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Name</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Description</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="month" type="Month">
+						<persistence type="property" />
+						<description>Month.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="monthDescription" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Month Description.</description>
+						<modifiers />
+					</attribute>
+					<!-- <attribute qualifier="diningTips" type="DiningTips"> <persistence 
+						type="property" /> <description>DiningTips.</description> <modifiers /> </attribute> -->
+				</attributes>
+			</itemtype>
+			<itemtype code="DayOfOperation" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.DayOfOperation">
+				<description>Days of Operation</description>
+				<deployment table="dayofoperation" typecode="21098" />
+				<attributes>
+					<attribute qualifier="daysOfWeek" type="WeekDayCollection">
+						<persistence type="property" />
+						<description>Days Of Week</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="timeFrom" type="java.lang.String">
+						<persistence type="property" />
+						<description>Opening Time</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="timeTo" type="java.lang.String">
+						<persistence type="property" />
+						<description>Closing Time</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="dateRange"
+						type="de.hybris.platform.util.StandardDateRange">
+						<persistence type="property" />
+						<description>Date Range</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="media" type="MediaCollection">
+						<persistence type="property" />
+						<description>Media</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="ActivityProductSubType">
+			<itemtype code="ActivityProductSubType" autocreate="true"
+				generate="true" extends="VariantProduct"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.ActivityProductSubType">
+				<description>Represents Activity Product Sub Type</description>
+				<attributes>
+					<attribute type="java.lang.String" qualifier="commonProductNameSubTypeId">
+						<description>Common product name sub type ID and value will be system generated</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="productType" type="ProductType">
+						<persistence type="property" />
+						<description>Product Type</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="placeOfEvent" type="DestinationPointType">
+						<persistence type="property" />
+						<description>Place of Event</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="startingPoint" type="java.lang.String">
+						<persistence type="property" />
+						<description>Starting Point</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="endingPoint" type="java.lang.String">
+						<persistence type="property" />
+						<description>Ending Point</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="duration" type="java.lang.String">
+						<persistence type="property" />
+						<description>Duration</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+				
+					<attribute qualifier="isPickupAndDropOff" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Pickup And DropOff</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="exclusionDescription" type="java.lang.String">
+						<persistence type="property" />
+						<description>Exclusion Description</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Entertainment" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.Entertainment">
+				<description>Represents Entertainment</description>
+				<deployment table="entertainmenttable" typecode="21068" />
+				<attributes>
+					<attribute qualifier="entertainmentType" type="EntertainmentType">
+						<persistence type="property" />
+						<description>Entertainment Type</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="name">
+						<description>Entertainment name</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="description">
+						<description>Entertainment description</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="de.hybris.platform.util.StandardDateRange" qualifier="fromToDate">
+						<description>From date to date</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="media" type="MediaCollection">
+						<persistence type="property" />
+						<description>Entertainment Media</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Inclusion" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.Inclusion">
+				<description>Represents Inclusion</description>
+				<deployment table="inclusiontable" typecode="21074" />
+			</itemtype>
+
+			<itemtype code="Guide" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.Guide">
+				<description>Represents Guide</description>
+				<deployment table="guidetable" typecode="21101" />
+				<attributes>
+					<attribute qualifier="isDriver" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Is Driver</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="audioCommentryAvailable" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Audio Commentry Available</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="description" type="java.lang.String">
+						<persistence type="property" />
+						<description>Description</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="language" type="LanguageCollection">
+						<persistence type="property" />
+						<description>Language</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Attraction" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.Attraction">
+				<description>Represents Attraction</description>
+				<deployment table="attractiontable" typecode="21070" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="name">
+						<description>Entertainment name</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="description">
+						<description>Entertainment description</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="panaromic" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Panaromic</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="sightSeeing" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Sight Seeing</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="photoSpot" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Photo Spot</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="duration" type="java.lang.String">
+						<persistence type="property" />
+						<description>Duration</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="media" type="MediaCollection">
+						<persistence type="property" />
+						<description>Is Driver Media</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="arrivalTime">
+						<description>Arrival time</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="depTime">
+						<description>Departure time</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="OperationDuration" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.OperationDuration">
+				<description>Represents Operation Duration</description>
+				<deployment table="operationdurationtable" typecode="21071" />
+				<attributes>
+					<!-- Created in commoninventorycore-items.xml because of dependency
+					<attribute qualifier="supplierName" type="Supplier"> <persistence 
+						type="property"/> <description>Supplier Name</description> <modifiers read="true" 
+						write="true" optional="true"/> 
+					</attribute> -->
+					<attribute type="de.hybris.platform.util.StandardDateRange" qualifier="dateRange">
+						<description>Date range</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="WeekDayCollection" qualifier="daysOfWeek">
+						<description>Days of week</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="timeOfDay" type="TimeOfDay">
+						<persistence type="property" />
+						<description>Time Of Day</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="timeFrom">
+						<description>Time from</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="timeTo">
+						<description>Time to</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="PickupAndDropOff" autocreate="true"
+				generate="true" extends="GenericItem" 
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.PickupAndDropOff">
+				<description>Represents Pickup And DropOff</description>
+				<deployment table="pickupanddropofftable" typecode="21072" />
+				<attributes>
+					<!-- Created in commoninventorycore-items.xml because of dependency
+					<attribute qualifier="supplierName" type="Supplier"> <persistence 
+						type="property" /> <description>Supplier Name</description> <modifiers read="true" 
+						write="true" optional="true"/> </attribute> -->
+					<attribute type="TransferType" qualifier="transferType">
+						<description>Transfer type</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<!-- Created in commoninventorycore-items.xml because of dependency 
+					<attribute type="VehicleDetails" qualifier="vehicleDetails">
+						<description>Vehicle Details</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute> -->
+					<attribute type="PickUpDropOffType" qualifier="type">
+						<description>Type of pick up and drop off</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="PickUpDropOffFromTo" qualifier="fromTo">
+						<description>Pick up from and drop off to</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="locationType" type="DestinationPointType">
+						<persistence type="property" />
+						<description>Location Type</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="locationName" type="Location">
+						<persistence type="property" />
+						<description>Location Name</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="pickUpAddress" type="Address">
+						<persistence type="property" />
+						<description>PickUp Address</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="contactDetails" type="ContactDetails">
+						<persistence type="property" />
+						<description>Contact Details</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="TourItinerary" generate="true" autocreate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.TourItinerary">
+				<description>Tour itinerary</description>
+				<deployment table="touritinerary" typecode="23062"/>
+				<attributes>
+					<attribute type="java.lang.String" qualifier="title">
+						<description>Sub title</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="startTime">
+						<description>Start time</description>
+						<persistence type="property"/>
+						<modifiers read="true" optional="true" write="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="endTime">
+						<description>End time</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="description">
+						<description>Description</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="dayName">
+						<description>Day name</description>
+						<persistence type="property"/>
+						<modifiers/>
+					</attribute>
+					<attribute qualifier="media" type="MediaCollection">
+						<persistence type="property" />
+						<description>tour Media</description>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+				</attributes>	
+			</itemtype>
+			
+			<itemtype code="SpaInfo" autocreate="true" generate="true" extends="GenericItem" 
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.SpaInfo">
+				<description>Spa Info for spa and wellness</description>
+				<deployment table="spainfo" typecode="23063"/>
+				<attributes>
+					<attribute type="java.lang.String" qualifier="name">
+						<description>Service name</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="description">
+						<description>Service description</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="benefit">
+						<description>how to benefit</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="recommended">
+						<description>Recommended for</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="duration">
+						<description>Duration</description>
+						<modifiers read="true" write="true" optional="true"/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="TeamMemberDetails" autocreate="true" generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.TeamMemberDetails">
+				<description>Team member details for participant</description>
+				<deployment table="teammemberdetails" typecode="23064"/>
+				<attributes>
+					<attribute type="java.lang.String" qualifier="name">
+						<description>Team member name</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="age">
+						<description>Team member age</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="height">
+						<description>Team member height</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="DistanceUnitMasterType" qualifier="heightUnit">
+						<description>Height unit</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="weight">
+						<description>Team member weight</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="WeightUnit" qualifier="weightUnit">
+						<description>Weight Unit</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="ranking">
+						<description>Team member rank</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="position">
+						<description>Team member position</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="teamMemberDesc">
+						<description>Team member description</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="Participant" autocreate="true" generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.Participant">
+				<description>Participant</description>
+				<deployment table="participant" typecode="23065"/>
+				<attributes>
+					<attribute type="java.lang.String" qualifier="sportsName">
+						<description>SportsName</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="teamName">
+						<description>teamName</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="description">
+						<description>description</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="Country" qualifier="country">
+						<description>Country</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="teamRanking">
+						<description>teamRanking</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute qualifier="flag" type="Media">
+						<persistence type="property" />
+						<description>Flag media</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="ShowInfo" autocreate="true" generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.ShowInfo">
+				<description>Show Info</description>
+				<deployment table="showinfo" typecode="23066"/>
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="languageAvailable">
+						<description>Language available</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute type="Language" qualifier="languageName">
+						<description>Language name</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="performedBy">
+						<description>performedBy</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="name">
+						<description>name</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="description">
+						<description>description</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="AwardInfo" autocreate="true" generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.AwardInfo">
+				<description>Award info</description>
+				<deployment table="awardinfo" typecode="23067"/>
+				<attributes>
+					<attribute type="java.lang.String" qualifier="awardCategory">
+						<description>Award Category</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="awardName">
+						<description>Award Name</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="ActivityCombo">
+			<itemtype code="ActivityComboProduct" autocreate="true"
+				generate="true" extends="BundleTemplate"
+				jaloclass="com.cnk.travelogix.product.activity.masters.core.jalo.ActivityComboProduct">
+				<description>Represents Activity Combo Product</description>
+				<attributes>
+					<attribute qualifier="comboProductType" type="java.lang.String">
+						<persistence type="property" />
+						<description>Combo Product Type</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="comboCompanyProductNameId" type="java.lang.String">
+						<persistence type="property" />
+						<description>Combo Company Product Name Id</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="productNameFinanceControlId" type="java.lang.String">
+						<persistence type="property" />
+						<description>ProductName and FinanceControlId</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="comboDisplayName" type="java.lang.String">
+						<persistence type="property" />
+						<description>Combo DisplayName</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="comboCommonProductNameSubTypeId"
+						type="java.lang.String">
+						<persistence type="property" />
+						<description>Combo Common ProductName SubTypeId</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="comboCompanyProductNameSubTypeId"
+						type="java.lang.String">
+						<persistence type="property" />
+						<description>Combo Company ProductName SubTypeId</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="comboProductNameSubType" type="java.lang.String">
+						<persistence type="property" />
+						<description>Combo ProductName SubType</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="productNameSubTypeFinanceControlId"
+						type="java.lang.String">
+						<persistence type="property" />
+						<description>ProductName SubType FinanceControlId</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="pickOfPoint" type="PickupAndDropOffCollection">
+						<persistence type="property" />
+						<description>Collection 
+						of pickOfPoints</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="dropOffPoint" type="PickupAndDropOffCollection">
+						<persistence type="property" />
+						<description>Collection of dropOffPoint</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="remark" type="java.lang.String">
+						<persistence type="property" />
+						<description>Remark</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="uniqueSellingPoints" type="java.lang.String">
+						<persistence type="property" />
+						<description>Unique SellingPoints</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="sellingTips" type="java.lang.String">
+						<persistence type="property" />
+						<description>SellingTips</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="copiedFromCompanyProductNameId"
+						type="java.lang.String">
+						<persistence type="property" />
+						<description>CopiedFrom Company ProductNameId</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="copiedFromCompanyProductNameSubTypeId"
+						type="java.lang.String">
+						<persistence type="property" />
+						<description>Copied From Company ProductName SubTypeId</description>
+						<modifiers optional="true" />
+					</attribute>
+
+					<attribute qualifier="interest" type="Interest">
+						<persistence type="property" />
+						<description>Interest</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="highlights" type="java.lang.String">
+						<persistence type="property" />
+						<description>Highlights</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="activityComboMedia" type="MediaCollection">
+						<persistence type="property" />
+						<description>ActivityCombo Media</description>
+						<modifiers optional="true" />
+					</attribute>
+					<attribute qualifier="attachedPolicies" type="ActivitiesPolicyCollection">
+						<persistence type="property" />
+						<description>Attached Policies</description>
+						<modifiers optional="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

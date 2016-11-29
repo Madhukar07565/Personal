@@ -1,0 +1,24 @@
+# Macros / Replacement Parameter definitions
+$productCatalog=EZ-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$classCatalogVersion=catalogversion(catalog(id[default='EZ-IN-CS']),version[default='1.0'])[unique=true,default='EZ-IN-CS:1.0']
+$classSystemVersion=systemVersion(catalog(id[default='EZ-IN-CS']),version[default='1.0'])[unique=true]
+$class=classificationClass(ClassificationClass.code,$classCatalogVersion)[unique=true]
+$supercategories=source(code, $classCatalogVersion)[unique=true]
+$categories=target(code, $catalogVersion)[unique=true]
+$attribute=classificationAttribute(code,$classSystemVersion)[unique=true]
+$unit=unit(code,$classSystemVersion)
+
+
+INSERT_UPDATE ClassificationClass;$classCatalogVersion;code[unique=true];allowedPrincipals(uid)[default='customergroup'];;;;;
+;;General-Activity;;;;;;
+
+
+INSERT_UPDATE ClassAttributeAssignment;$class;$attribute;position;$unit;attributeType(code[default=string]);multiValued[default=false];range[default=false];localized[default=true]
+;General-Activity;History-General-Activity;13;;;;;
+;General-Activity;YearBuilt-General-Activity;14;;;;;
+;General-Activity;YearRenovated-General-Activity;15;;;;;
+;General-Activity;Stories-General-Activity;16;;;;;
+;General-Activity;AboutUs-General-Activity;17;;;;;
+;General-Activity;CelebrityComments-General-Activity;18;;;;;
+;General-Activity;AwardsReceived-General-Activity;19;;;;;

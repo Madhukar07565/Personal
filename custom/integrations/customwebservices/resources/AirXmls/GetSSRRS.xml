@@ -1,0 +1,58 @@
+<AirInterfaceRS xmlns="http://www.coxandkings.com/integ/suppl/airinterface" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+   <ResponseHeader xmlns="http://www.coxandkings.com/integ/suppl/air">
+      <Status xmlns="http://www.coxandkings.com/integ/suppl/common">SUCCESS</Status>
+      <UserID xmlns="http://www.coxandkings.com/integ/suppl/common">eehhhee</UserID>
+      <SessionID xmlns="http://www.coxandkings.com/integ/suppl/common">12hghgh3</SessionID>
+      <TransactionID xmlns="http://www.coxandkings.com/integ/suppl/common">1hghg2345</TransactionID>
+   </ResponseHeader>
+   <ResponseBody>
+   
+      <OTA_AirGetSSRSWrapper xmlns="http://www.coxandkings.com/integ/suppl/air">
+         <SupplierID>AIRARABIA</SupplierID>
+         <Sequence>1</Sequence>
+         
+		  <ns0:OTA_AirGetSSRS Version="2006" TransactionIdentifier="TID$14665931258624478128FF920981" xmlns:ns0="http://www.opentravel.org/OTA/2003/05">
+         <ns0:AirItinerary>
+            <ns0:OriginDestinationOptions>
+               <ns0:OriginDestinationOption>
+                  <ns0:FlightSegment FlightNumber="G9406" DepartureDateTime="2016-08-20T23:45:00" ArrivalDateTime="2016-08-21T04:15:00" RPH="2005386">
+                     <ns0:DepartureAirport LocationCode="SHJ"/>
+                     <ns0:ArrivalAirport LocationCode="BOM" Terminal="TerminalX"/>
+                  </ns0:FlightSegment>
+               </ns0:OriginDestinationOption>
+            </ns0:OriginDestinationOptions>
+         </ns0:AirItinerary>
+         <ns0:TravelerInfo>
+            <ns0:MealRequests>
+               <ns0:MealDetails>
+                  <ns0:mealCode>BLBF</ns0:mealCode>
+                  <ns0:mealDescription>Blini</ns0:mealDescription>
+                  <ns0:mealCharge>12</ns0:mealCharge>
+                  <ns0:mealName>Blini</ns0:mealName>
+                  <ns0:availableMeals>300</ns0:availableMeals>
+                  <ns0:soldMeals>0</ns0:soldMeals>
+                  <ns0:allocatedMeals>300</ns0:allocatedMeals>
+                  <ns0:mealImageLink>http://reservations.airarabia.com/GA/meal_162.jpg</ns0:mealImageLink>
+                  <ns0:mealCategoryCode>Breakfast</ns0:mealCategoryCode>
+                  <ns0:FlightRef>2005386</ns0:FlightRef>
+               </ns0:MealDetails>
+              
+            </ns0:MealRequests>
+            <ns0:BaggageRequests>
+               <ns0:BaggageDetails>
+                  <ns0:baggageCode>30</ns0:baggageCode>
+                  <ns0:baggageDescription>30</ns0:baggageDescription>
+                  <ns0:baggageCharge>0</ns0:baggageCharge>
+                  <ns0:currencyCode>AED</ns0:currencyCode>
+                  <ns0:FlightRef>G9$SHJ/BOM$2005386$20160820234500$20160821041500</ns0:FlightRef>
+               </ns0:BaggageDetails>
+               
+            </ns0:BaggageRequests>
+         </ns0:TravelerInfo>
+      </ns0:OTA_AirGetSSRS>
+		 
+		 
+		 
+      </OTA_AirGetSSRSWrapper>
+   </ResponseBody>
+</AirInterfaceRS>

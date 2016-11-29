@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2016 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+
+  
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+<collectiontypes>
+		<collectiontype code="KeyValuePairs" elementtype="KeyValueMap"
+			autocreate="true" type="list" />
+		<collectiontype code="PaymentGatewayDetailsCollection" elementtype="PaymentGatewayDetail"
+			autocreate="true" type="list" />
+</collectiontypes>			
+			
+<enumtypes>
+		<enumtype code="RMSFraudCheckUpdateStatusEnum" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="Approved" />
+			<value code="Review" />
+			<value code="Rejected" />
+			<value code="Ignored" />
+			<value code="Fraud" />
+			<value code="Chargeback" />
+		</enumtype>
+		<enumtype code="PaymentServiceResponseDecisionEnum" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="ACCEPT" />
+			<value code="FRAUD" />
+			<value code="REVIEW" />
+			<value code="CANCELED" />
+		</enumtype>
+</enumtypes>
+<relations>
+<relation code="PaymentGatewayMapping2PaymentGatewayDetail"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="PaymentGatewayMapping" qualifier="paymentGatewayMapping"
+				cardinality="one">
+			</sourceElement>
+			<targetElement type="PaymentGatewayDetail" qualifier="paymentGatewayDetailList"
+				cardinality="many" collectiontype="list">
+			</targetElement>
+		</relation>
+<!-- <relation code="PaymentGatewayDetail2KeyValueMap"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="PaymentGatewayDetail" qualifier="paymentGatewayDetail"
+				cardinality="one">
+			</sourceElement>
+			<targetElement type="KeyValueMap" qualifier="keyValueMapList"
+				cardinality="many" collectiontype="list">
+			</targetElement> 
+</relation>-->
+</relations>
+			
+			
+			
+	 
+   	<itemtypes>
+   	<itemtype code="PaymentGatewayMapping" generate="false" extends="GenericItem">
+            <deployment table="PaymentGatewayMappings" typecode="31005"/>
+            <attributes>
+                <attribute  qualifier="pgName" type="java.lang.String" >
+                    <modifiers read="true" write="true" search="true" optional="true"/>
+                    <persistence type="property"/>
+                </attribute>
+               <!--  <attribute  qualifier="pgDetails" type="PaymentGatewayDetailsCollection">
+                    <modifiers read="true" write="true" search="true" optional="true"/>
+                    <persistence type="property"/>
+                </attribute> -->
+                <attribute  qualifier="pgReqTempID" type="java.lang.String">
+                    <modifiers read="true" write="true" search="true" optional="true"/>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute  qualifier="pgResTempID" type="java.lang.String">
+                    <modifiers read="true" write="true" search="true" optional="true"/>
+                    <persistence type="property"/>
+                </attribute>
+                </attributes>
+                </itemtype>
+   	
+   <!--  <itemtype code="PaymentGatewayMapping" autocreate="false" generate="false">
+   	<description>for hybris user value mapping to payment gateway</description>
+   	<deployment table="paymentGatewayMapping" typecode="31005" />
+<attributes>
+        <attribute type="java.lang.String" qualifier="paymentGatewayName" generate="false">
+        <modifiers read="true" write="true" search="true" optional="true"/>
+            <persistence type="property"/>            
+	</attribute>
+	<attribute type="PaymentGatewayDetails" qualifier="paymentGatewayDetails" generate="false">
+            <modifiers read="true" write="true" search="true" optional="true"/>
+            <persistence type="property"/>
+	</attribute>
+	<attribute type="java.lang.String" qualifier="paymentGatewayRequestTemplateID" generate="false">
+        <modifiers read="true" write="true" search="true" optional="true"/>
+            <persistence type="property"/>            
+	</attribute>
+	<attribute type="java.lang.String" qualifier="paymentGatewayResponseTemplateID" generate="false">
+        <modifiers read="true" write="true" search="true" optional="true"/>
+            <persistence type="property"/>            
+	</attribute>
+</attributes>
+</itemtype> -->
+
+<itemtype code="PaymentGatewayDetail" generate="false" extends="GenericItem">
+            <deployment table="PaymentGatewayDetails" typecode="31004"/>
+            <attributes>
+                <attribute  qualifier="paymentGatewayName" type="java.lang.String" >
+                    <modifiers read="true" write="true" search="true" optional="true"/>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute  qualifier="paymentMode" type="KeyValuePairs">
+                    <modifiers read="true" write="true" search="true" optional="true"/>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute  qualifier="cardType" type="KeyValuePairs">
+                    <modifiers read="true" write="true" search="true" optional="true"/>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute  qualifier="currency" type="KeyValuePairs">
+                    <modifiers read="true" write="true" search="true" optional="true"/>
+                    <persistence type="property"/>
+                </attribute>
+                </attributes>
+</itemtype>
+
+
+
+<!-- <itemtype code="PaymentGatewayDetails" autocreate="false" generate="false">	
+	<deployment table="paymentGatewayDetails" typecode="31004" />		
+				<attributes>
+					<attribute qualifier="paymentGatewayName" type="java.lang.String" generate="false">
+						<modifiers read="true" write="true" search="true" optional="false"/>
+						<persistence type="property" />
+				</attribute>				
+				<attribute qualifier="paymentMode" type="KeyValuePairs" generate="false">
+						<modifiers read="true" write="true" search="true" optional="true"/>
+						<persistence type="property" />
+				</attribute>
+				<attribute qualifier="cardType" type="KeyValuePairs" generate="false">
+						<modifiers read="true" write="true" search="true" optional="true"/>
+						<persistence type="property" />
+				</attribute>
+				<attribute qualifier="currency" type="KeyValuePairs" generate="false">
+						<modifiers read="true" write="true" search="true" optional="true"/>
+						<persistence type="property" />
+				</attribute>
+				</attributes>
+	</itemtype>	 -->
+	
+	<itemtype code="KeyValueMap" generate="false" extends="GenericItem">
+            <deployment table="KeyValueMaps" typecode="31006"/>
+            <attributes>
+                <attribute qualifier="paymentGatewayName" type="java.lang.String">
+                    <modifiers read="true" write="true" search="true" optional="true"/>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="key" type="java.lang.String">
+                    <modifiers read="true" write="true" search="true" optional="true"/>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="value" type="java.lang.String">
+                    <modifiers read="true" write="true" search="true" optional="true"/>
+                    <persistence type="property"/>
+                </attribute>
+                </attributes>
+                </itemtype>
+	
+
+<!-- <itemtype code="KeyValueMap" autocreate="false" generate="false">	
+	<deployment table="keyValueMap" typecode="31006" />		
+	<attributes>
+				<attribute qualifier="paymentGatewayName" type="java.lang.String" generate="false">
+						<modifiers read="true" write="true" search="true" optional="false"/>
+						<persistence type="property" />
+				</attribute>
+				<attribute qualifier="key" type="java.lang.String" generate="false">
+						<modifiers read="true" write="true" search="true" unique="true" optional="true"/>
+						<persistence type="property" />
+				</attribute>
+				<attribute qualifier="value" type="java.lang.String" generate="false">
+						<modifiers read="true" write="true" search="true" optional="true"/>
+						<persistence type="property" />
+				</attribute>				
+	</attributes>
+</itemtype>	 -->	
+</itemtypes>
+</items>

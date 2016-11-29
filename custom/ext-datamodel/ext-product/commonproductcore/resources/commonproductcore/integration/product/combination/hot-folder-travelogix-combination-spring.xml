@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration" xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+	<context:annotation-config />
+	<bean id="baseDirectoryTravelogixCombinationProduct" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogix/product/combinationproduct" />
+	</bean>
+
+
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesTravelogixCombinationProduct" directory="#{baseDirectoryTravelogixCombinationProduct}" filename-regex="^(.*)-(\d+)\.csv" comparator="fileOrderComparatorCombinationProduct">
+	<int:poller fixed-rate="100" />
+	</file:inbound-channel-adapter>
+
+	<bean id="fileOrderComparatorCombinationProduct" class="de.hybris.platform.acceleratorservices.dataimport.batch.FileOrderComparator">
+		<property name="prefixPriority">
+			<map>
+				<entry key="combination-product" value="160" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogixCombinationProduct" reply-channel="travelogixCombinationProductBatchFilesProc"
+		directory="#{baseDirectoryTravelogixCombinationProduct}/processing" delete-source-files="true" />
+
+	<int:service-activator input-channel="travelogixCombinationProductBatchFilesProc" output-channel="travelogixCombinationProductBatchFilesHeaderInit"
+		ref="travelogixCombinationProductHeaderSetupTask" method="execute" />
+
+	<bean id="travelogixCombinationProductHeaderSetupTask" class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogixCombinationProduct" />
+	</bean>
+
+	<!-- 2) move the file to processing and setup header, partly site dependent -->
+	<int:service-activator input-channel="travelogixCombinationProductBatchFilesHeaderInit" output-channel="travelogixCombinationProductBatchFilesHeader"
+		ref="headerInitTask" method="execute" />
+
+	<bean id="headerInitTask" class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderInitTask">
+		<property name="sequenceIdParser" ref="batchSequenceIdParser" />
+		<property name="languageParser" ref="batchLanguageParser" />
+		<property name="fallbackLanguage" value="en" />
+	</bean>
+
+	<bean id="batchSequenceIdParser" class="de.hybris.platform.acceleratorservices.dataimport.batch.util.SequenceIdParser">
+		<property name="parser">
+			<bean class="de.hybris.platform.acceleratorservices.util.RegexParser">
+				<property name="regex" value="-(\d+)\.csv" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="travelogixCombinationProductBatchFilesHeader" output-channel="batchFilesTran"
+		ref="travelogixCombinationProductBatchTransformerTask" method="execute" />
+
+	<bean id="travelogixCombinationProductBatchTransformerTask" class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+	<bean id="inventoryDefinitionCruiseDefaultHeader" class="java.lang.String">
+		<constructor-arg>
+			<value># ImpEx for importing data into EZ-IN
+				$productCatalog=EZ-IN
+				$productCatalogName=ezeego1-IN
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+         
+			</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="batchCombinationProdConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="combination-product" p:converter-ref="batchCombinationProdConverter" />
+	<bean id="batchCombinationProdConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{inventoryDefinitionCruiseDefaultHeader}
+				INSERT_UPDATE Product;$catalogVersion;code[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Product'" />
+			</bean>
+		</property>
+	</bean>
+
+<bean id="batchCombinationProductConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="combination-product" p:converter-ref="batchCombinationProductConverter" />
+	<bean id="batchCombinationProductConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{inventoryDefinitionCruiseDefaultHeader}
+				$categories=supercategories(code, catalogVersion(catalog(id),version))[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				INSERT_UPDATE CombinationProduct;$catalogVersion;code[unique=true];comboFailDueToSingleProduct;singleProductCancellation;commonProductID;companyMarket(Market.uid);entity(Principal.uid);$categories
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8}:{1}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'CombinationProduct'" />
+			</bean>
+		</property>
+	</bean>
+		<bean id="batchPointOfSaleConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="combination-product" p:converter-ref="batchPointOfSaleConverter" />
+	<bean id="batchPointOfSaleConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				INSERT_UPDATE PointOfSale;owner(CombinationProduct.code)[unique=true];pointOfSale(code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'PointOfSale'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchProductDefinitionConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="combination-product" p:converter-ref="batchProductDefinitionConverter" />
+	<bean id="batchProductDefinitionConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{inventoryDefinitionCruiseDefaultHeader}
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				INSERT_UPDATE ProductDefinition;attachId[unique=true];category(code,catalogVersion(catalog(id),version))[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator][unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{2};{3}:{1}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'ProductDefinition'" />
+			</bean>
+		</property>
+	</bean>
+	 <bean id="batchAttachedProductConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="combination-product" p:converter-ref="batchAttachedProductConverter" />
+	<bean id="batchAttachedProductConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{inventoryDefinitionCruiseDefaultHeader}
+				INSERT_UPDATE AttachedProduct;owner(ProductDefinition.attachId);include;product(code)[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'AttachedProduct'" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="batchIndividualConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="combination-product" p:converter-ref="batchIndividualConverter" />
+	<bean id="batchIndividualConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				INSERT_UPDATE Individual;owner(CombinationProduct.code)[unique=true];retentionFactor(code);value
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Individual'" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="batchComboConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="combination-product" p:converter-ref="batchComboConverter" />
+	<bean id="batchComboConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				INSERT_UPDATE Combo;owner(CombinationProduct.code)[unique=true];retentionFactor(code);value
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Combo'" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="batchPriceRetentionConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="combination-product" p:converter-ref="batchPriceRetentionConverter" />
+	<bean id="batchPriceRetentionConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				INSERT_UPDATE PriceRetention;owner(CombinationProduct.code)[unique=true];includeStandardCommission;isCombo;comboRetention(Combo.owner(CombinationProduct.code));individualRetentions(Individual.owner(CombinationProduct.code))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'PriceRetention'" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="batchUpdateCombinationProductConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="combination-product" p:converter-ref="atchUpdateCombinationProductConverter" />
+	<bean id="atchUpdateCombinationProductConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				UPDATE CombinationProduct;code[unique=true];productDefinitions(ProductDefinition.attachId);pointOfSale(PointOfSale.owner(CombinationProduct.code));priceRetention(PriceRetention.owner(CombinationProduct.code))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{2};{9};{10};{11}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'CombinationProduct'" />
+			</bean>
+		</property>
+	</bean> 
+	<bean id="batchProductDefinitionUpdateConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="combination-product" p:converter-ref="batchProductDefinitionUpdateConverter" />
+	<bean id="batchProductDefinitionUpdateConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{inventoryDefinitionCruiseDefaultHeader}
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				UPDATE ProductDefinition;attachId[unique=true];attachedProducts(AttachedProduct.owner(ProductDefinition.attachId))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{2};{4}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'ProductDefinition'" />
+			</bean>
+		</property>
+	</bean>
+</beans>	 

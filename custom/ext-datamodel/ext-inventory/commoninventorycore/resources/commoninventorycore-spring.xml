@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+	<!-- Hot Folder Configuration for CNK -->
+
+	<import
+		resource="classpath:/commoninventorycore/integration/air/coupons/hot-folder-travelogix-aircoupons-spring.xml" />
+	<import
+		resource="classpath:/commoninventorycore/integration/inventoryDefinition/acco/hot-folder-inventory-definition-acco-spring.xml" />
+	<import
+		resource="classpath:/commoninventorycore/integration/inventoryDefinition/activity/hot-folder-inventory-definition-activity-spring.xml" />
+	<import
+		resource="classpath:/commoninventorycore/integration/inventoryDefinition/air/hot-folder-travelogix-air-inventory-definitions-pricing-spring.xml" />
+	<import
+		resource="classpath:/commoninventorycore/integration/inventoryDefinition/cruise/hot-folder-inventorydefinition-cruise-spring.xml" />
+	<import
+		resource="classpath:/commoninventorycore/integration/inventoryDefinition/holiday/hot-folder-inventory-definition-holiday-spring.xml" />
+	<import
+		resource="classpath:/commoninventorycore/integration/inventoryDefinition/holiday/hot-folder-travelogix-inventory-definition-common-spring.xml" />
+	<import
+		resource="classpath:/commoninventorycore/integration/air/coupons/hot-folder-travelogix-aircoupons-spring.xml" />
+
+	<bean id="commonInventoryCoreSystemSetup"
+		class="com.cnk.travelogix.common.inventory.core.setup.CommonInventryCoreSystemSetup"
+		parent="abstractCoreSystemSetup" />
+</beans>

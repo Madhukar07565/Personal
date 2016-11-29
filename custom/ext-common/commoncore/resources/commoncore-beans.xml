@@ -1,0 +1,729 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2016 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="beans.xsd">
+	<!-- TRAV-237 START -->
+	<!-- ############################################################################################################## -->
+	<!-- COMMON -->
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntEntity">
+		<property name="code" type="java.lang.String"></property>
+		<property name="name" type="java.lang.String"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntOptionItem" extends="SvcIntEntity">
+		<property name="index" type="java.lang.Integer"></property>
+		<property name="description" type="java.lang.String"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntDistanceOptionItem" extends="SvcIntOptionItem">
+		<property name="distance" type="java.math.BigDecimal"></property>
+		<property name="unit" type="SvcIntOptionItem"></property>
+		<!-- added by aizijie start -->
+		<property name="map" type="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntAccoMap"/>
+		<!-- added by aizijie start -->
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntCategoryItem" extends="SvcIntOptionItem" abstract="true">
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntDefaultCategoryItem">
+		<property name="type" type="java.lang.String"/>
+		<property name="optionList" type="java.util.List&lt;SvcIntOptionItem&gt;"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntAncillaryCategory" extends="SvcIntCategoryItem">
+		<property name="optionList" type="java.util.List&lt;SvcIntAncillaryOptionItem&gt;"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntAncillaryOptionItem" extends="SvcIntOptionItem">
+		<property name="price" type="java.math.BigDecimal"></property>
+		<property name="extension" type="java.util.Map&lt;java.lang.String, java.lang.Object&gt;"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntPersonMatrix">
+		<property name="adultList" type="java.util.List&lt;Integer&gt;">
+			<description>If ages are provided in VO, populate each element with age value. Otherwise populate each with -1.</description>
+		</property>
+		<property name="childList" type="java.util.List&lt;Integer&gt;">
+			<description>If ages are provided in VO, populate each element with age value. Otherwise populate each with -1.</description>
+		</property>
+		<property name="infantList" type="java.util.List&lt;Integer&gt;">
+			<description>If ages are provided in VO, populate each element with age value. Otherwise populate each with -1.</description>
+		</property>
+	</bean>
+	<!-- ############################################################################################################## -->
+	<!-- AIR SEARCH REQUEST -->
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlightGetAvailabilityAndFareRequest">
+		<description>https://jira.itc.sap.com/browse/TRAV-237</description>
+		<property name="itineraryList" type="java.util.List&lt;SvcIntAirRQItinerary&gt;"></property>
+		<property name="travellerMatrix" type="com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntPersonMatrix"></property>
+		<property name="optinalPreference" type="SvcIntAirOptinalPreference"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntAirRQItinerary">
+		<property name="startingFrom" type="java.lang.String">
+			<description>AirLowFareSearchRQ/OriginDestinationInformation/OriginLocationCode</description>
+		</property>
+		<property name="goingTo" type="java.lang.String">
+			<description>AirLowFareSearchRQ/OriginDestinationInformation/DestinationLocationCode</description>
+		</property>
+		<property name="departureDateTime" type="java.util.Date">
+			<description>AirLowFareSearchRQ/OriginDestinationInformation/DepartureDateTime</description>
+		</property>
+		<property name="returnDateTime" type="java.util.Date">
+			<description>AirLowFareSearchRQ/OriginDestinationInformation/ArrivalDateTime</description>
+		</property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntAirOptinalPreference">
+		<property name="codeListOfAirlineCompany" type="java.util.List&lt;String&gt;">
+			<description>Element should be airline company code</description>
+		</property>
+		<property name="codeListOfCabinClass" type="java.util.List&lt;String&gt;">
+			<description>Element should be cabin class code</description>
+		</property>
+		<property name="directFlightOnly" type="java.lang.Boolean"></property>
+		<property name="refundableFlightOnly" type="java.lang.Boolean"></property>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlightBookingRequest">
+		<description>booking request include AirItinerary,TravelerInfo</description>
+		<property name="itineraryList" type="java.util.List&lt;SvcIntBookingItinerary&gt;"/>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntBookingItinerary">
+		<property name="itinerary" type="SvcIntBookingItinerary"></property><!-- include flights -->
+		<property name="travelerList" type="java.util.List&lt;SvcIntAirTraveler&gt;"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntBookingItinerary">
+		<property name="originDestinationOptionList" type="java.util.List&lt;com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntOriginDestinationOption&gt;"></property>
+	</bean>
+
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntAirTraveler">
+		<property name="passengerTypeCode" type="String" />
+		<property name="title" type="String" />
+		<property name="titleName" type="String" />
+		<property name="firstName" type="String" />
+		<property name="middleName" type="String" />
+		<property name="lastName" type="String" />
+		<property name="dateOfBirth" type="java.util.Date" />
+		<property name="mobileNumber" type="String" />
+		<property name="phoneLocationCode" type="String" />
+		<property name="phoneUseType" type="String" />
+		<property name="email" type="String" />
+		<property name="address" type="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntAddress" />
+		<property name="document" type="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntDocument" />
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntAddress">
+		<property name="countryCode" type="String" />
+		<property name="countryName" type="String" />
+		<property name="stateCode" type="String" />
+		<property name="stateName" type="String" />
+		<property name="postalCode" type="String" />
+		<property name="cityIsoCode" type="String"/>
+        <property name="cityName" type="String"/>
+        <property name="addressLine1" type="String"/>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntDocument">
+		<property name="issueAuthority" type="String" /><!--sample: Indian Passport Office -->
+		<property name="issueLocation" type="String" />
+		<property name="docId" type="String" />
+		<property name="docType" type="String" />
+		<property name="docHolderNationality" type="String" />
+		<property name="effectiveDate" type="java.util.Date"/>
+        <property name="expireDate" type="java.util.Date"/>
+        <property name="birthDate" type="java.util.Date"/>
+        <property name="gender" type="String"/>
+        <property name="docHolderName" type="String"/>
+        <!-- sample 
+        	DocIssueAuthority="Indian Passport Office"
+				DocIssueLocation="Mumbai" DocID="G056737" DocType="2"
+				DocHolderNationality="IN" EffectiveDate="2007-08-13+05:30"
+				ExpireDate="2017-08-13+05:30" BirthDate="2013-03-13+05:30"
+				Gender="Male"> -->
+	</bean>
+	<!-- ############################################################################################################## -->
+	<!-- AIR SEARCH RESPONSE -->
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlightGetAvailabilityAndFareResponse">
+		<description>https://jira.itc.sap.com/browse/TRAV-238</description>
+		<property name="tripType" type="com.cnk.travelogix.common.core.enums.TripType"></property>
+		<property name="departDatetime" type="java.util.Date"></property>
+		<property name="arrivalDatetime" type="java.util.Date"></property>
+		<property name="itineraryList" type="java.util.List&lt;com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntAirRSItinerary&gt;"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlightBookingResponse">
+		<description> AirItinerary,PriceInfo,travellerInfo, BookingReferenceID</description>
+		<property name="itineraryList" type="java.util.List&lt;SvcIntBookingItinerary&gt;"/>
+		<property name="priceInfo" type="java.util.List&lt;SvcIntFlightFare&gt;"></property>
+		<property name="travelerList" type="java.util.List&lt;SvcIntAirTraveler&gt;"></property>
+		<property name="bookingIdList" type="java.util.List&lt;BookingId&gt;"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.BookingId">
+		<property name="type" type="String" />
+		<property name="id" type="String" />
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntAirRSItinerary">
+		<property name="originDestinationOptionList" type="java.util.List&lt;com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntOriginDestinationOption&gt;"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntOriginDestinationOption">
+		<property name="startingFromCode" type="java.lang.String" />
+		<property name="goingToCode" type="java.lang.String" />
+		<property name="duration" type="java.time.Duration" />
+		<property name="flightList" type="java.util.List&lt;com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlight&gt;" />
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlight">
+		<property name="flightGeneral" type="SvcIntFlightGeneral"></property>
+		<property name="offerList" type="java.util.List&lt;com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntOptionItem&gt;"></property>
+		<property name="bookingPolicyList" type="java.util.List&lt;com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntOptionItem&gt;"></property>
+		<property name="stopList" type="java.util.List&lt;SvcIntStopGeneral&gt;"></property>
+		<property name="fareList" type="java.util.List&lt;SvcIntFlightFare&gt;"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlightGeneral">
+		<property name="startingFrom" type="java.lang.String"></property>
+		<property name="startingFromCode" type="java.lang.String"></property>
+		<property name="goingTo" type="java.lang.String"></property>
+		<property name="goingToCode" type="java.lang.String"></property>
+		<property name="departureDateTime" type="java.util.Date"></property>
+		<property name="departureAirport" type="java.lang.String"></property>
+		<property name="departureTerminal" type="java.lang.String"></property>
+		<property name="arrivalDateTime" type="java.util.Date"></property>
+		<property name="arrivalAirport" type="java.lang.String"></property>
+		<property name="arrivalTerminal" type="java.lang.String"></property>
+		<property name="duration" type="java.time.Duration"></property>
+		<property name="airlineCompany" type="SvcIntAirlineCompany"></property>
+		<property name="flightNumber" type="java.lang.String"></property>
+		<property name="cabinClassList" type="java.util.List&lt;SvcIntCabinClass&gt;"></property>
+		<property name="availableSeats" type="java.lang.Integer"></property>
+		<property name="aircraftType" type="java.lang.String"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntAirlineCompany" extends="com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntOptionItem">
+		<property name="flightNumber" type="java.lang.String"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntCabinClass" extends="com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntOptionItem">
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlightFare">
+		<property name="fareOptionName" type="java.lang.String"></property>
+		<property name="currency" type="java.util.Currency"></property>
+		<property name="predefinedAncillary" type="SvcIntFlightPredefinedAncillary"></property>
+		<property name="breakup" type="SvcIntFlightFareBreakup"></property>
+		<property name="summary" type="SvcIntFlightFareSummary"></property>
+		<property name="refundPolicy" type="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlightRefundPolicy"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlightPredefinedAncillary">
+		<property name="predefinedBaggageIncluded" type="java.lang.Boolean"></property>
+		<property name="predefinedMealIncluded" type="java.lang.Boolean"></property>
+		<property name="predefinedAncillaryCategoryList" type="java.util.List&lt;com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntAncillaryCategory&gt;"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlightFareBreakup">
+		<property name="baseFare" type="java.math.BigDecimal"></property>
+		<property name="fuelSurcharge" type="java.math.BigDecimal"></property>
+		<property name="jnTax" type="java.math.BigDecimal"></property>
+		<property name="passagerServiceFee" type="java.math.BigDecimal"></property>
+		<property name="serviceTax" type="java.math.BigDecimal"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlightFareSummary">
+		<property name="saveRs" type="java.math.BigDecimal"></property>
+		<property name="pointsToEarn" type="java.lang.Integer"></property>
+		<property name="listPrice" type="java.math.BigDecimal"></property>
+		<property name="webPrice" type="java.math.BigDecimal"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlightRefundPolicy">
+		<property name="refundable" type="java.lang.Boolean"></property>
+		<property name="cancellationUntil" type="java.util.Date"></property>
+		<property name="changeFee" type="java.math.BigDecimal"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntStopGeneral" extends="SvcIntFlightGeneral">
+		<property name="layoverDuration" type="java.time.Duration"></property>
+	</bean>
+
+	<!-- ############################################################################################################## -->
+	<!-- ACCO SEARCH REQUEST -->
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntHotelGetAvailabilityAndPriceRequest">
+		<description>https://jira.itc.sap.com/browse/TRAV-237</description>
+		<property name="base" type="SvcIntHotelBase"></property>
+		<property name="personMatrix" type="com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntPersonMatrix"></property>
+		<property name="optinalPreference" type="SvcIntAccoOptinalPreference"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntHotelBase">
+		<property name="destination" type="java.lang.String"></property>
+		<property name="checkIn" type="java.util.Date"></property>
+		<property name="checkOut" type="java.util.Date"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntAccoOptinalPreference">
+		<property name="priceMin" type="java.math.BigDecimal"></property>
+		<property name="priceMax" type="java.math.BigDecimal"></property>
+		<property name="currencyList" type="java.util.List&lt;java.util.Currency&gt;"></property>
+		<property name="starRatingList" type="java.util.List&lt;java.lang.Integer&gt;"></property>
+		<property name="accommodationTypeList" type="java.util.List&lt;com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntOptionItem&gt;"></property>
+	</bean>
+	<!-- ############################################################################################################## -->
+	<!-- ACCO SEARCH RESPONSE -->
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntHotelGetAvailabilityAndPriceResponse">
+		<property name="accommodationList" type="java.util.List&lt;SvcIntAccommodation&gt;"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntAccommodation">
+		<property name="general" type="SvcIntAccoGeneral"></property>
+		<property name="tripAdvisorInfo" type="SvcIntTripAdvisor"></property>
+		<property name="roomList" type="java.util.List&lt;com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntAccoRoomInfo&gt;"> </property>
+		<property name="facilityList" type="java.util.List&lt;com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntDefaultCategoryItem&gt;"></property>
+		<property name="landmarkList" type="java.util.List&lt;com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntDistanceOptionItem&gt;"></property>
+		<property name="inAndAroundList" type="java.util.List&lt;com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntDistanceOptionItem&gt;"></property>
+		<property name="offerList" type="java.util.List&lt;com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntOptionItem&gt;"></property>
+		<property name="bookingPolicyList" type="java.util.List&lt;com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntOptionItem&gt;"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntAccoGeneral">
+		<property name="name" type="java.lang.String"></property>
+		<property name="brand" type="java.lang.String"></property>
+		<property name="starRating" type="java.lang.Integer"></property>
+		<property name="travellerTypeList" type="java.util.List&lt;com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntOptionItem&gt;"></property>
+		<property name="overview" type="java.lang.String"></property>
+		<property name="address" type="java.lang.String"></property>
+		<property name="countOfRooms" type="java.lang.Integer"></property>
+		<property name="countOfFloors" type="java.lang.Integer"></property>
+		<property name="constraint" type="SvcIntAccoConstraint"></property>
+		<property name="map" type="SvcIntAccoMap"></property>
+		<property name="pictureList" type="java.util.List&lt;String>"/>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntAccoConstraint">
+		<property name="defaultCheckInTime" type="java.util.Date"></property>
+		<property name="defaultCheckOutTime" type="java.util.Date"></property>
+		<property name="freeCancelUntil" type="java.util.Date"></property>
+		<property name="payAtHotel" type="java.lang.Boolean"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntAccoMap">
+		<property name="longitude" type="java.math.BigDecimal"></property>
+		<property name="latitude" type="java.math.BigDecimal"></property>
+		<property name="area" type="com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntOptionItem"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntAccoRoomInfo" extends="com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntEntity">
+		<property name="availableRooms" type="java.lang.Integer"></property>
+		<property name="payAtHotel" type="java.lang.Boolean"></property>
+		<property name="freeCancelUntil" type="java.util.Date"></property>
+		<property name="dateSpecificRoomInfo" type="SvcIntAccoDateSpecificRoomInfo"></property>
+		<property name="tripAdvisor" type="SvcIntTripAdvisor"></property>
+		<property name="roomCategory" type="java.lang.String"></property>
+		<property name="priceCalendar" type="java.util.List&lt;SvcIntPriceCalendar>"></property>
+		<property name="maxOccupancy" type="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntAccoRoomOccupancy"/>
+		<!-- <property name="ancillaryGroupList"> -->
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntAccoRoomOccupancy">
+		 <property name="maxAdultNo" type="java.lang.Integer"></property>
+		 <property name="maxChildrenNo" type="java.lang.Integer"></property>	
+		 <property name="maxInfantNo" type="java.lang.Integer"></property>	
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntAccoDateSpecificRoomInfo">
+		<property name="currency" type="java.util.Currency"></property>
+		<property name="listPrice" type="java.math.BigDecimal"></property>
+		<property name="webPrice" type="java.math.BigDecimal"></property>
+		<property name="ancillaryCategoryList" type="java.util.List&lt;com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntAncillaryCategory&gt;"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntPriceCalendar">
+		<property name="date" type="java.util.Date"/>
+		<property name="availableRooms" type="java.lang.Integer"/>
+		<property name="listPrice" type="java.lang.Double"/>
+		<property name="webPrice" type="java.lang.Double"/>
+		<property name="commission" type="java.lang.Double"/>
+		<property name="markup" type="java.lang.Double"/>
+		<property name="curreny" type="java.util.Currency"></property>	
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntTripAdvisor">
+		<property name="rating" type="java.math.BigDecimal"></property>
+		<property name="reviewList" type="java.util.List&lt;SvcIntTripAdvisorReview&gt;"></property>
+		<property name="popularity" type="SvcIntTripAdvisorPopularity"></property>
+		<property name="expectationList" type="java.util.List&lt;SvcIntTripAdvisorExpectation&gt;"></property>
+		<property name="countOfReviews" type="java.lang.Integer"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntTripAdvisorReview">
+		<property name="creationTime" type="java.util.Date"></property>
+		<property name="author" type="java.lang.String"></property>
+		<property name="title" type="java.lang.String"></property>
+		<property name="comment" type="java.lang.String"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntTripAdvisorPopularity">
+		<property name="topPercent" type="java.math.BigDecimal"></property>
+		<property name="locationName" type="java.lang.String"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.storefront.svcint.dto.acco.SvcIntTripAdvisorExpectation" extends="com.cnk.travelogix.common.core.storefront.svcint.dto.general.SvcIntOptionItem">
+		<property name="rating" type="java.math.BigDecimal"></property>
+	</bean>
+	<!-- TRAV-237 END -->
+
+	<!-- add by Pan Hui for TRAV-150 start -->
+	<bean class="com.cnk.travelogix.common.core.cart.data.TravellerData">
+		<property name="title" type="String" />
+		<property name="titleName" type="String" />
+		<property name="firstName" type="String" />
+		<property name="middleName" type="String" />
+		<property name="lastName" type="String" />
+		<property name="dateOfBirth" type="java.util.Date" />
+		<property name="passportNumber" type="String" />
+		<property name="passportExpDate" type="java.util.Date" />
+		<property name="issueCountry" type="de.hybris.platform.commercefacades.user.data.CountryData" />
+		<property name="placeOfIssue" type="String" />
+		<property name="nationality" type="String" />
+		<property name="mobileNumber" type="String" />
+		<property name="countryCode" type="String" />
+		<property name="email" type="String" />
+        <property name="address" type="de.hybris.platform.commercefacades.user.data.AddressData" />
+        <property name="visaInfos" type="java.util.List&lt;com.cnk.travelogix.common.core.cart.data.VisaInfoData&gt;" />
+        <property name="photo" type="de.hybris.platform.commercefacades.product.data.ImageData" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.common.core.cart.data.FlightTravellerData"
+		extends="com.cnk.travelogix.common.core.cart.data.TravellerData">
+		<property name="freflyerSelAirline" type="String" />
+		<property name="freflyernumber" type="String" />
+		<property name="mealprefer" type="String" />
+		<property name="seatprefer" type="String" />
+		<property name="specialrequest" type="String" />
+	</bean>
+
+	<bean
+		class="com.cnk.travelogix.common.core.cart.data.AccommodationTravellerData"
+		extends="com.cnk.travelogix.common.core.cart.data.TravellerData">
+		<property name="nonPrimaryTravellerList"
+			type="java.util.List&lt;com.cnk.travelogix.common.core.cart.data.AccommodationNonPrimaryTravellerData>" />
+		<property name="specialrequest" type="String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.common.core.cart.data.AccommodationNonPrimaryTravellerData">
+		<property name="title" type="String" />
+		<property name="firstName" type="String" />
+		<property name="middleName" type="String" />
+		<property name="lastName" type="String" />
+		<property name="dateOfBirth" type="java.util.Date" />
+	</bean>
+
+	<bean class="de.hybris.platform.commercefacades.order.data.OrderEntryData">
+		<property name="productTypeEnum" type="com.cnk.travelogix.common.core.enums.ProductTypeEnum" />
+		<property name="orderProductJsonString" type="String" />
+		<property name="orderProductInfo" type="com.cnk.travelogix.common.core.cart.data.OrderProductInfoData" />
+		<!-- <property name="orderHotelDetailInfo" type="com.cnk.travelogix.common.core.cart.data.OrderHotelDetailInfoData" />
+		<property name="orderFlightDetailInfo" type="com.cnk.travelogix.common.core.cart.data.OrderFlightDetailInfoData"/> -->
+		<property name="travellerList"
+			type="java.util.List&lt;com.cnk.travelogix.common.core.cart.data.TravellerData>" />
+		<property name="orderEntryType" type="com.cnk.travelogix.common.core.enums.OrderEntryTypeEnum" />
+		<property name="orderEntryInfoData" type="com.cnk.travelogix.common.core.cart.data.OrderEntryInfoData" />
+		<property name="paymentSummaryInfoData" type="com.cnk.travelogix.common.core.cart.data.PaymentSummaryInfoData" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.OrderEntryInfoData"></bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.HotelOrderEntryInfoData" extends="com.cnk.travelogix.common.core.cart.data.OrderEntryInfoData">
+		<property name="groupId" type="String" />
+		<property name="hotelDetailInfoData" type="com.cnk.travelogix.common.core.cart.data.OrderHotelDetailInfoData" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.RoomOrderEntryInfoData" extends="com.cnk.travelogix.common.core.cart.data.OrderEntryInfoData">
+		<property name="roomDetailInfoData" type="com.cnk.travelogix.common.core.cart.data.OrderRoomDetailInfoData" />
+		<property name="paymentPlan" type="com.cnk.travelogix.common.core.payment.data.PaymentPlanData"></property>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.FlightGroupOrderEntryInfoData" extends="com.cnk.travelogix.common.core.cart.data.OrderEntryInfoData">
+		<property name="groupId" type="String" />
+		<property name="flightGroupDetailInfoData" type="com.cnk.travelogix.common.core.cart.data.OrderFlightGroupDetailInfoData" />
+		<property name="paymentPlan" type="com.cnk.travelogix.common.core.payment.data.PaymentPlanData"></property>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.FlightOrderEntryInfoData" extends="com.cnk.travelogix.common.core.cart.data.OrderEntryInfoData">
+		<property name="sequence" type="String" />
+		<property name="flightDetailInfoData" type="com.cnk.travelogix.common.core.cart.data.OrderFlightDetailInfoData" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.TicketOrderEntryInfoData" extends="com.cnk.travelogix.common.core.cart.data.OrderEntryInfoData">
+		<property name="ticketDetailInfoData" type="com.cnk.travelogix.common.core.cart.data.OrderTicketInfoData" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.TravellerOrderEntryInfoData" extends="com.cnk.travelogix.common.core.cart.data.OrderEntryInfoData">
+		<property name="travellerData" type="com.cnk.travelogix.common.core.cart.data.TravellerData" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.OrderProductInfoData">
+		<property name="priceInfo" type="com.cnk.travelogix.common.core.cart.data.PriceInfoData" />
+		<property name="groupId" type="String" />
+		<property name="supplier" type="com.cnk.travelogix.common.core.cart.data.SupplierData" />
+		<property name="status" type="de.hybris.platform.core.enums.OrderStatus" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.OrderTicketInfoData" extends="com.cnk.travelogix.common.core.cart.data.OrderProductInfoData">
+		<property name="commonFlightInfoData" type="com.cnk.travelogix.common.core.cart.data.CommonFlightInfoData" />
+		<property name="passengerType" type="com.cnk.travelogix.common.core.enums.PassengerType" />
+		<property name="ticketIndex" type="java.lang.Integer" />
+		<property name="orderFlightDetailInfoData" type="com.cnk.travelogix.common.core.cart.data.OrderFlightDetailInfoData" />
+		<property name="flightTraveler" type="com.cnk.travelogix.common.core.cart.data.FlightTravellerData" />
+		<property name="supplier" type="com.cnk.travelogix.common.core.cart.data.SupplierData" />
+		<property name="pnr" type="String" />
+	</bean>	
+	<bean class="com.cnk.travelogix.common.core.cart.data.CommonFlightInfoData">
+		<property name="flightNumber" type="String" />
+		<property name="cabinClass" type="String" />
+		<property name="departureTime" type="java.util.Date" />
+		<property name="arrivalTime" type="java.util.Date" />
+		<property name="fromCity" type="String" />
+		<property name="fromAirport" type="String" />
+		<property name="fromTerminal" type="String" />
+		<property name="toCity" type="String" />
+		<property name="toAirport" type="String" />
+		<property name="toTerminal" type="String" />
+		<property name="duration" type="String" />
+		<property name="airlineIATAData" type="com.cnk.travelogix.common.core.cart.data.AirlineIATAData" />
+		<property name="priceInfo" type="com.cnk.travelogix.common.core.cart.data.PriceInfoData" />
+		<property name="numberOfStops" type="String" />
+		<property name="commonFlightDetailList"
+			type="java.util.List&lt;com.cnk.travelogix.common.core.cart.data.CommonFlightDetailInfoData>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.common.core.cart.data.CommonFlightDetailInfoData">
+		<property name="flightNumber" type="String" />
+		<property name="cabinClass" type="String" />
+		<property name="departureTime" type="java.util.Date" />
+		<property name="arrivalTime" type="java.util.Date" />
+		<property name="fromCity" type="String" />
+		<property name="fromAirport" type="String" />
+		<property name="fromTerminal" type="String" />
+		<property name="toCity" type="String" />
+		<property name="toAirport" type="String" />
+		<property name="toTerminal" type="String" />
+		<property name="duration" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.OrderFlightGroupDetailInfoData">
+		<property name="flightPathList" type="java.util.List&lt;String>" />
+		<property name="departureTime" type="java.util.Date" />
+		<property name="arrivalTime" type="java.util.Date" />
+		<property name="numberOfAdult" type="String" />
+		<property name="numberOfChild" type="String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.common.core.cart.data.OrderFlightDetailInfoData">
+		<property name="commonFlightInfoData" type="com.cnk.travelogix.common.core.cart.data.CommonFlightInfoData" />
+		<property name="sequence" type="String" />
+		<property name="groupId" type="String" />
+		<property name="journeyType" type="String" />
+		<property name="priceInfo" type="com.cnk.travelogix.common.core.cart.data.PriceInfoData" />
+		<property name="orderTicketList"
+			type="java.util.List&lt;com.cnk.travelogix.common.core.cart.data.OrderTicketInfoData>" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.OrderHotelDetailInfoData" extends="com.cnk.travelogix.common.core.cart.data.OrderProductInfoData">
+		<property name="hotelId" type="String" />
+		<property name="hotelPictureUrl" type="String" />
+		<property name="hotelName" type="String" />
+		<property name="hotelRate" type="String" />
+		<property name="hotelCityName" type="String" />
+		<property name="hotelCountryName" type="String" />
+		<property name="hotelAddress" type="String" />
+		<property name="timeLimitExpDate" type="java.util.Date" />
+		<property name="reservationDay" type="String" />
+		<property name="numberOfNight" type="String" />
+		<property name="numberOfRooms" type="String" />
+		<property name="numberOfAdult" type="String" />
+		<property name="numberOfChild" type="String" />
+		<property name="hotelCheckinDate" type="java.util.Date" />
+		<property name="hotelCheckoutDate" type="java.util.Date" />
+		<property name="insuranceInfo" type="com.cnk.travelogix.common.core.cart.data.InsuranceInfoData" />
+		<property name="roomDetailInfoList" type="java.util.List&lt;com.cnk.travelogix.common.core.cart.data.OrderRoomDetailInfoData&gt;" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.OrderRoomDetailInfoData" extends="com.cnk.travelogix.common.core.cart.data.OrderProductInfoData">
+		<property name="hotelTraveler" type="com.cnk.travelogix.common.core.cart.data.AccommodationTravellerData" />
+		<property name="hotelId" type="String" />
+		<property name="roomId" type="String" />
+		<property name="roomType" type="com.cnk.travelogix.common.core.enums.CnkRoomType" />
+		<property name="roomName" type="String" />
+		<property name="timeLimit" type="java.lang.Boolean" />
+		<property name="agreeTerms" type="java.lang.Boolean" />
+		<property name="groupId" type="String" />
+		<property name="description" type="String" />
+		<property name="roomBookingDate" type="java.util.Date" />
+		<property name="roomCheckinDate" type="java.util.Date" />
+		<property name="roomCheckoutDate" type="java.util.Date" />
+		<property name="numberOfAdult" type="String" />
+		<property name="numberOfChild" type="String" />
+		<property name="numberOfNight" type="String" />
+		<property name="roomIndex" type="java.lang.Integer" />
+		<property name="roomAncillaryList" type="java.util.List&lt;com.cnk.travelogix.common.core.cart.data.RoomAncillaryData&gt;" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.InsuranceInfoData">
+		<property name="code" type="String" />
+		<property name="currency" type="de.hybris.platform.commercefacades.storesession.data.CurrencyData" />
+		<property name="costPrice" type="java.lang.Double" />
+		<property name="totalPrice" type="java.lang.Double" />
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.cart.data.RoomAncillaryData">
+		<property name="ancillaryType" type="com.cnk.travelogix.common.core.enums.HotelAncillaryType" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.WifiSubAncillaryData" extends="com.cnk.travelogix.common.core.cart.data.RoomAncillaryData">
+		<property name="duration" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.CarParkingSubAncillaryData" extends="com.cnk.travelogix.common.core.cart.data.RoomAncillaryData">
+		<property name="vehicleType" type="com.cnk.travelogix.common.core.enums.HotelVehicleType" />
+		<property name="startDate" type="java.util.Date" />
+		<property name="endDate" type="java.util.Date" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.PetSubAncillaryData" extends="com.cnk.travelogix.common.core.cart.data.RoomAncillaryData">
+		<property name="numberOfPets" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.LateCheckOutSubAncillaryData" extends="com.cnk.travelogix.common.core.cart.data.RoomAncillaryData">
+		<property name="checkoutTime" type="java.util.Date" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.EarlyCheckInSubAncillaryData" extends="com.cnk.travelogix.common.core.cart.data.RoomAncillaryData">
+		<property name="checkInTime" type="java.util.Date" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.BreakfastSubAncillaryData" extends="com.cnk.travelogix.common.core.cart.data.RoomAncillaryData">
+		<property name="numberOfAdult" type="String" />
+		<property name="numberOfChild" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.RestaurantSubAncillaryData" extends="com.cnk.travelogix.common.core.cart.data.RoomAncillaryData">
+		<property name="mealType" type="com.cnk.travelogix.common.core.enums.HotelMealType" />
+		<property name="numberOfAdult" type="String" />
+		<property name="numberOfChild" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.SpaSubAncillaryData" extends="com.cnk.travelogix.common.core.cart.data.RoomAncillaryData">
+		<property name="serviceType" type="com.cnk.travelogix.common.core.enums.HotelSpaServiceType" />
+		<property name="numberOfAdult" type="String" />
+		<property name="numberOfChild" type="String" />
+		<property name="duration" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.TransferSubAncillaryData" extends="com.cnk.travelogix.common.core.cart.data.RoomAncillaryData">
+		<property name="transferType" type="com.cnk.travelogix.common.core.enums.HotelTransferType" />
+		<property name="vehicleType" type="com.cnk.travelogix.common.core.enums.HotelVehicleType" />
+		<property name="numberOfAdult" type="String" />
+		<property name="numberOfChild" type="String" />
+		<property name="issueDate" type="java.util.Date" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.ActivitySubAncillaryData" extends="com.cnk.travelogix.common.core.cart.data.RoomAncillaryData">
+		<property name="activityName" type="String" />
+		<property name="vehicleType" type="com.cnk.travelogix.common.core.enums.HotelVehicleType" />
+		<property name="numberOfAdult" type="String" />
+		<property name="numberOfChild" type="String" />
+		<property name="issueDate" type="java.util.Date" />
+		<property name="duration" type="String" />
+		<property name="startDate" type="java.util.Date" />
+		<property name="endDate" type="java.util.Date" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.EquipmentSubAncillaryData" extends="com.cnk.travelogix.common.core.cart.data.RoomAncillaryData">
+		<property name="equipmentName" type="String" />
+		<property name="vehicleType" type="com.cnk.travelogix.common.core.enums.HotelVehicleType" />
+		<property name="duration" type="String" />
+		<property name="startDate" type="java.util.Date" />
+		<property name="endDate" type="java.util.Date" />
+		<property name="quantity" type="java.lang.Integer" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.PriceInfoData">
+		<property name="currency" type="de.hybris.platform.commercefacades.storesession.data.CurrencyData" />
+		<property name="costPrice" type="java.lang.double" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.AirlineIATAData">
+		<property name="airlineName" type="String" />
+		<property name="accountingCode" type="String" />
+		<property name="airlinePrefix" type="String" />
+	</bean>
+	<!-- add by Pan Hui for TRAV-150 end -->
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.VisaInfoData">
+	<property name="cid" type="String" />
+        <property name="country" type="String" />
+        <property name="validTill" type="java.util.Date" />
+    </bean>
+
+    
+     <bean class="com.cnk.travelogix.common.core.cart.data.CityData">
+        <property name="cityIsoCode" type="String"/>
+        <property name="cityName" type="String"/>
+     </bean>
+     
+
+    <bean class="de.hybris.platform.commercefacades.user.data.AddressData">
+        <property name="city" type="com.cnk.travelogix.common.core.cart.data.CityData"/>
+    </bean>
+    
+    <bean class="de.hybris.platform.commercefacades.user.data.CustomerData" extends="de.hybris.platform.commercefacades.user.data.PrincipalData">
+		<property name="subscribe" type="java.lang.Boolean" />
+		<property name="defaultWebSite" type="de.hybris.platform.commercefacades.user.data.CountryData" />
+		<property name="emails" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="mobiles" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="defaultCountryCode" type="java.lang.String" />
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.user.data.RegisterData">
+		<property name="tAndC" type="java.lang.Boolean" />
+		<property name="subscribe" type="java.lang.Boolean" />
+	</bean>	
+	
+	<bean class="de.hybris.platform.commercefacades.user.data.CountryData">
+		<property name="countryCode" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.cart.data.SupplierData">
+		<property name="name" type="String" />
+		<property name="shortName" type="String" />
+		<property name="code" type="String" />
+		<property name="supplierType" type="com.cnk.travelogix.supplier.masters.core.enums.SupplierType" />
+		<property name="parentCompany" type="String" />
+		<property name="address" type="de.hybris.platform.commercefacades.user.data.AddressData" />
+	</bean>
+
+	<!-- payment relative beans start-->
+	<bean class="com.cnk.travelogix.common.core.payment.data.PaymentInfoForm">
+		<property name="modeOfPayment" type="String" />
+		<property name="amountToPay" type="String" />
+		<property name="cod" type="com.cnk.travelogix.common.core.payment.data.CodPaymentInfoData"></property>
+		<property name="creditcard" type="de.hybris.platform.commercefacades.order.data.CCPaymentInfoData"></property>
+		<property name="emi" type="com.cnk.travelogix.common.core.payment.data.EmiPaymentInfoData"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.payment.data.CodPaymentInfoData">
+		<property name="street" type="String" />
+		<property name="city" type="String" />
+		<property name="state" type="String" />
+		<property name="country" type="String" />
+		<property name="postalcode" type="String" />
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.payment.data.EmiPaymentInfoData" extends="de.hybris.platform.commercefacades.order.data.CCPaymentInfoData">
+		<property name="bankName" type="String"></property>
+		<property name="emiOption" type="String"></property>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.core.payment.data.PaymentFeeData">
+		<property name="pgEnablerCost" type="java.lang.Double"></property>
+		<property name="pgEnablerFeeType" type="String"></property>
+		<property name="pgAcquirerCost" type="java.lang.Double"></property>
+		<property name="pgAcquirerFeeType" type="String"></property>
+		<property name="pgClientCost" type="java.lang.Double"></property>
+	</bean>
+
+	<bean class="com.cnk.travelogix.common.core.payment.data.PaymentPlanData">
+		<property name="paymentPlanEntryDataList" type="java.util.List&lt;com.cnk.travelogix.common.core.payment.data.PaymentPlanEntryData&gt;"></property>
+		<property name="shared" type="java.lang.Boolean" />
+		<property name="price" type="com.cnk.travelogix.common.core.cart.data.PriceInfoData" />
+		<property name="type" type="com.cnk.travelogix.common.core.enums.PaymentPlanType" />
+		<property name="paymentStatus" type="de.hybris.platform.core.enums.PaymentStatus" />
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.payment.data.PaymentPlanEntryData">
+		<property name="amount" type="java.lang.Double"></property>
+		<property name="dueDate" type="java.util.Date"></property>
+		<property name="paymentStatus" type="de.hybris.platform.core.enums.PaymentStatus"></property>
+		<property name="payAmount" type="java.lang.Double"></property>
+		<property name="payDate" type="java.util.Date"></property>
+	</bean>
+
+	<bean class="de.hybris.platform.commercefacades.order.data.AbstractOrderData">
+		<property name="paymentSummaryInfoData" type="com.cnk.travelogix.common.core.cart.data.PaymentSummaryInfoData"/>
+		<property name="isTimeLimitBooking" type="java.lang.Boolean" />	
+	</bean>
+	<bean class="com.cnk.travelogix.common.core.cart.data.PaymentSummaryInfoData">
+		<property name="amountPaid" type="de.hybris.platform.commercefacades.product.data.PriceData"/>
+		<property name="pendingBalanceForFull" type="de.hybris.platform.commercefacades.product.data.PriceData"/>
+		<property name="pendingBalanceForPart" type="de.hybris.platform.commercefacades.product.data.PriceData"/>
+		<property name="payOnConfirmation" type="de.hybris.platform.commercefacades.product.data.PriceData"/>
+		<property name="payAtLocation" type="de.hybris.platform.commercefacades.product.data.PriceData"/>
+	</bean>
+</beans>

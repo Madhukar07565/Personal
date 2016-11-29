@@ -1,0 +1,10 @@
+INSERT_UPDATE TravellerType;name;code[unique=true]
+;Family with children;familyWithChildren
+;Family with teens;familyWithTeens
+;Large family;largeFamily
+;Shopper;shopper
+;Honeymooner;honeymooner
+;First time abroad;firstTimeAbroad
+;Budget traveller;budgetTraveller
+;Adventure traveller;adventureTraveller
+;Luxury traveller;luxuryTraveller

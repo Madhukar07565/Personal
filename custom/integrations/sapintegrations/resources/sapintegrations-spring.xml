@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- The hybris platform provides one single Spring application context 
+		for beans located at the jalo layer. Each extension can add beans to this 
+		context by specifying them at this configuration file. You can use and/or 
+		redefine beans defined at configuration files of other extensions as well 
+		as adding new one. If you want to locate this file at a different location 
+		or want to use several files for better, structuring, please use the '<yourextension>.application-context' 
+		property at your project.properties file. There you can specify a comma separated 
+		list of files where first is tried to find a file per classpath and then 
+		per file system. If you want to configure beans for your web module please 
+		have a look at your web/webroot/WEB-INF/<extname>-web-spring.xml. -->
+
+	<!-- Example how to override a manager -->
+	<!-- <bean id="core.productManager" class="com.cnk.travelogix.jalo.SapintegrationsProductManager" 
+		init-method="init" destroy-method="destroy" /> -->
+
+
+	<!-- Example how to configure the class to use for jalo session creation -->
+	<!-- <bean id="jalosession" class="de.hybris.platform.jalo.JaloSessionFactory"> 
+		<property name="targetClassName" value="com.cnk.travelogix.jalo.SapintegrationsJaloSession"/> 
+		</bean> -->
+
+
+	<!-- Example how to override an item -->
+	<!-- <bean id="de.hybris.platform.jalo.product.Product" class="com.cnk.travelogix.jalo.SapintegrationsProduct" 
+		scope="prototype" /> -->
+
+	<!-- Example how to register and use an AOP aspect Also see http://static.springframework.org/spring/docs/2.5.x/reference/aop.html -->
+
+	<!-- <bean id="sapintegrationsProfBean" class="com.cnk.travelogix.aop.SapintegrationsProfilingAspect"/> 
+		<aop:config proxy-target-class="true"> <aop:aspect id="sapintegrationsProfAspect" 
+		ref="sapintegrationsProfBean" > <aop:pointcut id="profiledMethods" expression="execution(* 
+		getModificationTime(..))" /> <aop:around pointcut-ref="profiledMethods" method="profile" 
+		/> </aop:aspect> </aop:config> -->
+
+
+	<!-- some other examples of a pointcut that matches everything: <aop:pointcut 
+		id="profiledMethods" expression="bean(de.hybris.platform.jalo.user.Customer) 
+		&amp;&amp; !execution(* getPK(..))" /> <aop:pointcut id="profiledMethods" 
+		expression="execution(* *(..))" /> -->
+	<import resource="sapintegrations-facades-spring.xml"/>		
+	<bean id="queryExecutor" name="queryExecutor"
+		class="com.cnk.travelogix.sapintegrations.adaptor.impl.SAPRequestExecutor"
+		scope="tenant">
+		<property name="serviceMappings">
+			<map>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.AccountDocumentRequestProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.accountdocpost.url')}" />
+						<property name="marshaller" ref="accdocPostMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="accdocPostMarshallUnmarshaller" />
+						<property name="messageSender">
+						    <bean class="org.springframework.ws.transport.http.HttpComponentsMessageSender">
+						        <property name="credentials">
+						            <bean class="org.apache.http.auth.UsernamePasswordCredentials">
+						                <constructor-arg value="#{configurationService.configuration.getProperty('sapws.ecc.username')}:#{configurationService.configuration.getProperty('sapws.ecc.password')}"/>
+						            </bean>
+						        </property>
+						    </bean>
+					   </property>
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.SOCreateChangeRequestProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.crm.so.createchange.url')}" />
+						<property name="marshaller" ref="salesOrderCreateChangeMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="salesOrderCreateChangeMarshallUnmarshaller" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.InvoiceCreateProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.invoiceCreate.url')}" />
+						<property name="marshaller" ref="invoiceCreateMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="invoiceCreateMarshallUnmarshaller" />
+						<property name="messageSender">
+						    <bean class="org.springframework.ws.transport.http.HttpComponentsMessageSender">
+						        <property name="credentials">
+						            <bean class="org.apache.http.auth.UsernamePasswordCredentials">
+						                <constructor-arg value="#{configurationService.configuration.getProperty('sapws.ecc.username')}:#{configurationService.configuration.getProperty('sapws.ecc.password')}"/>
+						            </bean>
+						        </property>
+						    </bean>
+					   </property>
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.CustomerMasterCreateRequestProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.crm.customermastercreate.url')}" />
+						<property name="marshaller" ref="customermastercreateMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="customermastercreateMarshallUnmarshaller" />
+						<property name="messageSender">
+						    <bean class="org.springframework.ws.transport.http.HttpComponentsMessageSender">
+						        <property name="credentials">
+						            <bean class="org.apache.http.auth.UsernamePasswordCredentials">
+						                <constructor-arg value="#{configurationService.configuration.getProperty('sapws.crm.username')}:#{configurationService.configuration.getProperty('sapws.crm.password')}"/>
+						            </bean>
+						        </property>
+						    </bean>
+					   </property>
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.SubscriberAccMaintainRequestProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.cc.subscriberaccmaintain.url')}" />
+						<property name="marshaller" ref="subscribeAccMaintainMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="subscribeAccMaintainMarshallUnmarshaller" />
+						<property name="interceptors">
+					        <list>
+					            <ref bean="wsSecurityInterceptor" />
+					        </list>
+				    	</property>
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.ExternalAccMaintainRequestProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.cc.externalaccmaintain.url')}" />
+						<property name="marshaller" ref="subscribeAccMaintainMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="subscribeAccMaintainMarshallUnmarshaller" />
+						<property name="interceptors">
+					        <list>
+					            <ref bean="wsSecurityInterceptor" />
+					        </list>
+				    	</property>
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.MappingTableRowMaintainRequestProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.cc.mappingtablerowmaintain.url')}" />
+						<property name="marshaller" ref="mappingtablerowmaintainMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="mappingtablerowmaintainMarshallUnmarshaller" />
+						<property name="interceptors">
+					        <list>
+					            <ref bean="wsSecurityInterceptor" />
+					        </list>
+				    	</property>
+					</bean>
+				</entry>							
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.MaintainMappingTableRequestProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.cc.mappingtablerowmaintain.url')}" />
+						<property name="marshaller" ref="mappingtablerowmaintainMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="mappingtablerowmaintainMarshallUnmarshaller" />
+						<property name="interceptors">
+					        <list>
+					            <ref bean="wsSecurityInterceptor" />
+					        </list>
+				    	</property>
+					</bean>
+				</entry>							
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.BillingDocCancelRequestProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.ecc.billingdocinvcancel.url')}" />
+						<property name="marshaller" ref="billingDocInvoiceCancelMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="billingDocInvoiceCancelMarshallUnmarshaller" />
+						<property name="messageSender">
+						    <bean class="org.springframework.ws.transport.http.HttpComponentsMessageSender">
+						        <property name="credentials">
+						            <bean class="org.apache.http.auth.UsernamePasswordCredentials">
+						                <constructor-arg value="#{configurationService.configuration.getProperty('sapws.ecc.username')}:#{configurationService.configuration.getProperty('sapws.ecc.password')}"/>
+						            </bean>
+						        </property>
+						    </bean>
+					   </property>
+					</bean>
+				</entry>	
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.AccountClearRequestProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.ecc.accountclear.url')}" />
+						<property name="marshaller" ref="accountClearMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="accountClearMarshallUnmarshaller" />
+						<property name="messageSender">
+						    <bean class="org.springframework.ws.transport.http.HttpComponentsMessageSender">
+						        <property name="credentials">
+						            <bean class="org.apache.http.auth.UsernamePasswordCredentials">
+						                <constructor-arg value="#{configurationService.configuration.getProperty('sapws.ecc.username')}:#{configurationService.configuration.getProperty('sapws.ecc.password')}"/>
+						            </bean>
+						        </property>
+						    </bean>
+					   </property>
+					</bean>
+				</entry>			
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.ComplaintsFeedbackRequestProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.crm.complaintsfeedback.url')}" />
+						<property name="marshaller" ref="complaintsFeedbackMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="complaintsFeedbackMarshallUnmarshaller" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.OpportunityRequestProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.crm.opportunity.url')}" />
+						<property name="marshaller" ref="opportunityMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="opportunityMarshallUnmarshaller" />
+					</bean>
+				</entry>											
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.CustomerMasterCreateB2BRequestProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.customermastercreate.b2b.url')}" />
+						<property name="marshaller" ref="customermastercreateB2BMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="customermastercreateB2BMarshallUnmarshaller" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.VendorCreateChangeRequestProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.ecc.vendor.createchange.url')}" />
+						<property name="marshaller" ref="vendorCreateChangeMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="vendorCreateChangeMarshallUnmarshaller" />
+						<property name="messageSender">
+						    <bean class="org.springframework.ws.transport.http.HttpComponentsMessageSender">
+						        <property name="credentials">
+						            <bean class="org.apache.http.auth.UsernamePasswordCredentials">
+						                <constructor-arg value="#{configurationService.configuration.getProperty('sapws.ecc.username')}:#{configurationService.configuration.getProperty('sapws.ecc.password')}"/>
+						            </bean>
+						        </property>
+						    </bean>
+					   </property>
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.SubscriberAccountCancelProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.cc.subscriberaccountcancel.url')}" />
+						<property name="marshaller" ref="subscriberaccountcancelB2BMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="subscriberaccountcancelB2BMarshallUnmarshaller" />
+						<property name="interceptors">
+					        <list>
+					            <ref bean="wsSecurityInterceptor" />
+					        </list>
+				    	</property>
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.ContractProvisioningProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.cc.contractprovisioning.url')}" />
+						<property name="marshaller" ref="contractprovisioningMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="contractprovisioningMarshallUnmarshaller" />
+						<property name="interceptors">
+					        <list>
+					            <ref bean="wsSecurityInterceptor" />
+					        </list>
+				    	</property>
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.ItemChargingProcessor
+						</value>
+					</key>
+					<bean parent="travelogixWebServiceTempate">
+						<property name="defaultUri"
+							value="#{configurationService.configuration.getProperty('sapws.cc.itemcharging.url')}" />
+						<property name="marshaller" ref="itemChargingMarshallUnmarshaller" />
+						<property name="unmarshaller" ref="itemChargingMarshallUnmarshaller" />
+						<property name="interceptors">
+					        <list>
+					            <ref bean="wsSecurityInterceptor" />
+					        </list>
+				    	</property>
+					</bean>
+				</entry>											
+			</map>
+		</property>
+	</bean>
+	<bean id="accdocPostMarshallUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"
+		p:contextPath="com.cnk.travelogix.custom.zifws.accdocpost" scope="tenant" />
+	<bean id="salesOrderCreateChangeMarshallUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"
+		p:contextPath="com.cnk.travelogix.custom.so.createchange" scope="tenant" />
+	<bean id="customermastercreateMarshallUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"
+		p:contextPath="com.cnk.travelogix.custom.zif.erp.ws.custmastercreate" scope="tenant" />
+	<bean id="subscribeAccMaintainMarshallUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"
+		p:contextPath="com.cnk.travelogix.custom.subscribe.account" scope="tenant" />
+	<bean id="mappingtablerowmaintainMarshallUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"
+		p:contextPath="com.cnk.travelogix.custom.mappingtable.maintain" scope="tenant" />
+	<bean id="invoiceCreateMarshallUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"
+		p:contextPath="com.cnk.travelogix.custom.zifwsb.invoice.create" scope="tenant" />
+	<bean id="billingDocInvoiceCancelMarshallUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"
+		p:contextPath="com.cnk.travelogix.custom.zifwsb.inv.cancel" scope="tenant" />
+	<bean id="accountClearMarshallUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"
+		p:contextPath="com.cnk.travelogix.custom.zifws.account.clear" scope="tenant" />
+	<bean id="complaintsFeedbackMarshallUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"
+		p:contextPath="com.cnk.travelogix.custom.zif.erp.ws.complaints.feedback" scope="tenant" />
+	<bean id="opportunityMarshallUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"
+		p:contextPath="com.cnk.travelogix.custom.zif.erp.ws.opportunity" scope="tenant" />
+	<bean id="customermastercreateB2BMarshallUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"
+		p:contextPath="com.cnk.travelogix.custom.zif.erp.ws.custmastercreate.b2b" scope="tenant" />
+	<bean id="vendorCreateChangeMarshallUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"
+		p:contextPath="com.cnk.travelogix.custom.ziffm.vendor.createchange" scope="tenant" />
+	<bean id="subscriberaccountcancelB2BMarshallUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"
+		p:contextPath="com.cnk.travelogix.custom.subscribe.account" scope="tenant" />
+	<bean id="contractprovisioningMarshallUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"
+		p:contextPath="com.cnk.travelogix.custom.contract.provisioning" scope="tenant" />
+	<bean id="itemChargingMarshallUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"
+		p:contextPath="com.cnk.travelogix.custom.chargeable.itemcharging" scope="tenant" />
+		
+	<bean name="sapWebServicesFactory"
+		class="com.cnk.travelogix.sapintegrations.factory.DefaultSAPWebServicesFactory"
+		scope="tenant">
+		<property name="services">
+			<map>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.AccountDocumentRequestProcessor
+						</value>
+					</key>
+					<bean
+						class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultAccountDocumentRequestProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="accdocPostDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.accountdocpost.action')}" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.SOCreateChangeRequestProcessor
+						</value>
+					</key>
+					<bean
+						class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultSOCreateChangeRequestProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="salesOrderCreateChangeDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.crm.so.createchange.action')}" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.InvoiceCreateProcessor
+						</value>
+					</key>
+					<bean class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultInvoiceCreateProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="invoiceCreateProcessorDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.invoiceCreate.action')}" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.CustomerMasterCreateRequestProcessor
+						</value>
+					</key>
+					<bean
+						class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultCustomerMasterCreateRequestProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="custMasterCreateDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.crm.customermastercreate.action')}" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.SubscriberAccMaintainRequestProcessor
+						</value>
+					</key>
+					<bean
+						class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultSubscriberAccMaintainRequestProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="subscriberAccMaintainDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.cc.subscriberaccmaintain.action')}" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.ExternalAccMaintainRequestProcessor
+						</value>
+					</key>
+					<bean
+						class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultExternalAccMaintainRequestProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="subscriberAccMaintainDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.cc.externalaccmaintain.action')}" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.MappingTableRowMaintainRequestProcessor
+						</value>
+					</key>
+					<bean
+						class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultMappingTableRowMaintainRequestProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="mappingtablerowmaintainDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.cc.mappingtablerowmaintain.action')}" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.MaintainMappingTableRequestProcessor
+						</value>
+					</key>
+					<bean
+						class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultMaintainMappingTableRequestProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="mappingtablerowmaintainDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.cc.mappingtablerowmaintain.action')}" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.BillingDocCancelRequestProcessor
+						</value>
+					</key>
+					<bean
+						class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultBillingDocCancelRequestProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="billingDocInvCancelDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.ecc.billingdocinvcancel.action')}" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.AccountClearRequestProcessor
+						</value>
+					</key>
+					<bean
+						class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultAccountClearRequestProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="accountClearDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.ecc.accountclear.action')}" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.ComplaintsFeedbackRequestProcessor
+						</value>
+					</key>
+					<bean
+						class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultComplaintsFeedbackRequestProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="complaintsFeedbackDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.crm.complaintsfeedback.action')}" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.OpportunityRequestProcessor
+						</value>
+					</key>
+					<bean
+						class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultOpportunityRequestProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="opportunityDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.crm.opportunity.action')}" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.CustomerMasterCreateB2BRequestProcessor
+						</value>
+					</key>
+					<bean
+						class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultCustomerMasterCreateB2BRequestProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="custMasterCreateB2BDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.customermastercreate.b2b.action')}" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.VendorCreateChangeRequestProcessor
+						</value>
+					</key>
+					<bean
+						class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultVendorCreateChangeRequestProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="vendorCreateChangeDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.ecc.vendor.createchange.action')}" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.SubscriberAccountCancelProcessor
+						</value>
+					</key>
+					<bean
+						class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultSubscriberAccountCancelProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="subscriberAccountCancelDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.cc.subscriberaccountcancel.action')}" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.ContractProvisioningProcessor
+						</value>
+					</key>
+					<bean
+						class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultContractProvisioningProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="contractProvisioningDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.cc.contractprovisioning.action')}" />
+					</bean>
+				</entry>
+				<entry>
+					<key>
+						<value type="java.lang.Class">
+							com.cnk.travelogix.sapintegrations.processor.ItemChargingProcessor
+						</value>
+					</key>
+					<bean
+						class="com.cnk.travelogix.sapintegrations.processor.impl.DefaultItemChargingProcessor"
+						parent="abstractRequestProcessor">
+						<property name="dtoObjectFactory" ref="itemChargingDTOObjectFactory" />
+						<property name="soapAction"
+							value="#{configurationService.configuration.getProperty('sapws.cc.itemcharging.action')}" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	<bean name="abstractRequestProcessor" abstract="true" p:queryExecutor-ref="queryExecutor" />
+	<bean id="travelogixWebServiceTempate"
+		class="com.cnk.travelogix.sapintegrations.ws.client.core.TravelogixWebServiceTemplate" />
+		
+	<bean id="accdocPostDTOObjectFactory" class="com.cnk.travelogix.custom.zifws.accdocpost.ObjectFactory" scope="tenant" />
+	<bean id="custMasterCreateDTOObjectFactory" class="com.cnk.travelogix.custom.zif.erp.ws.custmastercreate.ObjectFactory" scope="tenant" />
+	<bean id="subscriberAccMaintainDTOObjectFactory" class="com.cnk.travelogix.custom.subscribe.account.ObjectFactory" scope="tenant" />
+	<bean id="externalAccMaintainDTOObjectFactory" class="com.cnk.travelogix.custom.subscribe.account.ObjectFactory" scope="tenant" />
+	<bean id="mappingtablerowmaintainDTOObjectFactory" class="com.cnk.travelogix.custom.mappingtable.maintain.ObjectFactory" scope="tenant" />
+	<bean id="invoiceCreateProcessorDTOObjectFactory" class="com.cnk.travelogix.custom.zifwsb.invoice.create.ObjectFactory" scope="tenant" />
+	<bean id="billingDocInvCancelDTOObjectFactory" class="com.cnk.travelogix.custom.zifwsb.inv.cancel.ObjectFactory" scope="tenant" />
+	<bean id="accountClearDTOObjectFactory" class="com.cnk.travelogix.custom.zifws.account.clear.ObjectFactory" scope="tenant" />
+	<bean id="complaintsFeedbackDTOObjectFactory" class="com.cnk.travelogix.custom.zif.erp.ws.complaints.feedback.ObjectFactory" scope="tenant" />
+	<bean id="opportunityDTOObjectFactory" class="com.cnk.travelogix.custom.zif.erp.ws.opportunity.ObjectFactory" scope="tenant" />
+	<bean id="salesOrderCreateChangeDTOObjectFactory" class="com.cnk.travelogix.custom.so.createchange.ObjectFactory" scope="tenant" />
+	<bean id="custMasterCreateB2BDTOObjectFactory" class="com.cnk.travelogix.custom.zif.erp.ws.custmastercreate.b2b.ObjectFactory" scope="tenant" />
+	<bean id="contractProvisioningDTOObjectFactory" class="com.cnk.travelogix.custom.contract.provisioning.ObjectFactory" scope="tenant" />
+	<bean id="vendorCreateChangeDTOObjectFactory" class="com.cnk.travelogix.custom.ziffm.vendor.createchange.ObjectFactory" scope="tenant" />
+	<bean id="subscriberAccountCancelDTOObjectFactory" class="com.cnk.travelogix.custom.subscribe.account.ObjectFactory"/>
+	<bean id="itemChargingDTOObjectFactory" class="com.cnk.travelogix.custom.chargeable.itemcharging.ObjectFactory"/>
+		
+	<bean id="wsSecurityInterceptor" class="org.springframework.ws.soap.security.wss4j.Wss4jSecurityInterceptor">
+	    <property name="securementActions" value="UsernameToken"/>
+	    <property name="securementUsername" value="#{configurationService.configuration.getProperty('sapws.cc.username')}"/>
+	    <property name="securementPassword" value="#{configurationService.configuration.getProperty('sapws.cc.password')}"/>
+	    <property name="securementPasswordType" value="PasswordText"/>
+	</bean>
+	<bean id="wsECCSecurityInterceptor" class="org.springframework.ws.soap.security.wss4j.Wss4jSecurityInterceptor">
+	    <property name="securementActions" value="UsernameToken"/>
+	    <property name="securementUsername" value="#{configurationService.configuration.getProperty('sapws.ecc.username')}"/>
+	    <property name="securementPassword" value="#{configurationService.configuration.getProperty('sapws.ecc.password')}"/>
+	    <property name="securementPasswordType" value="PasswordText"/>
+	</bean>
+	
+</beans>

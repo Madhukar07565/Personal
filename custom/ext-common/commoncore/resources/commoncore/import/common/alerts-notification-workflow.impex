@@ -1,0 +1,48 @@
+##Defined Workflow with decisions
+$dummyUserName=admin;
+$alertTemplateName=alertNotificationTemplate;
+$alertStepName=Alert step;
+$alertApprovalStepName=Approval;
+$alertEndStepName=End
+$doneName=Done;
+$approvedName=Approved;
+$endName=End
+
+INSERT_UPDATE WorkflowTemplate;code[unique=true];name[lang=en];name[lang=de];description[lang=en];description[lang=de];owner(User.uid);
+;$alertTemplateName;Alert template;Alert template;Template with one simple tasks;TBT: Template with one simple tasks;$dummyUserName;
+
+INSERT_UPDATE WorkflowActionTemplate;code[unique=true];name[lang=en];name[lang=de];principalAssigned(User.uid);owner(User.uid);workflow(WorkflowTemplate.code);actionType(code)
+;$alertStepName;Supplier Contract Will expire in 7 days;Supplier Contract Will expire in 7 days;$dummyUserName;$dummyUserName;$alertTemplateName;start
+INSERT_UPDATE WorkflowActionTemplate;code[unique=true];name[lang=en];name[lang=de];principalAssigned(User.uid);owner(User.uid);workflow(WorkflowTemplate.code);actionType(code)
+;$alertApprovalStepName;Approval;Freigabe;$dummyUserName;$dummyUserName;$alertTemplateName;normal
+
+
+INSERT_UPDATE WorkflowDecisionTemplate;code[unique=true];name[lang=en];name[lang=de];actionTemplate(WorkflowActionTemplate.code);
+;$doneName;Done!;Fertig!;$alertStepName;
+
+INSERT_UPDATE WorkflowActionTemplateLinkTemplateRelation;source(WorkflowDecisionTemplate.code)[unique=true];target(WorkflowActionTemplate.code)
+;$doneName;$alertApprovalStepName
+
+INSERT_UPDATE WorkflowDecisionTemplate;code[unique=true];name[lang=en];name[lang=de];actionTemplate(WorkflowActionTemplate.code);
+;$approvedName;Approval;Freigabe;$alertApprovalStepName;
+
+INSERT_UPDATE WorkflowActionTemplateLinkTemplateRelation;source(WorkflowDecisionTemplate.code)[unique=true];target(WorkflowActionTemplate.code)
+;$approvedName;$alertEndStepName
+
+
+INSERT_UPDATE WorkflowActionTemplate;code[unique=true];name[lang=en];name[lang=de];principalAssigned(User.uid);owner(User.uid);workflow(WorkflowTemplate.code);actionType(code)
+;$alertEndStepName;End;Ende;$dummyUserName;$dummyUserName;$alertTemplateName;end
+
+INSERT_UPDATE WorkflowDecisionTemplate;code[unique=true];name[lang=en];name[lang=de];actionTemplate(WorkflowActionTemplate.code);
+;$endName;End;Ende;$alertEndStepName;
+
+
+##Defined Workflow with no decisions
+INSERT_UPDATE WorkflowTemplate;code[unique=true] 		 ;name[lang=en]	 			 ;name[lang=de] 			 ;description[lang=en]					 ;description[lang=de]				     ;owner(User.uid);
+							  ;alertNotificationTemplate ;Alert Notification Template;Alert Notification Template;Template to generate alert notification;Template to generate alert notification;admin; 
+INSERT_UPDATE WorkflowActionTemplate;code[unique=true];name[lang=en];name[lang=de];principalAssigned(User.uid);owner(User.uid);workflow(WorkflowTemplate.code);actionType(code)
+								    ;Alert Step	      ;Supplier Contract Will expire in 7 days;Supplier Contract Will expire in 7 days		  ;admin			          ;admin 		  ;alertNotificationTemplate  ;start
+								    ;TODO_Complete      ;TODO Will expire in 7 days;TODO Will expire in 7 days		  ;admin			          ;admin 		  ;toDoTaskWorkflowTemplate  ;start
+
+
+

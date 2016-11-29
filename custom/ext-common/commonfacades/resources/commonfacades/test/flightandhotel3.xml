@@ -1,0 +1,431 @@
+<com.cnk.travelogix.common.facades.product.data.combination.FlightAndHotelData>
+  <id>id</id>
+  <flight>
+      <!--Layover 1h50m-->
+      <com.cnk.travelogix.common.facades.product.data.flight.FlightData>
+          <id>flight5</id>
+          <flightNumber>Z8892</flightNumber>
+          <cabinClass>Economy</cabinClass>
+          <airlineIATA>
+              <airlineName>IndiGo</airlineName>
+              <accountingCode>6E</accountingCode>
+              <airlinePrefix>714</airlinePrefix>
+          </airlineIATA>
+          <departureTime>2016-07-16 09:45:00.00 UTC</departureTime>
+          <arrivalTime>2016-07-16 15:45:00.00 UTC</arrivalTime>
+          <duration>06:00:00.00 UTC</duration>
+          <fromSection>
+              <city>Bengaluru</city>
+              <terminal>1B</terminal>
+          </fromSection>
+          <toSection>
+              <city>Jammu</city>
+              <terminal>3A</terminal>
+          </toSection>
+          <fareSummary>
+              <listPrice>9680</listPrice>
+              <webPrice>9380</webPrice>
+              <currency>currency</currency>
+              <pointEarn>60</pointEarn>
+          </fareSummary>
+          <fareDetail>
+              <currency>currency</currency>
+              <baseFare>5230</baseFare>
+              <fuelSurcharge>2950</fuelSurcharge>
+              <jnTax>550</jnTax>
+              <psgrSvcFee>550</psgrSvcFee>
+              <serviceTax>550</serviceTax>
+          </fareDetail>
+          <flightDetails>
+              <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+                  <cabinClass>Economy</cabinClass>
+                  <fromSection>
+                      <city>Bengaluru</city>
+                      <terminal>1B</terminal>
+                  </fromSection>
+                  <toSection>
+                      <city>Delhi</city>
+                      <terminal>2A</terminal><
+                          </toSection>
+                          <departureTime>2016-07-16 09:45:00.00 UTC</departureTime>
+                          <arrivalTime>2016-07-16 12:30:00.00 UTC</arrivalTime>
+                          <duration>02:45:00.00 UTC</duration>
+                      </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+                      <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+                          <cabinClass>Economy</cabinClass>
+                          <fromSection>
+                              <city>Delhi</city>
+                              <terminal>2A</terminal>
+                          </fromSection>
+                          <toSection>
+                              <city>Jammu</city>
+                              <terminal>3A</terminal>
+                          </toSection>
+                          <departureTime>2016-07-16 14:20:00.00 UTC</departureTime>
+                          <arrivalTime>2016-07-16 15:45:00.00 UTC</arrivalTime>
+                          <duration>01:25:00.00 UTC</duration>
+                      </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+                  </flightDetails>
+                  <com.cnk.travelogix.common.facades.product.data.flight.FlightData>
+              </flight>
+              
+        <flight>
+            <!--Nonstop-->
+            <com.cnk.travelogix.common.facades.product.data.flight.FlightData>
+                <id>flight6</id>
+                <flightNumber>TR2458</flightNumber>
+                <cabinClass>Economy</cabinClass>
+                <airlineIATA>
+                    <airlineName>TigerAir</airlineName>
+                    <accountingCode>TR</accountingCode>
+                    <airlinePrefix>2458</airlinePrefix>
+                </airlineIATA>
+                <departureTime>2016-07-01 09:50:00.00 UTC</departureTime>
+                <arrivalTime>2016-07-01 10:55:00.00 UTC</arrivalTime>
+                <duration>01:05:00.00 UTC</duration>
+                <fromSection>
+                    <city>Singapore</city>
+                    <terminal>3C</terminal>
+                </fromSection>
+                <toSection>
+                    <city>KualaLumpur</city>
+                    <terminal>2A</terminal>
+                </toSection>
+                <fareSummary>
+                    <listPrice>4680</listPrice>
+                    <webPrice>4380</webPrice>
+                    <currency>currency</currency>
+                    <pointEarn>20</pointEarn>
+                </fareSummary>
+                <fareDetail>
+                    <currency>currency</currency>
+                    <baseFare>2230</baseFare>
+                    <fuelSurcharge>1950</fuelSurcharge>
+                    <jnTax>150</jnTax>
+                    <psgrSvcFee>250</psgrSvcFee>
+                    <serviceTax>250</serviceTax>
+                </fareDetail>
+                <flightDetails>
+                    <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+                        <cabinClass>Economy</cabinClass>
+                        <fromSection>
+                            <city>Singapore</city>
+                            <terminal>3C</terminal>
+                        </fromSection>
+                        <toSection>
+                            <city>KualaLumpur</city>
+                            <terminal>2A</terminal>
+                        </toSection>
+                        <departureTime>2016-07-01 09:50:00.00 UTC</departureTime>
+                        <arrivalTime>2016-07-01 10:55:00.00 UTC</arrivalTime>
+                        <duration>01:05:00.00 UTC</duration>
+                    </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+                    <!--
+                     <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+                     <cabinClass>Economy</cabinClass>
+                     <fromSection>
+                     <city>Ahmedabad</city>
+                     <terminal>2A</terminal>
+                     </fromSection>
+                     <toSection>
+                     <city>Delhi</city>
+                     <terminal>3A</terminal>
+                     </toSection>
+                     <departureTime>2015-09-18 06:35:00.00 UTC</departureTime>
+                     <arrivalTime>2015-09-18 07:50:00.00 UTC</arrivalTime>
+                     <duration>01:05:00.00 UTC</duration>
+                     </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+                     -->
+                </flightDetails>
+                <com.cnk.travelogix.common.facades.product.data.flight.FlightData>
+        </flight>
+  
+  <hotel>
+      <com.cnk.travelogix.common.facades.product.data.hotel.HotelData>
+          <id>003</id>
+          <chain>b</chain>
+          <brand>The Park C</brand>
+          <address>8 Cellios Street, Middle India, Singapore</address>
+          <hotelRating>5</hotelRating>
+          <reviews>
+              
+              <numReviews>270</numReviews>
+              <ranking>5/5 Excellent</ranking>
+              <overallRating>5</overallRating>
+              <locationRating>5</locationRating>
+              <cleanlinessRating>5</cleanlinessRating>
+              <reviewContent>
+                  <com.cnk.travelogix.common.facades.product.data.hotel.ReviewContentData>
+                      <title>Good afternoon stay</title>
+                      <author>Cerek289</author>
+                      <reviewDate>Sep 15, 2016</reviewDate>
+                      <content>Stayed here afternoon in April with my children, and had a good experience. We were travelling back from Italy by train, and just needed a decent place to stay overnight, and this ticked the boxes.Room was good and quiet. Breakfast was a reasonable choice, and hotel is walking distance to the train station. Interesting area nearby, with a variety of places to eat. Good experience, and at that time a bonus for smokers, as you can have a drink in part of the bar, and have a cigarette with it without having to go outside.</content>
+                  </com.cnk.travelogix.common.facades.product.data.hotel.ReviewContentData>
+                  <com.cnk.travelogix.common.facades.product.data.hotel.ReviewContentData>
+                      <title>Safety</title>
+                      <author>Kajesh</author>
+                      <reviewDate>Aug 24, 2016</reviewDate>
+                      <content>Overall Excellent Hotel For Budget Travelers ! Close Proximity With New Delhi Railway Station and other important sightseeing points. Staff is friendly and very helpful ! Recommended For Stay in Delhi !</content>
+                  </com.cnk.travelogix.common.facades.product.data.hotel.ReviewContentData>
+                  <com.cnk.travelogix.common.facades.product.data.hotel.ReviewContentData>
+                      <title>Happiest</title>
+                      <author>Mitin</author>
+                      <reviewDate>JAN 24, 2016</reviewDate>
+                      <content>The Hotel is located nearby terminal 3, a few minutes drive. The staff are helpful and cooperative. Room service is good and timely. The rooms and bathrooms are nice and clean. And the rates are affordable. I would definitely stay here again</content>
+                  </com.cnk.travelogix.common.facades.product.data.hotel.ReviewContentData>
+              </reviewContent>
+              
+          </reviews>
+          <currentAttentions>10</currentAttentions>
+          <priceInfo>
+              <currency>IQD</currency>
+              <listPrice>7000</listPrice>
+              <webPrice>6000</webPrice>
+              <otherDescription>+30.5% service tax</otherDescription>
+          </priceInfo>
+          <rooms>
+              <com.cnk.travelogix.common.facades.product.data.hotel.RoomData>
+                  <type>Independent Double Room</type>
+                  <description>Max occupancy 2 adults  1 children</description>
+                  <roomDetails>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData>
+                          <description>With breakfast</description>
+                          <numLeft>2</numLeft>
+                          <price>
+                              <currency>IQD</currency>
+                              <listPrice>5600</listPrice>
+                              <webPrice>4600</webPrice>
+                              <unit>Day / Night</unit>
+                          </price>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData>
+                          <description>With meals</description>
+                          <numLeft>2</numLeft>
+                          <price>
+                              <currency>IQD</currency>
+                              <listPrice>5600</listPrice>
+                              <webPrice>4600</webPrice>
+                              <unit>Day / Night</unit>
+                          </price>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData>
+                  </roomDetails>
+              </com.cnk.travelogix.common.facades.product.data.hotel.RoomData>
+              <com.cnk.travelogix.common.facades.product.data.hotel.RoomData>
+                  <type>Deluxe King Size Room</type>
+                  <description>Max occupancy 3 adults & 2 children</description>
+                      <roomDetails>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData>
+                      <description>With breakfast</description>
+                      <numLeft>4</numLeft>
+                      <price>
+                      <currency>IQD</currency>
+                      <listPrice>8000</listPrice>
+                      <webPrice>7000</webPrice>
+                      <unit>Day / Night</unit>
+                      </price>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData>
+                      <description>With meals</description>
+                      <numLeft>4</numLeft>
+                      <price>
+                      <currency>IQD</currency>
+                      <listPrice>8000</listPrice>
+                      <webPrice>7000</webPrice>
+                      <unit>Day / Night</unit>
+                      </price>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData>
+                      </roomDetails>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.RoomData>
+                      </rooms>
+                      <overview>Sprawled across 28 acres of lush tropical gardens & lawns The Downtown offers a breathtaking view of The Sentosa Islands. It is conveniently located in the heart of Singapore. With an imposing 2 floored building it has 314 impeccably styled rooms for accommodation it redefines luxury. One can savor fine delicacies at the restaurant, enjoy at the nightlife lounges & have an exhilarating experience at the Shamana Spa.</overview>
+                      <facilities>
+                      <facilitydetails>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <name>Parking Lot</name>
+                      <icon>/\icon1</icon>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <name>Chinese Restaurant</name>
+                      <icon>/\icon2</icon>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <name>Free Internet</name>
+                      <icon>/\icon2</icon>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <name>Gym</name>
+                      <icon>/\icon2</icon>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <name>Play Ground</name>
+                      <icon>/\icon2</icon>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <name> Victualing House</name>
+                      <icon>/\icon2</icon>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <name>24 hour hot water</name>
+                      <icon>/\icon2</icon>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <name>Bar</name>
+                      <icon>/\icon2</icon>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <name>Play Field</name>
+                      <icon>/\icon2</icon>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      <name>Coffee house</name>
+                      <icon>/\icon2</icon>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+                      </facilitydetails>
+                      <hotelAmenities>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      <name>Elevators lift</name>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      <name>KTV</name>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      <name>ballroom</name>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      <name>boutique</name>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      <name>Laundry</name>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      </hotelAmenities>
+                      <otherAmenities>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      <name>Counter</name>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      <name>Hair Dividers</name>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      </otherAmenities>
+                      <businessService>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      <name>Conference furniture</name>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      <name>Presence chamber</name>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+                      </businessService>
+                      <otherDescriptions>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.DescriptionData>
+                      <title>Position</title>
+                      <description>Sprawled across 28 acres of lush tropical gardens & lawns The Downtown offers a breathtaking view of The Sentosa Islands. It is conveniently located in the heart of Singapore. With an imposing 2 floored building it has 314 impeccably styled rooms for accommodation it redefines luxury. One can savor fine delicacies at the restaurant, enjoy at the nightlife lounges & have an exhilarating experience at the Shamana Spa.</description>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.DescriptionData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.DescriptionData>
+                      <title>Hotel Traits</title>
+                      <description>X Tra Hotel's restaurant serves breakfast, lunch, and dinner. A bar/lounge is open for drinks. Room service is available during limited hours. The hotel serves a complimentary buffet breakfast. Complimentary high-speed (wired) Internet access is available in public areas. This Zurich property has event space consisting of conference/meeting rooms and small meeting rooms. The property offers a roundtrip airport shuttle (surcharge). Concierge services and tour/ticket assistance are available. Guest parking is available for a surcharge. Additional property amenities include barbecue grills, multilingual staff, and a nightclub.</description>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.DescriptionData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.DescriptionData>
+                      <title>Drawing Rooms</title>
+                      <description>36 guestrooms at X Tra Hotel feature minibars and washers/dryers. These individually decorated rooms include desks. Bathrooms feature showers with handheld showerheads, and hair dryers. Wired high-speed Internet access is complimentary. In addition to safes, guestrooms offer direct-dial phones. Cable television is provided. Windows that open, blackout drapes/curtains, and clock radios are also provided. Guests may request irons/ironing boards, hypo-allergenic bedding, and wake-up calls. Housekeeping is available daily.</description>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.DescriptionData>
+                      </otherDescriptions>
+                      </facilities>
+                      <landmarksNearby>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+                      <name>Galapagos Islands</name>
+                      <distance>8 km</distance>
+                      <description>8 km from the Galapagos Islands</description>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+                      <name>San Francisco</name>
+                      <distance>3 km</distance>
+                      <description>3 km from San Francisco</description>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+                      <name>Ometepe</name>
+                      <distance>1 km</distance>
+                      <description>5-minute walk from Ometepe</description>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+                      <name>The world Square</name>
+                      <distance>0.5 km</distance>
+                      <description>5 minute walk from The world Square</description>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+                      <name>The Stage of the World Square</name>
+                      <distance>8 km</distance>
+                      <description>8km walk from The Stage of the World Square</description>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+                      <name>The world Map Fountain</name>
+                      <distance>3 km</distance>
+                      <description>3 km from The world Map Fountain</description>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+                      <name>The Statue of Liberty</name>
+                      <distance>1 km</distance>
+                      <description>10-minute trek from The Statue of Liberty</description>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+                      <name>The Caption</name>
+                      <distance>0.5 km</distance>
+                      <description>2 minute bus ride from The Caption</description>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+                      </landmarksNearby>
+                      <priceCalendar>
+                      <date>April6，2016</date>
+                      <price>
+                      <currency>IQD</currency>
+                      <listPrice>6000</listPrice>
+                      <webPrice>7000</webPrice>
+                      <unit>Average / Night</unit>
+                      <otherInfo>
+                      <string>Pay at hotel</string>
+                      <string>FREE Cancellation</string>
+                      </otherInfo>
+                      </price>
+                      </priceCalendar>
+                      <offers>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.OfferData>
+                      <title>Book & avail 50% check back</title>
+                      <promoCode>Promo code: YU8789</promoCode>
+                      <content>Stayed here overnight in April with my children, and had a good experience. We were travelling back from Italy by train, and just needed a decent place to stay overnight, and this ticked the boxes.Room was good and quiet. Breakfast was a reasonable choice, and hotel is walking distance to the train station. Interesting area nearby, with a variety of places to eat. Good experience, and at that time a bonus for smokers, as you can have a drink in part of the bar, and have a cigarette with it without having to go outside.</content>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.OfferData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.OfferData>
+                      <title>Book & avail 50% check back</title>
+                      <promoCode>Promo code: YU8789</promoCode>
+                      <content>Stayed here overnight in April with my children, and had a good experience. We were travelling back from Italy by train, and just needed a decent place to stay overnight, and this ticked the boxes.Room was good and quiet. Breakfast was a reasonable choice, and hotel is walking distance to the train station. Interesting area nearby, with a variety of places to eat. Good experience, and at that time a bonus for smokers, as you can have a drink in part of the bar, and have a cigarette with it without having to go outside.</content>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.OfferData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.OfferData>
+                      <title>Book & avail 50% check back</title>
+                      <promoCode>Promo code: YU8789</promoCode>
+                      <content>Stayed here overnight in April with my children, and had a good experience. We were travelling back from Italy by train, and just needed a decent place to stay overnight, and this ticked the boxes.Room was good and quiet. Breakfast was a reasonable choice, and hotel is walking distance to the train station. Interesting area nearby, with a variety of places to eat. Good experience, and at that time a bonus for smokers, as you can have a drink in part of the bar, and have a cigarette with it without having to go outside.</content>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.OfferData>
+                      </offers>
+                      <bookingPolicies>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+                      <title>Cancellation and Replacement Policy</title>
+                      <content>Before you select your room and submitted a booking request, you can see the hotel's cancellation policy, these policies vary with different hotel, so you must read carefully.Cancellation policy according to the predetermined time, the room number and hotel while under the influence of different factors, such as the number of available rooms.</content>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+                      <title>Improve policy</title>
+                      <content>Optimize the development environment.Establish a nationwide unified, open, competitive and orderly services market, take effective measures, to break the administrative monopoly, industry monopoly and local protection, cleaning and abolished in the sex industry hampers form a unified national market and the rules of fair competition and practice.Further deepening the reform of investment and financing system, encourage and guide various types of social capital to consumer services.To further promote the reform of administrative examination and approval system, simplify the approval process, cancel and unreasonable matters, strengthen the supervision of things after the event.Cancel for examination and approval of commercial and mass sports.</content>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+                      <title>Tax message</title>
+                      <content>Fixed tax: small-scale enterprise business hotel (4%)Urban construction tax (according to the sales revenue of the business tax 7%)Add (according to the sales tax of 3%)Place of add (according to the business tax of 1-2%)Average taxpayer (VAT) at 17% of the sales revenue5% of the urban construction tax (VAT)Add (3% VAT)Place of add (1% VAT)</content>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+                      <title>Kids policy</title>
+                      <content>With three children under the age of basic family don't have to struggle with this policy. The ages of 5 and 12 years old children, need to focus on.Children 12 years of age and older without struggle, hotels are directly by the adults.</content>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+                      <com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+                      <title>Important issue</title>
+                      <content>Prepare personal documents: before the hotel away from home, to double check whether to carry my id, best buy a waterproof transparent envelope to specially used for important documents passport.</content>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+                      </bookingPolicies>
+                      </com.cnk.travelogix.common.facades.product.data.hotel.HotelData>
+                      
+
+                      
+  </hotel>
+</com.cnk.travelogix.common.facades.product.data.combination.FlightAndHotelData>

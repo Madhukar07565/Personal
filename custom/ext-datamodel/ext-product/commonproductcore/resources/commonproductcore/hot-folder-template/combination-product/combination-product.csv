@@ -1,0 +1,20 @@
+#Header Name;Company Name;code
+Product;ezeego1;123A	
+#;CompanyName;code;comboFailDueToSingleProduct;singleProductCancellation;commonProductID;companyMarket;entity;supercategories;productDefinitions;pointOfSale;priceRetention
+CombinationProduct;Ezeego1;1001;true;true;123A;IND;;C002ST001;FLIGHT001;1001;1001
+CombinationProduct;Ezeego1;1002;true;true;123A;IND;;C002ST002;FLIGHT001;1001;1001
+#;owner;pointOfSale
+PointOfSale;1001;ALL
+#;CompanyName;attachId;category;attachedProducts
+ProductDefinition;Ezeego1;FLIGHT001;C001ST001;FLIGHT001
+#;owner;include;product
+AttachedProduct;FLIGHT001;true;123A
+#;owner;retentionFactor;value
+Individual;1001;PERCENTAGE;10
+#;owner;retentionFactor;value
+Combo;1001;PERCENTAGE;15
+#;owner;includeStandardCommission;isCombo;comboRetention;individualRetentions
+PriceRetention;1001;true;false;1001;1001	
+
+
+

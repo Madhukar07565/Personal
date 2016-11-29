@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/integration
+        http://www.springframework.org/schema/integration/spring-integration.xsd
+        http://www.springframework.org/schema/integration/file
+        http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+	<bean id="baseDirectoryTravelogixcrrrr" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogixcrrrr/definition" />
+	</bean>
+
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesTravelogixcrrrr" directory="#{baseDirectoryTravelogixcrrrr}" filename-regex="^(.*)-(\d+)\.csv"
+		comparator="fileOrderComparator">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+
+	<!-- 2) move the file to processing and setup header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogixcrrrr" reply-channel="batchFilesTravelogixcrrrrProc" directory="#{baseDirectoryTravelogixcrrrr}/processing"
+		delete-source-files="true" />
+
+	<bean id="travelogixcrrrrHeaderSetupTask" class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="Default" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogixcrrrr" />
+	</bean>
+	
+	<int:service-activator input-channel="batchFilesTravelogixcrrrrProc" output-channel="batchFilesHeaderInit" ref="travelogixcrrrrHeaderSetupTask"
+		method="execute" />
+
+
+	<bean id="batchDefinitionConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="definition" p:converter-ref="batchDefinitionConverter" />
+
+	<bean id="batchDefinitionConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Ancillary Rates Definition
+				$contentCatalog=Default
+				$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+                   INSERT_UPDATE AncillaryRateDefinition;clientType(code)[unique=true,allownull=true];cruiseItinerary(itineraryId);currency(isocode)[allownull=true];seasonality(code)[unique=true];supplierMarket(code)[unique=true,allownull=true];supplierancillaryrate(catalogVersion(catalog(id),version),code);travelPeriod[dateformat=dd.MM.yyyy hh:mm:ss]
+                                                     
+ 			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2};{3};{4};{5};{6}</value>
+		</property>
+	</bean>
+	
+
+	
+</beans>

@@ -1,0 +1,17 @@
+Header Type;Company Name;CompanyCruiseBrandId;CruiseBrandCommonId;CruiseCompanyName;CruiseBrandName;CruiseBrandDetails;financeControlID;notes;copiedFrom;Affiliation;EffectiveFromDate;Active;ApprovalStatus(code);reason;remarks
+CruiseBrand;Ezeego1;CruiseBrand_8556;9876543;Star Cruise International;Star Cruise;;6785;;;1201;01-01-2017;false;approved;;;
+CruiseBrand;Ezeego1;CruiseBrand_9030;1782446;Royal Caribbean International;Royal Caribbean;;6786;;;1201;01-01-2017;false;approved;;;
+;Company Name;Media Name;Media Type;CruiseBrandId
+Media;Ezeego1;CruiseBrand-456.jpg;image/jpg;CruiseBrand_8556
+Media;Ezeego1;CruiseBrand-123.jpg;image/jpg;CruiseBrand_9030
+;Company Name;CruiseBrandId;Street 1;Street 2;Street 3;Street 4;street5;Postal Code;Town;Country;Landmark;AddressType;City;SuburbDowntown;Area;Location
+Address;Ezeego1;CruiseBrand_8556;15 Canton Road;1529 Ocean Centre;;;;400 059;Mumbai;IN;near ABC Hospital;HEADQUARTER;BOM;AE;;AAA
+Address;Ezeego1;CruiseBrand_9030;Caribbean Way Road;1051;;;;400 059;Mumbai;IN;near ABC Hospital;CORPORATE;BOM;AE;;AAA
+;socialNetworkingID;socialNetworkingName;CruiseBrandId
+SocialNetworkingDetails;face@face.com;facebook;CruiseBrand_8556
+SocialNetworkingDetails;twit@twit.com;twitter;CruiseBrand_8556
+SocialNetworkingDetails;link@link.com;linkedin;CruiseBrand_9030
+;newsLetterRequired;webpageAddress;displayName;EmailAddress;EmailAddressType;CruiseBrandId
+EmailAddresses;true;http://www.msccruises.com;cruisemail;expressuser123@expresscheckout.com;COMPANY;CruiseBrand_8556
+EmailAddresses;false;gmail;cruisemail;expressuser123@gmail.com;COMPANY;CruiseBrand_8556
+EmailAddresses;true;www.yahoo.com;newcruisemail;expressuser123@yahoo.com;COMPANY;CruiseBrand_9030

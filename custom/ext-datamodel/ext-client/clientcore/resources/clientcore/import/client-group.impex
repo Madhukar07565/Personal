@@ -1,0 +1,5 @@
+
+########   Client Group ########
+
+INSERT_UPDATE B2BUserGroup;uid[unique=true];name;Unit(uid);companyMarket(Market.uid);active;effectiveFrom[dateFormat=dd-MM-yyyy];reason(ClientGroupReason.code);remarks
+;CG_M_12345;B2B User Group;CnkB2BUnit1;IND;true;01-08-2018;OTHERS;GOOD

@@ -1,0 +1,29 @@
+Header Name;Company;CruisePackage_Code,CruisePackage_Name,CruisePackage_PackageName,SupplierProduct_Code,CruisePackage_DisplayName,CompanyRecommended,SupplierRatingDate,CompanyRatingDate,SupplierRating,CompanyRating,CruiseCompanyName,CruiseBrandName,ShipName,CruiseDestinationName;
+CruisePackage;Ezeego1;1809;The Classic Round Voyage;The Classic Round Voyage - 12 Days;;;;20-10-2014;20-11-2015;THREE;THREE;CruiseCompany_8556;CruiseBrand_8556;201
+;ShoreExcursionCode,ShoreExcursionType,ShoreExcursionName,ShoreExcursionDuration,ShoreExcursionSelable,ShoreExcursionDescription,ShoreExcursionDifficultyLevel,ShoreExcursionPortName
+ShoreExcursion;678;ExcursionType_01;Excursion Name34;4 hrs;TRUE;New Shore Excrution Selabal;EASY;3100
+;Company;MediaName;ShoreExcursion
+ShoreExcursionMedia;Ezeego1;bungalows.png;678
+ShoreExcursionMedia;Ezeego1;appartment.png;678
+;CruiseItineraryId;ItineraryName;SailingDates;CruiseOperationalDayCode;CruiseOperationalDayName;OperationalPeriod;CruisePackage_Code;ShoreExcursionCode;departuredate;blockoutdate
+CruiseItinerary;cruise_itinerary_1;Bergen;20-05-2014;OpeningSchedule_01;CruiseOperationalDay Name;HOURLY;1809;678
+CruiseItinerary;cruise_itinerary_2;Bergen 2;20-05-2014;OpeningSchedule_01;CruiseOperationalDay Name;HOURLY;1809;678
+;Company;MediaName;Day;CruiseItineraryName
+CruiseItineraryMedia;Ezeego1;bungalows.png;171;Bergen
+CruiseItineraryMedia;Ezeego1;appartment.png;172;Bergen
+;CruisePackageCode;Nationality;TravellingCountry;Remark
+VisaRequirement;1809;US;AU;
+VisaRequirement;1809;PF;AU;
+;Company;AncillaryType;AncillaryStatus;AncillaryDescription;AncillaryName;AncillaryValidFrom;CruisePackageCode
+Ancillary;Ezeego1;ANC_01;Hotel Parking;;11-05-2016;13-06-2017;Hotel Parking Facility;PARKING
+Ancillary;Ezeego1;ANC_02;Nanny and Babysitting Service;;14-05-2016;16-06-2017;Nanny and Babysitting Service;ENTERTAINMENT
+;Company;CruisePackageCode;AncillaryCode;ReferenceType;Active;Preselected
+AncillaryProductRef;Ezeego1;1809;ANC_01;PAID;true;false
+AncillaryProductRef;Ezeego1;1809;ANC_02;COMPLEMENTARY;true;false
+;CruiseRouteCode;localArrivalTime;localDepartureTime;Remark;ItineraryName
+RouteInfo;987654_CruiseRoute;02:00:00;20:00:00;remark;Bergen
+RouteInfo;987654_CruiseRoute;02:00:00;20:00:00;remark;Bergen
+
+
+
+

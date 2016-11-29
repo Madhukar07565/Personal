@@ -1,0 +1,64 @@
+$productCatalog=EZ-IN
+$productCatalogName=EZ-IN-CS
+$approved=approvalstatus(code)[default='check']
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$timeformat = hh:mm
+
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.common.initialdata.setup.InitialDataSystemSetup&\productsetup\import\images\96Wx96H
+
+$clAttrModifiers=system='EZ-IN-CS',version='1.0',translator=de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator,lang=en
+
+##Classification for Train
+
+$Trainname=@Trainname-General-Train[$clAttrModifiers]
+$Description=@Description-General-Train[$clAttrModifiers]
+$Coaches=@Coaches-General-Train[$clAttrModifiers]
+$Saloons=@Saloons-General-Train[$clAttrModifiers]
+$Restaurants=@Restaurants-General-Train[$clAttrModifiers]
+$Bar=@Bar-General-Train[$clAttrModifiers]
+$Spa=@Spa-General-Train[$clAttrModifiers]
+$GymCoach=@GymCoach-General-Train[$clAttrModifiers]
+$ConferenceCoach=@ConferenceCoach-General-Train[$clAttrModifiers]
+$Crew=@Crew-General-Train[$clAttrModifiers]
+$Transport=@Transport-General-Train[$clAttrModifiers]
+$Cabinarea =@Cabinarea-Presidentialsuitedimensions-Train[$clAttrModifiers]
+$Cabinlength=@Cabinlength-Presidentialsuitedimensions-Train[$clAttrModifiers]
+$Cabinwidth=@Cabinwidth-Presidentialsuitedimensions-Train[$clAttrModifiers]
+$BedWidthSingle=@BedWidthSingle-Presidentialsuitedimensions-Train[$clAttrModifiers]
+$Double=@Double-Presidentialsuitedimensions-Train[$clAttrModifiers]
+$BedLength=@BedLength-Presidentialsuitedimensions-Train[$clAttrModifiers]
+$CabinsPerCar=@CabinsPerCar-Presidentialsuitedimensions-Train[$clAttrModifiers]
+$Cabinarea_Deluxcabindimensions=@Cabinarea-Deluxcabindimensions-Train[$clAttrModifiers]
+$Cabinlength_Deluxcabindimensions=@Cabinlength-Deluxcabindimensions-Train[$clAttrModifiers]
+$Cabinwidth_Deluxcabindimensions=@Cabinwidth-Deluxcabindimensions-Train[$clAttrModifiers]
+$BedWidthSingle_Deluxcabindimensions=@BedWidthSingle-Deluxcabindimensions-Train[$clAttrModifiers]
+$Double_Deluxcabindimensions=@Double-Deluxcabindimensions-Train[$clAttrModifiers]
+$BedLength_Deluxcabindimensions=@BedLength-Deluxcabindimensions-Train[$clAttrModifiers]
+$CabinsPerCar_Deluxcabindimensions=@CabinsPerCar-Deluxcabindimensions-Train[$clAttrModifiers]
+$Library =@Library-Facilities-Train[$clAttrModifiers]
+$Bar_Facilities=@Bar-Facilities-Train[$clAttrModifiers]
+$Channelmusic=@Channelmusic-Facilities-Train[$clAttrModifiers]
+$AyurvedicMassageCentre=@AyurvedicMassageCentre-Facilities-Train[$clAttrModifiers]
+$SteamBath=@SteamBath-Facilities-Train[$clAttrModifiers]
+$Gymnasium=@Gymnasium-Facilities-Train[$clAttrModifiers]
+$BeautyParlour=@BeautyParlour-Facilities-Train[$clAttrModifiers]
+$BusinessCentre=@BusinessCentre-Facilities-Train[$clAttrModifiers]
+$SpecailSuitForPhysicallyChallenged=@SpecailSuitForPhysicallyChallenged-Facilities-Train[$clAttrModifiers]
+$FullyLoadedMiniPantryinCoach=@FullyLoadedMiniPantryinCoach-Facilities-Train[$clAttrModifiers]
+$TelephoneInEachSaloon=@TelephoneInEachSaloon-Facilities-Train[$clAttrModifiers]
+$TelevisoinInEachSaloon=@TelevisoinInEachSaloon-Facilities-Train[$clAttrModifiers]
+$PlasmaTvInLoungeCar=@PlasmaTvInLoungeCar-Facilities-Train[$clAttrModifiers]
+$PASystem_6ChannelMusicSystem=@PASystem_6ChannelMusicSystem-Facilities-Train[$clAttrModifiers]
+$LoungeInEachPassangerCar=@LoungeInEachPassangerCar-Facilities-Train[$clAttrModifiers]
+
+
+
+# INSERT_UPDATE Vehicle;code;VehicleCategory
+
+INSERT_UPDATE Vehicle;code[unique=true];name;commonProductID;supercategories(code,$catalogVersion)[mode=append];onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];$catalogVersion;$approved;$Trainname;$Description;$Coaches;$Saloons;$Restaurants;$Bar;$Spa;$GymCoach;$ConferenceCoach;$Crew;$Transport;$Cabinarea;$Cabinlength;$Cabinwidth;$BedWidthSingle;$Double;$BedLength;$CabinsPerCar;$Cabinarea_Deluxcabindimensions;$Cabinlength_Deluxcabindimensions;$Cabinwidth_Deluxcabindimensions;$BedWidthSingle_Deluxcabindimensions;$Double_Deluxcabindimensions;$BedLength_Deluxcabindimensions;$CabinsPerCar_Deluxcabindimensions;$Library;$Bar_Facilities;$Channelmusic;$AyurvedicMassageCentre;$SteamBath;$Gymnasium;$BeautyParlour;$BusinessCentre;$SpecailSuitForPhysicallyChallenged;$FullyLoadedMiniPantryinCoach;$TelephoneInEachSaloon;$TelevisoinInEachSaloon;$PlasmaTvInLoungeCar;$PASystem_6ChannelMusicSystem;$LoungeInEachPassangerCar
+;Train001;Train;001;Train,C001ST010;12-12-2016;13-12-2016;;;Trainname;Description;Coaches;Saloons;Restaurants;Bar;Spa;GymCoach;ConferenceCoach;Crew;Transport;Cabinarea;Cabinlength;Cabinwidth;BedWidthSingle;Double;BedLength;CabinsPerCar;Cabinarea;Cabinlength;Cabinwidth;BedWidthSingle;Double;BedLength;CabinsPerCar;Y;Y;Y;Y;Y;Y;Y;Y;Y;Y;Y;Y;Y;Y;Y
+
+
+

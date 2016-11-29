@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2015 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+	<context:annotation-config />
+	
+	<bean id="baseDirectoryTravelogixAirRouteProduct" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogix/product/airroute" />
+	</bean>
+	
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesTravelogixAirRoute"
+		directory="#{baseDirectoryTravelogixAirRouteProduct}" filename-regex="air_route_routeconnection-(\d+)\.csv"
+		comparator="fileOrderComparator">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+	
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogixAirRoute"
+		reply-channel="travelogixAirRouteProductBatchFilesProc" directory="#{baseDirectoryTravelogixAirRouteProduct}/processing"
+		delete-source-files="true" />
+		
+	<int:service-activator input-channel="travelogixAirRouteProductBatchFilesProc"
+		output-channel="travelogixAirRouteProductBatchFilesHeaderInit" ref="travelogixAirRouteProductHeaderSetupTask"
+		method="execute" />
+
+	<bean id="travelogixAirRouteProductHeaderSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogixAirRouteProduct" />
+	</bean>
+
+	<int:service-activator input-channel="travelogixAirRouteProductBatchFilesHeaderInit"
+		output-channel="travelogixAirRouteProductBatchFilesHeader" ref="headerInitTask"
+		method="execute" />
+
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="travelogixAirRouteProductBatchFilesHeader"
+		output-channel="batchFilesTran" ref="travelogixAirRouteProductBatchTransformerTask"
+		method="execute" />
+
+	<bean id="travelogixAirRouteProductBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+
+	<!-- End Of Common Header -->
+	<!-- Transformer converters mappings -->
+
+	<bean id="batchCnkAirRouteSectorConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_route_routeconnection" p:converter-ref="batchCnkAirRouteSectorConverter" />
+
+	<bean id="batchAirRouteSectorTimeIntervalConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_route_routeconnection" p:converter-ref="batchAirRouteSectorTimeIntervalConverter" />
+		
+	<bean id="batchAirRouteSectorTimeInterval3ConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_route_routeconnection" p:converter-ref="batchAirRouteSectorTimeInterval3Converter" />
+		
+	<bean id="batchCnkAirRouteConnectionConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_route_routeconnection" p:converter-ref="batchCnkAirRouteConnectionConverter" />
+		
+	<bean id="batchCnkAirRouteConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_route_routeconnection" p:converter-ref="batchCnkAirRouteConverter" />
+		
+	
+	<bean id="batchCnkAirRouteSectorConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK air route Products
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+				INSERT_UPDATE Sector;fromCountry(isocode);fromCity(code)[unique=true];toCountry(isocode);toCity(code)[unique=true];airlineProducts(name[lang=en],$catalogVersion)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{4};{5};{6};{7};{8}:{0}</value>
+		</property>
+	</bean>
+
+	<bean id="batchAirRouteSectorTimeIntervalConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK air route products
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+				INSERT_UPDATE Sector;fromCountry(isocode);fromCity(code)[unique=true];toCountry(isocode);toCity(code)[unique=true];airlineProducts(name[lang=en],$catalogVersion)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator];sameAirlineorSameTerminal;sameAirlineorDifferentTerminal;differentAirlineorSameTerminal;differentAirlineorDifferentTerminal
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{9};{10};{11};{12};{13}:{0};{14};{15};{16};{17}
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="batchAirRouteSectorTimeInterval3Converter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK air route products
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+				INSERT_UPDATE Sector;fromCountry(isocode);fromCity(code)[unique=true];toCountry(isocode);toCity(code)[unique=true];airlineProducts(name[lang=en],$catalogVersion)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator];sameAirlineorSameTerminal;sameAirlineorDifferentTerminal;differentAirlineorSameTerminal;differentAirlineorDifferentTerminal
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{18};{19};{20};{21};{22}:{0};{23};{24};{25};{26}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchCnkAirRouteConnectionConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK air route Products
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+				INSERT_UPDATE RouteConnection;sectors(Sector.fromCity(Airport.code),Sector.toCity(Airport.code))[unique=true];active;onlineDate[dateformat=$dateformat][unique=true];offlineDate[dateformat=$dateformat][unique=true]
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{5}:{7},{10}:{12},{19}:{21};{1};{2};{3}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchCnkAirRouteConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK air route Products
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+				$approved=approvalstatus(code)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.ArticleStatusDataDecorator]
+				INSERT_UPDATE AirRoute;code;$catalogVersion[unique=true];fromCountry(isocode);routeFromCity(code)[unique=true];toCountry(isocode);routeToCity(code)[unique=true];remarks;approvalStatus(code);onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];sectors(routeConnection.onlineDate[dateformat=$dateformat],routeConnection.offlineDate[dateformat=$dateformat])
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;01;{0};{31};{27};{32};{28};{29};{30};{33};{34};{33}:{34}</value>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,58 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=source(code, $catalogVersion)[unique=true]
+$categories=supercategories(code, $catalogVersion)[default=C001ST001:$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$approved=approvalstatus(code)[default='approved']
+$siteResource=jar:com.cnk.travelogix.product.transport.masters.core.setup.TransportProductSetup&\transportproductmasterscore\import\sampledata\images
+
+INSERT_UPDATE FlightProduct;code;$catalogVersion[unique=true];name[lang=en,unique=true];airlineIATA(code)[unique=true];airlineType(code);commonProductId;financeControlId[unique=true];$approved;remarks;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];ticketDesignator;&componentRef;$categories;travellerPrograms(code)
+;123;;Indigo;6E;LCC;123;;;;01-01-2015;01-01-2020;;IndigoReference;;TravellerProgram1,TravellerProgram2
+;124;;Jet Airways;9W;FSC;124;;;;01-01-2015;01-01-2020;589;JetAirwaysReference;;TravellerProgram3
+;125;;Emirates;EK;FSC;125;;;;01-01-2015;01-01-2020;176;EmiratesReference;;TravellerProgram4
+;126;;Air India;AI;FSC;126;;;;01-01-2015;01-01-2020;;AirIndiaReference;;TravellerProgram5
+;127;;Etihad Airways;EY;FSC;127;;;;01-01-2015;01-01-2020;;EtihadAirwaysReference;;TravellerProgram6
+;128;;Qantas Airways;QR;FSC;128;;;;01-01-2015;01-01-2020;;QantasAirwaysReference;;
+;129;;GoAir;G8;LCC;129;;;;01-01-2015;01-01-2020;;GoAirReference;;
+;130;;SpiceJet;SG;LCC;130;;;;01-01-2015;01-01-2020;;SpiceJetReference;;
+
+UPDATE FlightProduct;name[lang=en,unique=true];mainAirlineProduct(name[lang=en],$catalogVersion);$catalogVersion[unique=true]
+
+
+# Media Folders
+INSERT_UPDATE MediaFolder;qualifier[unique=true];path[unique=true]
+;images;images
+
+INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier);&logoRef
+;emirateImage;$siteResource\emirates.jpg;;;images;emirateImageRef
+;jetairwaysImage;$siteResource\jetairwayslogo.jpg;;;images;jetairwaysImageRef
+
+UPDATE FlightProduct;name[lang=en,unique=true];logo(&logoRef);$catalogVersion[unique=true]
+;Jet Airways;jetairwaysImageRef;
+;Emirates;emirateImageRef;
+
+INSERT_UPDATE AirlineDetails;flightProduct(name[lang=en],$catalogVersion)[unique=true];airlineType(code)[unique=true];flightNumberfrom[unique=true];flightNumberTo;rbds;cabinClass(code);sectorFrom(code);sectorTo(code)
+;Jet Airways;FSC;3240;3342;;;;;
+
+
+INSERT_UPDATE AirMarketDisplayName;flightProduct(name[lang=en],$catalogVersion)[unique=true];market(uid)[unique=true];displayName
+;Jet Airways;IND;Jet Airways
+;Jet Airways;AU;Jet Airways
+
+INSERT_UPDATE MarketSpecificLogo;flightProduct(name[lang=en],$catalogVersion)[unique=true];market(uid)[unique=true];logo(code,$catalogVersion);cabinClass(code);sectorFrom(code);sectorTo(code)
+;Jet Airways;IND;jetairwaysImage;;;
+;Jet Airways;AU;jetairwaysImage;;;
+
+INSERT_UPDATE MarketSpecificURL;flightProduct(name[lang=en],$catalogVersion)[unique=true];market(uid)[unique=true];url;urlType(code)[unique=true]
+;Jet Airways;IND;http://www.jetairways.com/EN/IN/TermsAndConditions/Web_Checkin.aspx;TERMSANDCONDITIONS
+;Jet Airways;ALL;www.jetairways.com/EN/CN/PlanYourTravel/WebCheck-in.aspx;CHECK_IN
+
+INSERT_UPDATE DeactivationConfig;product(name[lang=en],$catalogVersion)[unique=true];validityStartDate[dateformat=$dateformat];validityEndDate[dateformat=$dateformat];companyMarket(Market.uid)
+;Indigo;30-02-2016;08-10-2016;IND
+;Jet Airways;30-02-2016;08-10-2016;ALL
+;Emirates;30-02-2016;08-10-2016;ALL
+;Air India;30-02-2016;08-10-2016;ALL
+;Etihad Airways;30-02-2016;08-10-2016;ALL
+;GoAir;30-02-2016;08-10-2016;ALL

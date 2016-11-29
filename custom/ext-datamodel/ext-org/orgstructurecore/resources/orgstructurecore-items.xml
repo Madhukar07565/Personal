@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+
+  
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+	
+	<enumtypes>
+		<enumtype code="Month">
+			<description>Month of the year</description>
+			<value code="JAN"/>
+			<value code="FEB"/>
+			<value code="MAR"/>
+			<value code="APR"/>
+			<value code="MAY"/>
+			<value code="JUN"/>
+			<value code="JUL"/>
+			<value code="AUG"/>
+			<value code="SEP"/>
+			<value code="OCT"/>
+			<value code="NOV"/>
+			<value code="DEC"/>
+		</enumtype>
+		<enumtype code="RevenueRecognitionTriggerType">
+			<description>Revenue Recognition Triggers</description>
+			<value code="TRAVEL"/>
+			<value code="TICKETING"/>
+			<value code="CHECKIN"/>
+			<value code="CHECKOUT"/>
+			<value code="SALE"/>
+		</enumtype>
+		<enumtype code="KYCDocumentType" dynamic="true">
+			<description>Defines various type of KYC Documents like certificate of Incorporation</description>
+			<value code="COI"/>
+			<value code="AOA"/>
+			<value code="MOA"/>
+			<value code="ROBOD"/>
+		</enumtype>		
+		<enumtype code="ClientCompanyType" dynamic="true">
+		<description>Describes type of Client Company</description>
+			<value code="PUBLIC_LTD"/>
+			<value code="PRIVATE_LTD"/>
+			<value code="PARTNERSHIP_FIRM"/>
+			<value code="SOLE_TRADER"/>
+			<value code="COOPERATIVES"/>
+			<value code="FRANCHISES"/>
+			<value code="PUBLIC_SECTOR"/>
+		</enumtype>	
+		<enumtype code="FinanceBackendType" dynamic="true">
+			<description>Defines back end type for a company</description>
+			<value code="SAP"/>
+			<value code="OTHERS"/>
+		</enumtype>		
+	</enumtypes>
+	<relations>
+		<relation localized="false" code="GroupOfCompanies2GroupCompany">
+			<sourceElement type="GroupOfCompanies" qualifier="groupOfCompanies" cardinality="one">
+				<modifiers optional="false"/>
+			</sourceElement>
+			<targetElement type="GroupCompany" qualifier="groupCompaies" cardinality="many" collectiontype="set"/>
+		</relation>
+		<relation localized="false" code="GroupCompany2Company">
+			<sourceElement type="GroupCompany" qualifier="groupCompany" cardinality="one">
+				<modifiers optional="false"/>
+			</sourceElement>
+			<targetElement type="Company" qualifier="companies" cardinality="many" collectiontype="set"/>
+		</relation>		
+		<relation localized="false" code="Company2SBU">
+			<sourceElement type="Company" qualifier="company" cardinality="one"/>
+			<targetElement type="StrategicBusinessUnit" qualifier="strategicBusinessUnits" cardinality="many" collectiontype="set"/>
+		</relation>		
+		<relation localized="false" code="SBU2BU">
+			<sourceElement type="StrategicBusinessUnit" qualifier="strategicBusinessUnit" cardinality="one"/>
+			<targetElement type="BusinessUnit" qualifier="businessUnits" cardinality="many" collectiontype="set"/>
+		</relation>	
+		<relation localized="false" code="BU2Market">
+			<sourceElement type="BusinessUnit" qualifier="businessUnit" cardinality="one"/>
+			<targetElement type="Market" qualifier="markets" cardinality="many" collectiontype="set"/>
+		</relation>	
+		<relation localized="false" code="Market2CountryRel">
+			<deployment table="market2companyrel" typecode="20100"/>
+			<sourceElement type="Country" qualifier="constituentCountries" cardinality="many" collectiontype="set">
+				<modifiers optional="false"/>
+			</sourceElement>
+			<targetElement type="Market" qualifier="companyMarkets" cardinality="many" collectiontype="set"/>
+		</relation>			
+		<relation localized="false" code="Company2RevRecConf">
+			<sourceElement type="Company" qualifier="company" cardinality="one">
+				<modifiers optional="false" unique="true"/>
+			</sourceElement>
+			<targetElement type="RevenueRecognitionConfig" qualifier="revRecConfigs" cardinality="many" collectiontype="set">
+				<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+        <relation code="Market2KYC" localized="false">
+            <sourceElement type="Market" qualifier="market" cardinality="one">
+                <modifiers optional="false"/>
+            </sourceElement>
+            <targetElement type="KYCRequirement" qualifier="kycDocuments" cardinality="many" collectiontype="set">
+                <modifiers partof="true"/>
+            </targetElement>
+        </relation>
+        <relation code="KYCRequirement2KYCDocument" localized="false">
+        	<deployment table="kycreq2kycdoc" typecode="20103"/>
+            <sourceElement type="KYCRequirement" qualifier="kycRequirement" cardinality="many" collectiontype="set">
+                <modifiers optional="false"/>
+            </sourceElement>
+            <targetElement type="KYCDocumentType" qualifier="kycDocuments" cardinality="many" collectiontype="set">
+                <modifiers optional="false"/>
+            </targetElement>
+        </relation>		
+        <relation localized="false" code="DistributionChannel2Division">
+        	<sourceElement type="DistributionChannel" qualifier="distributionChannel" cardinality="one"/>
+        	<targetElement type="Division" qualifier="divisions" cardinality="many" collectiontype="set"/>
+        </relation>
+        <relation localized="false" code="DistributionChannel2Company">
+        	<sourceElement type="DistributionChannel" qualifier="distributionChannels" cardinality="many"/>
+        	<targetElement type="Company" qualifier="company" cardinality="one"/>
+        </relation>        
+        <relation localized="false" code="SalesOffice2SalesGroup">
+        	<deployment table="salesoff2grp" typecode="20104"/>
+        	<sourceElement type="SalesOffice" qualifier="salesOffices" cardinality="many" collectiontype="set"/>
+        	<targetElement type="SalesGroup" qualifier="salesGroups" cardinality="many" collectiontype="set"/>
+        </relation>
+        <relation localized="false" code="SalesOffice2BU">
+        	<deployment table="salesoffice2bu" typecode="20105"/>
+        	<sourceElement type="SalesOffice" qualifier="salesOffices" cardinality="many" collectiontype="set"/>
+        	<targetElement type="BusinessUnit" qualifier="buAvailability" cardinality="many" collectiontype="set"/>
+        </relation>
+        <relation code="Company2Market" localized="false">
+            <sourceElement type="Company" qualifier="company" cardinality="one"/>
+            <targetElement type="Market" qualifier="market" cardinality="many"/>
+        </relation>
+	</relations>
+	<itemtypes>
+		<typegroup name="organization">
+			<itemtype code="Item" autocreate="false" generate="true">
+				<attributes>
+				   <attribute type="User" qualifier="currentUser">
+						<persistence type="dynamic" attributeHandler="currentUserDynamicAttributeHandler" />
+						<modifiers write="false" read="true" search="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AbstractOrganization" extends="UserGroup" abstract="true" jaloclass="com.cnk.travelogix.orgstructure.core.jalo.AbstractOrganization">
+				<attributes>
+					<attribute type="java.lang.String" qualifier="reason">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="java.util.Date" qualifier="activeFrom">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="java.util.Date" qualifier="activeTo">
+						<persistence type="property"/>
+					</attribute>					
+					<attribute type="java.lang.Boolean" qualifier="active">
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="remarks">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="ArticleApprovalStatus" qualifier="approvalStatus">
+						<modifiers optional="false"/>
+						<persistence type="property" />
+						<defaultvalue>em().getEnumerationValue("ArticleApprovalStatus","check")</defaultvalue>
+					</attribute>
+					<attribute type="Employee" qualifier="lockedBy">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="workFlowStatus" type="ApprovalWorkFlowStatus">
+						<description>Work Flow Status</description>
+						<defaultvalue>em().getEnumerationValue("WorkFlowStatus","DRAFT")</defaultvalue>
+						<persistence type="property" />					
+				  </attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="GroupOfCompanies" extends="AbstractOrganization" jaloclass="com.cnk.travelogix.orgstructure.core.jalo.GroupOfCompanies">
+				<description>Marker type to manage Group of Companies</description>
+			</itemtype>
+			<itemtype code="GroupCompany" extends="AbstractOrganization" jaloclass="com.cnk.travelogix.orgstructure.core.jalo.GroupCompany">
+				<description>Marker type to manage Group Company</description>
+			</itemtype>
+			<itemtype code="Company" autocreate="false">
+				<description>Manages the companies at Travelogix platform</description>
+				<attributes>
+					<attribute qualifier="groupCompany" type="GroupCompany">
+						<description>Group Company</description>
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+					</attribute>				
+					<attribute type="Month" qualifier="fiscalStart">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="Month" qualifier="fiscalEnd">
+						<persistence type="property"/>
+					</attribute>		
+					<attribute type="TaxHead" qualifier="taxHeads">
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+					</attribute>	
+					<attribute type="Currency" qualifier="currency">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="telephone">
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="fax">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="email">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="websiteUrl">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="ArticleApprovalStatus" qualifier="approvalStatus">
+						<modifiers optional="false"/>
+						<persistence type="property" />
+						<defaultvalue>em().getEnumerationValue("ArticleApprovalStatus","check")</defaultvalue>
+					</attribute>
+					<attribute type="java.util.Date" qualifier="activeFrom">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="java.util.Date" qualifier="activeTo">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="Employee" qualifier="lockedBy">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="FinanceBackendType" qualifier="backendType">
+						<modifiers optional="false"/>
+						<persistence type="property" />
+						<defaultvalue>em().getEnumerationValue("FinanceBackendType","SAP")</defaultvalue>
+					</attribute>
+					<attribute qualifier="workFlowStatus" type="ApprovalWorkFlowStatus">
+						<description>Work Flow Status</description>
+						<defaultvalue>em().getEnumerationValue("WorkFlowStatus","DRAFT")</defaultvalue>
+						<persistence type="property" />					
+				  </attribute>
+				  <attribute type="java.lang.String" qualifier="subscriberAccountRef">
+						<persistence type="property" />
+				  </attribute> 																					
+				</attributes>
+			</itemtype>
+			<itemtype code="StrategicBusinessUnit" extends="AbstractOrganization" jaloclass="com.cnk.travelogix.orgstructure.core.jalo.StrategicBusinessUnit">
+				<description>Marker type to Strategic Business Units</description>
+			</itemtype>
+			<itemtype code="BusinessUnit" extends="AbstractOrganization" jaloclass="com.cnk.travelogix.orgstructure.core.jalo.BusinessUnit">
+				<description>Marker type to Business Units</description>
+			</itemtype>		
+			<itemtype code="Market" extends="AbstractOrganization" jaloclass="com.cnk.travelogix.orgstructure.core.jalo.Market">
+				<description>Company Market</description>
+				<attributes>
+					<attribute type="java.lang.String" qualifier="marketDateFormat">
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="Currency" qualifier="localCurrency">
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>	
+			<itemtype code="RevenueRecognitionConfig" jaloclass="com.cnk.travelogix.orgstructure.core.revenuerecognition.jalo.RevenueRecognitionConfig">
+				<deployment table="revrecconfig" typecode="20101"/>
+				<attributes>
+					<attribute type="ProductCategorySubType" qualifier="productCategorySubType">
+						<modifiers optional="false" unique="true"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="RevenueRecognitionTriggerType" qualifier="trigger">
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+						<defaultvalue>em().getEnumerationValue("RevenueRecognitionTriggerType","SALE")</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="before">
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="days">
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+						<defaultvalue>Integer.valueOf("0")</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="periodic">
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>		
+			<itemtype code="KYCRequirement" jaloclass="com.cnk.travelogix.orgstructure.core.kyc.jalo.KYCRequirement">	
+			 	 <description>Defines KYCRequirement for clients of company.</description>
+				 <deployment table="kycreqs" typecode="20102"/>   
+				 <attributes>
+				 	<attribute qualifier="clientCompanyType" type="ClientCompanyType">
+						<persistence type="property"/>
+					</attribute>
+				 </attributes>  
+			</itemtype>	
+			<itemtype code="DistributionChannel" extends="AbstractOrganization" jaloclass="com.cnk.travelogix.orgstructure.core.sales.jalo.DistributionChannel">
+				<description>Marker type to manage Distribution Channels</description>
+			</itemtype>
+			<itemtype code="Division" extends="AbstractOrganization" jaloclass="com.cnk.travelogix.orgstructure.core.sales.jalo.Division">
+				<description>Marker type to manage Division</description>
+			</itemtype>			
+			<itemtype code="IATAAgency" extends="AbstractIATAItem"
+			          jaloclass="com.cnk.travelogix.orgstructure.core.iata.jalo.IATAAgency">			          
+				<description>Defines IATA Agency.</description>
+			</itemtype>
+			<itemtype code="SalesOffice" extends="AbstractOrganization" jaloclass="com.cnk.travelogix.orgstructure.core.sales.jalo.SalesOffice">
+				<description>Type to maintain Sales Offices</description>
+				<attributes>
+					<attribute type="Address" qualifier="address">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="Division" qualifier="division">
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="IATAAgency" qualifier="iataAgency">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="contactPerson">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="telephone">
+						<modifiers optional="false"/>
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="fax">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="email">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="websiteUrl">
+						<persistence type="property"/>
+					</attribute>		
+					<attribute type="java.lang.String" qualifier="shopNumber">
+						<persistence type="property"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="establishmentNumber">
+						<persistence type="property"/>
+					</attribute>				
+				</attributes>
+			</itemtype>
+			<itemtype code="SalesGroup" extends="AbstractOrganization" jaloclass="com.cnk.travelogix.orgstructure.core.sales.jalo.SalesGroup">
+				<description>Marker type to manage sales groups</description>
+			</itemtype>
+			<itemtype code="Department" autocreate="false">
+				<attributes>
+					<attribute type="java.lang.String" qualifier="department">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="clientFinanceCode">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CostCentreCodes" qualifier="costCentreCode">
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		<typegroup name="catalog">
+			<itemtype code="Catalog" autocreate="false">
+				<attributes>
+					<attribute type="Company" qualifier="company">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>		
+</items>

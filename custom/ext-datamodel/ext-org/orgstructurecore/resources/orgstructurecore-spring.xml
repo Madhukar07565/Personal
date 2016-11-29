@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="orgStructureCoreSystemSetup" class="com.cnk.travelogix.orgstructure.core.setup.OrgStructureCoreSystemSetup" parent="abstractCoreSystemSetup"/>		
+			
+	<bean id="businessUnitLoadInterceptor" class="com.cnk.travelogix.orgstructure.core.interceptors.BusinessUnitLoadInterceptor"/>
+	<bean id="businessUnitLoadInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="businessUnitLoadInterceptor"/>
+		<property name="typeCode" value="BusinessUnitModel"/>
+	</bean>
+
+	<bean id="strategicBusinessUnitLoadInterceptor" class="com.cnk.travelogix.orgstructure.core.interceptors.StrategicBusinessUnitLoadInterceptor"/>
+	<bean id="strategicBusinessUnitLoadInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="strategicBusinessUnitLoadInterceptor"/>
+		<property name="typeCode" value="StrategicBusinessUnitModel"/>
+	</bean>
+
+	<bean id="companyLoadInterceptor" class="com.cnk.travelogix.orgstructure.core.interceptors.CompanyLoadInterceptor"/>
+	<bean id="companyLoadInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="companyLoadInterceptor"/>
+		<property name="typeCode" value="CompanyModel"/>
+	</bean>
+	
+	<bean id="groupCompanyLoadInterceptor" class="com.cnk.travelogix.orgstructure.core.interceptors.GroupCompanyLoadInterceptor"/>
+	<bean id="groupCompanyLoadInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="groupCompanyLoadInterceptor"/>
+		<property name="typeCode" value="GroupCompanyModel"/>
+	</bean>	
+
+	<bean id="marketLoadInterceptor" class="com.cnk.travelogix.orgstructure.core.interceptors.MarketLoadInterceptor"/>
+	<bean id="marketLoadInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="marketLoadInterceptor"/>
+		<property name="typeCode" value="MarketModel"/>
+	</bean>
+	
+	<bean id="defaultOrganizationUidGenerator"
+	      class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+	      init-method="init" scope="tenant">
+		<property name="key" value="${keygen.organization.uid.name}"/>
+		<property name="digits" value="${keygen.organization.uid.digits}"/>
+		<property name="start" value="${keygen.organization.uid.start}"/>
+		<property name="type" value="${keygen.organization.uid.type}"/>
+		<property name="template" value="${keygen.organization.uid.template}"/>
+	</bean>
+	
+	<bean id="companyUidGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="company_id" />
+		<property name="digits" value="7" />
+		<property name="start" value="0000001" />
+		<property name="numeric" value="true" />
+	</bean>
+	
+	<bean id="companyPrepareInterceptor" class="com.cnk.travelogix.orgstructure.core.interceptors.CompanyPrepareInterceptor">
+		<property name="keyGenerator" ref="companyUidGenerator"/>
+	</bean>
+	<bean id="companyPrepareInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="companyPrepareInterceptor"/>
+		<property name="typeCode" value="Company"/>
+	</bean>
+	
+	<bean id="marketUidGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="market_id" />
+		<property name="digits" value="${keygen.organization.uid.digits}"/>
+		<property name="start" value="M0000001" />
+		<property name="type" value="${keygen.organization.uid.type}"/>
+	</bean>
+	
+	<bean id="marketPrepareInterceptor" class="com.cnk.travelogix.orgstructure.core.interceptors.MarketPrepareInterceptor">
+		<property name="keyGenerator" ref="marketUidGenerator"/>
+	</bean>
+	<bean id="marketPrepareInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="marketPrepareInterceptor"/>
+		<property name="typeCode" value="Market"/>
+	</bean>
+	
+	<bean id="organizationPrepareInterceptor" class="com.cnk.travelogix.orgstructure.core.interceptors.AbstractOrganizationPrepareInterceptor">
+		<property name="keyGenerator" ref="defaultOrganizationUidGenerator"/>
+	</bean>
+	
+	<bean id="salesOfficePrepareInterceptor"
+		class="com.cnk.travelogix.orgstructure.core.interceptors.SalesOfficePrepareInterceptor" autowire="byName">
+		<property name="keyGenerator" ref="salesOfficeGenerator" />
+	</bean>
+
+	<bean id="salesOfficePrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="salesOfficePrepareInterceptor" />
+		<property name="typeCode" value="SalesOffice" />
+	</bean>
+
+	<bean id="salesOfficeGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		 scope="tenant">
+		<property name="key" value="salesOffice_uid" />
+		<property name="digits" value="8" />
+		<property name="start" value="SOI10000" />
+		<property name="numeric" value="false" />
+	</bean>	
+	
+	<bean id="currentUserDynamicAttributeHandler"
+		class="com.cnk.travelogix.orgstructure.core.dynamicattribute.handler.CurrentUserDynamicAttributeHandler" />
+</beans>

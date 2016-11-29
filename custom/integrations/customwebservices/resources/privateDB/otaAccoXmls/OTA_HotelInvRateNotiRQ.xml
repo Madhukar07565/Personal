@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:OTA_HotelInvRateNotifRQ xmlns:n2="http://www.coxandkings.com/suppl/accoCommonInvRates" xmlns:n21="http://www.coxandkings.com/suppl/accoInv" xmlns:n22="http://www.coxandkings.com/suppl/accoRates" xmlns:p="http://www.coxandkings.com/suppl/acco" xmlns:p1="http://www.coxandkings.com/suppl/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.coxandkings.com/suppl/accoInvRate OTA_HotelInvRateNotifRQ.xsd http://www.coxandkings.com/suppl/accoCommonInvRates ../../../../common/Schemas/CNK_CommonInventoryRate.xsd ">
+  <p:RequestBody>
+    <n2:AccomodationInvAndRateDefinition BU="" CompanyCode="CNK" CompanyRateCode="" CompanyRateType="" SBU="" SupplierCode="" SupplierMarket="" SupplierRate="" SupplierRateCode="" SupplierRateType="">
+      <n2:AccoInvDefinition BlockedQuantity="0" CutOffDaysForBlockedQuantity="0" DistressSaleMinimumThreshold="0" DistressSaleThresholdCutoffDays="0" SettleWithCompany="true">
+        <n21:AccoSupplierAdvanceDefinition MaxNoOfNights="5" MinNoOfNights="2">
+          <n21:BlockOutDates FromDate="25-08-2016" ToDate="27-08-2016"/>
+          <n21:AccoPenaltyChargesRelease ReleaseTime="">
+            <n21:RoomCategory>STANDARD</n21:RoomCategory>
+            <n21:RoomType>DOUBLE_ROOM</n21:RoomType>
+            <n21:MealType>NO_PREFERENCE</n21:MealType>
+            <n21:AccoCutoffAndCharges ActualAmount="5000.0" CutOffFromDay="3" CutOffToDay="0" PercentageAmount="0.0" Range="ABOVE"/>
+            <n21:DateRange FromDate="01-09-2016" ToDate="05-09-2016"/>
+          </n21:AccoPenaltyChargesRelease>
+          <n21:RoomingListCutOffs BufferDays="0" NoOfNTBAS="0" ReleaseTime="" SupplierCutOffDays="0">
+            <n21:DefinedBy>DAYS</n21:DefinedBy>
+          </n21:RoomingListCutOffs>
+          <n21:CutOffForFreeSale ReleaseDayOrHrs="" SupplierCutOffDays="0">
+            <n21:DefinedBy>DAYS</n21:DefinedBy>
+            <n21:AppliedOn>Prior_To_Travel</n21:AppliedOn>
+          </n21:CutOffForFreeSale>
+        </n21:AccoSupplierAdvanceDefinition>
+        <n21:AccoInventoryDetail City="BLR" Currency="INR" HotelCategory="DELUXE" PriceRangeFrom="2000" PriceRangeTo="18000" Product="" TravelChain="">
+          <n21:InventoryRoomInfo AvailableQuantity="40" DistressSalesThresholdCutOffDays="7" DistressSalesUtilizationThreshold="0" DistributedQuantity="10" LiabilityOnUtilization="0.0" NoOfRoomsRequired="0" RateCode="TTY" RateType="YY" RequestedQuantity="0" ReservedQuantity="0" StopSales="false" SupplierReferenceNumber="ERSTW">
+            <n21:RoomCategory>STANDARD</n21:RoomCategory>
+            <n21:RoomType>DOUBLE_ROOM</n21:RoomType>
+            <n21:DayOfWeek>SUNDAY</n21:DayOfWeek>
+          </n21:InventoryRoomInfo>
+          <n21:Products>n21:Products</n21:Products>
+        </n21:AccoInventoryDetail>
+        <n21:AccoAssociateInventory NumberOfDistributedInventory="10" Product="TAJ" ProductCategories="ACCO">
+          <n21:InventoryFor>STANDALONE</n21:InventoryFor>
+        </n21:AccoAssociateInventory>
+        <n2:Inventory>FREESALE</n2:Inventory>
+      </n2:AccoInvDefinition>
+     <n2:AccomodationSupplierRate Currency="INR" Market="INDIA" Product="TAJ" ProductSubCategory="HOTEL" Supplier="HotelGroup">
+        <n22:Taxes ApplicableForChild="true" ApplicableForInfant="true" ApplicableforAdult="true" City="" Country="" Currency="INR" PayOnArrival="true" State="KA" TaxCalculationOn="">
+		
+        </n22:Taxes>
+        <n22:AccomodationRateDefinition Client="B2C" ClientGroup="" CompanyRateCode="" CompanyRateType="" Net="true" NoOfRooms="12" SupplierRateCode="TTY" SupplierRateType="YY">
+          <n22:PriceApplicability>PER_ROOM</n22:PriceApplicability>
+          <n22:RateTypeApplicableFor>STANDALONE</n22:RateTypeApplicableFor>
+          <n22:ClientType>B2B</n22:ClientType>
+          <n22:Seasonality>LOW_SEASON</n22:Seasonality>
+          <n22:CommisionThreshold>AMOUNT</n22:CommisionThreshold>
+          <n22:Comparator>EQUALS</n22:Comparator>
+          <n22:CommisionValue>100.0</n22:CommisionValue>
+          <n22:AccoRateDetailDefinition MaxPaxOccupancy="6" MinNights="2" MinPaxOccupancy="2" NoOfAdult="4" NoOfChild="1">
+           
+            <n22:DayOfWeek>SUNDAY</n22:DayOfWeek>
+            <n22:RateDefinedFor>PER_NIGHT</n22:RateDefinedFor>
+            <n22:RoomCategory>STANDARD</n22:RoomCategory>
+            <n22:MealPlan>AI</n22:MealPlan>
+            <n22:CommissionExcluded>DOUBLE_ROOM</n22:CommissionExcluded>
+            <n22:CheckInTime>11.00</n22:CheckInTime>
+            <n22:CheckoutTime>10.00</n22:CheckoutTime>
+            <n22:ProRata>true</n22:ProRata>
+            <n22:StayDuration>0</n22:StayDuration>
+            <n22:RateFor>HOTEL</n22:RateFor>
+            <n22:Rate>0.0</n22:Rate>
+            <n22:PayOnArrival>true</n22:PayOnArrival>
+            <n22:ChildAge FromAge="3" ToAge="9"/>
+            <n22:AdultAge FromAge="10" ToAge="40"/>
+            <n22:AbstractRateAdvDefinition MaxNights="6" MaxPax="5" MinPax="2" Nationality="INDIA">
+              <n22:PriceExclusion>INTERNET</n22:PriceExclusion>
+              <n22:TaxInformation>TaxInformation</n22:TaxInformation>
+              <n22:InternalDescription>InternalDescription</n22:InternalDescription>
+              <n22:PriceInclusion>BREAKFAST</n22:PriceInclusion>
+              <n22:ExternalDescription>n22:ExternalDescription</n22:ExternalDescription>
+              <n22:OverrideRate>true</n22:OverrideRate>
+              <n22:ChildPolicy>true</n22:ChildPolicy>
+            </n22:AbstractRateAdvDefinition>
+            <n22:AbstractTravelogixSupplierOffer Nationality="INDIA" OfferExclusion="" OfferInclusion="" Reason="" Remarks="">
+              <n22:OfferSubType>NORMAL_DISCOUNT</n22:OfferSubType>
+              <n22:DiscountType>DISCOUNT_ON_RATES</n22:DiscountType>
+              <n22:Approvalstatus>CHECK</n22:Approvalstatus>
+              <n22:AdvanceBookingFromDays>0</n22:AdvanceBookingFromDays>
+              <n22:PriceComponent>n22:PriceComponent</n22:PriceComponent>
+              <n22:AdvanceBookingToDays>n22:AdvanceBookingToDays</n22:AdvanceBookingToDays>
+              <n22:ThresholdType>AMOUNT</n22:ThresholdType>
+              <n22:RateApplicabilityType>STANDALONE</n22:RateApplicabilityType>
+              <n22:OfferInternalDescription>n22:OfferInternalDescription</n22:OfferInternalDescription>
+              <n22:offerExternalDescription>n22:offerExternalDescription</n22:offerExternalDescription>
+              <n22:SalesDuration FromDate="22-08-2016" ToDate="28-08-2016"/>
+            </n22:AbstractTravelogixSupplierOffer>
+          </n22:AccoRateDetailDefinition>
+          <n22:AccoSurchargeSuppDetail Amount="2000.0" StdCommissionValue="200.0" SurchargeID="SUR123" SurchargeName="Tour">
+            <n22:type>HOTEL</n22:type>
+            <n22:Supplement>MANDATORY</n22:Supplement>
+            <n22:PriceInclusion>BREAKFAST</n22:PriceInclusion>
+            <n22:PriceExclusion>INTERNET</n22:PriceExclusion>
+            <n22:InternalDescription>n22:InternalDescription</n22:InternalDescription>
+            <n22:ExternalDescription>n22:ExternalDescription</n22:ExternalDescription>
+            <n22:PayOnArrival>true</n22:PayOnArrival>
+            <n22:SubType>ROOM_LEVEL</n22:SubType>
+            <n22:StdCommissionType>AMOUNT</n22:StdCommissionType>
+            <n22:RoomCategories>STANDARD</n22:RoomCategories>
+            <n22:RoomTypes>DOUBLE_ROOM</n22:RoomTypes>
+            <n22:MealPlan>AI</n22:MealPlan>
+            <n22:PassengerLevelSurchargeDetail AgeDetail="34" Amount="3000.0" StdCommissionValue="500.0">
+              <n22:PassengerType>ADULT</n22:PassengerType>
+              <n22:StdCommissionType>AMOUNT</n22:StdCommissionType>
+            </n22:PassengerLevelSurchargeDetail>
+          </n22:AccoSurchargeSuppDetail>
+        </n22:AccomodationRateDefinition>
+        <n22:SupplierAncillaryRate>
+          <n22:ActiveDateRange ToDate="28-08-2016" FromDate="22-08-2016"/>
+          <n22:SeasonDetails>
+            <n22:Seasonality>LOW_SEASON</n22:Seasonality>
+          </n22:SeasonDetails>
+          <n22:AncillaryRateDefinition currency="">
+            <n22:Seasonality>LOW_SEASON</n22:Seasonality>
+            <n22:ActiveDateRange FromDate="" ToDate=""/>
+            <n22:CommonAncillaryDetail ChildAge="5" DuratiomValue="0.0" SeatingType="Normal" StartTime="11:00">
+              <n22:DurationType>DAYS</n22:DurationType>
+              <n22:CostApplicabiltity>PER_ROOM</n22:CostApplicabiltity>
+              <n22:PaxType>ADULT</n22:PaxType>
+              <n22:VehicleType>FLIGHTS</n22:VehicleType>
+              <n22:Ancilary>n22:Ancilary</n22:Ancilary>
+              <n22:AncillaryDetails>n22:AncillaryDetails</n22:AncillaryDetails>
+              <n22:DayOfTheWeek>SUNDAY</n22:DayOfTheWeek>
+              <n22:cost>1000.0</n22:cost>
+              <n22:TaxPencentage>10.0</n22:TaxPencentage>
+              <n22:Net>true</n22:Net>
+              <n22:CommissionValue>10.0</n22:CommissionValue>
+              <n22:CommissionThreshold>AMOUNT</n22:CommissionThreshold>
+              <n22:PayOnArrival>true</n22:PayOnArrival>
+              <n22:AbstractTravelogixSupplierOffer Nationality="INDIAN" OfferExclusion="" OfferInclusion="" Reason="" Remarks="">
+                <n22:OfferSubType>NORMAL_DISCOUNT</n22:OfferSubType>
+                <n22:DiscountType>DISCOUNT_ON_RATES</n22:DiscountType>
+                <n22:Approvalstatus>CHECK</n22:Approvalstatus>
+                <n22:AdvanceBookingFromDays>0</n22:AdvanceBookingFromDays>
+                <n22:PriceComponent>n22:PriceComponent</n22:PriceComponent>
+                <n22:AdvanceBookingToDays>5</n22:AdvanceBookingToDays>
+                <n22:ThresholdType>AMOUNT</n22:ThresholdType>
+                <n22:RateApplicabilityType>STANDALONE</n22:RateApplicabilityType>
+                <n22:OfferInternalDescription>OfferInternalDescription</n22:OfferInternalDescription>
+                <n22:offerExternalDescription>offerExternalDescription</n22:offerExternalDescription>
+                <n22:SalesDuration FromDate="22-08-16" ToDate="28-08-16"/>
+              </n22:AbstractTravelogixSupplierOffer>
+            </n22:CommonAncillaryDetail>
+          </n22:AncillaryRateDefinition>
+        </n22:SupplierAncillaryRate>
+        <n2:Validity></n2:Validity>
+        <n2:ActiveDateRange ToDate="28-08-2016" FromDate="22-08-2016"/>
+      </n2:AccomodationSupplierRate>
+    </n2:AccomodationInvAndRateDefinition>
+    <p:HotelCode>TAJ</p:HotelCode>
+  </p:RequestBody>
+</p:OTA_HotelInvRateNotifRQ>

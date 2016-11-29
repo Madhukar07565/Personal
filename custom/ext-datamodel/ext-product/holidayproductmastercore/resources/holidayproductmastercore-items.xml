@@ -1,0 +1,865 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+	<collectiontypes>
+		<collectiontype elementtype="HolidayBrand" code="HolidayBrands"
+			autocreate="true" />
+		<collectiontype elementtype="Brochure" code="Brochures"
+			autocreate="true" />
+		<collectiontype elementtype="Market" code="Markets"
+			autocreate="true" />
+		<collectiontype elementtype="Interest" code="Interests"
+			autocreate="true" />
+		<collectiontype elementtype="Sector" code="Sectors"
+			autocreate="true" />
+	</collectiontypes>
+
+	<enumtypes>
+
+		<enumtype generate="true" autocreate="true" code="FlavorType">
+			<value code="Seat_in_Coach_Packages" />
+			<value code="Self_Drive_Packages" />
+			<value code="Private_Touring" />
+			<value code="Premium_Tours_with_Tour_Manager_Indian_Meals" />
+			<value code="Coach_tour_with_Indian_meals_Tour_Escort" />
+			<value code="Coach_tour_with_Indian_meals_Tour_Director" />
+			<value code="Coach_Tours_All_Inclusive" />
+			<value code="Rail_Holidays" />
+			<value code="Hotel_Packages" />
+			<value code="Coach_tour_with_Indian_meals" />
+			<value code="Cruise_Holidays" />
+			<value code="Coach_Tour_with_Continental_meal" />
+			<value code="Coach_Tour_with_Continental_meals_Tour_Manager" />
+			<value code="Premium_Tours_with_Tour_Manager" />
+			<value code="Coach_tour_with_Continental_meals_Tour_Director" />
+			<value code="Coach_tour_with_Tour_Manager" />
+		</enumtype>
+
+		<enumtype generate="true" autocreate="true" code="HolidayProductType">
+			<value code="FIT" />
+			<value code="GROUP" />
+			<value code="BOTH" />
+		</enumtype>
+
+		<enumtype generate="true" autocreate="true" code="Session">
+			<value code="MORNING" />
+			<value code="AFTERNOON" />
+			<value code="EVENING" />
+			<value code="NIGHT" />
+		</enumtype>
+
+		<enumtype generate="true" autocreate="true" code="TransferCategory">
+			<value code="RENTAL" />
+			<value code="TRANSFER" />
+		</enumtype>
+
+		<enumtype generate="true" autocreate="true" code="RateDefinedForType">
+			<value code="CITY_TRANSFER" />
+			<value code="INTERCITYTRANSFER" />
+			<value code="CITY_USE" />
+			<value code="OUT_STATION" />
+		</enumtype>
+	</enumtypes>
+
+	<relations>
+		<relation code="HolidayProductTODestination" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="product" type="HolidayProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="holidayDestinaions" type="HolidayDestination"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="HolidayFlavorTOAbstractDayWiseItinerary"
+			autocreate="true" localized="false">
+			<sourceElement qualifier="holidayFlavor" type="HolidayFlavor"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="serviceBasedDayWiseItinerarise"
+				type="AbstractDayWiseItinerary" cardinality="many">
+			</targetElement>
+		</relation>
+
+		<relation code="HolidayFlavorTOBlackOutDates" autocreate="true"
+			localized="false">
+			<sourceElement qualifier="holidayFlavor" type="HolidayFlavor"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="blackOutDays" type="BlackOutDates"
+				cardinality="many">
+			</targetElement>
+		</relation>
+
+		<relation code="HolidayFlavorTOHolidayHub" autocreate="true"
+			localized="false">
+			<sourceElement qualifier="holidayFlavor" type="HolidayFlavor"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="hubs" type="HolidayHub"
+				cardinality="many">
+			</targetElement>
+		</relation>
+
+		<relation code="HolidayFlavorTOAbstractVisaDetails"
+			autocreate="true" localized="false">
+			<sourceElement qualifier="holidayFlavor" type="HolidayFlavor"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="visas" type="AbstractVisaDetails"
+				cardinality="many">
+			</targetElement>
+		</relation>
+
+		<relation code="HolidayHubTOFeeder" autocreate="true"
+			localized="false">
+			<sourceElement qualifier="holidayHub" type="HolidayHub"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="feeders" type="Feeder"
+				cardinality="many">
+			</targetElement>
+		</relation>
+
+		<relation code="HolidayItineraryDetailsTODayWiseItinerary"
+			autocreate="true" localized="false">
+			<sourceElement qualifier="dayWiseItinerary" type="DayWiseItinerary"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="itineraryDetails" type="HolidayItineraryDetails"
+				cardinality="many">
+			</targetElement>
+		</relation>
+
+		<relation code="HolidayFlavorTODayWiseItinerary" autocreate="true"
+			localized="false">
+			<sourceElement qualifier="holidayFlavor" type="HolidayFlavor"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="itineraryBasedDayWiseItineraries"
+				type="DayWiseItinerary" cardinality="many">
+			</targetElement>
+		</relation>
+
+	</relations>
+
+	<itemtypes>
+		<typegroup name="HolidayProduct">
+			<itemtype code="HolidayBrand"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.HolidayBrand">
+				<deployment table="holidaybrands" typecode="21802" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="code">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="name">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="HolidayProduct" generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.HolidayProduct"
+				extends="Product">
+				<description>Represents Holiday Products Name</description>
+				<attributes>
+					<attribute qualifier="numberOfNight" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>Description</description>
+					</attribute>
+					<attribute qualifier="numberOfDays" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>Description</description>
+					</attribute>
+					<attribute qualifier="markets" type="Markets">
+						<persistence type="property" />
+						<description>Description</description>
+					</attribute>
+					<attribute qualifier="brands" type="HolidayBrands">
+						<persistence type="property" />
+						<description>Description</description>
+					</attribute>
+					<attribute qualifier="brochures" type="Brochures">
+						<persistence type="property" />
+						<description>Description</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="HolidayDestination" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.HolidayDestination"
+				extends="GenericItem">
+				<description>Represents Holiday Products Destination</description>
+				<deployment table="holidaydest" typecode="21122" />
+				<attributes>
+					<attribute qualifier="uid" type="java.lang.String">
+						<persistence type="property" />
+						<description>system generated Unique key</description>
+						<modifiers unique="true" initial="true" />
+					</attribute>
+					<attribute qualifier="destinationName" type="Continent">
+						<persistence type="property" />
+						<description>destination name form destination Master</description>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="country" type="Country">
+						<persistence type="property" />
+						<description>County selected form Destination</description>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="city" type="City">
+						<persistence type="property" />
+						<description>City from selected Country</description>
+						<modifiers optional="false" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="HolidayFlavor" generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.HolidayFlavor"
+				extends="VariantProduct">
+				<description>Represents Holiday Variant Products</description>
+				<deployment table="holidayflavor" typecode="21524" />
+				<attributes>
+					<attribute type="Market" qualifier="companyMarket">
+						<persistence type="property" />
+						<description>Company Market</description>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="companyTourCode">
+						<persistence type="property" />
+						<description>Company tour code</description>
+					</attribute>
+					<attribute type="FlavorType" qualifier="flavorType">
+						<persistence type="property" />
+						<description>Flavor type</description>
+					</attribute>
+					<attribute type="PackageCategory" qualifier="packageType">
+						<persistence type="property" />
+						<description>Type of package</description>
+					</attribute>
+					<attribute type="HolidayProductType" qualifier="productType">
+						<persistence type="property" />
+						<description>Type of product</description>
+					</attribute>
+					<attribute type="HolidayBrand" qualifier="brandName">
+						<persistence type="property" />
+						<description>Name of brand</description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="itineraryWise">
+						<persistence type="property" />
+						<description>Itinerary wise</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="comfortLevel">
+						<persistence type="property" />
+						<description>Comfort level</description>
+					</attribute>
+					<attribute type="Rating" qualifier="companyRating">
+						<persistence type="property" />
+						<description>Company rating</description>
+					</attribute>
+					<attribute type="Rating" qualifier="rating">
+						<persistence type="property" />
+						<description>Rating</description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="recommended">
+						<persistence type="property" />
+						<description>Recommended</description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="flightDay1Itinerary">
+						<persistence type="property" />
+						<description>Flight itinerary</description>
+					</attribute>
+					<attribute type="PackageCategoryCollection" qualifier="companyPackageCategories">
+						<persistence type="property" />
+						<description>Company package categories</description>
+					</attribute>
+					<attribute type="Brochures" qualifier="brochures">
+						<persistence type="property" />
+						<description>List of brochures</description>
+					</attribute>
+					<attribute type="Interests" qualifier="interests">
+						<persistence type="property" />
+						<description>List of interests</description>
+					</attribute>
+					<attribute type="StandardDateRangeSet" qualifier="salesValidities">
+						<persistence type="property" />
+						<description>Sales validities</description>
+					</attribute>
+					<attribute type="CruisePackage" qualifier="combinedCruise">
+						<persistence type="property" />
+						<description>Combined cruise package</description>
+					</attribute>
+					<attribute type="HolidayFlavor" qualifier="combinedFlavor">
+						<persistence type="property" />
+						<description>Combined flavor</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="DayWiseItinerary" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.DayWiseItinerary"
+				extends="GenericItem">
+				<description>Represents Day Wise Itinerary</description>
+				<deployment table="daywiseitinerary" typecode="21525" />
+				<attributes>
+					<attribute type="City" qualifier="city">
+						<persistence type="property" />
+						<description>City</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="sequenceNumber">
+						<persistence type="property" />
+						<description>Sequence number</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="day">
+						<persistence type="property" />
+						<description>Day</description>
+					</attribute>
+					<attribute type="PriceRow" qualifier="standardPrice">
+						<persistence type="property" />
+						<description>Standard price</description>
+					</attribute>
+					<attribute type="PriceRow" qualifier="deluxePrice">
+						<persistence type="property" />
+						<description>Deluxe price</description>
+					</attribute>
+					<attribute type="PriceRow" qualifier="superiorPrice">
+						<persistence type="property" />
+						<description>Superior price</description>
+					</attribute>
+					<attribute type="Category" qualifier="service">
+						<persistence type="property" />
+						<description>Service</description>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="timeFrom">
+						<persistence type="property" />
+						<description>Time from</description>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="timeTo">
+						<persistence type="property" />
+						<description>Time to</description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="lunchIncluded">
+						<persistence type="property" />
+						<description>Is lunch included</description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="breakfastIncluded">
+						<persistence type="property" />
+						<description>Is breakfast included</description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="dinnerIncluded">
+						<persistence type="property" />
+						<description>Is dinner included</description>
+					</attribute>
+					<attribute type="Session" qualifier="sessionName">
+						<persistence type="property" />
+						<description>Session</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="HolidayItineraryDetails" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.HolidayItineraryDetails"
+				extends="GenericItem">
+				<description>Represents Holiday Itinerary Details</description>
+				<deployment table="holidayitinerarydet" typecode="21526" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="itineraryInBrief">
+						<persistence type="property" />
+						<description>Itinerary brief</description>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="itineraryDetails">
+						<persistence type="property" />
+						<description>Itinerary details</description>
+					</attribute>
+					<attribute type="PackageCategoryCollection" qualifier="packageCategories">
+						<persistence type="property" />
+						<description>List of package categories</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="HolidayHub" generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.HolidayHub"
+				extends="GenericItem">
+				<description>Represents Holiday Hub</description>
+				<deployment table="holidayhub" typecode="21527" />
+				<attributes>
+					<attribute type="Category" qualifier="productCategory">
+						<persistence type="property" />
+						<description>Product category</description>
+					</attribute>
+					<attribute type="ProductCategorySubType" qualifier="productCategorySubType">
+						<persistence type="property" />
+						<description>Product category sub type</description>
+					</attribute>
+					<attribute type="City" qualifier="hub">
+						<persistence type="property" />
+						<description>Hub</description>
+					</attribute>
+					<attribute type="Sectors" qualifier="sectors">
+						<persistence type="property" />
+						<description>List of sectors</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Feeder" generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.Feeder"
+				extends="GenericItem">
+				<description>Represents Feeder</description>
+				<deployment table="feeder" typecode="21528" />
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="preTour">
+						<persistence type="property" />
+						<description>Is pre tour</description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="postTour">
+						<persistence type="property" />
+						<description>Is post tour</description>
+					</attribute>
+					<attribute type="HolidayFlavor" qualifier="flavor">
+						<persistence type="property" />
+						<description>Flavor</description>
+					</attribute>
+					<attribute type="TransferProductDayWiseItinerary"
+						qualifier="transfer">
+						<persistence type="property" />
+						<description>Transfer</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup>
+			<itemtype code="BlackOutDates" generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.BlackOutDates"
+				extends="GenericItem">
+				<description>Represents Black Out Dates</description>
+				<deployment table="blackoutdates" typecode="21529" />
+				<attributes>
+					<attribute type="WeekDayCollection" qualifier="daysOfWeek">
+						<persistence type="property" />
+						<description>List of week days</description>
+					</attribute>
+					<attribute type="StandardDateRangeSet" qualifier="blackOutDates">
+						<persistence type="property" />
+						<description>Black out dates</description>
+
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="VisaDetails">
+			<itemtype code="OnlineVisaDetails" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.OnlineVisaDetails"
+				extends="AbstractVisaDetails">
+				<description>Represents Black Out Dates</description>
+				<deployment table="onlinevisadetails" typecode="21530" />
+			</itemtype>
+
+			<itemtype code="OfflineVisaDetails" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.OfflineVisaDetails"
+				extends="AbstractVisaDetails">
+				<description>Represents Black Out Dates</description>
+				<deployment table="offlinevisadetails" typecode="21553" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="basicDocuments">
+						<persistence type="property" />
+						<description>Basic documents</description>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="documentsRequired">
+						<persistence type="property" />
+						<description>Documents required</description>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="notes">
+						<persistence type="property" />
+						<description>Notes</description>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="processingTime">
+						<persistence type="property" />
+						<description>Processing time</description>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="paymentMode">
+						<persistence type="property" />
+						<description>Payment mode</description>
+					</attribute>
+					<attribute type="Prices" qualifier="prices">
+						<persistence type="property" />
+						<description>Prices</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup>
+			<itemtype code="Prices" generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.Prices"
+				extends="ActualPrices">
+				<description>Represents Prices</description>
+				<attributes>
+					<attribute type="PackageCategory" qualifier="companyPackageCategory">
+						<persistence type="property" />
+						<description>Company package category</description>
+					</attribute>
+					<attribute type="Currency" qualifier="currency">
+						<persistence type="property" />
+						<description>Currency</description>
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="perItem">
+						<persistence type="property" />
+						<description>Per item</description>
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="adult">
+						<persistence type="property" />
+						<description>Adult</description>
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="child">
+						<persistence type="property" />
+						<description>Child</description>
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="infant">
+						<persistence type="property" />
+						<description>Infant</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="DayWiseItinerary">
+
+			<itemtype code="AccoDayWiseItinerary" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.AccoDayWiseItinerary"
+				extends="AbstractDayWiseItinerary">
+				<description>Represents Accomodation Day Wise Itinerary</description>
+				<deployment table="accodaywiseitnry" typecode="21543" />
+				<attributes>
+					<attribute type="Accommodation" qualifier="productName"> <persistence 
+						type="property" /> <description>Product name</description> </attribute>
+					<attribute type="Location" qualifier="location">
+						<persistence type="property" />
+						<description>Location</description>
+					</attribute>
+					<attribute type="Area" qualifier="area">
+						<persistence type="property" />
+						<description>Area</description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="extensionNights">
+						<persistence type="property" />
+						<description>Extension nights</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="availDays">
+						<persistence type="property" />
+						<description>Available days</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="OtherDayWiseItinerary" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.OtherDayWiseItinerary"
+				extends="AbstractDayWiseItinerary">
+				<description>Represents Other Day Wise Itinerary</description>
+				<deployment table="otherdaywiseitnry" typecode="21544" />
+				<attributes>
+					<attribute type="Product" qualifier="service">
+						<persistence type="property" />
+						<description>Service</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="availDays">
+						<persistence type="property" />
+						<description>Available days</description>
+					</attribute>
+					<attribute type="java.lang.Long" qualifier="quantity">
+						<persistence type="property" />
+						<description>Quantity</description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="valueAdded">
+						<persistence type="property" />
+						<description>Value added</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="numberOfItems">
+						<persistence type="property" />
+						<description>Number of items</description>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="description">
+						<persistence type="property" />
+						<description>Description</description>
+					</attribute>
+					<attribute type="Prices" qualifier="prices">
+						<persistence type="property" />
+						<description>Prices</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ActivityDayWiseItinerary" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.ActivityDayWiseItinerary"
+				extends="AbstractDayWiseItinerary">
+				<description>Represents Activity Day Wise Itinerary</description>
+				<deployment table="activitydaywiseitnry" typecode="21545" />
+				<attributes>
+					<attribute type="DestinationPointType" qualifier="pickUpPointType">
+						<persistence type="property" />
+						<description>Pickup point type</description>
+					</attribute>
+					<attribute type="Item" qualifier="pickUpPointName">
+						<persistence type="property" />
+						<description>Pickup point name</description>
+					</attribute>
+					<attribute type="Session" qualifier="sessionName">
+						<persistence type="property" />
+						<description>Session</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="TransferProductDayWiseItinerary" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.TransferProductDayWiseItinerary"
+				extends="AbstractDayWiseItinerary">
+				<description>Represents Transfer Product Day Wise Itinerary</description>
+				<deployment table="transproductdaywiseitnry" typecode="21546" />
+				<attributes>
+					<attribute type="TransferCategory" qualifier="category">
+						<persistence type="property" />
+						<description>Category</description>
+					</attribute>
+					<attribute type="JourneyType" qualifier="journeyType">
+						<persistence type="property" />
+						<description>Journey type</description>
+					</attribute>
+					<attribute type="RateDefinedForType" qualifier="rateDefinedFor">
+						<persistence type="property" />
+						<description>Rate defined for type</description>
+					</attribute>
+					<attribute type="TransferType" qualifier="transferType">
+						<persistence type="property" />
+						<description>Transfer type</description>
+					</attribute>
+					<attribute type="DestinationPointType" qualifier="pickUpPointType">
+						<persistence type="property" />
+						<description>Pickup point type</description>
+					</attribute>
+					<attribute type="Item" qualifier="pickUpPointName">
+						<persistence type="property" />
+						<description>Pickup point name</description>
+					</attribute>
+					<attribute type="Item" qualifier="dropOffPointName">
+						<persistence type="property" />
+						<description>Drop off point name</description>
+					</attribute>
+					<attribute type="DestinationPointType" qualifier="dropOffPointType">
+						<persistence type="property" />
+						<description>Drop off point type</description>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="dropOffTime">
+						<persistence type="property" />
+						<description>Drop off time</description>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="pickUpTime">
+						<persistence type="property" />
+						<description>Pick up time</description>
+					</attribute>
+					<attribute type="Session" qualifier="sessionName">
+						<persistence type="property" />
+						<description>Session</description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="meetAndGreet">
+						<persistence type="property" />
+						<description>Meet and greet</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="returnDay">
+						<persistence type="property" />
+						<description>Return day</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="returnSequence">
+						<persistence type="property" />
+						<description>Return day sequence</description>
+					</attribute>
+					<attribute type="City" qualifier="toCity">
+						<persistence type="property" />
+						<description>To city</description>
+					</attribute>
+					<attribute type="City" qualifier="fromCity">
+						<persistence type="property" />
+						<description>From city</description>
+					</attribute>
+					<attribute type="City" qualifier="enRouteCity">
+						<persistence type="property" />
+						<description>To city</description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="overNight">
+						<persistence type="property" />
+						<description>Is over night</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="FlightTransferDayWiseItinerary" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.FlightTransferDayWiseItinerary"
+				extends="AbstractDayWiseItinerary">
+				<description>Represents Flight Transfer Day Wise Itinerary</description>
+				<deployment table="flighttransdaywisitnry" typecode="21547" />
+				<attributes>
+					<attribute type="Airport" qualifier="fromCity">
+						<persistence type="property" />
+						<description>From city</description>
+					</attribute>
+					<attribute type="Airport" qualifier="toCity">
+						<persistence type="property" />
+						<description>To city</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="availDays">
+						<persistence type="property" />
+						<description>Available days</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="returnDay">
+						<persistence type="property" />
+						<description>Return day</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="returnSequence">
+						<persistence type="property" />
+						<description>Return sequence</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="RailTransferDayWiseItinerary" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.RailTransferDayWiseItinerary"
+				extends="AbstractDayWiseItinerary">
+				<description>Represents Rail Transfer Day Wise Itinerary</description>
+				<deployment table="railtransdaywiseitnry" typecode="21548" />
+				<attributes>
+					<attribute type="JourneyType" qualifier="journeyType">
+						<persistence type="property" />
+						<description>Journey type</description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="journeyByPass">
+						<persistence type="property" />
+						<description>Journey by pass</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="availDays">
+						<persistence type="property" />
+						<description>Available days</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="RentalTransferDayWiseItinerary" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.RentalTransferDayWiseItinerary"
+				extends="TransferProductDayWiseItinerary">
+				<description>Represents Rental Transfer Day Wise Itinerary</description>
+				<attributes>
+					<attribute type="Category" qualifier="vehicleCategory">
+						<persistence type="property" />
+						<description>Vehicle category</description>
+					</attribute>
+					<attribute type="Vehicle" qualifier="vehicleName">
+						<persistence type="property" />
+						<description>Vehicle name</description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="airCondition">
+						<persistence type="property" />
+						<description>Air condition</description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="withChuffer">
+						<persistence type="property" />
+						<description>With chuffer</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="RailPassTransferDayWiseItinerary" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.RailPassTransferDayWiseItinerary"
+				extends="RailTransferDayWiseItinerary">
+				<description>Represents Rail Pass Transfer Day Wise Itinerary</description>
+				<attributes>
+					<attribute type="Countries" qualifier="countries">
+						<persistence type="property" />
+						<description>Countries</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="numberOfDays">
+						<persistence type="property" />
+						<description>Number of days</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="RailTicketTransferDayWiseItinerary"
+				generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.RailTicketTransferDayWiseItinerary"
+				extends="RailTransferDayWiseItinerary">
+				<description>Represents Rail Ticket Transfer Day Wise Itinerary</description>
+				<attributes>
+					<attribute type="City" qualifier="fromCity">
+						<persistence type="property" />
+						<description>From city</description>
+					</attribute>
+					<attribute type="City" qualifier="toCity">
+						<persistence type="property" />
+						<description>To city</description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="reservationRequired">
+						<persistence type="property" />
+						<description>reservationRequired</description>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="overNight">
+						<persistence type="property" />
+						<description>Is over night</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="returnDay">
+						<persistence type="property" />
+						<description>Return day</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="returnSequence">
+						<persistence type="property" />
+						<description>Return sequence</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CarPackage" generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.product.holiday.masters.core.jalo.CarPackage"
+				extends="RentalTransferDayWiseItinerary">
+				<description>Represents Car Package</description>
+				<attributes>
+					<attribute type="Cities" qualifier="cities">
+						<persistence type="property" />
+						<description>Cities</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

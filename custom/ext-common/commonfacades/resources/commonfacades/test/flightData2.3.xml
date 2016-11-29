@@ -1,0 +1,115 @@
+<!--Layover 22H45M-->
+<com.cnk.travelogix.common.facades.product.data.flight.FlightData>
+  <id>flightData2.3</id>
+  <flightNumber>A380</flightNumber>
+  <cabinClass>Economy</cabinClass>
+  <numberOfStops>2 stop</numberOfStops>
+  <displayNumberOfStops>2 stop</displayNumberOfStops>
+  <airlineIATA>
+    <airlineName>Air India</airlineName>
+    <accountingCode>3T</accountingCode>
+    <airlinePrefix>209</airlinePrefix>
+  </airlineIATA>
+  <departureTime>2016-07-31 03:45:00.00 UTC</departureTime>
+  <arrivalTime>2016-07-31 10:40:00.00 UTC</arrivalTime>
+  <duration>6h 5m 2 stops</duration>
+  <displayDuration>6h 5m</displayDuration>
+  <fromSection>
+    <city>Delhi</city>
+    <airport>Delhi International Airport</airport>
+    <terminal>1B</terminal>
+  </fromSection>
+  <toSection>
+    <city>Mumbai</city>
+    <airport>Mumbai International Airport</airport>
+    <terminal>3A</terminal>
+  </toSection>
+  <fareSummary>
+
+      <com.cnk.travelogix.common.facades.product.data.flight.FareSummaryData>
+        <listPrice>3780</listPrice>
+        <type>fly</type>
+	    <webPrice>3430</webPrice>
+	    <currency>currency</currency>
+	    <pointEarn>60</pointEarn>
+      </com.cnk.travelogix.common.facades.product.data.flight.FareSummaryData>
+
+      <com.cnk.travelogix.common.facades.product.data.flight.FareSummaryData>
+        <listPrice>3780</listPrice>
+        <type>fly + bag</type>
+	    <webPrice>3430</webPrice>
+	    <currency>currency</currency>
+	    <pointEarn>100</pointEarn>
+      </com.cnk.travelogix.common.facades.product.data.flight.FareSummaryData>
+  </fareSummary>
+  <fareDetail>
+
+      <com.cnk.travelogix.common.facades.product.data.flight.FareDetailData>
+        <currency>currency</currency>
+	    <baseFare>2230</baseFare>
+	    <fuelSurcharge>950</fuelSurcharge>
+	    <jnTax>50</jnTax>
+	    <psgrSvcFee>50</psgrSvcFee>
+	    <serviceTax>50</serviceTax>
+      </com.cnk.travelogix.common.facades.product.data.flight.FareDetailData>
+
+       <com.cnk.travelogix.common.facades.product.data.flight.FareDetailData>
+        <currency>currency</currency>
+	    <baseFare>2230</baseFare>
+	    <fuelSurcharge>950</fuelSurcharge>
+	    <jnTax>50</jnTax>
+	    <psgrSvcFee>50</psgrSvcFee>
+	    <serviceTax>50</serviceTax>
+      </com.cnk.travelogix.common.facades.product.data.flight.FareDetailData>
+  </fareDetail>
+  <flightDetails>
+    <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+      <cabinClass>Economy</cabinClass>
+      <fromSection>
+        <city>Delhi</city>
+        <airport>Delhi International Airport</airport>
+        <terminal>1B</terminal>
+      </fromSection>
+      <toSection>
+        <city>Ahmedabad</city>
+        <airport>Delhi International Airport</airport>
+        <terminal>2A</terminal><!--Ahilya Bai Holkar-->
+      </toSection>
+      <departureTime>2016-07-31 03:45:00.00 UTC</departureTime>
+  	  <arrivalTime>2016-07-31 04:50:00.00 UTC</arrivalTime>
+      <duration>1h 5m Nonstop</duration>
+    </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+    <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+      <cabinClass>Economy</cabinClass>
+      <fromSection>
+        <city>Ahmedabad</city>
+        <airport>Ahmedabad International Airport</airport>
+        <terminal>2A</terminal><!--Ahilya Bai Holkar-->
+      </fromSection>
+      <toSection>
+        <city>Somewhere</city>
+        <airport>Somewhere International Airport</airport>
+        <terminal>3A</terminal>
+      </toSection>
+      <departureTime>2016-07-31 06:50:00.00 UTC</departureTime>
+  	  <arrivalTime>2016-07-31 8:30:00.00 UTC</arrivalTime>
+      <duration>1h 40m Nonstop</duration>
+    </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+    <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+      <cabinClass>Economy</cabinClass>
+      <fromSection>
+        <city>Somewhere</city>
+        <airport>Somewhere International Airport</airport>
+        <terminal>2A</terminal><!--Ahilya Bai Holkar-->
+      </fromSection>
+      <toSection>
+        <city>Mumbai</city>
+        <airport>Mumbai International Airport</airport>
+        <terminal>3A</terminal>
+      </toSection>
+      <departureTime>2016-07-31 9:50:00.00 UTC</departureTime>
+  	  <arrivalTime>2016-07-31 10:40:00.00 UTC</arrivalTime>
+      <duration> 50m Nonstop</duration>
+    </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+  </flightDetails>
+</com.cnk.travelogix.common.facades.product.data.flight.FlightData>

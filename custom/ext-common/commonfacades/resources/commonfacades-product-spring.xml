@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+        
+
+<!-- These facade are for MDM team implementation.  Product search facades Start -->
+	<alias alias="flightAndHotelSearchFacade" name="mockupFlightAndHotelSearchFacade"/>
+	<bean id="mockupFlightAndHotelSearchFacade" class="com.cnk.travelogix.common.facades.product.impl.MockupFlightAndHotelSearchFacade"/>
+
+	<alias alias="flightSearchFacade" name="mockupFlightSearchFacade"/>
+	<bean id="mockupFlightSearchFacade" class="com.cnk.travelogix.common.facades.product.impl.MockupFlightSearchFacade"/>
+	<bean id="svcIntFlightSearchFacade" class="com.cnk.travelogix.common.facades.product.impl.SvcIntFlightSearchFacade">
+		<property name="siAirService" ref="siAirService" />
+		<property name="searchRequestConverter" ref="airSearchUI2SLConverter" />
+		<property name="searchResponseConverter" ref="airSearchSL2UIConverter" />
+	</bean>
+
+	<alias alias="hotelSearchFacade" name="mockupHotelSearchFacade"/>
+	<bean id="mockupHotelSearchFacade" class="com.cnk.travelogix.common.facades.product.impl.MockupHotelSearchFacade"/>
+<!-- product search facades End -->
+
+
+
+	
+	<alias alias="cachedFlightAndHotelSearchFacade" name="defaultCachedFlightAndHotelSearchFacade"/>
+	<bean id="defaultCachedFlightAndHotelSearchFacade" class="com.cnk.travelogix.common.facades.product.impl.CachedCnkProductSearchFacade">
+		<property name="cnkProductSearchFacade" ref="flightAndHotelSearchFacade"/>  
+	    
+	</bean>
+	
+	<alias alias="cachedFlightSearchFacade" name="defaultCachedFlightSearchFacade"/>
+	<bean id="defaultCachedFlightSearchFacade" class="com.cnk.travelogix.common.facades.product.impl.CachedCnkProductSearchFacade">
+		<property name="cnkProductSearchFacade" ref="flightSearchFacade"/>    
+
+	</bean>
+	
+	<alias alias="cachedHotelSearchFacade" name="defaultCachedHotelSearchFacade"/>
+	<bean id="defaultCachedHotelSearchFacade" class="com.cnk.travelogix.common.facades.product.impl.CachedCnkProductSearchFacade">
+		<property name="cnkProductSearchFacade" ref="hotelSearchFacade"/>  
+
+	</bean>
+	
+	<alias alias="facetFlightAndHotelSearchFacade" name="defaultFacetFlightAndHotelSearchFacade"/>
+	<bean id="defaultFacetFlightAndHotelSearchFacade" class="com.cnk.travelogix.common.facades.product.impl.HotelFacetCnkProductSearchFacade" parent="abstractFacetCnkProductSearchFacade">
+		<property name="cnkProductSearchFacade" ref="flightAndHotelSearchFacade"/>   
+
+	</bean>
+	
+	<alias alias="facetFlightSearchFacade" name="defaultFacetFlightSearchFacade"/>
+	<bean id="defaultFacetFlightSearchFacade" class="com.cnk.travelogix.common.facades.product.impl.FlightFacetCnkProductSearchFacade" parent="abstractFacetCnkProductSearchFacade">
+		<property name="cnkProductSearchFacade" ref="flightSearchFacade"/>  
+		<property name="facetToModelMapper" ref="onewayFlightFacetToModelMapper"/> 
+	</bean>
+	
+	<!-- add by Felix for Multicity International --> 
+	<bean id="multicityIntlFacetFlightSearchFacade" class="com.cnk.travelogix.common.facades.product.impl.MulticityIntlFlightFacetCnkProductSearchFacade" parent="abstractFacetCnkProductSearchFacade">
+		<property name="cnkProductSearchFacade" ref="flightSearchFacade"/>  
+		<property name="facetToModelMapper" ref="multicityIntlFlightFacetToModelMapper"/> 
+	</bean>
+	
+	<alias alias="facetHotelSearchFacade" name="defaultFacetHotelSearchFacade"/>
+	<bean id="defaultFacetHotelSearchFacade" class="com.cnk.travelogix.common.facades.product.impl.HotelFacetCnkProductSearchFacade" parent="abstractFacetCnkProductSearchFacade">
+		 <property name="cnkProductSearchFacade" ref="hotelSearchFacade"/> 
+		 <property name="facetToModelMapper" ref="hotelFacetToModelMapper"/>
+	</bean>
+	
+	<bean id="abstractFacetCnkProductSearchFacade" class="com.cnk.travelogix.common.facades.product.impl.FacetCnkProductSearchFacade" abstract="true">
+		<property name="cnkProductFacetHandler" ref ="cnkProductFacetHandler"/>
+	</bean>
+	
+	<!-- further changed to be made
+	<alias alias="facetFlightSortFacade" name="defaultFacetFlightSortFacade"/>
+	<bean id="defaultFacetFlightSortFacade" class="com.cnk.travelogix.common.facades.product.impl.FlightSortedCnkProductSortFacade" parent="abstractFacetCnkProductSortFacade"/>
+
+	<bean id="abstractFacetCnkProductSortFacade" class="com.cnk.travelogix.common.facades.product.impl.SortedCnkProductSearchFacade" abstract="true"/>
+	
+	 -->
+<!--  Redis cacheable facade settings Ends-->
+	
+<!-- Facet hanlder Starts -->
+	
+	<bean id="cnkProductFacetHandler" class="com.cnk.travelogix.common.facades.product.facet.impl.DefaultCnkProductFacetHandler"/>
+	
+	<bean id="accessFactory" class="com.cnk.travelogix.common.facades.product.facet.impl.AccesserFactory"/>
+	
+	<bean id="facetToModelMapper" class="com.cnk.travelogix.common.facades.product.facet.impl.FacetToModelMapper" abstract="true">
+		<property name="defaultFacetCalculationHelper" ref="defaultFacetCalculationHelper"/> 
+		<property name="defaultCnkFacetValueProvider" ref="defaultCnkFacetValueProvider"/>
+	</bean>
+	
+<bean id="onewayFlightFacetToModelMapper" class="com.cnk.travelogix.common.facades.product.facet.impl.OnewayFlightFacetToModelMapper"
+	parent="facetToModelMapper"/>
+	
+<bean id="twowayFlightFacetToModelMapper" class="com.cnk.travelogix.common.facades.product.facet.impl.TwowayFlightFacetToModelMapper"
+	parent="facetToModelMapper"/>	
+
+<!-- add by Felix for Multicity International -->	
+	<bean id="multicityIntlFlightFacetToModelMapper" class="com.cnk.travelogix.common.facades.product.facet.impl.MulticityIntlFlightFacetToModelMapper">
+		<property name="defaultCnkFacetValueProvider" ref="defaultCnkMulticityIntlFacrtValueProvider"/>
+		<property name="defaultFacetCalculationHelper" ref="defaultFacetCalculationHelper"/> 
+	</bean>
+	
+<bean id="hotelFacetToModelMapper" class="com.cnk.travelogix.common.facades.product.facet.impl.HotelFacetToModelMapper"
+	parent="facetToModelMapper">
+			<property name="defaultFacetCalculationHelper" ref="hotelFacetCalculationHelper"/> 
+	</bean>
+<!-- Facet hanlder Ends -->	
+
+
+<!-- Facet helper Starts -->
+	<bean id="defaultFacetCalculationHelper" class="com.cnk.travelogix.common.facades.product.facet.impl.DefaultFacetCalculationHelper"/>
+	
+	<bean id="departureTimeFacetCalculationHelper" class="com.cnk.travelogix.common.facades.product.facet.impl.DepartureTimeFacetCalculationHelper"/>
+	
+	<bean id="priceRangeFacetCalculationHelper" class="com.cnk.travelogix.common.facades.product.facet.impl.PriceRangeFacetCalculationHelper"/>
+	
+	<bean id="budgetRangeFacetCalculationHelper" class="com.cnk.travelogix.common.facades.product.facet.impl.BudgetRangeFacetCalculationHelper"/>
+	
+	<bean id="hotelFacetCalculationHelper" class="com.cnk.travelogix.common.facades.product.facet.impl.HotelFacetCalculationHelper"/>
+
+	<bean id="hotelNameCalculationHelper" class="com.cnk.travelogix.common.facades.product.facet.impl.HotelNameCalculationHelper"/>
+	
+	<bean id="hotelLocationCalculationHelper" class="com.cnk.travelogix.common.facades.product.facet.impl.HotelLocationCalculationHelper"/>
+	<!-- Facet helper Ends -->
+
+
+<!-- Facet provider Starts -->
+	<bean id="defaultCnkFacetValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.DefaultCnkFacetValueProvider">
+		<property name="accessFactory" ref="accessFactory"/>
+	</bean>
+	<bean id="flightPriceValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.FlightPriceValueProvider"/>
+	<bean id="flightCompanyValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.FlightCompanyValueProvider"/>
+	<bean id="hotelRoomAmenitiesValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.HotelRoomAmenitiesValueProvider"/>
+	<bean id="flightDepartureValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.FlightDepartureValueProvider"/>
+	<bean id="flightDurationValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.FlightDurationValueProvider"/>
+	<bean id="flightArrivalValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.FlightArrivalValueProvider"/>
+	<bean id="hotelPriceValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.HotelPriceValueProvider"/>
+	<bean id="hotelRecommendedValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.HotelRecommendedValueProvider"/>
+	<bean id="hotelPopularityValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.HotelPopularityValueProvider"/>
+	<bean id="hotelStarRatingValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.HotelStarRatingValueProvider"/>
+	<bean id="hotelFacilitiesValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.HotelFacilitiesValueProvider"/>
+	<!-- add by Felix for multicity international start -->
+	<bean id = "defaultCnkMulticityIntlFacrtValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.DefaultCnkMulticityIntlFacetValueProvider">
+		<property name="accessFactory" ref="accessFactory"/>
+	</bean>
+	<bean id="multicityIntlFlightPriceValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.MulticityIntlFlightPriceValueProvider"/>
+	<bean id="multicityIntlFlightDepartureValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.MulticityIntlFlightDepartureValueProvider"/>
+	<bean id="multicityIntlFlightDurationValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.MulticityIntlFlightDurationValueProvider"/>
+	<bean id="multicityIntlFlightArrivalValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.MulticityIntlFlightArrivalValueProvider"/>
+	<bean id="multicityIntlFlightNumOfStopsValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.MulticityIntlFlightNumOfStopsValueProvider"/>
+	<bean id="multicityIntlFlightCompanyValueProvider" class="com.cnk.travelogix.common.facades.product.provider.impl.MulticityIntlFlightCompanyValueProvider"/>
+	<!-- add by Felix for multicity international end -->
+<!-- Facet provider Ends -->
+
+<!-- Sorting Starts-->
+
+
+	<bean id="flightCnkProductSortHelper" class="com.cnk.travelogix.common.facades.product.sort.impl.FlightCnkProductSortHelper"/>
+	<bean id="flightSortedToModelMapper" class="com.cnk.travelogix.common.facades.product.sort.impl.FlightSortedToModelMapper"/>
+	<bean id="flightCnkProductSortHandler" class="com.cnk.travelogix.common.facades.product.sort.impl.FlightCnkProductSortHandler">
+		<property name="cnkProductSortHelper" ref="flightCnkProductSortHelper"/>	
+	</bean>
+	
+	<!-- add by Felix for multicity international start  -->
+	<bean id="multicityIntlFlightCnkProductSortHelper" class="com.cnk.travelogix.common.facades.product.sort.impl.MulticityIntlFlightCnkProductSortHelper"/>
+	<bean id="multicityIntlFlightSortedToModelMapper" class="com.cnk.travelogix.common.facades.product.sort.impl.MulticityIntlFlightSortedToModelMapper"/>
+	<bean id="multicityIntlFlightCnkProductSortHandler" class="com.cnk.travelogix.common.facades.product.sort.impl.MulticityIntlFlightCnkProductSortHandler">
+		<property name="cnkProductSortHelper" ref="multicityIntlFlightCnkProductSortHelper"/>	
+	</bean>
+	<!-- add by Felix for multicity international end -->
+	
+	<alias alias="sortedFlightSearchFacade" name="defaultSortedFlightSearchFacade"/>
+	<bean id="defaultSortedFlightSearchFacade" class="com.cnk.travelogix.common.facades.product.impl.FlightSortedCnkProductSortFacade" >
+		<property name="cnkProductSearchFacade" ref="facetFlightSearchFacade"/>  
+		<property name="sortedToModelMapper" ref="flightSortedToModelMapper"/> 
+		<property name="cnkProductSortHelper" ref="flightCnkProductSortHelper"/> 
+		<property name="cnkProductSortHandler" ref="flightCnkProductSortHandler"/> 
+	</bean>
+	
+	<!-- add by Felix for multicity interational-->
+	<bean id="multicityIntlSortedFlightSearchFacade" class="com.cnk.travelogix.common.facades.product.impl.MulticityIntlFlightSortedCnkProductSortFacade" >
+		<property name="cnkProductSearchFacade" ref="multicityIntlFacetFlightSearchFacade"/>  
+		<property name="sortedToModelMapper" ref="multicityIntlFlightSortedToModelMapper"/> 
+		<property name="cnkProductSortHelper" ref="multicityIntlFlightCnkProductSortHelper"/> 
+		<property name="cnkProductSortHandler" ref="multicityIntlFlightCnkProductSortHandler"/> 
+	</bean>
+	
+	<bean id="hotelSortedToModelMapper" class="com.cnk.travelogix.common.facades.product.sort.impl.HotelSortedToModelMapper">
+		<property name="defaultCnkFacetValueProvider" ref="defaultCnkFacetValueProvider"/>
+	</bean>
+	<bean id="hotelCnkProductSortHelper" class="com.cnk.travelogix.common.facades.product.sort.impl.HotelCnkProductSortHelper"/>
+	
+	<bean id="hotelCnkProductSortHandler" class="com.cnk.travelogix.common.facades.product.sort.impl.HotelCnkProductSortHandler">
+		<property name="cnkProductSortHelper" ref="hotelCnkProductSortHelper"/>	
+	</bean>
+	
+	<bean id="sortedHotelSearchFacade" class="com.cnk.travelogix.common.facades.product.impl.HotelSortedCnkProductSortFacade">
+		<property name="cnkProductSearchFacade" ref="facetHotelSearchFacade"/>
+		<property name="sortedToModelMapper" ref="hotelSortedToModelMapper"/> 
+		<property name="cnkProductSortHandler" ref="hotelCnkProductSortHandler"/> 
+	</bean>
+<!-- Sorting Ends -->
+</beans>

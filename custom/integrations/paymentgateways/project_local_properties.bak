@@ -1,0 +1,208 @@
+#Sat, 25 Jun 2016 01:16:27 +0530
+# -----------------------------------------------------------------------
+# [y] hybris Platform 
+# 
+# Copyright (c) 2000-2016 hybris AG
+# All rights reserved.
+#  
+# This software is the confidential and proprietary information of hybris 
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with hybris.
+#
+#  
+# -----------------------------------------------------------------------
+
+# you can put key/value pairs here.
+# Use Config.getParameter(..) to retrieve the values during runtime.
+
+paymentgateways.key=value
+
+# Specifies the location of the spring context file added automatically to the global platform application context.
+paymentgateways.application-context=paymentgateways-spring.xml
+
+
+
+
+paymentgateways.javascript.paths.responsive=/responsive/common/js/paymentgateways.js
+paymentgateways.css.paths.responsive=/responsive/common/css/paymentgateways.css
+
+b2cstorefront.additionalWebSpringConfigs.paymentgateways=classpath\:/paymentgateways/web/spring/paymentgateways-web-spring.xml
+
+yacceleratorstorefront.wro4jconfigscan.paymentgateways=true
+
+##########################################################################################
+##################################### Fraud Check / FMS Config ###########################
+##########################################################################################
+###############################################################################
+rms.base.rest.fraud.check.post.url=https://s1.testrmsid.com/fde/api/txn/Post.xml
+rms.base.rest.update.by.txnlogid.post.url=https://s1.testrmsid.com/fde/api/txn/UpdateByID.xml
+
+rms.rest.api.config.credentials.merchantid= 50057
+rms.rest.api.config.credentials.key= be57e7e154ac51ff92eaae1352149648
+rms.rest.api.config.credentials.ecom.templateid= 69 
+rms.rest.api.config.credentials.motto.templateid= 70
+rms.rest.api.config.credentials.site= Cox and kings
+###################################################
+## FMS Variable Names Used in the Rest API Calls ##
+rms.rest.api.global.variable.name.merchantid=MerchantID 
+rms.rest.api.global.variable.name.key=Key 
+rms.rest.api.global.variable.name.templateid=TemplateID 
+rms.rest.api.global.variable.name.customerid=CustomerID 
+rms.rest.api.global.variable.name.cardnumber=CardNumber 
+rms.rest.api.global.variable.name.usermd5=UserMD5 
+rms.rest.api.global.variable.name.passmd5=PassMD5 
+rms.rest.api.global.variable.name.site=Site 
+rms.rest.api.global.variable.name.amount=Amount 
+rms.rest.api.global.variable.name.referenceNo=ReferenceNo 
+rms.rest.api.global.variable.name.custemail=CustEmail 
+rms.rest.api.global.variable.name.custphone=CustPhone 
+rms.rest.api.global.variable.name.country=Country 
+rms.rest.api.global.variable.name.datetime=DateTime
+rms.rest.api.global.variable.name.status=Status
+rms.rest.api.global.variable.name.txnlogid=TxnLogID
+## End of FMS Variable Names Used in the Rest API Calls ##
+##########################################################################################
+##################################### END of Fraud Check / FMS ###########################
+##########################################################################################
+
+##########################################################################################
+########################################## Payment TEST CONFIG ###########################
+##########################################################################################
+#LocalHost#
+#payment.basesite.url = https://localhost:9002/b2cstorefront/
+#DEV#
+#payment.basesite.url = https://52.76.42.231:9002/b2cstorefront/
+
+#payment.controller.path = my-account/payment-provider-response
+#payment.controller.path= checkout/multi/payment/payment-provider-response
+
+############# PAYTM TEST CONFIG###################
+paymentgateway.paytm.form.name = paytmForm
+paymentgateway.paytm.action.method = post
+paymentgateway.paytm.action.url = https://pguat.paytm.com/oltp-web/processTransaction
+paymentgateway.paytm.request.type = DEFAULT
+paymentgateway.paytm.mid = Ezeego43311122272551
+paymentgateway.paytm.channel.id = WEB
+paymentgateway.paytm.industry.type.id = Retail
+paymentgateway.paytm.website = Ezeegoweb
+paymentgateway.paytm.hash.checksum.key = ZjVSLvKLdh__Tf7W
+############# PAYTM TEST CONFIG####################
+############# ASIA PAY TEST CONFIG#################
+paymentgateway.asiapay.form.name = payForm
+paymentgateway.asiapay.action.method = post
+paymentgateway.asiapay.action.url = https://test.pesopay.com/b2cDemo/eng/payment/payForm.jsp
+paymentgateway.asiapay.merchant.id = 18063824
+#paymentgateway.asiapay.currency.code = 608
+paymentgateway.asiapay.pay.method = ALL
+paymentgateway.asiapay.language.code = E
+paymentgateway.asiapay.pay.type = N
+paymentgateway.asiapay.hash.secret.key = PC5hdPINm6bgBZ9h7F8ywHfpI0Z5FHYe
+############# ASIA PAY TEST CONFIG###################
+############# AMEX TEST CONFIG###################
+paymentgateway.amex.form.name = payAmex
+paymentgateway.amex.action.method = post
+paymentgateway.amex.action.accept.charset = UTF-8
+paymentgateway.amex.action.url = https://payments.billdesk.com/amexezeclick/payment/paymentrequest
+paymentgateway.amex.vpc.version = 1
+paymentgateway.amex.vpc.command = pay
+paymentgateway.amex.vpc.access.code = 75515D02
+paymentgateway.amex.vpc.merchant.id = TEST9820705713
+paymentgateway.amex.vpc.locale.code = en
+paymentgateway.amex.vpc.secure.hash.type = SHA256
+paymentgateway.amex.vpc.secure.hash.key = C87A0612589652C86FB861410A9672A2
+############# AMEX TEST CONFIG###################
+############# Bill Desk TEST CONFIG#################
+paymentgateway.billdesk.form.name = billdeskPayForm
+paymentgateway.billdesk.action.method = post
+paymentgateway.billdesk.action.url = https://pgi.billdesk.com/pgidsk/PGIMerchantPayment
+paymentgateway.billdesk.merchant.id = EZEEGO1
+paymentgateway.billdesk.currency.type = INR
+paymentgateway.billdesk.type.field1 = R
+paymentgateway.billdesk.security.id = ezeego1
+paymentgateway.billdesk.type.field2 = F
+paymentgateway.billdesk.checksum.key = ZjVSLvKLdh__Tf7W
+############# Bill Desk TEST CONFIG###################
+############# CCAvenue TEST CONFIG#################
+paymentgateway.ccavenue.form.id = nonseamless
+paymentgateway.ccavenue.form.name = redirect
+paymentgateway.ccavenue.action.method = post
+paymentgateway.ccavenue.action.url = https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction
+paymentgateway.ccavenue.merchant.id = 168
+paymentgateway.ccavenue.access.code = AVWH00DH50BU43HWUB
+paymentgateway.ccavenue.currency.code = INR
+paymentgateway.ccavenue.language.code = en
+paymentgateway.ccavenue.payment.option.creditcard = OPTCRDC
+paymentgateway.ccavenue.payment.option.netbanking = OPTNBK
+paymentgateway.ccavenue.payment.hash.working.key = 7B5360EED1CB20BF852CA5660AEF1136
+############# CCAvenue TEST CONFIG###################
+############# First Data TEST CONFIG#################
+paymentgateway.firstdata.form.name = firstdataPayForm
+paymentgateway.firstdata.action.method = post
+paymentgateway.firstdata.action.url = https://checkout.globalgatewaye4.firstdata.com/payment
+paymentgateway.firstdata.login.id = ezeego853
+paymentgateway.firstdata.currency.code = USD
+paymentgateway.firstdata.show.form.value = PAYMENT_FORM
+paymentgateway.firstdata.hash.transaction.key = ZjVSLvKLdh__Tf7W
+paymentgateway.firstdata.timestamp.date.format = YYYYMMddHHmmss
+############# First Data TEST CONFIG###################
+############# HDFC TEST CONFIG#################
+paymentgateway.hdfc.form.name = hdfcPayForm
+paymentgateway.hdfc.action.method = post
+paymentgateway.hdfc.action.url = https://securepgtest.fssnet.co.in/pgway/servlet/PaymentInitHTTPServlet
+paymentgateway.hdfc.merchant.id = 90001311
+paymentgateway.hdfc.password = password1
+paymentgateway.hdfc.currency.code = 356
+paymentgateway.hdfc.language.code = USA
+paymentgateway.hdfc.action.code = 1
+############# HDFC TEST CONFIG###################
+############# ICICI TEST CONFIG#################
+paymentgateway.icici.form.name = iciciPayForm
+paymentgateway.icici.action.method = post
+paymentgateway.icici.action.url = https://test.ipg-online.com/connect/gateway/processing
+paymentgateway.icici.storename.id = 3344000035
+paymentgateway.icici.txntype.code = sale
+paymentgateway.icici.timezone.code = IST
+paymentgateway.icici.hash.algorithm.code = SHA256
+paymentgateway.icici.mode.code = payonly
+paymentgateway.icici.currency.code = 356
+paymentgateway.icici.language.code = en_GB
+paymentgateway.icici.fullbypass.code = false
+paymentgateway.icici.hash.secert.key = dYZtXsNb9x
+############# ICICI TEST CONFIG###################
+############# MASHREQ TEST CONFIG#################
+paymentgateway.mashreq.form.name = mashreqPayForm
+paymentgateway.mashreq.action.method = post
+paymentgateway.mashreq.action.url = https://migs.mastercard.com.au/vpcpay
+paymentgateway.mashreq.vpc.version = 1
+paymentgateway.mashreq.vpc.command = pay
+paymentgateway.mashreq.vpc.access.code = 7B5D8012
+paymentgateway.mashreq.vpc.merchant.id = TEST800454
+paymentgateway.mashreq.vpc.currency.code = USD
+paymentgateway.mashreq.vpc.locale.code = en
+paymentgateway.mashreq.vpc.secure.hash.type = SHA256
+paymentgateway.mashreq.vpc.returnauthresponseData.option.code = y
+paymentgateway.mashreq.vpc.secure.hash.secert.key = 9B60EFE6E30D4F6DC1394CC154845D06
+############# MASHREQ TEST CONFIG#################
+############# NAB TEST CONFIG#################
+paymentgateway.nab.form.name = nabPayForm
+paymentgateway.nab.action.method = post
+paymentgateway.nab.action.url = https://transact.nab.com.au/test/directpostv2/authorise
+paymentgateway.nab.eps.merchant = XYZ0010
+paymentgateway.nab.transaction.password = abcd1234
+paymentgateway.nab.eps.transaction.type.code = 0
+paymentgateway.nab.eps.payment.choice.code = UPOP
+paymentgateway.nab.eps.timestamp.date.format = YYYYMMddHHmmss
+############# NAB TEST CONFIG#################
+############# SKASH TEST CONFIG#################
+paymentgateway.skash.form.name = skashPayForm
+paymentgateway.skash.action.method = post
+paymentgateway.skash.action.url = https://p3uat.sahaj.co.in:8080/web/guest/thirdpartypay
+paymentgateway.skash.vle.id = 1901010100002300
+paymentgateway.skash.vle.commission = 1.0
+paymentgateway.skash.service.id = 21
+paymentgateway.skash.service.provider.id = 10
+############# SKASH TEST CONFIG#################
+##########################################################################################
+################################### End of Payment TEST CONFIG ###########################
+##########################################################################################

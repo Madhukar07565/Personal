@@ -1,0 +1,11 @@
+$lang=en
+UPDATE ActivityChain;code[unique=true];displayName[lang=$lang];description[lang=$lang]
+;160;Outrigger Hotels and Resorts;
+;161;Quest Service Apartments;
+;162;Radisson Blu;
+;163;Rydges Hotels and Resorts;
+;164;Shangri - La Hotels and Resorts;
+;165;Stamford Hotels and Resorts;
+;166;Swissotel Hotels and Resorts;
+;167;Voyages Hotels and Resorts;
+;168;Jurys Inn;

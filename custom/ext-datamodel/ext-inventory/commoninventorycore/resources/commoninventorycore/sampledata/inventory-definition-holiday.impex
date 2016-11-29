@@ -1,0 +1,21 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+
+
+
+INSERT_UPDATE HolidayCutOffAndCharges;priceComponent[unique=true](code);applicableOn[unique=true](code)
+;BASE_FARE;TOUR_DATE
+
+INSERT_UPDATE HolidayPenaltyCharges;validateForType[unique=true](code);definedBy[unique=true](code);appliedOn(code);thresholdAppliedOn(ThresholdApplicableOn.code);charges(HolidayCutOffAndCharges.priceComponent(code),HolidayCutOffAndCharges.applicableOn(code))
+;ALL_TOUR_DATES;HOURS;Prior_To_Travel;TOTAL_UTILIZATION;BASE_FARE:TOUR_DATE
+
+INSERT_UPDATE HolidayInvSupplierAdvanceDefinition;cutOffForFreeSale(CutOffForFreeSale.definedBy(code),CutOffForFreeSale.appliedOn(code),CutOffForFreeSale.releaseDayOrHrs);blockOutDates[dateformat=$dateformat];penaltyCharges[unique=true](HolidayPenaltyCharges.validateForType(code),HolidayPenaltyCharges.definedBy(code))
+;DAYS:Prior_To_Travel:Days20;;ALL_TOUR_DATES:HOURS
+
+INSERT_UPDATE HolidayCompanySpecificInventory;sbu(Company.uid);bu(Company.uid);market(Market.uid);distributionChannel(DistributionChannel.uid)[unique=true];division(Division.uid)[unique=true];salesOfficeLocation;salesOffice(SalesOffice.uid)[unique=true];productCode(HolidayProduct.code);warehouse(Warehouse.code);noOfPax;anyRooms
+;E000;E000;IND;Website;Domestic;;VMN01;HolidayProduct;default;6;8
+
+INSERT_UPDATE HolidayInventoryDefinition;inventoryId[unique=true];overBookingLimit;product(HolidayProduct.code);flavor(HolidayFlavor.code);packageCategory(code);market(Market.uid);requestedBy(code);advanceDefinition(HolidayInvSupplierAdvanceDefinition.penaltyCharges(HolidayPenaltyCharges.validateForType(code),HolidayPenaltyCharges.definedBy(code)));distributedInventories(HolidayCompanySpecificInventory.distributionChannel(DistributionChannel.uid),HolidayCompanySpecificInventory.division(Division.uid),HolidayCompanySpecificInventory.salesOffice(SalesOffice.uid))
+;Holiday_Inv_Def_0001;7;HolidayProduct;;STANDARD;IND;PAX;;Website:Domestic:VMN01

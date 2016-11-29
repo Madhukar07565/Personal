@@ -1,0 +1,159 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$timeFormat=HH:MM
+$lang=en
+$dateformat=dd/MM/yyyy
+$baseProduct=baseProduct(code,$catalogVersion)
+$productCategorySubType=productCategorySubType(code,$catalogVersion)
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.common.initialdata.setup.InitialDataSystemSetup&\productsetup\import\images\96Wx96H
+
+#INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier)
+#;resorts;$siteResource\resorts.png;;;images
+#;sampleMedia2;$siteResource\sampleMedia2.png;;;images
+
+################ Dependency Start ##################
+
+##################### Supplier ############################
+INSERT_UPDATE Supplier;$catalogVersion;code[unique=true];commonUid;supplierType(code);enablerCategories(code);lobs(code)
+;;Cruise-Company123;12131;ENABLER;DIRECT_CONNECT;FIT
+
+INSERT_UPDATE ProductType;code[unique=true];$productCategorySubType;$catalogVersion
+;DAYCRUISE;C003ST001:EZ-IN:Staged;EZ-IN:Staged
+;NIGHTCRUISE;C003ST001:EZ-IN:Staged;EZ-IN:Staged
+
+##################### Dependent data of Interest Master ########
+INSERT_UPDATE Interest;code[unique=true];name
+					  ;INT001           ;Activity Interest
+
+####### Import essential-data.impex, essential-data_en.impex ##########									
+################ Dependency End ##################
+
+
+###########################  ActivityProductSubType ##########################							
+INSERT_UPDATE ActivityProductSubType;$catalogVersion[unique=true];$baseProduct;commonProductNameSubTypeId;code;financeControlId;name;productType(ProductType.code);placeOfEvent(DestinationPointType.code);startingPoint;endingPoint;interest(code);highlights;duration[timeformat=$timeFormat];usp;sellingTips;isPickupAndDropOff;copiedFrom;exclusionDescription
+									;							 ;AP1002	  ;DNRCRZ001				 ;EZDNRCRZ001;FINID001;Cruise with dinner;DAYCRUISE	   ;PORT					 			   ;Starting point;Ending point;INT001	  	;Highlights;03:00							;Usp123;Selling tips;true		   ;		  ;Exclusion description
+
+####################################### Activity Description long and short #################################################
+INSERT_UPDATE ActivityDescription;fromToDate[dateformat=$dateformat][unique=true];shortDescription[lang=$lang];longDescription[lang=$lang];activityProductSubTypeActivityDescription(code)
+								 ;26/04/2015,26/04/2016                          ;Short desc for Theme Park1  ;Long desc for Theme park   ;EZDNRCRZ001
+
+###########################  OperationDuration ##########################					   
+INSERT_UPDATE OperationDuration;supplierName(Supplier.code)[unique=true];timeOfDay(code);dateRange[dateformat=$dateformat]
+;Cruise-Company123;MORNING;01/01/2003,05/05/2015   
+
+#################################### Vehicle ########################################
+INSERT_UPDATE VehicleDetails;vehicleType(ProductCategorySubType.code)[unique=true];vehicleCategory(VehicleCategory.code)[unique=true];vehicleName(Vehicle.name)[unique=true];airCondition
+;CARS;MINI;Car;true
+;BUS;LUXARY;Bus;false
+
+########################### PickupAndDropOff ###########################
+INSERT_UPDATE PickupAndDropOff;supplierName(Supplier.code);transferType(TransferType.code);vehicleDetails(vehicleType(ProductCategorySubType.code),vehicleCategory(VehicleCategory.code),vehicleName(Vehicle.name));type(PickUpDropOffType.code);fromTo(PickUpDropOffFromTo.code);locationType(DestinationPointType.code);locationName(Location.name);pickUpAddress(Address.code);contactDetails(ContactDetails.telephone,ContactDetails.email)
+;;;;PICKUPPOINT;LOCATION;
+
+########################## Address ################################
+INSERT_UPDATE Address;building;appartment;streetname[unique=true];streetnumber;street3;street4;street5;postalcode;suburbDowntown;country(isocode);region;city(isocode);area;location
+;TajHotels;19 Apollo Burder;Gatway of India;;;;;40001;;India;Maharashtra;Mumbai;South mumbai;Marine drive
+
+###################################### Contact Details #######################################
+INSERT_UPDATE ContactDetails;telephone[unique=true];fax;websiteUrl;email[unique=true];note
+;1111111;22345678;www.test.com;test@test.com;General note
+;2222222;33876543;;testmail@test.com;General note
+
+##################################### TourItinerary######################################
+INSERT_UPDATE TourItinerary;title[unique=true];startTime[timeformat=$timeFormat][unique=true];endTime[timeformat=$timeFormat][unique=true];description;dayName;media(code)
+;Arabian treasures walking tour;07:15;18:30;Arabian treasure walking tour description;Day2;resorts
+
+################################## Inclusions ###################################################
+
+########################### Type of Inculsion-Guide ##########################	
+INSERT_UPDATE Guide;isDriver;audioCommentryAvailable[unique=true];description[unique=true];language(isocode)
+;true;true;guidelines of activity product;hi
+;true;false;Guide available for avtivity;en
+
+########################## Type of Inclusion-Attraction/Places ##################################
+INSERT_UPDATE Attraction;name;description;panaromic;sightSeeing;photoSpot;duration[timeformat=$timeFormat];arrivalTime[timeformat=$timeFormat];depTime[timeformat=$timeFormat]:media(code)
+;Heathrow;Attraction description;true;true;false;06:00;07:00;13:00;resorts
+
+########################### Type of Inclusion-Entertainment ##########################				   
+INSERT_UPDATE Entertainment;entertainmentType(EntertainmentType.code)[unique=true];name[unique=true];description;fromToDate[dateformat=$dateformat][unique=true];media(code)
+;Shows;Jullus Caeser;Entertainment description;26-04-2015,26-04-2016;sampleMedia2
+
+######### Entertainment cast and crew info #########
+INSERT_UPDATE AdditionalActivityInfo;name;description
+;Name of cast;Cast and crew description
+
+######### Entertainment days of operation ########
+INSERT_UPDATE DayOfOperation;daysOfWeek(code)[unique=true];timeFrom[timeformat=$timeFormat][unique=true];timeTo[timeformat=$timeFormat][unique=true];media(code)
+;SUNDAY,MONDAY;13:30;17:00;sampleMedia2
+
+############################# Type of inclusion-Seating Information ########################
+INSERT_UPDATE SeatingInfo;screenName;seatingClass;seatingCapacity;rowNumber;seatFrom;seatTo;description;media(code)
+;Audi1;GoldClass;200;9;9a;9d;Show description;sampleMedia2
+
+############################# Type of Inclusion-Meals or Dining #############################
+INSERT_UPDATE DiningInfo;restaurantName;typeOfDining(code);style(code);typeOfService(code);mealType(code);cuisineType(code);foodType(code);chefRecommended;spiceLevel(code);unit(VolumeUnit.code);description
+						;Mariott	   ;UNIQUE			  ;BUFFET	  ;TABLE			  ;VEGETARIAN	 ;CONTINENTAL	   ;DAIRY		  ;True 		  ;MEDIUM		   ;PER_GLASS			 ;Meal description
+
+########### Dining menu info ##############
+INSERT_UPDATE MealInfo;mealType(code);menuName(code)[unique=true];menuItemName[lang=$lang];description[lang=$lang];menuValidity[dateformat=$dateformat][unique=true];media(code)
+                      ;NON_VEGETARIAN;SPECIALS		             ;Rice                    ;meal info              ;26-04-2016,26-04-2016						    ;resorts
+
+################### Type of Inclusion-show/ Events & Tours / Rides / Attraction / Entertainment / Character Experience #################
+INSERT_UPDATE AdditionalActivityInfo;name;description
+;Inclusion for activites;Description for Inclusion for activites
+
+################### Type of Inclusion-Others ################
+INSERT_UPDATE AdditionalActivityInfo;name[unique=true];description
+;Inclusion for others;Description for Inclusion for Others
+
+################################### Additional Information ####################################
+INSERT_UPDATE AdditionalActivityInfo;typeOfInfo(RuleType.code)[unique=true];description
+									;Pets Policy			  ;Description for pet policy
+
+############################ Type of Information-Spa ############################
+INSERT_UPDATE SpaInfo;name;description;benefit;recommended;durationtimeFrom[timeformat=$timeFormat]
+;Spa treatment with lla;Service description;benefit for spa treatment;Spa treatment recommended for;02:00
+
+############################ Type of Information-Participants ########################
+INSERT_UPDATE Participant;sportsName;teamName;description;country(code);teamRanking;Media(code)
+;Sports name;Team name;Description about sports and team;IN;69;sampleMedia2
+						 
+						 
+########## Details ofTeam Members ###########
+INSERT_UPDATE TeamMemberDetails;name;age;height;heightUnit(DistanceUnitMasterType.code);weight;weightUnit(WeightUnit.code);ranking;position;teamMemberDesc
+;Member name;24;6;FOOT;89;KG;99;Member position;Team member description
+
+############################# Type of Information-Performer's ###################################
+INSERT_UPDATE GeneralDescriptionInfo;name;description
+;Performer name;Performer description
+
+############################# Type of Information-Nominee's ##############################
+INSERT_UPDATE AwardInfo;awardCategory[unique=true];awardName
+;Award Category;Award Name
+
+######### Nominees ##########
+INSERT_UPDATE GeneralDescriptionInfo;name;description
+;Nominee name;Nominee description
+
+###################### Type of Information-Show/Play ######################
+INSERT_UPDATE ShowInfo;name[unique=true];description;languageAvailable[unique=true];languageName(Language.code)[unique=true];performedBy
+;Show name;Show description;Ture;en;perforrmed by
+
+###################### Show/Play Cast ########################
+INSERT_UPDATE GeneralDescriptionInfo;name[unique=true];description
+;Show cast name;Show cast description
+
+###################### Type of Information-others #####################
+INSERT_UPDATE GeneralDescriptionInfo;owner(ActivityProductSubType.name);description
+;Cruise with dinner;Other Information
+
+###################################### Seating Arrangement for Food, Wine & Night Life ##########################
+INSERT_UPDATE SeatingInfo;seatingArrangments(code)[unique=true];roomName[lang=$lang][unique=true];purpose(code);seatingCapacity;dateRange[dateformat=$dateformat]                    
+                         ;CAFETERIA                            ;Seat1                            ;COCKTAIL     ;200            ;26-04-2016,26-04-2016
+###################################### Product name sub type relation #########################
+INSERT_UPDATE DeactivationConfig;product(name,$catalogVersion)[unique=true];validityStartDate[dateformat=$dateformat][unique=true];companyMarket(Market.uid)[unique=true];reason[unique=true];status[unique=true]
+;87762;30-02-2016;IND;Reason123;True
+
+

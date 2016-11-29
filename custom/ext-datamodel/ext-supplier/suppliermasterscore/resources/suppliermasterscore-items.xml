@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<enumtypes>
+		<enumtype code="SupplierType">
+			<value code="ENABLER" />
+			<value code="SOURCE" />
+			<value code="BOTH" />
+		</enumtype>
+
+		<enumtype code="SupplierEnablerCategory" dynamic="true">
+			<value code="GDS" />
+			<value code="DIRECT_CONNECT" />
+			<value code="PAYMENT_GATEWAY" />
+			<value code="SWITCH" />
+			<value code="SMS_GATEWAY" />
+			<value code="CONTENT_PROVIDER" />
+			<value code="TRAVEL_ACCESSORIES" />
+			<value code="LOGISTIC" />
+			<value code="SETTLEMENT" />
+		</enumtype>
+
+		<enumtype code="SuppliersLOB" dynamic="true">
+			<value code="GROUPS" />
+			<value code="FIT" />
+			<value code="MICE" />
+			<value code="INCENTIVES" />
+		</enumtype>
+		<enumtype code="Segment">
+			<value code="ACTIVE" />
+			<value code="PASSIVE" />
+			<value code="BOTH" />
+			<value code="OTHER_GDS" />
+		</enumtype>
+		<enumtype code="CommercialSlabType" dynamic="true">
+			<value code="TOTAL_REVENUE" />
+			<value code="NO_OF_TICKETS" />
+			<value code="NO_OF_ROOMS" />
+			<value code="NO_OF_PASSENGERS" />
+			<value code="NO_OF_SECTORS" />
+			<value code="NO_OF_NIGHTS" />
+			<value code="NO_OF_BOOKINGS" />
+			<value code="NO_OF_SEATS" />
+			<value code="NO_OF_SEGMENTS" />
+			<value code="NO_OF_ADULTS" />
+			<value code="NO_OF_CHILDREN" />
+		</enumtype>
+		<enumtype code="CalculationType">
+			<value code="NETT_OFF" />
+		</enumtype>
+		<enumtype code="FOCType">
+			<value code="FOC" />
+			<value code="UPGRADE" />
+		</enumtype>
+		<enumtype code="RunningType">
+			<value code="TICKETS" />
+			<value code="ROOMS" />
+			<value code="PASSENGERS" />
+		</enumtype>
+
+		<enumtype code="SupDefValidityContext">
+			<value code="TRAVEL" />
+			<value code="TICKETING" />
+			<value code="TRAVEL_AND_TICKETING" />
+			<value code="SALE" />
+			<value code="TRAVEL_AND_SALE" />
+		</enumtype>
+		<enumtype code="AncillaryCategory" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="SERVICE" />
+			<value code="RENTAL" />
+		</enumtype>
+		<enumtype code="TransferType" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="PRIVATE" />
+			<value code="SHARED" />
+			<value code="SEAT_IN_COACH" />
+		</enumtype>
+		<enumtype code="CityTierType" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="TIER_1" />
+			<value code="TIER_2" />
+			<value code="TIER_3" />
+		</enumtype>
+		<enumtype code="SeasonType">
+			<description>Season Type </description>
+			<value code="LOW_SEASON"></value>
+			<value code="MID_SEASON"></value>
+			<value code="HIGH_SEASON"></value>
+			<value code="PEAK_SEASON"></value>
+		</enumtype>
+		<enumtype code="TaxType" dynamic="true">
+			<description>Tax Type</description>
+			<value code="LUXURY_TAX"></value>
+			<value code="VAT"></value>
+			<value code="SERVICE_TAX"></value>
+		</enumtype>
+		<enumtype code="NonAirPriceComponentType" dynamic="true">
+			<description> Non Air Price Component Type</description>
+			<value code="BASE_FARE"></value>
+			<value code="YQ_TAX"></value>
+			<value code="FUEL_SURCHARGE"></value>
+			<value code="USER_DEVELOPMENT_FEE"></value>
+			<value code="PASSENGER_SERVICE_FEE"></value>
+			<value code="OTHER_CHARGES"></value>
+			<value code="TRANSACTION_FEE"></value>
+			<value code="TOTAL"></value>
+			<value code="ROOM_RATE"></value>
+			<value code="LUXURY_TAX"></value>
+			<value code="VAT_TAX"></value>
+			<value code="ANCILLARY_RATE"></value>
+		</enumtype>
+		<enumtype code="SippCode" dynamic="true">
+			<value code="CDMR" />
+			<value code="MDMR" />
+			<value code="DNMR" />
+		</enumtype>
+		<enumtype code="TransportCategory" dynamic="true">
+			<value code="TRANSFER" />
+			<value code="RENTAL" />
+			<value code="CAR_PACKAGE" />
+		</enumtype>
+		<enumtype code="JourneyType">
+			<value code="ONE_WAY" />
+			<value code="RETURN" />
+			<value code="MULTI_CITY" />
+		</enumtype>
+		<enumtype code="AncillaryType">
+			<value code="ENTERTAINMENT" />
+			<value code="PARKING" />
+			<value code="INTERNET" />
+			<value code="RESTAURANT" />
+			<value code="TRAILER_ACCESSORIES" />
+			<value code="PURCHASE_ITEM" />
+			<value code="CAMPING_ITEM" />
+			<value code="INSURANCE" />
+			<value code="PETS" />
+			<value code="SPA" />
+			<value code="TRANSFER" />
+			<value code="CYCLING_PACKAGE" />
+		</enumtype>
+		<enumtype code="RatesDefinedForType" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="PER_NIGHT" />
+			<value code="DAY_USE" />
+			<value code="HOURLY" />
+			<value code="CITY_TRANSFERRED" />
+			<value code="INTER_CITY_TRANSFER" />
+			<value code="CITY_USE" />
+			<value code="OUTSTATION" />
+		</enumtype>
+	</enumtypes>
+
+	<relations>
+<!-- 		<relation localized="false" code="EmergencyContact2Category">
+			<deployment table="emcont2cat" typecode="20600" />
+			<sourceElement type="SupplierEmergencyContact"
+				qualifier="supplierEmergencycontacts" cardinality="many"
+				collectiontype="set" />
+			<targetElement type="Category" qualifier="categories"
+				cardinality="many" collectiontype="set" />
+		</relation> -->
+		
+		<relation localized="false" code="EmergencyContact2Country">
+			<deployment table="emcont2country" typecode="20601" />
+			<sourceElement type="SupplierEmergencyContact"
+				qualifier="supplierEmergencycontacts" cardinality="many"
+				collectiontype="set" />
+			<targetElement type="Country" qualifier="countries"
+				cardinality="many" collectiontype="set" />
+		</relation>
+
+		<relation localized="false" code="EmergencyContact2Continent">
+			<deployment table="emcont2continent" typecode="20602" />
+			<sourceElement type="SupplierEmergencyContact"
+				qualifier="supplierEmergencycontacts" cardinality="many"
+				collectiontype="set" />
+			<targetElement type="Continent" qualifier="continents"
+				cardinality="many" collectiontype="set" />
+		</relation>
+
+		<relation localized="false" code="EmergencyContact2Region">
+			<deployment table="emcont2region" typecode="20603" />
+			<sourceElement type="SupplierEmergencyContact"
+				qualifier="supplierEmergencycontacts" cardinality="many"
+				collectiontype="set" />
+			<targetElement type="Region" qualifier="regions"
+				cardinality="many" collectiontype="set" />
+		</relation>
+
+		<relation localized="false" code="EmergencyContact2City">
+			<deployment table="emcont2city" typecode="20604" />
+			<sourceElement type="SupplierEmergencyContact"
+				qualifier="supplierEmergencycontacts" cardinality="many"
+				collectiontype="set" />
+			<targetElement type="City" qualifier="cities"
+				cardinality="many" collectiontype="set" />
+		</relation>
+		<relation localized="false" code="Policy2DynamicPolicy">
+			<sourceElement type="TravelogixPolicy" qualifier="policy"
+				cardinality="one" />
+			<targetElement type="AbstractDynamicPolicy" qualifier="canOrAmndPolicies"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+	</relations>
+
+	<itemtypes>
+		<itemtype code="SupplierEmergencyContact" extends="ContactDetails"
+			jaloclass="com.cnk.travelogix.supplier.core.contact.jalo.SupplierEmergencyContact">
+			<attributes>
+				<attribute type="java.lang.String" qualifier="contactPerson">
+					<persistence type="property" />
+				</attribute>
+				<attribute type="java.lang.Boolean" qualifier="displayInTravelDocuments">
+					<modifiers optional="false" />
+					<persistence type="property" />
+					<defaultvalue>Boolean.FALSE</defaultvalue>
+				</attribute>
+				<attribute type="ProductCategory" qualifier="productCategory">
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<typegroup name="policymasters">
+			<itemtype code="AbstractDynamicPolicy" abstract="true"
+				jaloclass="com.cnk.travelogix.supplier.masterdata.core.policy.AbstractDynamicPolicy">
+				<deployment table="dynamicpolicies" typecode="20612" />
+				<attributes>
+					<attribute type="PolicyDefinedByType" qualifier="definedBy">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="fromDaysHour">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="toDaysHour">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="chargesInPercentage">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Currency" qualifier="currency">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="chargesAmount">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+
+			</itemtype>
+			<itemtype code="AccoDynamicPolicy" extends="AbstractDynamicPolicy"
+				jaloclass="com.cnk.travelogix.supplier.masterdata.core.policy.AccoDynamicPolicy">
+				<attributes>
+					<attribute type="java.lang.Double" qualifier="chargeNight">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="perRoom">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="perPerson">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="ActivityDynamicPolicy" extends="AbstractDynamicPolicy"
+				jaloclass="com.cnk.travelogix.supplier.masterdata.core.policy.ActivityDynamicPolicy">
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="perPerson">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="perAdult">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="perChild">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="perInfant">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="allPaxTypes">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="CruiseDynamicPolicy" extends="AbstractDynamicPolicy"
+				jaloclass="com.cnk.travelogix.supplier.masterdata.core.policy.CruiseDynamicPolicy">
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="perPassenger">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="perCabin">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="FlightsDynamicPolicy" extends="AbstractDynamicPolicy"
+				jaloclass="com.cnk.travelogix.supplier.masterdata.core.policy.FlightsDynamicPolicy">
+				<attributes>
+					<attribute type="localized:java.lang.String" qualifier="fareTypes">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="perAdult">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="perChild">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="perInfant">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="HolidaysDynamicPolicy" extends="AbstractDynamicPolicy"
+				jaloclass="com.cnk.travelogix.supplier.masterdata.core.policy.HolidaysDynamicPolicy">
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="perRoom">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="allPaxTypes">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="adultInTwin">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="adultInDouble">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="childWithExtraBed">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="childWithNoBed">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="TransportationDynamicPolicy" extends="AbstractDynamicPolicy"
+				jaloclass="com.cnk.travelogix.supplier.masterdata.core.policy.TransportationDynamicPolicy">
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="perAdult">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="perChild">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="perPerson">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="perVehicle">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

@@ -1,0 +1,71 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=source(code, $catalogVersion)[unique=true]
+$categories=supercategories(code, $catalogVersion)[default=C001ST001:$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$approved=approvalstatus(code)[default='approved']
+$siteResource=jar:com.cnk.travelogix.product.transport.masters.core.setup.TransportProductSetup&\transportproductmasterscore\import\sampledata\images
+
+#Set Package
+INSERT_UPDATE HolidayFlavor;code[unique=true];$catalogVersion;baseProduct(Product.code);;name[lang=en,unique=true];commonProductId;financeControlId[unique=true];$approved;remarks;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];$categories;
+;SetPackage;;
+
+#Customized Package
+INSERT_UPDATE HolidayFlavor;code[unique=true];$catalogVersion;baseProduct(Product.code);;name[lang=en,unique=true];commonProductId;financeControlId[unique=true];$approved;remarks;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];$categories;
+;CustomizedPackage;;
+
+INSERT_UPDATE BlackOutDates;daysOfWeek(code)[unique=true];blackOutDates
+;MONDAY;
+
+INSERT_UPDATE HolidayItineraryDetails;itineraryInBrief[unique=true];itineraryDetails[unique=true];packageCategories(code)
+;itinerary brief1;itinerary detail1;DELUXE,LUXURY
+
+INSERT_UPDATE DayWiseItinerary;city[unique=true](isocode);sequenceNumber[unique=true];day;standardPrice;deluxePrice;superiorPrice;service(Category.code);timeFrom;timeTo;lunchIncluded;dinnerIncluded;breakfastIncluded;sessionName[unique=true](code);itineraryDetails(HolidayItineraryDetails.itineraryInBrief,HolidayItineraryDetails.itineraryDetails)
+;AAB;12;2;;;;C006;time1;time2;true;true;false;EVENING;itinerarybrief1:itinerarydetail1
+
+INSERT_UPDATE HolidayHub;productCategory[unique=true](Category.code);productCategorySubType[unique=true](code);hub(isocode);sectors;feeders(Feeder.flavor(HolidayFlavor.code),transfer(TransferProductDayWiseItinerary.category(code),TransferProductDayWiseItinerary.journeyType(code))
+;C006;C001ST100;AAB;
+
+INSERT_UPDATE HolidayFlavor;code[unique=true];$catalogVersion;baseProduct(Product.code);companyMarket(Market.uid);companyTourCode;flavorType(code)      ;packageType(code);productType(code);brandName(HolidayBrand.code);itineraryWise;comfortLevel;companyRating(code);rating(code);recommended;flightDay1Itinerary;companyPackageCategories(PackageCategory.code);brochures;interests;salesValidities;combinedCruise;combinedFlavor;itineraryBasedDayWiseItinerary(DayWiseItinerary.city(isocode),DayWiseItinerary.sequenceNumber)
+						   ;1001             ;               ;product1                 ;IND                      ;CNK_Tour1      ;Seat_in_Coach_Packages;STANDARD         ;GROUP            ;0000000001                  ;false        ;4           ;TWO                ;FOUR        ;false      ;false              ;DELUXE,LUXURY                                 ;         ;         ;               ;              ;              ;AAB:12
+
+
+INSERT_UPDATE ActualPrices;supplier[unique=true](code);onlineFrom[unique=true][dateformat=$dateformat];offlineFrom[unique=true][dateformat=$dateformat]
+;Taj_Hotel;06-06-2017;05-06-2017
+
+INSERT_UPDATE Prices;owner(ActualPrices.supplier(code),ActualPrices.onlineFrom[dateformat=$dateformat],ActualPrices.offlineFrom[dateformat=$dateformat])[unique=true];companyPackageCategory(code);currency(isocode);perItem;adult;child;infant
+;Taj_Hotel:06-06-2017:05-06-2017;DELUXE;USD;2.0;2;1;0
+
+INSERT_UPDATE OtherDayWiseItinerary;service(code)[unique=true];availDays;quantity;valueAdded;numberOfItems;description;prices
+;product1;4;7;true;8;desc;
+
+INSERT_UPDATE AccoDayWiseItinerary;productName(Accommodation.code)[unique=true];location[unique=true](Location.isocode);area[unique=true];extensionNights;availDays
+;87762;AAA;;false;5
+
+INSERT_UPDATE ActivityDayWiseItinerary;pickUpPointType[unique=true](code);pickUpPointName;sessionName[unique=true](code)
+;AIRPORT;;MORNING
+
+INSERT_UPDATE FlightTransferDayWiseItinerary;fromCity[unique=true](code);toCity[unique=true](code);availDays;returnDay;returnSequence
+;AAL;AAP;6;4;2
+
+INSERT_UPDATE TransferProductDayWiseItinerary;category(code)[unique=true];journeyType(code)[unique=true];rateDefinedFor(code);transferType(code);pickUpPointType(code);pickUpPointName;dropOffPointType(code);dropOffPointName;pickUpTime;dropOffTime;sessionName(code);meetAndGreet;returnDay;returnSequence;fromCity(isocode);toCity(isocode);enRouteCity(isocode);overnight
+                                             ;RENTAL                     ;RETURN                        ;CITY_TRANSFER       ;SHARED            ;AIRPORT              ;               ;AIRPORT               ;                ;11am      ;10pm       ;EVENING          ;true        ;2        ;2                ;AAA              ;AAB            ;                    ;false
+INSERT_UPDATE Feeder;preTour;postTour;flavor(HolidayFlavor.code);transfer[unique=true](TransferProductDayWiseItinerary.category(code),TransferProductDayWiseItinerary.journeyType(code))
+;true;false;1001;RENTAL:RETURN
+
+INSERT_UPDATE RentalTransferDayWiseItinerary;vehicleCategory[unique=true](code);vehicleName[unique=true](code);airCondition;withChuffer
+;C006;Car001;true;false
+
+INSERT_UPDATE CarPackage;owner(RentalTransferDayWiseItinerary.vehicleCategory(code),RentalTransferDayWiseItinerary.vehicleName(code))[unique=true];cities(isocode)
+;C006:Car001;AAA
+
+INSERT_UPDATE RailTransferDayWiseItinerary;journeyType[unique=true](code);journeyByPass[unique=true];availdays[unique=true]
+;RETURN;false;2
+
+INSERT_UPDATE RailPassTransferDayWiseItinerary;owner[unique=true](RailTransferDayWiseItinerary.journeyType(code),RailTransferDayWiseItinerary.journeyByPass,RailTransferDayWiseItinerary.availdays);countries(isocode);numberOfDays
+;RETURN:false:2;IN,AU;2
+
+INSERT_UPDATE RailTicketTransferDayWiseItinerary;owner[unique=true](RailTransferDayWiseItinerary.journeyType(code),RailTransferDayWiseItinerary.journeyByPass,RailTransferDayWiseItinerary.availdays);fromCity(isocode);toCity(isocode);reservationRequired;overNight;returnDay;returnSequence
+;RETURN:false:2;AAA;AAB;true;false;2;4

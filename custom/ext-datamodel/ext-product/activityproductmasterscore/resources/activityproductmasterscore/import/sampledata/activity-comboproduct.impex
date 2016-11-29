@@ -1,0 +1,21 @@
+
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$siteResource=jar:com.cnk.travelogix.product.activity.masters.core.setup.ActivityProductMastersCoreSystemSetup&\activityproductmasterscore\import\sampledata\images\96Wx96H\
+
+INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier);
+;123;$siteResource\sampleMedia2.png;;;images;
+;124;$siteResource\sampleMedia2.png;;;images;
+
+
+###################################### Dependent data of Interest Master ########
+INSERT_UPDATE Interest;code[unique=true];name
+					  ;INT001           ;Activity Interest
+					  
+INSERT_UPDATE ActivityComboProduct;$catalogVersion;version;id[unique=true];name;comboProductType;comboCompanyProductNameId;productNameFinanceControlId;comboDisplayName;comboCommonProductNameSubTypeId;comboCompanyProductNameSubTypeId;comboProductNameSubType;productNameSubTypeFinanceControlId;pickOfPoint;dropOffPoint;remark;uniqueSellingPoints;sellingTips;copiedFromCompanyProductNameId;copiedFromCompanyProductNameSubTypeId;interest(code);highlights;activityComboMedia(code);attachedPolicies(code);deactivationFromMarket(product(code));activityComboProducts(code);longDescription(product(code));shortDescription(product(code));updates(product(code));
+;;ActivityComboV1000;ACT001;Madame Tussads+LondonEye+SeaLife;Show+Museum+Aquarium;LONCB001;;Three Iconic Attraction;LONCBPNST001;LONCBPNST001;Madame Tussads+LondonEye+SeaLife;;;;Enjoy these three iconic attractions and save 30%;Enjoy these three iconic attractions and save 30%;30% saving ;;;INT001;;123,124;PR001;AP101;3001;;;;
+

@@ -1,0 +1,23 @@
+$productCatalog=EZ-IN
+$classificationCatalog=travelogixClassificationCatalog
+$lang=en
+$classSystemVersion=systemVersion(catalog(id[default='EZ-IN-CS']),version[default='1.0'])[unique=true]
+$classCatalogVersion=catalogversion(catalog(id[default='EZ-IN-CS']),version[default='1.0'])[unique=true,default='EZ-IN-CS:1.0']
+$class=classificationClass(ClassificationClass.code,$classCatalogVersion)[unique=true]
+$attribute=classificationAttribute(code,$classSystemVersion)[unique=true]
+$unit=unit(code,$classSystemVersion)
+
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+$categories=target(code, $catalogVersion)[unique=true]
+$supercategories=source(code,$classCatalogVersion)[unique=true]
+
+
+
+# Links ClassificationClasses to Categories
+INSERT_UPDATE CategoryCategoryRelation;$supercategories;$categories
+
+;HostFamilyDetails-HomeStay;C002ST016
+;CertificationDetails-HomeStay;C002ST016
+;LocationDetails-HomeStay;C002ST016

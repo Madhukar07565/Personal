@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<widget-definition id="com.cnk.travelogix.transport.flight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://hybris.com/cockpitng/widget-definition">
+	
+<name>Flight</name>
+	<description>Flight Creation Widget</description>
+
+	<sockets>
+		<input type="java.lang.String" id="incomingMsg"/>
+		<output type="java.lang.String" id="outgoingMsg"/>
+	</sockets>
+	<keywords>
+		<keyword>Flight</keyword>
+	</keywords>
+	
+</widget-definition>

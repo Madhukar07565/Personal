@@ -1,0 +1,55 @@
+# Sample data of AccInventoryDetails Modal.
+$lang=en
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$timeformat = hh:mm
+
+$writableCatalogVersions=writableCatalogVersions(catalog(id),version);
+$readableCatalogVersions=readableCatalogVersions(catalog(id),version);
+
+INSERT_UPDATE Usergroup;uid[unique=true];groups(uid)[mode=append];locname[lang=en];description
+;ReconfirmationCreatorGroup;employeegroup;"User Creator Group";
+;ReconfirmationApproverGroup;employeegroup;"User Approver Group";
+
+INSERT_UPDATE Role;code[unique=true];name[lang=$lang]
+;RECONFIRMATION_CONFIG_CREATOR;RECONFIRMATION CONFIG CREATOR
+;RECONFIRMATION_CONFIG_APPROVER;RECONFIRMATION CONFIG APPROVER
+
+### Create user for creating and approving the user.
+
+INSERT_UPDATE Employee;UID[unique=true]			;firstName		;middleName		;lastName		;contactEmail			;mobileNumber;designation				;functionalRole(code)				 ;reportingManager(uid) ;isManager[default=false];secondaryUser(uid);roles(code);groups(uid)[mode=append]				;sessionLanguage(isocode);name							;$writableCatalogVersions	;$readableCatalogVersions		;backOfficeLoginDisabled
+					 ;reconfirmationcreator		;subhash		;chandra		;sekhar			;subhash1@gmail.com		;1234567890	 ;Reconfrimation Manager	;RECONFIRMATION_CONFIG_CREATOR		 ;						;true					;					;			;ReconfirmationCreatorGroup				;en						 ;Reconfrimation Creator		;EZ-IN:Staged,EZ-IN:Online	;EZ-IN:Staged,EZ-IN:Online		;false
+					 ;reconfirmationapprover	;gorav			;kumar			;sekhar			;gorav1@gmail.com		;1234567890	 ;Reconfrimation Approver	;RECONFIRMATION_CONFIG_APPROVER		 ;						;true					;					;			;ReconfirmationApproverGroup			;en						 ;Reconfrimation Approver		;EZ-IN:Staged,EZ-IN:Online	;EZ-IN:Staged,EZ-IN:Online		;false
+					 
+INSERT_UPDATE ReconfirmationConfig;code[unique=true];$catalogVersion;productCategory(code,$catalogVersion);productCategorySubType(code,$catalogVersion);product(code,$catalogVersion);effectiveFrom[dateformat=$dateformat]; 
+								  ;	RC001				;			   	 ;C001	  									   ;C001ST001										;123				        ;11-08-2016						
+								  ;	RC002				;			   	 ;C001										   ;C001ST001										;124						;11-08-2016	
+								  ;	RC003				;				 ;C001										   ;C001ST001										;125						;11-08-2016
+								  ;	RC004				;				 ;C001										   ;C001ST001										;126						;11-08-2016
+								  ;	RC005				;				 ;C002										   ;C002ST001										;87762						;11-08-2016
+								  ;	RC006				;				 ;C002										   ;C002ST002										;15740						;11-08-2016
+								  ;	RC007				;				 ;C002										   ;C002ST003										;12121						;11-08-2016
+								  ;	RC008				;				 ;C002										   ;C002ST004										;68641						;11-08-2016
+								  
+								                                                                                   
+                                                                                            
+INSERT_UPDATE SupplierReconfirmationConfig;code[unique=true]	;supplier(code,$catalogVersion);reconfirmationTo(code)[unique=true]	;reconfirmationconfig(product(code,$catalogVersion));supplierReconfirmationInterval(reconfirmationCutOff(code))
+									   	  ;	SRC001				;Jet Airways				;TO_SUPPLIER							;123,126                                                ;FROM_BOOKING_DATE
+										  ;	SRC002				;GTA						;TO_SUPPLIER							;124                                                ;PRIOR_TO_TRAVEL_DATE
+										  ;	SRC003				;Taj Group					;TO_SUPPLIER							;87762                                              ;FROM_BOOKING_DATE
+										  ;	SRC004				;Mason						;TO_SUPPLIER							;15740                                              ;PRIOR_TO_TRAVEL_DATE
+										  
+
+INSERT_UPDATE ClientReconfirmationConfig;code[unique=true]		;client(uid)		;reconfirmationTo(code)[unique=true];reconfirmationconfig(product(code,$catalogVersion));clientReconfirmationInterval(reconfirmationCutOff(code))
+										;CRC002					;CnkB2BUnit1	 	;TO_CLIENT							;125,12121                                                ;FROM_BOOKING_DATE
+										;CRC004					;CnkB2BUnit2		;TO_CLIENT							;126,68641                                                ;PRIOR_TO_TRAVEL_DATE
+										  
+										  
+INSERT_UPDATE ReconfirmationInterval;&ReconfirmationInterval      ;reconfirmationCutOff(code)[unique=true];cutoff;cutOffDaysOrHours(code)
+									;ReconfirmationInterval0      ;FROM_BOOKING_DATE				      ;5		;DAYS	 
+									;ReconfirmationInterval1      ;PRIOR_TO_TRAVEL_DATE					  ;7		;DAYS		 
+
+INSERT_UPDATE ReconfirmationTravelDestination;continent(isocode);country(isocode);city(isocode)[unique=true];inclusion;reconfirmationconfig(product(code,$catalogVersion))
+											 ;AS				;IN				 ;	JAI						;true		;	126							

@@ -1,0 +1,72 @@
+<!--Nonstop-->
+<com.cnk.travelogix.common.facades.product.data.flight.FlightData>
+  <id>flight2</id>
+  <flightNumber>B590</flightNumber>
+  <cabinClass>Saloon</cabinClass>
+  <airlineIATA>
+    <airlineName>IndiGo</airlineName>
+    <accountingCode>6E</accountingCode>
+    <airlinePrefix>414</airlinePrefix>
+  </airlineIATA>
+  <departureTime>2016-06-25 12:35:00.00 UTC</departureTime>
+  <arrivalTime>2016-06-25 14:10:00.00 UTC</arrivalTime>
+  <duration>01:35:00.00 UTC</duration>
+  <fromSection>
+    <city>Mumbai</city>
+    <airport>Mumbai International Airport</airport>
+    <terminal>1B</terminal>
+  </fromSection>
+  <toSection>
+    <city>Bangalore</city>
+    <airport>Bangalore International Airport</airport>
+    <terminal>3A</terminal>
+  </toSection>
+  <fareSummary>
+    <listPrice>5680</listPrice>
+    <webPrice>5380</webPrice>
+    <currency>currency</currency>
+    <pointEarn>30</pointEarn>
+  </fareSummary>
+  <fareDetail>
+    <currency>currency</currency>
+    <baseFare>2530</baseFare>
+    <fuelSurcharge>2250</fuelSurcharge>
+    <jnTax>250</jnTax>
+    <psgrSvcFee>400</psgrSvcFee>
+    <serviceTax>400</serviceTax>
+  </fareDetail>
+  <flightDetails>
+    <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+      <cabinClass>Saloon</cabinClass>
+      <fromSection>
+        <city>Mumbai</city>
+        <airport>Mumbai International Airport</airport>
+        <terminal>1B</terminal>
+      </fromSection>
+      <toSection>
+        <city>Bangalore</city>
+        <airport>Bangalore International Airport</airport>
+        <terminal>3A</terminal>
+      </toSection>
+      <departureTime>2016-06-25 12:35:00.00 UTC</departureTime>
+      <arrivalTime>2015-06-25 14:10:00.00 UTC</arrivalTime>
+      <duration>01:35:00.00 UTC</duration>
+    </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+    <!--
+    <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+      <cabinClass>Economy</cabinClass>
+      <fromSection>
+        <city>Ahmedabad</city>
+        <terminal>2A</terminal><
+      </fromSection>
+      <toSection>
+        <city>Delhi</city>
+        <terminal>3A</terminal>
+      </toSection>
+      <departureTime>2015-09-18 06:35:00.00 UTC</departureTime>
+      <arrivalTime>2015-09-18 07:50:00.00 UTC</arrivalTime>
+      <duration>01:05:00.00 UTC</duration>
+    </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+     -->
+  </flightDetails>
+<com.cnk.travelogix.common.facades.product.data.flight.FlightData>

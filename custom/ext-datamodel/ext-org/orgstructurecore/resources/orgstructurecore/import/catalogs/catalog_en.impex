@@ -1,0 +1,6 @@
+$lang=en
+UPDATE Catalog;id[unique=true];name[lang=$lang]
+;EZ-IN;Ezeego One India Product Catalog
+
+UPDATE ClassificationSystem;id[unique=true];name[lang=$lang]
+;EZ-IN-CS;Ezeego One India Classification

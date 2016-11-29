@@ -1,0 +1,22 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$approved=approvalstatus(code)[default='approved']
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.product.transport.masters.core.setup.TransportProductSetup&\transportproductmasterscore\import\sampledata\images\96Wx96H
+
+
+# Media Folders
+INSERT_UPDATE MediaFolder;qualifier[unique=true];path[unique=true]
+;images;images
+
+INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier)
+;resorts.png;$siteResource\resorts.png;;;images
+;tents.png;$siteResource\tents.png;;;images
+;villas.png;$siteResource\villas.png;;;images
+
+INSERT_UPDATE CruiseDestination;$catalogVersion;code[unique=true];destinationName(Continent.isocode);cruiseDestinationCommonId;description;reason;copiedFrom;Country(Country.isocode);onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];continent(isocode);approvalStatus(code);destinationMedias(Media.code)
+;;987654_CruiseDest;NA;123456;;;;US;03-04-2013;02-09-2015;NA;approved;resorts.png
+;;987656_CruiseDest;NA;123457;;;;US;05-04-2014;02-09-2014;NA;approved;tents.png
+;;987658_CruiseDest;NA;123458;;;;US;02-04-2014;02-09-2014;NA;approved;villas.png

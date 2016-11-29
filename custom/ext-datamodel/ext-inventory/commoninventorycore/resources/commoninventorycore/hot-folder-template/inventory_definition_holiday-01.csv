@@ -1,0 +1,11 @@
+
+Holiday_CutOff_And_Charges;BASE_FARE;TOUR_DATE
+
+
+Holiday_Penalty_Charges;ALL_TOUR_DATES;HOURS;Prior_To_Travel;TOTAL_UTILIZATION;BASE_FARE;TOUR_DATE
+
+HolidayInv_Supplier_Advance_Definition;DAYS;Prior_To_Travel;Days20;;ALL_TOUR_DATES;HOURS
+
+Holiday_Company_Specific_Inventory;E000;E000;IND;Website;Domestic;;VMN01;HolidayProduct;default;6;8
+
+Holiday_Inventory_Definition;Holiday_Inv_Def_0001;7;HolidayProduct;;STANDARD;IND;PAX;;Website;Domestic;VMN01

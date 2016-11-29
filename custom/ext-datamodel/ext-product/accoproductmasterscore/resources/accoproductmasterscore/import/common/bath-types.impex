@@ -1,0 +1,23 @@
+$lang=en
+INSERT_UPDATE BathType;code[unique=true];name[lang=$lang]
+;1;Bath tub with spray jets
+;2;Bathrobe
+;3;Bathroom amenities
+;4;Bathroom telephone
+;5;Bathtub
+;6;Bathtub &whirlpool separate
+;7;Bathtub only
+;8;Bathtub seat
+;9;Bathtub/shower combination
+;10;Grecian tub
+;11;Hinoki tub
+;12;Marble bathroom
+;13;Oversized bathtub
+;14;Plunge pool
+;15;Separate toilet area
+;16;Separate tub and shower
+;17;Separate tub or shower
+;18;Shower
+;19;Sink in-room
+;20;Wet bar
+;21;Whirpool

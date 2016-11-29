@@ -1,0 +1,43 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=source(code, $catalogVersion)[unique=true]
+$categories=supercategories(code, $catalogVersion)[default=C001ST001:$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$approved=approvalstatus(code)[default='approved']
+$siteResource=jar:com.cnk.travelogix.product.transport.masters.core.setup.TransportProductSetup&\transportproductmasterscore\import\sampledata\images
+
+$dateformat=dd-MM-yyyy
+$timeformat = hh:mm
+
+####################insert transportinventorycore-aircoupon-essentialdata.impex####################################
+INSERT_UPDATE AirCouponIndentRequest;indentNumber[unique=true];purchaseFor(code);clientName;typeOfCoupon(code);airLine(FlightProduct.airlineIATA(code),FlightProduct.name[lang=en]);supplier(Supplier.code);couponSchemeName;schemeDescription;cabinClass(code);rbd;unit(code);settlementType(code);typesofPayment(code);credentialNameOrIATAcode;netAmountPaidToSupplier[allownull=true];netAmountPayableTosupplier;totalPrice;numberOfBooklets;numberOfCoupons;remark[allownull=true]          
+									;456789789;CLIENT;ABC Travels;ECOUPON;9W:Jet Airways;Jet Airways;ONE FARE Pass in Premiere;;PREMIER;P;BOOKLET;CREDIT;CREDIT_CARD;345678;;960000;960000;19;20;
+									;98765432;COMPANY;Ezeego1 - India;ECOUPON;9W:Jet Airways;Jet Airways;ONE FARE Pass in Premiere;;PREMIER;I;TICKET;NO_CREDIT;CASH;345678;;1120000;1120000;10;10;
+									;123456789;COMPANY;Ezeego1 - India;PAPERCOUPON;9W:Jet Airways;Jet Airways;ONE FARE Pass in Economy Class;;ECONOMY;K;BOOKLET;CREDIT;VMPD;345678;;1663279.2;1680080;10;40;
+				
+INSERT_UPDATE AirCouponIndentCommission;commissionType(code);cutPay;amountInPercentage;value;fareComponent(code)[unique=true];airCouponIndentRequest(AirCouponIndentRequest.indentNumber)[unique=true]
+										;COMMISSIONABLE;true;false;1;BASE_FARE;456789789
+										;COMMISSIONABLE;false;false;1;YQ_TAX;456789789
+										;NET;false;;;;;98765432
+										;COMMISSIONABLE;Cut and Pay;percentage;1;BASE_FARE;123456789
+										;COMMISSIONABLE;Cut and Pay;percentage;1;YQ_TAX;123456789
+										
+#INSERT_UPDATE UnsecuredCreditPaymentDetails;currency;amount
+
+INSERT_UPDATE VMPDPaymentDetails;indent[allownull=true];currency(Currency.isocode);vmpdNumber[unique=true];vmpdGenerationDate[dateformat=$dateformat];drawnOn(Bank.code);amount
+								;;INR;234567890;01-01-1015;ICICI1212;960000
+								
+INSERT_UPDATE CouponPriceRow;productId[unique=true];$catalogVersion[unique=true];fareComponent(code);unit(code);price;currency(isocode)								
+							;5891234567;;BASE_FARE;pieces;1680080;INR
+							;5891234568;;YQ_TAX;pieces;1680080;INR
+							
+INSERT_UPDATE PrePaymentDetails;indent[allownull=true];drawnOn(Bank.code);sapReferenceNumber[unique=true];paymentReferenceNumber[unique=true];dateOfPayment[dateformat=$dateformat];airCouponIndentRequest(AirCouponIndentRequest.indentNumber);amount
+								;;ICICI1212;9876543;23456789;15-12-2014;123456789;960000
+								
+								
+UPDATE AirCouponIndentRequest;indentNumber[unique=true];couponPriceRow(CouponPriceRow.productId);airCouponIndentCommission(AirCouponIndentCommission.fareComponent(code),AirCouponIndentCommission.airCouponIndentRequest(AirCouponIndentRequest.indentNumber));abstractPaymentDetails(PrePaymentDetails.sapReferenceNumber,PrePaymentDetails.paymentReferenceNumber)
+							;456789789;5891234567;BASE_FARE:456789789;9876543:23456789
+####################manage coupon###########################
+

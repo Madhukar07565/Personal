@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+		<collectiontype elementtype="RoomCategory" code="RoomCategorySet" type="set" />
+		<collectiontype elementtype="RoomType" code="RoomTypeSet" type="set" />
+		<collectiontype elementtype="MealPlanType" code="MealPlanTypeSet" type="set" />
+	</collectiontypes>
+
+	<enumtypes>
+		<enumtype code="AccoSurchargeSubType">
+			<description>Accommodation Surcharge Sub Type Enum</description>
+			<value code="ROOM_LEVEL"></value>
+			<value code="PAX_TYPE"></value>
+			<value code="GUIDE"></value>
+			<value code="MEAL_SUPPLEMENTS"></value>
+			<value code="OTHERS"></value>
+		</enumtype>
+		<enumtype code="ChildBedType">
+			<description>Child Bed Type Enum</description>
+			<value code="CHILD_NO_BED"></value>
+			<value code="CHILD_WITH_EXTRA_BED"></value>
+		</enumtype>
+		<enumtype code="RateFor">
+			<description>Rate For Enum</description>
+			<value code="HOTEL"></value>
+			<value code="HOTEL_PACKAGE"></value>
+		</enumtype>
+		<enumtype code="MealPlanType" dynamic="true">
+			<description>Meal Plan Type Enum</description>
+			<value code="AI"></value>
+			<value code="AP"></value>
+			<value code="BB"></value>
+			<value code="CP"></value>
+			<value code="EP"></value>
+			<value code="FP"></value>
+			<value code="FA"></value>
+			<value code="HP"></value>
+			<value code="MAP"></value>
+		</enumtype>
+		<enumtype code="DurationType">
+			<description>Duration Type</description>
+			<value code="DAYS"></value>
+			<value code="HOURS"></value>
+			<value code="MINS"></value>
+		</enumtype>
+		<enumtype code="VehicleType">
+			<description>Vehicle Type</description>
+			<value code="FLIGHTS"></value>
+			<value code="CARS"></value>
+			<value code="CRUISE"></value>
+			<value code="BUS"></value>
+			<value code="RAIL_TICKETS"></value>
+			<value code="RAIL_PASS"></value>
+		</enumtype>
+	</enumtypes>
+
+	<relations>
+		<relation code="AccoRateDef2AccoRateDetailDefRel" generate="true" localized="false" autocreate="true">
+			<sourceElement type="AccommodationRateDefinition" cardinality="one" qualifier="accoRateDef" />
+			<targetElement type="AccoRateDetailDefinition" cardinality="many" qualifier="accoRateDetailDefs" collectiontype="set" />
+		</relation>
+
+		<relation code="AccoRateDetailDefinition2RoomTypeRateRel" generate="true" localized="false" autocreate="true">
+			<sourceElement type="AccoRateDetailDefinition" cardinality="one" qualifier="accoRateDetailDefinition" />
+			<targetElement type="RoomTypeRate" cardinality="many" qualifier="roomTypeRates" collectiontype="set" >
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="CommonRateAdvDefinition2SupplierRoomOfferRel" generate="true" localized="false" autocreate="true">
+			<sourceElement type="CommonRateAdvDefinition" cardinality="one" qualifier="commonRateAdvDef" />
+			<targetElement type="SupplierRoomOffer" cardinality="many" qualifier="supplierRoomOffers" collectiontype="set" />
+		</relation>
+
+		<relation code="AccoRateDef2AccoDynamicPolicyRel" generate="true" localized="false" autocreate="true">
+		<deployment table="ratedefpolicy" typecode="22050" />
+			<sourceElement type="AccommodationRateDefinition" cardinality="many" qualifier="accRateDef" />
+			<targetElement type="AccoDynamicPolicy" cardinality="many" qualifier="accoDynamicPolicies" collectiontype="set" />
+		</relation>
+		<relation code="AccoRateDetailDefinition2AbstractTravelogixSupplierOfferRel" generate="true" localized="false" autocreate="true">
+			<deployment table="ratedetdefoffer" typecode="22049" />
+			<sourceElement type="AccoRateDetailDefinition" cardinality="many" qualifier="accoRateDetailDefinition" />
+			<targetElement type="AbstractTravelogixSupplierOffer" cardinality="many" qualifier="absTravelogixSupplierOffers"  />
+		</relation>
+		<relation code="AccoRateDetailDefinition2ChildAgeRateDetailRel" generate="true" localized="false" autocreate="true">
+			<sourceElement type="AccoRateDetailDefinition" cardinality="one" qualifier="accoRateDetailDefinition" />
+			<targetElement type="ChildAgeRateDetail" cardinality="many" qualifier="childRate"  >
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+	</relations>
+
+	<itemtypes>
+		<typegroup name="SupplierRateDefinitionforAccommodation">
+			<itemtype generate="true" code="AccommodationSupplierRate" jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.accommodation.AccommodationSupplierRate"
+				extends="AbstractSupplierRate" autocreate="true">
+				<description>Accommodation Supplier Rate Item</description>
+				<attributes>
+				</attributes>
+			</itemtype>
+			<itemtype code="AccommodationRateDefinition" extends="AbstractRateDefinition"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.accommodation.AccommodationRateDefinition" autocreate="true" generate="true">
+				<description>Accommodation Rate Definition Item</description>
+				<attributes>
+					<attribute type="PriceApplicabilityType" qualifier="priceApplicability">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="noOfRooms">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="AdvancedQueryComparatorEnum" qualifier="comparator">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="AccoSurchargeSuppDetail" qualifier="surchargeSupplement">
+						<modifiers read="true" write="true" optional="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AccoRateDetailDefinition" 
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.accommodation.AccoRateDetailDefinition">
+				<description> Rate Detail Definition Item</description>
+				<deployment table="accoratedetdef" typecode="22041" />
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="minNights">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="WeekDayCollection" qualifier="dayOfWeek">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RatesDefinedForType" qualifier="rateDefinedFor">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RoomCategory" qualifier="roomCategory">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="proRata">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="stayDuration">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Ratefor" qualifier="rateFor">
+						<modifiers read="true" write="true" optional="false"/>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="MealPlanType" qualifier="mealPlan">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="checkInTime">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="checkOutTime">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RoomType" qualifier="commissionExcluded">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AgeDetail" qualifier="childAge">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="noOfChild">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="noOfAdults">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AgeDetail" qualifier="adultAge">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="rate">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="minPaxOccupancy">
+						<modifiers read="true" write="true" />
+						<defaultvalue>Integer.valueOf(0)</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="maxPaxOccupancy">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="payOnArrival">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="CommonRateAdvDefinition" qualifier="commonRateAdvDefinition">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="RoomTypeRate" jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.common.RoomTypeRate">
+				<description>Room Type Rate Item</description>
+				<deployment table="roomtyperate" typecode="22042" />
+				<attributes>
+					<attribute type="java.lang.Double" qualifier="rate">
+						<modifiers read="true" write="true"/>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RoomType" qualifier="roomType">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="payOnArrival">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AccoSurchargeSuppDetail" extends="AbstractSurchargeSuppDetail"
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.accommodation.AccoSurchargeSuppDetail">
+				<description>Accommodation Surcharge Supplier Detail Item</description>
+				<attributes>
+					<attribute type="AccoSurchargeSubType" qualifier="subType">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RoomCategorySet" qualifier="roomCategories">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RoomTypeSet" qualifier="roomTypes">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="MealPlanTypeSet" qualifier="mealPlan">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="stdCommissionValue">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ThresholdType" qualifier="stdCommissionType">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="amount">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="SupplierRoomOffer" jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.common.SupplierRoomOffer">
+				<description>Supplier Room Offer Item</description>
+				<deployment table="supproomoffer" typecode="22047"></deployment>
+				<attributes>
+					<attribute type="RoomCategory" qualifier="roomCategory">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RoomType" qualifier="roomType">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="maxNoOfRooms">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CommonAncillaryRateDetail" extends="AbstractAncillaryRateDetail" jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.ancillary.CommonAncillaryRateDetail">
+				<description>Common Ancillary Rate Detail</description>
+				<deployment table="comancillratedet" typecode="22048"></deployment>
+				<attributes>
+					<attribute type="java.lang.String" qualifier="startTime">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DurationType" qualifier="durationType">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="durationValue">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="seatingType">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PriceApplicabilityType" qualifier="costApplicability">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PaxType" qualifier="paxType">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AgeDetail" qualifier="childAge">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="VehicleType" qualifier="vehicleType">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CruisePort" qualifier="portName">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

@@ -1,0 +1,20 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=source(code, $catalogVersion)[unique=true]
+$categories=supercategories(code, $catalogVersion)[default=C001ST001:$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$approved=approvalstatus(code)[default='approved']
+$siteResource=jar:com.cnk.travelogix.product.transport.masters.core.setup.TransportProductSetup&\transportproductmasterscore\import\sampledata\images
+
+INSERT_UPDATE HolidayProduct;$catalogVersion;code[unique=true];variantType(code);name[lang=en,unique=true];commonProductId;financeControlId[unique=true];$approved;remarks;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];$categories;numberOfNight;numberOfDays;
+;;HolidayProduct;HolidayFlavor;Holiday Package 1;0001;123;;;1-1-2016;1-1-2020;C004ST001;3;2;
+
+
+UPDATE HolidayProduct;code[unique=true];brands(code);brochures(code);markets(Market.uid)
+;HolidayProduct;;;IND,ALL;
+
+INSERT_UPDATE HolidayDestination;uid[unique=true];destinationName(isocode);country(isocode);city(isocode);product(code,$catalogVersion)
+;001322;NA;US;AAA;HolidayProduct
+;001321;SA;US;AAG;HolidayProduct

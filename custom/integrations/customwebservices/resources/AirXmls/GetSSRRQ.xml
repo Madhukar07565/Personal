@@ -1,0 +1,68 @@
+<air1:AirInterfaceRQ xmlns:air="http://www.coxandkings.com/integ/suppl/air" xmlns:com="http://www.coxandkings.com/integ/suppl/common" xmlns:air1="http://www.coxandkings.com/integ/suppl/airinterface" xmlns:ns="http://www.opentravel.org/OTA/2003/05">
+    <air:RequestHeader>
+        <!--Optional:-->
+        <com:UserID>eehhhee</com:UserID>
+        <com:SessionID>12hghgh3</com:SessionID>
+        <com:TransactionID>1hghg2345</com:TransactionID>
+        <!--Optional:-->
+        <com:SupplierCredentialsList>
+           <com:SupplierCredentials>
+                <com:SupplierID>AIRARABIA</com:SupplierID>
+               <com:Credentials>
+               <com:Credential name="AccountNumber">WSEZEEGO</com:Credential>
+               <com:Credential name="Username">WSEZEEGO</com:Credential>
+               <com:Credential name="Password">password1234</com:Credential>
+               <com:Credential name="Version">20061.00</com:Credential>
+               <com:Credential name="SourceTerminalID">Test/Test 1</com:Credential>
+               <com:Credential name="RequestorID">WSEZEEGO</com:Credential>
+               <com:Credential name="RequestorType">4</com:Credential>
+               <com:Credential name="BookingChannelType">12</com:Credential>
+               <com:Credential name="Target">Test</com:Credential>
+               <com:Credential name="EchoToken">11810113621255-577396696</com:Credential>
+               <com:Credential name="Pricing_EchoToken">11810120715007587065025</com:Credential>
+               <com:Credential name="Booking_EchoToken">11810120715007587065025</com:Credential>
+               <com:Credential name="SequenceNumber">1</com:Credential>
+               <com:Credential name="PrimaryLangID">en-us</com:Credential>
+               <com:Credential name="AgencyCode">BOM204</com:Credential>
+            </com:Credentials>
+                <!--Optional:-->
+                
+            </com:SupplierCredentials>
+           
+        </com:SupplierCredentialsList>
+    </air:RequestHeader>
+    <air1:RequestBody>
+   <air:OTA_AirGetSSRQWrapper>
+            <air:SupplierID>AIRARABIA</air:SupplierID>
+            <air:Sequence>1</air:Sequence>
+                 <ns:OTA_AirGetSSRQ TransactionIdentifier="TID$14665931258624478128FF920981" Version="1" Target="Test">
+             <ns:POS>
+            <ns:Source/>
+         </ns:POS>
+            <ns:TravelerInfoSummary>
+                        </ns:TravelerInfoSummary>
+			 <ns:OriginDestinationInformation>
+            <ns:DepartureDateTime>2016-08-20T23:45:00</ns:DepartureDateTime>
+            
+            <ns:OriginLocation LocationCode="SHJ"/>
+            <ns:DestinationLocation LocationCode="BOM"/>
+            <ns:OriginDestinationOptions>
+               <ns:OriginDestinationOption>
+                  <ns:FlightSegment DepartureDateTime="2016-08-20T23:45:00" ArrivalDateTime="2016-08-21T04:15:00">
+                     <ns:DepartureAirport LocationCode="SHJ" Terminal="TerminalX"/>
+                     <ns:ArrivalAirport LocationCode="BOM" Terminal="TerminalX"/>
+                     <ns:OperatingAirline CompanyShortName="G9" FlightNumber="406" Code="G9"/>
+                     <ns:TPA_Extensions>
+                        <air:ExtendedRPH>G9$SHJ/BOM$2005386$20160820234500$20160821041500</air:ExtendedRPH>
+                     </ns:TPA_Extensions>
+                  </ns:FlightSegment>
+               </ns:OriginDestinationOption>
+            </ns:OriginDestinationOptions>
+         </ns:OriginDestinationInformation>
+            <!--Optional:-->
+            <!--Zero or more repetitions:-->
+        </ns:OTA_AirGetSSRQ>
+</air:OTA_AirGetSSRQWrapper>
+		
+            </air1:RequestBody>
+</air1:AirInterfaceRQ>

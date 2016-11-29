@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+        http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="baseDirectoryClient" class="java.lang.String">
+		<constructor-arg value="#{baseDirectoryTraveLogix}/b2bclient" />
+	</bean>
+    
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesClient"
+		directory="#{baseDirectoryClient}" filename-regex="clients-masterdata(.*)-(\d+)\.csv"
+		comparator="fileOrderComparator">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+
+	<!-- 2) move the file to processing and setup header -->
+	<file:outbound-gateway request-channel="batchFilesClient"
+		reply-channel="batchFilesClientProcessing" directory="#{baseDirectoryClient}/processing"
+		delete-source-files="true" />
+
+	<int:service-activator input-channel="batchFilesClientProcessing"
+		output-channel="batchFilesHeaderInit" ref="clientHeaderSetupTask"
+		method="execute" />
+
+	<bean id="clientHeaderSetupTask" parent="baseHeaderSetupTask">
+		<property name="storeBaseDirectory" ref="baseDirectoryClient" />
+	</bean>
+
+	<!-- Transformer converters mappings -->
+    <bean id="batchClientConverterMapping"
+        class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+        p:mapping="Client" p:converter-ref="batchClientConverter" />  
+        
+    <bean id="batchClientConverter"
+        class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+        <property name="header">
+            <value>				
+				INSERT_UPDATE TravelogixB2BUnit;uid[unique=true, allownull=true];locName[lang=en];clientCategory(code);clientSubCategory(code);companyType(code);telephone
+            </value>
+        </property>
+        <property name="impexRow">
+            <value>          
+				;{+0};{1};{2};{3};{4};{5}
+            </value>
+        </property>
+    </bean>
+    <!-- INSERT_UPDATE KycInformation; pan; vatNo; tdsNo
+		 ;{+0};{1};{2};{3};{4};{5} ;12122;Travelsi22;ALLIANCE_PARTNERS;BANKS;PUBLIC;9987654321-->
+</beans>
+

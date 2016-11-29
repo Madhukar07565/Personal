@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such ~ Confidential Information and shall use it only in accordance with the ~ terms 
+	of the license agreement you entered into with SAP Hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="activitiesCoreSystemSetup" class="com.cnk.travelogix.supplier.rates.setup.CoreSystemSetup" parent="abstractCoreSystemSetup">
+		<property name="typeService" ref="typeService" />
+		<property name="modelService" ref="modelService" />
+		<property name="userService" ref="userService" />
+	</bean>
+
+	<!-- Spring Integration -->
+	 <import resource="classpath:/supplierratedefinitionsactivities/integration/hot-folder-activities-rate-definitions-spring.xml" /> 
+
+</beans>

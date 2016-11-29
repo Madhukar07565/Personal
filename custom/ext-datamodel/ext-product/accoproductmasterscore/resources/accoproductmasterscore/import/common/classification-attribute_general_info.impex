@@ -1,0 +1,30 @@
+$productCatalog=EZ-IN
+$classificationCatalog=travelogixClassificationCatalog
+$lang=en
+$classSystemVersion=systemVersion(catalog(id[default='EZ-IN-CS']),version[default='1.0'])[unique=true]
+$classCatalogVersion=catalogversion(catalog(id[default='EZ-IN-CS']),version[default='1.0'])[unique=true,default='EZ-IN-CS:1.0']
+$class=classificationClass(ClassificationClass.code,$classCatalogVersion)[unique=true]
+$attribute=classificationAttribute(code,$classSystemVersion)[unique=true]
+$unit=unit(code,$classSystemVersion)
+
+
+
+INSERT_UPDATE ClassificationAttribute;code[unique=true];$classSystemVersion;name[lang=$lang]
+;CarbonFootPrint-Accommodation-GeneralInfo;;Carbon Foot Print
+;YearRenovated-Accommodation-GeneralInfo;;Year Renovated
+;YearBuilt-Accommodation-GeneralInfo;;Year Built
+;AwardReceived-Accommodation-GeneralInfo;;Award Received
+
+
+
+
+INSERT_UPDATE ClassificationClass;$classCatalogVersion;code[unique=true];allowedPrincipals(uid)[default='customergroup'];;;;;
+;;GeneralInfo-Accommodation;;;;;;
+
+
+
+INSERT_UPDATE ClassAttributeAssignment;$class;$attribute;position;$unit;attributeType(code[default=string]);multiValued[default=false];range[default=false];localized[default=true]
+;GeneralInfo-Accommodation;CarbonFootPrint-Accommodation-GeneralInfo;1;;;;;
+;GeneralInfo-Accommodation;YearRenovated-Accommodation-GeneralInfo;2;;;;;
+;GeneralInfo-Accommodation;YearBuilt-Accommodation-GeneralInfo;3;;;;;
+;GeneralInfo-Accommodation;AwardReceived-Accommodation-GeneralInfo;4;;;;;

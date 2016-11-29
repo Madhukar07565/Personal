@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/integration
+        http://www.springframework.org/schema/integration/spring-integration.xsd
+        http://www.springframework.org/schema/integration/file
+        http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+	<bean id="baseDirectoryTravelogixxx" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogixxx/definition" />
+	</bean>
+
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesTravelogixxx" directory="#{baseDirectoryTravelogixxx}" filename-regex="^(.*)-(\d+)\.csv"
+		comparator="fileOrderComparator">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+
+	<!-- 2) move the file to processing and setup header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogixxx" reply-channel="batchFilesTravelogixxxProc" directory="#{baseDirectoryTravelogixxx}/processing"
+		delete-source-files="true" />
+
+	<bean id="travelogixxxHeaderSetupTask" class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="Default" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogixxx" />
+	</bean>
+	
+	<int:service-activator input-channel="batchFilesTravelogixxxProc" output-channel="batchFilesHeaderInit" ref="travelogixxxHeaderSetupTask"
+		method="execute" />
+
+
+	<bean id="batchDefinitionConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="definition" p:converter-ref="batchDefinitionConverter" />
+
+	<bean id="batchDefinitionConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Transport Rate Definition
+				$contentCatalog=Default
+				$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+                   INSERT_UPDATE TransportRateDefinition;clientType(code,itemtype(code))[allownull=true];commisionType(code,itemtype(code))[allownull=true];commissionThreshold(code,itemtype(code));commissionValue;companyRateCode(code);companyType(code)[allownull=true];country(isocode)[unique=true];freeSaleUnlimited[allownull=true];priceComponent(code,itemtype(code));rateTypeApplicableFor(code,itemtype(code))[allownull=true];seasonality(code,itemtype(code))[allownull=true];supplierRateCode(code);supplierType(code);travelFrom[allownull=true,dateformat=dd.MM.yyyy hh:mm:ss]
+ 			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2};;{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14}</value>
+		</property>
+	</bean>
+	
+
+	
+</beans>

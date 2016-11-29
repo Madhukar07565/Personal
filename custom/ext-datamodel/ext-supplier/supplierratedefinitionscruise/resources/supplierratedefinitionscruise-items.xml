@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~ [y] hybris Platform
+  ~ 
+  ~ Copyright (c) 2000-2016 SAP SE
+  ~ All rights reserved.
+  ~ 
+  ~ This software is the confidential and proprietary information of SAP 
+  ~ Hybris ("Confidential Information"). You shall not disclose such 
+  ~ Confidential Information and shall use it only in accordance with the 
+  ~ terms of the license agreement you entered into with SAP Hybris.
+  -->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+			
+	<enumtypes>
+	     <enumtype code="OccupancyType" autocreate="true" generate="true" dynamic="true">
+			<value code="SINGLE_CABIN" />
+			<value code="DOUBLE_CABIN" />
+	     </enumtype>
+	     <enumtype code="DiningCreditApplicabilityType" autocreate="true" generate="true" dynamic="true">
+			<value code="DINNER" />
+			<value code="LUNCH" />
+			<value code="BREAKFAST" />
+			<value code="DRINKS" />
+	     </enumtype>
+	     <enumtype code="CruiseSurchargeSubType" autocreate="true" generate="true" dynamic="true">
+			<value code="CABIN_LEVEL" />
+			<value code="PAX_TYPE" />
+	     </enumtype>
+	</enumtypes>
+	<relations>
+	<relation code="CruiseRateDetail2OccupancyDetailRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="CruiseRateDetail" cardinality="one" qualifier="cruiseratedetail" />
+			<targetElement type="OccupancyDetail" cardinality="many" qualifier="occupancyDetails" >
+			<modifiers partof="true"/>
+			</targetElement>
+	</relation>
+	<relation code="CruiseRateDefinition2CruiseRateDetailRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="CruiseRateDefinition" cardinality="one" qualifier="cruiseratedefinition" />
+			<targetElement type="CruiseRateDetail" cardinality="many" qualifier="cruiseRateDetails" >
+			<modifiers partof="true"/>
+			</targetElement>
+	</relation>
+	<relation code="CruiseRateDetail2TravelogixSupplierOfferRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="CruiseRateDetail" cardinality="one" qualifier="cruiseratedetail" />
+			<targetElement type="AbstractTravelogixSupplierOffer" cardinality="many" qualifier="absTravelogixSupplierOffers" >
+			</targetElement>
+	</relation>
+	<relation code="CruiseRateAdvDefinition2SupplierOfferValidityRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="CruiseRateAdvDefinition" cardinality="one" qualifier="cruiserateadvdefinition" />
+			<targetElement type="SupplierOfferValidity" cardinality="many" qualifier="supplierOfferValidities" >
+			</targetElement>
+	</relation>
+	<relation code="CruiseRateAdvDefinition2CabinOfferRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="CruiseRateAdvDefinition" cardinality="one" qualifier="cruiserateadvdefinition" />
+			<targetElement type="CabinOffer" cardinality="many" qualifier="cabinOffers" >
+			</targetElement>
+	</relation>
+	<relation code="CruiseRateDefinition2TravelogixPolicyRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="CruiseRateDefinition" cardinality="one" qualifier="cruiseratedefinition" />
+			<targetElement type="TravelogixPolicy" cardinality="many" qualifier="travelogixPolicies" >
+			</targetElement>
+	</relation>
+	</relations>
+	<itemtypes>
+	    <typegroup name="CruiseSupplierRate">
+		    <itemtype code="CruiseSupplierRate" autocreate="true" generate="true" extends="AbstractSupplierRate"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.cruisesupplierrate.jalo.CruiseSupplierRate">
+				<description>Cruise Supplier Rate </description>
+				<deployment table="cruisesuppratetab" typecode="22102" />
+			</itemtype>
+		</typegroup>
+		<typegroup name="OccupancyDetail">
+		   <itemtype code="OccupancyDetail" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.occupancydetail.jalo.OccupancyDetail">
+				<description>Occupancy Detail </description>
+				<deployment table="occupancydetailtab" typecode="22104" />
+				<attributes>
+					<attribute type="OccupancyType" qualifier="occupancyType">
+					    <modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.Integer" qualifier="extraPassenger">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="pricePercentage">
+					    <modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="OccupancyType" qualifier="percentageCalculatedOn">
+					    <modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PaxType" qualifier="passengerType">
+					    <modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.Integer" qualifier="ageFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.Integer" qualifier="ageTo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.Double" qualifier="price">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="commissionApplicable">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="payOnArrival">
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		<typegroup name="CruiseRateDefinition">
+		   <itemtype code="CruiseRateDefinition" autocreate="true" generate="true" extends="AbstractRateDefinition"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.cruiseratedefinition.jalo.CruiseRateDefinition">
+				<description>Cruise Rate Definition</description>
+				<deployment table="cruiseratedeftab" typecode="22105" />
+				<attributes>
+					<attribute type="CruiseItinerary" qualifier="itinerary">
+					    <modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PriceApplicabilityType" qualifier="priceApplicability">
+				     	<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="cabins">
+						<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AdvancedQueryComparatorEnum" qualifier="comparator">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		<typegroup name="CruiseRateDetail">
+		   <itemtype code="CruiseRateDetail" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.cruiseratedetail.jalo.CruiseRateDetail">
+				<description>Cruise Rate Detail</description>
+				<deployment table="cruiseratedettab" typecode="22106" />
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="code">
+						<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Deck" qualifier="deck">
+						<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Cabin" qualifier="cabin">
+						<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AbstractRateAdvDefinition" qualifier="abstractRateAdvDefinition">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		<typegroup name="CruiseRateAdvDefinition">
+		   <itemtype code="CruiseRateAdvDefinition" autocreate="true" generate="true" extends="AbstractRateAdvDefinition"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.cruiserateadvdefinition.jalo.CruiseRateAdvDefinition">
+				<description>Cruise Rate Adv Definition</description>
+				<deployment table="cruiserateadvdeftab" typecode="22107" />
+				<attributes>
+					<attribute type="AdvDefinitionRateTypeSet" qualifier="rateType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="diningCreditPerCabin">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DiningCreditApplicabilityType" qualifier="diningCreditApplicableFor">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		<typegroup name="CabinOffer">
+		   <itemtype code="CabinOffer" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.cabinoffer.jalo.CabinOffer">
+				<description>Cabin Offer</description>
+				<deployment table="cabinoffertab" typecode="22108" />
+				<attributes>
+					<attribute type="Cabin" qualifier="cabin">
+					    <modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.Integer" qualifier="maxNoOfCabins">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		<typegroup name="CruiseSurchargeSuppDetail">
+		   <itemtype code="CruiseSurchargeSuppDetail" autocreate="true" generate="true" extends="AbstractSurchargeSuppDetail"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.cruisesurchargesuppdetail.jalo.CruiseSurchargeSuppDetail">
+				<description>Cruise Surcharge Supp Detail</description>
+				<deployment table="cruisesursuppdettab" typecode="22110" />
+				<attributes>
+					<attribute type="CruiseSurchargeSubType" qualifier="subType">
+					    <modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.Double" qualifier="stdCommissionValue">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ThresholdType" qualifier="stdCommissionType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.Double" qualifier="amount">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CabinType" qualifier="cabinType">
+					    <modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CabinCategory" qualifier="cabinCategory">
+					    <modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		<typegroup name="SupplierOfferValidity">
+		   <itemtype code="SupplierOfferValidity" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.supplieroffervalidity.jalo.SupplierOfferValidity">
+				<description>Supplier Offer Validity</description>
+				<deployment table="supplieroffervaltab" typecode="22111" />
+				<attributes>
+				
+				
+				<!--   have to be uncommented after company offer are made
+					<attribute type="Offer" qualifier="offerName">
+						<persistence type="property" />
+					</attribute>
+					 -->
+					 
+					 
+					 
+					<attribute type="de.hybris.platform.util.StandardDateRange" qualifier="validity">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+   
+	
+</items>

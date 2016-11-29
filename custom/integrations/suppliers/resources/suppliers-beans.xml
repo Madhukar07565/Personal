@@ -1,0 +1,2728 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such ~ Confidential Information and shall use it only in accordance with the ~ terms 
+	of the license agreement you entered into with SAP Hybris. -->
+
+<!-- ATTENTION: This is just an example file. You have to edit it according to your needs. -->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	<!-- com.cnk.travelogix.suppliers.air.data.RequestHeader Definition -->
+	<bean class="com.cnk.travelogix.suppliers.common.data.RequestHeader">
+		<property name="userID" type="java.lang.String" />
+		<property name="sessionID" type="java.lang.String" />
+		<property name="transactionID" type="java.lang.String" />
+		<property name="supplierCredentials" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.SupplierCredentials&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.common.data.ResponseHeader">
+		<property name="status" type="java.lang.String" />
+		<property name="userID" type="java.lang.String" />
+		<property name="sessionID" type="java.lang.String" />
+		<property name="transactionID" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.common.data.SupplierCredentials">
+		<property name="supplierMarketType" type="java.lang.String" />
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="credentials" type="com.cnk.travelogix.suppliers.common.data.Credentials" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.common.data.Credentials">
+		<property name="credential" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.Credential&gt;" />
+		<property name="OperationURL" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.OperationURL&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.common.data.Credential">
+		<property name="name" type="java.lang.String" />
+		<property name="value" type="java.lang.String" />
+		<property name="url" type="java.lang.String" />
+		<property name="isEncrypted" type="java.lang.Boolean" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.common.data.OperationURL">
+		<property name="operation" type="java.lang.String" />
+		<property name="value" type="java.lang.String" />
+	</bean>
+
+	<!-- com.cnk.travelogix.suppliers.common.data.ErrorType Definition -->
+	<bean class="com.cnk.travelogix.suppliers.common.data.ErrorType">
+		<property name="type" type="java.lang.String" />
+		<property name="code" type="java.lang.String" />
+		<property name="shortText" type="java.lang.String" />
+		<property name="status" type="java.lang.String" />
+		<property name="recordID" type="java.lang.String" />
+		<property name="docURL" type="java.lang.String" />
+		<property name="language" type="java.lang.String" />
+		<property name="tag" type="java.lang.String" />
+		<property name="message" type="java.lang.String" />
+	</bean>
+
+	<!-- com.cnk.travelogix.suppliers.common.data.TPAExtensions Definition -->
+	<bean class="com.cnk.travelogix.suppliers.common.data.TPAExtensions">
+		<property name="keyValueMap" type="java.util.Map&lt;java.lang.String, java.lang.String&gt;" />
+		<property name="keyObjectMap" type="java.util.Map&lt;java.lang.Class&lt;?&gt;, java.lang.Object&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.common.data.POSType">
+		<property name="source" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.SourceType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.common.data.SourceType">
+		<property name="isoCurrency" type="java.lang.String" />
+		<property name="requestorID" type="com.cnk.travelogix.suppliers.common.data.RequestorID" />
+		<property name="erspUserID" type="java.lang.String" />
+		<property name="pseudoCityCode" type="java.lang.String" />
+		<property name="agentDutyCode" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.common.data.SupplierID">
+		<property name="value" type="java.lang.String" />
+		<property name="marketType" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirResponse">
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<enum class="com.cnk.travelogix.suppliers.air.data.CabinTypeEnum">
+		<value>All</value>
+		<value>Business</value>
+		<value>Cockpit</value>
+		<value>Economy</value>
+		<value>First</value>
+		<value>PremiumBusiness</value>
+		<value>PremiumEconomy</value>
+		<value>Suite</value>
+	</enum>
+
+	<enum class="com.cnk.travelogix.suppliers.air.data.FlightTypeEnum">
+		<value>Nonstop</value>
+		<value>Direct</value>
+		<value>Connection</value>
+		<value>SingleConnection</value>
+		<value>DoubleConnection</value>
+		<value>OneStopOnly</value>
+	</enum>
+
+	<!-- com.cnk.travelogix.suppliers.air.data.AirLowFareSearchRequest Definition -->
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirLowFareSearchRequest">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="airLowFareSearchRQ" type="com.cnk.travelogix.suppliers.air.data.AirLowFareSearchRQ" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirLowFareSearchRQ">
+		<property name="target" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="primaryLangID" type="java.lang.String" />
+		<property name="maxResponses" type="java.math.BigInteger" />
+		<property name="pos" type="com.cnk.travelogix.suppliers.common.data.POSType" />
+		<property name="originDestinationInformation" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.OriginDestinationInformation&gt;" />
+		<property name="travelPreferences" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.TravelPreferences&gt;" />
+		<property name="travelerInfoSummary" type="com.cnk.travelogix.suppliers.air.data.TravelerInfoSummary" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.OriginDestinationInformation">
+		<property name="rph" type="java.lang.String" />
+		<property name="departureDateTime" type="java.lang.String" />
+		<property name="returnDateTime" type="java.lang.String" />
+		<property name="originLocationCode" type="java.lang.String" />
+		<property name="destinationLocationCode" type="java.lang.String" />
+		<property name="arrivalDateTime" type="java.lang.String"/>
+		<property name="originLocation" type="com.cnk.travelogix.suppliers.air.data.OriginLocation"/>
+		<property name="destinationLocation" type="com.cnk.travelogix.suppliers.air.data.DestinationLocation"/>
+		<property name="connectionLocations" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.ConnectionLocation&gt;"/>
+		<property name="originDestinationOptions" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.OriginDestinationOption&gt;" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.suppliers.air.data.ConnectionLocation">
+		<property name="codeContext" type="java.lang.String"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.suppliers.air.data.DestinationLocation"/>
+	<bean class="com.cnk.travelogix.suppliers.air.data.OriginLocation"/>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.TravelPreferences">
+		<property name="maxStopsQuantity" type="java.lang.Integer" />
+		<property name="flightTypePref" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.FlightTypePref&gt;" />
+		<property name="fareRestrictPref" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.FareRestrictPref&gt;" />
+		<property name="cabinPref" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.CabinPref&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.FlightTypePref">
+		<property name="maxConnections" type="java.math.BigInteger" />
+		<property name="flightType" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.FareRestrictPref">
+		<property name="fareRestriction" type="java.lang.String" />
+		<property name="date" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.CabinPref">
+		<property name="cabin" type="java.lang.String" />
+		<property name="cabinSubtype" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.TravelerInfoSummary">
+		<property name="seatsRequested" type="java.util.List&lt;java.math.BigInteger&gt;" />
+		<property name="priceRequestInformation" type="com.cnk.travelogix.suppliers.air.data.PriceRequestInformation" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+		<property name="paymentDetail" type="com.cnk.travelogix.suppliers.air.data.PaymentDetail" />
+		<property name="airTraveler" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.TravelerInformation&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.TravelerInformation">
+		<property name="passengerTypeQuantity" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.PassengerTypeQuantity&gt;" />
+		<property name="airTraveler" type="com.cnk.travelogix.suppliers.air.data.AirTraveler" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.PriceRequestInformation">
+		<property name="currencyCode" type="java.lang.String" />
+		<property name="pricingSource" type="java.lang.String" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.PaymentDetail">
+		<property name="paymentCard" type="com.cnk.travelogix.suppliers.air.data.PaymentCard" />
+		<property name="paymentType" type="java.lang.String" />
+		<property name="rph" type="java.lang.String" />
+		<property name="guaranteeTypeCode" type="java.lang.String" />
+		<property name="paymentAmount" type="com.cnk.travelogix.suppliers.air.data.PaymentAmount" />
+		<property name="GuaranteeID" type="java.lang.String" />
+		<property name="costCenterID" type="java.lang.String" />
+		<property name="loyaltyRedemption" type="com.cnk.travelogix.suppliers.air.data.LoyaltyRedemption" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.LoyaltyRedemption">
+		<property name="promotionCode" type="java.lang.String" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.PaymentCard">
+		<property name="expireDate" type="java.lang.String" />
+		<property name="cardTypeCode" type="java.lang.String" />
+		<property name="cardTypeDescription" type="java.lang.String" />
+		<property name="cardHolderName" type="java.lang.String" />
+		<property name="cardNumber" type="java.lang.String" />
+		<property name="cardType" type="com.cnk.travelogix.suppliers.air.data.ListPaymentCardIssuer" />
+		<property name="address" type="com.cnk.travelogix.suppliers.air.data.Address" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.ListPaymentCardIssuer">
+
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.PassengerTypeQuantity">
+		<property name="code" type="java.lang.String" />
+		<property name="quantity" type="java.math.BigInteger" />
+		<property name="age" type="java.lang.Integer" />
+	</bean>
+
+	<!-- com.cnk.travelogix.suppliers.air.data.AirLowFareSearchResponse Definition -->
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirLowFareSearchResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="airLowFareSearchResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirLowFareSearchResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirLowFareSearchResponse" extends="com.cnk.travelogix.suppliers.air.data.AirResponse">
+		<property name="airLowFareSearchRS" type="com.cnk.travelogix.suppliers.air.data.AirLowFareSearchRS" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirLowFareSearchRS">
+		<property name="echoToken" type="java.lang.String" />
+		<property name="timeStamp" type="java.util.Date" />
+		<property name="target" type="java.lang.String" />
+		<property name="targetName" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="transactionIdentifier" type="java.lang.String" />
+		<property name="transactionStatusCode" type="java.lang.String" />
+		<property name="primaryLangID" type="java.lang.String" />
+		<property name="altLangID" type="java.lang.String" />
+		<property name="pricedItineraries" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.PricedItinerary&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.PricedItinerary">
+		<property name="sequenceNumber" type="java.math.BigInteger" />
+		<property name="priceType" type="java.lang.String" />
+		<property name="airItinerary" type="com.cnk.travelogix.suppliers.air.data.AirItinerary" />
+		<property name="airItineraryPricingInfo" type="com.cnk.travelogix.suppliers.air.data.AirItineraryPricingInfo" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirItinerary">
+		<property name="originDestinationOptions" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.OriginDestinationOption&gt;" />
+		<property name="directionInd" type="java.lang.String" />
+		<property name="airItineraryRPH" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.OriginDestinationOption">
+		<property name="rph" type="java.lang.String" />
+		<property name="refNumber" type="java.lang.Integer" />
+		<property name="travelPurpose" type="java.lang.String" />
+		<property name="flightSegments" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.FlightSegment&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.FlightSegment">
+		<property name="numberInParty" type="java.math.BigInteger" />
+		<property name="lineNumber" type="java.lang.Integer" />
+		<property name="status" type="java.lang.String" />
+		<property name="eTicketEligibility" type="java.lang.String" />
+		<property name="infoSource" type="java.lang.String" />
+		<property name="departureDay" type="java.lang.String" />
+		<property name="mealCode" type="java.lang.String" />
+		<property name="flightNumber" type="java.lang.String" />
+		<property name="resBookDesigCode" type="java.lang.String" />
+		<property name="arrivalDateTime" type="java.util.Date" />
+		<property name="departureDateTime" type="java.util.Date" />
+		<property name="stopQuantity" type="java.math.BigInteger" />
+		<property name="marriageGrp" type="java.lang.String" />
+		<property name="arrivalAirport" type="com.cnk.travelogix.suppliers.air.data.ArrivalAirport" />
+		<property name="departureAirport" type="com.cnk.travelogix.suppliers.air.data.DepartureAirport" />
+		<property name="operatingAirline" type="com.cnk.travelogix.suppliers.air.data.OperatingAirline" />
+		<property name="marketingAirline" type="com.cnk.travelogix.suppliers.air.data.MarketingAirline" />
+		<property name="equipmentTypes" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.EquipmentType&gt;" />
+		<property name="bookingClassAvails" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.BookingClassAvails&gt;" />
+		<property name="stopLocations" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.StopLocation&gt;" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+		<property name="rph" type="java.lang.String" />
+		<property name="connectionType" type="java.lang.String" />
+		<property name="validConnectionInd" type="java.lang.Boolean" />
+		<property name="fareBasisCode" type="java.lang.String" />
+		<property name="smokingAllowed" type="boolean" />
+		<property name="ticket" type="java.lang.String" />
+		<property name="marketingCabin" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.MarketingCabinType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.ArrivalAirport">
+		<property name="terminal" type="java.lang.String" />
+		<property name="locationCode" type="java.lang.String" />
+		<property name="codeContext" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.DepartureAirport">
+		<property name="terminal" type="java.lang.String" />
+		<property name="locationCode" type="java.lang.String" />
+		<property name="codeContext" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.OperatingAirline">
+		<property name="flightNumber" type="java.lang.String" />
+		<property name="companyShortName" type="java.lang.String" />
+		<property name="code" type="java.lang.String" />
+		<property name="countryCode" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.MarketingAirline">
+		<property name="companyShortName" type="java.lang.String" />
+		<property name="code" type="java.lang.String" />
+		<property name="codeContext" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.EquipmentType">
+		<property name="airEquipType" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.BookingClassAvails">
+		<property name="cabinType" type="java.lang.String" />
+		<property name="rph" type="java.lang.String" />
+		<property name="resBookDesigCode" type="java.lang.String" />
+		<property name="resBookDesigQuantity" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.StopLocation">
+		<property name="locationCode" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirItineraryPricingInfo">
+		<property name="quoteID" type="java.lang.String" />
+		<property name="validatingAirlineCode" type="java.lang.String" />
+		<property name="pricingSource" type="java.lang.String" />
+		<property name="itinTotalFares" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.ItinTotalFare&gt;" />
+		<property name="ptcFareBreakdown" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.PTCFareBreakdown&gt;" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.ItinTotalFare">
+		<property name="baseFare" type="com.cnk.travelogix.suppliers.air.data.BaseFare" />
+		<property name="taxes" type="com.cnk.travelogix.suppliers.air.data.Taxes" />
+		<property name="equivFares" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.EquivFare&gt;" />
+		<property name="fees" type="com.cnk.travelogix.suppliers.air.data.Fees" />
+		<property name="totalFare" type="com.cnk.travelogix.suppliers.air.data.TotalFare" />
+		<property name="unstructuredFareCalc" type="com.cnk.travelogix.suppliers.air.data.UnstructuredFareCalc" />
+
+		<property name="originalIssueInfo" type="com.cnk.travelogix.suppliers.air.data.OriginalIssueInfo" />
+		<property name="fareBaggageAllowance" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.FareBaggageAllowance&gt;" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.FareBaggageAllowance">
+		<property name="unitOfMeasureQuantity" type="java.math.BigDecimal" />
+		<property name="unitOfMeasure" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.UnstructuredFareCalc">
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.OriginalIssueInfo">
+		<property name="dateOfIssue" type="java.util.Date" />
+		<property name="issuingAirlineCode" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.BaseFare">
+		<property name="currencyCode" type="java.lang.String" />
+		<property name="fareAmountType" type="java.lang.String" />
+		<property name="decimalPlaces" type="java.math.BigInteger" />
+		<property name="amount" type="java.math.BigDecimal" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.EquivFare">
+		<property name="currencyCode" type="java.lang.String" />
+		<property name="decimalPlaces" type="java.math.BigInteger" />
+		<property name="amount" type="java.math.BigDecimal" />
+		<property name="fareAmountType" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Fees">
+		<property name="currencyCode" type="java.lang.String" />
+		<property name="amount" type="java.math.BigDecimal" />
+		<property name="airFeeTypes" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirFeeType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirFeeType">
+		<property name="feeCode" type="java.lang.String" />
+		<property name="decimalPlaces" type="java.math.BigInteger" />
+		<property name="amount" type="java.math.BigDecimal" />
+		<property name="feeTransactionType" type="java.lang.String" />
+		<property name="currencyCode" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirTaxType">
+		<property name="currencyCode" type="java.lang.String" />
+		<property name="decimalPlaces" type="java.math.BigInteger" />
+		<property name="taxCode" type="java.lang.String" />
+		<property name="amount" type="java.math.BigDecimal" />
+		<property name="taxName" type="java.lang.String" />
+		<property name="taxTransactionType" type="java.lang.String" />
+		<property name="rph" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Taxes">
+		<property name="amount" type="java.math.BigDecimal" />
+		<property name="airTaxTypes" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirTaxType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.TotalFare">
+		<property name="currencyCode" type="java.lang.String" />
+		<property name="decimalPlaces" type="java.math.BigInteger" />
+		<property name="amount" type="java.math.BigDecimal" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.PTCFareBreakdown">
+		<property name="pricingSource" type="java.lang.String" />
+		<property name="flightRefNumberRPHList" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="passengerTypeQuantity" type="com.cnk.travelogix.suppliers.air.data.PassengerTypeQuantity" />
+		<property name="fareBasisCodeTypes" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.FareBasisCodeType&gt;" />
+		<property name="passengerFares" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.PassengerFare&gt;" />
+		<property name="fareInfos" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.FareInfo&gt;" />
+		<property name="endorsements" type="com.cnk.travelogix.suppliers.air.data.Endorsements" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Endorsements">
+		<property name="endorsement" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Endorsement&gt;" />
+
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.Endorsement">
+		<property name="operation" type="java.lang.String" />
+
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.FareBasisCodeType">
+		<property name="flightSegmentRPH" type="java.lang.String" />
+		<property name="value" type="java.lang.String" />
+		<property name="notValidBefore" type="java.util.Date" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.PassengerFare">
+		<property name="baseFare" type="com.cnk.travelogix.suppliers.air.data.BaseFare" />
+		<property name="equivFares" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.EquivFare&gt;" />
+		<property name="taxes" type="com.cnk.travelogix.suppliers.air.data.Taxes" />
+		<property name="fees" type="com.cnk.travelogix.suppliers.air.data.Fees" />
+		<property name="totalFare" type="com.cnk.travelogix.suppliers.air.data.TotalFare" />
+		<property name="fareInfos" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.FareInfo&gt;" />
+		<property name="inputTicketDesigCode" type="java.lang.String" />
+		<property name="originalIssueInfo" type="com.cnk.travelogix.suppliers.air.data.OriginalIssueInfo"></property>
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.FareInfo">
+		<property name="currencyCode" type="java.lang.String" />
+		<property name="fareReferences" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.FareReference&gt;" />
+		<property name="fareInfoTypes" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.FareInfoType&gt;" />
+		<property name="date" type="com.cnk.travelogix.suppliers.air.data.Date" />
+		<property name="fare" type="com.cnk.travelogix.suppliers.air.data.Fare" />
+		<property name="ptc" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.PTC&gt;" />
+		<property name="city" type="com.cnk.travelogix.suppliers.air.data.City" />
+		<property name="passengerFare" type="com.cnk.travelogix.suppliers.air.data.FareInfoType" />
+		<property name="ruleInfo" type="com.cnk.travelogix.suppliers.air.data.RuleInfo" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Date">
+		<property name="date" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.RuleInfo">
+		<property name="chargesRules" type="com.cnk.travelogix.suppliers.air.data.ChargesRules" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.ChargesRules">
+		<property name="voluntaryChanges" type="com.cnk.travelogix.suppliers.air.data.VoluntaryChangesType" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.VoluntaryChangesType">
+
+		<property name="penalty" type="com.cnk.travelogix.suppliers.air.data.Penalty" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.Penalty">
+		<property name="penaltyType" type="java.lang.String" />
+		<property name="currencyCode" type="java.lang.String" />
+		<property name="amount" type="java.math.BigDecimal" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.City">
+		<property name="locationCode" type="java.lang.String" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.Fare">
+		<property name="fareDescription" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.PTC">
+		<property name="passengerTypeCode" type="java.lang.String" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.FareReference">
+		<property name="resBookDesigCode" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.FareInfoType">
+		<property name="fareType" type="java.lang.String" />
+		<property name="fareBasisCode" type="java.lang.String" />
+		<property name="fareStatus" type="java.lang.String" />
+		<property name="arrivalAirport" type="com.cnk.travelogix.suppliers.air.data.ArrivalAirport" />
+		<property name="departureAirport" type="com.cnk.travelogix.suppliers.air.data.DepartureAirport" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+	</bean>
+
+
+	<!-- com.cnk.travelogix.suppliers.air.data.AirReadRequest Definition -->
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirReadRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="airReadRequests" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirReadRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirReadRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="airReadRQ" type="com.cnk.travelogix.suppliers.air.data.AirReadRQ" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirReadRQ">
+		<property name="timeStamp" type="java.util.Date" />
+		<property name="target" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="primaryLangID" type="java.lang.String" />
+		<property name="transactionStatusCode" type="java.lang.String" />
+		<property name="pos" type="com.cnk.travelogix.suppliers.common.data.POSType" />
+		<property name="uniqueID" type="com.cnk.travelogix.suppliers.air.data.UniqueID" />
+		<property name="airReadReqs" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirReadReq&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.UniqueID">
+		<property name="companyName" type="com.cnk.travelogix.suppliers.air.data.CompanyName" />
+		<property name="url" type="java.lang.String" />
+		<property name="type" type="java.lang.String" />
+		<property name="instance" type="java.lang.String" />
+		<property name="id" type="java.lang.String" />
+		<property name="idContext" type="java.lang.String" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.CompanyName">
+		<property name="companyShortName" type="java.lang.String" />
+		<property name="travelSector" type="java.lang.String" />
+		<property name="code" type="java.lang.String" />
+		<property name="codeContext" type="java.lang.String" />
+		<property name="department" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirReadReq">
+		<property name="start" type="java.util.Date" />
+		<property name="end" type="java.util.Date" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirBookResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="airBookResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirBookResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirBookResponse" extends="com.cnk.travelogix.suppliers.air.data.AirResponse">
+		<property name="airBookRS" type="com.cnk.travelogix.suppliers.air.data.AirBookRS" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirBookRS">
+		<property name="transactionIdentifier" type="java.lang.String" />
+		<property name="timeStamp" type="java.util.Date" />
+		<property name="transactionStatusCode" type="java.lang.String" />
+		<property name="target" type="java.lang.String" />
+		<property name="targetName" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="primaryLangID" type="java.lang.String" />
+		<property name="success" type="java.lang.String" />
+		<property name="airReservation" type="com.cnk.travelogix.suppliers.air.data.AirReservation" />
+		<property name="warnings" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Warning&gt;" />
+		<property name="pos" type="com.cnk.travelogix.suppliers.common.data.POSType" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirReservation">
+		<property name="createDateTime" type="java.util.Date" />
+		<property name="lastModified" type="java.util.Date" />
+		<property name="airItinerary" type="com.cnk.travelogix.suppliers.air.data.AirItinerary" />
+		<property name="priceInfo" type="com.cnk.travelogix.suppliers.air.data.BookingPriceInfo" />
+		<property name="bookingReferenceIds" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.BookingReferenceID&gt;" />
+		<property name="ticketingInfos" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.TicketingInfo&gt;" />
+		<property name="fulfillment" type="com.cnk.travelogix.suppliers.air.data.Fulfillment" />
+		<property name="arrangerInfo" type="com.cnk.travelogix.suppliers.air.data.AirArrangerType" />
+		<property name="emdInfo" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.EMDType&gt;" />
+		<property name="travelerInfo" type="com.cnk.travelogix.suppliers.air.data.TravelerInfo" />
+		<property name="comment" type="com.cnk.travelogix.suppliers.air.data.FormattedTextType" />
+		<property name="queues" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Queue&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Queue">
+		<property name="queueNumber" type="java.lang.String" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.EMDType">
+		<property name="specificData" type="java.lang.String" />
+		<property name="rph" type="java.lang.String" />
+		<property name="operation" type="java.lang.String" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.BookingReferenceID">
+		<property name="id" type="java.lang.String" />
+		<property name="type" type="java.lang.String" />
+		<property name="idContext" type="java.lang.String" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Traveler" extends="com.cnk.travelogix.suppliers.air.data.PersonName">
+		<property name="docID" type="java.lang.String" />
+		<property name="docType" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.BookingPriceInfo">
+		<property name="itinTotalFares" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.ItinTotalFare&gt;" />
+		<property name="ptcFareBreakdowns" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.PTCFareBreakdown&gt;" />
+		<property name="travelerInfo" type="com.cnk.travelogix.suppliers.air.data.TravelerInfo" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.TravelerInfo">
+		<property name="airTravelers" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirTraveler&gt;" />
+		<property name="specialReqDetails" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.SpecialReqDetail&gt;" />
+		<property name="ssRs" type="com.cnk.travelogix.suppliers.air.data.SSRs"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.suppliers.air.data.SSRs">
+		<property name="ssr" type="com.cnk.travelogix.suppliers.air.data.SpecialRequests"/>
+	</bean>
+	
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirTraveler">
+		<property name="passengerTypeCode" type="java.lang.String" />
+		<property name="birthDate" type="java.util.Date" />
+		<property name="gender" type="java.lang.String" />
+		<property name="personName" type="com.cnk.travelogix.suppliers.air.data.PersonName" />
+		<property name="telephones" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Telephone&gt;" />
+		<property name="emails" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Email&gt;" />
+		<property name="addresses" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Address&gt;" />
+		<property name="documents" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Document&gt;" />
+		<property name="travelerRefNumber" type="com.cnk.travelogix.suppliers.air.data.TravelerRefNumber" />
+		<property name="profileRef" type="com.cnk.travelogix.suppliers.air.data.ProfileRef" />
+		<property name="custLoyalty" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.CustLoyalty&gt;" />
+		<property name="passengerTypeQuantity" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.PassengerTypeQuantity&gt;" />
+		<property name="currencyCode" type="java.lang.String" />
+		<property name="flightSegmentRPHs" type="com.cnk.travelogix.suppliers.air.data.FlightSegmentRPHs" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.FlightSegmentRPHs">
+		<property name="flightSegmentRPH" type="java.util.List&lt;java.lang.String&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.CustLoyalty">
+		<property name="travelSector" type="java.lang.String" />
+		<property name="vendorCode" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="effectiveDate" type="java.util.Date" />
+		<property name="programID" type="java.lang.String" />
+		<property name="membershipID" type="java.lang.String" />
+		<property name="rph" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.PersonName">
+		<property name="surname" type="java.lang.String" />
+		<property name="namePrefix" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="givenName" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="nameTitle" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="middleName" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Telephone">
+		<property name="countryAccessCode" type="java.lang.String" />
+		<property name="phoneNumber" type="java.lang.String" />
+		<property name="locationCode" type="java.lang.String" />
+		<property name="remark" type="java.lang.String" />
+		<property name="rph" type="java.lang.String" />
+		<property name="phoneUseType" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Email">
+		<property name="value" type="java.lang.String" />
+		<property name="emailType" type="java.lang.String" />
+		<property name="rph" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Address">
+		<property name="addressLine" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="cityName" type="java.lang.String" />
+		<property name="postalCode" type="java.lang.String" />
+		<property name="stateProv" type="com.cnk.travelogix.suppliers.air.data.StateProv" />
+		<property name="countryName" type="com.cnk.travelogix.suppliers.air.data.CountryName" />
+		<property name="streetNmbr" type="com.cnk.travelogix.suppliers.air.data.StreetNmbr" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.StreetNmbr">
+
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.StateProv">
+		<property name="code" type="java.lang.String" />
+		<property name="value" type="java.lang.String" />
+		<property name="stateCode" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.CountryName">
+		<property name="value" type="java.lang.String" />
+		<property name="code" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Document">
+		<property name="docID" type="java.lang.String" />
+		<property name="docType" type="java.lang.String" />
+		<property name="docIssueAuthority" type="java.lang.String" />
+		<property name="docIssueLocation" type="java.lang.String" />
+		<property name="docHolderNationality" type="java.lang.String" />
+		<property name="birthDate" type="java.util.Date" />
+		<property name="effectiveDate" type="java.util.Date" />
+		<property name="expireDate" type="java.util.Date" />
+		<property name="gender" type="java.lang.String" />
+		<property name="docHolderName" type="java.lang.String" />
+		<property name="docIssueCountry" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.TravelerRefNumber">
+		<property name="rph" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.TicketingInfo">
+		<property name="travelerRefNumber" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="passengerTypeCode" type="java.lang.String" />
+		<property name="ticketDocumentNbr" type="java.lang.String" />
+		<property name="ticketType" type="java.lang.String" />
+		<property name="ticketTimeLimit" type="java.util.Date" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirDemandTicketRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="airDemandTickets" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirDemandTicketRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirDemandTicketRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="target" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="pos" type="com.cnk.travelogix.suppliers.common.data.POSType" />
+		<property name="demandTicketDetail" type="com.cnk.travelogix.suppliers.air.data.DemandTicketDetail" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.DemandTicketDetail">
+		<property name="bookingReferenceID" type="com.cnk.travelogix.suppliers.air.data.UniqueID" />
+		<property name="paymentInfo" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.PaymentInfo&gt;" />
+		<property name="commission" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Commission&gt;" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Commission">
+		<property name="percent" type="java.math.BigDecimal" />
+		<property name="amount" type="java.math.BigDecimal" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.PaymentInfo">
+		<property name="paymentType" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirDemandTicketResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="airDemandTicketResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirDemandTicketResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirDemandTicketResponse" extends="com.cnk.travelogix.suppliers.air.data.AirResponse">
+		<property name="airDemandTicketRS" type="com.cnk.travelogix.suppliers.air.data.AirDemandTicketRS" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirDemandTicketRS">
+		<property name="success" type="java.lang.Boolean" />
+		<property name="bookingReferenceID" type="com.cnk.travelogix.suppliers.air.data.BookingReferenceID" />
+	</bean>
+
+	<!-- com.cnk.travelogix.suppliers.air.data.AirPriceRequest -->
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirPriceRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="airAirPriceRequests" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirPriceRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirPriceRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="Sequence" type="java.lang.Integer" />
+		<property name="airPriceRQ" type="com.cnk.travelogix.suppliers.air.data.AirPriceRQ" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirPriceRQ">
+		<property name="target" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="timeStamp" type="java.util.Date" />
+		<property name="transactionIdentifier" type="java.lang.String" />
+		<property name="primaryLangID" type="java.lang.String" />
+		<property name="pos" type="com.cnk.travelogix.suppliers.common.data.POSType" />
+		<property name="airItinerary" type="com.cnk.travelogix.suppliers.air.data.AirItinerary" />
+		<property name="travelerInfoSummary" type="com.cnk.travelogix.suppliers.air.data.TravelerInfoSummary" />
+		<property name="bookingReferenceID" type="com.cnk.travelogix.suppliers.air.data.BookingReferenceID" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirPriceResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="airPriceResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirPriceResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirPriceResponse" extends="com.cnk.travelogix.suppliers.air.data.AirResponse">
+		<property name="airPriceRS" type="com.cnk.travelogix.suppliers.air.data.AirPriceRS" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirPriceRS">
+		<property name="success" type="java.lang.Boolean" />
+		<property name="target" type="java.lang.String" />
+		<property name="timeStamp" type="java.util.Date" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="transactionIdentifier" type="java.lang.String" />
+		<property name="primaryLangID" type="java.lang.String" />
+		<property name="altLangID" type="java.lang.String" />
+		<property name="pricedItineraries" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.PricedItinerary&gt;" />
+		<property name="bookingReferenceID" type="com.cnk.travelogix.suppliers.air.data.BookingReferenceID" />
+		<property name="pricingOverview" type="com.cnk.travelogix.suppliers.air.data.PricingOverview" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.PricingOverview">
+		<property name="type" type="java.lang.String" />
+		<property name="notes" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.FreeText&gt;" />
+		<property name="baseFare" type="com.cnk.travelogix.suppliers.air.data.BaseFare" />
+		<property name="equivFares" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.EquivFare&gt;" />
+		<property name="totalFare" type="com.cnk.travelogix.suppliers.air.data.TotalFare" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.FreeText">
+		<property name="value" type="java.lang.String" />
+		<property name="language" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Baggages">
+		<property name="baggages" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Baggage&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Baggage">
+		<property name="baggageCode" type="java.lang.String" />
+		<property name="baggageCharge" type="java.math.BigDecimal" />
+		<property name="baggageDescription" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.StopAirports">
+		<property name="stopAirports" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.StopAirport&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.StopAirport">
+		<property name="arrivalTime" type="java.util.Date" />
+		<property name="departureTime" type="java.util.Date" />
+		<property name="elapsedTime" type="java.lang.String" />
+		<property name="duration" type="java.lang.String" />
+		<property name="gmtOffset" type="java.lang.String" />
+		<property name="equipment" type="java.lang.String" />
+		<property name="locationCode" type="java.lang.String" />
+		<property name="codeContext" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.BaggageInfoList">
+		<property name="baggages" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.BaggageInfo&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.BaggageInfo">
+		<property name="segments" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Segment&gt;" />
+		<property name="allowances" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Allowance&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Segment">
+		<property name="id" type="java.math.BigInteger" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Allowance">
+		<property name="arrivalTime" type="java.util.Date" />
+		<property name="departureTime" type="java.util.Date" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.SeatRequests">
+		<property name="seatRequests" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.SeatRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.SeatRequest">
+		<property name="seatNumber" type="java.lang.String" />
+		<property name="rowNumber" type="java.lang.Integer" />
+		<property name="flightRefNumberRPH" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="travelerRefNumberRPH" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="seatPreference" type="java.util.List&lt;java.lang.String&gt;"/>
+		<property name="deckLevel" type="java.lang.String"/>
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.OtherServiceInformations">
+		<property name="otherServiceInformations" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.OtherServiceInformation&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.OtherServiceInformation">
+		<property name="rph" type="java.lang.String" />
+		<property name="operation" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.MealRequests">
+		<property name="mealRequests" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.MealRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.MealRequest">
+		<property name="departureDate" type="java.util.Date" />
+		<property name="flightNumber" type="java.lang.String" />
+		<property name="mealCode" type="java.lang.String" />
+		<property name="mealQuantity" type="java.lang.Integer" />
+		<property name="flightRefNumberRPH" type="java.lang.String" />
+		<property name="travelerRefNumberRPH" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.BaggageRequests">
+		<property name="baggageRequests" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.BaggageRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.BaggageRequest">
+		<property name="flightNumber" type="java.lang.String" />
+		<property name="baggageCode" type="java.lang.String" />
+		<property name="baggageOndGroupId" type="java.lang.String" />
+		<property name="flightRefNumberRPH" type="java.lang.String" />
+		<property name="travelerRefNumberRPH" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.CustomerInfo" extends="com.cnk.travelogix.suppliers.air.data.AirTraveler" />
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirCancellRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="airCancellRequests" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirCancellRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirCancellRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="Sequence" type="java.lang.Integer" />
+		<property name="airCancellRQ" type="com.cnk.travelogix.suppliers.air.data.AirCancellRQ" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirCancellRQ">
+		<property name="target" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="cancelType" type="java.lang.String" />
+		<property name="pos" type="com.cnk.travelogix.suppliers.common.data.POSType" />
+		<property name="uniqueIDs" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.UniqueID&gt;" />
+		<property name="verification" type="com.cnk.travelogix.suppliers.air.data.Verification" />
+		<property name="originAndDestinationSegment" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.OriginAndDestinationSegment&gt;" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Verification">
+		<property name="startLocation" type="com.cnk.travelogix.suppliers.air.data.StartLocation" />
+		<property name="endLocation" type="com.cnk.travelogix.suppliers.air.data.EndLocation" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.StartLocation">
+		<property name="associatedDateTime" type="java.util.Date" />
+		<property name="locationCode" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.EndLocation">
+		<property name="associatedDateTime" type="java.util.Date" />
+		<property name="locationCode" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.OriginAndDestinationSegment">
+		<property name="originLocation" type="com.cnk.travelogix.suppliers.air.data.StartLocation" />
+		<property name="destinationLocation" type="com.cnk.travelogix.suppliers.air.data.EndLocation" />
+		<property name="travelers" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Traveler&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.SSRs">
+		<property name="ssrs" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.SpecialRequests&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.SpecialRequests">
+		<property name="flightRefNumberRPHList" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="travelerRefNumberRPHList" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="ssrCode" type="java.lang.String" />
+		<property name="number" type="java.lang.Integer" />
+		<property name="serviceQuantity" type="java.lang.Integer" />
+		<property name="companyName" type="com.cnk.travelogix.suppliers.air.data.CompanyName" />
+		<property name="code" type="java.lang.String"/>
+		<property name="description" type="java.lang.String"/>
+		<property name="name" type="java.lang.String"/>
+		<property name="categoryCode" type="java.lang.String"/>
+		<property name="flightRef" type="java.lang.String"/>
+		<property name="travelerRef" type="java.lang.String"/>
+		<property name="servicePrice" type="com.cnk.travelogix.suppliers.air.data.ServicePrice"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.suppliers.air.data.ServicePrice">
+		<property name="total" type="java.lang.String"/>
+		<property name="currencyCode" type="java.lang.String"/>
+		<property name="basePrice" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.BasePrice&gt;"/>
+		<property name="taxes" type="com.cnk.travelogix.suppliers.air.data.Taxes"></property>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.suppliers.air.data.BasePrice">
+		<property name="amount" type="java.lang.String"/>
+	</bean>
+
+
+	<!-- com.cnk.travelogix.suppliers.air.data.AirBookRequestWrapper Definition -->
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirBookRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="airBookRequests" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirBookRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirBookRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="airBookRQ" type="com.cnk.travelogix.suppliers.air.data.AirBookRQ" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirBookRQ">
+		<property name="transactionIdentifier" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="target" type="java.lang.String" />
+		<property name="primaryLangID" type="java.lang.String" />
+		<property name="priceInd" type="java.lang.Boolean" />
+		<property name="pos" type="com.cnk.travelogix.suppliers.common.data.POSType" />
+		<property name="airItinerary" type="com.cnk.travelogix.suppliers.air.data.AirItinerary" />
+		<property name="priceInfo" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.ItinTotalFare&gt;" />
+		<property name="travelerInfo" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirTraveler&gt;" />
+		<property name="fulfillment" type="com.cnk.travelogix.suppliers.air.data.Fulfillment" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.SpecialReqDetail">
+		<property name="seatRequests" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.SeatRequest&gt;" />
+		<property name="specialServiceRequests" type="com.cnk.travelogix.suppliers.air.data.SpecialServiceRequests" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirBookResponse">
+		<property name="transactionIdentifier" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="target" type="java.lang.String" />
+		<property name="pos" type="com.cnk.travelogix.suppliers.common.data.POSType" />
+		<property name="airItinerary" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirItinerary&gt;" />
+		<property name="priceInfo" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.ItinTotalFare&gt;" />
+		<property name="travelerInfo" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirTraveler&gt;" />
+		<property name="fulfillment" type="com.cnk.travelogix.suppliers.air.data.Fulfillment" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Fulfillment">
+		<property name="paymentDetails" type="com.cnk.travelogix.suppliers.air.data.PaymentDetails" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.PaymentDetails">
+		<property name="paymentDetail" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.PaymentDetail&gt;" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.PaymentAmount">
+		<property name="currencyCode" type="java.lang.String" />
+		<property name="amount" type="java.math.BigDecimal" />
+	</bean>
+
+	<!-- com.cnk.travelogix.suppliers.air.data.AirCancelResponse -->
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirCancelResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="airCancelResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirCancelResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirCancelResponse" extends="com.cnk.travelogix.suppliers.air.data.AirResponse">
+		<property name="airCancelRS" type="com.cnk.travelogix.suppliers.air.data.AirCancelRS" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirCancelRS">
+		<property name="status" type="java.lang.String" />
+		<property name="target" type="java.lang.String" />
+		<property name="warnings" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Warning&gt;" />
+		<property name="uniqueIDs" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.UniqueID&gt;" />
+		<property name="cancelInfoRS" type="com.cnk.travelogix.suppliers.acco.data.CancelInfoRS" />
+		<property name="segment" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Segment&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Warning">
+		<property name="shortText" type="java.lang.String" />
+		<property name="status" type="java.lang.String" />
+		<property name="type" type="java.lang.String" />
+		<property name="docURL" type="java.lang.String" />
+		<property name="recordID" type="java.lang.String" />
+		<property name="code" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Segment">
+		<property name="firstItinSegNbr" type="java.math.BigInteger" />
+		<property name="itinSegNbr" type="java.math.BigInteger" />
+		<property name="lastItinSegNbr" type="java.math.BigInteger" />
+		<property name="uniqueID" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.UniqueID&gt;" />
+	</bean>
+	<!-- Air Seat Map request -->
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirSeatMapRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="airSeatMapRequests" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirSeatMapRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirSeatMapRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="Sequence" type="java.lang.Integer" />
+		<property name="airSeatMapRQ" type="com.cnk.travelogix.suppliers.air.data.AirSeatMapRQ" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirSeatMapRQ">
+		<property name="echoToken" type="java.lang.String" />
+		<property name="timeStamp" type="java.util.Date" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="transactionIdentifier" type="java.lang.String" />
+		<property name="transactionStatusCode" type="java.lang.String" />
+		<property name="retransmissionIndicator" type="java.lang.Boolean" />
+		<property name="primaryLangID" type="java.lang.String" />
+		<property name="altLangID" type="java.lang.String" />
+		<property name="bookingReferenceID" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.UniqueID&gt;" />
+		<property name="pos" type="com.cnk.travelogix.suppliers.common.data.POSType" />
+		<property name="seatMapRequests" type="com.cnk.travelogix.suppliers.air.data.SeatMapRequests" />
+		<property name="airTravelers" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirTraveler&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.SeatMapRequests">
+		<property name="seatMapRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.SeatMapRequest&gt;" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.SeatMapRequest">
+		<property name="flightSegmentInfo" type="com.cnk.travelogix.suppliers.air.data.FlightSegment" />
+		<property name="seatDetails" type="com.cnk.travelogix.suppliers.air.data.SeatDetails" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.SeatDetails">
+		<property name="cabinClass" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.CabinClass&gt;" />
+		<property name="resBookDesignations" type="com.cnk.travelogix.suppliers.air.data.ResBookDesignations" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.CabinClass">
+		<property name="cabinType" type="java.lang.String" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.ResBookDesignations">
+		<property name="resBookDesignation" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.ResBookDesignation&gt;" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.ResBookDesignation">
+		<property name="resBookDesigCode" type="java.lang.String" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirSeatMapResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="airSeatMapResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirSeatMapResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirSeatMapResponse" extends="com.cnk.travelogix.suppliers.air.data.AirResponse">
+		<property name="airSeatMap" type="com.cnk.travelogix.suppliers.air.data.AirSeatMapRS" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirSeatMapRS">
+		<property name="success" type="java.lang.Boolean" />
+		<property name="target" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="transactionIdentifier" type="java.lang.String" />
+		<property name="primaryLangID" type="java.lang.String" />
+		<property name="altLangID" type="java.lang.String" />
+		<property name="seatMapResponses" type="com.cnk.travelogix.suppliers.air.data.SeatMapResponses" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.SeatMapResponses">
+		<property name="seatMapResponse" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.SeatMapResponse&gt;" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.SeatMapResponse">
+		<property name="flightSegmentInfo" type="com.cnk.travelogix.suppliers.air.data.FlightSegment" />
+		<property name="seatMapDetails" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.SeatMapDetailsType&gt;" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.SeatMapDetailsType">
+		<property name="cabinClass" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.CabinClass&gt;" />
+		<property name="travelerRefNumberRPHs" type="java.util.List&lt;java.lang.String&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirAvailRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="airAvailRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirAvailRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirAvailRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="airAvailRQ" type="com.cnk.travelogix.suppliers.air.data.AirAvailRQ" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirAvailRQ">
+		<property name="target" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="pos" type="com.cnk.travelogix.suppliers.common.data.POSType" />
+		<property name="originDestinationInformation" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.OriginDestinationInformation&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirAvailResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="airAvailResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.AirAvailResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.acco.data.AirAvailResponse" extends="com.cnk.travelogix.suppliers.air.data.AirResponse">
+		<property name="airAvailRS" type="com.cnk.travelogix.suppliers.air.data.AirAvailRS" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirAvailRS">
+		<property name="echoToken" type="java.lang.String" />
+		<property name="timeStamp" type="java.util.Date" />
+		<property name="target" type="java.lang.String" />
+		<property name="targetName" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="sequenceNumber" type="java.math.BigInteger" />
+		<property name="primaryLangID" type="java.lang.String" />
+		<property name="altLangID" type="java.lang.String" />
+		<property name="success" type="com.cnk.travelogix.suppliers.acco.data.Success" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+		<property name="warnings" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Warning&gt;" />
+		<property name="originDestinationInformation" type="com.cnk.travelogix.suppliers.air.data.OriginDestinationInformation" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.MarketingCabinType">
+		<property name="name" type="java.lang.String" />
+		<property name="rph" type="java.lang.String" />
+		<property name="meal" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.Meal&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.common.data.Meal">
+		<property name="mealCode" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirRulesRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="airRulesRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirRulesRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirRulesRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="Sequence" type="java.lang.Integer" />
+		<property name="airRulesRQ" type="com.cnk.travelogix.suppliers.air.data.AirRulesRQ" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirRulesRQ">
+		<property name="echoToken" type="java.lang.String" />
+		<property name="timeStamp" type="java.util.Date" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="transactionIdentifier" type="java.lang.String" />
+		<property name="transactionStatusCode" type="java.lang.String" />
+		<property name="retransmissionIndicator" type="java.lang.Boolean" />
+		<property name="primaryLangID" type="java.lang.String" />
+		<property name="altLangID" type="java.lang.String" />
+		<property name="pos" type="com.cnk.travelogix.suppliers.common.data.POSType" />
+		<property name="ruleReqInfo" type="com.cnk.travelogix.suppliers.air.data.RuleReqInfo" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.RuleReqInfo">
+		<property name="languageRequested" type="java.lang.String" />
+		<property name="fareInfos" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.FareInfo&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirRuleResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="airRulesResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirRulesResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirRulesResponse" extends="com.cnk.travelogix.suppliers.air.data.AirResponse">
+		<property name="airRulesRS" type="com.cnk.travelogix.suppliers.air.data.AirRulesRS" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirRulesRS">
+		<property name="fareRuleResponseInfo" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.FareRuleResponseInfo&gt;" />
+		<property name="success" type="java.lang.Boolean" />
+		<property name="target" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.FareRuleResponseInfo">
+		<property name="fareRuleInfo" type="com.cnk.travelogix.suppliers.air.data.FareInfo" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirBookModifyRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="airBookModifyRequest" type="com.cnk.travelogix.suppliers.air.data.AirBookModifyRequest" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirBookModifyRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="AirBookModifyRQ" type="com.cnk.travelogix.suppliers.air.data.AirBookModifyRQ"></property>
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirBookModifyRQ">
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="pos" type="com.cnk.travelogix.suppliers.common.data.POSType" />
+		<property name="target" type="java.lang.String" />
+		<property name="timeStamp" type="java.util.Date" />
+		<property name="airReservation" type="com.cnk.travelogix.suppliers.air.data.AirReservation" />
+		<property name="AirBookModify" type="com.cnk.travelogix.suppliers.air.data.AirBookModify" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirBookModify">
+		<property name="modificationType" type="java.lang.String" />
+		<property name="travelerInfo" type="com.cnk.travelogix.suppliers.air.data.TravelerInfo" />
+		<property name="comment" type="com.cnk.travelogix.suppliers.air.data.FormattedTextType" />
+		<property name="airItinerary" type="com.cnk.travelogix.suppliers.air.data.AirItinerary" />
+		<property name="bookingReferenceId" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.BookingReferenceID&gt;" />
+		<property name="fulfillment" type="com.cnk.travelogix.suppliers.air.data.Fulfillment" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.FormattedTextType">
+		<property name="textFormat" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.SpecialServiceRequests">
+		<property name="specialServiceRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.SpecialServiceRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.SpecialServiceRequest">
+		<property name="remarks" type="com.cnk.travelogix.suppliers.air.data.Remarks" />
+		<property name="travelerRefNumberRPHList" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="airline" type="com.cnk.travelogix.suppliers.air.data.CompanyName" />
+		<property name="ssrCode" type="java.lang.String"/>
+		<property name="number" type="java.lang.Integer"/>
+		<property name="status" type="java.lang.String"/>
+		<property name="serviceQuantity" type="java.lang.Integer"/>
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions"/>
+		<property name="flightLeg" type="com.cnk.travelogix.suppliers.air.data.FlightLeg"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.suppliers.air.data.FlightLeg">
+		<property name="date" type="java.util.Date"/>
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Remarks">
+		<property name="remark" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Remark&gt;" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.Remark">
+		<property name="RPH" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirArrangerType">
+		<property name="profileRef" type="com.cnk.travelogix.suppliers.air.data.ProfileRef" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.ProfileRef">
+		<property name="uniqueID" type="com.cnk.travelogix.suppliers.air.data.UniqueID" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.BookingReferenceID">
+		<property name="id" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.common.data.RequestorID">
+		<property name="type" type="java.lang.String" />
+	</bean>
+
+	<!-- AirMessageQueue -->
+	<bean class="com.cnk.travelogix.suppliers.air.data.MessageQueueRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="messageQueueRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.MessageQueueRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.MessageQueueRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="Sequence" type="java.lang.Integer" />
+		<property name="messageQueueRQ" type="com.cnk.travelogix.suppliers.air.data.MessageQueueRQ" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.MessageQueueRQ">
+		<property name="categoryID" type="java.lang.String" />
+		<property name="target" type="java.lang.String" />
+		<property name="uniqueID" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.MessageQueueResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="messageQueueResponse" type="com.cnk.travelogix.suppliers.air.data.MessageQueueResponse" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.MessageQueueResponse" extends="com.cnk.travelogix.suppliers.air.data.AirResponse">
+		<property name="messageQueueRS" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.MessageQueueRS&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.MessageQueueRS">
+		<property name="success" type="java.lang.Boolean" />
+		<property name="messageItems" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.MessageItem&gt;" />
+		<property name="target" type="java.lang.String" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.MessageItem">
+		<property name="uniqueID" type="java.lang.String" />
+		<property name="rph" type="java.lang.String" />
+		<property name="messages" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Messages&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Messages">
+		<property name="comment" type="java.lang.String" />
+	</bean>
+
+	<!-- AirRemoveMessageQueue -->
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirRemoveMessageQueueRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="airRemoveMessageQueueRequest" type="com.cnk.travelogix.suppliers.air.data.AirRemoveMessageQueueRequest" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirRemoveMessageQueueRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="Sequence" type="java.lang.Integer" />
+		<property name="airRemoveMessageQueueRQ" type="com.cnk.travelogix.suppliers.air.data.AirRemoveMessageQueueRQ" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirRemoveMessageQueueRQ">
+		<property name="target" type="java.lang.String" />
+		<property name="Items" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.Items&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.Items">
+		<property name="categoryID" type="java.lang.String" />
+		<property name="uniqueID" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirRemoveMessageQueueResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="airRemoveMessageQueueRSWrapper" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirRemoveMessageQueueResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirRemoveMessageQueueResponse" extends="com.cnk.travelogix.suppliers.air.data.AirResponse">
+		<property name="airRemoveMessageQueueRS" type="com.cnk.travelogix.suppliers.air.data.AirRemoveMessageQueueRS" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirRemoveMessageQueueRS">
+		<property name="success" type="java.lang.Boolean" />
+		<property name="target" type="java.lang.String" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<!-- AIRGetSession -->
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirGetSessionRequest">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="target" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirGetSessionResponse">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="supplierSessionInfo" type="com.cnk.travelogix.suppliers.air.data.SupplierSessionInfo" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.air.data.SupplierSessionInfo">
+		<property name="sessionID" type="java.lang.String" />
+		<property name="validTill" type="java.util.Date" />
+	</bean>
+
+	<!-- AirSessionLogout -->
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirSessionLogoutRequest">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirSessionLogoutResponse">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+	</bean>
+
+	<!-- AirPushOSI -->
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirPushSSRRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="airBookModifyRQWrapper" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirBookModifyRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirPushSSRResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="airBookResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirBookResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirPushSeatRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="airBookModifyRQWrapper" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirBookModifyRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirPushSeatResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="airBookResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirBookResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirGetSSRRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="airGetSSRequests" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirGetSSRequest&gt;" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirGetSSRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="airGetSSRQ" type="com.cnk.travelogix.suppliers.air.data.AirGetSSRQ" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirGetSSRQ">
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="pos" type="com.cnk.travelogix.suppliers.common.data.POSType" />
+		<property name="travelerInfoSummary" type="com.cnk.travelogix.suppliers.air.data.TravelerInfoSummary" />
+		<property name="originDestinationInformation" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.OriginDestinationInformation&gt;" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirGetSSResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="airGetSSResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.air.data.AirGetSSResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirGetSSResponse" extends="com.cnk.travelogix.suppliers.air.data.AirResponse">
+		<property name="airGetSSRS" type="com.cnk.travelogix.suppliers.air.data.AirGetSSRS" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.suppliers.air.data.AirGetSSRS">
+		<property name="airItinerary" type="com.cnk.travelogix.suppliers.air.data.AirItinerary" />
+		<property name="travelerInfo" type="com.cnk.travelogix.suppliers.air.data.TravelerInfo" />
+		<property name="version" type="java.math.BigDecimal" />
+	</bean>
+
+
+	<!-- *************** Acco Bean Definitions ***************************** -->
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.GetPoliciesRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="getPoliciesReadRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.GetPoliciesReadRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.GetPoliciesReadRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="getPoliciesRQ" type="com.cnk.travelogix.suppliers.acco.data.GetPoliciesRQ" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.GetPoliciesRQ">
+		<property name="paxPassport" type="java.lang.String" />
+		<property name="hotelID" type="java.lang.String" />
+		<property name="internalCode" type="java.lang.String" />
+		<property name="checkInDate" type="java.util.Date" />
+		<property name="checkOutDate" type="java.util.Date" />
+		<property name="nationalityID" type="java.math.BigInteger" />
+		<property name="cancelPolicyID" type="java.lang.String" />
+		<property name="flagAvail" type="java.lang.Boolean" />
+		<property name="resNo" type="java.lang.String" />
+		<property name="hbookingID" type="java.lang.String" />
+		<property name="agentID" type="java.lang.String" />
+		<property name="supplier" type="java.lang.String" />
+		<property name="countryID" type="java.lang.String" />
+		<property name="cityID" type="java.lang.String" />
+		<property name="isPackageRate" type="java.lang.String" />
+		<property name="roomInfo" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.RoomInfo&gt;" />
+		<property name="roomClass" type="com.cnk.travelogix.suppliers.acco.data.RoomClass" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RoomClass">
+		<property name="totalPrice" type="java.math.BigInteger" />
+		<property name="currencyCode" type="java.lang.String" />
+		<property name="rooms" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Room&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Room">
+		<property name="productID" type="java.math.BigInteger" />
+		<property name="adults" type="java.math.BigInteger" />
+		<property name="childs" type="java.math.BigInteger" />
+		<property name="childsAge" type="com.cnk.travelogix.suppliers.acco.data.ChildsAge" />
+		<property name="mapRoomID" type="java.math.BigInteger" />
+		<property name="agreementID" type="java.math.BigInteger" />
+		<property name="supplierRef" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.SupplierRefOne&gt;" />
+		<property name="supplierCode" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.SupplierRefOne">
+		<property name="id" type="java.math.BigInteger" />
+		<property name="value" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ChildsAge">
+		<property name="age" type="java.util.List&lt;java.math.BigInteger&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RoomInfo">
+		<property name="seqNo" type="java.math.BigInteger" />
+		<property name="roomType" type="java.lang.String" />
+		<property name="roomID" type="java.lang.String" />
+		<property name="adultNum" type="java.math.BigInteger" />
+		<property name="childAges" type="com.cnk.travelogix.suppliers.acco.data.ChildAges" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ChildAges">
+		<property name="childAge" type="java.util.List&lt;java.math.BigInteger&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CancelRoomRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="cancelRoomReadRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.CancelRoomReadRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CancelRoomReadRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="HotelResModifyRQ" type="com.cnk.travelogix.suppliers.acco.data.HotelResModify" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.acco.data.OnRequestBookingUpdateRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="onRequestBookingUpdateReadRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.OnRequestBookingUpdateReadRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.OnRequestBookingUpdateReadRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="OnRequestBookingUpdateRQ" type="com.cnk.travelogix.suppliers.acco.data.RetrieveBookingRQ" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RetrieveBookingListRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="retrieveBookingListReadRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.RetrieveBookingListReadRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RetrieveBookingListReadRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="retrieveBookingListRQ" type="com.cnk.travelogix.suppliers.acco.data.RetrieveBookingRQ" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RetrieveBookingWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="retrieveBookingReadRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.RetrieveBookingReadRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RetrieveBookingReadRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="retrieveBookingRQ" type="com.cnk.travelogix.suppliers.acco.data.RetrieveBookingRQ" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RetrieveBookingRQ">
+		<property name="target" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="uniqueID" type="com.cnk.travelogix.suppliers.acco.data.UniqueID" />
+		<property name="readRequests" type="com.cnk.travelogix.suppliers.acco.data.ReadRequests" />
+		<property name="transactionIdentifier" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ReadRequests">
+		<property name="hotelReadRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.HotelReadRequest&gt;" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelReadRequest">
+		<property name="selectionCriteria" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.SelectionCriteria&gt;" />
+		<property name="hotelCode" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.SelectionCriteria">
+		<property name="dateType" type="java.lang.String" />
+		<property name="resStatus" type="java.lang.String" />
+		<property name="start" type="java.lang.String" />
+		<property name="end" type="java.lang.String" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelCancelWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="hotelCancelReadRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.HotelCancelReadRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelCancelReadRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="hotelCancelRQ" type="com.cnk.travelogix.suppliers.acco.data.HotelCancelRQ" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelCancelRQ">
+		<property name="target" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="cancelType" type="java.lang.String" />
+		<property name="uniqueID" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.UniqueID&gt;" />
+		<property name="segment" type="com.cnk.travelogix.suppliers.acco.data.Segment" />
+		<property name="verification" type="com.cnk.travelogix.suppliers.acco.data.Verification" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Verification">
+		<property name="personName" type="com.cnk.travelogix.suppliers.acco.data.PersonName" />
+		<property name="email" type="com.cnk.travelogix.suppliers.acco.data.Email" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Segment">
+		<property name="firstItinSegNbr" type="java.math.BigInteger" />
+		<property name="itinSegNbr" type="java.math.BigInteger" />
+		<property name="lastItinSegNbr" type="java.math.BigInteger" />
+		<property name="uniqueID" type="com.cnk.travelogix.suppliers.acco.data.UniqueID" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.TransactionAction">
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelAvailRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="hotelAvailReadRequest" type="com.cnk.travelogix.suppliers.acco.data.HotelAvailReadRequest" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelAvailReadRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="hotelAvailRQ" type="com.cnk.travelogix.suppliers.acco.data.HotelAvailRQ" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.GetDetailsRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="getDetailsReadRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.GetDetailsReadRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.GetDetailsReadRequest">
+		<property name="supplierID" type="java.lang.String" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="hotelAvailRQ" type="com.cnk.travelogix.suppliers.acco.data.HotelAvailRQ" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RePricingRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="rePricingReadRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.RePricingReadRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RePricingReadRequest">
+		<property name="supplierID" type="java.lang.String" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="hotelAvailRQ" type="com.cnk.travelogix.suppliers.acco.data.HotelAvailRQ" />
+	</bean>
+
+
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelAvailRQ">
+		<property name="target" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="requestedCurrency" type="java.lang.String" />
+		<property name="availRequestSegments" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.AvailRequestSegment&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.AvailRequestSegment">
+		<property name="hotelSearchCriteria" type="com.cnk.travelogix.suppliers.acco.data.HotelSearchCriteria" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelSearchCriteria">
+		<property name="availableOnlyIndicator" type="java.lang.Boolean" />
+		<property name="criterion" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Criterion&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Criterion">
+		<property name="address" type="com.cnk.travelogix.suppliers.acco.data.Address" />
+		<property name="refPoint" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.RefPoint&gt;" />
+		<property name="hotelRef" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.HotelRef&gt;" />
+		<property name="position" type="com.cnk.travelogix.suppliers.acco.data.Position" />
+		<property name="stayDateRange" type="com.cnk.travelogix.suppliers.acco.data.DateTimeSpanType" />
+		<property name="roomStayCandidates" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.RoomStayCandidate&gt;" />
+		<property name="profiles" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.ProfileInfo&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Address">
+		<property name="sameCountryInd" type="java.lang.Boolean" />
+		<property name="addressSearchScope" type="java.lang.String" />
+		<property name="cityName" type="java.lang.String" />
+		<property name="stateProv" type="com.cnk.travelogix.suppliers.acco.data.StateProvType" />
+		<property name="addressLine" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="postalCode" type="java.lang.String" />
+		<property name="countryName" type="com.cnk.travelogix.suppliers.acco.data.CountryName" />
+		<property name="county" type="java.lang.String" />
+		<property name="tpaExtensions" type="java.lang.String" />
+		<property name="bldgRoom" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.BldgRoom&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.BldgRoom"></bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.StateProvType">
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CountryName">
+		<property name="code" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RefPoint">
+		<property name="countryCode" type="java.lang.String" />
+		<property name="stateProv" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelRef">
+		<property name="hotelCityCode" type="java.lang.String" />
+		<property name="hotelCode" type="java.lang.String" />
+		<property name="areaID" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Position">
+		<property name="altitudeUnitOfMeasureCode" type="java.lang.String" />
+		<property name="latitude" type="java.lang.String" />
+		<property name="longitude" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.DateTimeSpanType">
+		<property name="start" type="java.lang.String" />
+		<property name="end" type="java.lang.String" />
+		<property name="duration" type="java.lang.String" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RoomStayCandidate">
+		<property name="roomType" type="java.lang.String" />
+		<property name="guestCounts" type="com.cnk.travelogix.suppliers.acco.data.GuestCountType" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.GuestCountType">
+		<property name="isPerRoom" type="java.lang.Boolean" />
+		<property name="guestCount" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.GuestCount&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.GuestCount">
+		<property name="ageQualifyingCode" type="java.lang.String" />
+		<property name="count" type="java.lang.Integer" />
+		<property name="age" type="java.lang.Integer" />
+		<property name="ageBucket" type="java.lang.String" />
+		<property name="resGuestRPH" type="java.lang.String" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ProfileInfo">
+		<property name="profile" type="com.cnk.travelogix.suppliers.acco.data.Profile" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Profile">
+		<property name="rph" type="java.lang.String" />
+		<property name="customer" type="com.cnk.travelogix.suppliers.acco.data.CustomerType" />
+		<property name="personName" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.PersonName&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CustomerType">
+		<property name="citizenCountryName" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.CitizenCountryName&gt;" />
+		<property name="personName" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.PersonName&gt;" />
+		<property name="telephone" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Telephone&gt;" />
+		<property name="email" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Email&gt;" />
+		<property name="address" type="com.cnk.travelogix.suppliers.acco.data.Address" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.PersonName">
+		<property name="givenName" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="namePrefix" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="surname" type="java.lang.String" />
+		<property name="middleName" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="surnamePrefix" type="java.lang.String" />
+		<property name="nameTitle" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="nameSuffix" type="java.util.List&lt;java.lang.String&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CitizenCountryName">
+		<property name="code" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ExtraBedDetails">
+		<property name="extraBedDetail" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.ExtraBedDetail&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ExtraBedDetail">
+		<property name="roomRPH" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Child">
+		<property name="minAge" type="java.lang.Integer" />
+		<property name="maxAge" type="java.lang.Integer" />
+		<property name="desc" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RoomPrice">
+
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Minstay">
+		<property name="msDay" type="java.lang.String" />
+		<property name="msType" type="java.lang.String" />
+		<property name="msRate" type="java.lang.String" />
+		<property name="minstayPrice" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Compulsory">
+		<property name="name" type="java.lang.String" />
+		<property name="compulsoryPrice" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Supplement">
+		<property name="name" type="java.lang.String" />
+		<property name="supplementPrice" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.EarlyBird">
+		<property name="ebType" type="java.lang.String" />
+		<property name="ebRate" type="java.lang.String" />
+		<property name="earlyBirdDiscount" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Commission">
+		<property name="commType" type="java.lang.String" />
+		<property name="commRate" type="java.lang.String" />
+		<property name="commissionPrice" type="java.lang.String" />
+		<property name="commissionableAmount" type="com.cnk.travelogix.suppliers.acco.data.CommissionableAmount" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CommissionableAmount">
+		<property name="amount" type="java.math.BigDecimal" />
+		<property name="currencyCode" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Promotion">
+		<property name="name" type="java.lang.String" />
+		<property name="value" type="java.lang.String" />
+		<property name="promoCode" type="java.lang.String" />
+		<property name="promotionBFPrice" type="java.lang.String" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.acco.data.PriceInformation" />
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RoomCategory">
+		<property name="id" type="java.lang.String" />
+		<property name="netPrice" type="java.lang.String" />
+		<property name="grossPrice" type="java.lang.String" />
+		<property name="commPrice" type="java.lang.String" />
+		<property name="price" type="java.lang.String" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RoomCategoryID" />
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RoomCategoryName" />
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CreateBookingRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="hotelResReadRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.HotelResReadRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelResReadRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="hotelResRq" type="com.cnk.travelogix.suppliers.acco.data.HotelResRequest" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelResRequest">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="target" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="resStatus" type="java.lang.String" />
+		<property name="transactionIdentifier" type="java.lang.String" />
+		<property name="correlationID" type="java.lang.String" />
+		<property name="uniqueID" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.UniqueID&gt;" />
+		<property name="pos" type="com.cnk.travelogix.suppliers.common.data.POSType" />
+		<property name="hotelReservations" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.HotelReservation&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.UniqueID">
+		<property name="id" type="java.lang.String" />
+		<property name="type" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelReservation">
+		<property name="roomStays" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.RoomStay&gt;" />
+		<property name="resGuests" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.ResGuest&gt;" />
+		<property name="resGlobalInfo" type="com.cnk.travelogix.suppliers.acco.data.ResGlobalInfo" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+		<property name="resStatus" type="java.lang.String" />
+		<property name="uniqueID" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.UniqueID&gt;" />
+		<property name="services" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.ServiceType&gt;" />
+		<property name="createDateTime" type="java.util.Date" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ServiceType">
+		<property name="id" type="java.lang.String" />
+		<property name="type" type="java.lang.String" />
+		<property name="serviceDetails" type="com.cnk.travelogix.suppliers.acco.data.ServiceDetails" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ServiceDetails">
+		<property name="specialRequests" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.SpecialRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ResGlobalInfo">
+		<property name="depositPayments" type="com.cnk.travelogix.suppliers.acco.data.DepositPayments" />
+		<property name="total" type="com.cnk.travelogix.suppliers.acco.data.Total" />
+		<property name="basicPropertyInfo" type="com.cnk.travelogix.suppliers.acco.data.BasicPropertyInfo" />
+		<property name="hotelReservationIDs" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.HotelReservationID&gt;" />
+		<property name="totalCommissions" type="com.cnk.travelogix.suppliers.acco.data.Commission" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelReservationID">
+		<property name="resIDValue" type="java.lang.String" />
+		<property name="resIDType" type="java.lang.String" />
+		<property name="resIDDate" type="java.util.Date" />
+		<property name="cancellationDate" type="java.util.Date" />
+		<property name="resIDSource" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.DepositPayments">
+		<property name="guaranteePayment" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.GuaranteePayment&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.GuaranteePayment">
+		<property name="acceptedPayments" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.AcceptedPayment&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.AcceptedPayment">
+		<property name="paymentCard" type="com.cnk.travelogix.suppliers.acco.data.PaymentCard" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ResGuest">
+		<property name="resGuestRPH" type="java.lang.String" />
+		<property name="ageQualifyingCode" type="java.lang.String" />
+		<property name="primaryIndicator" type="java.lang.Boolean" />
+		<property name="profiles" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.ProfileInfo&gt;" />
+	</bean>
+
+
+	<!-- ************************** response ********************************** -->
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.GetPoliciesResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="getPoliciesResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.GetPoliciesResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.GetPoliciesResponse" extends="com.cnk.travelogix.suppliers.acco.data.AccoResponse">
+		<property name="getPoliciesRS" type="com.cnk.travelogix.suppliers.acco.data.GetPoliciesRS" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.GetPoliciesRS">
+		<property name="resNo" type="java.lang.String" />
+		<property name="hBookingID" type="java.lang.String" />
+		<property name="hotelId" type="java.lang.String" />
+		<property name="hotelName" type="java.lang.String" />
+		<property name="roomTypeCode" type="java.lang.String" />
+		<property name="checkInDate" type="java.lang.String" />
+		<property name="checkOutDate" type="java.lang.String" />
+		<property name="policies" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Policy&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Policy">
+		<property name="fromDate" type="java.util.Date" />
+		<property name="toDate" type="java.util.Date" />
+		<property name="roomCatgCode" type="com.cnk.travelogix.suppliers.acco.data.RoomCatgCode" />
+		<property name="exCancelDays" type="java.math.BigInteger" />
+		<property name="chargeType" type="java.lang.String" />
+		<property name="chargeRate" type="java.lang.Double" />
+		<property name="description" type="java.lang.String" />
+		<property name="currency" type="java.lang.String" />
+		<property name="days" type="com.cnk.travelogix.suppliers.acco.data.Days" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RoomCatgCode">
+		<property name="name" type="java.lang.String" />
+		<property name="bfType" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Days">
+		<property name="chargeDate" type="java.lang.String" />
+		<property name="charge" type="java.lang.Float" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CancelRoomResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="cancelRoomResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.CancelRoomResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CancelRoomResponse" extends="com.cnk.travelogix.suppliers.acco.data.AccoResponse">
+		<property name="hotelResModifyRS" type="com.cnk.travelogix.suppliers.acco.data.HotelResModify" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.OnRequestBookingUpdateResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="onRequestBookingUpdateResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.OnRequestBookingUpdateResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.acco.data.OnRequestBookingUpdateResponse" extends="com.cnk.travelogix.suppliers.acco.data.AccoResponse">
+		<property name="onRequestBookingUpdateResponseRS" type="com.cnk.travelogix.suppliers.acco.data.ResRetrieveRS" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RetrieveBookingListResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="retrieveBookingListResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.RetrieveBookingListResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RetrieveBookingListResponse" extends="com.cnk.travelogix.suppliers.acco.data.AccoResponse">
+		<property name="resRetrieveListRS" type="com.cnk.travelogix.suppliers.acco.data.ResRetrieveRS" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RetrieveBookingResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="retrieveBookingResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.RetrieveBookingResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RetrieveBookingResponse" extends="com.cnk.travelogix.suppliers.acco.data.AccoResponse">
+		<property name="resRetrieveRS" type="com.cnk.travelogix.suppliers.acco.data.ResRetrieveRS" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ResRetrieveRS">
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="success" type="com.cnk.travelogix.suppliers.acco.data.Success" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+		<property name="warnings" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Warning&gt;" />
+		<property name="reservationsList" type="com.cnk.travelogix.suppliers.acco.data.ReservationsList" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ReservationsList">
+		<property name="hotelReservation" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.HotelReservation&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelCancelResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="hotelCancelResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.HotelCancelResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelCancelResponse" extends="com.cnk.travelogix.suppliers.acco.data.AccoResponse">
+		<property name="hotelCancelRS" type="com.cnk.travelogix.suppliers.acco.data.HotelCancelRS" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelCancelRS">
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="status" type="com.cnk.travelogix.suppliers.acco.data.TransactionStatus" />
+		<property name="success" type="com.cnk.travelogix.suppliers.acco.data.Success" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+		<property name="uniqueID" type="com.cnk.travelogix.suppliers.acco.data.UniqueID" />
+		<property name="cancelInfoRS" type="com.cnk.travelogix.suppliers.acco.data.CancelInfoRS" />
+		<property name="segment" type="com.cnk.travelogix.suppliers.acco.data.Segment" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CancelInfoRS">
+		<property name="uniqueID" type="com.cnk.travelogix.suppliers.acco.data.UniqueID" />
+		<property name="cancelRules" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.CancelRule&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CancelRule">
+		<property name="cancelByDate" type="java.lang.String" />
+		<property name="amount" type="java.math.BigDecimal" />
+		<property name="percent" type="java.math.BigDecimal" />
+		<property name="type" type="java.lang.String" />
+		<property name="currencyCode" type="java.lang.String" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.TransactionStatus">
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.AccoResponse">
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelAvailResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="hotelAvailResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.HotelAvailResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelAvailResponse">
+		<property name="hotelAvailResponse" type="com.cnk.travelogix.suppliers.acco.data.HotelAvailRS" />
+		<property name="supplierID" type="java.lang.String" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.GetDetailsResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="getDetailsResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.GetDetailsResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.GetDetailsResponse">
+		<property name="getDetailResponse" type="com.cnk.travelogix.suppliers.acco.data.HotelAvailRS" />
+		<property name="supplierID" type="java.lang.String" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RePricingResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="rePricingResponses" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.RePricingResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RePricingResponse">
+		<property name="rePricingResponse" type="com.cnk.travelogix.suppliers.acco.data.HotelAvailRS" />
+		<property name="supplierID" type="java.lang.String" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelAvailRS">
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="success" type="com.cnk.travelogix.suppliers.acco.data.Success" />
+		<property name="roomStays" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.RoomStay&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Success"></bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RoomStay">
+		<property name="availabilityStatus" type="java.lang.String" />
+		<property name="rph" type="java.lang.String" />
+		<property name="marketCode" type="java.lang.String" />
+		<property name="roomTypes" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.RoomType&gt;" />
+		<property name="ratePlans" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.RatePlans&gt;" />
+		<property name="total" type="com.cnk.travelogix.suppliers.acco.data.Total" />
+		<property name="discount" type="com.cnk.travelogix.suppliers.acco.data.Discount" />
+		<property name="roomRates" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.RoomRate&gt;" />
+		<property name="basicPropertyInfo" type="com.cnk.travelogix.suppliers.acco.data.BasicPropertyInfo" />
+		<property name="guestCounts" type="com.cnk.travelogix.suppliers.acco.data.GuestCountType" />
+		<property name="timeSpan" type="com.cnk.travelogix.suppliers.acco.data.DateTimeSpanType" />
+		<property name="guarantee" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Guarantee&gt;" />
+		<property name="roomStayStatus" type="java.lang.String" />
+		<property name="discountCode" type="java.lang.String" />
+		<property name="specialRequests" type="com.cnk.travelogix.suppliers.acco.data.SpecialRequests" />
+		<property name="comments" type="com.cnk.travelogix.suppliers.acco.data.Comments" />
+		<property name="reference" type="com.cnk.travelogix.suppliers.acco.data.UniqueID" />
+		<property name="bookingRules" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.BookingRulesType&gt;" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+		<property name="indexNumber" type="java.lang.String" />
+		<property name="serviceRPHs" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.ServiceRPHs&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ServiceRPHs">
+		<property name="rph" type="java.lang.String" />
+		<property name="isPerRoom" type="java.lang.Boolean" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.BookingRulesType">
+		<property name="code" type="java.lang.String" />
+		<property name="cancelPenalties" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.CancelPenalty&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Comments">
+		<property name="comment" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.ParagraphType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.SpecialRequests">
+		<property name="specialRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.SpecialRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.SpecialRequest">
+		<property name="requestCode" type="java.lang.String" />
+		<property name="name" type="com.cnk.travelogix.suppliers.acco.data.ParagraphType" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Guarantee">
+		<property name="guaranteesAccepted" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.GuaranteeAccepted&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.GuaranteeAccepted">
+		<property name="guaranteeID" type="java.lang.String" />
+		<property name="guaranteeIndicator" type="java.lang.Boolean" />
+		<property name="guaranteeTypeCode" type="java.lang.String" />
+		<property name="nameReqInd" type="java.lang.Boolean" />
+		<property name="paymentCard" type="com.cnk.travelogix.suppliers.acco.data.PaymentCard" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.PaymentCard">
+		<property name="cardCode" type="com.cnk.travelogix.suppliers.acco.data.EncryptionType" />
+		<property name="cardNumber" type="com.cnk.travelogix.suppliers.acco.data.EncryptionType" />
+		<property name="seriesCode" type="java.lang.String" />
+		<property name="expireDate" type="java.lang.String" />
+		<property name="address" type="com.cnk.travelogix.suppliers.acco.data.Address" />
+		<property name="cardHolderName" type="java.lang.String" />
+		<property name="telephone" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Telephone&gt;" />
+		<property name="email" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Email&gt;" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+		<property name="cardType" type="com.cnk.travelogix.suppliers.acco.data.CardType" />
+		<property name="threeDomainSecurity" type="com.cnk.travelogix.suppliers.acco.data.ThreeDomainSecurity" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ThreeDomainSecurity">
+		<property name="results" type="com.cnk.travelogix.suppliers.acco.data.Results" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Results">
+		<property name="cavv" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.EncryptionType">
+		<property name="plainText" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Telephone">
+		<property name="phoneNumber" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Email">
+		<property name="value" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CardType">
+		<property name="value" type="java.lang.String" />
+		<property name="code" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.BasicPropertyInfo">
+		<property name="CurrencyCode" type="java.lang.String" />
+		<property name="hotelCode" type="java.lang.String" />
+		<property name="hotelSegmentCategoryCode" type="java.lang.String" />
+		<property name="hotelName" type="java.lang.String" />
+		<property name="areaID" type="java.lang.String" />
+		<property name="chainName" type="java.lang.String" />
+		<property name="chainCode" type="java.lang.String" />
+		<property name="hotelCityCode" type="java.lang.String" />
+		<property name="address" type="com.cnk.travelogix.suppliers.acco.data.Address" />
+		<property name="hotelCodeContext" type="java.lang.String" />
+		<property name="award" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Award&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Award">
+		<property name="Provider" type="java.lang.String" />
+		<property name="rating" type="java.lang.String" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RoomRate">
+		<property name="roomID" type="java.lang.String" />
+		<property name="ratePlanCode" type="java.lang.String" />
+		<property name="roomTypeCode" type="java.lang.String" />
+		<property name="availabilityStatus" type="java.lang.String" />
+		<property name="bookingCode" type="java.lang.String" />
+		<property name="numberOfUnits" type="java.math.BigInteger" />
+		<property name="effectiveDate" type="java.util.Date" />
+		<property name="expireDate" type="java.util.Date" />
+		<property name="ratePlanType" type="java.lang.String" />
+		<property name="ratePlanID" type="java.lang.String" />
+		<property name="ratePlanQualifier" type="java.lang.Boolean" />
+		<property name="availability" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Availability&gt;" />
+		<property name="total" type="com.cnk.travelogix.suppliers.acco.data.Total" />
+		<property name="rates" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Rate&gt;" />
+		<property name="guestCounts" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.GuestCount&gt;" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Rate">
+		<property name="rateDescription" type="com.cnk.travelogix.suppliers.acco.data.ParagraphType" />
+		<property name="base" type="com.cnk.travelogix.suppliers.acco.data.Total" />
+		<property name="total" type="com.cnk.travelogix.suppliers.acco.data.Total" />
+		<property name="discount" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Discount&gt;" />
+		<property name="effectiveDate" type="java.util.Date" />
+		<property name="expireDate" type="java.util.Date" />
+		<property name="fees" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Fee&gt;" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+		<!-- verify below 3 attributes -->
+		<property name="amountAfterTax" type="java.lang.String" />
+		<property name="currencyCode" type="java.lang.String" />
+		<property name="rateType" type="java.lang.String" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Fee">
+		<property name="code" type="java.lang.String" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Availability">
+		<property name="availabilityStatus" type="java.lang.String" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Discount">
+		<property name="appliesTo" type="java.lang.String" />
+		<property name="discountReason" type="com.cnk.travelogix.suppliers.acco.data.ParagraphType" />
+		<property name="AmountBeforeTax" type="java.math.BigDecimal" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+		<property name="discountCode" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RateIndicator"></bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Total">
+		<property name="amountAfterTax" type="java.math.BigDecimal" />
+		<property name="amountBeforeTax" type="java.math.BigDecimal" />
+		<property name="type" type="java.lang.String" />
+		<property name="currencyCode" type="java.lang.String" />
+		<property name="decimalPlaces" type="java.math.BigInteger" />
+		<property name="taxes" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Tax&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Tax">
+		<property name="code" type="String" />
+		<property name="amount" type="java.math.BigDecimal" />
+		<property name="taxDescription" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.ParagraphType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RoomType">
+		<property name="roomID" type="java.lang.String" />
+		<property name="roomType" type="java.lang.String" />
+		<property name="roomTypeCode" type="java.lang.String" />
+		<property name="roomLocationCode" type="java.lang.String" />
+		<property name="bedTypeCode" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="nonSmoking" type="java.lang.Boolean" />
+		<property name="numberOfUnits" type="java.math.BigInteger" />
+		<property name="roomDescription" type="com.cnk.travelogix.suppliers.acco.data.ParagraphType" />
+		<property name="additionalDetails" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.AdditionalDetail&gt;" />
+		<property name="occupancy" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Occupancy&gt;"></property>
+		<property name="amenities" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Amenity&gt;" />
+		<property name="tpaExtensions" type="com.cnk.travelogix.suppliers.common.data.TPAExtensions" />
+		<property name="quantity" type="java.lang.Integer" />
+		<property name="promotionCode" type="java.lang.String" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Amenity">
+		<property name="quantity" type="java.math.BigInteger" />
+		<property name="qualityLevel" type="java.lang.String" />
+		<property name="roomAmenity" type="java.lang.String" />
+	</bean>
+
+
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.AdditionalDetail">
+		<property name="detailDescription" type="com.cnk.travelogix.suppliers.acco.data.ParagraphType" />
+		<property name="type" type="java.lang.String" />
+		<property name="code" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Occupancy">
+		<property name="minOccupancy" type="java.lang.Integer" />
+		<property name="maxOccupancy" type="java.lang.Integer" />
+		<property name="ageQualifyingCode" type="java.lang.String" />
+		<property name="minAge" type="java.lang.Integer" />
+		<property name="maxAge" type="java.lang.Integer" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RatePlans">
+		<property name="availabilityStatus" type="java.lang.String" />
+		<property name="availableQuantity" type="java.math.BigInteger" />
+		<property name="ratePlanCode" type="java.lang.String" />
+		<property name="ratePlanName" type="java.lang.String" />
+		<property name="ratePlanType" type="java.lang.String" />
+		<property name="rateIndicator" type="java.lang.String" />
+		<property name="mealsIncluded" type="com.cnk.travelogix.suppliers.acco.data.MealsIncluded" />
+		<property name="ratePlanDesciption" type="com.cnk.travelogix.suppliers.acco.data.ParagraphType" />
+		<property name="ratePlanInclusions" type="com.cnk.travelogix.suppliers.acco.data.RatePlanInclusions" />
+		<property name="cancelPenalties" type="com.cnk.travelogix.suppliers.acco.data.CancelPenalties" />
+		<property name="bookingCode" type="java.lang.String" />
+		<property name="ratePlanID" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.MealsIncluded">
+		<property name="breakfast" type="java.lang.Boolean" />
+		<property name="lunch" type="java.lang.Boolean" />
+		<property name="dinner" type="java.lang.Boolean" />
+		<property name="mealPlanCodes" type="java.util.List&lt;java.lang.String&gt;" />
+		<property name="mealPlanIndicator" type="java.lang.Boolean" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.RatePlanInclusions">
+		<property name="ratePlanInclusionDesciption" type="com.cnk.travelogix.suppliers.acco.data.ParagraphType"></property>
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CancelPenalties">
+		<property name="cancelPolicyIndicator" type="java.lang.Boolean" />
+		<property name="cancelPenalty" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.CancelPenalty&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CancelPenalty">
+		<property name="start" type="java.lang.String" />
+		<property name="end" type="java.lang.String" />
+		<property name="duration" type="java.lang.String" />
+		<property name="deadline" type="com.cnk.travelogix.suppliers.acco.data.Deadline" />
+		<property name="amountPercent" type="com.cnk.travelogix.suppliers.acco.AmountPercent" />
+		<property name="penaltyDescription" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.ParagraphType&gt;" />
+
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Deadline">
+		<property name="absoluteDeadline" type="java.lang.String" />
+		<property name="offsetTimeUnit" type="com.cnk.travelogix.suppliers.acco.data.TimeUnit" />
+		<property name="offsetDropTime" type="java.lang.String" />
+		<property name="offsetUnitMultiplier" type="java.lang.Integer" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.AmountPercent">
+		<property name="percent" type="java.math.BigDecimal" />
+		<property name="amount" type="java.math.BigDecimal" />
+		<property name="nmbrOfNights" type="java.math.BigInteger" />
+		<property name="taxInclusive" type="java.lang.Boolean" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ParagraphType">
+		<property name="requestCode" type="java.lang.String" />
+		<property name="name" type="java.lang.String" />
+		<property name="text" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.TimeUnit" />
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelResResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="hotelResResponse" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.HotelResResponses&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelResResponses">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+		<property name="hotelResRs" type="com.cnk.travelogix.suppliers.acco.data.HotelResResponse" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelResResponse">
+		<property name="success" type="com.cnk.travelogix.suppliers.acco.data.Success" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+		<property name="pos" type="com.cnk.travelogix.suppliers.common.data.POSType" />
+		<property name="warnings" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Warning&gt;" />
+		<property name="hotelReservations" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.HotelReservation&gt;" />
+	</bean>
+
+
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.Warning">
+		<property name="shortText" type="java.lang.String" />
+		<property name="status" type="java.lang.String" />
+		<property name="type" type="java.lang.String" />
+	</bean>
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelResModifyRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="hotelResModifyRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.HotelResModifyRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelResModifyRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="hotelResModifyRq" type="com.cnk.travelogix.suppliers.acco.data.HotelResModify"></property>
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.UpdateHotelResModifyRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="updateHotelResModifyRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.UpdateHotelResModifyRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.UpdateHotelResModifyRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="hotelResModifyRq" type="com.cnk.travelogix.suppliers.acco.data.HotelResModify"></property>
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CancelHotelResModifyRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="cancelHotelResModifyRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.CancelHotelResModifyRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CancelHotelResModifyRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="hotelResModifyRq" type="com.cnk.travelogix.suppliers.acco.data.HotelResModify"></property>
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelResModify" extends="com.cnk.travelogix.suppliers.acco.data.HotelReservation">
+		<property name="target" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="transactionIdentifier" type="java.lang.String" />
+		<property name="uniqueID" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.UniqueID&gt;" />
+		<property name="hotelResModifies" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.HotelReservation&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+		<property name="warnings" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Warning&gt;" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelResModifyResponse">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+		<property name="hotelResModifyRs" type="com.cnk.travelogix.suppliers.acco.data.HotelResModifyRs" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelResModifyResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="hotelResModifyResponse" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.HotelResModifyResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.UpdateHotelResModifyResponse">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+		<property name="hotelResModifyRs" type="com.cnk.travelogix.suppliers.acco.data.HotelResModifyRs" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.UpdateHotelResModifyResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="updateHotelResModifyResponse" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.UpdateHotelResModifyResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CancelHotelResModifyResponse">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+		<property name="hotelResModifyRs" type="com.cnk.travelogix.suppliers.acco.data.HotelResModifyRs" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.CancelHotelResModifyResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="cancelHotelResModifyResponse" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.CancelHotelResModifyResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.HotelResModifyRs">
+		<property name="target" type="java.lang.String" />
+		<property name="version" type="java.math.BigDecimal" />
+		<property name="transactionIdentifier" type="java.lang.String" />
+		<property name="success" type="com.cnk.travelogix.suppliers.acco.data.Success" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+		<property name="warnings" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.Warning&gt;" />
+		<property name="hotelResModifies" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.HotelReservation&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.AddRoomHotelResModifyRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="addRoomHotelResModifyRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.AddRoomHotelResModifyRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.AddRoomHotelResModifyRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="hotelResModifyRq" type="com.cnk.travelogix.suppliers.acco.data.HotelResModify"></property>
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.AddRoomHotelResModifyResponse">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+		<property name="hotelResModifyRs" type="com.cnk.travelogix.suppliers.acco.data.HotelResModifyRs" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.AddRoomHotelResModifyResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="addRoomHotelResModifyResponse" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.AddRoomHotelResModifyResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.UpdateRoomHotelResModifyRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="updateRoomHotelResModifyRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.UpdateRoomHotelResModifyRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.UpdateRoomHotelResModifyRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="hotelResModifyRq" type="com.cnk.travelogix.suppliers.acco.data.HotelResModify"></property>
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.UpdateRoomHotelResModifyResponse">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+		<property name="hotelResModifyRs" type="com.cnk.travelogix.suppliers.acco.data.HotelResModifyRs" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.UpdateRoomHotelResModifyResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="updateRoomHotelResModifyResponse" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.UpdateRoomHotelResModifyResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ChangePeriodOfStayHotelResModifyRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="changePeriodOfStayHotelResModifyRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.ChangePeriodOfStayHotelResModifyRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ChangePeriodOfStayHotelResModifyRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="hotelResModifyRq" type="com.cnk.travelogix.suppliers.acco.data.HotelResModify"></property>
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ChangePeriodOfStayHotelResModifyResponse">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+		<property name="hotelResModifyRs" type="com.cnk.travelogix.suppliers.acco.data.HotelResModifyRs" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.ChangePeriodOfStayHotelResModifyResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="changePeriodOfStayHotelResModifyResponse" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.ChangePeriodOfStayHotelResModifyResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.AncillaryBookingHotelResModifyRequestWrapper">
+		<property name="requestHeader" type="com.cnk.travelogix.suppliers.common.data.RequestHeader" />
+		<property name="ancillaryBookingHotelResModifyRequest" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.AncillaryBookingHotelResModifyRequest&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.AncillaryBookingHotelResModifyRequest">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="hotelResModifyRq" type="com.cnk.travelogix.suppliers.acco.data.HotelResModify"></property>
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.AncillaryBookingHotelResModifyResponse">
+		<property name="supplierID" type="com.cnk.travelogix.suppliers.common.data.SupplierID" />
+		<property name="sequence" type="java.lang.Integer" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+		<property name="hotelResModifyRs" type="com.cnk.travelogix.suppliers.acco.data.HotelResModifyRs" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.suppliers.acco.data.AncillaryBookingHotelResModifyResponseWrapper">
+		<property name="responseHeader" type="com.cnk.travelogix.suppliers.common.data.ResponseHeader" />
+		<property name="ancillaryBookingHotelResModifyResponse" type="java.util.List&lt;com.cnk.travelogix.suppliers.acco.data.AncillaryBookingHotelResModifyResponse&gt;" />
+		<property name="errors" type="java.util.List&lt;com.cnk.travelogix.suppliers.common.data.ErrorType&gt;" />
+	</bean>
+</beans>

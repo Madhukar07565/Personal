@@ -1,0 +1,86 @@
+<!--Layover 22H45M-->
+<com.cnk.travelogix.common.facades.product.data.flight.FlightData>
+  <id>flightData4.1</id>
+  <flightNumber>A380</flightNumber>
+  <cabinClass>Saloon</cabinClass>
+  <numberOfStops>None stop</numberOfStops>
+  <displayNumberOfStops>non stop</displayNumberOfStops>
+  <airlineIATA>
+    <airlineName>IndiGo</airlineName>
+    <accountingCode>6E</accountingCode>
+    <airlinePrefix>198</airlinePrefix>
+  </airlineIATA>
+  <departureTime>2016-07-30 00:45:00.00 UTC</departureTime>
+  <arrivalTime>2016-07-30 01:40:00.00 UTC</arrivalTime>
+  <duration>1h 5m Nonstop</duration>
+  <displayDuration>1h 5m</displayDuration>
+  <fromSection>
+    <city>Pune</city>
+    <airport>Pune International Airport</airport>
+    <terminal>1B</terminal>
+  </fromSection>
+  <toSection>
+    <city>Delhi</city>
+    <airport>Delhi International Airport</airport>
+    <terminal>3A</terminal>
+  </toSection>
+  <fareSummary>
+  
+      <com.cnk.travelogix.common.facades.product.data.flight.FareSummaryData>
+        <listPrice>9970</listPrice>
+	    <webPrice>9830</webPrice>
+	    <currency>currency</currency>
+	    <pointEarn>60</pointEarn>
+	    <type>fly</type>
+      </com.cnk.travelogix.common.facades.product.data.flight.FareSummaryData>
+    
+      <com.cnk.travelogix.common.facades.product.data.flight.FareSummaryData>
+        <listPrice>10070</listPrice>
+	    <webPrice>9930</webPrice>
+	    <currency>currency</currency>
+	    <pointEarn>100</pointEarn>
+	    <type>fly + bag</type>
+      </com.cnk.travelogix.common.facades.product.data.flight.FareSummaryData>
+  </fareSummary>
+  <fareDetail>
+    
+      <com.cnk.travelogix.common.facades.product.data.flight.FareDetailData>
+        <currency>currency</currency>
+	    <baseFare>5230</baseFare>
+	    <fuelSurcharge>2950</fuelSurcharge>
+	    <jnTax>550</jnTax>
+	    <psgrSvcFee>550</psgrSvcFee>
+	    <serviceTax>550</serviceTax>
+	    
+      </com.cnk.travelogix.common.facades.product.data.flight.FareDetailData>
+   
+       <com.cnk.travelogix.common.facades.product.data.flight.FareDetailData>
+        <currency>currency</currency>
+	    <baseFare>5230</baseFare>
+	    <fuelSurcharge>2950</fuelSurcharge>
+	    <jnTax>550</jnTax>
+	    <psgrSvcFee>550</psgrSvcFee>
+	    <serviceTax>550</serviceTax>
+	    
+      </com.cnk.travelogix.common.facades.product.data.flight.FareDetailData>
+  </fareDetail>
+  <flightDetails>
+    <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+      <cabinClass>Economy</cabinClass>
+      <fromSection>
+        <city>Pune</city>
+        <airport>Pune International Airport</airport>
+        <terminal>1B</terminal>
+      </fromSection>
+      <toSection>
+        <city>Delhi</city>
+        <airport>Delhi International Airport</airport>
+        <terminal>2A</terminal><!--Ahilya Bai Holkar-->
+      </toSection>
+      <departureTime>2016-07-30 00:45:00.00 UTC</departureTime>
+	  <arrivalTime>2016-07-30 01:40:00.00 UTC</arrivalTime>
+	  <duration>1h 5m Nonstop</duration>
+    </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+    
+  </flightDetails>
+</com.cnk.travelogix.common.facades.product.data.flight.FlightData>

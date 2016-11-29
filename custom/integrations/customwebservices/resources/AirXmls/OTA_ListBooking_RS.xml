@@ -1,0 +1,30 @@
+<AirInterfaceRS xmlns="http://www.coxandkings.com/integ/suppl/airinterface" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+   <ResponseHeader xmlns="http://www.coxandkings.com/integ/suppl/air">
+      <Status xmlns="http://www.coxandkings.com/integ/suppl/common">SUCCESS</Status>
+      <UserID xmlns="http://www.coxandkings.com/integ/suppl/common">1</UserID>
+      <SessionID xmlns="http://www.coxandkings.com/integ/suppl/common">2</SessionID>
+      <TransactionID xmlns="http://www.coxandkings.com/integ/suppl/common">3</TransactionID>
+   </ResponseHeader>
+   <ResponseBody>
+      <OTA_AirBookRSWrapper xmlns="http://www.coxandkings.com/integ/suppl/air">
+         <SupplierID>ELSYARRES</SupplierID>
+         <Sequence>1</Sequence>
+         <ns3:OTA_AirBookRS Version="8.2" PrimaryLangID="EN" xmlns:ns3="http://www.opentravel.org/OTA/2003/05">
+            <ns3:Success>true</ns3:Success>
+            <ns3:AirReservation CreateDateTime="2016-03-15T12:24:38">
+               <ns3:AirItinerary>
+                  <ns3:OriginDestinationOptions>
+                     <ns3:OriginDestinationOption>
+                        <ns3:FlightSegment>
+                           <ns3:TPA_Extensions>
+                              <ExtendedRPH>1-160315122132-01-1625008-688</ExtendedRPH>
+                           </ns3:TPA_Extensions>
+                        </ns3:FlightSegment>
+                     </ns3:OriginDestinationOption>
+                  </ns3:OriginDestinationOptions>
+               </ns3:AirItinerary>
+            </ns3:AirReservation>
+         </ns3:OTA_AirBookRS>
+      </OTA_AirBookRSWrapper>
+   </ResponseBody>
+</AirInterfaceRS>

@@ -1,0 +1,51 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$timeformat = hh:mm
+$lang=en
+$approved=approvalstatus(code)[default='approved']
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.product.activity.masters.core.setup.ActivityProductMastersCoreSystemSetup&\activityproductmasterscore\import\sampledata\images\96Wx96H 
+
+
+###################################### Dependent data of Interest Master ########
+INSERT_UPDATE Interest;code[unique=true];name
+					  ;INT001           ;Activity Interest
+					  
+###################################### Dependent data of Affiliation Master ########
+INSERT_UPDATE Affiliation;code[unique=true];name
+					     ;AFF001           ;Activity Affiliation
+							
+
+###################################### Dependent data for How to Reach ######
+INSERT_UPDATE Location;isocode[unique=true];multicityLocation(isocode);type(code);subType(code);name[lang=$lang];portName[lang=$lang];country(isocode);subCountry;state(isocode);subState;timediv;latitude;longitude;active[default=TRUE]
+                      ;AAA                 ;                          ;L         ;A            ;Anaa            ;Anaa;PF;TM;PF-00;;02;17.21.09S;145.30.36W;
+
+###################################### Dependent data for How to Reach ######
+INSERT_UPDATE NameOfPlace;code[unique=true];name
+						 ;AND              ;Andheri
+					  
+###################################### How to Reach (Route) #######################################
+INSERT_UPDATE Route;from(isocode)[unique=true];nameOfPlace(code);modeOfTransport(code)[unique=true];transportType(code,$catalogVersion)[unique=true];distanceFromProperty;distanceUnit(code);approximateDuration;description;drivingDirection;validFromTO[dateformat=$dateformat];accommodation(code,$catalogVersion)[unique=true]
+				   ;AAA                       ;AND              ;ROAD                              ;C001ST004                                              ;15                  ;km                ;1 hour             ;route desc ;north    ;20-08-2015,20-10-2030                        ;87762
+
+
+
+								
+###################################### Dependent data for Facility ##########
+INSERT_UPDATE FacilityType;code[unique=true];name[lang=$lang]
+						  ;Activity         ;Activity Facility
+						  
+###################################### Policies #########
+INSERT_UPDATE TravelogixPolicy;code[unique=true];$catalogVersion;policyType(code);policyCategory(code);name            ;productCategorySubType(code,$catalogVersion)
+							  ;PR001            ;               ;SCOM            ;TERMS_AND_CONDITIONS;Product Policy 1;C003ST002                                   
+							  ;PR002            ;               ;SFAR            ;CANCELLATION_CHARGES;Product Policy 2;C003ST009  
+
+###################################### Chain ########
+INSERT_UPDATE ActivityChain;code[unique=true];name
+;10007;XYZ
+
+###################################### Brand ########
+INSERT_UPDATE ActivityBrand;code[unique=true];
+;10008							  

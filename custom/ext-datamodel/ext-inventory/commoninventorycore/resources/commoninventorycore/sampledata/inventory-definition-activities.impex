@@ -1,0 +1,69 @@
+$productCatalog=EZ-IN
+$productCatalogName=Ezeego Product Catalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$distributionToCompany=distributionToCompany(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$lang=en
+
+###########################DUMMY DATA
+INSERT_UPDATE ChangeRequestPenaltyCharges;definedBy(DefinedBy.code)[unique=true];penaltyChangesFor(PenaltyChangesFor.code)
+                                         ;DAYS                     ;NAME_CHANGE
+                                         
+INSERT_UPDATE FreeOfCostSeatsOrTickets;slabType(CommercialSlabType.code)[unique=true];fromValue[unique=true];toValue[unique=true];numberOfFrees;freeOfCostPercentage
+                                      ;TOTAL_REVENUE                    ;1        ;1       ;12          ;15    
+                                      
+INSERT_UPDATE CutOffsAndCharges;cutOffFromDay[unique=true];cutOffToDay[unique=true];amount[unique=true];currency(Currency.isocode);amountType(AmountType.code);range(Range.code)
+                                  ;14                    ;12.00      ;12    ;US                        ;AMOUNT                 ;ABOVE
+						  
+#######################ActivityFreeOfCostSeatsOrTickets
+
+INSERT_UPDATE ActivityFreeOfCostSeatsOrTickets;priceComponent(NonAirPriceComponentType.code)[unique=true];slabType(CommercialSlabType.code);fromValue;toValue;numberOfFrees;freeOfCostPercentage
+                                              ;BASE_FARE                                                 ;TOTAL_REVENUE                    ;12       ;12     ;1            ;1
+
+#######################ActivitySupplierAdvanceDefinition####NEEDS TO CREATE overbookingLimit######
+
+INSERT_UPDATE ActivitySupplierAdvanceDefinition;blockOutDates;activityFreeOfCostSeatsOrTickets(ActivityFreeOfCostSeatsOrTickets.priceComponent(code))[unique=true];changeRequestPenaltyCharges(ChangeRequestPenaltyCharges.definedBy(DefinedBy.code));penaltyCharges(ActivityPenaltyCharges.definedBy(DefinedBy.code))                                   
+                                               ;             ;BASE_FARE                                                                                           ;DAYS                                                                              ;HOURS                                              
+
+#######################ActivityCompanyAdvanceDefinition
+INSERT_UPDATE ActivityCompanyAdvanceDefinition;blockOutDates;overBookingAllowed[unique=true];penaltyCharges(ActivityCompanyPenaltyCharges.definedBy(DefinedBy.code))
+                                              ;                 ;true                       ;DAYS 
+
+########################ActivityWithinCompanyInventoryDistribution
+
+INSERT_UPDATE ActivityWithinCompanyInventoryDistribution;sbu(Company.uid)[unique=true];bu(Company.uid);market(Market.uid);distributionChannel(DistributionChannel.uid);division(Division.uid);salesOfficeLocation(Location.isocode);salesOffice;settleWith
+                                                        ;E000                         ;E000           ;IND               ;Website                                     ;Out Bound             ; AAB                                 ;      
+
+########################ActivityPenaltyCharges
+INSERT_UPDATE ActivityPenaltyCharges;definedBy(DefinedBy.code)[unique=true];appliedOn(AppliedOn.code);releaseTime;utilizationThreshold;utilizationThresholdOf(UtilizationThresholdType.code);specificDates;dateRange;charges(ActivityCutoffAndCharges.cutOffFromDay)
+                                    ;HOURS                                 ;                         ;12:00      ;234                  ;TOTAL_NUMBER_OF_SEAT                                ;             ;         ;12
+
+########################ActivityClientInventoryDistribution
+INSERT_UPDATE ActivityClientInventoryDistribution;clientType(ClientType.code)[unique=true];clientName;clientGroup(ClientGroup.uid)
+                                                 ;B2B                        ;           ;
+
+########################ActivityCompanyPenaltyCharges
+INSERT_UPDATE ActivityCompanyPenaltyCharges;definedBy(DefinedBy.code)[unique=true];appliedOn(AppliedOn.code);releaseTime;utilizationThreshold;utilizationThresholdOf(UtilizationThresholdType.code);specificDates;dateRange
+                                           ;DAYS                      ;                        ;12:00      ;234                  ;TOTAL_NUMBER_OF_SEAT                                ;
+
+########################ActivityCutoffAndCharges
+INSERT_UPDATE ActivityCutoffAndCharges;cutOffFromDay[unique=true];cutOffToDay;amount;currency(Currency.isocode);amountType(AmountType.code);range(Range.code)
+                                      ;12                     ;12.00      ;12    ;US                        ;AMOUNT                 ;ABOVE
+
+########################NEEDS TO CHECK
+INSERT_UPDATE ActivityOtherCompanyInventoryDistribution;$distributionToCompany;
+
+
+
+####################NEEDS TO CHECK##########Needs to create distributedInventories and inventoryAssociations#########
+
+INSERT_UPDATE ActivityInventoryDefinition;city(isocode)[unique=true];country(Country.isocode);rateType(RateType.code);active[default=FALSE];effectiveFrom[dateformat=$dateformat];reason;confirmedInventory;advanceDefinition(ActivitySupplierAdvanceDefinition.activityFreeOfCostSeatsOrTickets(ActivityFreeOfCostSeatsOrTickets.priceComponent(code)));companyAdvanceDefinition(ActivityCompanyAdvanceDefinition.overBookingAllowed);inventoryID;inventoryDetails(ActivityInventoryDetail.productCode)						  
+			                             ;AAA          ;IN	                    ;123	                ;			          ;01-05-2016                           ;reason;123               ;BASE_FARE                                                                            ;true                                                                ;1234 ;123A 
+
+############NEEDS TOC CHECK
+INSERT_UPDATE ActivityInventoryDetail;productSubtype(ActivityProductSubType.code);row;seatNumber;supplierReferenceNumber;timeOfDay(TimeOfDay.code);time;auditoriumName[lang=$lang];seatingClass(code);remark;ticket;seats;productCode[unique=true];warehouse(Warehouse.code)
+                                     ;3001                                       ; 12;             12        ;2123                   ;EVENING                  ;02:00;Bel's auditorium         ;AC                ;Good  ;true  ;true ;123A                    ; warehouse_s  
+			                             
+		                             
+			                             
+			                             

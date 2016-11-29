@@ -1,0 +1,17 @@
+<response id='skash_cc_payment_gateway_response'>
+	<response-attributes>
+		<response-attribute>
+			<name>ezgtxn</name>
+			<mapped-to>success</mapped-to>
+		</response-attribute>
+		<response-attribute>
+			<name>shjtxn</name>
+			<mapped-to>receiptNo</mapped-to>
+		</response-attribute>
+		<response-attribute>
+			<name>txnstatus</name>
+			<mapped-to>message</mapped-to>
+		</response-attribute>
+	</response-attributes>	
+</response>	
+	

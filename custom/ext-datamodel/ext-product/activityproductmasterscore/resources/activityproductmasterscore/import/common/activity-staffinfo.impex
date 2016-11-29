@@ -1,0 +1,53 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=source(code, $catalogVersion)[unique=true]
+$categories=supercategories(code, $catalogVersion)[default=C001ST001:$catalogVersion]
+$dateformat=dd-MM-yyyy
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$approved=approvalstatus(code)[default='approved']
+$siteResource=jar:com.cnk.travelogix.product.accommodation.masters.core.setup.AccoProductMastersCoreSystemSetup&\accoproductmasterscore\import\sampledata\images\96Wx96H
+
+####DUMMY###
+INSERT_UPDATE Department;code[unique=true];name
+;Products;Products
+;Operations;Operations
+;Accounts;Accounts
+;IT;IT
+;Marketing;Marketing
+
+##############
+INSERT_UPDATE TimeZone;country(isocode);value[unique=true]
+;AU;GMT
+;US;PST
+
+#################
+INSERT_UPDATE ContactNumberInfo;contactType(code);medium(code);contactNumber[unique=true];staffInformation(uid)[unique=true]
+;BUSINESS;PHONE;0222517118;125
+
+################
+INSERT_UPDATE LanguageSkillInfo;language(Language.isocode)[unique=true];read;write;speak;staffInformation(uid)[unique=true]
+;en;true;true;false;125
+
+################
+INSERT_UPDATE EContactInfo;emailType(code)[unique=true];emailAddress;website;newsletterRequired;
+;PERSONAL;umesh@gmail.com;www.google.com;false
+
+################
+INSERT_UPDATE SocialContactInfo;socialNetwork[unique=true];idOrLoginOrHandleOrAddress[unique=true];staffInformation(uid)[unique=true]
+;facebook;umesh@gmail.com;125
+
+################
+INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier);
+;umeshpatil.jpg;$siteResource\umeshpatil.jpg;;;
+
+################
+INSERT_UPDATE Address;owner(StaffInformation.uid)[unique=true];addressType(code)[unique=true];streetname[unique=true];street3;street4;street5;town;postalcode;country(isocode);region(isocode);city(isocode);area;location;landmark
+;125;HEADQUARTER;Crystal;;;;Sagard;18551;US;US-FL;FMU;
+
+################
+INSERT_UPDATE StaffInformation;uid[unique=true];title(Title.code);firstName;middleName;lastName;department(Department.code);designation;role;responsibilities;gender(code);birthDate[dateformat=$dateformat];anniversaryDate[dateformat=$dateformat];internalText;timeZone(TimeZone.value);medias(code);accommodation(Accommodation.code);availabilityTimeFrom(key(code),value);availabilityTimeTo(key(code),value)
+;125;mr;Umesh;Vaman;Patil;IT;software engineer;admin;admin;MALE;28-08-1992;28-08-1992;;GMT;umeshpatil.jpg;87762;MON->mon;MON->mon
+
+UPDATE StaffInformation;uid[unique=true];addresses(owner(StaffInformation.uid))
+;125;125

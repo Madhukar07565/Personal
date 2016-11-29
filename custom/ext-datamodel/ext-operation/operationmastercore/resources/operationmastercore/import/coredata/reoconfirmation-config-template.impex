@@ -1,0 +1,56 @@
+$contentCatalog=operationsContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$jarResourceCms=$config-jarResourceCmsValue
+
+# Create PageTemplates
+# These define the layout for pages
+# "FrontendTemplateName" is used to define the JSP that should be used to render the page for pages with multiple possible layouts.
+# "RestrictedPageTypes" is used to restrict templates to page types
+
+INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true]					;name								;frontendTemplateName				 					;restrictedPageTypes(code);active[default=true]   
+						  ;						  ;ReconfirmationConfigPageTamplate 	;Reconfirmation Config Page Tamplate	;reconfirmation/reconfirmationConfigTamplatePage		 ;ContentPage;                                      
+						  
+INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true]					   ;velocityTemplate[translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+						  ;						  ;ReconfirmationConfigPageTamplate 	   ;$jarResourceCms/structure-view/structure_reconfirmationConfigPageTemplate.vm
+						  
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='ReconfirmationConfigPageTamplate'];validComponentTypes(code);compTypeGroup(code)
+;SiteLogo;;;logo
+;Section1;;;wide
+;Header;;;wide
+;Footer;;;wide
+
+# Create Content Slots
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active
+;;SiteLogoSlot;Default Site Logo Slot;true
+;;Section1-ReconfirmationConfigSearchSlot;Section 1;true
+;;Section1-ReconfirmationConfigSlot;Section 1;true
+
+# Content Slots
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
+;;SiteLogoSlot;LogoComponent
+
+				   
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true]									;position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='ReconfirmationConfigPageTamplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+									;						;SiteLogo-ReconfirmationConfigPageTamplate			;SiteLogo			  ;																				    ;SiteLogoSlot							  ;true
+									
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true]					;name						 			 ;masterTemplate(uid,$contentCV)		;label							;defaultPage[default='true'];approvalStatus(code)[default='approved'];title[default='Cox & Kings']
+						 ;						 ;reconfirmationConfigPage 			;Reconfirmation Config Page   			;ReconfirmationConfigPageTamplate		;/reconfirmation-config																
+						 ;						 ;reconfirmationConfigSearchPage 	;Reconfirmation Config Search Page   	;ReconfirmationConfigPageTamplate		;/reconfirmation-config-search	
+						 				
+				
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]						;position[unique=true]	;page(uid,$contentCV)[unique=true][default='reconfirmationConfigPage'];contentSlot(uid,$contentCV)[unique=true];;;
+								;						;section1-reconfirmationConfigPage		;Section1				;																 	 ;Section1-ReconfirmationConfigSlot			   ;;;
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]								;position[unique=true]	;page(uid,$contentCV)[unique=true][default='reconfirmationConfigSearchPage'];contentSlot(uid,$contentCV)[unique=true];;;
+								;						;section1-reconfirmationConfigSearchPage		;Section1				;																 			 ;Section1-ReconfirmationConfigSearchSlot			   ;;;
+								
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true]									;name												;active		;cmsComponents(&componentRef);;;
+						 ;						 ;Section1-ReconfirmationConfigSlot					;Section1 Reconfirmation Config Slot		  		;true		;ReconfirmationConfigComponent;;;
+						 ;						 ;Section1-ReconfirmationConfigSearchSlot			;Section1 Reconfirmation Config Search Slot	  		;true		;ReconfirmationConfigSearchComponent;;;
+
+INSERT_UPDATE JspIncludeComponent;$contentCV[unique=true]	;uid[unique=true]								;name								;page										;actions(uid,$contentCV)			;&componentRef
+								 ;							;ReconfirmationConfigComponent					;Reconfirmation Config Component	;reconfirmationConfigComponent.jsp			;									;ReconfirmationConfigComponent
+								 ;							;ReconfirmationConfigSearchComponent			;Reconfirmation Config Search Component	;reconfirmationConfigSearchComponent.jsp;									;ReconfirmationConfigSearchComponent

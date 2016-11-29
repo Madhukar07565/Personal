@@ -1,0 +1,212 @@
+<response id='asipay_payment_gateway_response'>
+	<response-attributes>
+		<response-attribute>
+			<name>src</name>
+			<!-- Return bank host status code (secondary).  Please refer to 
+Appendix A for detail.  -->
+			<mapped-to></mapped-to>
+		</response-attribute>
+		<response-attribute>
+			<name>prc</name>
+			<!-- Return bank host status code (primary).  Please refer to 
+Appendix A for detail.  -->
+			<mapped-to></mapped-to>
+		</response-attribute>
+		<response-attribute>
+			<name>Ord</name>
+			<!-- Bank Reference Number -->
+			<mapped-to></mapped-to>
+		</response-attribute>
+		<response-attribute>
+			<name>Holder</name>
+			<!-- The Holder Name of the Payment Account  -->
+			<mapped-to></mapped-to>
+		</response-attribute>
+		<response-attribute>
+			<name>successcode</name>
+			<!-- 0- succeeded, 1- failure, Others - error  -->
+			<mapped-to>success</mapped-to>
+		</response-attribute>
+		<response-attribute>
+			<name>Ref</name>
+			<!-- Merchant‘s Order Reference Number  -->			
+		</response-attribute>
+		<response-attribute>
+			<name>PayRef</name>
+			<!-- PesoPay Payment Reference Number  -->
+			<mapped-to>receiptNo</mapped-to>		
+		</response-attribute>
+		<response-attribute>
+			<name>Amt</name>
+			<mapped-to>amount</mapped-to>		
+			<!-- Transaction Amount  -->
+		</response-attribute>
+		<response-attribute>
+			<name>Cur</name>
+			<mapped-to>currency</mapped-to>
+		</response-attribute>
+		<response-attribute>
+			<name>mpsAmt</name>
+			<!-- MPS Transaction Amount 
+Remark: For MPS Enabled only.  -->
+			<mapped-to></mapped-to>
+		</response-attribute>
+		<response-attribute>
+			<name>mpsCur</name>
+			<!-- MPS Transaction Currency 
+Remark: For MPS Enabled only.  -->
+		<mapped-to></mapped-to>
+		</response-attribute>
+		<response-attribute>
+			<name>mpsForeignAmt</name>
+			<!-- MPS Transaction Foreign Amount  -->
+		</response-attribute>
+		<response-attribute>
+			<name>mpsForeignCur</name>
+			<!-- MPS Transaction Foreign Currency 
+Remark: For MPS Enabled only.  -->
+			<mapped-to></mapped-to>
+		</response-attribute>
+		<response-attribute>
+			<name>mpsRate</name>
+			<!-- MPS Exchange Rate: (Foreign / Base) 
+e.g. USD / HKD = 7.77 
+Remark: For MPS Enabled only.  -->
+		</response-attribute>
+		<response-attribute>
+			<name>remark</name>
+			<mapped-to>message</mapped-to>
+			<!-- A remark field for you to store additional data that will not 
+show on the transaction web page  -->
+		</response-attribute>
+		<response-attribute>
+			<name>AuthId</name>
+			<!-- Approval Code -->
+		</response-attribute>
+		<response-attribute>
+			<name>eci</name>
+			<!-- Remark : Empty String will be sent when the transaction is 
+rejected by PesoPay PayAlert.  -->
+		</response-attribute>
+		<response-attribute>
+			<name>payerAuth</name>
+			<!-- Payer Authentication Status 
+Y - Card is 3-D secure enrolled and authentication 
+succeeds. 
+N - Card is 3-D secure enrolled but authentication fails. 
+P - 3-D Secure check is pending  -->
+		</response-attribute>
+		<response-attribute>
+			<name>sourceIp</name>
+			<!-- IP address of payer  -->
+		</response-attribute>
+		<response-attribute>
+			<name>ipCountry</name>
+			<!-- Country of payer ( e.g. HK)  -->
+		</response-attribute>
+		<response-attribute>
+			<name>payMethod</name>
+			<mapped-to>cardType</mapped-to>			
+			<!-- Payment method (e.g. VISA, Master, Diners, JCB, AMEX)  -->
+		</response-attribute>
+		<response-attribute>
+			<name>cardIssuingCountry</name>
+			<!-- Card Issuing Country Code ( e.g. HK) 
+- if country is on high risk country list, an asterisk will be 
+shown (e.g. MY*) 
+- if the card issuing country of credit card is undefined,  
+“- -“ will be shown. 
+Please refer to Appendix A “List of Country Code” for detail  -->
+		</response-attribute>
+		<response-attribute>
+			<name>channelType</name>
+			<!-- SPC – Client Post Through Browser 
+DPC – Direct Client Side Connection 
+DPS – Server Side Direct Connection 
+SCH – Schedule Payment 
+DPL – Direct Payment Link Connection 
+MOT – Moto Connection 
+RTL – RetailPay Connection 
+BPP – Batch Payment Process 
+MOB – Mobile Payment Connection  -->
+		</response-attribute>
+		<response-attribute>
+			<name>secureHash</name>
+			<!-- Secure hash is used to authenticate the integrity of the 
+response information and the identity of PesoPay. It is 
+calculated by hashing the combination of various response 
+parameters and the Secure Hash Secret.  
+*Applies to merchants who registered this function only. For 
+more information, please refer to section 4. -->
+		</response-attribute>
+		<response-attribute>
+			<name>dSchPayId</name>
+			<!-- The Detail Schedule Payment Id 
+*For Schedule payment transaction only  -->
+		</response-attribute>
+		<response-attribute>
+			<name>AlertCode</name>
+			<!-- The Alert Code 
+e.g. R14 –IP Country not match with Issuing Country 
+   R 9 - In high risk country list  -->
+		</response-attribute>
+		<response-attribute>
+			<name>MerchantId</name>
+			<!-- The merchant Id of transaction  -->
+		</response-attribute>
+		<response-attribute>
+			<name>installment_period</name>
+			<!-- In number of months  -->
+		</response-attribute>
+		<response-attribute>
+			<name>installment_firstPayAmt</name>
+			<!-- The transaction amount for first installment period -->
+		</response-attribute>
+		<response-attribute>
+			<name>installment_eachPayAmt</name>
+			<!-- The transaction amount for each installment period -->
+		</response-attribute>
+		<response-attribute>
+			<name>installment_lastPayAmt</name>
+			<!--The transaction amount for last installment period  -->
+		</response-attribute>
+		<response-attribute>
+			<name>airline_ticketNumber</name>
+			<!-- Air Ticket Number  -->
+		</response-attribute>
+		<response-attribute>
+			<name>panFirst4</name>
+			<!-- First 4 digit of card 
+*Return to approved merchant only  -->
+		</response-attribute>
+		<response-attribute>
+			<name>panLast4</name>
+			<!-- Last 4 digit of card 
+*Return to approved merchant only  -->
+		</response-attribute>
+		<response-attribute>
+			<name>installment_period</name>
+		</response-attribute>
+		<response-attribute>
+			<name>accountHash</name>
+			<!-- Hash value of card 
+*Return to approved merchant only  -->
+		</response-attribute>
+		<response-attribute>
+			<name>accountHashAlgo</name>
+			<!-- Hash function of card: 
+SHA-1 
+*Return to approved merchant only  -->
+		</response-attribute>
+		<response-attribute>
+			<name>TxTime</name>
+		</response-attribute>
+		<response-attribute>
+			<name><response-attribute>
+			<name>panFull </name>
+			<!-- Encrypted PAN with AES256 encryption *Return to approved merchant only  -->
+		</response-attribute></name>
+		</response-attribute>
+		
+	</response-attributes>	
+</response>	

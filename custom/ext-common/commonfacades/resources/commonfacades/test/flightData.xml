@@ -1,0 +1,70 @@
+<com.cnk.travelogix.common.facades.product.data.flight.FlightData>
+  <id>id</id>
+  <flightNumber>flightNumber</flightNumber>
+  <cabinClass>cabinClass</cabinClass>
+  <airlineIATA>
+    <airlineName>airlineName</airlineName>
+    <accountingCode>accountingCode</accountingCode>
+    <airlinePrefix>airlinePrefix</airlinePrefix>
+  </airlineIATA>
+  <departureTime>2016-06-24 07:29:51.774 UTC</departureTime>
+  <arrivalTime>2016-06-24 07:29:51.774 UTC</arrivalTime>
+  <duration>1h 5m Nonstop</duration>
+  <fromSection>
+    <city>city</city>
+    <airport>airport</airport>
+    <terminal>terminal</terminal>
+  </fromSection>
+  <toSection>
+    <city>city</city>
+    <airport>airport</airport>
+    <terminal>terminal</terminal>
+  </toSection>
+  <fareSummary>
+    <listPrice>listPrice</listPrice>
+    <webPrice>webPrice</webPrice>
+    <currency>currency</currency>
+    <pointEarn>pointEarn</pointEarn>
+  </fareSummary>
+  <fareDetail>
+    <currency>currency</currency>
+    <baseFare>baseFare</baseFare>
+    <fuelSurcharge>fuelSurcharge</fuelSurcharge>
+    <jnTax>jnTax</jnTax>
+    <psgrSvcFee>psgrSvcFee</psgrSvcFee>
+    <serviceTax>serviceTax</serviceTax>
+  </fareDetail>
+  <flightDetails>
+    <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+      <cabinClass>cabinClass</cabinClass>
+      <fromSection>
+        <city>city</city>
+        <airport>airport</airport>
+        <terminal>terminal</terminal>
+      </fromSection>
+      <toSection>
+        <city>city</city>
+        <airport>airport</airport>
+        <terminal>terminal</terminal>
+      </toSection>
+      <departureTime>2016-06-24 07:29:51.775 UTC</departureTime>
+      <arrivalTime>2016-06-24 07:29:51.775 UTC</arrivalTime>
+      <duration>2016-06-24 07:29:51.775 UTC</duration>
+    </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+    <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+      <cabinClass>cabinClass</cabinClass>
+      <fromSection>
+        <city>city</city>
+        <airport>airport</airport>
+        <terminal>terminal</terminal>
+      </fromSection>
+      <toSection>
+        <city>city</city>
+        <airport>airport</airport>
+        <terminal>terminal</terminal>
+      </toSection>
+      <departureTime>2016-06-24 07:29:51.775 UTC</departureTime>
+      <arrivalTime>2016-06-24 07:29:51.775 UTC</arrivalTime>
+      <duration>2016-06-24 07:29:51.775 UTC</duration>
+    </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+  </flightDetails>

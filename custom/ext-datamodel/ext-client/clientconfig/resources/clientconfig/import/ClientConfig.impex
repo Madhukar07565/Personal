@@ -1,0 +1,77 @@
+# Sample data of client account.
+$lang=en
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd/MM/yyyy
+$timeformat = hh:mm
+$contentCatalog=Default
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+
+INSERT_UPDATE TravelogixClientType;uid[unique=true];language(isocode);clientType(code);&clientType;companyMarkets(Market.uid);settlement[default=false];clientCommercials[default=false];transactional[default=false];transactionalCurrency(Currency.isocode);pointOfSale(DistributionChannel.uid);reason[unique=true, lang=$lang];remarks[lang=$lang]
+;12B2b121;en;B2B;12B2b121;IND;true;true;true;INR;XML,ASP;Others;Others
+
+#Password Setting
+INSERT_UPDATE PasswordConfig;&pwdInfoId;forgetPasswordCommunicationModes(code)[unique=true];reminderCommunicationModesforEnabledAccount(code);autoExpirePasswordAfterDays;autoExpiredPasswordAllowed[default=false];secretQuestionRequired[default=false]
+;2100013;EMAIL;EMAIL;60;true;true;
+
+#B2BRegistration Setting
+INSERT_UPDATE B2BRegistrationConfig;&b2bRegSetId;verificationLinkValidForDays[unique=true]
+;2100014;1
+
+#B2CRegistration Setting
+INSERT_UPDATE B2CRegistrationConfig;&b2cRegSetId;activationLinkValidForDay[unique=true]
+;2100015;1
+
+#Account Configuration
+INSERT_UPDATE LoginConfig;&accountInfoId;allowedThirdParties(code)[unique=true];forgetUserIdCommunicationModes(code);retriesCountBeforeLocking;keepUserSignInDays;remarks;loginType(code);loginValidation(code);passwordConfig(&pwdInfoId); thirdPartyLoginAllowed[default=false]; keepUserSignInAllowed[default=false]; userAccountLockAllowed[default=false];childClientB2BAll[default=false]; childClientB2CAll[default=false];
+;2100012;GOOGLE;EMAIL;30;07;its an admin account;NORMAL;ALL;2100013;true;true;true;false;false;
+
+INSERT_UPDATE Category;code[unique=true];&categoryCode;$catalogVersion[unique=true];name[lang=$lang]
+;C001;C001;EZ-IN:Staged;Transportation
+;C002;C002;EZ-IN:Staged;Accommodation
+
+INSERT_UPDATE ProductCategorySubType;code[unique=true];&categorySubCode;$catalogVersion[unique=true];name[lang=$lang]
+;C001ST001;C001ST001;EZ-IN:Staged;Flights
+;C001ST002;C001ST002;EZ-IN:Staged;Cruise
+
+#ProductInformation Configuration
+INSERT_UPDATE ProductInformation;category(&categoryCode)[unique=true, allownull=true];productCategorySubType(&categorySubCode)[unique=true, allownull=true];&productInfo
+;C001;C001ST002;C001ProdInfo
+
+#PartPaymentSchedule Configuration
+INSERT_UPDATE PartPaymentSchedule;billingAmountFrom[unique=true];billingAmountTo[unique=true];paymentScheduleType(code);&partPymt;days; hours; amount; currency(isocode)
+;1000;2000;INITIAL_DEPOSIT_FOR_SECURITY;P001PartPymt;10;8;100012;INR
+
+#PartPaymentSchedule Configuration
+INSERT_UPDATE PartPaymentMasterConfig;partPaymentId[unique=true];&partPayment;$catalogVersion;approvalStatus(code);active[default=true];code;productInformation(&productInfo);partPaymentSchedule(&partPymt);effectiveFrom[dateFormat=dd-MM-yyyy]
+;100PARTPYMT;100PARTPYMT;;approved;true;1212145;C001ProdInfo;P001PartPymt;01-09-2016
+
+#Supplier Configuration
+INSERT_UPDATE Supplier;$contentCV;code[unique=true];commonUid;supplierType(code);enablerCategories(code);lobs(code);&supplierInfo
+#;;Taj Hotel;2131;ENABLER;DIRECT_CONNECT;FIT;2131
+#;;Mason Travel;2132;ENABLER;DIRECT_CONNECT;FIT;2132
+
+#TimeLimitMasterConfig Configuration
+INSERT_UPDATE TimeLimitMasterConfig;timeLimitMasterId[unique=true];&timeLimit;$catalogVersion;approvalStatus(code);active[default=true];code;bufferDays; bufferHours; reconfirmation; timeLimitExtension[default=false unique=false];excludeAllocation[default=false unique=false];enablePaymentForTimeLimitBooking[default=false unique=false];productInformation(&productInfo);supplierInformation(&supplierInfo);effectiveFrom[dateFormat=dd-MM-yyyy]
+;100TIMELIMIT;100TIMELIMIT;;approved;true;1212146;10;8;Yes;true;true;true;C001ProdInfo;;01-09-2016
+
+#Product Configuration
+INSERT_UPDATE Product;$catalogVersion;code[unique=true];&product
+;;123APP;123APP
+;;123ACC;123ACC
+
+#CorporateDealCodes
+INSERT_UPDATE CorporateDealCodes;dealCode[unique=true];productCategory(&categoryCode)[unique=true, allownull=true];productCategorySubType(&categorySubCode)[unique=true, allownull=true];entityName(Principal.uid);description; validFrom[dateFormat=dd-MM-yyyy]; validTo[dateFormat=dd-MM-yyyy];products(&product);supplier(&supplierInfo)
+;CoprpDeal121221;C001;C001ST002;;Corporate Deal Code 121221;01-04-2016;31-12-9999;123ACC,123APP;;
+
+
+#DocumentManagement
+INSERT_UPDATE DocumentManagement;documentId[unique=true];entityName(Principal.uid);documentDescription;documentSignedOn[dateFormat=dd-MM-yyyy];documentName(code); documentType(code); documentCategory(code)
+;Docno121221;;Corporate Document;01-04-2016;HOTEL_VOCHER;HANDOVER_DOCUMENTS;RFP
+
+#TravelogixUserGroup
+INSERT_UPDATE TravelogixUserGroup; uid[unique=true]; loginConfig(&accountInfoId)[unique=true]; partPaymentMasterConfig(&partPayment); timeLimitMasterConfig(&timeLimit); b2bRegistrationConfig(&b2bRegSetId); b2cRegistrationConfig(&b2cRegSetId); trvlClientType(&clientType)
+;2100011223;2100012;100PARTPYMT;100TIMELIMIT;2100014;2100015;12B2b121
+

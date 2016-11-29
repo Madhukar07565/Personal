@@ -1,0 +1,153 @@
+<AirInterfaceRS xmlns="http://www.coxandkings.com/integ/suppl/airinterface" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+   <ResponseHeader xmlns="http://www.coxandkings.com/integ/suppl/air">
+      <Status xmlns="http://www.coxandkings.com/integ/suppl/common">SUCCESS</Status>
+      <UserID xmlns="http://www.coxandkings.com/integ/suppl/common">1</UserID>
+      <SessionID xmlns="http://www.coxandkings.com/integ/suppl/common">2</SessionID>
+      <TransactionID xmlns="http://www.coxandkings.com/integ/suppl/common">3</TransactionID>
+   </ResponseHeader>
+   <ResponseBody>
+      <OTA_AirPriceRSWrapper xmlns="http://www.coxandkings.com/integ/suppl/air">
+         <SupplierID>ELSYARRES</SupplierID>
+         <Sequence>1</Sequence>
+         <tns:OTA_AirPriceRS Version="8.2" xmlns:tns="http://www.opentravel.org/OTA/2003/05">
+            <tns:Success>false</tns:Success>
+            <tns:PricedItineraries>
+               <tns:PricedItinerary>
+                  <tns:AirItinerary DirectionInd="Return">
+                     <tns:OriginDestinationOptions>
+                        <tns:OriginDestinationOption RPH="CGN_TXL__41000" RefNumber="40">
+                           <tns:FlightSegment FlightNumber="11000" DepartureDateTime="2016-07-09T00:00:00" ArrivalDateTime="2016-07-09T01:30:00" LineNumber="0">
+                              <tns:DepartureAirport LocationCode="CGN"/>
+                              <tns:ArrivalAirport LocationCode="TXL"/>
+                              <tns:OperatingAirline FlightNumber="11000" CompanyShortName="Fake Carrier" Code="1"/>
+                              <tns:TPA_Extensions>
+                                 <ExtendedRPH>4-160701063731-01-1628196-6307|_4-160701063731-01-1628348-5821</ExtendedRPH>
+                              </tns:TPA_Extensions>
+                              <tns:MarketingAirline CompanyShortName="FakeMyAirline" Code="4"/>
+                              <tns:BookingClassAvails CabinType="Economy"/>
+                           </tns:FlightSegment>
+                        </tns:OriginDestinationOption>
+                        <tns:OriginDestinationOption RPH="TXL_CGN__41000" RefNumber="40">
+                           <tns:FlightSegment FlightNumber="11000" DepartureDateTime="2016-07-25T00:00:00" ArrivalDateTime="2016-07-25T01:30:00" LineNumber="0">
+                              <tns:DepartureAirport LocationCode="TXL"/>
+                              <tns:ArrivalAirport LocationCode="CGN"/>
+                              <tns:OperatingAirline FlightNumber="11000" CompanyShortName="Fake Carrier" Code="1"/>
+                              <tns:TPA_Extensions>
+                                 <ExtendedRPH>4-160701063731-01-1628196-6307|_4-160701063731-01-1628348-5821</ExtendedRPH>
+                              </tns:TPA_Extensions>
+                              <tns:MarketingAirline CompanyShortName="FakeMyAirline" Code="4"/>
+                              <tns:BookingClassAvails CabinType="Economy"/>
+                           </tns:FlightSegment>
+                        </tns:OriginDestinationOption>
+                     </tns:OriginDestinationOptions>
+                  </tns:AirItinerary>
+                  <tns:AirItineraryPricingInfo QuoteID="4-160701063731-01-1628196-6307|_4-160701063731-01-1628348-5821">
+                     <tns:ItinTotalFare>
+                        <tns:Taxes Amount="5985.6">
+                           <tns:Tax RPH="40" Amount="2992.8"/>
+                           <tns:Tax RPH="40" Amount="2992.8"/>
+                        </tns:Taxes>
+                        <tns:Fees CurrencyCode="INR" Amount="0">
+                           <tns:Fee FeeCode="ELECTRON" Amount="1125.3"/>
+                           <tns:Fee FeeCode="MASTERCARD" Amount="638.98"/>
+                           <tns:Fee FeeCode="VISA" Amount="1125.3"/>
+                           <tns:Fee Amount="897.84" FeeCode="BookingOption : SpeedBoarding"/>
+                        </tns:Fees>
+                        <tns:TotalFare CurrencyCode="INR" Amount="15712.18"/>
+                     </tns:ItinTotalFare>
+                     <tns:PTC_FareBreakdowns>
+                        <tns:PTC_FareBreakdown FlightRefNumberRPHList="40" PricingSource="Web">
+                           <tns:PassengerTypeQuantity Code="ADT"/>
+                           <tns:PassengerFare>
+                              <tns:BaseFare Amount="1496.4"/>
+                           </tns:PassengerFare>
+                        </tns:PTC_FareBreakdown>
+                        <tns:PTC_FareBreakdown FlightRefNumberRPHList="40" PricingSource="Web">
+                           <tns:PassengerTypeQuantity Code="CHD"/>
+                           <tns:PassengerFare>
+                              <tns:BaseFare Amount="1122.3"/>
+                           </tns:PassengerFare>
+                        </tns:PTC_FareBreakdown>
+                        <tns:PTC_FareBreakdown FlightRefNumberRPHList="40" PricingSource="Web">
+                           <tns:PassengerTypeQuantity Code="INF"/>
+                           <tns:PassengerFare>
+                              <tns:BaseFare Amount="748.19"/>
+                           </tns:PassengerFare>
+                        </tns:PTC_FareBreakdown>
+                        <tns:PTC_FareBreakdown FlightRefNumberRPHList="40" PricingSource="Web">
+                           <tns:PassengerTypeQuantity Code="ADT"/>
+                           <tns:PassengerFare>
+                              <tns:BaseFare Amount="1496.4"/>
+                           </tns:PassengerFare>
+                        </tns:PTC_FareBreakdown>
+                        <tns:PTC_FareBreakdown FlightRefNumberRPHList="Inbound_40" PricingSource="Web">
+                           <tns:PassengerTypeQuantity Code="CHD"/>
+                           <tns:PassengerFare>
+                              <tns:BaseFare Amount="1122.3"/>
+                           </tns:PassengerFare>
+                        </tns:PTC_FareBreakdown>
+                        <tns:PTC_FareBreakdown FlightRefNumberRPHList="40" PricingSource="Web">
+                           <tns:PassengerTypeQuantity Code="INF"/>
+                           <tns:PassengerFare>
+                              <tns:BaseFare Amount="748.19"/>
+                           </tns:PassengerFare>
+                        </tns:PTC_FareBreakdown>
+                     </tns:PTC_FareBreakdowns>
+                     <tns:TPA_Extensions>
+                        <Baggages>
+                           <Baggage>
+                              <tns:baggageCode>0/0</tns:baggageCode>
+                              <tns:baggageDescription>0</tns:baggageDescription>
+                              <tns:baggageCharge>0</tns:baggageCharge>
+                           </Baggage>
+                           <Baggage>
+                              <tns:baggageCode>1/15</tns:baggageCode>
+                              <tns:baggageDescription>15</tns:baggageDescription>
+                              <tns:baggageCharge>748.2</tns:baggageCharge>
+                           </Baggage>
+                           <Baggage>
+                              <tns:baggageCode>1/20</tns:baggageCode>
+                              <tns:baggageDescription>20</tns:baggageDescription>
+                              <tns:baggageCharge>2244.6</tns:baggageCharge>
+                           </Baggage>
+                           <Baggage>
+                              <tns:baggageCode>2/15</tns:baggageCode>
+                              <tns:baggageDescription>15</tns:baggageDescription>
+                              <tns:baggageCharge>1496.4</tns:baggageCharge>
+                           </Baggage>
+                           <Baggage>
+                              <tns:baggageCode>2/20</tns:baggageCode>
+                              <tns:baggageDescription>20</tns:baggageDescription>
+                              <tns:baggageCharge>2992.8</tns:baggageCharge>
+                           </Baggage>
+                           <Baggage>
+                              <tns:baggageCode>3/15</tns:baggageCode>
+                              <tns:baggageDescription>15</tns:baggageDescription>
+                              <tns:baggageCharge>2244.6</tns:baggageCharge>
+                           </Baggage>
+                           <Baggage>
+                              <tns:baggageCode>3/20</tns:baggageCode>
+                              <tns:baggageDescription>20</tns:baggageDescription>
+                              <tns:baggageCharge>3741</tns:baggageCharge>
+                           </Baggage>
+                        </Baggages>
+                     </tns:TPA_Extensions>
+                  </tns:AirItineraryPricingInfo>
+                  <tns:Notes>Online check-in required: Please refer to the carrier&amp;#39;s confirmation email for details. TotalFare already includes online check-in fees.</tns:Notes>
+                  <tns:Notes>At the airport you may be required to present the credit card used to purchase your ticket. If you are not the card holder, please ensure you have a photocopy of the card.</tns:Notes>
+               </tns:PricedItinerary>
+            </tns:PricedItineraries>
+            <tns:BookingReferenceID ID="4-160701063731-01-1628196-6307|_4-160701063731-01-1628348-5821"/>
+            <tns:PricingOverview Type="OUTBOUND_TermsURL">
+               <tns:Notes>http://testv80.elsyarres.net/terms.aspx?tid=Y/TER/68640/2&amp;cid=Y/CAR/72350/2&amp;lang=EN</tns:Notes>
+            </tns:PricingOverview>
+            <tns:PricingOverview Type="INBOUND_TermsURL">
+               <tns:Notes>http://testv80.elsyarres.net/terms.aspx?tid=Y/TER/68640/2&amp;cid=Y/CAR/72350/2&amp;lang=EN</tns:Notes>
+            </tns:PricingOverview>
+            <tns:Errors>
+               <tns:Error Code="5026" ShortText="Possible duplicate booking detected [Y/BFL/160602022780/00725142]"/>
+            </tns:Errors>
+         </tns:OTA_AirPriceRS>
+      </OTA_AirPriceRSWrapper>
+   </ResponseBody>
+</AirInterfaceRS>

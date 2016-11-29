@@ -1,0 +1,271 @@
+$lang=en
+UPDATE AccommodationBrand;code[unique=true];name[lang=$lang]
+;ACCO_BR_01;Outrigger Hotels and Resorts
+;ACCO_BR_02;Quest Service Apartments
+;ACCO_BR_03;Radisson Blu
+;ACCO_BR_04;Rydges Hotels and Resorts
+;ACCO_BR_05;Shangri - La Hotels and Resorts
+;ACCO_BR_06;Stamford Hotels and Resorts
+;ACCO_BR_07;Swissotel Hotels and Resorts
+;ACCO_BR_08;Voyages Hotels and Resorts
+;ACCO_BR_09;Jurys Inn
+;ACCO_BR_10;Premier Inn
+;ACCO_BR_11;Reykjavik Hotels
+;ACCO_BR_12;Reykjavik Grand
+;ACCO_BR_13;Reykjavik Centrum
+;ACCO_BR_14;Centara Hotels and Resorts
+;ACCO_BR_15;Four Seasons Hotels and Resorts
+;ACCO_BR_16;NH Hotels
+;ACCO_BR_17;Expo Hotels & Resorts
+;ACCO_BR_18;Dusit Princess
+;ACCO_BR_19;Dusit Thani
+;ACCO_BR_20;Dusit D2
+;ACCO_BR_21;Dusit Residence
+;ACCO_BR_22;Kempinski Hotels
+;ACCO_BR_23;WBTDC Hotels
+;ACCO_BR_24;Royal Orchid-Bangalore
+;ACCO_BR_25;VITS Hotels-Mumbai
+;ACCO_BR_26;Mandarin Oriental
+;ACCO_BR_27;Parkland Hotels and Resorts
+;ACCO_BR_28;Fairmont Hotels
+;ACCO_BR_29;Montien Hotels
+;ACCO_BR_30;Club Med
+;ACCO_BR_31;Fraser Suites
+;ACCO_BR_32;Fraser Place
+;ACCO_BR_33;Fraser Residence
+;ACCO_BR_34;Fraser Resorts
+;ACCO_BR_35;Sterling Holiday Resorts
+;ACCO_BR_36;Preferred Hotels & Resorts
+;ACCO_BR_37;Meritus Hotels and Resorts
+;ACCO_BR_38;Oakwood Hotels
+;ACCO_BR_39;The Leela Palace Hotels & Resorts
+;ACCO_BR_40;Base Backpackers
+;ACCO_BR_41;Copthorne Hotels
+;ACCO_BR_42;Kingsgate Hotels and Resorts
+;ACCO_BR_43;Fiesta Americana Hotels and Resorts
+;ACCO_BR_44;Feel Good Apartments
+;ACCO_BR_45;H10 Hotels
+;ACCO_BR_46;H10 club
+;ACCO_BR_47;Ocean by H10 Hotels
+;ACCO_BR_48;HCC Hotels
+;ACCO_BR_49;Hotel Attica 21
+;ACCO_BR_50;Husa Hotel
+;ACCO_BR_51;Eurostars hotel
+;ACCO_BR_52;Moevenpick Hotels and Resorts
+;ACCO_BR_53;Macdonald Hotels & Resort
+;ACCO_BR_54;Rotana Hotels & Resorts
+;ACCO_BR_55;Armani Hotels & Resorts
+;ACCO_BR_56;Citymax Hotels
+;ACCO_BR_57;Ritz-Carlton
+;ACCO_BR_58;The Address Hotel & Resorts
+;ACCO_BR_59;Rayhaan Hotels & Resorts
+;ACCO_BR_60;Arjaan Hotel Apartments
+;ACCO_BR_61;Centro Hotels
+;ACCO_BR_62;Winchest Hotels
+;ACCO_BR_63;Iberotel Hotels & Resorts
+;ACCO_BR_64;Grand Midwest
+;ACCO_BR_65;Vincci Hotels
+;ACCO_BR_66;Value Hotel
+;ACCO_BR_67;Regent Hotels
+;ACCO_BR_68;Resorts World Sentosa
+;ACCO_BR_69;Hotel 81
+;ACCO_BR_70;Arcotel Hotels
+;ACCO_BR_71;Marco Polo Hotels
+;ACCO_BR_72;Royal Tulip
+;ACCO_BR_73;Golden Tulip
+;ACCO_BR_74;Tulip Inn
+;ACCO_BR_75;Orient-Express
+;ACCO_BR_76;Ramee Hotels
+;ACCO_BR_77;Elite Hospitality
+;ACCO_BR_78;Harbour Plaza Hotels & Resorts
+;ACCO_BR_79;Layia Hotels
+;ACCO_BR_80;Living Courts - Serviced Apartments
+;ACCO_BR_81;Athens Hotels Group
+;ACCO_BR_82;Citin Hotels
+;ACCO_BR_83;Kyriad Hotel
+;ACCO_BR_84;Kyriad Prestige
+;ACCO_BR_85;Keys Hotels
+;ACCO_BR_86;Auris Hotels
+;ACCO_BR_87;Metropark Hotels
+;ACCO_BR_88;Okura Hotels and Resorts
+;ACCO_BR_89;Amari Hotels
+;ACCO_BR_90;Shama Serviced Apartments
+;ACCO_BR_91;Saffron Hotels & Resorts
+;ACCO_BR_92;OAM Hotels
+;ACCO_BR_93;Le Meridien
+;ACCO_BR_94;Four Points by Sheraton
+;ACCO_BR_95;Westin Hotels and Resorts
+;ACCO_BR_96;Aloft
+;ACCO_BR_97;Sheraton Hotels and Resorts
+;ACCO_BR_98;Element By Westin
+;ACCO_BR_99;St. Regis
+;ACCO_BR_100;W Hotels Worldwide
+;ACCO_BR_101;Comfort Inn
+;ACCO_BR_102;Sofitel Hotels
+;ACCO_BR_103;Pullman Hotels and Resorts
+;ACCO_BR_104;M Gallery
+;ACCO_BR_105;Novotel Hotels
+;ACCO_BR_106;Mercure
+;ACCO_BR_107;Suite Novotel
+;ACCO_BR_108;Ibis Hotels
+;ACCO_BR_109;All Seasons Hotels
+;ACCO_BR_110;Adagio City Apartments
+;ACCO_BR_111;Motel 6
+;ACCO_BR_112;Studio 6
+;ACCO_BR_113;Etap Hotels
+;ACCO_BR_114;Formule 1
+;ACCO_BR_115;Hotel F1
+;ACCO_BR_116;AC Hotels
+;ACCO_BR_117;Adam's Mark Hotels
+;ACCO_BR_118;Affinia Hospitality
+;ACCO_BR_119;AFM Hospitality
+;ACCO_BR_120;Akzent Hotels
+;ACCO_BR_121;Intercontinental Hotels and Resorts
+;ACCO_BR_122;Crowne Plaza Hotels and Resorts
+;ACCO_BR_123;Indigo Hotel
+;ACCO_BR_124;Holiday Inn
+;ACCO_BR_125;Holiday Inn Express
+;ACCO_BR_126;Staybridge Suites
+;ACCO_BR_127;Candlewood Suites
+;ACCO_BR_128;Wyndham Hotels and Resorts
+;ACCO_BR_129;Wyndham Garden Hotels
+;ACCO_BR_130;Marriott Hotels and Resorts
+;ACCO_BR_131;JW Marriott Hotels and Resorts
+;ACCO_BR_132;Renaissance Hotels
+;ACCO_BR_133;Edition Hotel
+;ACCO_BR_134;Autograph Collection
+;ACCO_BR_135;Courtyard by Marriott
+;ACCO_BR_136;Residence Inn by Marriott
+;ACCO_BR_137;Fairfield Inn and Suites by Marriott
+;ACCO_BR_138;Marriott Conference Centers
+;ACCO_BR_139;TownePlace Suites by Marriott
+;ACCO_BR_140;SpringHill Suites by Marriott
+;ACCO_BR_141;The Ritz-Carlton Hotel
+;ACCO_BR_142;Grand Residences by Marriott
+;ACCO_BR_143;Marriott Executive Apartments
+;ACCO_BR_144;Waldorf Astoria Hotels and Resorts
+;ACCO_BR_145;Conrad Hotels and Resorts
+;ACCO_BR_146;Hilton Hotels
+;ACCO_BR_147;Doubletree Hotels
+;ACCO_BR_148;Embassy Suites Hotels
+;ACCO_BR_149;Hilton Garden Inn
+;ACCO_BR_150;Hampton Inn and Suites
+;ACCO_BR_151;Homewood Suites by Hilton
+;ACCO_BR_152;Home2 Suites by Hilton
+;ACCO_BR_153;Comfort Suites
+;ACCO_BR_154;Super 8
+;ACCO_BR_155;Wyndham Grand Collection
+;ACCO_BR_156;Wingate by Wyndham
+;ACCO_BR_157;Hawthorn Suites by Wyndham
+;ACCO_BR_158;Ramada Worldwide
+;ACCO_BR_159;Days Inn
+;ACCO_BR_160;Baymont Inn and Suites
+;ACCO_BR_161;Microtel Inn and Suites
+;ACCO_BR_162;Howard Johnson
+;ACCO_BR_163;Travelodge (Wyndham)
+;ACCO_BR_164;Travelodge Hotels (TOGA)
+;ACCO_BR_165;Ginger Hotels
+;ACCO_BR_166;Taj
+;ACCO_BR_167;Knights Inn
+;ACCO_BR_168;Park Hyatt
+;ACCO_BR_169;Grand Hyatt
+;ACCO_BR_170;Hyatt Regency
+;ACCO_BR_171;Hyatt Place
+;ACCO_BR_172;Hyatt Summerfield Suites
+;ACCO_BR_173;Hyatt Resorts
+;ACCO_BR_174;Hyatt Vacation Club
+;ACCO_BR_175;Radisson
+;ACCO_BR_176;Park Plaza
+;ACCO_BR_177;Park Inn
+;ACCO_BR_178;Country Inn and Suites
+;ACCO_BR_179;Lalit Group
+;ACCO_BR_180;Oberoi
+;ACCO_BR_181;Leela
+;ACCO_BR_182;Park Hotels
+;ACCO_BR_183;Trident Hotels
+;ACCO_BR_184;Ramada
+;ACCO_BR_185;Clarks Hotels
+;ACCO_BR_186;Sarovar
+;ACCO_BR_187;Leisure Hotels
+;ACCO_BR_188;Mayfair
+;ACCO_BR_189;Abad Hotels and Resorts
+;ACCO_BR_190;Usha Lexus
+;ACCO_BR_191;Lemon Tree
+;ACCO_BR_192;Red Fox
+;ACCO_BR_193;Royal Orchid
+;ACCO_BR_194;Royal Orchid Central
+;ACCO_BR_195;Pride Hotels and Resorts
+;ACCO_BR_196;Pride Biznotel
+;ACCO_BR_197;CGH Earth Hotels
+;ACCO_BR_198;HRH Group of Hotels
+;ACCO_BR_199;Neemrana Hotels
+;ACCO_BR_200;Elgin Hotels and Resorts
+;ACCO_BR_201;Club Mahindra Resorts
+;ACCO_BR_202;Country Inn
+;ACCO_BR_203;Aitken Spence Hotels and Resorts
+;ACCO_BR_204;Sinclairs Hotels
+;ACCO_BR_205;Peerless Hotels
+;ACCO_BR_206;Carnival Hotels
+;ACCO_BR_207;Best Western International
+;ACCO_BR_208;ITDC Hotels
+;ACCO_BR_209;Mansingh Hotels
+;ACCO_BR_210;Jaypee Hotels
+;ACCO_BR_211;Ambassador Hotels
+;ACCO_BR_212;Asia Hotels
+;ACCO_BR_213;Marriott ExecuStay
+;ACCO_BR_214;Americas Best Value Inn
+;ACCO_BR_215;Canadas Best Value Inn
+;ACCO_BR_216;Chinas Best Value Inn
+;ACCO_BR_217;Value Inn Worldwide
+;ACCO_BR_218;Quality Inn
+;ACCO_BR_219;Sleep Inn
+;ACCO_BR_220;Clarion Hotel
+;ACCO_BR_221;Cambria Suites
+;ACCO_BR_222;MainStay Suites
+;ACCO_BR_223;Suburban Extended Stay
+;ACCO_BR_224;Econo Lodge
+;ACCO_BR_225;Rodeway Inn
+;ACCO_BR_226;Ascend Collection
+;ACCO_BR_227;Raffles Hotels and Resorts
+;ACCO_BR_228;Pan Pacific Hotel and Resorts
+;ACCO_BR_229;Park Royal Hotels and Resorts
+;ACCO_BR_230;Anantara
+;ACCO_BR_231;Doyle Collection
+;ACCO_BR_232;First Hotels
+;ACCO_BR_233;Royal Orchid Suites
+;ACCO_BR_234;Breakfree Hotels
+;ACCO_BR_235;Peppers Hotels
+;ACCO_BR_236;Mantra Hotels
+;ACCO_BR_237;Medina Apartment Hotels
+;ACCO_BR_238;Vibe Hotels
+;ACCO_BR_239;Adina Apartment Hotels
+;ACCO_BR_240;Quay Grand
+;ACCO_BR_241;The Como
+;ACCO_BR_242;Quay West
+;ACCO_BR_243;The Sebel
+;ACCO_BR_244;Citigate
+;ACCO_BR_245;Cairns Habour Lights
+;ACCO_BR_246;Sea Temple Resort and Spa
+;ACCO_BR_247;Lindrum Hotel
+;ACCO_BR_248;Harbour Rocks Hotel
+;ACCO_BR_249;Woraburi Hotels & Resorts
+;ACCO_BR_250;Sawasdee Hotels
+;ACCO_BR_251;Sunway Hotels and Resorts
+;ACCO_BR_252;Delta Hotels and Resorts
+;ACCO_BR_253;Rockford Hotels
+;ACCO_BR_254;Andaz Hotels
+;ACCO_BR_255;Amsterdam Hospitality Group
+;ACCO_BR_256;La Loft Apartments
+;ACCO_BR_257;Nirwana Gardens
+;ACCO_BR_258;Santa Grand Hotels
+;ACCO_BR_259;8 Hotels Collection
+;ACCO_BR_260;Thistle Hotels
+;ACCO_BR_261;Cambay Hotels and Resorts
+;ACCO_BR_262;Alcon Victor Group
+;ACCO_BR_263;The Parks Hotels
+;ACCO_BR_264;Assured Hospitality Services Pvt. Ltd
+;ACCO_BR_265;Maharani Group of Hotels
+;ACCO_BR_266;Breakout Management Services
+;ACCO_BR_267;Chevron Hotels and Resorts
+;ACCO_BR_268;Vienna Hotels
+;ACCO_BR_269;Welcomhotel

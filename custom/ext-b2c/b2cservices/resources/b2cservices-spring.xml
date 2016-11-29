@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ [y] hybris Platform
+  ~ 
+  ~ Copyright (c) 2000-2016 SAP SE
+  ~ All rights reserved.
+  ~ 
+  ~ This software is the confidential and proprietary information of SAP 
+  ~ Hybris ("Confidential Information"). You shall not disclose such 
+  ~ Confidential Information and shall use it only in accordance with the 
+  ~ terms of the license agreement you entered into with SAP Hybris.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<alias alias="commerceCartCalculationStrategy" name="ezgCheckoutCartCalculationStrategy"/>
+	<bean id="ezgCheckoutCartCalculationStrategy"
+			class="com.cnk.travelogix.b2c.services.order.strategy.EzgCommerceCartCalculationStrategy"
+			parent="defaultCheckoutCartCalculationStrategy">
+		<property name="calculationService" ref="ezgMockCalculationService"/>
+	</bean>		
+			
+	<bean id="ezgMockCalculationService"
+			class="com.cnk.travelogix.b2c.services.order.service.EzgMockCalculationService"
+			parent="defaultCalculationService">
+		<!-- <property name="calculateExternalTaxes" value="true"/> -->
+	</bean>	
+	
+	 
+	<bean id="extB2cCustomerAccountService" class="com.cnk.travelogix.b2c.services.customer.impl.ExtB2cCustomerAccountService"
+			parent="defaultCustomerAccountService">
+	</bean>
+	
+	<!-- Modified by panhui for TRAV-40 START-->
+	<bean id="ezgAddHotelToCartStrategy"  
+			class="com.cnk.travelogix.b2c.services.order.strategy.EzgAddHotelToCartStrategy"
+			parent="abstractCommerceAddToCartStrategy">
+		<property name="commerceAddToCartMethodHooks" ref="commerceAddToCartMethodHooks"/>
+		<property name="configurationService" ref="configurationService"/>
+	</bean>
+	<!-- added by aizijie start -->
+	<bean id="citySearchAutocompleteService" class="com.cnk.travelogix.b2c.services.autoSuggestion.impl.DefaultCitySearchAutocompleteService">
+		<property name="facetSearchConfigService" ref="facetSearchConfigService" />
+		<property name="commonI18NService" ref="commonI18NService" />
+		<property name="solrAutoSuggestService" ref="solrAutoSuggestService" />
+		<property name="solrIndexedTypeCodeResolver" ref="solrIndexedTypeCodeResolver" />
+		<property name="solrFacetSearchConfigSelectionStrategy" ref="solrFacetSearchConfigSelectionStrategy" />
+	</bean>
+	<!-- added by aizijie end -->
+	<!-- added by aizijie start for trav-264  -->
+	<bean id="homePageService" class="com.cnk.travelogix.b2c.services.homepage.impl.DefaultHomePageService"/>
+	
+	<!-- added by aizijie end for trav-264  -->
+	<bean id="ezgAddTicketToCartStrategy"  
+			class="com.cnk.travelogix.b2c.services.order.strategy.EzgAddTicketToCartStrategy"
+			parent="abstractCommerceAddToCartStrategy">
+		<property name="commerceAddToCartMethodHooks" ref="commerceAddToCartMethodHooks"/>
+		<property name="configurationService" ref="configurationService"/>
+	</bean>
+	
+	<bean id="ezgCommerceCartService"
+			class="com.cnk.travelogix.b2c.services.order.service.EzgCommerceCartService"
+			parent="defaultCommerceCartService">
+	</bean>
+	<!-- Modified by panhui for TRAV-40 END-->  
+	
+	<bean id="b2cCreditCardService" class="com.cnk.travelogix.b2c.services.wallet.impl.ExtB2cCreditCardService"/>
+	
+	
+	<!-- Place order hook -->
+	<bean id="b2cPlaceOrderMethodHook" class="com.cnk.travelogix.b2c.services.order.hook.B2cPlaceOrderMethodHook">
+		<property name="modelService" ref="modelService" />
+	</bean>
+	
+	<bean id="b2cPlaceOrderMethodHooksMergeDirective" depends-on="commercePlaceOrderMethodHooks" parent="listMergeDirective">
+       <property name="add" ref="b2cPlaceOrderMethodHook"/>
+    </bean>
+    
+
+     <bean id="cartItemOrderHandler" class="com.cnk.travelogix.b2c.services.order.hook.CartItemOrderHandler"></bean>
+    
+     <aop:config>  
+        <aop:aspect id="cartOrderAspect" ref="cartItemOrderHandler">  
+            <aop:pointcut id="ezgCommerceCartServicePoint" expression="execution(* com.cnk.travelogix.b2c.services.order.service.*.addToCart(..))"/>  
+            <aop:after method="doAfter"  pointcut-ref="ezgCommerceCartServicePoint"/>  
+        </aop:aspect>  
+    </aop:config>  
+</beans>

@@ -1,0 +1,114 @@
+$dateformat=dd-MM-yyyy
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$approved=approvalstatus(code)[default='approved']
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.product.transport.masters.core.setup.TransportProductSetup&\transportproductmasterscore\import\sampledata\images\96Wx96H
+
+# Media Folders
+INSERT_UPDATE MediaFolder;qualifier[unique=true];path[unique=true]
+;images;images
+
+INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier)
+;resorts.png;$siteResource\resorts.png;;;images
+;tents.png;$siteResource\tents.png;;;images
+
+
+
+INSERT_UPDATE DescriptionDetails;description;fromToDate[dateformat=dd/MM/yyyy hh:mm:ss];source[unique=true];
+;Pool is under Renovation, so it will be closed for usage;23/04/2016 12:00:00,27/04/2016 12:00:00;Supplier1;
+;Few Hotel Rooms are under Renovation, there will be noise due to that;23/04/2016 12:00:00,27/04/2016 12:00:00;Hotel;
+;Pool is under Renovation, so it will be closed for usage;23/04/2016 12:00:00,27/04/2016 12:00:00;Supplier2;
+;Pool is under Renovation, so it will be closed for usage;23/04/2016 12:00:00,27/04/2016 12:00:00;Supplier3;
+;Pool is under Renovation, so it will be closed for usage;23/04/2016 12:00:00,27/04/2016 12:00:00;Supplier4;
+;Pool is under Renovation, so it will be closed for usage;23/04/2016 12:00:00,27/04/2016 12:00:00;Supplier5;
+;Pool is under Renovation, so it will be closed for usage;23/04/2016 12:00:00,27/04/2016 12:00:00;Supplier6;
+
+
+INSERT_UPDATE ShipDescription;highlights[unique=true];sellingTips[unique=true];uniqueSellingPoints[unique=true];longDescription(DescriptionDetails.source);shortDescription(DescriptionDetails.source);
+;Cruise Ship highlights;Tip 01;usp;Supplier1,Supplier2,Supplier3;Supplier4,Supplier5,Supplier6;
+
+##########ShipDimensionDetails##########							   
+INSERT_UPDATE ShipDimensionDetails;lengthOverall[unique=true];lengthAtWaterLine[unique=true];beam;grossTonnage;draftMin;draftMax;heightAtWaterLine;overallHeight[unique=true]
+;121.8;58.2;;11204;;;84.23;95.6
+
+#########ShipPerformanceCapabilities######
+INSERT_UPDATE ShipPerformanceCapabilities;maxSpeed;cruisingSpeed[unique=true];range;fuelCapacity[unique=true];waterCapacity[unique=true]
+;15;10;;100L;100L
+
+###########ShipAccomadationDetails#######
+INSERT_UPDATE ShipAccomadationDetails;guest;cabinsTotal[unique=true];cabins;crew[unique=true];noOfWheelchairsAccessibleCabins;noOfCabinsWithPrivateBalconies;noOfDecks[unique=true]
+;691;50;50;;12;10;20
+
+###########ShipEquipmentDetails####
+INSERT_UPDATE ShipEquipmentDetails;generator[unique=true];stabilizers[unique=true];thrusters[unique=true];amenities;noOfNavigationSystem_GPS
+                                  ;generator             ;stabilizers             ;thrusters             ;         ;    
+
+########RescueSecurityDetails###								  
+INSERT_UPDATE RescueSecurityDetails;cdcScore[unique=true];cdcDate[dateformat=$dateformat][unique=true];noOfLifeBoats[unique=true];noOfTenders;noOfRescueBoats
+;25;08-04-2017;5;7;3;CruiseRescueSecurityRef
+
+########ShipConstructionDetails####
+INSERT_UPDATE ShipConstructionDetails;hullMaterial[unique=true];superStructure[unique=true];deckMaterial[unique=true];deckNB;hullConfiguration
+                                     ;abc         ; abc          ;  abc       ;abc   ;abc
+
+#######ShipOverview########
+INSERT_UPDATE ShipOverview;name[unique=true];type[unique=true];model;builder;navalArchitect[unique=true];exteriorDesign;interiorDesign;year[dateformat=$dateformat];refurbished;refurbishedDescription;flag;subType;mca;shipClass;hullNB;hullColor;formalyKnownAs
+;CruiseShipOverview;CruiseShips;ScaleModel;GardenReach;GHSport;Carnival Breeze;Carnival Breeze;05-04-2015;;changed lights ;;;1092;first;;;Cruise Garden;CruiseShipOverview;1254
+
+######ShipEngineDetails####
+INSERT_UPDATE ShipEngineDetails;quantity;fuelType[unique=true];manufacturer[unique=true];model;power[unique=true];totalPower;propulsion
+                               ;40L     ;Diesel  ;Kirloskar   ;Eng-1;     ;10HP       ;
+
+#######FacilityDetail####
+INSERT_UPDATE FacilityDetail;medias(Media.code);facilityType(FacilityType.code)[unique=true];description;facilityName[unique=true]
+                            ;resorts.png;SWIMMING_POOL		                             ;Swimming Pool         ;Swimming Pool
+							;tents.png;CONTINENTAL_RESTAURANT                       			 ;Continental Restaurant ;Continental Restaurant
+							;tents.png;INDIAN_RESTAURANT										 ;Sauna                  ;Sauna
+							;resorts.png;INDIAN_RESTAURANT										 ;Badminton Court		 ;Badminton Court
+							;resorts.png;GAME_ZONE										 ;Pool Table			 ;Pool Table
+							
+							
+
+#######Deck####
+INSERT_UPDATE Deck;deckName[unique=true];deckLevel[unique=true];description;deckFacilities(FacilityDetail.facilityType(code),FacilityDetail.facilityName)[unique=true]
+;Deck2;2;Deck 2;SWIMMING_POOL:Swimming Pool
+;Deck3;3;Deck 3;CONTINENTAL_RESTAURANT:Continental Restaurant
+;Deck4;4;Deck 4;INDIAN_RESTAURANT:Badminton Court
+;Deck5;5;Deck 5;GAME_ZONE:Pool Table
+
+
+#######Cabin###
+
+INSERT_UPDATE Cabin;cabinType(code)[unique=true];cabinCategory(code)[unique=true];numberOfCabin[unique=true];cabinSize[unique=true];unit(code);cabinFacilities(FacilityDetail.facilityType(code),FacilityDetail.facilityName)[unique=true];description;deck(Deck.deckLevel,Deck.deckName)[unique=true]
+;U_OUTSIDE_CABIN;GS_GRAND_SUITE;2;300;SQ_FEET;
+;I_INSIDE_CABIN;K_INTERIOR_STATEROOM;1;400;SQ_FEET;
+
+INSERT_UPDATE CabinOccupancy;maxPax[unique=true];maxChild[unique=true];maxAdult[unique=true];ageForChildFrom;ageForChildTo;cabin(Cabin.cabinType(code),Cabin.cabinCategory(code))[unique=true]
+;3;1;2;10;12;U_OUTSIDE_CABIN:GS_GRAND_SUITE
+;2;1;1;0;0;U_OUTSIDE_CABIN:GS_GRAND_SUITE
+;2;1;1;0;0;I_INSIDE_CABIN:K_INTERIOR_STATEROOM
+
+######CruiseUpdate######
+
+
+$dateformat=dd-MM-yyyy
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+INSERT_UPDATE Ship;code[unique=true];shipCommonID[unique=true];approvalStatus(code);cruiseCompanyName(CruiseCompany.code);cruiseBrandName(CruiseBrand.code);cruiseDestinationName(CruiseDestination.code);shipCode[unique=true];shipRating(code);shipDisplayName;shipClass(code);shipCategory(code);cruiseType(code);cruiseSubType(code);isMultipleDeckAvailable;copiedFrom;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];shipDescription(ShipDescription.highlights,ShipDescription.sellingTips);shipFacilities(FacilityDetail.facilityType(code),FacilityDetail.facilityName)[unique=true];cabinInformation(Cabin.cabinType(code),Cabin.cabinCategory(code))[unique=true];shipOverview(ShipOverview.name);constructionDetails(ShipConstructionDetails.hullMaterial);engineDetails(ShipEngineDetails.fuelType);dimensionDetails(ShipDimensionDetails.lengthOverall);shipPerformanceCapabilities(ShipPerformanceCapabilities.cruisingSpeed);accommodationDetails;equipmentDetails(ShipEquipmentDetails.generator);rescueSecurityDetails(RescueSecurityDetails.cdcScore);$catalogVersion;shipname;deckDetails(deckname)
+                  ;201;202                                   ;approved             ;CruiseCompany_8556                 ;CruiseBrand_8556              ;987654_CruiseDest                            ;LH                   ;ONE             ; ROYAL CRUISE  ;OASIS_CLASS    ;ADVENTURE         ;RIVER_CRUISES   ;OVERNIGHT_CRUISE   ;true                   ;          ;28-12-2015                        ;01-01-2016                         ;Cruise Ship highlights:Tip 01                                          ;SWIMMING_POOL:Swimming Pool                          ;U_OUTSIDE_CABIN:GS_GRAND_SUITE                                                ;CruiseShipOverview               ;abc                                                     ;Diesel                                    ; 121.8                                              ;10                                                                    ;                    ;generator                                       ;25                                                               ;               ;MS Kong Harald;Deck2                
+
+
+				  
+INSERT_UPDATE CruiseUpdate;description;descriptionType[unique=true];dateRange[unique=true,dateformat=dd-MM-yyyy hh:mm:ss];source;ship(Ship.code)[unique=true]
+;All 465 soundproofed rooms feature free WiFi and 24-hour room service. ;Internal;26-04-2016 12:00:00,30-04-2016 12:00:00;Royal;201
+
+
+INSERT_UPDATE CruiseRuleInformation;ruleName[unique=true];ruleInformationFor(code)[unique=true];deck(Deck.deckLevel,Deck.deckName)[unique=true];cabin(Cabin.cabinType(code)[unique=true],Cabin.cabinCategory(code));ship(Ship.code)[unique=true]
+;Dress code;DECK;2:Deck2;U_OUTSIDE_CABIN:GS_GRAND_SUITE;201
+
+
+INSERT_UPDATE HealthAndSafety;healthAndSafetyCategory(code);healthAndSafetyName[unique=true];remarks;value;lastUpdate[dateformat=$dateformat];ship(Ship.code)[unique=true]
+; ;Hygiene;Hygienic Food;;05-04-2015;201
+

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="accommodationCoreSystemSetup" class="com.cnk.travelogix.supplier.rates.setup.AccommodationCoreSystemSetup" parent="abstractCoreSystemSetup">
+		<property name="typeService" ref="typeService" />
+		<property name="modelService" ref="modelService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	
+	<bean id="supplierRateIdKeyGenerator" class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator" init-method="init" scope="tenant">
+		<property name="key" value="Supplier_ID" />
+		<property name="digits" value="5" />
+		<property name="start" value="123" />
+		<property name="numeric" value="false" />
+	</bean>
+	
+	<bean id="AccommodationSupplierRatePrepareInterceptor"
+		class="com.cnk.travelogix.supplier.rates.interceptors.AccommodationSupplierRatePrepareInterceptor">
+			<property name="keyGenerator" ref="supplierRateIdKeyGenerator" />
+	</bean>
+	
+	<bean id="AccommodationSupplierRatePrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="AccommodationSupplierRatePrepareInterceptor" />
+		<property name="typeCode" value="AccommodationSupplierRate" />
+	</bean>
+	
+	<!-- Spring Integration -->
+	<import
+		resource="classpath:/supplierratedefinitionsaccommodation/integration/hot-folder-accommodation-rate-definitions-spring.xml" />
+
+</beans>

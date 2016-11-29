@@ -1,0 +1,40 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd/MM/yyyy
+
+
+
+##################################### CommercialPayable #######################################
+#INSERT_UPDATE CommercialPayable;paymentType;
+INSERT_UPDATE CommercialPayable;owner(ClientSettlement.code)[unique=true];standardCommercial;otherCommercial;standardCommercialType(code)[unique=true];otherCommercialHead(otherCommercialPayableType(code));commercialSettlementType(code);initialAmountPercentage;settlementSchedule(code)
+;131;true;false;COMMISSIONABLE;;COMMISSIONABLE;13;TRAVELDATE;
+
+
+##################################### CommercialReceivable #######################################
+INSERT_UPDATE CommercialReceivable;owner(ClientSettlement.code)[unique=true];settlementSchedule(code);standardCommercial;otherCommercial;otherCommercialHead(otherCommercialReceivableType(code));
+;141;TRAVELDATE;false;true;SERVICE_CHARGE
+
+##################################### ClientSettlement #######################################
+#INSERT_UPDATE ClientSettlement;entityType;
+INSERT_UPDATE ClientSettlement;code[unique=true];$catalogVersion;companyMarket(uid);commercialType(code);;clientSettlementPeriodicity(day,month,year);interestApplicable;interestPercentage;interestpercentageBasis;settlementtermId[unique=true];remarks
+;131;;ALL;PAYABLE;CommercialPay01;;true;21;;3543;Good
+;141;;ALL;RECEIVABLE;CommercialRec01;;true;21;;4321;Good
+
+INSERT_UPDATE ClientSettlement;code[unique=true];$catalogVersion;commercial(owner(ClientSettlement.code),settlementSchedule(code))
+;131;;131:TRAVELDATE
+
+##################################### OtherCommercialHead #######################################
+INSERT_UPDATE OtherCommercialHead;otherCommercialPayableType(code)[unique=true];otherCommercialReceivableType(code)[unique=true]
+;OVERRIDING_COMMISSION;SERVICE_CHARGE
+;PLB;MANAGEMENT_FEE
+
+##################################### BalanceDetails #######################################
+INSERT_UPDATE BalanceDetails;owner(CommercialPayable.owner(ClientSettlement.code))[unique=true];balanceAmountPercentage[unique=true];payInDays[unique=true];commercialPayable(owner(ClientSettlement.code))
+;131;200;3;131
+;131;250;5;131
+
+##################################### ServiceTax #######################################
+INSERT_UPDATE ServiceTax;owner(CommercialPayable.owner(ClientSettlement.code))[unique=true];fromDate[dateformat=$dateformat][unique=true];toDate[dateformat=$dateformat][unique=true];percentage;commercialPayable(owner(ClientSettlement.code))
+;131;20/04/2015;28/09/2015;21;131
+;131;29/08/2015;28/01/2016;28;131

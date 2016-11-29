@@ -1,0 +1,13 @@
+<!DOCTYPE aspectj PUBLIC
+        "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<aspectj>
+  <weaver>
+    <include within="com.cnk.travelogix..*"/>
+	<include within="com.cnk.travelogix..*"/>
+  </weaver>
+  <aspects>
+     <aspect name="com.cnk.travelogix.exception.commonlogging.aop.TravelogixAuditingAspect" />
+     <aspect name="com.cnk.travelogix.exception.commonlogging.aop.TravelogixIncidentThrowsAspect" /> 
+     <aspect name="com.cnk.travelogix.exception.commonlogging.aop.CoreAspect" />
+  </aspects>
+</aspectj>

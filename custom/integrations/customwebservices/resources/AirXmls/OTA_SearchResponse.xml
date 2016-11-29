@@ -1,0 +1,97 @@
+      <AirInterfaceRS xmlns="http://www.coxandkings.com/integ/suppl/airinterface">
+         <ResponseHeader xmlns="http://www.coxandkings.com/integ/suppl/air">
+            <Status xmlns="http://www.coxandkings.com/integ/suppl/common">SUCCESS</Status>
+            <UserID xmlns="http://www.coxandkings.com/integ/suppl/common">INFANT</UserID>
+            <SessionID xmlns="http://www.coxandkings.com/integ/suppl/common">123</SessionID>
+            <TransactionID xmlns="http://www.coxandkings.com/integ/suppl/common">123</TransactionID>
+         </ResponseHeader>
+         <ResponseBody>
+      <OTA_AirLowFareSearchRSWrapper xmlns="http://www.coxandkings.com/integ/suppl/air">
+         <SupplierID>ELSYARRES</SupplierID>
+         <tns:OTA_AirLowFareSearchRS Version="8.2" PrimaryLangID="EN" xmlns:tns="http://www.opentravel.org/OTA/2003/05">
+            <tns:Success>true</tns:Success>
+            <tns:PricedItineraries>
+               <tns:PricedItinerary>
+                  <tns:AirItinerary DirectionInd="Return">
+                     <tns:OriginDestinationOptions>
+                        <tns:OriginDestinationOption RefNumber="40" RPH="CGN_TXL__11000">
+                           <tns:FlightSegment ArrivalDateTime="2016-07-09T01:30:00" DepartureDateTime="2016-07-09T00:00:00" LineNumber="0">
+                              <tns:DepartureAirport LocationCode="CGN" CodeContext="Cologne"/>
+                              <tns:ArrivalAirport LocationCode="TXL" CodeContext="Berlin Tegel"/>
+                              <tns:OperatingAirline FlightNumber="11000" Code="1" CompanyShortName="Fake Carrier"/>
+                              <tns:MarketingAirline CompanyShortName="FakeMyAirline" Code="4"/>
+                              <tns:BookingClassAvails CabinType="Economy"/>
+                           </tns:FlightSegment>
+                        </tns:OriginDestinationOption>
+                        <tns:OriginDestinationOption RPH="TXL_CGN__11000" RefNumber="40">
+                           <tns:FlightSegment ArrivalDateTime="2016-07-25T01:30:00" DepartureDateTime="2016-07-25T00:00:00" LineNumber="0">
+                              <tns:DepartureAirport LocationCode="TXL" CodeContext="Berlin Tegel"/>
+                              <tns:ArrivalAirport LocationCode="CGN" CodeContext="Cologne"/>
+                              <tns:OperatingAirline FlightNumber="11000" Code="1" CompanyShortName="Fake Carrier"/>
+                              <tns:MarketingAirline CompanyShortName="FakeMyAirline" Code="4"/>
+                              <tns:BookingClassAvails CabinType="Economy"/>
+                           </tns:FlightSegment>
+                        </tns:OriginDestinationOption>
+                     </tns:OriginDestinationOptions>
+                  </tns:AirItinerary>
+                  <tns:AirItineraryPricingInfo QuoteID="4-160701063731-01-1628196-6307|_4-160701063731-01-1628348-5821">
+                     <tns:ItinTotalFare>
+                        <tns:Taxes>
+                           <tns:Tax RPH="40" Amount="2992"/>
+                           <tns:Tax RPH="40" Amount="2992"/>
+                        </tns:Taxes>
+                        <tns:Fees>
+                           <tns:Fee FeeCode="Baggage" Amount="2244.6"/>
+                           <tns:Fee FeeCode="CreditCard" Amount="562.65"/>
+                           <tns:Fee FeeCode="Handling" Amount="0"/>
+                        </tns:Fees>
+                        <tns:TotalFare Amount="15712.2" CurrencyCode="INR"/>
+                     </tns:ItinTotalFare>
+                     <tns:PTC_FareBreakdowns>
+                        <tns:PTC_FareBreakdown FlightRefNumberRPHList="40" PricingSource="Web">
+                           <tns:PassengerTypeQuantity Code="ADT"/>
+                           <tns:PassengerFare>
+                              <tns:BaseFare Amount="1496.4"/>
+                           </tns:PassengerFare>
+                        </tns:PTC_FareBreakdown>
+                        <tns:PTC_FareBreakdown FlightRefNumberRPHList="40" PricingSource="Web">
+                           <tns:PassengerTypeQuantity Code="CHD"/>
+                           <tns:PassengerFare>
+                              <tns:BaseFare Amount="1122.3"/>
+                           </tns:PassengerFare>
+                        </tns:PTC_FareBreakdown>
+                        <tns:PTC_FareBreakdown FlightRefNumberRPHList="40" PricingSource="Web">
+                           <tns:PassengerTypeQuantity Code="INF"/>
+                           <tns:PassengerFare>
+                              <tns:BaseFare Amount="748.2"/>
+                           </tns:PassengerFare>
+                        </tns:PTC_FareBreakdown>
+                        <tns:PTC_FareBreakdown FlightRefNumberRPHList="40" PricingSource="Web">
+                           <tns:PassengerTypeQuantity Code="ADT"/>
+                           <tns:PassengerFare>
+                              <tns:BaseFare Amount="1496.4"/>
+                           </tns:PassengerFare>
+                        </tns:PTC_FareBreakdown>
+                        <tns:PTC_FareBreakdown FlightRefNumberRPHList="40" PricingSource="Web">
+                           <tns:PassengerTypeQuantity Code="CHD"/>
+                           <tns:PassengerFare>
+                              <tns:BaseFare Amount="1122.3"/>
+                           </tns:PassengerFare>
+                        </tns:PTC_FareBreakdown>
+                        <tns:PTC_FareBreakdown FlightRefNumberRPHList="40" PricingSource="Web">
+                           <tns:PassengerTypeQuantity Code="INF"/>
+                           <tns:PassengerFare>
+                              <tns:BaseFare Amount="748.2"/>
+                           </tns:PassengerFare>
+                        </tns:PTC_FareBreakdown>
+                     </tns:PTC_FareBreakdowns>
+                  </tns:AirItineraryPricingInfo>
+               </tns:PricedItinerary>
+              
+            </tns:PricedItineraries>
+         </tns:OTA_AirLowFareSearchRS>
+      </OTA_AirLowFareSearchRSWrapper>
+
+	</ResponseBody>
+      </AirInterfaceRS>
+   

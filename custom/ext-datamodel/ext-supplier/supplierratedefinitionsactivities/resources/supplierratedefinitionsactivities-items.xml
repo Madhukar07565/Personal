@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such ~ Confidential Information and shall use it only in accordance with the ~ terms 
+	of the license agreement you entered into with SAP Hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+
+
+   <collectiontypes>
+		<collectiontype elementtype="RoomCategory" code="RoomCategoryCollection" type="set" />
+		<collectiontype elementtype="RoomType" code="RoomTypeCollection" type="set" />
+	</collectiontypes>
+	<enumtypes>
+		<enumtype code="PerCostType" dynamic="true">
+			<description>Per Cost Type Enum</description>
+			<value code="PAX_TYPE"></value>
+			<value code="FAMILY"></value>
+		</enumtype>
+		<enumtype code="UpgradeVehicleType" dynamic="true">
+			<description>Upgrade Vehicle Type</description>
+			<value code="VEHICLE_NAME"></value>
+			<value code="VEHICLE_CATEGORY"></value>
+		</enumtype>
+	</enumtypes>
+
+	<relations>
+		<relation code="ActiSuppRateDef2ActiRateDetDefRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="ActivitySupplierRateDefinition" cardinality="one" qualifier="activitySuppRateDef" />
+			<targetElement type="ActivityRateDetailDefinition" cardinality="many" qualifier="rateDetailDefs">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="ActiSuppRateDef2ActiDynamicPolicyRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="ActivitySupplierRateDefinition" cardinality="one" qualifier="supplierRateDef" />
+			<targetElement type="ActivityDynamicPolicy" cardinality="many" qualifier="dynamicPolicies">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="ActiSuppRateDef2TravelogixSupplierOfferRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="ActivitySupplierRateDefinition" cardinality="one" qualifier="supplierRateDef" />
+			<targetElement type="AbstractTravelogixSupplierOffer" cardinality="many" qualifier="absTravelogixSupplierOffers">
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityRateDetailDef2PickupAndDropOffRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="ActivityRateDetailDefinition" cardinality="one" qualifier="supplierRateDef" />
+			<targetElement type="PickupAndDropOff" cardinality="many" qualifier="pickupAndDropOffs">
+			</targetElement>
+		</relation>
+		<relation code="ActivityRateDetailDef2ActiRatesRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="ActivityRateDetailDefinition" cardinality="one" qualifier="supplierRateDef" />
+			<targetElement type="ActivityRates" cardinality="many" qualifier="activityRates">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityRateDetailDef2EventsAndTourInfoRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="ActivityRateDetailDefinition" cardinality="one" qualifier="rateDetailDef" />
+			<targetElement type="EventsAndTourInfo" cardinality="many" qualifier="eventsAndTourInfos">
+			</targetElement>
+		</relation>
+		<relation code="UpgardeTourOffer2ActivityProductRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="UpgardeTourOffer" cardinality="one" qualifier="upgardetouroffer" />
+			<targetElement type="ActivityProduct" cardinality="many" qualifier="activityproduct">
+			</targetElement>
+		</relation>
+
+	</relations>
+	<itemtypes>
+		<typegroup name="ActiviesRateDefinition">
+			<itemtype generate="true" code="ActivitiesSupplierRate" jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.ActivitiesSupplierRate"
+				extends="AbstractSupplierRate" autocreate="true">
+				<description>Activities Supplier Rate Item</description>
+				<attributes>
+					<attribute type="ActivityProductSubType" qualifier="productType">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="City" qualifier="city">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property"></persistence>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype generate="true" code="ActivitySupplierRateDefinition" jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.ActivitySupplierRateDefinition"
+				extends="AbstractRateDefinition" autocreate="true">
+				<description>Activities Rate Advance Item</description>
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="freeSaleLimited">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="ActivityInventory" qualifier="inventory">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype generate="true" code="ActivityRateDetailDefinition" jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.ActivityRateDetailDefinition"
+				autocreate="true">
+				<description>Activities Rate Advance Item</description>
+				<deployment table="activityratedetdef" typecode="22091" />
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="minPaxCount">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property"></persistence>
+						<defaultvalue>java.lang.Integer.valueOf(0)</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="maxPaxCount">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property"></persistence>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype generate="true" code="ActivityRateAdvDefinition" jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.ActivityRateAdvDefinition"
+				extends="AbstractRateAdvDefinition" autocreate="true">
+				<description>Activities Rate Advance Item</description>
+				<attributes>
+					<attribute type="localized:java.lang.String" qualifier="voucherInformation">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="OperatorName" qualifier="operatorName">
+						<modifiers read="true" write="true"  optional="false"/>
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="operatorDetails">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype generate="true" code="ActivitySurchargeSuppDetail" extends="AbstractSurchargeSuppDetail"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.ActivitySurchargeSuppDetail" autocreate="true">
+				<description>Activities Rate Advance Item</description>
+				<attributes>
+					<attribute type="java.lang.Double" qualifier="stdCommissionValue">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="ThresholdType" qualifier="stdCommissionType">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="PerCostType" qualifier="costPerType">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" ></persistence>
+					</attribute>
+					<attribute type="PaxType" qualifier="passengerType">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="AgeDetail" qualifier="ageDetail">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="amount">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="AccoSurchargeSubType" qualifier="subType">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="OtherSurcharge" qualifier="otherSurcharge">
+						<modifiers read="true" write="true" partof="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="MealSupplementDetail" qualifier="mealSupplementDetail">
+						<modifiers read="true" write="true" partof="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="GuideSurchargeDetail" qualifier="guideSurchargeDetail">
+						<modifiers read="true" write="true" partof="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype generate="true" code="MealSupplementDetail" jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.MealSupplementDetail"
+				autocreate="true">
+				<description>Meal Supplement Detail Item</description>
+				<deployment table="mealspmtdet" typecode="22092" />
+				<attributes>
+					<attribute type="MenuName" qualifier="menuName">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="MenuItemName" qualifier="menuItemName">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="MealType" qualifier="mealType">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype generate="true" code="GuideSurchargeDetail" jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.GuideSurchargeDetail"
+				autocreate="true">
+				<description>Guide Surcharge Detail Item</description>
+				<deployment table="guidesurchadet " typecode="22093" />
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="slabTo">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="Language" qualifier="language">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="SpecialSkillType" qualifier="specialSkills">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="slabFrom">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype generate="true" code="ActivityRates" jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.ActivityRates"
+				autocreate="true">
+				<description>Activity Rates Item</description>
+				<deployment table="activityrates " typecode="22094" />
+				<attributes>
+					<attribute type="PerCostType" qualifier="costPerType">
+						<modifiers read="true" write="true" optional="false" unique="true"/>
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="PaxType" qualifier="paxType">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="AgeDetail" qualifier="ageDetail">
+						<modifiers read="true" write="true"/>
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="RailTicketType" qualifier="ticketType">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="price">
+						<modifiers read="true" write="true" optional="false"/>
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="payOnArrival">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype generate="true" code="OtherSurcharge" jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.OtherSurcharge"
+				autocreate="true">
+				<description>Other Surcharge Item</description>
+				<deployment table="othersurcharge" typecode="22095" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="details">
+						<modifiers read="true" write="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+
+			<!-- Temp Item -->
+			<itemtype generate="true" code="ActivityInventory" jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.ActivityInventory"
+				autocreate="true">
+				<description>Other Surcharge Item</description>
+				<deployment table="activityinventory" typecode="22096" />
+			</itemtype>
+				<itemtype code="FreeActivitiesOffer" autocreate="true" generate="true" extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.FreeActivitiesOffer">
+				<description>Free Activities Offer</description>
+				<attributes>
+					<attribute type="City" qualifier="city">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="noOfActivitiesPurchased">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ActivityProductSubType" qualifier="productSubType">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="minPax">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="maxPax">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RoomCategoryCollection" qualifier="roomCategory">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RoomTypeCollection" qualifier="roomType">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="noOfNights">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DiscountCalculatedOnType" qualifier="discountCalculatedOn">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="TwoForPriceOfOneOffer" autocreate="true" generate="true" extends="FreeActivitiesOffer"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.TwoForPriceOfOneOffer">
+				<description>Two For Price Of One Offer</description>
+				<deployment table="twofroneprcofrtab" typecode="22157" />
+				<attributes>
+					<attribute type="java.lang.Double" qualifier="discountValue2">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ThresholdType" qualifier="thresholdType2">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="NonAirPriceComponentType" qualifier="priceComponent2">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="UpgradeSeatingOffer" autocreate="true" generate="true" extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.UpgradeSeatingOffer">
+				<description>Upgrade Seating Offer</description>
+				<attributes>
+					<attribute type="ThresholdType" qualifier="thresholdType"
+					    redeclare="true">
+						<modifiers write="false"  /> 
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="discountValue"
+					    redeclare="true">
+						<modifiers write="false"  />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PaxType" qualifier="passengerType">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SeatClass" qualifier="upgradeSeatClassFrom">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SeatClass" qualifier="upgradeSeatClassTo">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="UpgardeTourOffer" autocreate="true" generate="true" extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.UpgardeTourOffer">
+				<description>Upgarde Tour Offer</description>
+				<attributes>
+					<attribute type="ThresholdType" qualifier="thresholdType"
+					    redeclare="true">
+						<modifiers write="false"  /> 
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="discountValue"
+					    redeclare="true">
+						<modifiers write="false"   />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="City" qualifier="city">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ActivityProduct" qualifier="upgradeToProduct">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="OfferRate" autocreate="true" generate="true" extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.OfferRate">
+				<description>Offer Rate</description>
+				<attributes>
+					<attribute type="ThresholdType" qualifier="thresholdType"
+					    redeclare="true">
+						<modifiers write="false"  /> 
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="discountValue"
+					    redeclare="true">
+						<modifiers write="false"  />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="DiscountOnActivitiesPurchased" autocreate="true" generate="true" extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.DiscountOnActivitiesPurchased">
+				<description>Discount On Activities Purchased</description>
+				<attributes>
+					<attribute type="City" qualifier="city">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="noOfActivitiesPurchased">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ActivityProductSubType" qualifier="productSubType">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="minPax">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="maxPax">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PaxType" qualifier="passengerType">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DiscountCalculatedOnType" qualifier="discountCalculatedOn">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="NightOrActivityAncillaryDiscountOffer" autocreate="true" generate="true" extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.NightOrActivityAncillaryDiscountOffer">
+				<description>Night Or Activity Ancillary Discount Offer</description>
+				<attributes>
+					<attribute type="City" qualifier="city">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="noOfActivitiesPurchased">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="minPax">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="maxPax">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PaxType" qualifier="passengerType">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DiscountCalculatedOnType" qualifier="discountCalculatedOn">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="noOfActivitiesFOC">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="UpgradeVehicleOffer" autocreate="true" generate="true" extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.supplierrates.activities.UpgradeVehicleOffer">
+				<description>Upgrade Vehicle Offer</description>
+				<attributes>
+					<attribute type="ThresholdType" qualifier="thresholdType"
+					    redeclare="true">
+						<modifiers write="false"  /> 
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="discountValue"
+					    redeclare="true">
+						<modifiers write="false"   />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TransferType" qualifier="transferType">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="VehicleType" qualifier="vehicleType">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Vehicle" qualifier="vehicle">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="airConditionedVehicle">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="UpgradeVehicleType" qualifier="upgradeType">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="VehicleCategory" qualifier="upgradedVehicleCategory">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Vehicle" qualifier="upgradedVehicleName">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="airConditionAfterUpgrade">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

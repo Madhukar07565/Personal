@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<action-definition id="com.cnk.travelogix.mdmbackoffice.actions.SubmitAction" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/action-definition.xsd">
+
+	 <name>mdmbackoffice.submitButton</name>
+    <description>Submit to Approval</description>
+    <author>hybris</author>
+    <version>0.1</version>  
+    <actionClassName>com.cnk.travelogix.mdmbackoffice.actions.SubmitAction</actionClassName>
+    <customRendererClassName>com.cnk.travelogix.mdmbackoffice.renderer.CustomActionRenderer</customRendererClassName> 
+    <inputType>de.hybris.platform.core.model.ItemModel</inputType>
+    <outputType>java.lang.String</outputType>
+ 	<iconUri>icons/submit_default.png</iconUri>
+ 	<iconHoverUri>icons/submit_active.png</iconHoverUri>
+    <iconDisabledUri>icons/submit_disabled.png</iconDisabledUri>
+</action-definition>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~ [y] hybris Platform
+  ~ 
+  ~ Copyright (c) 2000-2016 SAP SE
+  ~ All rights reserved.
+  ~ 
+  ~ This software is the confidential and proprietary information of SAP 
+  ~ Hybris ("Confidential Information"). You shall not disclose such 
+  ~ Confidential Information and shall use it only in accordance with the 
+  ~ terms of the license agreement you entered into with SAP Hybris.
+  -->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<enumtypes>
+		<enumtype generate="true" code="Handling" autocreate="true">
+			<description>Defines Client Group Reason</description>
+			<value code="UNKNOWN" />
+			<value code="RECOVERABLE" />
+			<value code="UNRECOVERABLE" />
+			<value code="AGENT_ATTENTION" />
+		</enumtype>
+		<enumtype code="ErrorCategory" autocreate="true" generate="false"
+			dynamic="true">
+			<value code="UNKNOWN"></value>
+			<value code="EXCEPTION"></value>
+			<value code="CREDITCARDVALIDATION"></value>
+			<value code="DATAVALIDATION"></value>
+			<value code="AUTHENTICATION"></value>
+			<value code="UNABLETOPROCESSREQUEST"></value>
+			<value code="INVALIDPROPERTYID"></value>
+			<value code="REQUESTNULL"></value>
+			<value code="PROCESSFAIL"></value>
+			<value code="SOLDOUT"></value>
+			<value code="RESTRICTEDCHECKIN"></value>
+			<value code="ONLYONEROOMBOOKED"></value>
+			<value code="SUPPLIERCOMMUNICTAION"></value>
+			<value code="PAYERAUTHENTICATIONREQUIRED"></value>
+		</enumtype>
+		<enumtype generate="true" code="ErrorType" autocreate="true">
+			<description>Defines Client Group Reason</description>
+			<value code="UNKNOWN" />
+			<value code="RECOVERABLE" />
+			<value code="UNRECOVERABLE" />
+			<value code="AGENT_ATTENTION" />
+		</enumtype>
+		
+		<enumtype generate="true" code="SupplierErrorType" autocreate="true">
+			<description>Supplier Error Type</description>
+			<value code="SUPPLIER" />
+			<value code="NONSUPPLIER" />
+		</enumtype>
+		
+		<!-- <enumtype generate="true" code="Supplier" autocreate="true">
+			<description>Supplier </description>
+			<value code="AMADEOUS" />
+			<value code="NONAMADEOUS" />
+		</enumtype> -->
+	</enumtypes>
+	
+	 <relations>
+		<relation code="ErrorMaster2Supplier" localized="false">
+		<deployment table="ErrorMaster2Supplier" typecode="27000" />
+				<sourceElement type="TravelogixErrorMaster" cardinality="many"
+					qualifier="travelogixErrorMasters" collectiontype="set" />
+				<targetElement type="SupplierError" cardinality="many"
+					qualifier="supplierErrors" collectiontype="set">
+				</targetElement>
+			</relation>
+	</relations>
+			
+	<itemtypes>
+		<typegroup name="travelogixlog">
+           <itemtype code="TravelogixErrorMaster" 
+                 jaloclass="com.cnk.travelogix.exception.commonlogging.errorlog.jalo.TravelogixErrorMaster">
+                 <deployment table="travelogixerror" typecode="25050" />
+                       <attributes>
+                       		  <attribute type="java.lang.String" qualifier="errorCode">
+                                   <persistence type="property" />
+                                   <modifiers optional="false" />
+                             </attribute>
+                             <attribute type="ErrorCategory" qualifier="errorCategory">
+                                   <persistence type="property" />
+                             </attribute>
+                             <attribute type="Handling" qualifier="handling">
+                                   <persistence type="property" />
+                             </attribute>                        
+                             <attribute type="errorType" qualifier="errorType">
+                                   <persistence type="property" />
+                             </attribute>
+                             <attribute type="java.lang.Boolean" qualifier="reportingRequired">
+                                   <persistence type="property" />
+                                   <defaultvalue>Boolean.FALSE</defaultvalue>
+                             </attribute>
+                             <attribute type="java.lang.Boolean" qualifier="operationRequired">
+                                   <persistence type="property" />
+                                   <defaultvalue>Boolean.FALSE</defaultvalue>
+                             </attribute>
+                             <attribute type="java.lang.Boolean" qualifier="supplierError">
+                                   <persistence type="property" />
+                                   <defaultvalue>Boolean.FALSE</defaultvalue>
+                             </attribute>
+                             <attribute type="java.lang.String" qualifier="presentationMsg">
+                                   <persistence type="property" />
+                             </attribute>
+                             <attribute type="java.lang.String" qualifier="verboseMsg">
+                                   <persistence type="property" />
+                             </attribute>
+                             <attribute type="java.lang.String" qualifier="correctiveMeasures">
+                                   <persistence type="property" />
+                             </attribute>
+                       </attributes>
+                 </itemtype>
+                 
+	             <itemtype code="SupplierError"  jaloclass="com.cnk.travelogix.exception.commonlogging.errorlog.jalo.SupplierError">
+					<deployment table="supplierError" typecode="25051" />
+					<attributes>
+	                       		 <attribute type="SupplierErrorType" qualifier="supplierErrorType">
+	                                   <persistence type="property" />
+	                             </attribute>
+	                             <attribute type="Supplier" qualifier="supplier">
+	                                   <persistence type="property" />
+	                             </attribute>
+	                             <attribute type="java.lang.String" qualifier="supplierErrorCode">
+	                                   <persistence type="property" />
+	                             </attribute>                     
+	                             <attribute type="java.lang.String" qualifier="supplierErrorMessage">
+	                                   <persistence type="property" />
+	                             </attribute>  
+	                            
+					</attributes>
+				</itemtype>
+            </typegroup>
+	</itemtypes>
+</items>

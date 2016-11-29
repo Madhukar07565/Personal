@@ -1,0 +1,3 @@
+# childAge;costPer;durationType;durationValue;paxType;seatingType;startTime;vehicleType
+6:10;PER_ROOM;DAYS;23;ADULT;XYZ;22.04.2016 12:00:00;FLIGHTS
+5:15;PER_ROOM;HOURS;65;CHILD;type;29.04.2016 12:00:00;FLIGHTS

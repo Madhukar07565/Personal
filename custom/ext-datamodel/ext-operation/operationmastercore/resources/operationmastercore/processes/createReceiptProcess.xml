@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<process xmlns="http://www.hybris.de/xsd/processdefinition" start="createPaymentReceipt" name="createPaymentReceiptProcess"
+		processClass="com.cnk.travelogix.common.core.model.receipts.TravelogixPaymentReceiptModel" onError="error">
+
+	<action id="createPaymentReceipt" bean="createPaymentReceipt">
+		<transition name="OK" to="createPaymentReceiptAction"/>
+		<transition name="NOK" to="error"/>
+	</action>	
+	<end id="error" state="ERROR">Something went wrong.</end>
+	<end id="failed" state="FAILED">Could not create receipt</end>
+	<end id="success" state="SUCCEEDED">receipt created</end>
+
+</process>

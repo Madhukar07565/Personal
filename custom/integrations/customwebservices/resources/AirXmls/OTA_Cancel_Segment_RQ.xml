@@ -1,0 +1,56 @@
+<air1:AirInterfaceRQ xmlns:air="http://www.coxandkings.com/integ/suppl/air" xmlns:com="http://www.coxandkings.com/integ/suppl/common" xmlns:air1="http://www.coxandkings.com/integ/suppl/airinterface" xmlns:ns="http://www.opentravel.org/OTA/2003/05">
+    <air:RequestHeader>
+        <!--Optional:-->
+        <com:UserID>Test</com:UserID>
+      <com:SessionID>123</com:SessionID>
+      <com:TransactionID>10</com:TransactionID>
+        <!--Optional:-->
+        <com:SupplierCredentialsList>
+            <!--1 or more repetitions:-->
+            <com:SupplierCredentials>
+            <com:SupplierID>INDIGO</com:SupplierID>
+            <com:Credentials>
+               <com:Credential name="DomainCode">WWW</com:Credential>
+               <com:Credential name="AgentName">OTI004</com:Credential>
+               <com:Credential name="Password">Indigo@2016</com:Credential>
+            </com:Credentials>
+         </com:SupplierCredentials>
+            </com:SupplierCredentialsList>
+    </air:RequestHeader>
+    <air1:RequestBody>
+   <air:OTA_CancelRQWrapper>
+            <air:SupplierID>INDIGO</air:SupplierID>
+            <air:Sequence>1</air:Sequence>
+              <ns:OTA_CancelRQ CancelType="Cancel" Version="1">
+         <ns:POS>
+            <ns:Source/>
+         </ns:POS>
+         <ns:UniqueID Type="14" ID="LYE7UT" ID_Context="SSR">
+            <ns:TPA_Extensions>
+               <air:ExtendedRPH>6E~ 546~ ~~BLR~07/16/2016 00:15~HYD~07/16/2016 01:15~</air:ExtendedRPH>
+               <air:FlightNumber>546</air:FlightNumber>
+               <air:CarrierCode>6E</air:CarrierCode>
+                <air:SSR>
+                  <SpecialServiceRequests>
+                     <SpecialServiceRequest FlightRefNumberRPHList="1" TravelerRefNumberRPHList="1" SSRCode="XBPA" Number="1" ServiceQuantity="1"/>
+                   
+                  </SpecialServiceRequests>
+               </air:SSR>
+            </ns:TPA_Extensions>
+         </ns:UniqueID>
+         <ns:Verification>
+         <ns:StartLocation AssociatedDateTime = "2016-07-16T00:15:00" LocationCode = "BLR"/>
+         <ns:EndLocation AssociatedDateTime = "2016-06-15T01:15:00" LocationCode = "HYD"/>
+         
+         
+         </ns:Verification>
+         <ns:OriginAndDestinationSegment>
+            <ns:OriginLocation LocationCode="BLR"/>
+            <ns:DestinationLocation LocationCode="HDR"/>
+         </ns:OriginAndDestinationSegment>
+      </ns:OTA_CancelRQ>
+  
+        </air:OTA_CancelRQWrapper>
+     
+            </air1:RequestBody>
+</air1:AirInterfaceRQ>

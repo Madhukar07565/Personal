@@ -1,0 +1,45 @@
+$lang=en
+INSERT_UPDATE Bank;code[unique=true];name[lang=$lang]
+;SBBJ;State Bank of Bikaner & Jaipur
+;SBH;State Bank of Hyderabad
+;SBP;State Bank of Patiala
+;SBM;State Bank of Mysore
+;SBT;State Bank of Travancore
+;AB;Allahabad Bank
+;AB;Andhra Bank
+;B;Bank of baroda
+;BI;Bank of India
+;BM;Bank of Maharashtra
+;CB;Canara Bank
+;CBI;Central Bank of India
+;CB;Corporation Bank
+;DB;Dena Bank
+;IB;Indian Bank
+;IOB;Indian Overseas Bank
+;OBC;Oriental Bank of Commerce
+;PSB;Punjab & Sind Bank
+;PNB;Punjab National Bank
+;SB;Syndicate Bank
+;UCOB;UCO Bank
+;UBI;Union Bank of India
+;UBI;United Bank of India
+;VB;Vijaya Bank
+;CSB;Catholic Syrian Bank
+;CUB;City Union Bank
+;DB;Dhanlaxmi Bank
+;FB;Federal Bank
+;JKB;Jammu and Kashmir Bank
+;KB;Karnataka Bank
+;KVB;Karur Vysya Bank
+;LVB;Lakshmi Vilas Bank
+;NB;Nainital Bank
+;RB;Ratnakar Bank
+;SIB;South Indian Bank
+;TMB;Tamilnad Mercantile Bank
+;ICICIB;ICICI Bank
+;HDFCB;HDFC Bank
+;AB;Axis Bank
+;KMB;Kotak Mahindra Bank
+;IIB;IndusInd Bank
+;DCB;Development Credit Bank
+;YB;Yes Bank

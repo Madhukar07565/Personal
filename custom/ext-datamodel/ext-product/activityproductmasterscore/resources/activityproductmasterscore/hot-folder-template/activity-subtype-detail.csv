@@ -1,0 +1,12 @@
+Header Name;compay Name; commonProductID;code;placeOfEvent;transferType;productType;startingPoint;endingPoint;duration;uniqueSellingPoint;isPickupAndDropOff;fromTime;toTime;exclusionDescription
+ActivityProductSubType;Ezeego1;11234;1100;PORT;SHARED;DAYCRUISE;west coast;east coast;6:00;west harbour;TRUE;7:30;13:30;Activity desc
+Header Name;entertainmentType;nameAndDescription
+Entertainment;Cruise;other
+Header Name;isDriver;audioCommentryAvailable;description;language
+Guide;TRUE;TRUE;guidelines of activity product;hi
+Guide;TRUE;FALSE;Guide available for avtivity;en
+Header Name;panaromic;sightSeeing;photoSpot;duration
+Attraction;TRUE;TRUE;TRUE;2:30
+Header Name;timeOfDay;supplierName
+OperationDuration;MORNING;Cruise-Company123
+

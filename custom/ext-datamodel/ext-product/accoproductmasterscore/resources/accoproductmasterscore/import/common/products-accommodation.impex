@@ -1,0 +1,205 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.product.accommodation.masters.core.setup.AccoProductMastersCoreSystemSetup&\accoproductmasterscore\import\sampledata\images\96Wx96H
+$approved=approvalstatus(code)[default='approved']
+
+
+INSERT_UPDATE Media;code;fileName(FileName.code)[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier);
+;hotel.jpg;Exterior view;$siteResource\hotel.jpg;;;
+;motel.jpg;Lobby view;$siteResource\motel.jpg;;;
+;resorts.jpg;Pool view;$siteResource\resorts.jpg;;;
+;hostel.jpg;Restaurant;$siteResource\hostel.jpg;;;
+;lodge.jpg;Health club;$siteResource\lodge.jpg;;;
+;appartment.jpg;Suite;$siteResource\appartment.jpg;;;
+;guestHouse.jpg;Meeting room;$siteResource\guestHouse.jpg;;;
+
+
+INSERT_UPDATE Accommodation;$catalogVersion[unique=true];code[unique=true][forceWrite=true];commonProductID[unique=true];financeControlId;name;$approved;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];supercategories(code,$catalogVersion);ratingDate[dateformat=$dateformat];totalFloors;totalRooms;checkinTime;checkoutTime;internalRemark;companyRecommended;mysteryProduct;displayName;hotelRating(code);companyRating(code);recommendedFor(code);hashTags(code);resortType(code);logo(Media.fileName(FileName.code));chain(AccommodationChain.code);brand(AccommodationBrand.code);affiliation(Affiliation.code);address(owner(Accommodation.code));reason;remarks;active[default=FALSE]
+;;87762;10012;;Crowne Plaza;;11-05-2016;13-06-2017;C002ST001;;;;14:00;12:00;;;true;;THREE;;;SHOPPER;;Exterior view;160;ACCO_BR_01;;
+;;15740;10012;;Atlantis The Palm;;11-05-2016;13-06-2017;C002ST002;;;;15:00;11:00;;;false;;FIVE;;;SHOPPER;;Lobby view;161;ACCO_BR_02;;
+;;12121;10012;;Hyatt Regency;;11-05-2016;13-06-2017;C002ST003;;;233;14:00;12:00;;;false;;FIVE;;;SHOPPER;;Pool view;162;ACCO_BR_03
+;;68641;10032;;Taj Palace;;11-05-2016;13-06-2017;C002ST004;;;462;14:00;12:00;;;false;;FIVE;;;;;Lobby view;163;ACCO_BR_04
+;;1111;10032;;Waterfront Apartments;;11-05-2016;13-06-2017;C002ST005;;;;16:00;10:30;;;false;;FOUR;;;;;Suite;164;ACCO_BR_05
+;;2222;10032;;8 Ludgate Square Apartments;;11-05-2016;13-06-2017;C002ST006;;;;15:00;11:00;;;false;;FIVE;;;;;Restaurant;165;ACCO_BR_06
+;;1303;10032;;Hilton London Kensington hotel;;11-05-2016;13-06-2017;C002ST007;;;;14:00;12:00;;;false;;THREE;;;;;Health club;166;ACCO_BR_07
+;;3177;10034;;Copthorne Hotel Effingham Gatwick;;11-05-2016;13-06-2017;C002ST008;;;;14:00;12:00;;;false;;FOUR;;;;;Exterior view;167;ACCO_BR_08
+;;6163;10034;;Menzies Strathmore;;11-05-2016;13-06-2017;C002ST009;;;;14:00;12:00;;;false;;THREE;;;;;Lobby view;168;ACCO_BR_09
+;;12125;10034;;Hyatt Regency;;11-05-2016;13-06-2017;C002ST010;;;233;14:00;12:00;;;false;;FIVE;;;;;Pool view;169;ACCO_BR_10
+;;68645;10034;;Taj Palace;;11-05-2016;13-06-2017;C002ST011;;;462;14:00;12:00;;;false;;FIVE;;;;;Lobby view;170;ACCO_BR_11
+;;11561;10034;;Waterfront Apartments ;;11-05-2016;13-06-2017;C002ST012;;;;16:00;10:30;;;false;;FIVE;;;;;Suite;171;ACCO_BR_12
+;;22252;10039;;8 Ludgate Square Apartments;;11-05-2016;13-06-2017;C002ST013;;;;15:00;11:00;;;false;;FIVE;;;;;Restaurant;172;ACCO_BR_13
+;;13073;10039;;Hilton London Kensington hotel;;11-05-2016;13-06-2017;C002ST014;;;;14:00;12:00;;;false;;FOUR;;;;;Health club;173;ACCO_BR_14
+;;31677;10039;;Copthorne Hotel Effingham Gatwick;;11-05-2016;13-06-2017;C002ST015;;;;14:00;12:00;;;false;;THREE;;;;;Exterior view;174;ACCO_BR_15
+;;61633;10039;;Menzies Strathmore;;11-05-2016;13-06-2017;C002ST016;;;;14:00;12:00;;;false;;FIVE;;;;;Lobby view;175;ACCO_BR_16
+;;11191;10039;;Waterfront Apartments;;11-05-2016;13-06-2017;C001;;;;16:00;10:30;;;false;;FOUR;;;;;Pool view;176;ACCO_BR_17
+
+INSERT_UPDATE Address;owner(Accommodation.code)[unique=true];streetname[unique=true];streetnumber[unique=true];postalcode;duplicate;town;country(isocode);street3;street4;street5;suburbDowntown;area;location;latitude;longitude;addressType;branchName;city(isocode)
+;87762;Crystal Drive;1480;18551;true;Safegard;US;
+
+INSERT_UPDATE ProductUpdate;updateType(code)[unique=true];descriptionType(code)[unique=true];description;sendToCustomer;showOnVoucher;modeOfCommunication(code)[unique=true];fromToDate[unique=true,dateformat=dd-MM-yyyy hh:mm:ss];product(code,$catalogVersion)[unique=true]
+;Renovation;Internal;Pool is under Renovation, so it will be closed for usage;true;true;MOBILE;11-05-2016 12:00:00,27-05-2016 12:00:00;87762
+;Renovation;External;Few Hotel Rooms are under Renovation, there will be noise due to that;true;true;FAX;11-05-2016 12:00:00,27-05-2016 12:00:00;15740
+
+INSERT_UPDATE Facility;accommodation(code)[unique=true];facilityCategory(code)[unique=true];facilityType(code);facilityName;description
+;87762;ACTIVITIES;SWIMMING_POOL;Continental Restaurant
+;15740;ACTIVITIES;SWIMMING_POOL;Indian Restaurant
+;12121;RECREATIONAL;SWIMMING_POOL;Arcade/game room
+;68641;RECREATIONAL;SWIMMING_POOL;Beach/pool umbrellas
+;1111;ACTIVITIES;SWIMMING_POOL;Batminton Court
+;2222;ACTIVITIES;SWIMMING_POOL;Game Zone
+;1303;ACTIVITIES;SWIMMING_POOL;Fitness Centre Amenities
+;3177;ACTIVITIES;SWIMMING_POOL;Barbecue grill(s)
+;6163;ACTIVITIES;SWIMMING_POOL;Bar / Lounge
+;12125;ACTIVITIES;SWIMMING_POOL;Parking Facilities
+;68645;ACTIVITIES;SWIMMING_POOL;Gym / Fitness Facilities
+;11561;ACTIVITIES;SWIMMING_POOL;Batminton Court
+;22252;RECREATIONAL;SWIMMING_POOL;Beach/pool umbrellas
+;13073;RECREATIONAL;SWIMMING_POOL;Indian Restaurant
+;31677;ACTIVITIES;SWIMMING_POOL;Continental Restaurant
+;61633;ACTIVITIES;SWIMMING_POOL;Arcade/game room
+;11191;ACTIVITIES;SWIMMING_POOL;Bar / Lounge
+
+########################### Short Description ##########################
+INSERT_UPDATE DescriptionDetails;description;fromToDate[dateformat=dd-MM-yyyy hh:mm:ss][unique=true];source;productShortDescription(code)
+;Pool is under Renovation, so it will be closed for usage1;20-04-2016 12:00:00,22-04-2016 12:00:00;Supplier1;87762
+;Few Hotel Rooms are under Renovation, there will be noise due to that2;21-04-2016 12:00:00,23-04-2016 12:00:00;Hotel;87762
+;foot balll court is under Renovation, so it will be closed for usage3;22-04-2016 12:00:00,24-04-2016 12:00:00;Supplier2;87762
+
+########################### Long Description ##########################
+INSERT_UPDATE DescriptionDetails;description;fromToDate[dateformat=dd-MM-yyyy hh:mm:ss][unique=true];source;productLongDescription(code)
+;Game is under Renovation, so it will be closed for usage4;23-04-2016 12:00:00,25-04-2016 12:00:00;Supplier3;15740
+;cricket ground is under Renovation, so it will be closed for usage5;24-04-2016 12:00:00,26-04-2016 12:00:00;Supplier4;15740
+;Basketball ground is under Renovation, so it will be closed for usage6;25-04-2016 12:00:00,26-04-2016 12:00:00;Supplier5;15740
+;Pool is under Renovation, so it will be closed for usage7;26-04-2016 12:00:00,27-04-2016 12:00:00;Supplier6;12121
+
+###########################  ProductContactDetails ##########################
+INSERT_UPDATE ContactDetails;accommodation(Accommodation.code)[unique=true];telephone;fax;websiteUrl;email
+;87762;22584552;22584555;www.test.com;test@test.com
+;15740;22584552;22584555;www.test.com;test@test.com
+;12121;22584552;22584555;www.test.com;test@test.com
+;68641;22584552;22584555;www.test.com;test@test.com
+;1111;22584552;22584555;www.test.com;test@test.com
+;2222;22584552;22584555;www.test.com;test@test.com
+;1303;22584552;22584555;www.test.com;test@test.com
+;3177;22584552;22584555;www.test.com;test@test.com
+;6163;22584552;22584555;www.test.com;test@test.com
+;12125;22584552;22584555;www.test.com;test@test.com
+;68645;22584552;22584555;www.test.com;test@test.com
+;11561;22584552;22584555;www.test.com;test@test.com
+;22252;22584552;22584555;www.test.com;test@test.com
+;13073;22584552;22584555;www.test.com;test@test.com
+;31677;22584552;22584555;www.test.com;test@test.com
+;61633;22584552;22584555;www.test.com;test@test.com
+;11191;22584552;22584555;www.test.com;test@test.com
+
+###########################  Route ##########################
+
+INSERT_UPDATE Route;distanceFromProperty;approximateDuration;description;drivingDirection;validFromTO[dateformat=dd/MM/yyyy hh:mm:ss];distanceUnit(code);accommodation(code,$catalogVersion)[unique=true];from;nameOfPlace;modeOfTransport(code);transportType
+;;;Distance from the Airport 3.5 miles;;;;;
+;;;Distance from airport is about 35 minutes drive;;;;;
+;11.0;;Cab Service available at extra charge;;;;
+;11.5;;Cab Service available at extra charge;;;;
+;10.0;;Cab Service available at extra charge;;;;
+;22.0;;Cab Service available at extra charge;;;;
+;10.0;;Cab Service available at extra charge;;;;
+;21.0;;Cab Service available at extra charge;;;;
+;15.0;;Cab Service available at extra charge;;;;
+;25.0;;Cab Service available at extra charge;;;;
+;11.5;;Cab Service available at extra charge;;;;
+;10.0;;Cab Service available at extra charge;;;;
+;22.0;;Cab Service available at extra charge;;;;
+;10.0;;Cab Service available at extra charge;;;;
+;21.0;;Cab Service available at extra charge;;;;
+;15.0;;Cab Service available at extra charge;;;;
+;25.0;;Cab Service available at extra charge;;;;
+
+###########################  Landmark ##########################
+INSERT_UPDATE PlaceDescription;placeName;distanceFromProperty;description;accommodation(code,$catalogVersion)[unique=true];placeOfCategory(code);distanceUnit(code)
+;Washington Convention Center;4 MI;;87762;
+;Smithsonian Museums;2 MI;;15740;
+
+###########################  In and Around ##########################
+INSERT_UPDATE PlaceDescription;placeName;distanceFromProperty;description;accommodation(code,$catalogVersion)[unique=true];placeOfCategory(code);distanceUnit(code)
+;Dolphin Bay;;;12121;
+;Ossiano;;Ossiano is an award-winning seafood restaurant with stunning views of the Ambassador Lagoon, making it the most luxurious dining experience at Atlantis;68641
+
+###########################  HealthAndSafety ##########################
+INSERT_UPDATE HealthAndSafety;accommodation(code);remarks;value;lastUpdate[dateformat=$dateformat];owner(Product.code)[unique=true];healthAndSafetyCategory;healthAndSafetyName;
+;87762;Good;21;31-12-2016;87762
+
+####################### RoomPaxOccupancyFor HOTEL/ MOTEL/ GUEST HOUSE/ LODGES/ HOSTEL/ RESORTS ##########################
+INSERT_UPDATE RoomPaxOccupancy;roomId[unique=true];maxAdults;maxPaxWithExtraBed;maxCNB;maxChild;maxPax;accommodation(code,$catalogVersion)[unique=true];roomType(code);fromAgeForExtraBed;toAgeForExtraBed;fromAgeForCNB;toAgeForCNB;fromAgeForCIOR;toAgeForCIOR;category(code)
+;5555;1;2;0;1;1;87762
+;6666;0;0;0;1;1;15740
+;7777;0;0;0;1;1;1303
+;2222;2;0;0;1;1;68641
+;3333;1;2;0;1;1;1111
+;1111;1;0;1;2;1;12121
+;1116;1;1;0;1;1;13073
+
+
+INSERT_UPDATE RuleInfo;description[unique=true];accommodation(code,$catalogVersion)[unique=true];ruleType(TravelogixRuleType.code)[unique=true];
+;Pets not allowed1;87762;Pets Policy
+;Smoking allowed only in designated places2;15740;Smoking Policy
+;Pets allowed3;12121;Pets Policy
+;Pets not allowed11;68641;Pets Policy
+
+INSERT_UPDATE RoomInfo;roomId[unique=true][forceWrite=true];roomView;noOfRooms;roomName[lang=en];noOfInterconnectingRooms;description;roomSize;roomDecor;smoking;floorName;floorNumber;mysteryRoom;accommodation(code,$catalogVersion)[unique=true];bathroomType(BathType.code);bedType(code);companyRoomCategory(code);category(code);;amenityTypes(AmenityType.code)
+;5555;;150;;;;;;;;;true;87762;1;Twin_Beds;STANDARD;STANDARD;50
+;6666;;120;;;;;;;;;false;15740;2;Twin_Beds;DELUXE;DELUXE;51
+;1111;;150;;;;;;;;;true;12121;3;King_Size_Beds;STANDARD;STANDARD;52
+;2222;;120;;;The Palm Beach Deluxe is our most popular room thanks to its unique views across 1.4 km of pristine beach, The Palm and the Dubai Skyline.;;;;;;false;68641;4;King_Size_Beds;DELUXE;DELUXE;53
+
+
+INSERT_UPDATE DeactivationConfig;product(code,$catalogVersion)[unique=true];validityStartDate[dateformat=$dateformat];validityEndDate[dateformat=$dateformat];companyMarket(Market.uid);reason
+;87762;30-02-2016;08-10-2016;IND
+;15740;30-02-2016;08-10-2016;ALL
+;68641;30-02-2016;08-10-2016;ALL
+;2222;30-02-2016;08-10-2016;ALL
+
+INSERT_UPDATE FamilyDetail;accommodation(code,$catalogVersion)[unique=true];familyName[unique=true];familyDescription;familyMember[unique=true];age[unique=true];gender(code);memberName[unique=true];familyMemberDescription
+;87762;Shah Family;shah's;6;25;MALE;Rajeev Shah;Joly in nature
+;15740;Kumar Family;kumar's;10;35;MALE;Rohan Kumar;Funny in nature
+;12121;Gupta Family;gupta's;6;20;MALE;Vikram Gupta;Joly in nature
+;68641;Singh Family;sing,s;5;30;FEMALE;Sakshi Singh;Funny in nature
+;1111;Saini Family;saini's;10;16;MALE;Pratik Saini;Joly in nature
+;2222;Sharma Family;sharma's;15;40;MALE;Harsh Sharma;Funny in nature
+;1303;Takur Family;takur's;10;35;FEMALE;Sakshi Takur;Joly in nature
+;3177;Lobo Family;lobo's;6;25;MALE;Jason Lobo;Joly in nature
+;6163;Dsouza Family;dsouza's;7;26;MALE;Neel Dsouza;Funny in nature
+;12125;Cardoza Family;cardoza's;8;27;FEMALE;Joyline Cardoza;Joly in nature
+;68645;GTR Family;gtr's;4;25;FEMALE;Deepa GTR;Joly in nature
+;11561;Alwa Family;alwa's;5;25;FEMALE;Neethi Alwa;Funny in nature
+;22252;Patel Family;patel's;4;28;MALE;Upen Patel;Joly in nature
+;13073;Rawat Family;rawat's;10;45;MALE;Rohit Rawat;Funny in nature
+;31677;Raman Family;raman's;15;50;MALE;Sundar Raman;Funny in nature
+;61633;Pinto Family;pinto's;20;60;MALE;Diraj Pinto;Joly in nature
+;11191;Cutinha Family;cutinhs's;17;25;FEMALE;Smitha Cutinha;Joly in nature
+
+INSERT_UPDATE Ancillary;$catalogVersion[unique=true];code[unique=true];name;$approved;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];description;ancillaryType(code)
+;;ANC111;Hotel Parking;;11-05-2016;13-06-2017;Hotel Parking Facility;PARKING
+;;ANC222;Wi Fi;;12-05-2016;14-06-2017;Wi Fi facility;INTERNET
+;;ANC333;Atlantis Chauffeur Services;;13-05-2016;15-06-2017;Atlantis Chauffeur Services;INSURANCE
+;;ANC444;Nanny and Babysitting Service;;14-05-2016;16-06-2017;Nanny and Babysitting Service;ENTERTAINMENT
+;;ANC555;Yoga Classes;;15-05-2016;17-06-2017;Yoga Classes facility;CAMPING_ITEM
+;;ANC666;Golf Hyat;;16-05-2016;18-06-2017;Golf Hyat facilty;CYCLING_PACKAGE
+
+# Insert Product References
+INSERT_UPDATE ProductReference;source(code,$catalogVersion)[unique=true];target(code,$catalogVersion)[unique=true];referenceType(code);active;preselected
+;87762;ANC111;PAID;true;false
+;87762;ANC222;COMPLEMENTARY;true;false
+;15740;ANC333;PAID;true;false
+;15740;ANC444;COMPLEMENTARY;true;false
+;12121;ANC555;PAID;true;false
+;12121;ANC666;COMPLEMENTARY;true;false
+;68641;ANC111;PAID;true;false
+;68641;ANC222;COMPLEMENTARY;true;false
+;1111;ANC333;PAID;true;false
+;1111;ANC444;COMPLEMENTARY;true;false
+;2222;ANC555;PAID;true;false
+;2222;ANC666;COMPLEMENTARY;true;false
+;1303;ANC111;PAID;true;false
+;1303;ANC222;COMPLEMENTARY;true;false

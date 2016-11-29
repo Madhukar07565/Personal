@@ -1,0 +1,43 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<tns:AccoInterfaceRQ xmlns:ns1="http://www.opentravel.org/OTA/2003/05" xmlns:fusion="http://www.coxandkings.com/integ/suppl/common" xmlns:tns="http://www.coxandkings.com/integ/suppl/accointerface" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.coxandkings.com/integ/suppl/accointerface file:/D:/JDeveloper/mywork/Test/SharedArtifacts/supplier/Accommodation/common/Schemas/AccoInterface.xsd">
+   <ns0:RequestHeader xmlns:ns0="http://www.coxandkings.com/integ/suppl/acco">
+      <fusion:UserID>1</fusion:UserID>
+      <fusion:SessionID>2</fusion:SessionID>
+      <fusion:TransactionID>3</fusion:TransactionID>
+      <com:SupplierCredentialsList xmlns:com="http://www.coxandkings.com/integ/suppl/common" xmlns:acco="http://www.coxandkings.com/integ/suppl/acco" xmlns:ns="http://www.opentravel.org/OTA/2003/05">
+            <!--1 or more repetitions:-->
+            <com:SupplierCredentials>
+                <com:SupplierID>AxisRooms</com:SupplierID>
+                <com:Credentials>
+                    <!--1 to 5 repetitions:-->
+                    <com:Credential name="kEy" isEncrypted="false">AXR-EZG</com:Credential>
+					<com:Credential name="buyER_iD" isEncrypted="false">20</com:Credential>
+                </com:Credentials>
+            </com:SupplierCredentials>
+        </com:SupplierCredentialsList>
+   </ns0:RequestHeader>
+   <tns:RequestBody>
+      <ns0:OTA_HotelResModifyRQWrapper xmlns:ns0="http://www.coxandkings.com/integ/suppl/acco">
+         <ns0:SupplierID>AxisRooms</ns0:SupplierID>
+         <ns0:Sequence>1</ns0:Sequence>
+         <ns:OTA_HotelResModifyRQ Version="1.0" xmlns:com="http://www.coxandkings.com/integ/suppl/common" xmlns:acco="http://www.coxandkings.com/integ/suppl/acco" xmlns:ns="http://www.opentravel.org/OTA/2003/05">
+			<ns:HotelResModifies>
+				<ns:HotelResModify>
+					<ns:UniqueID Type="14" ID="ARK00082ANO7"/>
+					<ns:RoomStays>
+						<ns:RoomStay>
+							<ns:GuestCounts>
+								<ns:GuestCount AgeQualifyingCode="10" Count="1"/>
+								<ns:GuestCount AgeQualifyingCode="8" Age="5" Count="1"/>
+								
+							</ns:GuestCounts>
+									<ns:TimeSpan Start="2016-06-01" End="2016-06-04"/>
+						</ns:RoomStay>
+					
+					</ns:RoomStays>
+				</ns:HotelResModify>
+			</ns:HotelResModifies>
+		</ns:OTA_HotelResModifyRQ>
+      </ns0:OTA_HotelResModifyRQWrapper>
+   </tns:RequestBody>
+</tns:AccoInterfaceRQ>

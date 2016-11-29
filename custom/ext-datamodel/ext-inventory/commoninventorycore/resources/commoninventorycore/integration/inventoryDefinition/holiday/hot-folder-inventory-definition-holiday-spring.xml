@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+   <context:annotation-config />
+	
+	<bean id="baseDirectoryHolidayInvDef" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogix/inventoryDefinition/holiday" />
+	</bean>
+	
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesHolidayInvDef"
+		directory="#{baseDirectoryHolidayInvDef}" filename-regex="inventory_definition_holiday-(\d+)\.csv"
+		comparator="fileOrderComparator">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+	
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesHolidayInvDef"
+		reply-channel="holidayInvDefBatchFilesProc" directory="#{baseDirectoryHolidayInvDef}/processing"
+		delete-source-files="true" />
+		
+	<int:service-activator input-channel="holidayInvDefBatchFilesProc"
+		output-channel="holidayInvDefBatchFilesHeaderInit" ref="holidayInvDefHeaderSetupTask"
+		method="execute" />
+
+	<bean id="holidayInvDefHeaderSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryHolidayInvDef" />
+	</bean>
+
+	<int:service-activator input-channel="holidayInvDefBatchFilesHeaderInit"
+		output-channel="holidayInvDefBatchFilesHeader" ref="headerInitTask"
+		method="execute" />
+		
+	<bean id="headerInitTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderInitTask">
+		<property name="sequenceIdParser" ref="batchSequenceIdParser" />
+		<property name="languageParser" ref="batchLanguageParser" />
+		<property name="fallbackLanguage" value="en" />
+	</bean>
+
+	<!-- <bean id="batchSequenceIdParser"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.util.SequenceIdParser">
+		<property name="parser">
+			<bean class="de.hybris.platform.acceleratorservices.util.RegexParser">
+				<property name="regex" value="-(\d+)\.csv" />
+			</bean>
+		</property>
+	</bean> -->
+
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="holidayInvDefBatchFilesHeader"
+		output-channel="batchFilesTran" ref="holidayInvDefBatchTransformerTask"
+		method="execute" />
+
+	<bean id="holidayInvDefBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>	
+	
+	
+	<!-- Transformer converters mappings -->
+
+		<!-- HolidayCutOffAndCharges -->
+	<bean id="batchHolidayCutOffAndChargesMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_holiday" p:converter-ref="batchHolidayCutOffAndChargesConverter" />
+
+	<bean id="batchHolidayCutOffAndChargesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>INSERT_UPDATE HolidayCutOffAndCharges;priceComponent[unique=true](code);applicableOn[unique=true](code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Holiday_CutOff_And_Charges'" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- HolidayPenaltyCharges -->
+	<bean id="batchHolidayPenaltyChargesMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_holiday" p:converter-ref="batchHolidayPenaltyChargesConverter" />
+
+	<bean id="batchHolidayPenaltyChargesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE HolidayPenaltyCharges;validateForType[unique=true](code);definedBy[unique=true](code);appliedOn(code);thresholdAppliedOn(ThresholdApplicableOn.code);charges(HolidayCutOffAndCharges.priceComponent(code),HolidayCutOffAndCharges.applicableOn(code))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}:{6}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Holiday_Penalty_Charges'" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- HolidayInvSupplierAdvanceDefinition -->
+	<bean id="batchHolidayInvSupplierAdvanceDefinitionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_holiday" p:converter-ref="batchHolidayInvSupplierAdvanceDefinitionConverter" />
+
+	<bean id="batchHolidayInvSupplierAdvanceDefinitionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				$dateformat=dd-MM-yyyy
+			INSERT_UPDATE HolidayInvSupplierAdvanceDefinition;cutOffForFreeSale(CutOffForFreeSale.definedBy(code),CutOffForFreeSale.appliedOn(code),CutOffForFreeSale.releaseDayOrHrs);blockOutDates[dateformat=$dateformat];penaltyCharges[unique=true](HolidayPenaltyCharges.validateForType(code),HolidayPenaltyCharges.definedBy(code))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1}:{2}:{3};{4};{5}:{6}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'HolidayInv_Supplier_Advance_Definition'" />
+			</bean>
+		</property>
+	</bean>
+		
+	<!-- HolidayCompanySpecificInventory -->
+	<bean id="batchHolidayCompanySpecificInventoryMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_holiday" p:converter-ref="batchHolidayCompanySpecificInventoryConverter" />
+
+	<bean id="batchHolidayCompanySpecificInventoryConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE HolidayCompanySpecificInventory;sbu(Company.uid);bu(Company.uid);market(Market.uid);distributionChannel(DistributionChannel.uid)[unique=true];division(Division.uid)[unique=true];salesOfficeLocation;salesOffice(SalesOffice.uid)[unique=true];productCode(HolidayProduct.code);warehouse(Warehouse.code);noOfPax;anyRooms
+			 </value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Holiday_Company_Specific_Inventory'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- HolidayInventoryDefinition -->
+	<bean id="batchHolidayInventoryDefinitionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_holiday" p:converter-ref="batchHolidayInventoryDefinitionConverter" />
+
+	<bean id="batchHolidayInventoryDefinitionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			$dateformat=dd-MM-yyyy
+			INSERT_UPDATE HolidayInventoryDefinition;inventoryId[unique=true];overBookingLimit;product(HolidayProduct.code);flavor(HolidayFlavor.code);packageCategory(code);market(Market.uid);requestedBy(code);advanceDefinition(HolidayInvSupplierAdvanceDefinition.penaltyCharges(HolidayPenaltyCharges.validateForType(code),HolidayPenaltyCharges.definedBy(code)));distributedInventories(HolidayCompanySpecificInventory.distributionChannel(DistributionChannel.uid),HolidayCompanySpecificInventory.division(Division.uid),HolidayCompanySpecificInventory.salesOffice(SalesOffice.uid))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9}:{10}:{11}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Holiday_Inventory_Definition'" />
+			</bean>
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,58 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$productCategorySubType=productCategorySubType(code,$catalogVersion)
+$dateformat=dd-MM-yyyy
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.presales.masters.core.setup.PresalesSystemSetup&\presalescore\import\sampledata\images
+$lang=en
+
+INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier);&mediaRef
+;Lobby;$siteResource\Lobby.pdf;;;images;LobbyRef
+
+INSERT_UPDATE Barter;barterAmount[unique=true];minimumProductValue[unique=true]
+;10000;20000
+
+INSERT_UPDATE Market;uid[unique=true];locName[lang=$lang]
+;IND;India
+;AU;Australia
+
+INSERT_UPDATE CNKCreditLimit;companyMarket(Market.uid)[unique=true];credit;deposit;creditType(code)[unique=true];isLimitedUnsecuredCredit;modeOfSecurity(code)[unique=true];isCreditLimitBybranchOrProduct;barter(Barter.barterAmount,Barter.minimumProductValue)[unique=true];remark;entityType;entityName;validityFrom[dateformat=$dateformat];validityTo[dateformat=$dateformat];CNKCreditLimit2MediaRelation(Media.code)[unique=true];creditCardInfo(CreditCard.creditCardNumber,CreditCard.cardholderName,CreditCard.ccExpiryDate[dateformat=$dateformat])[unique=true];bankInfo(BankInformation.bankName(code),BankInformation.branchName(code),BankInformation.contactNumber)[unique=true];bankGuaranteeInfo(BankGuarantee.bgRefNumber,BankGuarantee.bgIssueDate[dateformat=$dateformat],BankGuarantee.bgExpiryDate[dateformat=$dateformat])[unique=true];thresholdInfo(ThresholdInformation.thresholdIn(Absolute.code),ThresholdInformation.thresholdValue);creditLimitInfo(CreditLimitInfo.amount(Absolute.code),CreditLimitInfo.creditLimit)[unique=true]
+                            ;IND                                  ;true  ;false   ;SECURED          ;false                              ;BANK_GUARENTEE                    ;true                          ;10000:20000                                                        ;good  ;  ;                  ;23-05-2016                          ;5-06-2018                         ;Lobby                                                 ;4444333322221111:ksp:01-04-2020                                                                                                   ;BANK1213:anderi:9999999999                                                                                         ;1234:01-07-2016:09-09-2016                                                                                                                                    ;PERCENTAGE:10000                                                                                  ;AMOUNT:10000
+ 
+INSERT_UPDATE Bank;code[unique=true];&bankId;name[lang=$lang]
+                   ;BANK1213;BANK1213;HDFC Bank
+
+
+INSERT_UPDATE BankInformation;bankName(code)[unique=true];branchName(code)[unique=true];contactNumber[unique=true]
+                             ;BANK1213      ;anderi    ;9999999999
+							 
+
+INSERT_UPDATE ProductDetail;productCategory(Category.code,$catalogVersion)[unique=true];productCategorySubType;productName;productNameSubType
+;C001;;;;
+				
+
+INSERT_UPDATE CreditLimitInfo;amount(Absolute.code)[unique=true];creditLimit[unique=true]
+
+                             ;AMOUNT               ;10000
+                             ;PERCENTAGE           ;5
+							 
+INSERT_UPDATE ThresholdInformation;thresholdIn(Absolute.code)[unique=true];thresholdValue[unique=true]
+                                  ;PERCENTAGE                ;10000
+
+
+INSERT_UPDATE BankGuarantee;bgRefNumber[unique=true];bgIssueDate[dateformat=$dateformat][unique=true];bgClaimPeriod;bgAmount;bgExpiryDate[dateformat=$dateformat][unique=true]
+                           ;1234                    ;01-07-2016              ;5            ;100000;09-09-2016 
+
+INSERT_UPDATE Continent;isocode[unique=true];name
+                       ;NE1001              ;Northern Europe
+
+
+
+INSERT_UPDATE CreditCard;creditCardNumber[unique=true];cardholderName[unique=true];ccExpiryDate[dateformat=$dateformat][unique=true];continent(isocode);country(Country.isocode)
+                        ;4444333322221111             ;ksp           ;01-04-2020  ;AF           ;IN
+						;6666333322224444             ;RSP           ;05-06-2022  ;AN           ;SK
+
+INSERT_UPDATE Barter;barterAmount[unique=true];minimumProductValue[unique=true]
+                    ;10000       ;10000
+					

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<html>
+<![CDATA[ 
+		
+<script>
+	// This example requires the Places library. Include the libraries=places
+	// parameter when you first load the API. For example:
+	// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+	var map;
+
+	function initMap(clicked_id) {
+		var pyrmont = {
+			lat : 19.111,
+			lng : 72.8781
+		};
+
+		map = new google.maps.Map(document.getElementById('map'), {
+			center : pyrmont,
+			zoom : 17,
+			zoomControl: true,
+			zoomControlOptions: {
+			position: google.maps.ControlPosition.LEFT_TOP},
+			streetViewControlOptions: {
+			position: google.maps.ControlPosition.LEFT_TOP},
+		});
+
+		var service = new google.maps.places.PlacesService(map);
+		var temp = false ;
+		
+  			if (document.getElementById(clicked_id).value == 'restaurant') {
+				var type = 'restaurant';
+			} else if (document.getElementById(clicked_id).value == 'cafe') {
+				var type = 'cafe';
+			} else if (document.getElementById(clicked_id).value == 'shopping') {
+				var type = 'store';
+			} else if (document.getElementById(clicked_id).value == 'nightlife') {
+				var type = 'bar';
+			} else {
+				var type = 'store';
+			}
+ 		 		
+		service.nearbySearch({
+			location : pyrmont,
+			radius : 500,
+			types : [ type ]
+		}, processResults);
+	}
+
+	function processResults(results, status, pagination) {
+		if (status !== google.maps.places.PlacesServiceStatus.OK) {
+			return;
+		} else {
+			createMarkers(results);
+
+			if (pagination.hasNextPage) {
+				var moreButton = document.getElementById('more');
+
+				moreButton.disabled = false;
+
+				moreButton.addEventListener('click', function() {
+					moreButton.disabled = true;
+					pagination.nextPage();
+				});
+			}
+		}
+	}
+
+	function createMarkers(places) {
+		var bounds = new google.maps.LatLngBounds();
+		var placesList = document.getElementById('places');
+
+		for (var i = 0, place; place = places[i]; i++) {
+			var image = {
+				url : place.icon,
+				size : new google.maps.Size(71, 71),
+				origin : new google.maps.Point(0, 0),
+				anchor : new google.maps.Point(17, 34),
+				scaledSize : new google.maps.Size(25, 25)
+			};
+
+			var marker = new google.maps.Marker({
+				map : map,
+				icon : image,
+				title : place.name,
+				position : place.geometry.location
+			});
+
+			placesList.innerHTML += '<li>' + place.name + '</li>';
+
+			bounds.extend(place.geometry.location);
+		}
+		map.fitBounds(bounds);
+	}
+</script>
+
+<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOBxAMd3umU33VaHolsQpZD30nD3BGfSo &signed_in=true&libraries=places&callback=initMap"
+		async defer>
+</script>
+
+		
+		]]>
+</html>

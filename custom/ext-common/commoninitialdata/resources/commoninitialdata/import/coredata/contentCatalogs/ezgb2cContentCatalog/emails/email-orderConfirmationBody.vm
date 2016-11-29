@@ -1,0 +1,39 @@
+## messageSource=classpath:/commoninitialdata/import/coredata/contentCatalogs/ezgb2cContentCatalog/emails/email-orderConfirmation_$lang.properties
+#macro( genHtmlBoldFont $text )
+<font color="#414a4f" size="2" face="Arial, Helvetica, sans-serif"><b>$text</b></font>
+#end
+#macro(genHtmlLinkStartTag $url)
+<a href="$url"><font color="#666666">
+#end
+#macro(genHtmlLinkEndTag)
+</font></a>
+#end
+#macro(genHtmlLink $url $textColor $bodyContent)
+<a href="$url"><font color="$textColor">$bodyContent</font></a>
+#end
+
+<html>
+<head>
+</head>
+
+<body>
+<p><b>${ctx.messages.getMessage('salutation', ${ctx.title},${ctx.displayName})}</b>,</font></p>
+<p>${ctx.messages.getMessage('thankYouForOrder', "#genHtmlBoldFont(${ctx.order.code})", "#genHtmlBoldFont(${ctx.order.totalPriceWithTax.formattedValue})")}</font></p>
+<p></p>
+
+<p><b>Order entries are as following: </b></p>
+#foreach( $entry in ${ctx.orderModel.entries} )
+<p>Name: $entry.product.name</font></p>
+<p>Info: $entry.info</font></p>
+<p>Quantity: $entry.quantity</font></p>
+<p>Base Price: $entry.basePrice</font></p>
+<p>Total Price: $entry.totalPrice</font></p>
+<hr/>
+#end
+
+<p></p>
+<p>${ctx.messages.complimentaryClosing}</font></p>
+<p>${ctx.messages.signature}</font></p>
+
+</body>
+</html>

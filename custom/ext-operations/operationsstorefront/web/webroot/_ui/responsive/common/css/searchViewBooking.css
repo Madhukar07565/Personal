@@ -1,0 +1,162 @@
+
+/* .footer {
+    height: 50px;
+    background: #0d4779;
+    text-align: center;
+    vertical-align: middle;
+    color: #fff;
+} */
+
+
+
+.marginSpacing {
+    margin: 5px;
+    
+}
+.titleHead{
+    color:white;
+    font-size: 14px;
+    float: center;
+}
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -20px; 
+    
+}
+.footer{
+    height: 20px;
+    background: #0d4779;
+    text-align: center;
+    vertical-align:middle;
+    color:#FFF;
+}
+
+.leftPane{
+
+    border-radius: 5px;
+    background: #d6dbde;
+    height: 50%;
+    width=100px;
+    vertical-align: top;
+}
+.minLeftPane a:after{
+    font-family:'Glyphicons Halflings';
+    content:"\e114";
+    float: right;
+    color: grey;
+}
+.minLeftPane a.collapsed:after~
+.midPane a:after{
+    font-family:'Glyphicons Halflings';
+    content:"\e079";
+    float: left;
+    color: grey;
+
+    column-width: 5px;
+}
+
+.rightPane{
+/*    border: true;*/
+    background: #FFF;
+    padding-left:4px;
+    padding-right:0px;
+
+}
+.panePadding{
+    padding-bottom:0px;
+    margin-bottom:2px;
+}
+.alignRight{
+    float:right;
+}
+
+.contentText{
+    font-size: 12px;
+     
+   
+}
+.titleBold{
+    font-weight: bold;
+}
+
+.panel-heading a:after {
+    font-family:'Glyphicons Halflings';
+    content:"\e114";
+    float: right;
+    color: grey;
+}
+.panel-heading a.collapsed:after {
+    content:"\e080";
+}
+.centered{
+    text-align:center;
+}
+.tabHead{
+    background: #CFCFCF;
+}
+.tabBody
+{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    line-height: 1.42857143;
+    color: #333;
+}
+.yellowIcon{
+    color:yellow;
+    background:yellow;
+}
+
+
+/*copied from adyuth css - start*/
+body{ font-family: 'Open Sans', sans-serif;; font-weight: 400; font-size: 12px; background: #fff;}
+a, a:visited, a:focus, input, button{ outline: none !important;}
+a{ color: #004f93; }
+a:hover{ text-decoration: none; color: #0d4779;}
+cite{ font-style: normal;}
+.container { width: 1280px;}
+header{ background: #004f93; }
+label{ font-weight: normal;}
+
+/* Header */
+.navbar-brand{ height: auto; min-height: 50px; padding: 8px 0}
+.navbar-collapse{ padding-left: 180px; }
+.navbar-collapse .nav{ height: 96px; display: table; float: none;}
+.navbar-collapse li{ display: table-cell; vertical-align: middle; float: none;}
+.navbar-collapse li a{ color: #fff; }
+.navbar-collapse li a:hover, .navbar-collapse li a:active, .navbar-collapse li a:focus{ background: #0d4779; border-radius: 6px; color: #fff;}
+.float-right{ float: right;}
+.navbar-collapse .float-right{ padding-top: 6px;}
+.select-country{ color: #fff; font-size: 12px;}
+.select-country label{ color: #fff; background: #0d4779; font-weight: 600 !important; font-size: 12px; margin-left: 4px; padding: 2px 4px;}
+.person-dtl{ padding: 0;}
+.person-dtl li{ display: block; color: #fff; font-size: 12px; margin-top: 4px;}
+.person-dtl li i{ color: #fff;}
+.mail-head{ padding-right: 12px; float: left;}
+.navbar-collapse ul li i{ padding-right: 4px; }
+.phone-head{ float: left;}
+
+/*copied from adyuth css - end*/
+
+/* Added for left pane */
+
+.leftPane {
+    border-radius: 5px;
+   background-color: #d6dbde;
+    height: 50%;
+    vertical-align: top;
+    padding-bottom: 260px;
+    
+}
+ 
+ body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, dialog, figure, footer, header, hgroup, nav, section {
+    padding: 0px;
+    }    
+ 
+/*added for right pane  */ 
+.btn{
+margin-right: 18px;
+}
+    
+

@@ -1,0 +1,114 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+
+############Client-Company Commercials-Cars-B2B##############
+
+INSERT_UPDATE commercialHead;code[unique=true]
+;MARK_UP
+
+
+INSERT_UPDATE B2BUnit;uid[unique=true];telephone;groupCompany(uid);taxHeads(key(code),value);locName
+;CnkB2BUnit;12345;E001;VAT_REG_NO->6877851;CnkB2BUnit
+
+INSERT_UPDATE BudgetMargin;market(uid);category(code,$catalogVersion)[unique=true];productCategorySubType(code,$catalogVersion)[unique=true];percentage;currency(ISOcode);percentageOramountValue
+;IND;C001;C001ST003;false;INR;10
+
+#########Prodcut Based##################
+INSERT_UPDATE CompanyCommercial;commercialId[unique=true];commercialName;byProduct;payable(code);receivable(code);iscommissionable;reason;status(code);supplierName(code);passAllSupplierComm;viewSupplierCommercial;approvalRequired;supplierCommercial;budgetMargin(category(code),productCategorySubType(code))
+;1;B2B_Car;true;STANDARD_COMMISSION,OVERRIDING_COMMISSION;LOOK_TO_BOOK;true;reason;ACTIVE;;;;;;C001:C001ST003
+#Ferry
+;5;B2B_Ferry;true;;;true
+
+INSERT_UPDATE CommercialHeadDefination;uid[unique=true];commercialHead(code);rateType;abstractClientCompanyCommercial(commercialId);percentage;priceComponent(code);validFrom[dateformat=$dateformat];validTo[dateformat=$dateformat]
+;1;MARK_UP;;1;20;BASE_FARE;01-01-2015;31-12-2016
+;2;MARK_UP;;2;12;BASE_FARE;01-01-2015;
+;3;MARK_UP;;2;12;BASE_FARE;01-01-2015;
+
+#Ferry
+;4;MARK_UP;;5;15;BASE_FARE;01-01-2015;
+
+INSERT_UPDATE CommercialHeadDefination;uid[unique=true];commercialHead(code);percentage;validFrom[dateformat=$dateformat];validTo[dateformat=$dateformat];currency(isocode);amount
+;2;STANDARD_COMMERCIAL;23;01-01-2015;31-12-2016;
+;3;OVERRIDING_COMMISSION;50;01-01-2015;31-12-2016;
+;4;STANDARD_COMMERCIAL;23;01-01-2015;31-12-2016;
+;5;OVERRIDING_COMMISSION;50;01-01-2015;31-12-2016;
+;6;TERMINATION_FEE;;01-01-2015;31-12-2016;INR;90
+;7;STANDARD_COMMERCIAL;3;01-01-2015;31-12-2016;
+;8;TERMINATION_FEE;;01-01-2015;;INR;150
+;9;ISSUANCE_FEE;;01-01-2015;;EUR;2.01
+;10;ISSUANCE_FEE;;01-01-2015;;EUR;2.75
+;11;ISSUANCE_FEE;;01-01-2015;;EUR;2.5
+;12;STANDARD_COMMERCIAL;2;01-01-2015;31-12-2016;
+;13;STANDARD_COMMERCIAL;2;01-01-2015;31-12-2016;
+;14;STANDARD_COMMERCIAL;13;01-01-2015;31-12-2016;
+;15;TERMINATION_FEE;;01-01-2015;;INR;100
+;16;STANDARD_COMMERCIAL;5;01-01-2015;;INR;100
+INSERT_UPDATE RetentionCommercial;retensionPayable(commercialId)[unique=true];commercialHeadDefination(uid)[unique=true]
+;1;2
+;2;2
+;4;11
+;4;12
+;4;13
+INSERT_UPDATE RetentionCommercial;retensionReceivables(commercialId)[unique=true];commercialHeadDefination(uid)[unique=true]
+;1;3
+;2;3
+INSERT_UPDATE AdditionalCommercial;additionalPayables(commercialId)[unique=true];commercialHeadDefination(uid)[unique=true]
+;1;4
+;2;4
+;3;7
+;3;6
+;4;15
+;5;16
+
+INSERT_UPDATE AdditionalCommercial;additionalReceivables(commercialId)[unique=true];commercialHeadDefination(uid)[unique=true]
+;1;5
+;2;5
+;3;8
+;3;9
+;3;10
+;3;11
+;4;8
+;4;9
+;4;10
+;4;11
+
+#########Supplier Based##################
+INSERT_UPDATE CompanyCommercial;commercialId[unique=true];commercialName;byProduct;payable(code);receivable(code);iscommissionable;reason;status(code);supplierName(code);passAllSupplierComm;viewSupplierCommercial;approvalRequired;supplierCommercial;budgetMargin(category(code),productCategorySubType(code));clientNetMarginPercentage;clientNetMarginAmount;companyNetMarginPercentage;companyNetMarginAmount
+;2;B2B_Car;false;STANDARD_COMMISSION,OVERRIDING_COMMISSION;LOOK_TO_BOOK;true;reason;ACTIVE;Taj_Hotel;;;Y;;C001:C001ST003;0;0;0;0
+
+
+############Client-Company Commercials-Rail-ABC Travel##############
+INSERT_UPDATE BudgetMargin;market(uid);category(code,$catalogVersion)[unique=true];productCategorySubType(code,$catalogVersion)[unique=true];percentage;currency(ISOcode);percentageOramountValue
+;IND;C001;C001ST012;true;INR;12
+
+#Ferry
+;IND;C001;C001ST002;false;INR;10
+
+#########Prodcut Based##################
+
+INSERT_UPDATE ClientCommercial;commercialId[unique=true];commercialName;byProduct;payable(code);receivable(code);iscommissionable;supplierName(code)
+;3;commName;true;STANDARD_COMMISSION;ISSUANCE_FEE;true;
+
+#########Supplier Based##################
+;4;commName;false;;STANDARD_COMMISSION;false;Taj_Hotel
+
+#INSERT_UPDATE TravelogixB2BUnitType; budgetMargin(category(code),productCategorySubType(code))[unique=true];companyMarkets(uid);trnslCurrency(isocode);language(isocode);distributionChannel(uid)
+#;C001:C001ST003;IND;INR;en;Branch
+INSERT_UPDATE TravelogixClientType; budgetMargin(category(code),productCategorySubType(code))[unique=true];companyMarkets(uid);trnslCurrency(isocode);language(isocode);distributionChannel(uid)
+;C001:C001ST003;IND;INR;en;Branch
+#############Advanec Definition#################
+INSERT_UPDATE ActivityClientCompanyAdvanceDefinition;perBooking;owner(CommercialHeadDefination.uid)[unique=true]
+;false;2
+;false;3
+;false;4
+;false;5
+
+
+INSERT_UPDATE CommercialHeadDefination;uid[unique=true];advanceDefinition(owner(CommercialHeadDefination.uid))
+;2;2
+;3;3
+;4;4
+;5;5
+###

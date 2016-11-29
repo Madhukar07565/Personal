@@ -1,0 +1,533 @@
+<AccoInterfaceRS xmlns="http://www.coxandkings.com/integ/suppl/accointerface" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+   <ResponseHeader xmlns="http://www.coxandkings.com/integ/suppl/acco">
+      <Status xmlns="http://www.coxandkings.com/integ/suppl/common">SUCCESS</Status>
+      <UserID xmlns="http://www.coxandkings.com/integ/suppl/common">1</UserID>
+      <SessionID xmlns="http://www.coxandkings.com/integ/suppl/common">2</SessionID>
+      <TransactionID xmlns="http://www.coxandkings.com/integ/suppl/common">3</TransactionID>
+   </ResponseHeader>
+   <ResponseBody>
+      <OTA_HotelAvailRSWrapper xmlns="http://www.coxandkings.com/integ/suppl/acco">
+         <SupplierID>ATI</SupplierID>
+         <Sequence>1</Sequence>
+         <ns0:OTA_HotelAvailRS EchoToken="" TimeStamp="2016-06-30T23:18:23.611-07:00" Target="" Version="" TransactionIdentifier="" xmlns:ns0="http://www.opentravel.org/OTA/2003/05">
+            <ns0:Warnings/>
+            <ns0:RoomStays>
+               <ns0:RoomStay>
+                  <ns0:RoomTypes>
+                     <ns0:RoomType IsRoom="true" RoomTypeCode="HNLAQP-BPR">
+                        <ns0:RoomDescription>
+                           <ns0:Text>Partial Ocean View Room including Resort Fee (B)</ns0:Text>
+                        </ns0:RoomDescription>
+                        <ns0:AdditionalDetails/>
+                        <ns0:Amenities/>
+                     </ns0:RoomType>
+                  </ns0:RoomTypes>
+                  <ns0:RoomRates>
+                     <ns0:RoomRate AvailabilityStatus="Available">
+                        <ns0:Rates>
+                           <ns0:Rate EffectiveDate="2016-07-15">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="237">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-16">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="237">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-17">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="237">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-18">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="237">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                        </ns0:Rates>
+                        <ns0:Features/>
+                        <ns0:Availability/>
+                     </ns0:RoomRate>
+                  </ns0:RoomRates>
+                  <ns0:GuestCounts IsPerRoom="false">
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="10"/>
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="8"/>
+                  </ns0:GuestCounts>
+                  <ns0:Guarantee GuaranteeCode="" GuaranteeType="">
+                     <ns0:GuaranteesAccepted/>
+                  </ns0:Guarantee>
+                  <ns0:CancelPenalties>
+                     <ns0:CancelPenalty RoomTypeCode="">
+                        <ns0:Deadline AbsoluteDeadline="2016-07-12T00:00:00-07:00" OffsetTimeUnit="" OffsetUnitMultiplier=""/>
+                     </ns0:CancelPenalty>
+                  </ns0:CancelPenalties>
+                  <ns0:Total Type="" CurrencyCode="USD" AmountAfterTax="948"/>
+                  <ns0:BasicPropertyInfo ChainCode="" BrandCode="" HotelCode="HNLAQP" HotelName=""/>
+               </ns0:RoomStay>
+               <ns0:RoomStay>
+                  <ns0:RoomTypes>
+                     <ns0:RoomType IsRoom="true" RoomTypeCode="HNLAQP-BCR">
+                        <ns0:RoomDescription>
+                           <ns0:Text>City View Room including Resort Fee (B)</ns0:Text>
+                        </ns0:RoomDescription>
+                        <ns0:AdditionalDetails/>
+                        <ns0:Amenities/>
+                     </ns0:RoomType>
+                  </ns0:RoomTypes>
+                  <ns0:RoomRates>
+                     <ns0:RoomRate AvailabilityStatus="Available">
+                        <ns0:Rates>
+                           <ns0:Rate EffectiveDate="2016-07-15">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="216">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-16">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="216">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-17">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="216">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-18">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="216">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                        </ns0:Rates>
+                        <ns0:Features/>
+                        <ns0:Availability/>
+                     </ns0:RoomRate>
+                  </ns0:RoomRates>
+                  <ns0:GuestCounts IsPerRoom="false">
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="10"/>
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="8"/>
+                  </ns0:GuestCounts>
+                  <ns0:Guarantee GuaranteeCode="" GuaranteeType="">
+                     <ns0:GuaranteesAccepted/>
+                  </ns0:Guarantee>
+                  <ns0:CancelPenalties>
+                     <ns0:CancelPenalty RoomTypeCode="">
+                        <ns0:Deadline AbsoluteDeadline="2016-07-12T00:00:00-07:00" OffsetTimeUnit="" OffsetUnitMultiplier=""/>
+                     </ns0:CancelPenalty>
+                  </ns0:CancelPenalties>
+                  <ns0:Total Type="" CurrencyCode="USD" AmountAfterTax="864"/>
+                  <ns0:BasicPropertyInfo ChainCode="" BrandCode="" HotelCode="HNLAQP" HotelName=""/>
+               </ns0:RoomStay>
+               <ns0:RoomStay>
+                  <ns0:RoomTypes>
+                     <ns0:RoomType IsRoom="true" RoomTypeCode="HNLAQP-ACR">
+                        <ns0:RoomDescription>
+                           <ns0:Text>City View Room including Resort Fee (A)</ns0:Text>
+                        </ns0:RoomDescription>
+                        <ns0:AdditionalDetails/>
+                        <ns0:Amenities/>
+                     </ns0:RoomType>
+                  </ns0:RoomTypes>
+                  <ns0:RoomRates>
+                     <ns0:RoomRate AvailabilityStatus="Available">
+                        <ns0:Rates>
+                           <ns0:Rate EffectiveDate="2016-07-15">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="245">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-16">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="245">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-17">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="245">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-18">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="245">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                        </ns0:Rates>
+                        <ns0:Features/>
+                        <ns0:Availability/>
+                     </ns0:RoomRate>
+                  </ns0:RoomRates>
+                  <ns0:GuestCounts IsPerRoom="false">
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="10"/>
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="8"/>
+                  </ns0:GuestCounts>
+                  <ns0:Guarantee GuaranteeCode="" GuaranteeType="">
+                     <ns0:GuaranteesAccepted/>
+                  </ns0:Guarantee>
+                  <ns0:CancelPenalties>
+                     <ns0:CancelPenalty RoomTypeCode="">
+                        <ns0:Deadline AbsoluteDeadline="2016-07-12T00:00:00-07:00" OffsetTimeUnit="" OffsetUnitMultiplier=""/>
+                     </ns0:CancelPenalty>
+                  </ns0:CancelPenalties>
+                  <ns0:Total Type="" CurrencyCode="USD" AmountAfterTax="980"/>
+                  <ns0:BasicPropertyInfo ChainCode="" BrandCode="" HotelCode="HNLAQP" HotelName=""/>
+               </ns0:RoomStay>
+               <ns0:RoomStay>
+                  <ns0:RoomTypes>
+                     <ns0:RoomType IsRoom="true" RoomTypeCode="HNLAQP-CCR">
+                        <ns0:RoomDescription>
+                           <ns0:Text>City View Room including Resort Fee (C)</ns0:Text>
+                        </ns0:RoomDescription>
+                        <ns0:AdditionalDetails/>
+                        <ns0:Amenities/>
+                     </ns0:RoomType>
+                  </ns0:RoomTypes>
+                  <ns0:RoomRates>
+                     <ns0:RoomRate AvailabilityStatus="Available">
+                        <ns0:Rates>
+                           <ns0:Rate EffectiveDate="2016-07-15">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="197">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-16">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="197">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-17">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="197">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-18">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="197">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                        </ns0:Rates>
+                        <ns0:Features/>
+                        <ns0:Availability/>
+                     </ns0:RoomRate>
+                  </ns0:RoomRates>
+                  <ns0:GuestCounts IsPerRoom="false">
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="10"/>
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="8"/>
+                  </ns0:GuestCounts>
+                  <ns0:Guarantee GuaranteeCode="" GuaranteeType="">
+                     <ns0:GuaranteesAccepted/>
+                  </ns0:Guarantee>
+                  <ns0:CancelPenalties>
+                     <ns0:CancelPenalty RoomTypeCode="">
+                        <ns0:Deadline AbsoluteDeadline="2016-07-12T00:00:00-07:00" OffsetTimeUnit="" OffsetUnitMultiplier=""/>
+                     </ns0:CancelPenalty>
+                  </ns0:CancelPenalties>
+                  <ns0:Total Type="" CurrencyCode="USD" AmountAfterTax="788"/>
+                  <ns0:BasicPropertyInfo ChainCode="" BrandCode="" HotelCode="HNLAQP" HotelName=""/>
+               </ns0:RoomStay>
+               <ns0:RoomStay>
+                  <ns0:RoomTypes>
+                     <ns0:RoomType IsRoom="true" RoomTypeCode="HNLAQP-BDR">
+                        <ns0:RoomDescription>
+                           <ns0:Text>Diamond Head View Room including Resort Fee (B)</ns0:Text>
+                        </ns0:RoomDescription>
+                        <ns0:AdditionalDetails/>
+                        <ns0:Amenities/>
+                     </ns0:RoomType>
+                  </ns0:RoomTypes>
+                  <ns0:RoomRates>
+                     <ns0:RoomRate AvailabilityStatus="Available">
+                        <ns0:Rates>
+                           <ns0:Rate EffectiveDate="2016-07-15">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="226">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-16">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="226">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-17">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="226">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-18">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="226">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                        </ns0:Rates>
+                        <ns0:Features/>
+                        <ns0:Availability/>
+                     </ns0:RoomRate>
+                  </ns0:RoomRates>
+                  <ns0:GuestCounts IsPerRoom="false">
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="10"/>
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="8"/>
+                  </ns0:GuestCounts>
+                  <ns0:Guarantee GuaranteeCode="" GuaranteeType="">
+                     <ns0:GuaranteesAccepted/>
+                  </ns0:Guarantee>
+                  <ns0:CancelPenalties>
+                     <ns0:CancelPenalty RoomTypeCode="">
+                        <ns0:Deadline AbsoluteDeadline="2016-07-12T00:00:00-07:00" OffsetTimeUnit="" OffsetUnitMultiplier=""/>
+                     </ns0:CancelPenalty>
+                  </ns0:CancelPenalties>
+                  <ns0:Total Type="" CurrencyCode="USD" AmountAfterTax="904"/>
+                  <ns0:BasicPropertyInfo ChainCode="" BrandCode="" HotelCode="HNLAQP" HotelName=""/>
+               </ns0:RoomStay>
+               <ns0:RoomStay>
+                  <ns0:RoomTypes>
+                     <ns0:RoomType IsRoom="true" RoomTypeCode="HNLAQP-CDR">
+                        <ns0:RoomDescription>
+                           <ns0:Text>Diamond Head View Room including Resort Fee (C)</ns0:Text>
+                        </ns0:RoomDescription>
+                        <ns0:AdditionalDetails/>
+                        <ns0:Amenities/>
+                     </ns0:RoomType>
+                  </ns0:RoomTypes>
+                  <ns0:RoomRates>
+                     <ns0:RoomRate AvailabilityStatus="Available">
+                        <ns0:Rates>
+                           <ns0:Rate EffectiveDate="2016-07-15">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="207">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-16">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="207">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-17">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="207">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-18">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="207">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                        </ns0:Rates>
+                        <ns0:Features/>
+                        <ns0:Availability/>
+                     </ns0:RoomRate>
+                  </ns0:RoomRates>
+                  <ns0:GuestCounts IsPerRoom="false">
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="10"/>
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="8"/>
+                  </ns0:GuestCounts>
+                  <ns0:Guarantee GuaranteeCode="" GuaranteeType="">
+                     <ns0:GuaranteesAccepted/>
+                  </ns0:Guarantee>
+                  <ns0:CancelPenalties>
+                     <ns0:CancelPenalty RoomTypeCode="">
+                        <ns0:Deadline AbsoluteDeadline="2016-07-12T00:00:00-07:00" OffsetTimeUnit="" OffsetUnitMultiplier=""/>
+                     </ns0:CancelPenalty>
+                  </ns0:CancelPenalties>
+                  <ns0:Total Type="" CurrencyCode="USD" AmountAfterTax="828"/>
+                  <ns0:BasicPropertyInfo ChainCode="" BrandCode="" HotelCode="HNLAQP" HotelName=""/>
+               </ns0:RoomStay>
+               <ns0:RoomStay>
+                  <ns0:RoomTypes>
+                     <ns0:RoomType IsRoom="true" RoomTypeCode="HNLAQP-ADR">
+                        <ns0:RoomDescription>
+                           <ns0:Text>Diamond Head View Room including Resort Fee (A)</ns0:Text>
+                        </ns0:RoomDescription>
+                        <ns0:AdditionalDetails/>
+                        <ns0:Amenities/>
+                     </ns0:RoomType>
+                  </ns0:RoomTypes>
+                  <ns0:RoomRates>
+                     <ns0:RoomRate AvailabilityStatus="Available">
+                        <ns0:Rates>
+                           <ns0:Rate EffectiveDate="2016-07-15">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="255">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-16">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="255">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-17">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="255">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-18">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="255">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                        </ns0:Rates>
+                        <ns0:Features/>
+                        <ns0:Availability/>
+                     </ns0:RoomRate>
+                  </ns0:RoomRates>
+                  <ns0:GuestCounts IsPerRoom="false">
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="10"/>
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="8"/>
+                  </ns0:GuestCounts>
+                  <ns0:Guarantee GuaranteeCode="" GuaranteeType="">
+                     <ns0:GuaranteesAccepted/>
+                  </ns0:Guarantee>
+                  <ns0:CancelPenalties>
+                     <ns0:CancelPenalty RoomTypeCode="">
+                        <ns0:Deadline AbsoluteDeadline="2016-07-12T00:00:00-07:00" OffsetTimeUnit="" OffsetUnitMultiplier=""/>
+                     </ns0:CancelPenalty>
+                  </ns0:CancelPenalties>
+                  <ns0:Total Type="" CurrencyCode="USD" AmountAfterTax="1020"/>
+                  <ns0:BasicPropertyInfo ChainCode="" BrandCode="" HotelCode="HNLAQP" HotelName=""/>
+               </ns0:RoomStay>
+               <ns0:RoomStay>
+                  <ns0:RoomTypes>
+                     <ns0:RoomType IsRoom="true" RoomTypeCode="HNLAQP-CPR">
+                        <ns0:RoomDescription>
+                           <ns0:Text>Partial Ocean View Room including Resort Fee (C)</ns0:Text>
+                        </ns0:RoomDescription>
+                        <ns0:AdditionalDetails/>
+                        <ns0:Amenities/>
+                     </ns0:RoomType>
+                  </ns0:RoomTypes>
+                  <ns0:RoomRates>
+                     <ns0:RoomRate AvailabilityStatus="Available">
+                        <ns0:Rates>
+                           <ns0:Rate EffectiveDate="2016-07-15">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="216">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-16">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="216">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-17">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="216">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-18">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="216">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                        </ns0:Rates>
+                        <ns0:Features/>
+                        <ns0:Availability/>
+                     </ns0:RoomRate>
+                  </ns0:RoomRates>
+                  <ns0:GuestCounts IsPerRoom="false">
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="10"/>
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="8"/>
+                  </ns0:GuestCounts>
+                  <ns0:Guarantee GuaranteeCode="" GuaranteeType="">
+                     <ns0:GuaranteesAccepted/>
+                  </ns0:Guarantee>
+                  <ns0:CancelPenalties>
+                     <ns0:CancelPenalty RoomTypeCode="">
+                        <ns0:Deadline AbsoluteDeadline="2016-07-12T00:00:00-07:00" OffsetTimeUnit="" OffsetUnitMultiplier=""/>
+                     </ns0:CancelPenalty>
+                  </ns0:CancelPenalties>
+                  <ns0:Total Type="" CurrencyCode="USD" AmountAfterTax="864"/>
+                  <ns0:BasicPropertyInfo ChainCode="" BrandCode="" HotelCode="HNLAQP" HotelName=""/>
+               </ns0:RoomStay>
+               <ns0:RoomStay>
+                  <ns0:RoomTypes>
+                     <ns0:RoomType IsRoom="true" RoomTypeCode="HNLAQP-APR">
+                        <ns0:RoomDescription>
+                           <ns0:Text>Partial Ocean View Room including Resort Fee (A)</ns0:Text>
+                        </ns0:RoomDescription>
+                        <ns0:AdditionalDetails/>
+                        <ns0:Amenities/>
+                     </ns0:RoomType>
+                  </ns0:RoomTypes>
+                  <ns0:RoomRates>
+                     <ns0:RoomRate AvailabilityStatus="Available">
+                        <ns0:Rates>
+                           <ns0:Rate EffectiveDate="2016-07-15">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="266">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-16">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="266">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-17">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="266">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                           <ns0:Rate EffectiveDate="2016-07-18">
+                              <ns0:Base CurrencyCode="USD" AmountAfterTax="266">
+                                 <ns0:Taxes/>
+                              </ns0:Base>
+                              <ns0:Fees/>
+                           </ns0:Rate>
+                        </ns0:Rates>
+                        <ns0:Features/>
+                        <ns0:Availability/>
+                     </ns0:RoomRate>
+                  </ns0:RoomRates>
+                  <ns0:GuestCounts IsPerRoom="false">
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="10"/>
+                     <ns0:GuestCount ResGuestRPH="1" Count="1" AgeQualifyingCode="8"/>
+                  </ns0:GuestCounts>
+                  <ns0:Guarantee GuaranteeCode="" GuaranteeType="">
+                     <ns0:GuaranteesAccepted/>
+                  </ns0:Guarantee>
+                  <ns0:CancelPenalties>
+                     <ns0:CancelPenalty RoomTypeCode="">
+                        <ns0:Deadline AbsoluteDeadline="2016-07-12T00:00:00-07:00" OffsetTimeUnit="" OffsetUnitMultiplier=""/>
+                     </ns0:CancelPenalty>
+                  </ns0:CancelPenalties>
+                  <ns0:Total Type="" CurrencyCode="USD" AmountAfterTax="1064"/>
+                  <ns0:BasicPropertyInfo ChainCode="" BrandCode="" HotelCode="HNLAQP" HotelName=""/>
+               </ns0:RoomStay>
+            </ns0:RoomStays>
+            <ns0:Errors/>
+         </ns0:OTA_HotelAvailRS>
+      </OTA_HotelAvailRSWrapper>
+   </ResponseBody>
+</AccoInterfaceRS>

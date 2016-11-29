@@ -1,0 +1,63 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$timeformat = hh:mm
+
+$approved=approvalstatus(code)[default='approved']
+
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.product.transport.masters.core.setup.TransportProductSetup&\transportproductmasterscore\import\sampledata\images\96Wx96H
+
+#####################################  CruisePackage  #####################################
+INSERT_UPDATE CruisePackage;$catalogVersion;code[unique=true];name;pakageName[unique=true];supplierProductCode;displayName;companyRecommended;supplierRatingAsOnDate[dateformat=$dateformat];companyRatingAsOnDate[dateformat=$dateformat];supplierRating(code);companyRating(code);cruiseCompanyName(code)[unique=true];cruiseBrandName(code)[unique=true];shipName(code)[unique=true];cruiseDestinationName;
+;;1809;The Classic Round Voyage;The Classic Round Voyage - 12 Days;;;;01-01-2010;31-12-2015;THREE;THREE;CruiseCompany_8556;CruiseBrand_8556;201
+
+#####################################  CruiseItinerary  #####################################
+INSERT_UPDATE CruiseItinerary;itineraryId;itineraryName[unique=true];departureDates[dateformat= dd-mm-yyy hh:mm:ss];blockOutDepartureDates[dateformat= dd-mm-yyy hh:mm:ss];sailingDates[dateformat=$dateformat];cruiseOperationalDay(code)[unique=true];cruisePackage(code);shoreExcursion(excursionCode)
+;cruise_itinerary_1;Bergen;;;;OpeningSchedule_01;1809;shore_excursion_01
+;cruise_itinerary_2;Bergen 2;;;;OpeningSchedule_01;1809;shore_excursion_01
+
+#####################################  ItineraryMedia  #####################################
+INSERT_UPDATE ItineraryMedia;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier);day[unique=true];cruiseItinerary(itineraryName)[unique=true]
+;itineraryImage;$siteResource\hotel.png;;;;;Bergen
+
+#####################################  ShoreExcursion  #####################################
+INSERT_UPDATE ShoreExcursion;excursionCode[unique=true];excursionType[unique=true];excursionName[unique=true];duration[unique=true];saleble[unique=true];description;difficultyLevel(code)[unique=true];portName(code)[unique=true];
+;shore_excursion_01;ExcursionType_01;Shore Excrusion;2 hrs;true;First Shore Excursion;EASY;3100;
+
+#####################################  ItineraryMedia  #####################################
+INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier);
+;shoreImage1;$siteResource\hotel.png;;;images;
+
+
+#####################################  VisaRequirment  ####################################
+#INSERT_UPDATE VisaRequirment;visa;
+INSERT_UPDATE VisaRequirement;owner(CruisePackage.code)[unique=true];cruisePackage(code);nationality(isocode)[unique=true];travellingCountry(isocode)[unique=true];remark
+;1809;1809;US;AU;
+;1809;1809;PF;AU;
+
+#####################################  Ancillary  ####################################
+#INSERT_UPDATE Ancillary;ancillaryType(code)[unique=true];ancillaryStatus(code);description;ancillaryName[lang=en,unique=true];validFromTo[dateformat=$dateformat];cruisePackage(code)
+#;ENTERTAINMENT;unapproved;Ancillary Desc;CruiseAncillary_01;21-08-2009,01-08-2013;1809
+#;PARKING;approved;Ancillary Desc;CruiseAncillary_02;21-11-2009,20-08-2012;1809
+
+INSERT_UPDATE Ancillary;$catalogVersion[unique=true];code[unique=true];name;$approved;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];description;ancillaryType(code)
+;;ANC_01;Hotel Parking;;11-05-2016;13-06-2017;Hotel Parking Facility;PARKING
+;;ANC_02;Nanny and Babysitting Service;;14-05-2016;16-06-2017;Nanny and Babysitting Service;ENTERTAINMENT
+
+# Insert Product References
+INSERT_UPDATE ProductReference;source(code,$catalogVersion)[unique=true];target(code,$catalogVersion)[unique=true];referenceType(code);active;preselected
+;1809;ANC_01;PAID;true;false
+;1809;ANC_02;COMPLEMENTARY;true;false
+
+#####################################  CruiseOpeningSchedule  #####################################
+INSERT_UPDATE CruiseOpeningSchedule;code[unique=true];name;operationalPeriod(code)
+;OpeningSchedule_01;CruiseOperationalDay Name;HOURLY
+
+#####################################  RouteInfo  #####################################
+INSERT_UPDATE RouteInfo;cruiseRoute(code)[unique=true];localArrivalTime[unique=true];localDepartureTime[unique=true];dayDescriptionRemark;itineraries(itineraryName)
+;987654_CruiseRoute;02:00:00;20:00:00;remark;Bergen;
+;987654_CruiseRoute;02:00:00;20:00:00;remark;Bergen 2
+
+

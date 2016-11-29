@@ -1,0 +1,71 @@
+<air1:AirInterfaceRQ xmlns:air="http://www.coxandkings.com/integ/suppl/air" xmlns:com="http://www.coxandkings.com/integ/suppl/common" xmlns:air1="http://www.coxandkings.com/integ/suppl/airinterface" xmlns:ns="http://www.opentravel.org/OTA/2003/05">
+    <air:RequestHeader>
+        <!--Optional:-->
+        <com:UserID>iii</com:UserID>
+        <com:SessionID>fdfsdfsdf</com:SessionID>
+        <com:TransactionID>fdfdfdf</com:TransactionID>
+        <!--Optional:-->
+        <com:SupplierCredentialsList>
+            <!--1 or more repetitions:-->
+         <com:SupplierCredentials>
+            <com:SupplierID>MYSTIFLY</com:SupplierID>
+            <com:Credentials>
+               <com:Credential name="AccountNumber">MCN001101</com:Credential>
+               <com:Credential name="Username">EZEXML</com:Credential>
+               <com:Credential name="Password">EZE2016_xml</com:Credential>
+            </com:Credentials>
+         </com:SupplierCredentials>  
+				 <com:SupplierCredentials>
+           <com:SupplierID>ELSYARRES</com:SupplierID>
+            <com:Credentials>
+               <com:Credential name="UserID">ezeego1</com:Credential>
+               <com:Credential name="Password">87095140</com:Credential>
+            </com:Credentials>
+         </com:SupplierCredentials>
+		 <com:SupplierCredentials>
+            <com:SupplierID>INDIGO</com:SupplierID>
+            <com:Credentials>
+               <com:Credential name="DomainCode">WWW</com:Credential>
+               <com:Credential name="AgentName">OTI004</com:Credential>
+               <com:Credential name="Password">Indigo@2016</com:Credential>
+            </com:Credentials>
+         </com:SupplierCredentials>
+            
+        </com:SupplierCredentialsList>
+    </air:RequestHeader>
+    <air1:RequestBody>
+        <!--You have a CHOICE of the next 17 items at this level-->
+         <ns:OTA_AirLowFareSearchRQ Version="1" Target="Test">
+         <ns:POS>
+            <ns:Source/>
+         </ns:POS>
+         <ns:OriginDestinationInformation>
+            <ns:DepartureDateTime>2016-07-11T00:00:00</ns:DepartureDateTime>
+            <ns:OriginLocation LocationCode="LHR"/>
+            <ns:DestinationLocation LocationCode="JFK"/>
+         </ns:OriginDestinationInformation>
+         <ns:TravelPreferences MaxStopsQuantity="4">
+            <ns:CabinPref Cabin="Economy"/>
+         </ns:TravelPreferences>
+         <ns:TravelerInfoSummary>
+            <ns:AirTravelerAvail>
+               <ns:PassengerTypeQuantity Code="ADT" Quantity="2"/>
+            </ns:AirTravelerAvail>
+      <!--      <ns:AirTravelerAvail>
+               <ns:PassengerTypeQuantity Code="CHD" Quantity="1"/>
+            </ns:AirTravelerAvail> -->
+            <ns:AirTravelerAvail>
+               <ns:PassengerTypeQuantity Code="INF" Quantity="2"/>
+            </ns:AirTravelerAvail>
+            <ns:PriceRequestInformation CurrencyCode="INR"/>
+            <ns:TPA_Extensions>
+               <air:TripType>OneWay</air:TripType>
+               <air:NearbyDepartures>false</air:NearbyDepartures>
+               <air:NearbyDestinations>false</air:NearbyDestinations>
+            </ns:TPA_Extensions>
+         </ns:TravelerInfoSummary>
+      </ns:OTA_AirLowFareSearchRQ>
+   
+    </air1:RequestBody>
+</air1:AirInterfaceRQ>
+        <!--1 or more repetitions:-->

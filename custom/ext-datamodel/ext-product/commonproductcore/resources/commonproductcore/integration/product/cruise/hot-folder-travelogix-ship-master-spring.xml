@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2015 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+	<context:annotation-config />
+	
+	<bean id="baseDirectoryTravelogixShipMaster" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogix/shipMaster" />
+	</bean>
+	
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesTravelogixShipMaster"
+		directory="#{baseDirectoryTravelogixShipMaster}" filename-regex="ship_master_product-(\d+)\.csv"
+		comparator="fileOrderComparatorShipMaster">
+		<int:poller fixed-rate="100" />
+	</file:inbound-channel-adapter>
+		
+	<bean id="fileOrderComparatorShipMaster"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.FileOrderComparator">
+		<property name="prefixPriority">
+			<map>
+				<entry key="ship_master_product" value="280" />
+			</map>
+		</property>
+	</bean>
+	
+	
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogixShipMaster"
+		reply-channel="travelogixShipMasterBatchFilesProc" directory="#{baseDirectoryTravelogixShipMaster}/processing"
+		delete-source-files="true" />
+		
+	<int:service-activator input-channel="travelogixShipMasterBatchFilesProc"
+		output-channel="travelogixShipMasterBatchFilesHeaderInit" ref="travelogixShipMasterHeaderSetupTask"
+		method="execute" />
+
+	<bean id="travelogixShipMasterHeaderSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogixShipMaster" />
+	</bean>
+
+	<int:service-activator input-channel="travelogixShipMasterBatchFilesHeaderInit"
+		output-channel="travelogixShipMasterBatchFilesHeader" ref="headerInitTask"
+		method="execute" />
+	<bean id="headerInitTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderInitTask">
+		<property name="sequenceIdParser" ref="batchSequenceIdParser" />
+		<property name="languageParser" ref="batchLanguageParser" />
+		<property name="fallbackLanguage" value="en" />
+	</bean>
+
+	<bean id="batchSequenceIdParser"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.util.SequenceIdParser">
+		<property name="parser">
+			<bean class="de.hybris.platform.acceleratorservices.util.RegexParser">
+				<property name="regex" value="-(\d+)\.csv" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="travelogixShipMasterBatchFilesHeader"
+		output-channel="batchFilesTran" ref="travelogixShipMasterBatchTransformerTask"
+		method="execute" />
+
+	<bean id="travelogixShipMasterBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+	
+	<!-- Transformer converters mappings -->
+	
+	<bean id="batchCnkShipMasterDescriptionConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkShipMasterDescriptionConverter" />
+	
+	<bean id="batchCnkMasterShipDescriptionConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkMasterShipDescriptionConverter" />
+		
+	<bean id="batchShipMasterFacilityMediaConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchShipMasterFacilityMediaConverter" />
+	
+	<bean id="batchCnkMasterFacilityDetailConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkMasterFacilityDetailConverter" />
+	
+	<bean id="batchCnkMasterDeckConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkMasterDeckConverter" />
+	
+	<bean id="batchCnkMasterCabinConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkMasterCabinConverter" />
+		
+	<bean id="batchCnkMasterCabinOccupancyConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkMasterCabinOccupancyConverter" />
+	
+	<bean id="batchCnkShipDimensionDetailsConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkShipDimensionDetailsConverter" />	
+	
+	<bean id="batchCnkMasterShipEngineDetailsConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkMasterShipEngineDetailsConverter" />
+	
+	<bean id="batchCnkMasterShipOverviewConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkMasterShipOverviewConverter" />
+		
+	<bean id="batchCnkMasterShipAccomadationDetailsConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkMasterShipAccomadationDetailsConverter" />
+	
+	<bean id="batchCnkMasterShipEquipmentDetailsConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkMasterShipEquipmentDetailsConverter" />
+		
+	<bean id="batchCnkMasterShipPerformanceCapabilitiesConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkMasterShipPerformanceCapabilitiesConverter" />	
+	
+	<bean id="batchCnkMasterRescueSecurityDetailsConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkMasterRescueSecurityDetailsConverter" />
+		
+	<bean id="batchMasterCnkShipConstructionDetailsConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchMasterCnkShipConstructionDetailsConverter" />
+		
+	<bean id="batchCnkMasterShipConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkMasterShipConverter" />
+	
+	<bean id="batchCnkMasterCruiseUpdateConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkMasterCruiseUpdateConverter" />
+	
+	<bean id="batchCnkMasterCruiseRuleInformationConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkMasterCruiseRuleInformationConverter" />
+	
+	<bean id="batchCnkMasterHealthAndSafetyConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="ship_master_product" p:converter-ref="batchCnkMasterHealthAndSafetyConverter" />	
+	
+	<!-- Common Header -->
+	<bean id="ShipMasterDefaultHeader" class="java.lang.String">
+		<constructor-arg>
+			<value>
+				# ImpEx for importing data into $CATALOG$
+				$productCatalog=EZ-IN
+				$productCatalogName=ezeego1-IN
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+				$approved=approvalstatus(code)[default='approved']
+			</value>
+		</constructor-arg>	
+	</bean>
+
+	<!-- End Of Common Header -->
+	
+	<bean id="batchCnkShipMasterDescriptionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Description Details
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE DescriptionDetails;description;fromToDate[dateformat=dd/MM/yyyy hh:mm:ss];source[unique=true];
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'DescriptionDetails'"/>
+   		</bean>
+  		</property>
+	</bean>
+
+	<bean id="batchCnkMasterShipDescriptionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Ship Description
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE ShipDescription;highlights[unique=true];sellingTips[unique=true];uniqueSellingPoints[unique=true];longDescription(DescriptionDetails.source);shortDescription(DescriptionDetails.source);	
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'ShipDescription'"/>
+   		</bean>
+  		</property>
+	</bean>
+	
+	<bean id="batchShipMasterFacilityMediaConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK FacilityMedia
+				#{ShipMasterDefaultHeader}
+				$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+				$importFolder=file:$BASE_SOURCE_DIR$
+				INSERT_UPDATE Media;code[unique=true];mime[default='image/jpeg'];$catalogVersion;folder(qualifier)[default=images];realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{5};{6};{1};;{5};$importFolder/{5}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'FacilityDetail'"/>
+   		</bean>
+  		</property>
+	</bean>
+	
+	<bean id="batchCnkMasterFacilityDetailConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Facility Detail
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE FacilityDetail;medias(Media.code);facilityType(FacilityType.code)[unique=true];description;facilityName[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{5};{2};{3};{4}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'FacilityDetail'"/>
+   		</bean>
+  		</property>
+	</bean>
+
+	<bean id="batchCnkMasterDeckConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Deck
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE Deck;deckName[unique=true];deckLevel[unique=true];description;deckFacilities(FacilityDetail.facilityType(code),FacilityDetail.facilityName)[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}:{5}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'Deck'"/>
+   		</bean>
+  		</property>
+	</bean>
+
+	<bean id="batchCnkMasterCabinConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE Cabin;cabinType(code)[unique=true];cabinCategory(code)[unique=true];numberOfCabin[unique=true];cabinSize[unique=true];unit(code);cabinFacilities(FacilityDetail.facilityType(code),FacilityDetail.facilityName)[unique=true];description;deck(Deck.deckLevel,Deck.deckName)[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6}:{7};{8};{9}:{10}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'Cabin'"/>
+   		</bean>
+  		</property>
+	</bean>
+	
+	<bean id="batchCnkMasterCabinOccupancyConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CabinOccupancy
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE CabinOccupancy;maxPax[unique=true];maxChild[unique=true];maxAdult[unique=true];ageForChildFrom;ageForChildTo;cabin(Cabin.cabinType(code),Cabin.cabinCategory(code))[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6}:{7}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'CabinOccupancy'"/>
+   		</bean>
+  		</property>
+	</bean>
+
+	<bean id="batchCnkShipDimensionDetailsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert ShipDimensionDetails
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE ShipDimensionDetails;lengthOverall[unique=true];lengthAtWaterLine[unique=true];beam;grossTonnage;draftMin;draftMax;heightAtWaterLine;overallHeight[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'ShipDimensionDetails'"/>
+   		</bean>
+  		</property>
+	</bean>
+
+	<bean id="batchCnkMasterShipEngineDetailsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert ShipEngineDetails
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE ShipEngineDetails;quantity;fuelType[unique=true];manufacturer[unique=true];model;power[unique=true];totalPower;propulsion
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'ShipDimensionDetails'"/>
+   		</bean>
+  		</property>
+	</bean>
+
+	<bean id="batchCnkMasterShipOverviewConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert ShipOverview
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE ShipOverview;name[unique=true];type[unique=true];model;builder;navalArchitect[unique=true];exteriorDesign;interiorDesign;year[dateformat=$dateformat];refurbished;refurbishedDescription;flag;subType;mca;shipClass;hullNB;hullColor;formalyKnownAs
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'ShipOverview'"/>
+   		</bean>
+  		</property>
+	</bean>
+
+	<bean id="batchCnkMasterShipAccomadationDetailsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert ShipAccomadationDetails
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE ShipAccomadationDetails;guest;cabinsTotal[unique=true];cabins;crew[unique=true];noOfWheelchairsAccessibleCabins;noOfCabinsWithPrivateBalconies;noOfDecks[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'ShipAccomadationDetails'"/>
+   		</bean>
+  		</property>
+	</bean>
+
+	<bean id="batchCnkMasterShipEquipmentDetailsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert ShipEquipmentDetails
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE ShipEquipmentDetails;generator[unique=true];stabilizers[unique=true];thrusters[unique=true];amenities;noOfNavigationSystem_GPS
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'ShipEquipmentDetails'"/>
+   		</bean>
+  		</property>
+	</bean>
+
+	<bean id="batchCnkMasterShipPerformanceCapabilitiesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert ShipPerformanceCapabilities
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE ShipPerformanceCapabilities;maxSpeed;cruisingSpeed[unique=true];range;fuelCapacity[unique=true];waterCapacity[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'ShipPerformanceCapabilities'"/>
+   		</bean>
+  		</property>
+	</bean>
+
+	<bean id="batchCnkMasterRescueSecurityDetailsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert RescueSecurityDetails
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE RescueSecurityDetails;cdcScore[unique=true];cdcDate[dateformat=$dateformat][unique=true];noOfLifeBoats[unique=true];noOfTenders;noOfRescueBoats
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'RescueSecurityDetails'"/>
+   		</bean>
+  		</property>
+	</bean>
+	
+	<bean id="batchMasterCnkShipConstructionDetailsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert ShipConstructionDetails
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE ShipConstructionDetails;hullMaterial[unique=true];superStructure[unique=true];deckMaterial[unique=true];deckNB;hullConfiguration
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'ShipConstructionDetails'"/>
+   		</bean>
+  		</property>
+	</bean>
+
+	<bean id="batchCnkMasterShipConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Ship
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE Ship;code[unique=true];shipCommonID[unique=true];approvalStatus(code);cruiseCompanyName(CruiseCompany.uid);cruiseBrandName(CruiseBrand.uid);cruiseDestinationName(CruiseDestination.code);shipCode[unique=true];shipRating(code);shipDisplayName;shipClass(code);shipCategory(code);cruiseType(code);cruiseSubType(code);isMultipleDeckAvailable;copiedFrom;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];shipDescription(ShipDescription.highlights,ShipDescription.sellingTips);shipFacilities(FacilityDetail.facilityType(code),FacilityDetail.facilityName)[unique=true];cabinInformation(Cabin.cabinType(code),Cabin.cabinCategory(code))[unique=true];shipOverview(ShipOverview.name);constructionDetails(ShipConstructionDetails.hullMaterial);engineDetails(ShipEngineDetails.fuelType);dimensionDetails(ShipDimensionDetails.lengthOverall);shipPerformanceCapabilities(ShipPerformanceCapabilities.cruisingSpeed);accommodationDetails;equipmentDetails(ShipEquipmentDetails.generator);rescueSecurityDetails(RescueSecurityDetails.cdcScore);$catalogVersion;shipname;deckDetails(deckname)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18};{19}:{20};{21}:{22};{23}:{24};{25};{26};{27};{28};{29};{30};{31};{32};{1};{33};{34}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'Ship'"/>
+   		</bean>
+  		</property>
+	</bean>
+	
+	<bean id="batchCnkMasterCruiseUpdateConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CruiseUpdate
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE CruiseUpdate;description;descriptionType[unique=true];dateRange[unique=true,dateformat=dd-MM-yyyy hh:mm:ss];source;ship(Ship.code)[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'CruiseUpdate'"/>
+   		</bean>
+  		</property>
+	</bean>
+
+	<bean id="batchCnkMasterCruiseRuleInformationConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CruiseRuleInformation
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE CruiseRuleInformation;ruleName[unique=true];ruleInformationFor(code)[unique=true];deck(Deck.deckLevel,Deck.deckName)[unique=true];cabin(Cabin.cabinType(code)[unique=true],Cabin.cabinCategory(code));ship(Ship.code)[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}:{4};{5}:{6};{7}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'CruiseRuleInformation'"/>
+   		</bean>
+  		</property>
+	</bean>
+
+	<bean id="batchCnkMasterHealthAndSafetyConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert HealthAndSafety
+				#{ShipMasterDefaultHeader}
+				INSERT_UPDATE HealthAndSafety;healthAndSafetyCategory(code);healthAndSafetyName[unique=true];remarks;value;lastUpdate[dateformat=$dateformat];ship(Ship.code)[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'HealthAndSafety'"/>
+   		</bean>
+  		</property>
+	</bean>
+	</beans>

@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~ [y] hybris Platform
+  ~ 
+  ~ Copyright (c) 2000-2016 SAP SE
+  ~ All rights reserved.
+  ~ 
+  ~ This software is the confidential and proprietary information of SAP 
+  ~ Hybris ("Confidential Information"). You shall not disclose such 
+  ~ Confidential Information and shall use it only in accordance with the 
+  ~ terms of the license agreement you entered into with SAP Hybris.
+  -->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+<collectiontypes>
+        <collectiontype code="RoleList" elementtype="Role" autocreate="true" generate="false" type="list"/>
+        <collectiontype code="TDSTaxElementList" elementtype="TDSTaxElement" autocreate="true" generate="false" type="set"/>
+</collectiontypes>
+
+<!--  Manage Doc   -->
+         <enumtypes>   
+         <enumtype code="DocumentStatus" dynamic="true">
+			<description>Document Status Enum</description>
+			<value code="PENDING"></value>
+			<value code="PENDING_VERIFICATION"></value>
+			<value code="REJECTED"></value>
+			<value code="VERIFIED"></value>
+			<value code="PENDING_APPROVAL"></value>
+			<value code="GENERATED"></value>
+		</enumtype>
+		
+		<enumtype code="ServiceOrderStatus" dynamic="true">
+			<value code="PSO_GENERATED"/>
+			<value code="PSO_CANCELLED"/>
+			<value code="FSO_GENERATED"/>
+			<value code="FSO_NOT_GENERATED"/>
+			<value code="FSO_CANCELLED"/>
+			<value code="BILL_PASSING_PENDING"/>
+		</enumtype>
+			
+		<enumtype code="SupplierLiabilityStatus" dynamic="true">	
+			<value code="PSL_GENERATED"/>
+			<value code="PSL_CANCELLED"/>
+			<value code="FSL_GENERATED"/>
+			<value code="FSL_NOT_GENERATED"/>
+			<value code="FSL_CANCELLED"/>
+			<value code="BILL_PASSING_PENDING"/>
+		</enumtype>
+		
+		<enumtype code="ServiceOrderPaymentStatus" dynamic="true">	
+			<value code="PENDING"/>
+			<value code="PARTIALLY_PAID"/>
+			<value code="FULLY_PAID"/>
+			<value code="SETTLED"/>
+			<value code="FULLY_SETTLED"/>
+			<value code="PARTIALLY_SETTLED"/>
+			<value code="UNSETTLED"/>
+			<value code="SETTLED_AGAINST_DEPOSIT"/>
+			<value code="PARTIALLY_SETTLED_AGAINST_DEPOSIT"/>
+		</enumtype>
+		
+		<enumtype code="ServiceOrderType" >	
+			<value code="PSO" />
+			<value code="FSO" />
+		</enumtype>
+		
+		<enumtype code="SupplierLiabilityType" >	
+			<value code="PSL" />
+			<value code="FSL" />
+		</enumtype>
+		
+		<enumtype code="TDSApprovalStatus" dynamic="true">
+			<description>TDS Approval Status Enum</description>
+			<value code="NOT_SUBMITTED"/>
+			<value code="PENDING_FOR_APPROVAL"/>
+			<value code="REJECTED"/>
+			<value code="APPROVED"/>
+		</enumtype>
+		<enumtype code="TDSTaxElement" dynamic="true">
+			<description>TDS Tax element Enum</description>
+			<value code="AMOUNT"/>
+			<value code="MAIN_TDS"/>
+			<value code="EDU_CESS"/>
+			<value code="HI_EDU_CESS"/>
+			<value code="SURCHARGE"/>
+		</enumtype>
+		
+		<enumtype code="PaymentAdviceStatus" >	
+			<value code="PENDING" />
+		</enumtype>
+		
+        </enumtypes>
+    <relations>
+        <relation code="ReconfirmationConfig2ClientReconfirmationConfigREL" autocreate="true" generate="false" localized="false">
+			<sourceElement type="ReconfirmationConfig" cardinality="one" qualifier="reconfirmationconfig" />
+			<targetElement type="ClientReconfirmationConfig" cardinality="many" qualifier="clientreconfirmationconfigs" >
+			</targetElement>
+		</relation>
+		<relation code="ReconfirmationConfig2SupplierReconfirmationConfigREL" autocreate="true" generate="false" localized="false">
+			<sourceElement type="ReconfirmationConfig" cardinality="one" qualifier="reconfirmationconfig" />
+			<targetElement type="SupplierReconfirmationConfig" cardinality="many" qualifier="supplierreconfirmationconfigs" >
+			</targetElement>
+		</relation>
+		<relation code="ReconfirmationConfig2ReconfirmationIntervalREL" autocreate="true" generate="false" localized="false">
+			<sourceElement type="ReconfirmationConfig" cardinality="one" qualifier="reconfirmationconfig" />
+			<targetElement type="ReconfirmationInterval" cardinality="many" qualifier="reconfirmationintervals" >
+			</targetElement>
+		</relation>
+		<relation code="ReconfirmationConfig2ReconfirmationTravelDestinationREL" autocreate="true" generate="false" localized="false">
+			<sourceElement type="ReconfirmationConfig" cardinality="one" qualifier="reconfirmationconfig" />
+			<targetElement type="ReconfirmationTravelDestination" cardinality="many" qualifier="reconfirmationtraveldestinations" >
+			</targetElement>
+		</relation>
+		
+		<!--   Manage Doc   -->
+		<relation code="Order2DocumentSettingREL" autocreate="true" generate="false" localized="false">
+		    <deployment table="orderdocreltab" typecode="22189" />
+			<sourceElement type="Order" cardinality="many" qualifier="order" />
+			<targetElement type="DocumentSetting" cardinality="many" qualifier="documentSettings" >
+			</targetElement>
+		</relation>
+		
+		<relation code="TDSMaster2TDSTaxComponentREL" autocreate="true" generate="false" localized="false">
+			<sourceElement type="TDSMaster" cardinality="one" qualifier="tdsMaster" />
+			<targetElement type="TDSTaxComponent" cardinality="many" qualifier="taxComponents" collectiontype="list"/>
+		</relation>
+		<relation code="TDSMaster2AbstractTDSRuleREL" autocreate="true" generate="false" localized="false">
+			<sourceElement type="TDSMaster" cardinality="one" qualifier="tdsMaster" />
+			<targetElement type="AbstractTDSRule" cardinality="many" qualifier="tdsRules" >
+			</targetElement>
+		</relation>
+		<relation code="TDSMaster2TDSExemptionREL" autocreate="true" generate="false" localized="false">
+			<sourceElement type="TDSMaster" cardinality="one" qualifier="tdsMaster" />
+			<targetElement type="TDSExemption" cardinality="many" qualifier="tdsExemptions" >
+			</targetElement>
+		</relation>
+		<relation code="TDSMaster2TDSCompanyTypeREL" autocreate="true" generate="false" localized="false">
+			<deployment table="tdsMaster2tdsCompanyType" typecode="22206"/>
+			<sourceElement type="TDSMaster" cardinality="many" qualifier="tdsMasters" />
+			<targetElement type="TDSCompanyType" cardinality="many" qualifier="tdsCompanyTypes" >
+			</targetElement>
+		</relation>
+		<relation code="SupplierInvoice2ServiceOrderREL" autocreate="true" generate="false" localized="false">
+			<sourceElement type="SupplierInvoice" cardinality="one" qualifier="supplierInvoice" />
+			<targetElement type="ServiceOrder" cardinality="many" qualifier="serviceOrder" />
+		</relation>
+		<relation code="PaymentAdvice2ServiceOrderREL" autocreate="true" generate="false" localized="false">
+			<sourceElement type="PaymentAdvice" cardinality="one" qualifier="paymentAdvice" />
+			<targetElement type="ServiceOrder" cardinality="many" qualifier="serviceOrder" />
+		</relation>
+	</relations>
+	<itemtypes>
+      <typegroup name="ReconfirmationConfig">
+			<itemtype code="ReconfirmationConfig" autocreate="true" generate="true" extends="AbstractTravelogixItem"
+				jaloclass="com.cnk.travelogix.datamodel.operation.reconfirmationconfig.jalo.ReconfirmationConfig">
+				<description>Reconfirmation Config</description>
+				<deployment table="reccnfrmconfigtab" typecode="22121" />
+				<attributes>
+					<attribute type="Product" qualifier="product">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ProductCategorySubType" qualifier="productCategorySubType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Category" qualifier="productCategory">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="effectiveFrom">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			</typegroup>
+			<typegroup name="ReconfirmationInterval">
+			<itemtype code="ReconfirmationInterval" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.operation.reconfirmationinterval.jalo.ReconfirmationInterval">
+				<description>Reconfirmation Interval</description>
+				<deployment table="rcnfrmtnintrvltab" typecode="22122" />
+				<attributes>
+					<attribute type="ReconfirmationCutOffType" qualifier="reconfirmationCutOff">
+						<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.Integer" qualifier="cutoff">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CutOffDaysAndHours" qualifier="cutOffDaysOrHours">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			</typegroup>
+			<typegroup name="ClientReconfirmationConfig">
+			<itemtype code="ClientReconfirmationConfig" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.operation.clientreconfirmationconfig.jalo.ClientReconfirmationConfig">
+				<description>Client Reconfirmation Config</description>
+				<deployment table="clntrcnfrtncfgtab" typecode="22123" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="code">
+						<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TravelogixB2BUnit" qualifier="client">
+						<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ReconfirmationToBeSentToType" qualifier="reconfirmationTo">
+						<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+						<attribute type="ReconfirmationInterval" qualifier="clientReconfirmationInterval">
+						<persistence type="property" />
+					</attribute>
+				
+				</attributes>
+			</itemtype>
+			</typegroup>
+			<typegroup name="SupplierReconfirmationConfig">
+			<itemtype code="SupplierReconfirmationConfig" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.operation.supplierreconfirmationconfig.jalo.SupplierReconfirmationConfig">
+				<description>Supplier Reconfirmation Config</description>
+				<deployment table="splrrcftncfgtab" typecode="22124" />
+ 			<attributes>
+						<attribute type="java.lang.String" qualifier="code">
+						<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Supplier" qualifier="supplier">
+						<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ReconfirmationToBeSentToType" qualifier="reconfirmationTo">
+						<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ReconfirmationInterval" qualifier="supplierReconfirmationInterval">
+						<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			</typegroup>
+			<typegroup name="ReconfirmationTravelDestination">
+			<itemtype code="ReconfirmationTravelDestination" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.operation.reconfirmationtraveldestination.jalo.ReconfirmationTravelDestination">
+				<description>Reconfirmation Travel Destination</description>
+				<deployment table="rcfrtntrvldstntab" typecode="22125" />
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="inclusion">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Continent" qualifier="continent">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Country" qualifier="country">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="City" qualifier="city">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			</typegroup>
+			
+	<!-- added aditional attribute in Employee Item -->
+		<typegroup name="Employee">
+			<itemtype code="Employee" autocreate="false" generate="false">
+				<attributes>
+					<attribute type="java.lang.String" qualifier="contactEmail">
+						<persistence type="property" />
+						<modifiers read="true" write="true" search="true"
+							optional="false" unique="true" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="firstName">
+						<persistence type="property" />
+						<modifiers read="true" write="true" search="true"
+							optional="false" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="middleName">
+						<persistence type="property" />
+						<modifiers read="true" write="true" search="true" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="lastName">
+						<persistence type="property" />
+						<modifiers read="true" write="true" search="true"
+							optional="false" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="mobileNumber">
+						<persistence type="property" />
+						<modifiers read="true" write="true" search="true" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="designation">
+						<persistence type="property" />
+						<modifiers read="true" write="true" search="true"
+							optional="false" />
+					</attribute>
+					<attribute type="Role" qualifier="functionalRole">
+						<persistence type="property" />
+						<modifiers read="true" write="true" search="true" />
+					</attribute>
+					<attribute type="Employee" qualifier="reportingManager">
+						<persistence type="property" />
+						<modifiers read="true" write="true" search="true" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="isManager">
+						<persistence type="property" />
+						<modifiers read="true" write="true" search="true" />
+					</attribute>
+					<attribute type="Employee" qualifier="secondaryUser">
+						<persistence type="property" />
+						<modifiers read="true" write="true" search="true" />
+					</attribute>
+					<attribute type="RoleList" qualifier="roles">
+						<persistence type="property" />
+						<modifiers read="true" write="true" search="true" />
+					</attribute>
+			
+				</attributes>
+			</itemtype>
+		</typegroup>
+			
+			<typegroup>
+			  <itemtype code="ToDoListComponent" extends="SimpleCMSComponent"
+                      jaloclass="com.cnk.travelogix.datamodel.operation.components.jalo.ToDoListComponent">
+            </itemtype>
+            
+            <itemtype code="ToDoDetailComponent" extends="SimpleCMSComponent"
+                      jaloclass="com.cnk.travelogix.datamodel.operation.components.jalo.ToDoDetailComponent">
+            </itemtype>
+			
+			</typegroup>
+			
+			<!--   Manage Doc   -->
+
+			
+
+<typegroup name="Order">
+	<itemtype code="Order" autocreate="false" generate="false">
+		<description>Addition of 3 attributes for Manage Documents</description>
+		<attributes>
+			<attribute type="java.util.Date" qualifier="docReceivedDate">
+				<persistence type="property" />
+			</attribute>
+			<attribute type="DocumentStatus" qualifier="docStatus">
+				<persistence type="property" />
+			</attribute>
+			<attribute type="java.lang.String" qualifier="remarks">
+				<persistence type="property" />
+			</attribute>
+			<attribute type="TimeLimitMasterConfig" qualifier="timeLimitMasterConfig">
+				<persistence type="property" />
+			</attribute>
+			<attribute type="java.util.Date" qualifier="tempTimeLimit">
+				<persistence type="property" />
+			</attribute>
+			<attribute type="java.lang.String" qualifier="financialControlId">
+				<persistence type="property" />
+			</attribute>
+		</attributes>
+	</itemtype>
+	<!--Added for Saved Queries -->
+		<itemtype code="SavedQuery" autocreate="false" generate="true">
+            <attributes>
+      			<attribute qualifier="employee" type="Employee" autocreate="true" >
+                    <modifiers read="true" write="true" search="true"/>
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+	<itemtype code="TimeLimitBookingProcess" autocreate="true"
+		generate="true"
+		jaloclass="com.cnk.travelogix.datamodel.model.operation.process.TimeLimitBookingProcess"
+		extends="StoreFrontCustomerProcess">
+		<attributes>
+			<attribute qualifier="order" type="Order">
+				<persistence type="property" />
+			</attribute>
+		</attributes>
+	</itemtype>
+</typegroup>	
+
+			<typegroup name="ServiceOrders">
+			
+				<itemtype code="ServiceOrder" autocreate="true" generate="true" 
+						jaloclass="com.cnk.travelogix.operation.serviceorder.jalo.ServiceOrder" >
+					<deployment table="ServiceOrders" typecode="22311"/>
+					<attributes>
+						<attribute type="java.lang.String" qualifier="code">
+							<persistence type="property"/>
+							<modifiers unique="true" optional="false"/>
+						</attribute>
+						<attribute type="ServiceOrderType" qualifier="type">
+							<persistence type="property"/>
+							<modifiers optional="false"/>
+						</attribute>
+						<attribute type="ServiceOrder" qualifier="fso">
+							<persistence type="property" />
+						</attribute>
+						<attribute type="java.lang.Double" qualifier="versionNumber">
+							<persistence type="property"/>
+							<modifiers unique="true" optional="false"/>
+							<defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+						</attribute>
+						<attribute type="ServiceOrderStatus" qualifier="serviceOrderStatus">
+							<persistence type="property"/>
+							<defaultvalue>em().getEnumerationValue("ServiceOrderStatus","FSO_NOT_GENERATED")</defaultvalue>
+						</attribute>
+						<attribute type="Currency" qualifier="currency">
+							<persistence type="property"/>
+						</attribute>
+						<attribute type="java.util.Date" qualifier="travelCompletionDate">
+							<persistence type="property"/>
+						</attribute>
+						<attribute type="SupplierPriceDetails" qualifier="pricingDetails">
+							<persistence type="property"/>
+						</attribute>
+						<attribute type="ServiceOrderPaymentStatus" qualifier="paymentStatus">
+							<persistence type="property"/>
+							<defaultvalue>em().getEnumerationValue("ServiceOrderPaymentStatus","PENDING")</defaultvalue>
+						</attribute>
+						<attribute type="AbstractOrderEntry" qualifier="orderEntry">
+							<persistence type="property"/>
+						</attribute>
+						<attribute type="java.lang.Boolean" qualifier="active">
+							<persistence type="property"/>
+							<defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+						</attribute>
+					</attributes>
+				</itemtype>
+				
+				<itemtype code="SupplierLiability" autocreate="true" generate="true" 
+						jaloclass="com.cnk.travelogix.operation.serviceorder.jalo.SupplierLiability">
+					<deployment table="SupplierLiability" typecode="22312"/>
+					<attributes>
+						<attribute type="java.lang.String" qualifier="code">
+							<persistence type="property"/>
+							<modifiers unique="true" optional="false"/>
+						</attribute>
+						<attribute type="SupplierLiabilityType" qualifier="type">
+							<persistence type="property"/>
+							<modifiers optional="false"/>
+						</attribute>
+						<attribute type="SupplierLiability" qualifier="fsl">
+							<persistence type="property" />
+						</attribute>
+						<attribute type="SupplierLiabilityStatus" qualifier="supplierLiabilityStatus">
+							<persistence type="property"/>
+							<defaultvalue>em().getEnumerationValue("SupplierLiabilityStatus","FSL_NOT_GENERATED")</defaultvalue>
+						</attribute>
+						<attribute type="ServiceOrder" qualifier="serviceOrder">
+							<persistence type="property"/>
+						</attribute>
+					</attributes>
+				</itemtype>
+				
+				<itemtype code="AbstractOrderEntry" autocreate="false" generate="false">
+					<attributes>
+						<attribute type="ServiceOrder" qualifier="latestServiceOrder">
+							<persistence type="property"/>
+						</attribute>
+					</attributes>			
+				</itemtype>
+				
+				<itemtype code="SupplierInvoice" autocreate="true" generate="true" 
+						jaloclass="com.cnk.travelogix.operation.serviceorder.jalo.SupplierInvoice">
+					<deployment table="SupplierInvoice" typecode="22313"/>
+					<attributes>
+						<attribute type="java.lang.String" qualifier="invoiceNumber">
+							<persistence type="property"/>
+							<modifiers unique="true" optional="false"/>
+						</attribute>
+						<attribute type="java.util.Date" qualifier="invoiceDate">
+							<persistence type="property"/>
+						</attribute>
+						<attribute type="java.util.Date" qualifier="invoiceReceivedDate">
+							<persistence type="property"/>
+						</attribute>
+						<attribute type="java.lang.Double" qualifier="totalCost">
+							<persistence type="property"/>
+							<defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+						</attribute>
+						<attribute type="java.lang.Double" qualifier="totalCommission">
+							<persistence type="property"/>
+							<defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+						</attribute>
+						<attribute type="Currency" qualifier="currency">
+							<persistence type="property"/>
+						</attribute>
+						<attribute type="java.lang.Double" qualifier="serviceOrderAmount">
+							<persistence type="property"/>
+							<defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+						</attribute>
+						<attribute type="java.lang.Double" qualifier="netPayable">
+							<persistence type="property"/>
+							<defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+						</attribute>
+						<attribute type="java.util.Date" qualifier="paymentDueDate">
+							<persistence type="property"/>
+						</attribute>
+						<attribute type="Media" qualifier="upload">
+							<persistence type="property"/>
+						</attribute>
+					</attributes>
+				</itemtype>
+				
+				<itemtype code="PaymentAdvice" autocreate="true" generate="true" 
+						jaloclass="com.cnk.travelogix.operation.serviceorder.jalo.PaymentAdvice">
+					<deployment table="SupplierPaymentAdvice" typecode="22314"/>
+					<attributes>
+						<attribute type="java.lang.String" qualifier="paymentAdviceNumber">
+							<persistence type="property"/>
+							<modifiers unique="true" optional="false"/>
+						</attribute>
+						<attribute type="PaymentAdviceStatus" qualifier="paymentAdviceStatus">
+							<persistence type="property"/>
+						</attribute>
+						<attribute type="java.lang.Double" qualifier="netPayable">
+							<persistence type="property"/>
+							<defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+						</attribute>
+						<attribute type="java.lang.Double" qualifier="amountPayable">
+							<persistence type="property"/>
+							<defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+						</attribute>
+						<attribute type="java.lang.Double" qualifier="balanceAmountPayable">
+							<persistence type="property"/>
+							<defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+						</attribute>
+						<attribute type="java.lang.Double" qualifier="amountTobePaid">
+							<persistence type="property"/>
+							<defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+						</attribute>
+						<attribute type="ModeOfPayment" qualifier="modeOfPayment">
+							<persistence type="property"/>
+						</attribute>
+					</attributes>
+				</itemtype>
+				
+				<itemtype code="PaymentDetails" autocreate="true" generate="true" 
+						jaloclass="com.cnk.travelogix.operation.serviceorder.jalo.PaymentDetails">
+					<deployment table="SupplierPaymentDetails" typecode="22315"/>
+					<attributes>
+						<attribute type="PaymentAdvice" qualifier="paymentAdvice">
+							<persistence type="property"/>
+						</attribute>
+						<attribute type="Currency" qualifier="remittanceCurrency">
+							<persistence type="property"/>
+						</attribute>
+						<attribute type="java.lang.Double" qualifier="roe">
+							<persistence type="property"/>
+							<defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+						</attribute>
+						<attribute type="java.lang.Double" qualifier="amountToBeRemitted">
+							<persistence type="property"/>
+							<defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+						</attribute>
+						<attribute type="java.lang.Double" qualifier="remittanceCharges">
+							<persistence type="property"/>
+							<defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+						</attribute>
+						<attribute type="java.lang.Double" qualifier="totalAmountToBeRemitted">
+							<persistence type="property"/>
+							<defaultvalue>Double.valueOf(0.0d)</defaultvalue>
+						</attribute>
+						<attribute type="PaymentInfo" qualifier="paymentTypeInfo">
+							<persistence type="property"/>
+						</attribute>
+						<attribute type="java.lang.String" qualifier="paymentReferenceNumber">
+							<persistence type="property"/>
+						</attribute>
+						<attribute type="java.lang.String" qualifier="sapReferenceNumber">
+							<persistence type="property"/>
+						</attribute>
+						<attribute type="java.util.Date" qualifier="dateOfPayment">
+							<persistence type="property"/>
+						</attribute>
+						<attribute type="java.lang.String" qualifier="remarks">
+							<persistence type="property"/>
+						</attribute>
+					</attributes>
+				</itemtype>
+			</typegroup>
+			
+			<typegroup name="TDS">
+			 	
+			<itemtype code="TDSMaster" autocreate="true" generate="true" extends="AbstractTravelogixItem"
+				jaloclass="com.cnk.travelogix.operation.tds.jalo.TDSMaster">
+				<description>TDS master definition</description>
+				<deployment table="tdsMaster" typecode="22201" />
+				<attributes>
+					<attribute type="Company" qualifier="company">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="tdsType">
+						<persistence type="property" />
+					</attribute>
+					
+					<attribute type="java.lang.String" qualifier="tdsTypeDescription">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="startDate">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="endDate">
+						<persistence type="property" />
+					</attribute>
+					
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="TDSCompanyType" autocreate="true" generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.operation.tds.jalo.TDSCompanyType">
+				<description>Define Tds Company Type</description>
+				<deployment table="tdsCompanyType" typecode="22202" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="code">
+						<modifiers unique="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="value">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="TDSTaxComponent" autocreate="true" generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.operation.tds.jalo.TDSTaxComponent">
+				<description>Define Tax Components</description>
+				<deployment table="taxComponent" typecode="22203" />
+				<attributes>
+					<attribute type="TDSTaxElement" qualifier="taxElement">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="percentage">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TDSTaxElementList" qualifier="taxElementList">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="AbstractTDSRule" autocreate="true" generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.operation.tds.jalo.AbstractTDSRule">
+				<description>Define TDS Rule</description>
+				<deployment table="tdsRules" typecode="22204" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="code">
+						<modifiers unique="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Country" qualifier="country">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="isIncluded">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="SupplierTDSRule" autocreate="true" generate="true" extends="AbstractTDSRule"
+				jaloclass="com.cnk.travelogix.operation.tds.jalo.SupplierTDSRule">
+				<description>Define TDS Rule for Supplier</description>
+				<attributes>
+					<attribute qualifier="supplier" type="Supplier">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Category" qualifier="category">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ProductCategorySubType" qualifier="subCategory">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Product" qualifier="product">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="ClientTDSRule" autocreate="true" generate="true" extends="AbstractTDSRule"
+				jaloclass="com.cnk.travelogix.operation.tds.jalo.ClientTDSRule">
+				<description>Define TDS Rule for Client</description>
+				<attributes>
+					<attribute qualifier="client" type="Customer">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CommercialHead" qualifier="commercialHead">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="TDSExemption" autocreate="true" generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.operation.tds.jalo.TDSExemption">
+				<description>Define TDS Exemption</description>
+				<deployment table="tdsExemption" typecode="22205" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="customerId">
+						<modifiers unique="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="customerName">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="percentage">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="threshold">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="cappingAmount">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="exemptionCertificateHash">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Media" qualifier="exemptionCertificate">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="certificateValidFrom">
+						<modifiers unique="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="certificateValidTo">
+						<modifiers unique="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="certificateDescription">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		
+		<typegroup>
+			<itemtype code="TravelogixPaymentReceipt" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="client" type="TravelogixB2BUnit">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

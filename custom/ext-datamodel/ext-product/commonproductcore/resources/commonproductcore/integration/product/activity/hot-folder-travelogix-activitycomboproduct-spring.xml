@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2015 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+
+	<context:annotation-config />
+	<bean id="baseDirectoryTravelogixActivityCombo" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogix/product/comboactivity" />
+	</bean>
+
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesTravelogixActivityCombo"
+		directory="#{baseDirectoryTravelogixActivityCombo}" filename-regex="activity_combo_product_info-(\d+)\.csv"
+		comparator="fileOrderComparator">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogixActivityCombo"
+		reply-channel="travelogixActivityComboBatchFilesProc" directory="#{baseDirectoryTravelogixActivityCombo}/processing"
+		delete-source-files="true" />
+
+	<int:service-activator input-channel="travelogixActivityComboBatchFilesProc"
+		output-channel="travelogixActivityComboBatchFilesHeaderInit" ref="travelogixActivityComboHeaderSetupTask"
+		method="execute" />
+
+	<bean id="travelogixActivityComboHeaderSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogixActivityCombo" />
+	</bean>
+
+	<!-- 2) move the file to processing and setup header, partly site dependent -->
+	<int:service-activator input-channel="travelogixActivityComboBatchFilesHeaderInit"
+		output-channel="travelogixActivityComboBatchFilesHeader" ref="headerInitTask"
+		method="execute" />
+
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="travelogixActivityComboBatchFilesHeader"
+		output-channel="batchFilesTran" ref="travelogixActivityComboBatchTransformerTask"
+		method="execute" />
+
+	<bean id="travelogixActivityComboBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+
+
+	<!-- Common Header -->
+	
+		<bean id="activityComboDefaultHeader" class="java.lang.String">
+			<constructor-arg>
+				<value># ImpEx for importing data into $CATALOG$
+					$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+					$dateformat=dd-MM-yyyy
+					$timeformat = hh:mm
+	                $lang=en
+					$categories=supercategories(code, catalogVersion(catalog(id),version))[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+					$approved=approvalstatus(code)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.ArticleStatusDataDecorator]					
+				</value>
+			</constructor-arg>
+		</bean>
+		<!-- End Of Common Header -->
+
+	<bean id="batchCnkActivityComboMediaConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_combo_product_info" p:converter-ref="batchCnkActivityComboMediaConverter" />
+
+	<bean id="batchCnkActivityComboProductConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_combo_product_info" p:converter-ref="batchCnkActivityComboProductConverter" />
+		
+	
+
+	<!-- Transformer converters mappings -->
+
+	<bean id="batchCnkActivityComboMediaConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+		    	#{activityComboDefaultHeader}		
+				$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+				$importFolder=file:$BASE_SOURCE_DIR$
+				INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier)[default=images]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};$importFolder\{2};;Ezeego1;;</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Media'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchCnkActivityComboProductConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityComboDefaultHeader}
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+				$importFolder=file:$BASE_SOURCE_DIR$
+				INSERT_UPDATE ActivityComboProduct;$catalogVersion;version;id[unique=true];name;comboProductType;comboCompanyProductNameId;productNameFinanceControlId;comboDisplayName;comboCommonProductNameSubTypeId;comboCompanyProductNameSubTypeId;comboProductNameSubType;productNameSubTypeFinanceControlId;pickOfPoint;dropOffPoint;remark;uniqueSellingPoints;sellingTips;copiedFromCompanyProductNameId;copiedFromCompanyProductNameSubTypeId;interest(code);highlights;activityComboMedia(code);attachedPolicies(code);deactivationFromMarket(product(code));activityComboProducts(code);longDescription(activityProduct(code));shortDescription(activityProduct(code));updates(activityProduct(code));
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;Ezeego1;{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'ComboActivityProduct'" />
+			</bean>
+		</property>
+	</bean>
+</beans>
+

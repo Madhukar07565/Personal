@@ -1,0 +1,47 @@
+$customergroup=customergroup
+$defaultPassword=12341234
+$lang=en
+
+INSERT_UPDATE Country2Language;source(isocode)[unique=true];target(isocode)[unique=true]
+;IN;en
+;CA;en
+;CA;fr
+
+INSERT_UPDATE Country2Currency;source(isocode)[unique=true];target(isocode)[unique=true]
+;IN;USD
+;IN;INR
+;CA;CAD
+
+INSERT_UPDATE Country;isocode[unique=true];countryCode
+;CN;086
+;IN;091
+;US;1
+
+INSERT_UPDATE Customer;originalUid[unique=true];uid[unique=true];title(code);name;description;sessionLanguage(isocode);sessionCurrency(isocode);groups(uid);isActive;password[default=$defaultPassword]
+;test@test.com;test@test.com;;dummy user;test user;en;USD;customergroup;true;
+
+
+### sample data for configuration start
+INSERT_UPDATE Market;uid[unique=true];locName[lang=$lang]
+;IND;India
+;AU;Australia
+
+INSERT_UPDATE TravelogixClientType;uid[unique=true];language(isocode);clientType(code);companyMarkets(Market.uid);settlement[default=false];clientCommercials[default=false];transactional[default=false];reason[unique=true, lang=$lang];remarks[lang=$lang]
+;12B2b121;en;B2C;IND;;;;Others;Others
+
+#Password Setting
+INSERT_UPDATE PasswordConfig;&pwdInfoId;forgetPasswordCommunicationModes(code)[unique=true];reminderCommunicationModesforEnabledAccount(code);autoExpirePasswordAfterDays;autoExpiredPasswordAllowed[default=false];secretQuestionRequired[default=false]
+;2100013;EMAIL;EMAIL;60;true;true;
+
+#B2CRegistration Setting
+INSERT_UPDATE B2CRegistrationConfig;&b2cRegSetId;activationLinkValidForDay[unique=true];entityName(uid)
+;2100015;1;12B2b121
+
+#Account Configuration
+INSERT_UPDATE LoginConfig;&accountInfoId;allowedThirdParties(code)[unique=true];forgetUserIdCommunicationModes(code);retriesCountBeforeLocking;keepUserSignInDays;remarks;loginType(code);loginValidation(code);passwordConfig(&pwdInfoId);thirdPartyLoginAllowed[default=false]; keepUserSignInAllowed[default=false]; userAccountLockAllowed[default=false];childClientB2BAll[default=false];childClientB2CAll[default=false];entityName(uid);
+;2100012;GOOGLE;EMAIL;30;07;its an admin account;NORMAL;ALL;2100013;true;true;true;;;12B2b121;
+
+#BaseStore
+INSERT_UPDATE BaseStore;uid[unique=true];travelogixClientType(uid)
+;ezginb2c;12B2b121
+### sample data for configuration end

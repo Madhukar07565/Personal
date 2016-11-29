@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:AirRS xmlns:n2="http://www.coxandkings.com/suppl/air" xmlns:p="http://www.coxandkings.com/suppl/airinterface" xmlns:p1="http://www.coxandkings.com/suppl/common" xmlns:p2="http://www.opentravel.org/OTA/2003/05" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.coxandkings.com/suppl/airinterface RetrieveBooking.xsd ">
+  <n2:ResponseHeader>
+    <p1:Status>ERROR</p1:Status>
+    <p1:SessionID>p1:SessionID</p1:SessionID>
+    <p1:TransactionID>p1:TransactionID</p1:TransactionID>
+  </n2:ResponseHeader>
+  <p:ResponseBody>
+    <n2:OTA_AirBookModifyRSWrapper>
+      <n2:SupplierID>n2:SupplierID</n2:SupplierID>
+      <n2:Sequence>0</n2:Sequence>
+      <n2:ErrorList>
+        <p1:Error>
+          <p1:ErrorCode>p1:ErrorCode</p1:ErrorCode>
+          <p1:ErrorMsg>p1:ErrorMsg</p1:ErrorMsg>
+          <p1:ErrorDetails>p1:ErrorDetails</p1:ErrorDetails>
+        </p1:Error>
+      </n2:ErrorList>
+    </n2:OTA_AirBookModifyRSWrapper>
+  </p:ResponseBody>
+</p:AirRS>

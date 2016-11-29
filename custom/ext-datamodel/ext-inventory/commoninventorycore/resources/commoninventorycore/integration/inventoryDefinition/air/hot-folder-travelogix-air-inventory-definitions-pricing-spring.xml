@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+	<context:annotation-config />
+
+	<bean id="baseDirectoryTravelogixAirInventoryDefinition" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogix/inventoryDefinition/air" />
+	</bean>
+
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter
+		id="batchFilesTravelogixAirInventoryDefinition" directory="#{baseDirectoryTravelogixAirInventoryDefinition}"
+		filename-regex="air_inventory_definition-(\d+)\.csv" comparator="fileOrderComparatorAirInventoryDefinition">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+
+	<bean id="fileOrderComparatorAirInventoryDefinition"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.FileOrderComparator">
+		<property name="prefixPriority">
+			<map>
+				<!-- default priority is 0-->
+				<entry key="air_inventory_definition" value="150" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogixAirInventoryDefinition"
+		reply-channel="travelogixAirInventoryDefinitionBatchFilesProc" directory="#{baseDirectoryTravelogixAirInventoryDefinition}/processing"
+		delete-source-files="true" />
+
+	<int:service-activator input-channel="travelogixAirInventoryDefinitionBatchFilesProc"
+		output-channel="travelogixAirInventoryDefinitionBatchFilesHeaderInit" ref="travelogixAirInventoryDefinitionHeaderSetupTask"
+		method="execute" />
+
+	<bean id="travelogixAirInventoryDefinitionHeaderSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogixAirInventoryDefinition" />
+	</bean>
+
+	<!-- 2) move the file to processing and setup header, partly site dependent -->
+	<int:service-activator input-channel="travelogixAirInventoryDefinitionBatchFilesHeaderInit"
+		output-channel="travelogixAirInventoryDefinitionBatchFilesHeader" ref="headerInitTask"
+		method="execute" />
+		
+	<bean id="headerInitTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderInitTask">
+		<property name="sequenceIdParser" ref="batchSequenceIdParser" />
+		<property name="languageParser" ref="batchLanguageParser" />
+		<property name="fallbackLanguage" value="en" />
+	</bean>
+
+	<bean id="batchSequenceIdParser"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.util.SequenceIdParser">
+		<property name="parser">
+			<bean class="de.hybris.platform.acceleratorservices.util.RegexParser">
+				<property name="regex" value="-(\d+)\.csv" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="travelogixAirInventoryDefinitionBatchFilesHeader"
+		output-channel="batchFilesTran" ref="travelogixAirInventoryDefinitionBatchTransformerTask"
+		method="execute" />
+
+	<bean id="travelogixAirInventoryDefinitionBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+	
+	
+	<bean id="airInventoryDefinitionDefaultHeader" class="java.lang.String">
+		<constructor-arg>
+			<value>
+				# ImpEx for importing data into $CATALOG$
+				$productCatalog=EZ-IN
+				$productCatalogName=ezeego1-IN
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+				$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+                $approved=approvalstatus(code)[default='approved']
+			</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- Transformer converters mappings -->
+	
+	
+	<bean id="batchAirInventoryDefinitionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_inventory_definition" p:converter-ref="batchAirInventoryDefinitionConverter" />
+
+	<bean id="batchAirCompanyAdvanceDefinitionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_inventory_definition" p:converter-ref="batchAirCompanyAdvanceDefinitionConverter" />
+
+	<bean id="batchAirCompanyPenaltyChargesMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_inventory_definition" p:converter-ref="batchAirCompanyPenaltyChargesConverter" />
+
+	<bean id="batchUpgradeChargesMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_inventory_definition" p:converter-ref="batchUpgradeChargesConverter" />
+
+	<bean id="batchAirFreeOfCostSeatsOrTicketsMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_inventory_definition" p:converter-ref="batchAirFreeOfCostSeatsOrTicketsConverter" />
+
+	<bean id="batchAirOtherCompanyInventoryDistributionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_inventory_definition" p:converter-ref="batchAirOtherCompanyInventoryDistributionConverter" />
+
+	<bean id="batchAirClientInventoryDistributionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_inventory_definition" p:converter-ref="batchAirClientInventoryDistributionConverter" />
+
+	<bean id="batchAirWithinCompanyInventoryDistributionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_inventory_definition" p:converter-ref="batchAirWithinCompanyInventoryDistributionConverter" />
+
+	<bean id="batchAirPCCCredentialInfoMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_inventory_definition" p:converter-ref="batchAirPCCCredentialInfoConverter" />
+
+	<bean id="batchAirInvSupplierAdvanceDefinitionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_inventory_definition" p:converter-ref="batchAirInvSupplierAdvanceDefinitionConverter" />
+
+	<bean id="batchFareRulesAndTermsAndConditionsMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_inventory_definition" p:converter-ref="batchFareRulesAndTermsAndConditionsConverter" />
+
+	<bean id="batchTicketingCutOffDaysMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="air_inventory_definition" p:converter-ref="batchTicketingCutOffDaysConverter" />
+
+	
+	<bean id="batchAirInventoryDefinitionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert AirInventoryPercentageAndAmount
+				#{airInventoryDefinitionDefaultHeader}
+				INSERT_UPDATE AirInventoryDefinition;inventoryId[unique=true];inventoryType(code);currency;supplierAdvanceDefinition;companyAdvanceDefinition;abstractInventoryRequest(AbstractInventoryRequest.id)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6}</value>
+		</property>
+		
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'AirInventoryDefinition'"/>
+   			</bean>
+		</property>
+   	
+   	</bean>
+  		
+	<bean id="batchAirCompanyAdvanceDefinitionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert AirInventoryProductInfo
+				#{airInventoryDefinitionDefaultHeader}
+				INSERT_UPDATE AirCompanyAdvanceDefinition;blockOutDates;overBookingAllowed;penaltyCharges(AirCompanyPenaltyCharges.definedBy(code),AirCompanyPenaltyCharges.appliedOn(code))[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}:{4}</value>
+		</property>
+		
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'AirCompanyAdvanceDefinition'"/>
+   			</bean>
+		</property>
+   	
+   	</bean>
+  		
+	<bean id="batchAirCompanyPenaltyChargesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert AirCommonDefinitions
+				#{airInventoryDefinitionDefaultHeader}
+				INSERT_UPDATE AirCompanyPenaltyCharges;definedBy(code)[unique=true];appliedOn(code)[unique=true];utilizationThreshold;utilizationThresholdOf(code);specificDates;dateRange[unique=true,dateformat=dd-MM-yyyy hh:mm:ss]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6}</value>
+		</property>
+		
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'AirCompanyPenaltyCharges'"/>
+   			</bean>
+		</property>
+   	
+   	</bean>
+  		
+	<bean id="batchUpgradeChargesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CredentialInformation
+				#{airInventoryDefinitionDefaultHeader}
+				INSERT_UPDATE UpgradeCharges;systemFare[unique=true];fareBasis[unique=true];netFareperPax
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}</value>
+		</property>
+		
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'UpgradeCharges'"/>
+   			</bean>
+		</property>
+   	
+   	</bean>
+  		
+	<bean id="batchAirFreeOfCostSeatsOrTicketsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert AirInventoryAdvanceDefinitions
+				#{airInventoryDefinitionDefaultHeader}
+				INSERT_UPDATE AirFreeOfCostSeatsOrTickets;cabinClass(code)[unique=true];rbd(code)[unique=true];fareComponent
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}</value>
+		</property>
+		
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'AirFreeOfCostSeatsOrTickets'"/>
+   			</bean>
+		</property>
+   	
+   	</bean>
+  		
+	<bean id="batchAirOtherCompanyInventoryDistributionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert AirInventoryFromToDates
+				#{airInventoryDefinitionDefaultHeader}
+				INSERT_UPDATE AirOtherCompanyInventoryDistribution;$distributionToCompany[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1}</value>
+		</property>
+		
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'AirOtherCompanyInventoryDistribution'"/>
+   			</bean>
+		</property>
+   	
+   	</bean>
+  		
+	<bean id="batchAirClientInventoryDistributionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert ComponentDetails
+				#{airInventoryDefinitionDefaultHeader}
+				INSERT_UPDATE AirClientInventoryDistribution;clientType(code);clientName;clientGroup;rbd;noOfSeatsConfirmed;pnr[unique=true];noOfWaitListSeats;baseFare;uqTax;time;destination(Airport.code);origin(Airport.code);productCode(code);warehouse(Warehouse.code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14}</value>
+		</property>
+		
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'AirClientInventoryDistribution'"/>
+   			</bean>
+		</property>
+   	
+   	</bean>
+  		
+	<bean id="batchAirWithinCompanyInventoryDistributionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert TaxDetails
+				#{airInventoryDefinitionDefaultHeader}
+				INSERT_UPDATE AirWithinCompanyInventoryDistribution;pnr[unique=true];sbu(uid);bu(uid);market(Market.uid);distributionChannel;division;salesOfficeLocation;salesOffice;settleWith(code);rbd;noOfSeatsConfirmed;noOfWaitListSeats;baseFare;uqTax;time;destination(Airport.code);origin(Airport.code);productCode(code)[unique=true];warehouse(Warehouse.code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18};{19}</value>
+		</property>
+		
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'AirWithinCompanyInventoryDistribution'"/>
+   			</bean>
+		</property>
+   	
+   	</bean>
+  		
+	<bean id="batchAirPCCCredentialInfoConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert AirInventoryDefinitionGrid
+				#{airInventoryDefinitionDefaultHeader}
+				INSERT_UPDATE AirPCCCredentialInfo;ticketOwner(code)[unique=true];booking;ticketing;gds(code);pccLocation;loginId
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6}</value>
+		</property>
+		
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'AirPCCCredentialInfo'"/>
+   			</bean>
+		</property>
+   	
+   	</bean>
+   	
+   	<bean id="batchTicketingCutOffDaysConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CutOffDaysAndCharges
+				#{airInventoryDefinitionDefaultHeader}
+				INSERT_UPDATE TicketingCutOffDays;definedBy(code);appliedOn(code);supplierCutOffDays[unique=true];bufferDays[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}</value>
+		</property>
+		
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'TicketingCutOffDays'"/>
+   			</bean>
+		</property>
+   	
+   	</bean>
+  		
+	<bean id="batchAirInvSupplierAdvanceDefinitionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert AirInventoryPaymentSchedule
+				#{airInventoryDefinitionDefaultHeader}
+				INSERT_UPDATE AirInvSupplierAdvanceDefinition;salesDates[unique=true,dateformat=dd-MM-yyyy hh:mm:ss];blockOutDates[unique=true,dateformat=dd-MM-yyyy hh:mm:ss];fareBasis;codes[unique=true];ticketingCutOffDays(supplierCutOffDays,bufferDays);airFreeOfCostSeatsOrTicket
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}:{6};{7}</value>
+		</property>
+		
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'AirInvSupplierAdvanceDefinition'"/>
+   			</bean>
+		</property>
+   	
+   	</bean>
+  		
+	<bean id="batchFareRulesAndTermsAndConditionsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert AirInventoryDefinitions
+				#{airInventoryDefinitionDefaultHeader}
+				INSERT_UPDATE FareRulesAndTermsAndConditions;fareRule;description[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2}</value>
+		</property>
+		
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'FareRulesAndTermsAndConditions'"/>
+   			</bean>
+		</property>
+   	
+   	</bean>
+  		
+	
+  		
+	
+  		
+</beans>	

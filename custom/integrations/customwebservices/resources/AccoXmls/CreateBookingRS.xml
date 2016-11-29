@@ -1,0 +1,97 @@
+<AccoInterfaceRS xmlns="http://www.coxandkings.com/integ/suppl/accointerface" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+   <ResponseHeader xmlns="http://www.coxandkings.com/integ/suppl/acco">
+      <Status xmlns="http://www.coxandkings.com/integ/suppl/common">SUCCESS</Status>
+      <UserID xmlns="http://www.coxandkings.com/integ/suppl/common">1</UserID>
+      <SessionID xmlns="http://www.coxandkings.com/integ/suppl/common">2</SessionID>
+      <TransactionID xmlns="http://www.coxandkings.com/integ/suppl/common">3</TransactionID>
+   </ResponseHeader>
+   <ResponseBody>
+      <OTA_HotelResRSWrapper xmlns="http://www.coxandkings.com/integ/suppl/acco">
+         <SupplierID>ATI</SupplierID>
+         <Sequence>1</Sequence>
+         <ns0:OTA_HotelResRS xmlns:ns0="http://www.opentravel.org/OTA/2003/05">
+            <ns0:Warnings/>
+            <ns0:HotelReservations>
+               <ns0:HotelReservation ResStatus="CONFIRMED">
+                  <ns0:UniqueID ID="5145317" Type="14"/>
+                  <ns0:RoomStays>
+                     <ns0:RoomStay IndexNumber="28003364" RoomStayStatus="BOOKED">
+                        <ns0:RoomTypes>
+                           <ns0:RoomType RoomTypeCode="HNLAQP-BPR"/>
+                        </ns0:RoomTypes>
+                        <ns0:RoomRates>
+                           <ns0:RoomRate>
+                              <ns0:Rates>
+                                 <ns0:Rate EffectiveDate="2016-07-15">
+                                    <ns0:Base CurrencyCode="USD" AmountAfterTax="237"/>
+                                 </ns0:Rate>
+                                 <ns0:Rate EffectiveDate="2016-07-16">
+                                    <ns0:Base CurrencyCode="USD" AmountAfterTax="237"/>
+                                 </ns0:Rate>
+                                 <ns0:Rate EffectiveDate="2016-07-17">
+                                    <ns0:Base CurrencyCode="USD" AmountAfterTax="237"/>
+                                 </ns0:Rate>
+                                 <ns0:Rate EffectiveDate="2016-07-18">
+                                    <ns0:Base CurrencyCode="USD" AmountAfterTax="237"/>
+                                 </ns0:Rate>
+                              </ns0:Rates>
+                           </ns0:RoomRate>
+                        </ns0:RoomRates>
+                        <ns0:GuestCounts IsPerRoom="false">
+                           <ns0:GuestCount ResGuestRPH="0" Age=""/>
+                           <ns0:GuestCount ResGuestRPH="1" Age="3" AgeQualifyingCode="8"/>
+                        </ns0:GuestCounts>
+                        <ns0:TimeSpan Start="2016-07-15" Duration="" End="2016-07-19"/>
+                        <ns0:CancelPenalties>
+                           <ns0:CancelPenalty>
+                              <ns0:Deadline AbsoluteDeadline="2016-07-12T00:00:00-07:00"/>
+                           </ns0:CancelPenalty>
+                        </ns0:CancelPenalties>
+                        <ns0:BasicPropertyInfo HotelName="Aqua Palms Waikiki"/>
+                     </ns0:RoomStay>
+                  </ns0:RoomStays>
+                  <ns0:ResGuests>
+                     <ns0:ResGuest AgeQualifyingCode="" ResGuestRPH="0">
+                        <ns0:Profiles>
+                           <ns0:ProfileInfo>
+                              <ns0:Profile>
+                                 <ns0:Customer>
+                                    <ns0:PersonName>
+                                       <ns0:NamePrefix>Mr</ns0:NamePrefix>
+                                       <ns0:GivenName>AAA</ns0:GivenName>
+                                       <ns0:Surname>Doe</ns0:Surname>
+                                    </ns0:PersonName>
+                                 </ns0:Customer>
+                              </ns0:Profile>
+                           </ns0:ProfileInfo>
+                        </ns0:Profiles>
+                     </ns0:ResGuest>
+                     <ns0:ResGuest AgeQualifyingCode="" ResGuestRPH="1">
+                        <ns0:Profiles>
+                           <ns0:ProfileInfo>
+                              <ns0:Profile>
+                                 <ns0:Customer>
+                                    <ns0:PersonName>
+                                       <ns0:NamePrefix>Mr</ns0:NamePrefix>
+                                       <ns0:GivenName>BB</ns0:GivenName>
+                                       <ns0:Surname>Doe</ns0:Surname>
+                                    </ns0:PersonName>
+                                 </ns0:Customer>
+                              </ns0:Profile>
+                           </ns0:ProfileInfo>
+                        </ns0:Profiles>
+                     </ns0:ResGuest>
+                  </ns0:ResGuests>
+                  <ns0:ResGlobalInfo>
+                     <ns0:Total AmountAfterTax="948" CurrencyCode="USD"/>
+                     <ns0:HotelReservationIDs>
+                        <ns0:HotelReservationID ResID_Value="5145317"/>
+                     </ns0:HotelReservationIDs>
+                  </ns0:ResGlobalInfo>
+               </ns0:HotelReservation>
+            </ns0:HotelReservations>
+            <ns0:Errors/>
+         </ns0:OTA_HotelResRS>
+      </OTA_HotelResRSWrapper>
+   </ResponseBody>
+</AccoInterfaceRS>

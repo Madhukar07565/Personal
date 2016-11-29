@@ -1,0 +1,43 @@
+$contentCatalog=Default
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$wideContent=SimpleCMSComponent,BannerComponent
+$jarResourceCms=$config-jarResourceCmsValue
+$emailResource=$config-emailResourceValue
+$lang=en
+
+# Email page Template
+INSERT_UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];name;active;frontendTemplateName;subject(code);htmlTemplate(code);restrictedPageTypes(code)
+;;CheckFileStatusEmailTemplate;Check File Status Email Template;true;checkFileStatusEmailTemplate;email-checkFileStatusEmail_Subject;email-checkFileStatusEmail_Body;EmailPage
+
+UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];velocityTemplate[translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+;;CheckFileStatusEmailTemplate;$jarResourceCms/structure-view/structure_CheckFileStatusEmailTemplate.vm
+
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='CheckFileStatusEmailTemplate']
+#;SiteLogo;;
+#;TopContent;;
+#;BottomContent;;
+#;Footer;;
+;SiteLogo;;CMSImageComponent,BannerComponent
+;TopContent;;$wideContent;
+;BottomContent;;$wideContent;
+;Footer;;CMSLinkComponent,CMSParagraphComponent
+
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='CheckFileStatusEmailTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteLogo-CheckFileStatusEmail;SiteLogo;;SiteLogoSlot;true
+;;Footer-CheckFileStatusEmail;Footer;;FooterSlot;true
+;;TopContent-CheckFileStatusEmail;TopContent;;EmailTopSlot;true
+;;BottomContent-CheckFileStatusEmail;BottomContent;;EmailBottomSlot;true
+
+INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved'];fromEmail[lang=en];fromName[lang=en]
+;;CheckFileStatusEmail;Check File Status Email page;CheckFileStatusEmailTemplate;false;;customerservices@hybris.com;Customer Services Team
+
+INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
+;email-checkFileStatusEmail_Body;com.cnk.travelogix.common.facades.process.email.context.CustomerEmailContext
+;email-checkFileStatusEmail_Subject;com.cnk.travelogix.common.facades.process.email.context.CustomerEmailContext
+
+UPDATE RendererTemplate;code[unique=true];description[lang=$lang];templateScript[lang=$lang,translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+;email-checkFileStatusEmail_Body;Check file status email body;$emailResource/email-checkFileStatusBody.vm
+;email-checkFileStatusEmail_Subject;Check file status email subject;$emailResource/email-checkFileStatusSubject.vm
+

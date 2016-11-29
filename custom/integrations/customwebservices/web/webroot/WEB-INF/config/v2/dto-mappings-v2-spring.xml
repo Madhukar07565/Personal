@@ -1,0 +1,1163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 hybris AG ~ All rights reserved. ~ ~ This software is the confidential and proprietary information 
+	of hybris ~ ("Confidential Information"). You shall not disclose such Confidential ~ Information and shall use it only in accordance with the terms of 
+	the ~ license agreement you entered into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Orika : DataMapper -->
+	<alias alias="dataMapper" name="defaultDataMapper" />
+	<bean id="defaultDataMapper" class="de.hybris.platform.webservicescommons.mapping.impl.DefaultDataMapper">
+		<property name="fieldSetBuilder" ref="fieldSetBuilder" />
+	</bean>
+
+	<!-- Orika : Filters -->
+	<bean class="de.hybris.platform.webservicescommons.mapping.filters.GeneralFieldFilter">
+		<property name="fieldSelectionStrategy" ref="fieldSelectionStrategy" />
+	</bean>
+
+	<!-- Orika : Mappers -->
+	<bean class="com.cnk.travelogix.mapping.mappers.AddressValidationDataMapper" parent="abstractCustomMapper" />
+	<bean class="com.cnk.travelogix.mapping.mappers.SpellingSuggestionMapper" parent="abstractCustomMapper" />
+	<bean class="com.cnk.travelogix.mapping.mappers.CCPaymentInfoDataMapper" parent="abstractCustomMapper" />
+
+	<!-- Orika : Converters -->
+	<bean class="com.cnk.travelogix.mapping.converters.StockLevelStatusConverter" />
+	<bean class="com.cnk.travelogix.mapping.converters.OrderStatusConverter" />
+	<bean class="com.cnk.travelogix.mapping.converters.ConsignmentStatusConverter" />
+	<bean class="com.cnk.travelogix.mapping.converters.DeliveryStatusConverter" />
+	<bean class="com.cnk.travelogix.mapping.converters.ProductReferenceTypeEnumConverter" />
+
+	<!-- Field Mappings : User -->
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="de.hybris.platform.commercewebservicescommons.dto.user.UserSignUpWsDTO" />
+		<property name="destClass" value="de.hybris.platform.commercefacades.user.data.RegisterData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="uid" value="login" />
+			</map>
+		</property>
+	</bean>
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="de.hybris.platform.commercefacades.user.data.CustomerData" />
+		<property name="destClass" value="de.hybris.platform.commercewebservicescommons.dto.user.UserWsDTO" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="defaultShippingAddress" value="defaultAddress" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : Catalog -->
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="de.hybris.platform.commercefacades.catalog.data.CatalogVersionData" />
+		<property name="destClass" value="de.hybris.platform.commercewebservicescommons.dto.catalog.CatalogVersionWsDTO" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="categoriesHierarchyData" value="categories" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : Cart -->
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="de.hybris.platform.commercefacades.order.data.CartModificationDataList" />
+		<property name="destClass" value="de.hybris.platform.commercewebservicescommons.dto.order.CartModificationListWsDTO" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="cartModificationList" value="cartModifications" />
+			</map>
+		</property>
+	</bean>
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="de.hybris.platform.commercefacades.order.data.CCPaymentInfoDatas" />
+		<property name="destClass" value="de.hybris.platform.commercewebservicescommons.dto.order.PaymentDetailsListWsDTO" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="paymentInfos" value="payments" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : Product -->
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="de.hybris.platform.commercefacades.product.data.PromotionResultData" />
+		<property name="destClass" value="de.hybris.platform.commercewebservicescommons.dto.product.PromotionResultWsDTO" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="promotionData" value="promotion" />
+			</map>
+		</property>
+	</bean>
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="de.hybris.platform.commerceservices.search.facetdata.ProductSearchPageData" />
+		<property name="destClass" value="de.hybris.platform.commercewebservicescommons.dto.search.facetdata.ProductSearchPageWsDTO" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="results" value="products" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : Stores -->
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="de.hybris.platform.commerceservices.storefinder.data.StoreFinderSearchPageData" />
+		<property name="destClass" value="de.hybris.platform.commercewebservicescommons.dto.store.StoreFinderSearchPageWsDTO" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="results" value="stores" />
+			</map>
+		</property>
+	</bean>
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="de.hybris.platform.commercefacades.storefinder.data.StoreFinderStockSearchPageData" />
+		<property name="destClass" value="de.hybris.platform.commercewebservicescommons.dto.store.StoreFinderStockSearchPageWsDTO" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="results" value="stores" />
+			</map>
+		</property>
+	</bean>
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="de.hybris.platform.commercefacades.storelocator.data.PointOfServiceStockData" />
+		<property name="destClass" value="de.hybris.platform.commercewebservicescommons.dto.store.PointOfServiceStockWsDTO" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="stockData" value="stockInfo" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : Search -->
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="de.hybris.platform.commerceservices.search.pagedata.PaginationData" />
+		<property name="destClass" value="de.hybris.platform.commercewebservicescommons.dto.search.pagedata.PaginationWsDTO" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="totalNumberOfResults" value="totalResults" />
+				<entry key="numberOfPages" value="totalPages" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : Supplier Credentials-->
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="com.cnk.travelogix.supplier.credentials.data.CredentialsData" />
+		<property name="destClass" value="com.cnk.travelogix.supplier.credentials.dto.CredentialsWsDTO" />
+	</bean>
+	
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="com.cnk.travelogix.supplier.credentials.data.SupplierCredentialsData" />
+		<property name="destClass" value="com.cnk.travelogix.supplier.credentials.dto.SupplierCredentialsWsDTO" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="credentials" value="credentials" />
+			</map>
+		</property>
+	</bean>
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="com.cnk.travelogix.supplier.credentials.data.SupplierCredentialsDataList" />
+		<property name="destClass" value="com.cnk.travelogix.supplier.credentials.dto.SupplierCredentialsListWsDTO" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="supplierCredentials" value="supplierCredentials" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : Supplier City and Country Mapping -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="de.hybris.platform.commercefacades.user.data.CountryData" />
+		<property name="destClass" value="com.cnk.travelogix.supplier.mapping.dto.CountryWsDto" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="isocode" value="isocode" />
+				<entry key="name" value="name" />
+			</map>
+		</property>
+	</bean>
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="com.cnk.travelogix.supplier.mapping.data.CityData" />
+		<property name="destClass" value="com.cnk.travelogix.supplier.mapping.dto.CityWsDTO" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="cityIsoCode" value="isocode" />
+				<entry key="cityName" value="name" />
+				<entry key="country" value="country" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Field Mappings : Offline Inventory-->
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="com.cnk.travelogix.supplier.inventory.data.SupplierInventoryData" />
+		<property name="destClass" value="com.cnk.travelogix.supplier.inventory.dto.SupplierInventoryWsDTO" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="supplierID" value="supplierID" />
+				<entry key="hotelCode" value="hotelCode" />
+				<entry key="availabiltyStatus" value="availabiltyStatus" />
+			</map>
+		</property>
+	</bean>
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="com.cnk.travelogix.supplier.inventory.data.SupplierInventoryDataList" />
+		<property name="destClass" value="com.cnk.travelogix.supplier.inventory.dto.SupplierInventoryWsDTOList" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="supplierInventory" value="supplierInventory" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="com.cnk.travelogix.supplier.inventory.dto.HotelSearchWsDTO" />
+		<property name="destClass" value="com.cnk.travelogix.supplier.inventory.data.HotelSearchData" />
+	</bean>
+	
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="com.cnk.travelogix.supplier.inventory.dto.FlightSearchWsDTO" />
+		<property name="destClass" value="com.cnk.travelogix.supplier.inventory.data.FlightSearchData" />
+	</bean>
+	
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="com.cnk.travelogix.supplier.inventory.data.flight.AirportData" />
+		<property name="destClass" value="com.cnk.travelogix.supplier.inventory.dto.flight.AirportDataWsDTO" />
+	</bean>
+	
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="com.cnk.travelogix.supplier.inventory.data.flight.FareBreakUp" />
+		<property name="destClass" value="com.cnk.travelogix.supplier.inventory.dto.flight.FareBreakUpWsDTO" />
+	</bean>
+	
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="com.cnk.travelogix.supplier.inventory.data.flight.FareDetailData" />
+		<property name="destClass" value="com.cnk.travelogix.supplier.inventory.dto.flight.FareDetailDataWsDTO" />
+	</bean>
+	
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="com.cnk.travelogix.supplier.inventory.data.flight.FlightDetailData" />
+		<property name="destClass" value="com.cnk.travelogix.supplier.inventory.dto.flight.FlightDetailWsDTO" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="fromSection" value="fromSection" />
+				<entry key="toSection" value="toSection" />
+				<entry key="fareDetail" value="fareDetail" />
+				<entry key="fareBreakup" value="fareBreakup" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="com.cnk.travelogix.supplier.inventory.data.flight.FlightDetailDataList" />
+		<property name="destClass" value="com.cnk.travelogix.supplier.inventory.dto.flight.FlightDetailWsDTOList" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="supplierAirInventory" value="supplierAirInventory" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : OfferCombinationRule -->
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.OfferCombinationRuleWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.OfferCombinationRuleData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="offerName" value="offerName" />
+				<entry key="combinedOffer" value="combinedOffer" />
+				<entry key="combinationAllowed" value="combinationAllowed" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : DateRangeRestriction -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.DateRangeRestrictionWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.DateRangeRestrictionData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="standardDateRange" value="standardDateRange" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : RateVoucherNote -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.RateVoucherNoteWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.RateVoucherNoteData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="offerName" value="offerName" />
+				<entry key="voucherNotes" value="voucherNotes" />
+
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- Field Mappings : RatePaymentDetail -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.RatePaymentDetailWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.RatePaymentDetailData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="payablePercentage" value="payablePercentage" />
+				<entry key="settlementSchedule" value="settlementSchedule" />
+				<entry key="guaranteeRequired" value="guaranteeRequired" />
+				<entry key="remarks" value="remarks" />
+
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- Field Mappings : FullPrePayment -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.FullPrePaymentWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.FullPrePaymentData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="ratePaymentDetail" value="ratePaymentDetail" />
+
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- Field Mappings : PartPrePayment -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.PartPrePaymentWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.PartPrePaymentData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="ratePaymentDetails" value="ratePaymentDetails" />
+
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : DiscountPerAge -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.DiscountPerAgeWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.DiscountPerAgeData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="minPaxOrNight" value="minPaxOrNight" />
+				<entry key="passengerType" value="passengerType" />
+				<entry key="arrivalDayofWeek" value="arrivalDayofWeek" />
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- Field Mappings : DiscountOnRate -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.DiscountOnRateWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.DiscountOnRateData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="minPaxOrNight" value="minPaxOrNight" />
+				<entry key="maximumNight" value="maximumNight" />
+				<entry key="passengerType" value="passengerType" />
+				<entry key="discountCalculatedOn" value="discountCalculatedOn" />
+				<entry key="appliedOnAll" value="appliedOnAll" />
+				<entry key="daysOfweek" value="daysOfweek" />
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- Field Mappings : DiscountOnNight -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.DiscountOnNightWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.DiscountOnNightData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="noOfDiscountedNights" value="noOfDiscountedNights" />
+				<entry key="mealPlanDiscountedNights" value="mealPlanDiscountedNights" />
+				<entry key="minimumNights" value="minimumNights" />
+				<entry key="discountCalculatedOn" value="discountCalculatedOn" />
+				<entry key="passengerType" value="passengerType" />
+				<entry key="arrivalDayofWeek" value="arrivalDayofWeek" />
+				<entry key="daysOfweek" value="daysOfweek" />
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- Field Mappings : DiscountOnFreeNight -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.DiscountOnFreeNightWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.DiscountOnFreeNightData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="minFreeNight" value="minFreeNight" />
+				<entry key="freeNightCalculatedOn" value="freeNightCalculatedOn" />
+				<entry key="mealPlanforFreeNight" value="mealPlanforFreeNight" />
+				<entry key="noOfNights" value="noOfNights" />
+				<entry key="arrivalDaysOfWeek" value="arrivalDaysOfWeek" />
+				<entry key="daysOfweek" value="daysOfweek" />
+				<entry key="appliedOnAll" value="appliedOnAll" />
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- Field Mappings : DiscountLongStay -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.DiscountLongStayWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.DiscountLongStayData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="stayDuration" value="stayDuration" />
+				<entry key="passengerType" value="passengerType" />
+				<entry key="arrivalDaysOfWeek" value="arrivalDaysOfWeek" />
+				<entry key="daysOfweek" value="daysOfweek" />
+
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : DiscountOnRoomOrCabin -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.DiscountOnRoomOrCabinWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.DiscountOnRoomOrCabinData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="noOfNights" value="noOfNights" />
+				<entry key="bookedRoomsCount" value="bookedRoomsCount" />
+				<entry key="appliedOnAll" value="appliedOnAll" />
+				<entry key="arrivalDaysOfWeek" value="arrivalDaysOfWeek" />
+				<entry key="daysOfweek" value="daysOfweek" />
+
+			</map>
+		</property>
+	</bean>
+
+
+
+	<!-- Field Mappings : Complimentary -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.ComplimentaryWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.ComplimentaryData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="minPaxOrNight" value="minPaxOrNight" />
+				<entry key="passengerType" value="passengerType" />
+				<entry key="applicableDays" value="applicableDays" />
+
+
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- Field Mappings : DiscountOnPax -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.DiscountOnPaxWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.DiscountOnPaxData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="minPaxOrNight" value="minPaxOrNight" />
+				<entry key="passengerType" value="passengerType" />
+				<entry key="paxBookedCount" value="paxBookedCount" />
+				<entry key="discountedPaxCount" value="discountedPaxCount" />
+				<entry key="appliedOnAll" value="appliedOnAll" />
+				<entry key="arrivalDayofWeek" value="arrivalDayofWeek" />
+				<entry key="daysOfweek" value="daysOfweek" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : FOCOffer -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.FOCOfferWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.FOCOfferData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="minPaxOrNight" value="minPaxOrNight" />
+				<entry key="maxPaxOrNight" value="maxPaxOrNight" />
+				<entry key="focAppliedOnSuppliement" value="focAppliedOnSuppliement" />
+				<entry key="passengerType" value="passengerType" />
+				<entry key="noOfChildren" value="noOfChildren" />
+				<entry key="supplement" value="supplement" />
+				<entry key="supplementMandatory" value="supplementMandatory" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : RoomOrCabinUpgrade -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.RoomOrCabinUpgradeWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.RoomOrCabinUpgradeData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="minPaxOrNight" value="minPaxOrNight" />
+				<entry key="roomCategory" value="roomCategory" />
+				<entry key="roomType" value="roomType" />
+				<entry key="upgrade" value="upgrade" />
+				<entry key="upgradeRoomCategoryTo" value="upgradeRoomCategoryTo" />
+				<entry key="upgradeRoomType" value="upgradeRoomType" />
+				<entry key="upgradeMealPlanType" value="upgradeMealPlanType" />
+				<entry key="offerInclusion" value="offerInclusion" />
+			</map>
+		</property>
+	</bean>
+
+
+
+	<!-- Field Mappings : AncillaryFOC -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.AncillaryFOCWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.AncillaryFOCData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="noOfChildren" value="noOfChildren" />
+
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : AncillaryDiscount -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.AncillaryDiscountWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.AncillaryDiscountData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="bookingCount" value="bookingCount" />
+				<entry key="discountedBooking" value="discountedBooking" />
+				<!-- <entry key="thresholdType" value="thresholdType" /> -->
+				<entry key="discountValue" value="discountValue" />
+				<entry key="appliedOnAll" value="appliedOnAll" />
+				<entry key="ancillaryComponentType" value="ancillaryComponentType" />
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- Field Mappings : Ancillary -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.AncillaryWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.AncillaryData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="ancillaryType" value="ancillaryType" />
+
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- Field Mappings : OfferRateProduct -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.OfferRateProductWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.OfferRateProductData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="discountType" value="discountType" />
+				<entry key="discountValue" value="discountValue" />
+				<entry key="advanceBookingFromDays" value="advanceBookingFromDays" />
+				<entry key="advanceBookingToDays" value="advanceBookingToDays" />
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- Field Mappings : AbstractTravelogixSupplierOffer -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.AbstractTravelogixSupplierOfferWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="offerSubType" value="offerSubType" />
+				<entry key="discountType" value="discountType" />
+				<entry key="approvalStatus" value="approvalStatus" />
+				<entry key="reason" value="reason" />
+				<entry key="advanceBookingFromDays" value="advanceBookingFromDays" />
+				<entry key="advanceBookingToDays" value="advanceBookingToDays" />
+				<entry key="thresholdType" value="thresholdType" />
+				<entry key="discountValue" value="discountValue" />
+				<entry key="rateApplicabilityType" value="rateApplicabilityType" />
+				<entry key="nationality" value="nationality" />
+				<entry key="offerInclusion" value="offerInclusion" />
+				<entry key="offerExclusion" value="offerExclusion" />
+				<entry key="remarks" value="remarks" />
+				<entry key="dateRangeRestriction" value="dateRangeRestriction" />
+			</map>
+		</property>
+	</bean>
+
+
+
+	<!-- Field Mappings : Country -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.CountryWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.CountryData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="name" value="name" />
+				<entry key="isocode" value="isocode" />
+
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- Field Mappings : SupplierAncillaryRate -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.SupplierAncillaryRateWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.SupplierAncillaryRateData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="seasonality" value="seasonality" />
+				<entry key="activeDateRange" value="activeDateRange" />
+			</map>
+		</property>
+	</bean>
+
+
+
+	<!-- Field Mappings : SeasonDetail -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.SeasonDetailWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.SeasonDetailData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="seasonality" value="seasonality" />
+
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- Field Mappings : Tax -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass" value="com.cnk.travelogix.rate.acco.dto.TaxWsDTO" />
+		<property name="destClass" value="com.cnk.travelogix.rate.acco.data.TaxData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="code" value="code" />
+				<entry key="name" value="name" />
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- Field Mappings : AccomodationSupplierRate -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.AccomodationSupplierRateWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.AccomodationSupplierRateData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="product" value="product" />
+				<entry key="supplier" value="supplier" />
+				<entry key="market" value="market" />
+				<entry key="company" value="company" />
+				<entry key="productSubCategory" value="productSubCategory" />
+				<entry key="tax" value="tax" />
+				<entry key="validity" value="validity" />
+				<entry key="currency" value="currency" />
+				<entry key="activeDateRange" value="activeDateRange" />
+				<entry key="accomodationRateDefinition" value="accomodationRateDefinition" />
+
+			</map>
+		</property>
+	</bean>
+
+
+
+	<!-- Field Mappings : AccommodationRateDefinition -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.AccommodationRateDefinitionWsDto" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.AccommodationRateDefinitionData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="priceApplicability" value="priceApplicability" />
+				<entry key="noOfRooms" value="noOfRooms" />
+				<entry key="comparator" value="comparator" />
+				<entry key="supplierRateType" value="supplierRateType" />
+				<entry key="supplierRateCode" value="supplierRateCode" />
+				<entry key="companyRateType" value="companyRateType" />
+				<entry key="companyRateCode" value="companyRateCode" />
+				<entry key="rateTypeApplicableFor" value="rateTypeApplicableFor" />
+				<entry key="clientType" value="clientType" />
+				<entry key="clientGroup" value="clientGroup" />
+				<entry key="client" value="client" />
+				<entry key="seasonality" value="seasonality" />
+				<entry key="travelFrom" value="travelFrom" />
+				<entry key="net" value="net" />
+				<entry key="commisionValue" value="commisionValue" />
+				<entry key="commisionThreshold" value="commisionThreshold" />
+				<entry key="commissionType" value="commissionType" />
+				<entry key="accoRateDetailDefs" value="accoRateDetailDefs" />
+				<entry key="surcharge" value="surcharge" />
+
+			</map>
+		</property>
+	</bean>
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.RateCodeWsDto" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.RateCodeData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="code" value="code" />
+				<entry key="name" value="name" />
+
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : AccoSurchargeSuppDetail -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.AccoSurchargeSuppDetailWsDto" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.AccoSurchargeSuppDetailData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="surchargeID" value="surchargeID" />
+				<entry key="surchageName" value="surchageName" />
+				<entry key="type" value="type" />
+				<entry key="supplement" value="supplement" />
+				<entry key="priceInclusion" value="priceInclusion" />
+				<entry key="priceExclusion" value="priceExclusion" />
+				<entry key="internalDescription" value="internalDescription" />
+				<entry key="externalDescription" value="externalDescription" />
+				<entry key="payOnArrival" value="payOnArrival" />
+				<entry key="subType" value="subType" />
+				<entry key="roomCategories" value="roomCategories" />
+				<entry key="roomTypes" value="roomTypes" />
+				<entry key="mealPlan" value="mealPlan" />
+
+				<entry key="stdCommissionValue" value="stdCommissionValue" />
+				<entry key="stdCommissionType" value="stdCommissionType" />
+				<entry key="amount" value="amount" />
+				<entry key="passengerLevelSurchargeDetails" value="passengerLevelSurchargeDetails" />
+				<entry key="dateRangeRestrictions" value="dateRangeRestrictions" />
+
+			</map>
+		</property>
+	</bean>
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.PassengerLevelSurchargeDetailWsDto" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.PassengerLevelSurchargeDetailData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="amount" value="amount" />
+				<entry key="passengerType" value="passengerType" />
+			</map>
+		</property>
+	</bean>
+
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.AgeDetailWsDto" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.AgeDetailData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="fromAge" value="fromAge" />
+				<entry key="toAge" value="toAge" />
+			</map>
+		</property>
+	</bean>
+
+
+	<!-- Field Mappings : AccoRateDetailDefinition -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.dto.AccoRateDetailDefinitionWsDto" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.data.AccoRateDetailDefinitionData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="minNight" value="minNight" />
+				<entry key="dayOfWeek" value="dayOfWeek" />
+				<entry key="rateDefinedFor" value="rateDefinedFor" />
+				<entry key="roomCategory" value="roomCategory" />
+				<entry key="proRata" value="proRata" />
+				<entry key="staryDuration" value="staryDuration" />
+				<entry key="mealPlan" value="mealPlan" />
+				<entry key="checkInTime" value="checkInTime" />
+				<entry key="checkoutTime" value="checkoutTime" />
+				<entry key="commissionExcluded" value="commissionExcluded" />
+				<entry key="rateFor" value="rateFor" />
+				<entry key="childAge" value="childAge" />
+				<entry key="noOfAdult" value="noOfAdult" />
+
+				<entry key="rate" value="rate" />
+				<entry key="adultAge" value="adultAge" />
+				<entry key="minPaxOccupancy" value="minPaxOccupancy" />
+				<entry key="maxPaxOccupancy" value="maxPaxOccupancy" />
+				<entry key="noOfChild" value="noOfChild" />
+
+				<entry key="payOnArrival" value="payOnArrival" />
+				<entry key="travelogixSupplierOffer" value="travelogixSupplierOffer" />
+				<!-- <entry key="rateAdvanceDef" value="rateAdvanceDef" /> <entry key="ancillary" 
+					value="ancillary" /> -->
+
+			</map>
+		</property>
+	</bean>
+
+<!-- Field Mappings : UpdateRateResponse -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.data.UpdateRateResponseData" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.dto.UpdateRateResponseWsDto" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="responseCode" value="responseCode" />
+				<entry key="responseDesc" value="responseDesc" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Field Mappings : UpdateRateResponse -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.rate.acco.data.UpdateRateResponseData" />
+		<property name="destClass"
+			value="com.cnk.travelogix.rate.acco.dto.UpdateRateResponseWsDto" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="responseCode" value="responseCode" />
+				<entry key="responseDesc" value="responseDesc" />
+			</map>
+		</property>
+	</bean>
+
+<!-- Field Mappings : UpdateInventoryResponse -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.inventory.acco.data.UpdateInventoryResponseData" />
+		<property name="destClass"
+			value="com.cnk.travelogix.inventory.acco.dto.UpdateInventoryResponseWsDto" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="responseCode" value="responseCode" />
+				<entry key="responseDesc" value="responseDesc" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Field Mappings : AccoInventoryDefinition -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.inventory.dto.AccoInventoryDefinitionWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.inventory.data.AccoInventoryDefinitionData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="supplierID" value="supplierID" />
+				<entry key="distressSaleMinimumThreshold" value="distressSaleMinimumThreshold" />
+				<entry key="distressSaleThresholdCutoffDays" value="distressSaleThresholdCutoffDays" />
+				<entry key="blockedQuantity" value="blockedQuantity" />
+				<entry key="cutOffDaysForBlockedQuantity" value="cutOffDaysForBlockedQuantity" />
+				<entry key="settleWithCompany" value="settleWithCompany" />
+				<entry key="supplierAdvanceDefinition" value="supplierAdvanceDefinition" />
+				<entry key="companyAdvanceDefinition" value="companyAdvanceDefinition" />
+				<entry key="inventoryDetails" value="inventoryDetails" />
+				<entry key="inventoryType" value="inventoryType" />
+				<entry key="productCategorySubType" value="productCategorySubType" />
+				<entry key="associations" value="associations" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Field Mappings : AccoAssociateInventory -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.inventory.dto.AccoAssociateInventoryWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.inventory.data.AccoAssociateInventoryData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="inventoryFor" value="inventoryFor" />
+				<entry key="productCategories" value="productCategories" />
+				<entry key="productCategorySubtype" value="productCategorySubtype" />
+				<entry key="products" value="products" />
+				<entry key="variants" value="variants" />
+				<entry key="numberOfDistributedInventory" value="numberOfDistributedInventory" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Field Mappings : AccoSupplierAdvanceDefinition -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.inventory.dto.AccoSupplierAdvanceDefinitionWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.inventory.data.AccoSupplierAdvanceDefinitionData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="blockoutDates" value="blockoutDates" />
+				<entry key="minNoOfNights" value="minNoOfNights" />
+				<entry key="maxNoOfNights" value="maxNoOfNights" />
+				<entry key="cutOfForFreeSale" value="cutOfForFreeSale" />
+				<entry key="penaltyCharges" value="penaltyCharges" />
+				<entry key="overbookinglimits" value="overbookinglimits" />
+				<entry key="roomingListCutOff" value="roomingListCutOff" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Field Mappings : AccoCompanyAdvanceDefinition -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.inventory.dto.AccoCompanyAdvanceDefinitionwsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.inventory.data.AccoCompanyAdvanceDefinitionData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="blockoutDates" value="blockoutDates" />
+				<entry key="minNoOfNights" value="minNoOfNights" />
+				<entry key="maxNoOfNights" value="maxNoOfNights" />
+				<entry key="penaltyCharges" value="penaltyCharges" />
+				<entry key="overBookingAllowed" value="overBookingAllowed" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Field Mappings : AccoInventoryGrid -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.inventory.dto.AccoInventoryGridWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.inventory.data.AccoInventoryGridData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="inventoryDetails" value="inventoryDetails" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Field Mappings : AbstractAccoInventoryDetail -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.inventory.dto.AbstractAccoInventoryDetailWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.inventory.data.AbstractAccoInventoryDetailData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="city" value="city" />
+				<entry key="travelChain" value="travelChain" />
+				<entry key="hotelCategory" value="hotelCategory" />
+				<entry key="departureDate" value="departureDate" />
+				<entry key="arrivalDate" value="arrivalDate" />
+				<entry key="inventoryType" value="inventoryType" />
+				<entry key="reservedCutOffDays" value="reservedCutOffDays" />
+				<entry key="releasedDate" value="releasedDate" />
+				<entry key="createdDate" value="createdDate" />
+				<entry key="currency" value="currency" />
+				<entry key="remark" value="remark" />
+				<entry key="priceRangeFrom" value="priceRangeFrom" />
+				<entry key="priceRangeTo" value="priceRangeTo" />
+				<entry key="product" value="product" />
+				<entry key="products" value="products" />
+				<entry key="inventoryRoomInfos" value="inventoryRoomInfos" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Field Mappings : InventoryRoomInfo -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.inventory.dto.InventoryRoomInfoWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.inventory.data.InventoryRoomInfoData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="roomCategory" value="roomCategory" />
+				<entry key="roomType" value="roomType" />
+				<entry key="noOfRoomRequested" value="noOfRoomRequested" />
+				<entry key="supplierReferenceNumber" value="supplierReferenceNumber" />
+				<entry key="rateCode" value="rateCode" />
+				<entry key="rateType" value="rateType" />
+				<entry key="inventoryAssociation" value="inventoryAssociation" />
+				<entry key="daysOfWeek" value="daysOfWeek" />
+				<entry key="distressSalesUtilizationThreshhold" value="distressSalesUtilizationThreshhold" />
+				<entry key="distressSalesThreshholdCutOffDays" value="distressSalesThreshholdCutOffDays" />
+				<entry key="requestedQuantity" value="requestedQuantity" />
+				<entry key="distributedQuantity" value="distributedQuantity" />
+				<entry key="availableQuantity" value="availableQuantity" />
+				<entry key="reservedQuantity" value="reservedQuantity" />
+				<entry key="stopSales" value="stopSales" />
+				<entry key="liabilityOnUtilization" value="liabilityOnUtilization" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- Field Mappings : AccoCompanyPenaltyCharges -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.inventory.dto.AccoCompanyPenaltyChargesWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.inventory.data.AccoCompanyPenaltyChargesData" />
+	</bean>
+	
+	<!-- Field Mappings : AccoPenaltyChargesRelease -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.inventory.dto.AccoPenaltyChargesReleaseWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.inventory.data.AccoPenaltyChargesReleaseData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="roomCategory" value="roomCategory" />
+				<entry key="roomType" value="roomType" />
+				<entry key="mealPlan" value="mealPlan" />
+				<entry key="definedBy" value="definedBy" />
+				<entry key="specificDates" value="specificDates" />
+				<entry key="dateRange" value="dateRange" />
+				<entry key="appliedOn" value="appliedOn" />
+				<entry key="charges" value="charges" />
+				<entry key="releaseTime" value="releaseTime" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Field Mappings : AccoCutoffAndCharges -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.inventory.dto.AccoCutoffAndChargesWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.inventory.data.AccoCutoffAndChargesData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="minUtilizationThreshold" value="minUtilizationThreshold" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Field Mappings : RoomingListCutOff -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.inventory.dto.RoomingListCutOffWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.inventory.data.RoomingListCutOffData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="definedBy" value="definedBy" />
+				<entry key="appliedOn" value="appliedOn" />
+				<entry key="typeOfList" value="typeOfList" />
+				<entry key="supplierCutOffDays" value="supplierCutOffDays" />
+				<entry key="bufferDays" value="bufferDays" />
+				<entry key="noOfNTBAS" value="noOfNTBAS" />
+				<entry key="releaseTime" value="releaseTime" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Field Mappings : CutOffForFreeSale -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.inventory.dto.CutOffForFreeSaleWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.inventory.data.CutOffForFreeSaleData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="definedBy" value="definedBy" />
+				<entry key="appliedOn" value="appliedOn" />
+				<entry key="releaseDayOrHrs" value="releaseDayOrHrs" />
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Field Mappings : CutOffsAndCharges -->
+	<bean parent="fieldMapper">
+		<property name="sourceClass"
+			value="com.cnk.travelogix.common.dto.CutOffsAndChargesWsDTO" />
+		<property name="destClass"
+			value="com.cnk.travelogix.common.data.CutOffsAndChargesData" />
+		<property name="fieldMapping">
+			<map>
+				<entry key="cutOffFromDay" value="cutOffFromDay" />
+				<entry key="cutOffToDay" value="cutOffToDay" />
+				<entry key="actualAmount" value="actualAmount" />
+				<entry key="currency" value="currency" />
+				<entry key="percentageAmount" value="percentageAmount" />
+				<entry key="range" value="range" />
+			</map>
+		</property>
+	</bean>
+
+</beans>

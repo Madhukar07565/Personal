@@ -1,0 +1,8 @@
+INSERT_UPDATE Continent;isocode[unique=true];active[default=true]
+;AF
+;AN
+;AS
+;EU
+;NA
+;OC
+;SA

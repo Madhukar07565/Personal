@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<enumtypes>
+		<enumtype code="SettlementScheduleType">
+			<description> Settlement Schedule Type </description>
+			<value code="TRAVEL_DATE"></value>
+			<value code="BOOKING_DATE"></value>
+			<value code="TRAVEL_INVOICE"></value>
+		</enumtype>
+		<enumtype code="ScheduleType" dynamic="true">
+			<description>Schedule types</description>
+			<value code="HOURLY" />
+			<value code="DAILY" />
+			<value code="WEEKLY" />
+			<value code="FORTNIGHTLY" />
+			<value code="MONTHLY" />
+			<value code="YEARLY" />
+			<value code="QUARTERLY" />
+			<value code="HALF_YEARLY" />
+			<value code="END_OF_VALIDITY" />
+		</enumtype>
+		<enumtype code="SettlementOnType">
+			<description>Settlement on types</description>
+			<value code="GROSS" />
+			<value code="NET" />
+		</enumtype>
+		<enumtype code="ThresholdType">
+			<description>Threshold types</description>
+			<value code="AMOUNT" />
+			<value code="PERCENTAGE" />
+		</enumtype>
+		<enumtype code="RaiseIndentType">
+			<description>Raise index types</description>
+			<value code="FULL_AMOUNT" />
+			<value code="UTLISED_AMOUNT" />
+		</enumtype>
+		<enumtype code="PrePaymentType">
+			<description>Prepayment types</description>
+			<value code="FULL" />
+			<value code="PARTIAL" />
+		</enumtype>
+		<enumtype code="PaymentType">
+			<description>Payment types</description>
+			<value code="ADVANCE" />
+			<value code="BALANCE" />
+		</enumtype>
+		<enumtype code="SettlementType">
+			<description>Settlement types</description>
+			<value code="CREDIT" />
+			<value code="NO_CREDIT" />
+		</enumtype>
+		<enumtype code="InterestCalcBasisType">
+			<description>Settlement types</description>
+			<value code="PER_DAY" />
+			<value code="PER_WEEK" />
+			<value code="PER_MONTH" />
+		</enumtype>
+		<!-- <enumtype code="NonCreditType">
+			<description>Settlement types</description>
+			<value code="DEPOSIT" />
+			<value code="PREPAYMENT" />
+		</enumtype> -->
+	</enumtypes>
+
+	<relations>
+		<!-- <relation localized="false" code="CreditLimit2Country"> <deployment 
+			table="crlmt2country" typecode="22024" /> <sourceElement type="CountryCreditLimit" 
+			qualifier="creditLimits" cardinality="many" /> <targetElement type="Country" 
+			qualifier="countries" cardinality="many"> </targetElement> </relation> -->
+		<relation code="CreditCommSettlement2SupplierCredentialsRels"
+			generate="true" localized="false" autocreate="true">
+			<sourceElement type="CreditCommSettlement" cardinality="one"
+				qualifier="creditCommSettlement">
+			</sourceElement>
+			<targetElement type="SupplierCredentials" cardinality="many"
+				qualifier="credentialNameList">
+			</targetElement>
+
+		</relation>
+		<relation code="NoCreditDepositCommSettlement2SupplierCredentialsRels"
+			generate="true" localized="false" autocreate="true">
+			<sourceElement type="NoCreditDepositCommSettlement"
+				cardinality="one" qualifier="noCreditDepositcommisionableDetail" />
+			<targetElement type="SupplierCredentials" cardinality="many"
+				qualifier="credentialNameList" />
+		</relation>
+		<relation code="NoCreditPrePaymentCommSettlement2SupplierCredentialsRels"
+			generate="true" localized="false" autocreate="true">
+			<sourceElement type="NoCreditPrePaymentCommSettlement"
+				cardinality="one" qualifier="noCreditPrePaymentCommSettlement" />
+			<targetElement type="SupplierCredentials" cardinality="many"
+				qualifier="credentialNameList" />
+		</relation>
+		<relation code="SupplierSettlement2BankAccountDetailRels"
+			generate="true" localized="false" autocreate="true">
+			<sourceElement type="SupplierSettlement" cardinality="one"
+				qualifier="supplierSettlement" />
+			<targetElement type="BankAccountDetail" cardinality="many"
+				qualifier="bankDetailList" />
+		</relation>
+		<relation code="Trigger2SettlementPeriodRels" generate="true"
+			localized="false" autocreate="true">
+			<sourceElement type="Trigger" cardinality="one"
+				qualifier="trigger" />
+			<targetElement type="SettlementPeriod" cardinality="many"
+				qualifier="settlementPeriodList" />
+		</relation>
+
+		<relation code="StdCommCommisionableSettlement2CreditCommSettlementRels"
+			generate="true" localized="false" autocreate="true">
+			<sourceElement type="StdCommCommisionableSettlement"
+				cardinality="one" qualifier="stdCommCommisionableSettlement" />
+			<targetElement type="CreditCommSettlement" cardinality="many"
+				qualifier="creditDetails" />
+		</relation>
+		<relation
+			code="StdCommCommisionableSettlement2NoCreditDepositCommSettlementRels"
+			generate="true" localized="false" autocreate="true">
+			<sourceElement type="StdCommCommisionableSettlement"
+				cardinality="one" qualifier="stdCommCommisionableSettlement" />
+			<targetElement type="NoCreditDepositCommSettlement"
+				cardinality="many" qualifier="noCreditDepositDetails" />
+		</relation>
+
+		<relation
+			code="StdCommNonComissionableSettlement2NoCreditPrePaymentCommSettlementRels"
+			generate="true" localized="false" autocreate="true">
+			<sourceElement type="StdCommNonComissionableSettlement"
+				cardinality="one" qualifier="stdCommNonComissionableSettlement" />
+			<targetElement type="NoCreditPrePaymentCommSettlement"
+				cardinality="many" qualifier="noCreditPrePaymentDetails" />
+		</relation>
+
+		<relation code="NoCreditPrePaymentCommSettlement2PayableAmountDetailRels"
+			generate="true" localized="false" autocreate="true">
+			<sourceElement type="NoCreditPrePaymentCommSettlement"
+				cardinality="one" qualifier="noCreditPrePaymentCommSettlement" />
+			<targetElement type="PayableAmountDetail" cardinality="many"
+				qualifier="payableAmountDetails" />
+		</relation>
+
+		<relation code="CreditCommSettlement2CountryCreditLimitRels"
+			generate="true" localized="false" autocreate="true">
+			<sourceElement type="CreditCommSettlement" cardinality="one"
+				qualifier="creditCommSettlement" />
+			<targetElement type="CountryCreditLimit" cardinality="many"
+				qualifier="countryCreditLimitList" />
+		</relation>
+		<relation code="SupplierSettlement2AdvCommercialSettlementPayableRels"
+			generate="true" localized="false" autocreate="true">
+			<sourceElement type="SupplierSettlement" cardinality="one"
+				qualifier="supplierSettlement" />
+			<targetElement type="AdvCommercialSettlementPayable"
+				cardinality="many" qualifier="advCommercialSettlementPayable" />
+		</relation>
+		<relation code="SupplierSettlement2CommercialSettlementReceivableRels"
+			generate="true" localized="false" autocreate="true">
+			<sourceElement type="SupplierSettlement" cardinality="one"
+				qualifier="supplierSettlement" />
+			<targetElement type="CommercialSettlementReceivable"
+				cardinality="many" qualifier="commercialSettlementReceivable" />
+		</relation>
+		<relation code="SupplierSettlement2StdCommCommisionableSettlementRels"
+			generate="true" localized="false" autocreate="true">
+			<sourceElement type="SupplierSettlement" cardinality="one"
+				qualifier="supplierSettlement" />
+			<targetElement type="StdCommCommisionableSettlement"
+				cardinality="many" qualifier="stdCommCommisionableSettlement" />
+		</relation>
+		<relation code="SupplierSettlement2StdCommNonComissionableSettlementRels"
+			generate="true" localized="false" autocreate="true">
+			<sourceElement type="SupplierSettlement" cardinality="one"
+				qualifier="supplierSettlement" />
+			<targetElement type="StdCommNonComissionableSettlement"
+				cardinality="many" qualifier="stdCommNonComissionableSettlement" />
+		</relation>
+	</relations>
+
+	<itemtypes>
+		<typegroup name="SupplierSettlement">
+			<itemtype code="SupplierSettlement" extends="AbstractTravelogixItem"
+				jaloclass="com.cnk.travelogix.supplier.settlementterms.jalo.SupplierSettlement">
+				<description>Supplier settlement</description>
+				<deployment table="supsetterms" typecode="22025" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="code"
+						redeclare="true">
+						<modifiers optional="false" unique="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Supplier" qualifier="supplier">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="workFlowStatus" type="ApprovalWorkFlowStatus">
+						<description>Work Flow Status</description>
+						<defaultvalue>em().getEnumerationValue("WorkFlowStatus","DRAFT")</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AbstractSupplierSettlement" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.supplier.settlementterms.jalo.AbstractSupplierSettlement">
+				<deployment table="abssupsetterms" typecode="22109" />
+				<attributes>
+					<attribute type="CommercialHead" qualifier="commercialHead">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="interestApplicable">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="interestPercentage">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="InterestCalcBasisType" qualifier="interestpercentageBasis">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AdvCommercialSettlementPayable" extends="AbstractSupplierSettlement"
+				jaloclass="com.cnk.travelogix.supplier.settlementterms.jalo.AdvCommercialSettlementPayable">
+				<attributes>
+					<attribute type="Trigger" qualifier="supplierSettlementPeriodicity">
+						<persistence type="property" />
+						<modifiers partof="true" />
+					</attribute>
+					<attribute type="SettlementScheduleType" qualifier="settlementScheduleType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PaymentMode" qualifier="preferredPaymentOption">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="CommercialSettlementReceivable" extends="AbstractSupplierSettlement"
+				jaloclass="com.cnk.travelogix.supplier.settlementterms.jalo.CommercialSettlementReceivable">
+				<attributes>
+					<attribute type="Trigger" qualifier="supplierSettlementPeriodicity">
+						<persistence type="property" />
+						<modifiers partof="true" />
+					</attribute>
+					<attribute type="SettlementScheduleType" qualifier="settlementScheduleType">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="StdCommCommisionableSettlement" extends="AbstractSupplierSettlement"
+				jaloclass="com.cnk.travelogix.supplier.settlementterms.jalo.StdCommCommisionableSettlement">
+				<attributes>
+					<attribute type="SettlementOnType" qualifier="settlementOn">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SettlementType" qualifier="typeOfSettlement">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Trigger" qualifier="supplierSettlementPeriodicity">
+						<persistence type="property" />
+						<modifiers partof="true" />
+					</attribute>
+					<attribute type="SettlementScheduleType" qualifier="settlementScheduleType">
+						<persistence type="property" />
+					</attribute>
+
+				</attributes>
+			</itemtype>
+			<itemtype code="StdCommNonComissionableSettlement" extends="AbstractSupplierSettlement"
+				jaloclass="com.cnk.travelogix.supplier.settlementterms.jalo.StdCommNonComissionableSettlement">
+				<attributes>
+					<attribute type="SettlementType" qualifier="typeOfSettlement">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>em().getEnumerationValue("SettlementType","NO_CREDIT")</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="CreditCommSettlement" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.supplier.settlementterms.jalo.CreditCommSettlement">
+				<deployment table="creditcomset" typecode="22501" />
+				<attributes>
+					<attribute type="CreditType" qualifier="typeOfCredit">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ModeOfSecurity" qualifier="modeOfSecurity">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="validityFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="validityTo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Currency" qualifier="currency">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="amount">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PaymentMode" qualifier="preferredPaymentOption">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="NoCreditDepositCommSettlement" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.supplier.settlementterms.jalo.NoCreditDepositCommSettlement">
+				<deployment table="nocreditcomset" typecode="22502" />
+				<attributes>
+					<attribute type="ThresholdType" qualifier="thresholdType">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="thresholdAmount">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RaiseIndentType" qualifier="raiseIndentBy">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ModeOfSecurity" qualifier="modeOfSecurity">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Currency" qualifier="currency">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="amount">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RateType" qualifier="supplierRateType">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RateCode" qualifier="supplierRateCode">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CreditType" qualifier="typeOfCredit">
+						<description>Credit Type</description>
+						<defaultvalue>em().getEnumerationValue("CreditType","DEPOSIT")</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="createdIndent">
+     					 <persistence type="property" />
+     					 <defaultvalue>Boolean.FALSE</defaultvalue>
+     				</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="NoCreditPrePaymentCommSettlement" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.supplier.settlementterms.jalo.NoCreditPrePaymentCommSettlement">
+				<deployment table="nocreditprecomset" typecode="22503" />
+				<attributes>
+					<attribute type="PrePaymentType" qualifier="typeOfPrePayment">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="prePaymentByCountry">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="ModeOfSecurity" qualifier="modeOfSecurity">
+						<!-- <modifiers optional="false" /> -->
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CreditType" qualifier="typeOfCredit">
+						<description>Credit Type</description>
+						<defaultvalue>em().getEnumerationValue("CreditType","PREPAYMENT")</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Countries" qualifier="countryList">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="CountryCreditLimit"
+				jaloclass="com.cnk.travelogix.supplier.settlementterms.jalo.CountryCreditLimit">
+				<deployment table="ccreditlimit" typecode="22028" />
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="isCreditLimitByCountry">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="ThresholdType" qualifier="creditLimitType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="creditLimitAmount">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ThresholdType" qualifier="thresholdType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="thresholdValue">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Countries" qualifier="countryList">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="Trigger" autocreate="false" generate="false">
+				<description> Trigger for supplier settlement</description>
+				<attributes>
+					<attribute qualifier="settlementSchedule" type="ScheduleType">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="SettlementPeriod"
+				jaloclass="com.cnk.travelogix.supplier.settlementterms.jalo.SettlementPeriod">
+				<deployment table="stlmntperiods" typecode="22029" />
+				<attributes>
+					<attribute qualifier="fromDate" type="java.util.Date">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="toDate" type="java.util.Date">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="PayableAmountDetail"
+				jaloclass="com.cnk.travelogix.supplier.settlementterms.jalo.PayableAmountDetail">
+				<deployment table="payablesamountd" typecode="22083" />
+				<attributes>
+					<attribute qualifier="paymentType" type="PaymentType">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="settlementSchedule" type="ScheduleType">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="noOfDays" type="java.lang.Integer">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="percent" type="java.lang.Integer">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype generate="true" code="RaiseIndentCronJob"
+				jaloclass="com.cnk.travelogix.supplier.settlementterms.jalo.RaiseIndentCronJob"
+				extends="CronJob" autocreate="true">
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

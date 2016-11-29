@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2016 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+     <context:annotation-config/> 
+
+	<!-- Spring Integration -->
+	<import resource="classpath:/commoncore/integration/hot-folder-store-electronics-spring.xml"/>
+	<import resource="classpath:/commoncore/integration/hot-folder-store-apparel-spring.xml"/>
+	<import resource="classpath:/commoncore/integration/hot-folder-common-spring.xml"/>
+
+	<!-- SystemSetup for the CommonCore -->
+	<bean id="acceleratorCoreSystemSetup" class="com.cnk.travelogix.common.core.setup.CoreSystemSetup"
+	       parent="abstractCoreSystemSetup"/>
+
+
+
+	<!-- Enquiry related START -->
+	<bean id="cnkGenericEventListener" class="com.cnk.travelogix.common.core.event.CnkGenericEventListener" parent="abstractEventListener">
+		<property name="eventStrategyList">
+			<list>
+				<bean class="com.cnk.travelogix.common.core.event.strategy.EnquiryAfterCreationEventStrategy">
+					<property name="enquirySupplierFacade" ref="enquirySupplierFacade" />
+					<property name="modelService" ref="modelService" />
+				</bean>
+				<bean class="com.cnk.travelogix.common.core.event.strategy.EnquiryBeforeCreationEventStrategy">
+					<property name="enquirySupplierFacade" ref="enquirySupplierFacade" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<alias alias="sessionCloseStrategy" name="enquirySessionCloseStrategy"/>
+	<bean id="enquirySessionCloseStrategy" class="com.cnk.travelogix.common.core.enquiry.EnquirySessionCloseStrategy">
+		<property name="enquiryService" ref="enquiryService" />
+		<property name="modelService" ref="modelService" />
+	</bean>
+	<alias name="defaultEnquirySupplierFacade" alias="enquirySupplierFacade"/>
+	<bean id="defaultEnquirySupplierFacade" class="com.cnk.travelogix.common.core.enquiry.facade.impl.DefaultEnquirySupplierFacade">
+	</bean>
+	<alias name="defaultEnquiryService" alias="enquiryService"/>
+	<bean id="defaultEnquiryService" class="com.cnk.travelogix.common.core.enquiry.services.impl.DefaultEnquiryService">
+		<property name="eventService" ref="eventService" />
+		<property name="modelService" ref="modelService"/>
+		<property name="userService" ref="userService" />
+		<property name="configurationService" ref="configurationService" />
+		<property name="baseSiteService" ref="baseSiteService" />
+		<property name="enquirySupplierFacade" ref="enquirySupplierFacade" />
+	</bean>
+	<!-- Enquiry related END -->
+
+	<alias name="defaultCaptchaService" alias="captchaService"/>
+	<bean id="defaultCaptchaService" class="com.cnk.travelogix.common.core.captcha.services.impl.DefaultCaptchaService"></bean>
+
+
+	<!--
+		Event listeners are singletons, therefore the dependency for a bean in tenant-scope
+		must be configured with a lookup method.
+	-->
+	<bean id="orderCancelledEventListener"
+	      class="com.cnk.travelogix.common.core.event.OrderCancelledEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="orderRefundEventListener"
+	      class="com.cnk.travelogix.common.core.event.OrderRefundEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="customerRegistrationEventListener"
+	      class="com.cnk.travelogix.common.core.event.RegistrationEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="b2cCustomerRegistrationEventListener"
+	      class="com.cnk.travelogix.common.core.event.B2cRegistrationEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="b2cCustomerAccountLockEventListener"
+	      class="com.cnk.travelogix.common.core.event.B2cAccountLockEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="b2cCustomerAccountEnableEventListener"
+	      class="com.cnk.travelogix.common.core.event.B2cAccountEnableEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="forgottenPasswordEventListener"
+	      class="com.cnk.travelogix.common.core.event.ForgottenPasswordEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="submitOrderEventListener" class="com.cnk.travelogix.common.core.event.SubmitOrderEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="businessProcessService" ref="businessProcessService"/>
+		<property name="modelService" ref="modelService"/>
+		<property name="baseStoreService" ref="baseStoreService"/>
+	</bean>
+	<bean id="orderConfirmationEventListener"
+	      class="com.cnk.travelogix.common.core.event.OrderConfirmationEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="sendDeliveryMessageEventListener"
+	      class="com.cnk.travelogix.common.core.event.SendDeliveryMessageEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="sendReadyForPickupMessageEventListener"
+	      class="com.cnk.travelogix.common.core.event.SendReadyForPickupMessageEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="sendOrderPartiallyCanceledMessageEventListener"
+	      class="com.cnk.travelogix.common.core.event.SendOrderPartiallyCanceledMessageEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="sendOrderPartiallyRefundedMessageEventListener"
+	      class="com.cnk.travelogix.common.core.event.SendOrderPartiallyRefundedMessageEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="sendNotPickedUpConsignmentCanceledMessageEventListener"
+	      class="com.cnk.travelogix.common.core.event.SendNotPickedUpConsignmentCanceledMessageEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	<bean id="orderCompletedEventListener" class="com.cnk.travelogix.common.core.event.OrderCompletedEventListener" parent="abstractAcceleratorSiteEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+
+	<!-- Process resources definition -->
+
+	<bean id="customerRegistrationEmailProcessDefinitionResource"
+	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/commoncore/processes/customerRegistrationEmailProcess.xml"/>
+	</bean>
+	<bean id="customerActivationEmailProcessDefinitionResource"
+	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/commoncore/processes/customerActivationEmailProcess.xml"/>
+	</bean>
+	<bean id="customerLockEmailProcessDefinitionResource"
+	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/commoncore/processes/customerLockEmailProcess.xml"/>
+	</bean>
+	<bean id="customerEnableEmailProcessDefinitionResource"
+	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/commoncore/processes/customerEnableEmailProcess.xml"/>
+	</bean>
+	<bean id="forgottenPasswordEmailProcessDefinitionResource"
+	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/commoncore/processes/forgottenPasswordEmailProcess.xml"/>
+	</bean>
+	<bean id="orderConfirmationEmailProcessDefinitionResource"
+	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/commoncore/processes/orderConfirmationEmailProcess.xml"/>
+	</bean>
+	<bean id="sendDeliveryEmailProcessDefinitionResource"
+	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/commoncore/processes/sendDeliveryEmailProcess.xml"/>
+	</bean>
+	<bean id="sendReadyForPickupEmailProcessDefinitionResource"
+	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/commoncore/processes/sendReadyForPickupEmailProcess.xml"/>
+	</bean>
+	<bean id="sendOrderCancelledEmailProcessDefinitionResource"
+	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/commoncore/processes/sendOrderCancelledEmailProcess.xml"/>
+	</bean>
+	<bean id="sendOrderRefundEmailProcessDefinitionResource"
+	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/commoncore/processes/sendOrderRefundEmailProcess.xml"/>
+	</bean>
+	<bean id="sendOrderPartiallyCanceledEmailProcessDefinitionResource"
+	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/commoncore/processes/sendOrderPartiallyCanceledEmailProcess.xml"/>
+	</bean>
+	<bean id="sendOrderPartiallyRefundedEmailProcessDefinitionResource"
+	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/commoncore/processes/sendOrderPartiallyRefundedEmailProcess.xml"/>
+	</bean>
+	<bean id="sendNotPickedUpConsignmentCanceledEmailProcessDefinitionResource"
+	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/commoncore/processes/sendNotPickedUpConsignmentCanceledEmailProcess.xml"/>
+	</bean>
+	
+	<!-- added for send customer to CRM -->
+	<bean id="sendCustomerToCRMProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource"
+			value="classpath:/commoncore/processes/sendCustomerToCRMProcess.xml" />
+	</bean>	
+
+	
+ 	<bean id="workflowTriggerProcessDefinitionResource"
+	      class="de.hybris.platform.processengine.definition.ProcessDefinitionResource" >
+		<property name="resource" value="classpath:/commoncore/processes/workflowTriggerProcess.xml"/>
+	</bean>
+
+
+	<!-- Actions -->
+	<bean id="abstractAction" class="de.hybris.platform.processengine.action.AbstractAction"
+	      abstract="true">
+		<property name="modelService" ref="modelService"/>
+		<property name="processParameterHelper" ref="processParameterHelper"/>
+	</bean>
+
+	<bean id="sendEmail" class="de.hybris.platform.acceleratorservices.process.email.actions.SendEmailAction"
+	       parent="abstractAction">
+		<property name="emailService" ref="emailService"/>
+	</bean>
+
+	<bean id="abstractGenerateEmailAction" class="de.hybris.platform.acceleratorservices.process.email.actions.GenerateEmailAction"
+	      parent="abstractAction" abstract="true">
+		<property name="modelService" ref="modelService"/>
+		<property name="cmsEmailPageService" ref="cmsEmailPageService"/>
+		<property name="contextResolutionStrategy" ref="processContextResolutionStrategy"/>
+		<property name="emailGenerationService" ref="emailGenerationService"/>
+	</bean>
+
+	<bean id="generateCustomerRegistrationEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="CustomerRegistrationEmailTemplate"/>
+	</bean>
+	
+	<bean id="generateCustomerActivationEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="CustomerActivationEmailTemplate"/>
+	</bean>
+	
+	<bean id="generateCustomerLockEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="CustomerLockEmailTemplate"/>
+	</bean>
+	
+	<bean id="generateCustomerEnableEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="CustomerEnableEmailTemplate"/>
+	</bean>
+
+	<bean id="generateForgottenPasswordEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="ForgottenPasswordEmailTemplate"/>
+	</bean>
+
+	<bean id="generateOrderConfirmationEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderConfirmationEmailTemplate"/>
+	</bean>
+	
+	<bean id="generateDeliverySentEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="DeliverySentEmailTemplate"/>
+	</bean>
+
+	<bean id="generateReadyForPickupEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="ReadyForPickupEmailTemplate"/>
+	</bean>
+	
+	<bean id="generateOrderCancelledEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderCancelledEmailTemplate"/>
+	</bean>
+	
+	<bean id="generateOrderRefundEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderRefundEmailTemplate"/>
+	</bean>
+
+	<bean id="generateOrderPartiallyCanceledEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderPartiallyCanceledEmailTemplate"/>
+	</bean>
+	<bean id="generateOrderPartiallyRefundedEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="OrderPartiallyRefundedEmailTemplate"/>
+	</bean>
+	<bean id="generateNotPickedUpConsignmentCanceledEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="NotPickedUpConsignmentCanceledEmailTemplate"/>
+	</bean>
+
+	<bean id="removeSentEmail"
+	      class="de.hybris.platform.acceleratorservices.process.email.actions.RemoveSentEmailAction"
+	      parent="abstractAction">
+		<property name="modelService" ref="modelService"/>
+	</bean>
+	
+	<!-- added for send customer to CRM -->
+	<bean id="sendCustomerToCRM"
+		class="com.cnk.travelogix.common.core.process.actions.SendCustomerToCRMAction"
+		parent="abstractAction">
+	</bean>
+
+	<!-- Simple Suggestion Service -->
+	<alias alias="simpleSuggestionService" name="defaultSimpleSuggestionService"/>
+	<bean id="defaultSimpleSuggestionService"
+	      class="com.cnk.travelogix.common.core.suggestion.impl.DefaultSimpleSuggestionService" >
+		<property name="simpleSuggestionDao" ref="simpleSuggestionDao"/>
+	</bean>
+	<alias alias="simpleSuggestionDao" name="defaultSimpleSuggestionDao"/>
+	<bean id="defaultSimpleSuggestionDao"
+	      class="com.cnk.travelogix.common.core.suggestion.dao.impl.DefaultSimpleSuggestionDao"
+	      parent="abstractItemDao" >
+		<property name="flexibleSearchService" ref="flexibleSearchService"/>
+	</bean>
+
+	<bean id="mccSiteUrlHelper" class="com.cnk.travelogix.common.core.util.MccSiteUrlHelper" >
+		<property name="siteChannelValidationStrategy" ref="siteChannelValidationStrategy"/>
+		<property name="siteBaseUrlResolutionService" ref="siteBaseUrlResolutionService"/>
+		<property name="cmsSiteService" ref="cmsSiteService"/>
+	</bean>
+
+
+	<!-- checkout flow configuration -->
+	
+	<bean id="pickUpInStoreCheckoutFlowStrategy" class="com.cnk.travelogix.common.core.checkout.flow.impl.PickUpInStoreCheckoutFlowStrategy" >
+		<property name="pickupStrategy" ref="pickupStrategy" />
+		<property name="defaultStrategy" ref="siteCheckoutFlowStrategy"/>
+		<property name="multiStepCheckoutFlowStrategy" ref="multiStepCheckoutFlowStrategy" />
+	</bean>	
+
+	<bean id="siteCheckoutFlowStrategy"
+	      class="com.cnk.travelogix.common.core.checkout.flow.impl.SiteCheckoutFlowStrategy" >
+		<!-- This strategy looks up a strategy based on the current site UID -->
+		<property name="cmsSiteService" ref="cmsSiteService"/>
+		<property name="siteMappings">
+			<map>
+				<entry key="electronics" value-ref="newCustomerCheckoutFlowStrategy"/>
+				<entry key="apparel-de" value-ref="multiStepCheckoutFlowStrategy"/>
+				<entry key="apparel-uk" value-ref="multiStepCheckoutFlowStrategy"/>
+				<entry key="powertoolsstore" value-ref="multiStepCheckoutFlowStrategy"/>
+			</map>
+		</property>
+		<!-- Default to SINGLE step checkout -->
+		<property name="defaultStrategy" ref="multiStepCheckoutFlowStrategy"/>
+	</bean>
+
+	<bean id="newCustomerCheckoutFlowStrategy"
+	      class="com.cnk.travelogix.common.core.checkout.flow.impl.NewCustomerCheckoutFlowStrategy" >
+		<!-- This strategy works out if the user has created any data -->
+		<property name="userService" ref="userService"/>
+		<property name="customerAccountService" ref="customerAccountService"/>
+		<property name="defaultStrategy" ref="multiStepCheckoutFlowStrategy"/>
+		<property name="newCustomerStrategy" ref="multiStepCheckoutFlowStrategy"/>
+	</bean>
+
+
+	<!-- Manage Communication -->
+	<bean id="communicationEmailProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource"
+			value="classpath:/commoncore/processes/communicationProcess.xml" />
+	</bean>
+
+	<bean id="generateCommunicationEmail"
+		class="com.cnk.travelogix.communication.process.CommunicationGenerateEmailAction"
+		parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="CommunicationEmailTemplate" />
+		<property name="communicationTemplateService" ref="communicationTemplateService" />
+	</bean>
+
+	<bean id="communicationTemplateService"
+		class="com.cnk.travelogix.communication.process.CommunicationTemplateService">
+	</bean>
+
+<!-- 	<alias alias="processContextResolutionStrategy" name="travelogixProcessContextResolutionStrategy" />
+	<bean id="travelogixProcessContextResolutionStrategy"
+		class="com.cnk.travelogix.communication.process.strategies.impl.TravelogixProcessContextResolutionStrategy">
+		<property name="catalogVersionService" ref="catalogVersionService" />
+		<property name="cmsSiteService" ref="cmsSiteService" />
+		<property name="commonI18NService" ref="commonI18NService" />
+		<property name="commerceCommonI18NService" ref="commerceCommonI18NService" />
+		<property name="sessionService" ref="sessionService" />
+		<property name="baseSiteService" ref="baseSiteService" />
+		<property name="enableLanguageFallback" value="true" />
+	</bean>
+ -->
+	<bean id="communicationEmailContext"
+		class="com.cnk.travelogix.communication.CommunicationEmailContext"
+		parent="abstractEmailContext" scope="prototype">
+	</bean>
+
+	<alias alias="communicationTemplateSaveListener" name="defaultCommunicationTemplateSaveListener" />
+	<bean id="defaultCommunicationTemplateSaveListener"
+		class="com.cnk.travelogix.communication.event.CommunicationTemplateAfterSaveListener">
+		<property name="modelService" ref="modelService" />
+		<property name="userService" ref="userService" />
+		<property name="workflowService" ref="newestWorkflowService" />
+		<property name="workflowTemplateService" ref="workflowTemplateService" />
+		<property name="workflowProcessingService" ref="workflowProcessingService" />
+	</bean>
+
+	<bean id="templateConfirmationActionJob"
+		class="com.cnk.travelogix.communication.workflow.TemplateConfirmationActionJob">
+		<property name="modelService" ref="modelService" />
+		<!-- <property name="mailService" ref="mailService" /> -->
+	</bean>
+
+	<bean id="templateDeclineActionJob"
+		class="com.cnk.travelogix.communication.workflow.TemplateDeclineActionJob">
+		<property name="modelService" ref="modelService" />
+		<!-- <property name="mailService" ref="mailService" /> -->
+	</bean>
+
+	<bean id="communicationTemplateInterceptor"
+		class="com.cnk.travelogix.communication.workflow.CommunicationTemplateInterceptor"
+		autowire="byName">
+		<property name="modelService" ref="modelService" />
+		<property name="versionDetailService" ref="versionDetailService" />
+		<property name="cloneCommunicationTemplateStrategy" ref="cloneCommunicationTemplateStrategy" />
+		<property name="typeService" ref="typeService" />
+	</bean>
+
+	<bean id="communicationTemplateInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="communicationTemplateInterceptor" />
+		<property name="typeCode" value="CommunicationTemplate" />
+	</bean>
+
+	<bean id="versionDetailService"
+		class="com.cnk.travelogix.communication.services.VersionDetailService">
+		<property name="modelService" ref="modelService" />
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+		<property name="typeService" ref="typeService" />
+	</bean>
+
+	<alias alias="cloneCommunicationTemplateStrategy" name="defaultCloneCommunicationTemplateStrategy" />
+	<bean id="defaultCloneCommunicationTemplateStrategy"
+		class="com.cnk.travelogix.communication.strategies.DefaultCloneCommunicationTemplateStrategy">
+		<constructor-arg name="versionDetailService" ref="versionDetailService" />
+		<constructor-arg name="modelService" ref="modelService" />
+	</bean>
+	
+
+	<!--  Bank Master  -->
+	
+	<bean id="bankAccountDetailPrepareInterceptor" class="com.cnk.travelogix.common.core.interceptors.BankAccountDetailPrepareInterceptor"/>
+	<bean id="bankAccountDetailPrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="bankAccountDetailPrepareInterceptor" />
+		<property name="typeCode" value="BankAccountDetail" />
+	</bean>
+
+	<bean id="roeValidateInterceptor"
+		class="com.cnk.travelogix.common.core.interceptors.ROEValidateInterceptor"
+		autowire="byName" />
+
+	<bean id="ROEValidateInterceptor"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="roeValidateInterceptor" />
+		<property name="typeCode" value="TravelogixROE" />
+	</bean>
+
+	<bean id="roePrepareInterceptor"
+		class="com.cnk.travelogix.common.core.interceptors.ROEPrepareInterceptor"
+		autowire="byName" />
+
+	<bean id="ROEPrepareInterceptor"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="roePrepareInterceptor" />
+		<property name="typeCode" value="TravelogixROE" />
+    </bean>
+
+
+	<!-- Product Reference Lookup Strategies-->
+	
+	<!-- payment beans start -->
+	
+	<bean id="cnkPaymentService"
+	      class="com.cnk.travelogix.common.core.payment.services.impl.CustomCnkPaymentService">
+		<property name="cartService" ref="cartService"/>
+		<property name="modelService" ref="modelService"/>
+		<property name="sessionService" ref="sessionService"/>
+		<property name="userService" ref="userService"/>
+		<property name="creditCardPaymentSubscriptionDao" ref="creditCardPaymentSubscriptionDao"/>
+		<property name="siteConfigService" ref="siteConfigService"/>
+		<property name="paymentResponseInterpretation" ref="paymentResponseInterpretationStrategy"/>
+		<property name="hopPaymentResponseInterpretation" ref="hopPaymentResponseInterpretationStrategy"/>
+		<property name="paymentDataConverter" ref="paymentDataConverter"/>
+		<property name="paymentFormActionUrlStrategy" ref="cnkPaymentFormActionUrlStrategy"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+		<property name="createSubscriptionRequestStrategy" ref="createSubscriptionRequestStrategy"/>
+		<property name="createSubscriptionResultValidationStrategy" ref="createSubscriptionResultValidationStrategy"/>
+		<property name="signatureValidationStrategy" ref="signatureValidationStrategy"/>
+		<property name="cnkPaymentInfoCreateStrategy" ref="cnkPaymentInfoCreateStrategy"/>
+		<property name="paymentTransactionStrategy" ref="cnkPaymentTransactionStrategy"/>
+		<property name="clientReferenceLookupStrategy" ref="clientReferenceLookupStrategy"/>
+		<property name="fraudCallbackStrategy" ref="fraudCallbackStrategy"/>
+		<property name="paymentPlanCreateStrategy" ref="paymentPlanCreateStrategy"/>
+		<property name="paymentPlanUpdateStrategy" ref="paymentPlanUpdateStrategy"/>
+		<property name="paymentProviderMap">
+			 <map>
+               <entry key="amex" value-ref="amexPaymentProvider"/>
+               <entry key="firstdata" value-ref="firstDataPaymentProvider"/>
+           </map>
+		</property>
+	</bean>
+	
+	<bean id="amexPaymentProvider" class="com.cnk.travelogix.common.core.payment.ezg.impl.AmexPaymentProvider"/>
+	<bean id="firstDataPaymentProvider" class="com.cnk.travelogix.common.core.payment.ezg.impl.FirstDataPaymentProvider"/>
+	
+	<bean id="paymentPlanEntryPopulator" class="com.cnk.travelogix.common.core.payment.converters.populator.PaymentPlanEntryPopulator"/>
+	<bean id="paymentPlanEntryReversePopulator" class="com.cnk.travelogix.common.core.payment.converters.populator.PaymentPlanEntryReversePopulator"/>
+	<bean id="paymentPlanPopulator" class="com.cnk.travelogix.common.core.payment.converters.populator.PaymentPlanPopulator">
+		<property name="paymentPlanEntryPopulator" ref="paymentPlanEntryPopulator"></property>
+	</bean>
+	<bean id="paymentPlanReversePopulator" class="com.cnk.travelogix.common.core.payment.converters.populator.PaymentPlanReversePopulator">
+		<property name="paymentPlanEntryReversePopulator" ref="paymentPlanEntryReversePopulator"></property>
+		<property name="modelService" ref="modelService"></property>
+	</bean>
+	<bean id="paymentPlanService" class="com.cnk.travelogix.common.core.payment.services.impl.CustomCnkPaymentPlanService"/>
+	<bean id="paymentModeSettingPopulator" class="com.cnk.travelogix.common.core.payment.converters.populator.PaymentModeSettingPopulator"/>
+	
+	<bean id="codPaymentInfoPopulator" class="com.cnk.travelogix.common.core.payment.converters.populator.CodPaymentInfoPopulator"/>
+	<bean id="codPaymentInfoReversePopulator" class="com.cnk.travelogix.common.core.payment.converters.populator.CodPaymentInfoReversePopulator"/>
+	<bean id="cnkPaymentFormActionUrlStrategy"
+	      class="com.cnk.travelogix.common.core.payment.strategies.impl.CustomCnkPaymentFormActionUrlStrategy">
+		<property name="baseSiteService" ref="baseSiteService"/>
+		<property name="siteBaseUrlResolutionService" ref="siteBaseUrlResolutionService"/>
+		<property name="siteConfigService" ref="siteConfigService"/>
+	</bean>
+	
+	<bean id="cnkPaymentTransactionStrategy" class="com.cnk.travelogix.common.core.payment.strategies.impl.CustomCnkPaymentTransactionStrategy">
+		<property name="modelService" ref="modelService"/>
+		<property name="commerceCheckoutService" ref="commerceCheckoutService"/>
+		<property name="flexibleSearchService" ref="flexibleSearchService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+		<property name="paymentService" ref="paymentService"/>
+	</bean>
+	
+	<bean id="cnkPaymentInfoCreateStrategy" class="com.cnk.travelogix.common.core.payment.strategies.impl.CustomCnkPaymentInfoCreateStrategy">
+		<property name="modelService" ref="modelService"/>
+		<property name="commonI18NService" ref="commonI18NService"/>
+		<property name="customerEmailResolutionService" ref="customerEmailResolutionService"/>
+		<property name="userService" ref="userService"/>
+		<property name="configurationService" ref="configurationService"/>
+		<property name="codPaymentInfoReversePopulator" ref="codPaymentInfoReversePopulator"/>
+	</bean>
+	<bean id="paymentPlanCreateStrategy" class="com.cnk.travelogix.common.core.payment.strategies.impl.CustomCnkPaymentPlanCreateStrategy">
+		<property name="modelService" ref="modelService"/>
+		<property name="paymentPlanService" ref="paymentPlanService"/>
+	</bean>
+	<bean id="paymentPlanUpdateStrategy" class="com.cnk.travelogix.common.core.payment.strategies.impl.CustomCnkPaymentPlanUpdateStrategy">
+		<property name="modelService" ref="modelService"/>
+		<property name="paymentPlanService" ref="paymentPlanService"/>
+	</bean>
+	<!-- payment beans end -->	
+
+	<alias name="cnkDefaultCustomerAccountDao" alias="cnkDefaultCustomerAccountDao"/>
+	<bean id="cnkDefaultCustomerAccountDao"
+			class="com.cnk.travelogix.common.core.order.dao.impl.CNKDefaultCustomerAccountDao"
+			parent="customerAccountDao"
+			>
+	</bean>
+	
+	<!-- this service  seems duplicated with extB2cCustomerAccountService, but required to make new service in common project, so that does not re-use that one-->
+	<bean id="cnkDefaultCustomerAccountService" class="com.cnk.travelogix.common.core.order.impl.CNKDefaultCustomerAccountService"
+			parent="defaultCustomerAccountService">
+			<property name="customerAccountDao" ref="cnkDefaultCustomerAccountDao"/>
+	</bean>
+
+	<!-- timeLimit booking Communications -->
+	<bean id="timeLimitBookingAlertEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="TimeLimitBookingAlertTemplate"/>
+	</bean>
+	
+	<bean id="timeLimitBookingCancelEmail" parent="abstractGenerateEmailAction">
+		<property name="frontendTemplateName" value="TimeLimitBookingCancelTemplate"/>
+		</bean>
+	<bean id="cnKAccountService" class="com.cnk.travelogix.common.core.account.services.impl.ExtCnKAccountService">
+	</bean>
+	
+	<!--  order/cart config start -->
+	<alias name="ezgCartValidationStrategy" alias="cartValidationStrategy"/>
+	<bean id="ezgCartValidationStrategy"
+			class="com.cnk.travelogix.common.core.order.strategy.EzgCartValidationStrategy"
+			parent="defaultCartValidationStrategy">
+		<property name="cnkProductSearchService" ref="mockHotelProductSearchService" />
+	</bean>
+	<bean id="mockHotelProductSearchService" class="com.cnk.travelogix.common.core.order.mock.MockupHotelSearchService">
+	</bean>
+	<bean id="bookingService" class="com.cnk.travelogix.common.core.order.mock.BookingServiceImpl" >
+		<property name="supplierCheckService" ref="supplierCheckService"/>
+		<property name="paymentCheckService" ref="paymentCheckService"/>
+		<property name="modelService" ref="modelService"/>
+		
+	</bean>
+	<bean id="supplierCheckService" class="com.cnk.travelogix.common.core.order.mock.MockSupplierCheckService" >
+	</bean>
+	<bean id="paymentCheckService" class="com.cnk.travelogix.common.core.order.mock.PaymentCheckService" >
+	</bean>
+	<!-- cart calculate hook -->
+	<bean id="hotelLevelPriceCalculationMethodHook" class="com.cnk.travelogix.common.core.order.hook.HotelLevelPriceCalculationMethodHook">
+		<property name="modelService" ref="modelService" />
+	</bean>
+	
+	<bean id="priceCalculationMethodHooksMergeDirective" depends-on="commerceCartCalculationMethodHooks" parent="listMergeDirective">
+       <property name="add" ref="hotelLevelPriceCalculationMethodHook"/>
+    </bean>
+    
+    <alias name="defaultOrderProductService" alias="orderProductService"/>
+	<bean id="defaultOrderProductService"
+			class="com.cnk.travelogix.common.core.order.service.impl.DefaultOrderProductService">
+		<property name="modelService" ref="modelService" />
+		<property name="productDao" ref="productDao"/>
+	</bean>
+    
+	<!--  order/cart config end -->
+	<alias name="ezgDefaultBruteForceAttackCounter" alias="bruteForceAttackCounter"/>
+   	<bean id="ezgDefaultBruteForceAttackCounter" class="com.cnk.travelogix.common.core.account.security.EzgDefaultBruteForceAttackCounter">
+   		<constructor-arg name="maxFailedLogins" value="5" />
+        <constructor-arg name="cacheExpiration" value="60" />
+        <constructor-arg name="cacheSizeLimit" value="1000" />
+   	</bean>
+   	
+	<bean id="svcIntFlightGetAvailabilityAndFareRequestPopulator" class="com.cnk.travelogix.common.core.si.converters.populators.SvcIntFlightGetAvailabilityAndFareRequestPopulator" />
+	<bean id="airSearchUI2SLConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlightGetAvailabilityAndFareRequest"/>
+		<property name="populators">
+			<list>
+				<ref bean="svcIntFlightGetAvailabilityAndFareRequestPopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="airSearchRequestHeaderPopulator" class="com.cnk.travelogix.common.core.si.converters.populators.RequestHeaderPopulator" />
+	<bean id="airLowFareSearchRQPopulator" class="com.cnk.travelogix.common.core.si.converters.populators.AirLowFareSearchRQPopulator" />
+	<bean id="airSearchSL2ILConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.suppliers.air.data.AirLowFareSearchRequest"/>
+		<property name="populators">
+			<list>
+				<ref bean="airSearchRequestHeaderPopulator"/>
+				<ref bean="airLowFareSearchRQPopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="svcIntFlightPopulator" class="com.cnk.travelogix.common.core.si.converters.populators.SvcIntFlightPopulator" />
+	<bean id="svcIntFlightConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlight"/>
+		<property name="populators">
+			<list>
+				<ref bean="svcIntFlightPopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="svcIntItineraryPopulator" class="com.cnk.travelogix.common.core.si.converters.populators.SvcIntItineraryPopulator" />
+	<bean id="svcIntItineraryConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntAirRSItinerary"/>
+		<property name="populators">
+			<list>
+				<ref bean="svcIntItineraryPopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="svcIntFlightGetAvailabilityAndFareResponsePopulator" class="com.cnk.travelogix.common.core.si.converters.populators.SvcIntFlightGetAvailabilityAndFareResponsePopulator" />
+	<bean id="airSearchIL2SLConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlightGetAvailabilityAndFareResponse"/>
+		<property name="populators">
+			<list>
+				<ref bean="svcIntFlightGetAvailabilityAndFareResponsePopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="flightFareListPopulator" class="com.cnk.travelogix.common.core.si.converters.populators.FlightFareListPopulator" />
+	<bean id="flightGeneralPolulator" class="com.cnk.travelogix.common.core.si.converters.populators.FlightGeneralPolulator" />
+	<bean id="flightOfferListPopulator" class="com.cnk.travelogix.common.core.si.converters.populators.FlightOfferListPopulator" />
+	<bean id="flightDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.common.facades.product.data.flight.FlightData"/>
+		<property name="populators">
+			<list>
+				<ref bean="flightFareListPopulator"/>
+				<ref bean="flightGeneralPolulator"/>
+				<ref bean="flightOfferListPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="flightProductSearchPageDataPopulator" class="com.cnk.travelogix.common.core.si.converters.populators.FlightProductSearchPageDataPopulator" />
+	<bean id="airSearchSL2UIConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.common.facades.product.data.FlightProductSearchPageData"/>
+		<property name="populators">
+			<list>
+				<ref bean="flightProductSearchPageDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="siAirService" class="com.cnk.travelogix.common.core.si.services.impl.DefaultSIAirService">
+		<property name="searchRequestConverter" ref="airSearchSL2ILConverter"/>
+		<property name="searchResponseConverter" ref="airSearchIL2SLConverter"/>
+		<property name="supplierAirService" ref="supplierAirService"/>
+	</bean>
+</beans>

@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+	<enumtypes>
+		<enumtype code="Absolute" autocreate="true" generate="true">
+			<value code="AMOUNT" />
+			<value code="PERCENTAGE" />
+		</enumtype>
+		<enumtype code="ClientTransactionOn" autocreate="true"
+			generate="true">
+			<value code="CREDIT" />
+			<value code="DEPOSITE" />
+		</enumtype>
+		
+	</enumtypes>
+
+	<relations>
+		<relation code="ClientCreditDetailsToMedia" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="clientCreditDetails" type="ClientCreditDetails"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="clientCreditMedia" type="Media"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="ClientCreditDetailsToBankGuarantee"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="clientCreditDetails" type="ClientCreditDetails"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="bankGuaranteeInfo" type="BankGuarantee"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="ClientCreditDetailsToSecurityDeposit"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="clientCreditDetails" type="ClientCreditDetails"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="securityDeposit" type="SecurityDeposit"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="ClientCreditDetailsToProductInformationforCredit"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="clientCreditDetails" type="ClientCreditDetails"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="productInfo" type="ProductInformationforCredit"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="ClientCreditDetailsToCreditCard" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="clientCreditDetails" type="ClientCreditDetails"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="creditCardInfo" type="CreditCard"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+
+
+		<relation code="PrincipalToClientCreditDepositLimit" 
+			localized="false">
+			<sourceElement type="Principal" cardinality="one"
+				qualifier="client">
+			</sourceElement>
+			<targetElement type="ClientCreditDepositLimit" cardinality="many"
+				qualifier="creditDepositLimits">
+			</targetElement>
+		</relation>
+
+		<relation code="ClientCreditDepositLimit2Media"
+			localized="false">
+			<sourceElement type="ClientCreditDepositLimit"
+				cardinality="one" qualifier="clientCreditDepositLimit" />
+			<targetElement type="Media" cardinality="many"
+				qualifier="medias" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="SecuredBankGuaranteeToBankInfo" 
+			localized="false">
+			<sourceElement type="SecuredBankGuarantee" cardinality="one"
+				qualifier="securedBankGuarantee">
+			</sourceElement>
+			<targetElement type="BankInfo" cardinality="many"
+				qualifier="banks">
+				<modifiers optional="false" />
+			</targetElement>
+		</relation>
+
+		<relation code="SecuredCreditCardLimitToCreditCardDetail" 
+			localized="false">
+			<sourceElement type="SecuredCreditCardLimit" cardinality="one"
+				qualifier="securedCreditCardLimit">
+			</sourceElement>
+			<targetElement type="CreditCardDetail" cardinality="many"
+				qualifier="creditcards">
+			</targetElement>
+		</relation>
+
+	</relations>
+
+	<itemtypes>
+		<itemtype code="ClientCreditDetails" extends="GenericItem"
+			autocreate="true" generate="true"
+			jaloclass="com.cnk.travelogix.client.credit.core.jalo.ClientCreditDetails">
+			<deployment table="clientCreditDetails" typecode="23011" />
+			<attributes>
+				<attribute qualifier="clientTransactionOn" type="ClientTransactionOn">
+					<description>Client transaction of type credit </description>
+					<persistence type="property" />
+					<modifiers optional="false" />
+					<defaultvalue>Boolean.FALSE</defaultvalue>
+				</attribute>
+
+				<attribute qualifier="creditType" type="CreditType">
+					<description>Credit type</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="isLimitedUnsecuredCredit" type="java.lang.Boolean">
+					<description>Unsecured Credit Card</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+					<defaultvalue>Boolean.TRUE</defaultvalue>
+				</attribute>
+				<attribute qualifier="modeOfSecurity" type="ModeOfSecurity">
+					<description>ModeOfSecurity</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="isCreditLimitBybranchOrProduct"
+					type="java.lang.Boolean">
+					<description>CreditLimitBybranch/Product</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+					<defaultvalue>Boolean.TRUE</defaultvalue>
+				</attribute>
+				<attribute qualifier="barter" type="Barter">
+					<description>Barter</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="remark" type="localized:java.lang.String">
+					<description>Remark</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="BankInformation" autocreate="true" generate="true"
+			extends="GenericItem" jaloclass="com.cnk.travelogix.client.credit.core.jalo.BankInformation">
+			<deployment table="bankInformation" typecode="23001" />
+			<attributes>
+				<attribute qualifier="bankName" type="Bank">
+					<description>Bank Name </description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="branchName" type="java.lang.String">
+					<description>Branch Name </description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="contactNumber" type="java.lang.String">
+					<description>ContactNumber</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+
+		<itemtype code="ProductInformationforCredit" autocreate="true"
+			generate="true"
+			jaloclass="com.cnk.travelogix.client.credit.core.jalo.ProductInformationforCredit"
+			extends="ProductInformation">
+			<description>Represents ProductIfo for creditlimit</description>
+			<attributes>
+
+				<attribute qualifier="productName" type="Product">
+					<description>Product Name</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="productNameSubType" type="VariantProduct">
+					<description>Product Name SubType</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="thresholdInfo" type="ThresholdInformation">
+					<description>Threshold Information</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="creditLimitInfo" type="CreditLimitInfo">
+					<description>Credit Limit Information</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<!-- <attribute qualifier="clientBranch" type="ClientBranch"> <description>Product 
+					Name SubType</description> <modifiers optional="true" /> <persistence type="property" 
+					/> </attribute> -->
+
+				<attribute qualifier="employeeName" type="Employee">
+					<description>Employee Name</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+
+
+
+		<itemtype code="ThresholdInformation" autocreate="true"
+			generate="true" extends="GenericItem"
+			jaloclass="com.cnk.travelogix.client.credit.core.jalo.ThresholdInformation">
+			<deployment table="thresholdInformation" typecode="23002" />
+			<attributes>
+				<attribute qualifier="thresholdIn" type="Absolute">
+					<description>Threshold In for credit limit</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="thresholdValue" type="java.math.BigDecimal">
+					<description>Threshold value for credit limit</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+
+			</attributes>
+		</itemtype>
+
+		<itemtype code="CreditLimitInfo" autocreate="true" generate="true"
+			extends="GenericItem" jaloclass="com.cnk.travelogix.client.credit.core.jalo.CreditLimitInfo">
+			<deployment table="creditLimitInfo" typecode="23003" />
+			<attributes>
+				<attribute qualifier="amount" type="Absolute">
+					<description>Amount for credit limit</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="creditLimit" type="java.math.BigDecimal">
+					<description>Credit Limit</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="currency" type="Currency">
+					<description>Currency for Credit Limit</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+
+		<itemtype code="BankGuarantee" autocreate="true" generate="true"
+			extends="GenericItem" jaloclass="com.cnk.travelogix.client.credit.core.jalo.BankGuarantee">
+			<deployment table="bankgaurantee" typecode="23004" />
+			<attributes>
+
+				<attribute qualifier="bgRefNumber" type="java.lang.String">
+					<description>BankRefNo</description>
+					<persistence type="property" />
+					<modifiers optional="false" />
+				</attribute>
+				<attribute qualifier="bgIssueDate" type="java.util.Date">
+					<description>BankIssueDate</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="bgExpiryDate" type="java.util.Date">
+					<description>BankExpiryDate</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="bgClaimPeriod" type="java.lang.Integer">
+					<description>BankClaimPeriod</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="bgAmount" type="java.math.BigDecimal">
+					<description>Bg amount</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="bankInformation" type="BankInformation">
+					<description>Bank Information</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="currency" type="Currency">
+					<description>Currency</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="thresholdInfo" type="ThresholdInformation">
+					<description>Threshold Information</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="creditLimitInfo" type="CreditLimitInfo">
+					<description>Credit limit info</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="CreditCard" autocreate="true" generate="true"
+			jaloclass="com.cnk.travelogix.client.credit.core.jalo.CreditCard"
+			extends="GenericItem">
+			<deployment table="creditcard" typecode="23005" />
+			<attributes>
+				<attribute qualifier="creditCardNumber" type="java.lang.String">
+					<description>CreditCardNumber</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="cardholderName" type="java.lang.String">
+					<description>CardHolderName</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="ccExpiryDate" type="java.util.Date">
+					<description>CCExpiryDate</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="continent" type="Continent">
+					<description>Continent</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="country" type="Country">
+					<description>Country</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="bankInformation" type="BankInformation">
+					<description>Bank Information</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="thresholdInfo" type="ThresholdInformation">
+					<description>Threshold Information</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="creditLimitInfo" type="CreditLimitInfo">
+					<description>Credit LimitInfo</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="Barter" autocreate="true" generate="true"
+			extends="GenericItem" jaloclass="com.cnk.travelogix.client.credit.core.jalo.Barter">
+			<deployment table="barter" typecode="23006" />
+			<attributes>
+
+				<attribute qualifier="barterAmount" type="java.math.BigDecimal">
+					<description>BarterAmount</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="minimumProductValue" type="java.math.BigDecimal">
+					<description>Minimum ProductValue</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="currency" type="Currency">
+					<description>Minimum ProductValue</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="validFrom" type="java.util.Date">
+					<description>Minimum ProductValue</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="validTo" type="java.util.Date">
+					<description>Minimum ProductValue</description>
+					<modifiers optional="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="SecurityDeposit" autocreate="true" generate="true"
+			extends="GenericItem" jaloclass="com.cnk.travelogix.client.credit.core.jalo.SecurityDeposit">
+			<deployment table="securityDeposit" typecode="23069" />
+			<attributes>
+				<attribute qualifier="validFrom" type="java.util.Date">
+					<description>ValidFrom</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="validTo" type="java.util.Date">
+					<description>ValidTo</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="amount" type="java.math.BigDecimal">
+					<description>Amount</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="currency" type="Currency">
+					<description>Currency</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="creditLimit" type="java.math.BigDecimal">
+					<description>CreditLimit</description>
+					<modifiers optional="false" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="TravelogixClientType" generate="false"
+			autocreate="false">
+			<attributes>
+				<attribute type="ClientCreditDetails" qualifier="clientCreditLimit">
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="TravelogixB2BUnit" generate="false"
+			autocreate="false">
+			<attributes>
+				<attribute type="ClientCreditDetails" qualifier="clientCreditLimit">
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+	
+		<typegroup name="ClientCreditLimit">
+			<itemtype code="ClientCreditDepositLimit" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.client.credit.jalo.ClientCreditDepositLimit">
+				<deployment table="clientcreddeplim" typecode="23097" />
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="transactionOnCredit">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="transactionOnDeposit">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CreditType" qualifier="creditType">
+						<persistence type="property" />
+						<modifiers optional="false" />						
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="limitByBranchOrProduct">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="SecuredCreditDepositLimit" autocreate="true"
+				generate="true" extends="ClientCreditDepositLimit"
+				jaloclass="com.cnk.travelogix.client.credit.jalo.SecuredCreditDepositLimit">
+				<attributes>
+					<attribute type="ModeOfSecurity" qualifier="modeOfSecurity">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="SecuredCreditCardLimit" autocreate="true"
+				generate="true" extends="SecuredCreditDepositLimit"
+				jaloclass="com.cnk.travelogix.client.credit.jalo.SecuredCreditCardLimit">
+			</itemtype>
+
+			<itemtype code="SecuredBankGuarantee" autocreate="true"
+				generate="true" extends="SecuredCreditDepositLimit"
+				jaloclass="com.cnk.travelogix.client.credit.jalo.SecuredBankGuarantee">
+			</itemtype>
+
+			<itemtype code="SecuredDepositLimit" autocreate="true"
+				generate="true" extends="SecuredCreditDepositLimit"
+				jaloclass="com.cnk.travelogix.client.credit.jalo.SecuredDepositLimit">
+				<attributes>
+					<attribute type="java.util.Date" qualifier="validFrom">
+						<persistence type="property" />
+						<modifiers optional="false" />						
+					</attribute>
+					<attribute type="java.util.Date" qualifier="validTo">
+						<persistence type="property" />
+						<modifiers optional="false" />						
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="creditLimitPercentage">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AmountType" qualifier="thresholdIn">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="thresholdValue">
+						<persistence type="property" />
+						<modifiers optional="false" />						
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="creditLimit">
+						<persistence type="property" />
+						<modifiers optional="false" />						
+					</attribute>
+					<attribute type="Currency" qualifier="currency">
+						<persistence type="property" />
+						<modifiers optional="false" />						
+					</attribute>
+				</attributes>				
+			</itemtype>
+			
+			<itemtype code="UnsecuredCreditLimit" autocreate="true"
+				generate="true" extends="ClientCreditDepositLimit"
+				jaloclass="com.cnk.travelogix.client.credit.jalo.UnsecuredCreditLimit">
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="limitedCredit">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Currency" qualifier="currency">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="creditLimitAmount">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="creditLimitPercentage">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="thresholdAmount">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="thresholdPercentage">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="BarterLimit" autocreate="true"
+				generate="true" extends="ClientCreditDepositLimit"
+				jaloclass="com.cnk.travelogix.client.credit.jalo.BarterLimit">
+				<attributes>
+					<attribute type="java.util.Date" qualifier="validFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="validTo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="barterAmount">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Currency" qualifier="currency">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="minProductValue">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="LimitByBranchOrProduct" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.client.credit.jalo.LimitByBranchOrProduct">
+				<deployment table="limbybranchorpro" typecode="23098" />
+				<attributes>
+					<attribute type="Category" qualifier="productCategory">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="ProductCategorySubtype" qualifier="productCategorySubtype">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="Product" qualifier="product">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="VariantProduct" qualifier="productSubtype">
+						<persistence type="property" />
+					</attribute>
+<!-- 					<attribute type="Branch" qualifier="clientBranch">
+						<persistence type="property" />
+					</attribute>
+ -->
+ 					<attribute type="AmountType" qualifier="creditLimitIn">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="creditLimit">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="Currency" qualifier="currency">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="AmountType" qualifier="thresholdIn">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="thresholdValue">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="BankInfo" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.client.credit.jalo.BankInfo">
+				<deployment table="bankinfo" typecode="23099" />
+				<attributes>
+					<attribute type="Bank" qualifier="bank">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="branchName">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="contactNumber">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="bgRefNumber">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="bgIssueDate">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="bgExpiryDate">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="bgClaimPeriod">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="bgAmount">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="AmountType" qualifier="thresholdIn">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="thresholdValue">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="creditLimit">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="Currency" qualifier="currency">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CreditCardDetail" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.client.credit.jalo.CreditCardDetail">
+				<deployment table="credcarddetail" typecode="23090" />
+				<attributes>
+					<attribute type="Category" qualifier="productCategory">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ProductCategorySubType" qualifier="productCategorySubtype">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Product" qualifier="product">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="VariantProduct" qualifier="productNameSubtype">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AirlineType" qualifier="airlineType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Continent" qualifier="continent">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Country" qualifier="country">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="B2Bunit" qualifier="clientBranch">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="B2BCustomer" qualifier="employee">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Bank" qualifier="bank">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="cardNumber">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="cardHolderName">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="expiryDate">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="AmountType" qualifier="thresholdIn">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="thresholdValue">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="creditLimit">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="Currency" qualifier="currency">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+				</attributes>
+			</itemtype>
+						
+		</typegroup>
+				
+	</itemtypes>
+</items>

@@ -1,0 +1,3 @@
+<li class="fL posR"><a href="javascript:void(0);" onclick="popupwin('topDeals','topDealsinner','fade')"><img src="${ezgImagesPath}/flight01.jpg" alt="Deal1"/> <span class="offerContr fS12 fL offerPosTop">Hot deal</span>
+	<div class="hotelContrDtl  clearfix"> <span class="txtClrlitGryMid fW600">Airlines flash sale - domestic</span> <span class="fS12">Fares starting at <span class="rupee">Rs.</span>2269. <br/>Offer valid till 22nd Aug.</span> </div></a>
+</li>

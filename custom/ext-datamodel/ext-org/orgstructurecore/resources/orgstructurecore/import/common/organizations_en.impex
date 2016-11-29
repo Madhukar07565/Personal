@@ -1,0 +1,56 @@
+$lang=en
+UPDATE GroupOfCompanies;uid[unique=true];locName[lang=$lang]
+;C001;Cox & Kings Group of Companies
+
+UPDATE GroupCompany;uid[unique=true];locName[lang=$lang]
+;E001;Ezeego One Group
+
+UPDATE Company;uid[unique=true];locName[lang=$lang]
+;E000;Ezeego One Tours & Travels India
+
+UPDATE StrategicBusinessUnit;uid[unique=true];locName[lang=$lang]
+;SBU - Out Bound;Out Bound
+;SBU - IBT;IBT
+;SBU - Domestic;Domestic
+;SBU - Air;Air
+;SBU - Non-Air;Non-Air
+
+UPDATE BusinessUnit;uid[unique=true];locName[lang=$lang]
+;BU - FIT;FIT
+;BU - Duniya Dekho;Duniya Dekho
+;BU - Bharat Dekho;Bharat Dekho
+;BU - MICE;MICE
+;BU - Air;Air
+;BU - Non Air;Non Air
+
+UPDATE Market;uid[unique=true];locName[lang=$lang]
+;IND;India
+;AU;Australia 
+;ALL;All
+
+UPDATE DistributionChannel;uid[unique=true];locName[lang=$lang]
+;Website;Website
+;Whitelabel;White Label
+;XML;XML
+;ASP;ASP
+;Call Centre;Call Centre
+;Branch;Branch
+;Mobile;Mobile
+
+UPDATE Division;uid[unique=true];locName[lang=$lang]
+;Out Bound;Out Bound
+;IBT;IBT
+;Domestic;Domestic
+;Air;Air
+;Non Air;Non Air
+;FIT;FIT
+;Duniya Dekho;Duniya Dekho
+;Bharat Dekho;Bharat Dekho
+;MICE;MICE
+
+UPDATE SalesOffice;uid[unique=true];locName[lang=$lang]
+;VMN01;Vaman Center
+
+UPDATE SalesGroup;uid[unique=true];locName[lang=$lang]
+;SG01;Sales Group 01
+;SG02;Sales Group 02

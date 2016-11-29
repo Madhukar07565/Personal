@@ -1,0 +1,3 @@
+CruiseItineraryId,ItineraryName,DepartureDates,BlockOutDepartureDates,sailingDates,CruiseOperationalDay,CruisePackage_Code,ShoreExcursionCode
+cruise_itinerary_1,Bergen,,,,,1809,678
+cruise_itinerary_2,Bergen 2,,,,,1809,678

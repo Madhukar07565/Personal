@@ -1,0 +1,1774 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+	<collectiontypes>
+		<collectiontype elementtype="de.hybris.platform.util.StandardDateRange"
+			code="StandardDateRangeSet" type="set" />
+		<collectiontype elementtype="AdvDefinitionRateType"
+			code="AdvDefinitionRateTypeSet" type="set" />
+		<collectiontype code="TravelBlockoutPeriodCollection"
+			elementtype="de.hybris.platform.util.StandardDateRange" autocreate="true" />
+	</collectiontypes>
+	<enumtypes>
+		<enumtype code="AdvDefinitionRateType" dynamic="true">
+			<description>Advance Rate Type Enum</description>
+			<value code="LEISURE"></value>
+			<value code="CORPORATE"></value>
+			<value code="SEAMEN"></value>
+			<value code="LTC"></value>
+			<value code="GOVERNMENT"></value>
+		</enumtype>
+		<enumtype code="RatePaymentType">
+			<description>Rate Payment Type</description>
+			<value code="PREPAYMENT"></value>
+			<value code="PAYMENT_ON_ARRIVAL"></value>
+		</enumtype>
+		<enumtype code="RateApplicabilityType">
+			<description>Rate Applicability Type</description>
+			<value code="STANDALONE"></value>
+			<value code="PACKAGE"></value>
+			<value code="BOTH"></value>
+		</enumtype>
+		<enumtype code="CommissionType">
+			<description>Commission Type</description>
+			<value code="NET"></value>
+			<value code="COMMISSIONABLE"></value>
+		</enumtype>
+		<enumtype code="SurchargeSupplementType">
+			<description>Surcharge Supplement Type</description>
+			<value code="SUPPLEMENT"></value>
+			<value code="SURCHARGE"></value>
+		</enumtype>
+		<enumtype code="SupplementType">
+			<description>Supplement Type</description>
+			<value code="MANDATORY"></value>
+			<value code="NONMANDATORY"></value>
+		</enumtype>
+		<enumtype code="MealType">
+			<description>Meal Type Enum</description>
+			<value code="NO_PREFERENCE"></value>
+			<value code="VEGETARIAN"></value>
+			<value code="NON_VEGETARIAN"></value>
+			<value code="ASIAN_VEG"></value>
+			<value code="BLAND_SOFT_NONVEG"></value>
+			<value code="BLAND_SOFT_VEG"></value>
+			<value code="DIABETIC_NONVEG"></value>
+			<value code="DIABETIC_VEG"></value>
+			<value code="FRUIT_PLATTER"></value>
+			<value code="GLUTEN_FREE_NONVEG"></value>
+			<value code="GLUTEN_FREE_VEG"></value>
+			<value code="KOSHER_MEAL"></value>
+			<value code="VEGETARIAN_JAIN_MEAL"></value>
+			<value code="VEGETARIAN_LACTO_OVO"></value>
+			<value code="VEGETARIAN_ORIENTAL"></value>
+		</enumtype>
+		<enumtype code="MenuItemName" dynamic="true">
+			<description>Menu Item Name Enum</description>
+			<value code="RICE"></value>
+			<value code="DAL"></value>
+			<value code="BURGER"></value>
+			<value code="VEG_SANDWICH"></value>
+			<value code="NONVEG_SANDWICH"></value>
+		</enumtype>
+
+		<enumtype code="MenuName" dynamic="true">
+			<description>Menu Name Enum</description>
+			<value code="KIDS_MENU"></value>
+			<value code="SPECIALS"></value>
+			<value code="VEG_MENU"></value>
+			<value code="NONVEG_MENU"></value>
+			<value code="TODAYS_SPECIAL"></value>
+			<value code="PACKED_LUNCH"></value>
+		</enumtype>
+
+		<enumtype code="SpecialSkillType" dynamic="true">
+			<description>Special Skill Type Enum</description>
+			<value code="BIRD_WATCHING"></value>
+		</enumtype>
+		<enumtype code="PriceApplicabilityType">
+			<description>Accommodation Price Applicability Type Enum
+			</description>
+			<value code="PER_ROOM"></value>
+			<value code="PER_PERSON"></value>
+		</enumtype>
+		<enumtype code="OperatorName" dynamic="true">
+			<description>Operator Name Enum</description>
+		</enumtype>
+		<enumtype code="OfferType" dynamic="true">
+			<value code="DISCOUNT"></value>
+			<value code="COMPLIMENTARY"></value>
+			<value code="UPGRADE"></value>
+			<value code="FOC"></value>
+		</enumtype>
+		<enumtype code="OfferSubType" dynamic="true">
+			<value code="NORMAL_DISCOUNT"></value>
+			<value code="EARLY_BIRD_DISCOUNT"></value>
+			<value code="DISCOUNT_ON_PASSENGER"></value>
+			<value code="DISCOUNT_ON_ASSOCIATED_PRODUCTS"></value>
+			<value code="DISCOUNT_ON_UPGRADES"></value>
+			<value code="SPECIAL_DISCOUNT"></value>
+		</enumtype>
+		<enumtype code="DiscountType" dynamic="true">
+			<value code="DISCOUNT_ON_RATES"></value>
+			<value code="DISCOUNT_ON_NIGHT"></value>
+			<value code="DISCOUNT_ON_FREE_NIGHT"></value>
+			<value code="DISCOUNT_ON_ROOM"></value>
+			<value code="PAX_TYPE_WISE"></value>
+			<value code="DISCOUNT_ON_AGE"></value>
+			<value code="DISCOUNT_ON_LONG_STAY"></value>
+			<value code="ANCILLARY_DISCOUNT"></value>
+			<value code="COMPLIMENTARY"></value>
+		</enumtype>
+		<enumtype code="FOCAppliedOnType" dynamic="true">
+			<value code="PAX"></value>
+			<value code="SUPPLEMENTS"></value>
+		</enumtype>
+		<enumtype code="DiscountCalculatedOnType" dynamic="true">
+			<value code="LAST_NIGHT"></value>
+			<value code="LOWEST_RATE"></value>
+		</enumtype>
+		<enumtype code="StayDaysOfWeekType">
+			<value code="SPECIFIC"></value>
+			<value code="ARRIVAL_DAYS_OF_WEEK"></value>
+		</enumtype>
+		<enumtype code="UpgradeToType" dynamic="true">
+			<value code="ROOM_OR_CABIN_CATEGORY"></value>
+			<value code="ROOM_TYPE"></value>
+		</enumtype>
+	</enumtypes>
+	<relations>
+		<relation localized="false" code="CompanyRateInvRestriction2MarketMapping">
+			<description>Company RateInv Restriction to Market Mapping Relation
+			</description>
+			<sourceElement type="MarketMapping" qualifier="marketMapping"
+				cardinality="one">
+			</sourceElement>
+			<targetElement type="CompanyRateInvRestriction"
+				qualifier="companyRateInvRestriction" cardinality="many"
+				collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation localized="false"
+			code="AbstractSupplierRate2CompanyRateInvRestrictionRel">
+			<description>Abstract Supplier Rate to Company RateInv Restriction
+				Relation</description>
+			<sourceElement type="AbstractSupplierRate" qualifier="supplierRate"
+				cardinality="one">
+			</sourceElement>
+			<targetElement type="CompanyRateInvRestriction"
+				qualifier="companyRateInvRestrictions" cardinality="many"
+				collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation localized="false" code="AbsSuppRate2TaxRowRel">
+			<description>Abstract Supplier Rate to Abstract Rate Tax Detail
+				Relation</description>
+			<sourceElement type="AbstractSupplierRate" qualifier="supplierRate"
+				cardinality="one">
+			</sourceElement>
+			<targetElement type="TaxRow" qualifier="taxes"
+				cardinality="many" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation localized="false" code="AbsSuppRate2SeasonDetailRel">
+			<description>Abstract Supplier Rate to Season Detail Relation
+			</description>
+			<sourceElement type="AbstractSupplierRate" qualifier="supplierRate"
+				cardinality="one">
+			</sourceElement>
+			<targetElement type="SeasonDetail" qualifier="seasonDetails"
+				cardinality="many" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation localized="false"
+			code="AbsSuppRateDef2AbsSurchargeSuppDetailRel">
+			<description>Abstract Supplier Rate Definition to Abstract Surcharge
+				Supplier Detail Relation</description>
+			<sourceElement type="AbstractRateDefinition" qualifier="supplierRate"
+				cardinality="one">
+			</sourceElement>
+			<targetElement type="AbstractSurchargeSuppDetail"
+				qualifier="surchargeSuppDetails" cardinality="many" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation localized="false" code="AbsSupplierRate2MediaRel">
+			<description>Abstract Supplier Rate to Media Relation</description>
+			<deployment table="abssupratemediatab" typecode="22148" />
+			<sourceElement type="AbstractSupplierRate" qualifier="supplierRate"
+				cardinality="many">
+			</sourceElement>
+			<targetElement type="Media" qualifier="medias"
+				cardinality="many" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation localized="false" code="AbsRateDef2PaymentTypeDetails">
+			<description>Abstract Rate Definition to Abstract Rate Payment Detail
+				Relation</description>
+			<sourceElement type="AbstractRateDefinition" qualifier="rateDefinition"
+				cardinality="one">
+			</sourceElement>
+			<targetElement type="PaymentTypeDetails" qualifier="paymentTypeDetails"
+				cardinality="many" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation localized="false" code="RateVoucherNote2AbsRateAdvDefRel">
+			<description>Rate Voucher Note to Abstract Rate Advance Definition
+				Relation</description>
+			<sourceElement type="AbstractRateAdvDefinition"
+				qualifier="rateAdvDefinitions" cardinality="one">
+			</sourceElement>
+			<targetElement type="RateVoucherNote" qualifier="rateVoucherNote"
+				cardinality="many" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation localized="false"
+			code="AbsSurchargeSuppDetail2PassengerLevelSurchargeDetRel">
+			<description>Abstract Surcharge Supplier Detail to Passenger Level
+				Surcharge Detail Relation</description>
+			<sourceElement type="AbstractSurchargeSuppDetail"
+				qualifier="surchargeSuppDetail" cardinality="one">
+			</sourceElement>
+			<targetElement type="PassengerLevelSurchargeDetail"
+				qualifier="passengerLevelSurchargeDetails" cardinality="many"
+				collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation localized="false" code="PaymentTypeDetails2RatePaymentDetailRel">
+			<description>Part PrePayment to Rate Payment Detail Relation
+			</description>
+			<sourceElement type="PaymentTypeDetails" qualifier="paymentTypeDetails"
+				cardinality="one">
+			</sourceElement>
+			<targetElement type="RatePaymentDetail" qualifier="ratePaymentDetails"
+				cardinality="many" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation localized="false"
+			code="AncillaryRateDefinition2AbstractAncillaryRateDetailRel">
+			<description>Ancillary Rate Definition to Abstract Ancillary Rate
+				Detail Relation</description>
+			<sourceElement type="AncillaryRateDefinition"
+				qualifier="ancillaryRateDefinition" cardinality="one">
+			</sourceElement>
+			<targetElement type="AbstractAncillaryRateDetail"
+				qualifier="abstractAncillaryRateDetails" cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation code="SupplierAncRate2SeasonDeatilRelation"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement type="SupplierAncillaryRate"
+				cardinality="one" qualifier="supplierAncillaryRate" />
+			<targetElement type="SeasonDetail" cardinality="many"
+				qualifier="seasonDetails">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation code="SupplierAncRate2MediaRelation" autocreate="true"
+			generate="false" localized="false">
+			<deployment table="suppancmediatab" typecode="22160" />
+			<sourceElement type="SupplierAncillaryRate"
+				cardinality="many" qualifier="supplierAncillaryRate" />
+			<targetElement type="Media" cardinality="many"
+				qualifier="medias">
+			</targetElement>
+		</relation>
+
+		<relation code="AbsSupplierRate2AbsRateDefinitionRelation"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement type="AbstractSupplierRate" cardinality="one"
+				qualifier="absSupplierRate" />
+			<targetElement type="AbstractRateDefinition"
+				cardinality="many" qualifier="absRateDefinitions">
+			</targetElement>
+		</relation>
+		<relation code="SuppAncillaryRate2AncillaryRateDefRelation"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement type="SupplierAncillaryRate"
+				cardinality="one" qualifier="supplierAncillaryRate" />
+			<targetElement type="AncillaryRateDefinition"
+				cardinality="many" qualifier="ancillaryRateDefinitions">
+			</targetElement>
+		</relation>
+		<relation code="AbstractAncillaryRateDetail2TravelogixPolicyRelation"
+			autocreate="true" generate="false" localized="false">
+			<deployment table="absancilpolicytab" typecode="22169" />
+			<sourceElement type="AbstractAncillaryRateDetail"
+				cardinality="many" qualifier="abstractAncillaryRateDetail" />
+			<targetElement type="TravelogixPolicy" cardinality="many"
+				qualifier="travelogixPolicies">
+			</targetElement>
+		</relation>
+		<relation
+			code="AbstractAncillaryRateDetail2AbsTravelogixSupplierOfferRelation"
+			autocreate="true" generate="false" localized="false">
+			<deployment table="absanciloffertab" typecode="22168" />
+			<sourceElement type="AbstractAncillaryRateDetail"
+				cardinality="many" qualifier="abstractAncillaryRateDetail" />
+			<targetElement type="AbstractTravelogixSupplierOffer"
+				cardinality="many" qualifier="absTravelogixSupplierOffers">
+			</targetElement>
+		</relation>
+		<relation code="AbstractRateDefinition2FareComponentRelation"
+			localized="false">
+			<deployment table="ratedeffarecomp" typecode="22146" />
+			<sourceElement type="AbstractRateDefinition"
+				cardinality="many" qualifier="abstractRateDefinition"
+				collectiontype="set" />
+			<targetElement type="FareComponent" cardinality="many"
+				qualifier="priceComponent" collectiontype="set" />
+		</relation>
+		<relation code="TaxRow2FareComponentRelation" localized="false">
+			<deployment table="taxrowfarecomp" typecode="22147" />
+			<sourceElement type="TaxRow" cardinality="many"
+				qualifier="taxRow" collectiontype="set" />
+			<targetElement type="FareComponent" cardinality="many"
+				qualifier="priceComponent" collectiontype="set" />
+		</relation>
+		<relation localized="false" code="AbsRateAdvDef2SalesDurationRel">
+			<description> Abstract Rate Advance Definition to
+				DateRangeRestriction Relation</description>
+			<sourceElement type="AbstractRateAdvDefinition"
+				qualifier="rateAdvDefinitions" cardinality="one">
+			</sourceElement>
+			<targetElement type="DateRangeRestriction" qualifier="salesDuration"
+				cardinality="many" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation localized="false" code="AbsRateAdvDef2BlockOutDurationRel">
+			<description> Abstract Rate Advance Definition to
+				DateRangeRestriction Relation</description>
+			<sourceElement type="AbstractRateAdvDefinition"
+				qualifier="rateAdvDefinitions" cardinality="one">
+			</sourceElement>
+			<targetElement type="DateRangeRestriction" qualifier="blockOutDuration"
+				cardinality="many" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation localized="false" code="AbsRateAdvDef2offerCombRule">
+			<description> Abstract Rate Advance Definition to
+				OfferCombinationRule Relation</description>
+			<sourceElement type="AbstractRateAdvDefinition"
+				qualifier="rateAdvDefinitions" cardinality="one">
+			</sourceElement>
+			<targetElement type="OfferCombinationRule" qualifier="offerCombinationRule"
+				cardinality="many" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation localized="false" code="AbsSurSupp2DateRangeRestrictionRel">
+			<description> Abstract Surcharge SuppDetail to
+				DateRangeRestrictionRelation</description>
+			<sourceElement type="AbstractSurchargeSuppDetail"
+				qualifier="absSurchargeSuppDetail" cardinality="one">
+			</sourceElement>
+			<targetElement type="DateRangeRestriction" qualifier="travelDate"
+				cardinality="many" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation localized="false" code="SeasonDetail2DateRangeRestrictionRel">
+			<description> SeasonDetail to DateRangeRestrictionRelation
+			</description>
+			<sourceElement type="SeasonDetail" qualifier="seasonDetail"
+				cardinality="one">
+			</sourceElement>
+			<targetElement type="DateRangeRestriction" qualifier="travelDate"
+				cardinality="many" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation code="AbstractTravelogixSupplier2FareComponentRelation"
+			localized="false">
+			<deployment table="offerfarecomp" typecode="22138" />
+			<sourceElement type="AbstractTravelogixSupplierOffer"
+				cardinality="many" qualifier="abstractTravelogixSupplierOffer"
+				collectiontype="set" />
+			<targetElement type="FareComponent" cardinality="many"
+				qualifier="priceComponent" collectiontype="set" />
+		</relation>
+		<relation localized="false"
+			code="AbstractTravelogixSupplierOffer2BlockOutDurationRel">
+			<description> Abstract Travelogix Supplier to DateRangeRestriction
+				Relation</description>
+			<sourceElement type="AbstractTravelogixSupplierOffer"
+				qualifier="abstractTravelogixSupplierOffer" cardinality="one">
+			</sourceElement>
+			<targetElement type="DateRangeRestriction" qualifier="blockOutDuration"
+				cardinality="many" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation localized="false"
+			code="AbstractTravelogixSupplierOffer2SalesDurationRel">
+			<description> Abstract Travelogix Supplier Offer to
+				DateRangeRestriction Relation</description>
+			<sourceElement type="AbstractTravelogixSupplierOffer"
+				qualifier="abstractTravelogixSupplierOffer" cardinality="one">
+			</sourceElement>
+			<targetElement type="DateRangeRestriction" qualifier="salesDuration"
+				cardinality="many" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation localized="false" code="UserGroup2DiscretionaryDiscount">
+			<sourceElement type="UserGroup" qualifier="userGroup"
+				cardinality="one" />
+			<targetElement type="DiscretionaryDiscount" qualifier="DiscretionaryDiscounts"
+				cardinality="many" collectiontype="set" />
+		</relation>
+
+		<relation localized="false" code="UserGroup2Incentive">
+			<sourceElement type="UserGroup" qualifier="userGroup"
+				cardinality="one" />
+			<targetElement type="Incentive" qualifier="incentives"
+				cardinality="many" collectiontype="set" />
+		</relation>
+
+		<relation localized="false" code="Employee2Incentive">
+			<sourceElement type="Employee" qualifier="employee"
+				cardinality="one" />
+			<targetElement type="Incentive" qualifier="incentives"
+				cardinality="many" collectiontype="set" />
+		</relation>
+
+		<relation localized="false" code="Employee2DiscretionaryDiscount">
+			<sourceElement type="Employee" qualifier="employee"
+				cardinality="one" />
+			<targetElement type="DiscretionaryDiscount" qualifier="DiscretionaryDiscounts"
+				cardinality="many" collectiontype="set" />
+		</relation>
+
+		<relation code="Employee2Employee" generate="true" localized="false"
+			autocreate="true">
+			<deployment table="salesEmployee" typecode="23113" />
+			<sourceElement type="Employee" qualifier="heads"
+				cardinality="many" />
+			<targetElement type="Employee" qualifier="salesOfficers"
+				cardinality="many" />
+		</relation>
+
+	</relations>
+	<itemtypes>
+		<typegroup name="AbstractSupplierRateDefinition">
+			<itemtype code="AbstractSupplierRate" extends="AbstractTravelogixItem"
+				abstract="true">
+				<description>Abstract Supplier Rate Item</description>
+				<deployment table="abssupplierrate" typecode="22030" />
+				<attributes>
+					<attribute type="ProductCategorySubType" qualifier="productSubCategory">
+						<modifiers read="true" write="true" search="true"
+							optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Product" qualifier="product">
+						<modifiers read="true" write="true" search="true"
+							unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Supplier" qualifier="supplier">
+						<modifiers read="true" write="true" search="true"
+							optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="de.hybris.platform.util.StandardDateRange"
+						qualifier="validity">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Currency" qualifier="currency">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SupplierMarket" qualifier="market">
+						<modifiers read="true" write="true" optional="false"
+							unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="activeDateRange">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SupplierAncillaryRate" qualifier="ancillary">
+						<modifiers read="true" write="true" partof="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="defineSeasonality">
+						<modifiers optional="true" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="workFlowStatus" type="ApprovalWorkFlowStatus">
+						<description>Work Flow Status</description>
+						<defaultvalue>em().getEnumerationValue("WorkFlowStatus","DRAFT")
+						</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AbstractRateDefinition" abstract="true"
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.parent.AbstractRateDefinition">
+				<description>Abstract Rate Definition Item</description>
+				<deployment table="absratedef" typecode="22032" />
+				<attributes>
+					<attribute type="RateType" qualifier="supplierRateType">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RateCode" qualifier="supplierRateCode">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RateType" qualifier="companyType">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RateCode" qualifier="companyRateCode">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RateApplicabilityType" qualifier="rateTypeApplicableFor">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ClientType" qualifier="clientType">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="UserGroup" qualifier="clientOrClientGroup">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SeasonType" qualifier="seasonality">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="de.hybris.platform.util.StandardDateRange"
+						qualifier="travelDate">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="net">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="commissionValue">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ThresholdType" qualifier="commissionThreshold">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AbstractSurchargeSuppDetail" abstract="true"
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.parent.AbstractSurchargeSuppDetail">
+				<description>Abstract Surcharge Supplier Detail Item</description>
+				<deployment table="absurcharsuppdet" typecode="22033" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="surchargeId">
+						<modifiers read="true" write="false" optional="false"
+							unique="true" initial="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="surchargeName">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SurchargeSupplementType" qualifier="type">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SupplementType" qualifier="supplement">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="priceInclusion">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="priceExclusion">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="internalDescription">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="externalDescription">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="payOnArrival">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AbstractRateAdvDefinition" abstract="true"
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.parent.AbstractRateAdvDefinition">
+				<description>Abstract Rate Advance Definition Item</description>
+				<deployment table="absrateadvdef" typecode="22034" />
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="maxPax">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CountryCollection" qualifier="nationality">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="minPax">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="maxNights">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="priceExclusion">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="taxInformation">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="internalDescription">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="priceInclusion">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="externalDescription">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="childPolicy">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="overrideRate">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="PaymentTypeDetails" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.common.PaymentTypeDetails">
+				<description>Payment type details</description>
+				<deployment table="paymenttypedetails" typecode="23076" />
+				<attributes>
+					<attribute type="RatePaymentType" qualifier="paymentType">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PrePaymentType" qualifier="prepaymentType">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="RatePaymentDetail"
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.common.RatePaymentDetail"
+				generate="true" autocreate="true">
+				<description>Rate Payment Detail Item</description>
+				<deployment table="ratepaymentdetail" typecode="22036" />
+				<attributes>
+					<attribute type="java.lang.Double" qualifier="payablePercentage">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SettlementscheduleType" qualifier="settlementSchedule">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="guranteeRequired">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="remarks">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="CompanyRateInvRestriction"
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.common.RateRestriction"
+				generate="true">
+				<description>Company Rate Inventory Item Restriction</description>
+				<deployment table="raterestrictions" typecode="22037" />
+				<attributes>
+					<attribute type="Company" qualifier="company">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="activeDateRange">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="active">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<!-- <attribute type="MarketMapping" qualifier="marketMapping"> -->
+					<!-- <modifiers read="true" write="true" /> -->
+					<!-- <persistence type="property" /> -->
+					<!-- </attribute> -->
+					<attribute type="BusinessUnit" qualifier="bu">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="StrategicBusinessUnit" qualifier="sbu">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Market" qualifier="companyMarket">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="reason">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="SeasonDetail"
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.common.SeasonDetail"
+				generate="true">
+				<description>Season Detail Item</description>
+				<deployment table="seasondetail" typecode="22038" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="seasonality">
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CruiseItinerary" qualifier="itinerary">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="RateVoucherNote"
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.common.RateVoucherNote"
+				generate="true">
+				<description> Rate VoucherVoucher Notes Item</description>
+				<deployment table="ratevochnote" typecode="22039" />
+				<attributes>
+					<attribute type="AbstractTravelogixSupplierOffer"
+						qualifier="offerName">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="voucherNotes">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="PassengerLevelSurchargeDetail"
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.common.PassengerLevelSurchargeDetail"
+				generate="true">
+				<description>Passenger Level Surcharge Detail Item</description>
+				<deployment table="psgrlvlsurchargedet" typecode="22040" />
+				<attributes>
+					<attribute type="java.lang.Double" qualifier="stdCommissionValue">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ThresholdType" qualifier="stdCommissionType">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="amount">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AgeDetail" qualifier="ageDetail">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PaxType" qualifier="passengerType">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="ChildAgeDetail"
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.common.ChildAgeDetail">
+				<description>Child Age Detail Item</description>
+				<deployment table="childagedet" typecode="22044" />
+				<attributes>
+					<attribute type="AgeDetail" qualifier="ageDetail">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ChildBedType" qualifier="childBedType">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+
+				</attributes>
+			</itemtype>
+			<itemtype code="ChildAgeRateDetail" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.common.ChildAgeRateDetail">
+				<description>Child Age Detail Item</description>
+				<deployment table="childageratedet" typecode="23077" />
+				<attributes>
+					<attribute type="ChildAgeDetail" qualifier="childAgeDetail">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="rate">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AgeDetail"
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.common.AgeDetail">
+				<description>Age Detail Item</description>
+				<deployment table="agedetail" typecode="22046"></deployment>
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="toAge">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="fromAge">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="SupplierAncillaryRate" autocreate="true"
+				generate="true" extends="AbstractTravelogixItem"
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.common.SupplierAncillaryRate">
+				<description>Supplier Ancillary Rate</description>
+				<deployment table="supplierancratetab" typecode="22066"></deployment>
+				<attributes>
+					<attribute type="de.hybris.platform.util.StandardDateRange"
+						qualifier="activeDateRange">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AbstractAncillaryRateDetail" abstract="true"
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.common.AbstractAncillaryRateDetail">
+				<description>Abstract Ancillary Rate Detail</description>
+				<deployment table="abstrctancratdettab" typecode="22068"></deployment>
+				<attributes>
+					<attribute type="Ancillary" qualifier="ancillary">
+						<persistence type="property" />
+						<modifiers unique="true" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="ancillaryDetails">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="WeekDay" qualifier="daysOfWeek">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="cost">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="taxPercentage">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="net">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="commissionValue">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ThresholdType" qualifier="commissionThreshold">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AbstractRateAdvDefinition" qualifier="definition">
+						<modifiers partof="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="payOnArrival">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AncillaryRateDefinition" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.ancillaryratedefinition.jalo.AncillaryRateDefinition">
+				<description>Ancillary rate Definition </description>
+				<deployment table="ancilaryratedeftab" typecode="22067" />
+				<attributes>
+					<attribute type="SupplierMarket" qualifier="supplierMarket">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Currency" qualifier="currency">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SeasonType" qualifier="seasonality">
+						<modifiers unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="de.hybris.platform.util.StandardDateRange"
+						qualifier="travelPeriod">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ClientType" qualifier="clientType">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CruiseItinerary" qualifier="cruiseItinerary">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TravelogixB2Bunit" qualifier="client">
+						<modifiers unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="UserGroup" qualifier="clientGroup">
+						<modifiers unique="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CommonRateAdvDefinition" extends="AbstractRateAdvDefinition"
+				jaloclass="com.cnk.travelogix.supplier.rates.supplierrate.jalo.accommodation.CommonRateAdvDefinition">
+				<description>Common Rate Advance Definition Item</description>
+				<attributes>
+					<attribute type="AdvDefinitionRateTypeSet" qualifier="rateApplicabilityType">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="packageName">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="TaxRow" autocreate="false" generate="false">
+				<attributes>
+					<attribute type="TaxType" qualifier="taxType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ThresholdType" qualifier="taxRate">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RateType" qualifier="taxCalculationOn">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="City" qualifier="city">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Country" qualifier="country">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Region" qualifier="state">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="payOnArrival">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="applicableForChild">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="applicableForAdult">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="applicableForInfant">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AbstractTravelogixSupplierOffer" autocreate="true"
+				generate="true" abstract="true"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.travelogixsupplieroffer.jalo.AbstractTravelogixSupplierOffer">
+				<description>Abstract Travelogix Supplier Offer</description>
+				<attributes>
+					<attribute type="OfferType" qualifier="offerType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="OfferSubType" qualifier="offerSubType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DiscountType" qualifier="discountType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ArticleApprovalStatus" qualifier="approvalStatus">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="reason">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="remarks">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Employee" qualifier="lockedBy">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="advanceBookingFromDays">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="advanceBookingToDays">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ThresholdType" qualifier="thresholdType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="discountValue">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Supplier" qualifier="supplier">
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RateType" qualifier="supplierRateType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RateCode" qualifier="supplierRateCode">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AdvDefinitionRateTypeSet" qualifier="rateApplicabilityType">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="workFlowStatus" type="ApprovalWorkFlowStatus">
+						<description>Work Flow Status</description>
+						<defaultvalue>em().getEnumerationValue("WorkFlowStatus","DRAFT")
+						</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CountryCollection" qualifier="nationality">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="offerInclusion">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="offerExclusion">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="internalDescription">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="externalDescription">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="copiedFrom" type="java.lang.String">
+						<description>Copied From</description>
+						<modifiers read="true" write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="effectiveFrom">
+						<modifiers read="true" write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ProductCategorySubType" qualifier="productCategorySubType">
+						<modifiers read="true" write="true" search="true"
+							optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="offerName">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="code" autocreate="true" type="java.lang.String">
+						<description>Identifier for this offer</description>
+						<persistence type="property" />
+						<modifiers optional="false" unique="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="DiscountPerAge" autocreate="true" generate="true"
+				extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.discountperage.jalo.DiscountPerAge">
+				<description>Discount Per Age</description>
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="minPaxOrNight">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PaxType" qualifier="passengerType">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AgeDetail" qualifier="ageDetails">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="StayDaysOfWeekType" qualifier="arrivalDaysOfWeek">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="WeekDayCollection" qualifier="daysOfWeek">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="DiscountLongStay" autocreate="true"
+				generate="true" extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.discountlongstay.jalo.DiscountLongStay">
+				<description>Discount Long Stay</description>
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="stayDuration">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PaxType" qualifier="passengerType">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DiscountCalculatedOnType" qualifier="discountCalculatedOn">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="StayDaysOfWeekType" qualifier="arrivalDaysOfWeek">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="WeekDayCollection" qualifier="daysOfWeek">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="Complimentary" autocreate="true" generate="true"
+				extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.complimentary.jalo.Complimentary">
+				<description>Complimentary</description>
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="minPaxOrNight">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PaxType" qualifier="passengerType">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="WeekDayCollection" qualifier="applicableDays">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ThresholdType" qualifier="thresholdType"
+						redeclare="true">
+						<modifiers write="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="discountValue"
+						redeclare="true">
+						<modifiers write="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="FOCOffer" autocreate="true" generate="true"
+				extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.fOCoffer.jalo.FOCOffer">
+				<description>FOC Offer</description>
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="minPaxOrNight">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="maxPaxOrNights">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="focAppliedOnSupplement">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="PaxType" qualifier="passengerType">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AgeDetail" qualifier="childAge">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="noOfChildren">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="supplementMandatory">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="SupplementSurchargeType" qualifier="supplement">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AncillaryFOC" autocreate="true" generate="true"
+				extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.ancillaryfOC.jalo.AncillaryFOC">
+				<description>Ancillary FOC</description>
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="noOfChildren">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AncillaryDiscount" autocreate="true"
+				generate="true" extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.ancillarydiscount.jalo.AncillaryDiscount">
+				<description>Ancillary Discount</description>
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="bookingCount">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="discountedBooking">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="appliedOnAll">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="NonAirPriceComponentType" qualifier="ancillaryComponentType">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ThresholdType" qualifier="thresholdType"
+						redeclare="true">
+						<modifiers write="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="discountValue"
+						redeclare="true">
+						<modifiers write="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="DiscountOnRate" autocreate="true" generate="true"
+				extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.discountonrate.jalo.DiscountOnRate">
+				<description>Discount On Rate</description>
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="minPaxOrNight">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="maximumNights">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PaxType" qualifier="passengerType">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DiscountCalculatedOnType" qualifier="discountCalculatedOn">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="appliedOnAll">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="StayDaysOfWeekType" qualifier="arrivalDaysOfWeek">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="WeekDayCollection" qualifier="daysOfWeek">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="DiscountOnNight" autocreate="true" generate="true"
+				extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.discountonnight.jalo.DiscountOnNight">
+				<description>Discount On Night</description>
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="noOfDiscountedNights">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="MealPlanType" qualifier="mealPlanForDiscountedNights">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="minimumNights">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PaxType" qualifier="passengerType">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DiscountCalculatedOnType" qualifier="discountCalculatedOn">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="appliedOnAll">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="StayDaysOfWeekType" qualifier="arrivalDaysOfWeek">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="WeekDayCollection" qualifier="daysOfWeek">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="DiscountOnFreeNight" autocreate="true"
+				generate="true" extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.discountonfreenight.jalo.DiscountOnFreeNight">
+				<description>Discount On Free Night</description>
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="noOfFreeNight">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DiscountCalculatedOnType" qualifier="freeNightCalculatedOn">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="MealPlanType" qualifier="mealPlansForFreeNight">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="noOfNights">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="StayDaysOfWeekType" qualifier="arrivalDaysOfWeek">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="WeekDayCollection" qualifier="daysOfWeek">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="appliedOnAll">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="ThresholdType" qualifier="thresholdType"
+						redeclare="true">
+						<modifiers write="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="discountValue"
+						redeclare="true">
+						<modifiers write="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="DiscountOnRoomOrCabin" autocreate="true"
+				generate="true" extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.discountonroomorcabin.jalo.DiscountOnRoomOrCabin">
+				<description>Discount On Room Or Cabin</description>
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="noOfNights">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="bookedRoomsCount">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="discountedRoomsCount">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="appliedOnAll">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="WeekDayCollection" qualifier="daysOfWeek">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="StayDaysOfWeekType" qualifier="arrivalDaysOfWeek">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="DiscountOnPax" autocreate="true" generate="true"
+				extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.discountonpax.jalo.DiscountOnPax">
+				<description>Discount On Pax</description>
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="minPaxOrNight">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PaxType" qualifier="passengerType">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="paxBookedCount">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="discountedPaxCount">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="appliedOnAll">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="WeekDayCollection" qualifier="daysOfWeek">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="StayDaysOfWeekType" qualifier="arrivalDaysOfWeek">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="RoomOrCabinUpgrade" autocreate="true"
+				generate="true" extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.roomorcabinupgrade.jalo.RoomOrCabinUpgrade">
+				<description>Room Or Cabin Upgrade</description>
+				<deployment table="rmorcbnupgrdtab" typecode="22143" />
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="minPaxOrNight">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RoomCategory" qualifier="roomCategory">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RoomType" qualifier="roomType">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="UpgradeToType" qualifier="upgrade">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RoomCategory" qualifier="upgradeRoomCategoryTo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RoomType" qualifier="upgradeRoomType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="MealPlanType" qualifier="upgradeMealPlan">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ThresholdType" qualifier="thresholdType"
+						redeclare="true">
+						<modifiers write="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="discountValue"
+						redeclare="true">
+						<modifiers write="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AncillaryOfferRate" autocreate="true"
+				generate="true" extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.ancillaryofferrate.jalo.AncillaryOfferRate">
+				<description>Ancillary Offer Rate</description>
+				<attributes>
+					<attribute type="ThresholdType" qualifier="thresholdType"
+						redeclare="true">
+						<modifiers write="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="discountValue"
+						redeclare="true">
+						<modifiers write="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="OfferRateProduct" autocreate="true"
+				generate="true" extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.offerrateproduct.jalo.OfferRateProduct">
+				<description>Offer Rate Product</description>
+				<attributes>
+					<attribute type="ThresholdType" qualifier="thresholdType"
+						redeclare="true">
+						<modifiers write="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="discountValue"
+						redeclare="true">
+						<modifiers write="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="DateRangeRestriction" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.dateRange.jalo.DateRangeRestriction">
+				<description>DateRange Restriction</description>
+				<deployment table="daterangerestab" typecode="22149" />
+				<attributes>
+					<attribute type="de.hybris.platform.util.StandardDateRange"
+						qualifier="standardDateRange">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="OfferCombinationRule" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.offercombinationrule.jalo.OfferCombinationRule">
+				<description>Offer Combination Rule</description>
+				<deployment table="offercombruletab" typecode="22159" />
+				<attributes>
+					<attribute type="AbstractTravelogixSupplierOffer"
+						qualifier="offerName">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AbstractTravelogixSupplierOffer"
+						qualifier="combinedOffer">
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="combinationAllowed">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+		</typegroup>
+
+		<typegroup name="mdm">
+			<itemtype code="DiscretionaryDiscount" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.DiscretionaryDiscount">
+				<description>Discretinary Discount</description>
+				<deployment table="discritionary" typecode="23114" />
+				<attributes>
+					<attribute type="Division" qualifier="division">
+						<description>Version Remark</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="BusinessUnit" qualifier="bu">
+						<description>Business Unit</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Market" qualifier="market">
+						<description>Market</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="year">
+						<description>year</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SeasonType" qualifier="season">
+						<description>Season</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Location" qualifier="location">
+						<description>Destination</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="discountAllocated">
+						<description>Discount allocated</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ArticleApprovalStatus" qualifier="status">
+						<description>status</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Company" qualifier="company">
+						<description>company</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PointOfSale" qualifier="pos">
+						<description>pos</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="totalDiscountAllocated">
+						<description>Total Discount Allocated</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="unallocatedDiscount">
+						<description>Unallocated Discount</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Product" qualifier="product">
+						<description>product</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Employee" qualifier="salesOfficer">
+						<description>Sales Officer</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Employee" qualifier="lockedBy">
+						<description>LockedBy</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Incentive" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.Incentive">
+				<description>Incentive</description>
+				<deployment table="incentivemdm" typecode="23115" />
+				<attributes>
+					<attribute type="Division" qualifier="division">
+						<description>Version Remark</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="BusinessUnit" qualifier="bu">
+						<description>Business Unit</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Market" qualifier="market">
+						<description>Market</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="year">
+						<description>year</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SeasonType" qualifier="season">
+						<description>Season</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Location" qualifier="location">
+						<description>Destination</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="discountAllocated">
+						<description>Discount allocated</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ArticleApprovalStatus" qualifier="status">
+						<description>status</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Company" qualifier="company">
+						<description>company</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PointOfSale" qualifier="pos">
+						<description>pos</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="totalDiscountAllocated">
+						<description>Total Discount Allocated</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="unallocatedDiscount">
+						<description>Unallocated Discount</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Product" qualifier="product">
+						<description>product</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="bookingFrom">
+						<description>Booking From</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="bookingTo">
+						<description>Booking To</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="bookingValidityFrom">
+						<description>Booking Validity From</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="bookingValidityTo">
+						<description>Booking Validity To</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="travelDateValidityFrom">
+						<description>Travel Date Validity</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="travelDateValidityTo">
+						<description>Travel Date Validity</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="ratesWithDiscount">
+						<description>Rates With Discount</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="ratesWithoutDiscount">
+						<description>Rates Without Discount</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Employee" qualifier="lockedBy">
+						<description>LockedBy</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="DiscretionaryProductHead" extends="DiscretionaryDiscount"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.DiscretionaryProductHead">
+				<description>Discretionary Product Head</description>
+				<attributes>
+				</attributes>
+			</itemtype>
+			<itemtype code="DiscretionarySalesHead" extends="DiscretionaryDiscount"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.DiscretionarySalesHead">
+				<description>Discretionary Sales Head</description>
+				<attributes>
+				</attributes>
+			</itemtype>
+			<itemtype code="DiscretionaryBranchHead" extends="DiscretionaryDiscount"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.DiscretionaryBranchHead">
+				<description>Discretionary Branch Head</description>
+				<attributes>
+				</attributes>
+			</itemtype>
+			<itemtype code="IncentiveBranchHead" extends="Incentive"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.IncentiveBranchHead">
+				<description>Incentive Branch Head</description>
+				<attributes>
+				</attributes>
+			</itemtype>
+			<itemtype code="IncentiveSalesHead" extends="Incentive"
+				jaloclass="com.cnk.travelogix.supplier.rates.jalo.IncentiveSalesHead">
+				<description>Incentive Sales Head</description>
+				<attributes>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

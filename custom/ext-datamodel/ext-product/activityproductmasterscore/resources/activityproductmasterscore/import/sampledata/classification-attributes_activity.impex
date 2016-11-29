@@ -1,0 +1,77 @@
+$productCatalog=EZ-IN
+$classificationCatalog=EZ-IN-CS
+
+$classCatalogVersion=catalogversion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true,default='$classificationCatalog:1.0']
+$classSystemVersion=systemVersion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true]
+$lang=en,zh
+
+
+INSERT_UPDATE ClassificationAttribute;code[unique=true];$classSystemVersion;name[lang=$lang]
+;NameOfPlace-Attraction-Inclusion;;Name Of Place
+;Description-Attraction-Inclusion;;Description
+;IsPanaromicStop-Attraction-Inclusion;;Is Panaromic Stop
+;IsSightseeingStop-Attraction-Inclusion;;Is Sight seeing Stop
+;IsPhotoSpot-Attraction-Inclusion;;Is Photo Spot
+;DurationAtTheStop-Attraction-Inclusion;;Duration At The Stop
+;ArrivalTime-Attraction-Inclusion;;Arrival Time 
+;DepartureTime-Attraction-Inclusion;;Departure Time
+;AuditoriumName-Seating-Inclusion;;Auditorium Name
+;SeatingClass-Seating-Inclusion;;Seating Class
+;TotalNoOfSeats-Seating-Inclusion;;Total No Of Seats
+;RowNumber-Seating-Inclusion;;Row Number
+;SeatNoFrom-Seating-Inclusion;;Seat No From
+;SeatNoTo-Seating-Inclusion;;Seat No To
+;Description-Seating-Inclusion;;Seating Description
+;FromDay-Seating-Inclusion;;FromDay
+;FromMonth-Seating-Inclusion;;FromMonth
+;FromYear-Seating-Inclusion;;FromYear
+;ToDay-Seating-Inclusion;;ToDay
+;ToMonth-Seating-Inclusion;;ToMonth
+;ToYear-Seating-Inclusion;;ToYear
+;SubTitle-Tour-Activity;;Sub Title
+;StartTime-Tour-Activity;;Start Time
+;EndTime-Tour-Activity;;End Time
+;Description-Tour-Activity;;Tour Description
+;DayName-Tour-Activity;;Day Name
+;ServiceName-Spa-Information;;Service Name
+;ServiceDescription-Spa-Information;;Service Description
+;HowToBenefit-Spa-Information;;How To Benefit
+;RecommendedFor-Spa-Information;;Recommended For
+;ServiceDuration-Spa-Information;;Service Duration
+;SportsName-Participants-Information;;Sports Name
+;TeamName-Participants-Information;;Team Name
+;TeamRanking-Participants-Information;;Team Ranking
+;Description-Participants-Information;;Participants Description
+;Country-Participants-Information;;Country
+;NameOfTeamMember-TeamMembers-Information;;Name Of Team Member
+;Age-TeamMembers-Information;;Age 
+;Height-TeamMembers-Information;;Height
+;Weight-TeamMembers-Information;;Weight
+;Ranking-TeamMembers-Information;;Ranking
+;Position-TeamMembers-Information;;Position
+;TeamMemberDescription-TeamMembers-Information;;Team Member Description
+;NameOfPerformer-Performer-Information;;Name Of Performer
+;DescriptionPerformer-Performer-Information;;Performer Description 
+;AwardName-Nominee-Information;;Award Name
+;AwardCategory-Nominee-Information;;Award Category
+;NameOfNominee-Nominee-Information;;Name Of Nominee
+;Description-Nominee-Information;;Nominee Description
+;NameOfShow-Show-Information;;Name Of Show
+;LanguageAvailable-Show-Information;;Language Available
+;LanguageName-Show-Information;;Language Name
+;PerformedBy-Show-Information;;Performed By
+;Description-Show-Information;;Show Description
+;NameOfCast-CastAndCrew-Information;;Name Of Cast
+;Description-CastAndCrew-Information;;CastAndCrew Description
+;SeatingArrangement-SeatingArrangement-Activity;;Seating Arrangement
+;Purpose-SeatingArrangement-Activity;;Purpose
+;RoomName-SeatingArrangement-Activity;;RoomName
+;SeatingCapacity-SeatingArrangement-Activity;;Seating Capacity
+;DaysOfWeek-SeatingArrangement-Activity;;Days Of Week
+;FromDay-SeatingArrangement-Activity;;SeatingArrangement FromDay
+;FromMonth-SeatingArrangement-Activity;;SeatingArrangement FromMonth
+;FromYear-SeatingArrangement-Activity;;SeatingArrangement FromYear
+;ToDay-SeatingArrangement-Activity;;SeatingArrangement ToDay
+;ToMonth-SeatingArrangement-Activity;;SeatingArrangement ToMonth
+;ToYear-SeatingArrangement-Activity;;SeatingArrangement ToYear
+

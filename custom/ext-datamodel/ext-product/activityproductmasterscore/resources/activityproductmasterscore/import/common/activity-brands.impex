@@ -1,0 +1,271 @@
+$lang=en
+INSERT_UPDATE ActivityBrand;code[unique=true];name[lang=$lang]
+;ACTIVITY_BR_01;Outrigger Hotels and Resorts
+;ACTIVITY_BR_02;Quest Service Apartments
+;ACTIVITY_BR_03;Radisson Blu
+;ACTIVITY_BR_04;Rydges Hotels and Resorts
+;ACTIVITY_BR_05;Shangri - La Hotels and Resorts
+;ACTIVITY_BR_06;Stamford Hotels and Resorts
+;ACTIVITY_BR_07;Swissotel Hotels and Resorts
+;ACTIVITY_BR_08;Voyages Hotels and Resorts
+;ACTIVITY_BR_09;Jurys Inn
+;ACTIVITY_BR_10;Premier Inn
+;ACTIVITY_BR_11;Reykjavik Hotels
+;ACTIVITY_BR_12;Reykjavik Grand
+;ACTIVITY_BR_13;Reykjavik Centrum
+;ACTIVITY_BR_14;Centara Hotels and Resorts
+;ACTIVITY_BR_15;Four Seasons Hotels and Resorts
+;ACTIVITY_BR_16;NH Hotels
+;ACTIVITY_BR_17;Expo Hotels & Resorts
+;ACTIVITY_BR_18;Dusit Princess
+;ACTIVITY_BR_19;Dusit Thani
+;ACTIVITY_BR_20;Dusit D2
+;ACTIVITY_BR_21;Dusit Residence
+;ACTIVITY_BR_22;Kempinski Hotels
+;ACTIVITY_BR_23;WBTDC Hotels
+;ACTIVITY_BR_24;Royal Orchid-Bangalore
+;ACTIVITY_BR_25;VITS Hotels-Mumbai
+;ACTIVITY_BR_26;Mandarin Oriental
+;ACTIVITY_BR_27;Parkland Hotels and Resorts
+;ACTIVITY_BR_28;Fairmont Hotels
+;ACTIVITY_BR_29;Montien Hotels
+;ACTIVITY_BR_30;Club Med
+;ACTIVITY_BR_31;Fraser Suites
+;ACTIVITY_BR_32;Fraser Place
+;ACTIVITY_BR_33;Fraser Residence
+;ACTIVITY_BR_34;Fraser Resorts
+;ACTIVITY_BR_35;Sterling Holiday Resorts
+;ACTIVITY_BR_36;Preferred Hotels & Resorts
+;ACTIVITY_BR_37;Meritus Hotels and Resorts
+;ACTIVITY_BR_38;Oakwood Hotels
+;ACTIVITY_BR_39;The Leela Palace Hotels & Resorts
+;ACTIVITY_BR_40;Base Backpackers
+;ACTIVITY_BR_41;Copthorne Hotels
+;ACTIVITY_BR_42;Kingsgate Hotels and Resorts
+;ACTIVITY_BR_43;Fiesta Americana Hotels and Resorts
+;ACTIVITY_BR_44;Feel Good Apartments
+;ACTIVITY_BR_45;H10 Hotels
+;ACTIVITY_BR_46;H10 club
+;ACTIVITY_BR_47;Ocean by H10 Hotels
+;ACTIVITY_BR_48;HCC Hotels
+;ACTIVITY_BR_49;Hotel Attica 21
+;ACTIVITY_BR_50;Husa Hotel
+;ACTIVITY_BR_51;Eurostars hotel
+;ACTIVITY_BR_52;Moevenpick Hotels and Resorts
+;ACTIVITY_BR_53;Macdonald Hotels & Resort
+;ACTIVITY_BR_54;Rotana Hotels & Resorts
+;ACTIVITY_BR_55;Armani Hotels & Resorts
+;ACTIVITY_BR_56;Citymax Hotels
+;ACTIVITY_BR_57;Ritz-Carlton
+;ACTIVITY_BR_58;The Address Hotel & Resorts
+;ACTIVITY_BR_59;Rayhaan Hotels & Resorts
+;ACTIVITY_BR_60;Arjaan Hotel Apartments
+;ACTIVITY_BR_61;Centro Hotels
+;ACTIVITY_BR_62;Winchest Hotels
+;ACTIVITY_BR_63;Iberotel Hotels & Resorts
+;ACTIVITY_BR_64;Grand Midwest
+;ACTIVITY_BR_65;Vincci Hotels
+;ACTIVITY_BR_66;Value Hotel
+;ACTIVITY_BR_67;Regent Hotels
+;ACTIVITY_BR_68;Resorts World Sentosa
+;ACTIVITY_BR_69;Hotel 81
+;ACTIVITY_BR_70;Arcotel Hotels
+;ACTIVITY_BR_71;Marco Polo Hotels
+;ACTIVITY_BR_72;Royal Tulip
+;ACTIVITY_BR_73;Golden Tulip
+;ACTIVITY_BR_74;Tulip Inn
+;ACTIVITY_BR_75;Orient-Express
+;ACTIVITY_BR_76;Ramee Hotels
+;ACTIVITY_BR_77;Elite Hospitality
+;ACTIVITY_BR_78;Harbour Plaza Hotels & Resorts
+;ACTIVITY_BR_79;Layia Hotels
+;ACTIVITY_BR_80;Living Courts - Serviced Apartments
+;ACTIVITY_BR_81;Athens Hotels Group
+;ACTIVITY_BR_82;Citin Hotels
+;ACTIVITY_BR_83;Kyriad Hotel
+;ACTIVITY_BR_84;Kyriad Prestige
+;ACTIVITY_BR_85;Keys Hotels
+;ACTIVITY_BR_86;Auris Hotels
+;ACTIVITY_BR_87;Metropark Hotels
+;ACTIVITY_BR_88;Okura Hotels and Resorts
+;ACTIVITY_BR_89;Amari Hotels
+;ACTIVITY_BR_90;Shama Serviced Apartments
+;ACTIVITY_BR_91;Saffron Hotels & Resorts
+;ACTIVITY_BR_92;OAM Hotels
+;ACTIVITY_BR_93;Le Meridien
+;ACTIVITY_BR_94;Four Points by Sheraton
+;ACTIVITY_BR_95;Westin Hotels and Resorts
+;ACTIVITY_BR_96;Aloft
+;ACTIVITY_BR_97;Sheraton Hotels and Resorts
+;ACTIVITY_BR_98;Element By Westin
+;ACTIVITY_BR_99;St. Regis
+;ACTIVITY_BR_100;W Hotels Worldwide
+;ACTIVITY_BR_101;Comfort Inn
+;ACTIVITY_BR_102;Sofitel Hotels
+;ACTIVITY_BR_103;Pullman Hotels and Resorts
+;ACTIVITY_BR_104;M Gallery
+;ACTIVITY_BR_105;Novotel Hotels
+;ACTIVITY_BR_106;Mercure
+;ACTIVITY_BR_107;Suite Novotel
+;ACTIVITY_BR_108;Ibis Hotels
+;ACTIVITY_BR_109;All Seasons Hotels
+;ACTIVITY_BR_110;Adagio City Apartments
+;ACTIVITY_BR_111;Motel 6
+;ACTIVITY_BR_112;Studio 6
+;ACTIVITY_BR_113;Etap Hotels
+;ACTIVITY_BR_114;Formule 1
+;ACTIVITY_BR_115;Hotel F1
+;ACTIVITY_BR_116;AC Hotels
+;ACTIVITY_BR_117;Adam's Mark Hotels
+;ACTIVITY_BR_118;Affinia Hospitality
+;ACTIVITY_BR_119;AFM Hospitality
+;ACTIVITY_BR_120;Akzent Hotels
+;ACTIVITY_BR_121;Intercontinental Hotels and Resorts
+;ACTIVITY_BR_122;Crowne Plaza Hotels and Resorts
+;ACTIVITY_BR_123;Indigo Hotel
+;ACTIVITY_BR_124;Holiday Inn
+;ACTIVITY_BR_125;Holiday Inn Express
+;ACTIVITY_BR_126;Staybridge Suites
+;ACTIVITY_BR_127;Candlewood Suites
+;ACTIVITY_BR_128;Wyndham Hotels and Resorts
+;ACTIVITY_BR_129;Wyndham Garden Hotels
+;ACTIVITY_BR_130;Marriott Hotels and Resorts
+;ACTIVITY_BR_131;JW Marriott Hotels and Resorts
+;ACTIVITY_BR_132;Renaissance Hotels
+;ACTIVITY_BR_133;Edition Hotel
+;ACTIVITY_BR_134;Autograph Collection
+;ACTIVITY_BR_135;Courtyard by Marriott
+;ACTIVITY_BR_136;Residence Inn by Marriott
+;ACTIVITY_BR_137;Fairfield Inn and Suites by Marriott
+;ACTIVITY_BR_138;Marriott Conference Centers
+;ACTIVITY_BR_139;TownePlace Suites by Marriott
+;ACTIVITY_BR_140;SpringHill Suites by Marriott
+;ACTIVITY_BR_141;The Ritz-Carlton Hotel
+;ACTIVITY_BR_142;Grand Residences by Marriott
+;ACTIVITY_BR_143;Marriott Executive Apartments
+;ACTIVITY_BR_144;Waldorf Astoria Hotels and Resorts
+;ACTIVITY_BR_145;Conrad Hotels and Resorts
+;ACTIVITY_BR_146;Hilton Hotels
+;ACTIVITY_BR_147;Doubletree Hotels
+;ACTIVITY_BR_148;Embassy Suites Hotels
+;ACTIVITY_BR_149;Hilton Garden Inn
+;ACTIVITY_BR_150;Hampton Inn and Suites
+;ACTIVITY_BR_151;Homewood Suites by Hilton
+;ACTIVITY_BR_152;Home2 Suites by Hilton
+;ACTIVITY_BR_153;Comfort Suites
+;ACTIVITY_BR_154;Super 8
+;ACTIVITY_BR_155;Wyndham Grand Collection
+;ACTIVITY_BR_156;Wingate by Wyndham
+;ACTIVITY_BR_157;Hawthorn Suites by Wyndham
+;ACTIVITY_BR_158;Ramada Worldwide
+;ACTIVITY_BR_159;Days Inn
+;ACTIVITY_BR_160;Baymont Inn and Suites
+;ACTIVITY_BR_161;Microtel Inn and Suites
+;ACTIVITY_BR_162;Howard Johnson
+;ACTIVITY_BR_163;Travelodge (Wyndham)
+;ACTIVITY_BR_164;Travelodge Hotels (TOGA)
+;ACTIVITY_BR_165;Ginger Hotels
+;ACTIVITY_BR_166;Taj
+;ACTIVITY_BR_167;Knights Inn
+;ACTIVITY_BR_168;Park Hyatt
+;ACTIVITY_BR_169;Grand Hyatt
+;ACTIVITY_BR_170;Hyatt Regency
+;ACTIVITY_BR_171;Hyatt Place
+;ACTIVITY_BR_172;Hyatt Summerfield Suites
+;ACTIVITY_BR_173;Hyatt Resorts
+;ACTIVITY_BR_174;Hyatt Vacation Club
+;ACTIVITY_BR_175;Radisson
+;ACTIVITY_BR_176;Park Plaza
+;ACTIVITY_BR_177;Park Inn
+;ACTIVITY_BR_178;Country Inn and Suites
+;ACTIVITY_BR_179;Lalit Group
+;ACTIVITY_BR_180;Oberoi
+;ACTIVITY_BR_181;Leela
+;ACTIVITY_BR_182;Park Hotels
+;ACTIVITY_BR_183;Trident Hotels
+;ACTIVITY_BR_184;Ramada
+;ACTIVITY_BR_185;Clarks Hotels
+;ACTIVITY_BR_186;Sarovar
+;ACTIVITY_BR_187;Leisure Hotels
+;ACTIVITY_BR_188;Mayfair
+;ACTIVITY_BR_189;Abad Hotels and Resorts
+;ACTIVITY_BR_190;Usha Lexus
+;ACTIVITY_BR_191;Lemon Tree
+;ACTIVITY_BR_192;Red Fox
+;ACTIVITY_BR_193;Royal Orchid
+;ACTIVITY_BR_194;Royal Orchid Central
+;ACTIVITY_BR_195;Pride Hotels and Resorts
+;ACTIVITY_BR_196;Pride Biznotel
+;ACTIVITY_BR_197;CGH Earth Hotels
+;ACTIVITY_BR_198;HRH Group of Hotels
+;ACTIVITY_BR_199;Neemrana Hotels
+;ACTIVITY_BR_200;Elgin Hotels and Resorts
+;ACTIVITY_BR_201;Club Mahindra Resorts
+;ACTIVITY_BR_202;Country Inn
+;ACTIVITY_BR_203;Aitken Spence Hotels and Resorts
+;ACTIVITY_BR_204;Sinclairs Hotels
+;ACTIVITY_BR_205;Peerless Hotels
+;ACTIVITY_BR_206;Carnival Hotels
+;ACTIVITY_BR_207;Best Western International
+;ACTIVITY_BR_208;ITDC Hotels
+;ACTIVITY_BR_209;Mansingh Hotels
+;ACTIVITY_BR_210;Jaypee Hotels
+;ACTIVITY_BR_211;Ambassador Hotels
+;ACTIVITY_BR_212;Asia Hotels
+;ACTIVITY_BR_213;Marriott ExecuStay
+;ACTIVITY_BR_214;Americas Best Value Inn
+;ACTIVITY_BR_215;Canadas Best Value Inn
+;ACTIVITY_BR_216;Chinas Best Value Inn
+;ACTIVITY_BR_217;Value Inn Worldwide
+;ACTIVITY_BR_218;Quality Inn
+;ACTIVITY_BR_219;Sleep Inn
+;ACTIVITY_BR_220;Clarion Hotel
+;ACTIVITY_BR_221;Cambria Suites
+;ACTIVITY_BR_222;MainStay Suites
+;ACTIVITY_BR_223;Suburban Extended Stay
+;ACTIVITY_BR_224;Econo Lodge
+;ACTIVITY_BR_225;Rodeway Inn
+;ACTIVITY_BR_226;Ascend Collection
+;ACTIVITY_BR_227;Raffles Hotels and Resorts
+;ACTIVITY_BR_228;Pan Pacific Hotel and Resorts
+;ACTIVITY_BR_229;Park Royal Hotels and Resorts
+;ACTIVITY_BR_230;Anantara
+;ACTIVITY_BR_231;Doyle Collection
+;ACTIVITY_BR_232;First Hotels
+;ACTIVITY_BR_233;Royal Orchid Suites
+;ACTIVITY_BR_234;Breakfree Hotels
+;ACTIVITY_BR_235;Peppers Hotels
+;ACTIVITY_BR_236;Mantra Hotels
+;ACTIVITY_BR_237;Medina Apartment Hotels
+;ACTIVITY_BR_238;Vibe Hotels
+;ACTIVITY_BR_239;Adina Apartment Hotels
+;ACTIVITY_BR_240;Quay Grand
+;ACTIVITY_BR_241;The Como
+;ACTIVITY_BR_242;Quay West
+;ACTIVITY_BR_243;The Sebel
+;ACTIVITY_BR_244;Citigate
+;ACTIVITY_BR_245;Cairns Habour Lights
+;ACTIVITY_BR_246;Sea Temple Resort and Spa
+;ACTIVITY_BR_247;Lindrum Hotel
+;ACTIVITY_BR_248;Harbour Rocks Hotel
+;ACTIVITY_BR_249;Woraburi Hotels & Resorts
+;ACTIVITY_BR_250;Sawasdee Hotels
+;ACTIVITY_BR_251;Sunway Hotels and Resorts
+;ACTIVITY_BR_252;Delta Hotels and Resorts
+;ACTIVITY_BR_253;Rockford Hotels
+;ACTIVITY_BR_254;Andaz Hotels
+;ACTIVITY_BR_255;Amsterdam Hospitality Group
+;ACTIVITY_BR_256;La Loft Apartments
+;ACTIVITY_BR_257;Nirwana Gardens
+;ACTIVITY_BR_258;Santa Grand Hotels
+;ACTIVITY_BR_259;8 Hotels Collection
+;ACTIVITY_BR_260;Thistle Hotels
+;ACTIVITY_BR_261;Cambay Hotels and Resorts
+;ACTIVITY_BR_262;Alcon Victor Group
+;ACTIVITY_BR_263;The Parks Hotels
+;ACTIVITY_BR_264;Assured Hospitality Services Pvt. Ltd
+;ACTIVITY_BR_265;Maharani Group of Hotels
+;ACTIVITY_BR_266;Breakout Management Services
+;ACTIVITY_BR_267;Chevron Hotels and Resorts
+;ACTIVITY_BR_268;Vienna Hotels
+;ACTIVITY_BR_269;Welcomhotel

@@ -1,0 +1,34 @@
+##############Import clientconfigdashboard-essentialdata.impex beore this impex#########################
+
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+
+
+INSERT_UPDATE AssociatedCredentials;credential(SupplierCredentials.code)[unique=true];enabled[default=false]
+;;true
+
+INSERT_UPDATE AssociatedProduct;product(Product.code)[unique=true];suppliers(supplier(Supplier.code))
+;87762;Taj Group
+;15740;GTA
+;12121;Pegasus
+;68641;Desiya
+
+
+INSERT_UPDATE AssociatedSupplier;supplier(Supplier.code)[unique=true];credentials(credential(SupplierCredentials.code));products(product(Product.code))
+;Taj Group;;87762
+;GTA;;15740
+;Pegasus;;12121
+;Desiya;;68641
+
+
+INSERT_UPDATE AssociatedProductAndCategorySubtype;categorySubtype(code,$catalogVersion)[unique=true];enabled[default=false][unique=true];suppliers(supplier(Supplier.code));products(product(Product.code));enabledProducts;enabledSuppliers
+;C002ST001;true;Taj Group;87762;true;true
+;C002ST002;true;Taj Group;15740;true;true
+
+INSERT_UPDATE AssociatedCategories;category(code,$catalogVersion)[unique=true];enabled[default=false][unique=true];categorySubtypesAndProducts(categorySubtype(code,$catalogVersion))
+;C002;true;C002ST001
+
+
+

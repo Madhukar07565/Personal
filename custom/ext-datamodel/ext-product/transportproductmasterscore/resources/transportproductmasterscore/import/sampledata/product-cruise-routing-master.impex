@@ -1,0 +1,22 @@
+# Sample data of AccInventoryDetails Modal.
+$lang=en
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.product.transport.masters.core.setup.TransportProductSetup&\transportproductmasterscore\import\sampledata\images\96Wx96H
+
+
+INSERT_UPDATE CruiseRoute;$catalogVersion[unique=true];routingCommonId;code[unique=true];numberOfNights[unique=true];routingName[unique=true];cruiseDestinationName(code,$catalogVersion);approvalStatus(code);onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];reason;copiedFrom
+;;23456718_CruiseRoute;987654_CruiseRoute;11;Bergen-Kirkenes-Bergen;987654_CruiseDest;approved;01-01-2015;10-01-2015;;;
+;;2345679_CruiseRoute;987655_CruiseRoute;5;Bangkok-Pataya;987656_CruiseDest;approved;01-01-2015;02-01-2015;;;
+;;2345680_CruiseRoute;987656_CruiseRoute;7;Mumbai-Malaysia-Bergen;987658_CruiseDest;approved;01-01-2015;03-01-2015;;;
+
+
+
+INSERT_UPDATE RouteDetail;day;country(isoCode)[unique=true];city(isocode)[unique=true];portName(CruisePort.portCommonId)[unique=true];placeType(PlaceType.code)[unique=true];cruiseRoute(code)
+;11;IN;AAA;202;PORT;987654_CruiseRoute
+;5;AU;AAB;202;HIGHSEA;987654_CruiseRoute
+;7;EG;AAC;202;LAND;987654_CruiseRoute
+

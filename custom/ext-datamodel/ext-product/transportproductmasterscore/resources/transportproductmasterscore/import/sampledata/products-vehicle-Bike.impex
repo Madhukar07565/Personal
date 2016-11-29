@@ -1,0 +1,63 @@
+$productCatalog=EZ-IN
+$productCatalogName=EZ-IN-CS
+$approved=approvalstatus(code)[default='check']
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$timeformat = hh:mm
+
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.common.initialdata.setup.InitialDataSystemSetup&\productsetup\import\images\96Wx96H
+
+$clAttrModifiers=system='EZ-IN-CS',version='1.0',translator=de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator,lang=en
+
+$supercategories=source(code, $catalogVersion)[unique=true]
+
+##classification for Bike
+
+$Kerbweights=@Kerbweights-Weights-Bike[$clAttrModifiers]
+$Maxpayload=@Maxpayload-Weights-Bike[$clAttrModifiers]
+$Front=@Front-Breaks-Bike[$clAttrModifiers]
+$Rear=@Rear-Breaks-Bike[$clAttrModifiers]
+$Breakfluid=@Breakfluid-Breaks-Bike[$clAttrModifiers]
+$Frontrimsize=@Frontrimsize-Wheelsandtyers-Bike[$clAttrModifiers]
+$Rearrimsize=@Rearrimsize-Wheelsandtyers-Bike[$clAttrModifiers]
+$Fronttyersize=@Fronttyersize-Wheelsandtyers-Bike[$clAttrModifiers]
+
+$reartyersize=@reartyersize-Wheelsandtyers-Bike[$clAttrModifiers]
+
+$Type=@Type-Engine-Bike[$clAttrModifiers]
+$Displacement=@Displacement-Engine-Bike[$clAttrModifiers]
+
+$cylinderArrangeMent=@CylinderArrangeMent-Engine-Bike[$clAttrModifiers]
+
+$Maximumpower=@Maximumpower-Engine-Bike[$clAttrModifiers]
+$MaximumTorque=@MaximumTorque-Engine-Bike[$clAttrModifiers]
+$BoreStroke=@BoreStroke-Engine-Bike[$clAttrModifiers]
+$CompressionRation=@CompressionRation-Engine-Bike[$clAttrModifiers]
+$Carburetor=@Carburetor-Engine-Bike[$clAttrModifiers]
+$Starting=@Starting-Engine-Bike[$clAttrModifiers]
+$CompressionRationValve=@CompressionRationValve-Engine-Bike[$clAttrModifiers]
+$IdealSpeed=@IdealSpeed-Engine-Bike[$clAttrModifiers]
+$StartingMode=@StartingMode-Engine-Bike[$clAttrModifiers]
+$PowerToWaightRatio=@PowerToWaightRatio-Engine-Bike[$clAttrModifiers]
+
+$Maxspeed(Kmph)=@Maxspeed_Kmph-Acceleration-Bike[$clAttrModifiers]
+$TypeChassis=@Type-Chassis-Bike[$clAttrModifiers]
+$FrontFrontSuspension=@Front-Suspension-Bike[$clAttrModifiers]
+$RearSuspension=@Rear-Suspension-Bike[$clAttrModifiers]
+$Clutch=@Clutch-Transmission-Bike[$clAttrModifiers]
+$Primaryreduction=@Primaryreduction-Transmission-Bike[$clAttrModifiers]
+$Finalreduction=@Finalreduction-Transmission-Bike[$clAttrModifiers]
+$Length=@Length-Dimensions-Bike[$clAttrModifiers]
+$Height=@Height-Dimensions-Bike[$clAttrModifiers]
+$Width=@Width-Dimensions-Bike[$clAttrModifiers]
+
+$Wheelbase_Bike=@Wheelbase_Bike-Dimensions-Bike[$clAttrModifiers]
+$Groundclearance_Mm_Bike=@Groundclearance_Mm_Bike-Dimensions-Bike[$clAttrModifiers]
+
+# INSERT_UPDATE Vehicle;code;VehicleCategory
+
+INSERT_UPDATE Vehicle;code[unique=true];name;commonProductID;supercategories(code,$catalogVersion)[mode=append];onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];$catalogVersion;$approved;$Kerbweights;$Maxpayload;$Front;$Rear;$Breakfluid;$Frontrimsize;$Rearrimsize;$Fronttyersize;$Type;$Displacement;$Maximumpower;$Maxspeed(Kmph);$TypeChassis;$FrontFrontSuspension;$RearSuspension;$Clutch;$Primaryreduction;$Finalreduction;$Length;$Height;$Width;$cylinderArrangeMent;$MaximumTorque;$BoreStroke;$CompressionRation;$Carburetor;$Starting;$CompressionRationValve;$IdealSpeed;$StartingMode;$PowerToWaightRatio;$Wheelbase_Bike;$Groundclearance_Mm_Bike
+;Bike001;Bike;001;Bike,C001ST009;12-12-2016;13-12-2016;;;Kerbweights;Maxpayload;Front;Rear;Breakfluid;Frontrimsize;Rearrimsize;Fronttyersize;Type;Displacement;Maximumpower;Maxspeed(Kmph);TypeChassis;FrontFrontSuspension;RearSuspension;Clutch;Primaryreduction;Finalreduction;Length;Height;Width;cylinderArrangeMent;MaximumTorque;BoreStroke;CompressionRation;Carburetor;Starting;CompressionRationValve;IdealSpeed;StartingMode;PowerToWaightRatio;Wheelbase_Bike;Groundclearance_Mm_Bike
+
+

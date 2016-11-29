@@ -1,0 +1,62 @@
+<hybrisconfig xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='../bin/platform/resources/schemas/extensions.xsd'>
+  <extensions>
+    <path dir='${HYBRIS_BIN_DIR}' autoload='false' />
+    <!-- <path dir='${HYBRIS_BIN_DIR}/custom/' autoload='true' /> -->
+    <extension name='mcc' />
+    <extension name='backoffice' />
+    <extension name='commercesearchbackoffice' />
+    <extension name='commerceservicesbackoffice' />
+    <extension name='solrfacetsearchbackoffice' />
+    <extension name='solrserver' />
+       
+    <extension name='yaddon' />
+    <extension name='ycommercewebservices' />    
+    <extension name='captchaaddon' />
+    <extension name='liveeditaddon' />
+    <extension name='acceleratorwebservicesaddon' />
+    
+    <!-- ext-template -->
+	<extension name="yempty" />
+	   	
+    <extension name='b2bcockpits' />
+    <extension name='b2bcore' />
+    <extension name='b2bfacades' />
+    <extension name='b2bfulfilmentprocess' />
+    <extension name='b2binitialdata' />
+    <extension name='b2bstorefront' />
+    <extension name='b2btest' />
+    
+    <extension name='b2ccockpits' />
+    <extension name='b2ccore' />
+    <extension name='b2cfacades' />
+    <extension name='b2cfulfilmentprocess' />
+    <extension name='b2cinitialdata' />
+    <extension name='b2cstorefront' />
+    <extension name='b2ctest' />
+		
+	<extension name='corporatecockpits' />
+	<extension name='corporatecore' />
+	<extension name='corporatefacades' />
+	<extension name='corporatefulfilmentprocess' />
+	<extension name='corporateinitialdata' />
+	<extension name='corporatestorefront' />
+	<extension name='corporatetest' />
+	
+	<extension name='operationscockpits' />
+	<extension name='operationscore' />
+	<extension name='operationsfacades' />
+	<extension name='operationsfulfilmentprocess' />
+	<extension name='operationsinitialdata' />
+	<extension name='operationsstorefront' />
+	<extension name='operationstest' />
+	
+	<extension name='common' />
+	<extension name='br' />
+	<extension name='productbackoffice' />
+	<extension name='clientbackoffice' />
+	<extension name='supplierbackoffice' />
+	<extension name='datamodel' />
+	<extension name='search' />
+	<extension name='book' />
+  </extensions>
+</hybrisconfig>

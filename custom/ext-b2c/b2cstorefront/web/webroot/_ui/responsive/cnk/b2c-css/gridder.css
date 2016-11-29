@@ -1,0 +1,155 @@
+/* GRIDDER CSS */
+.gridder{ width: 100%; margin: 0 auto;}
+.gridder-list img { width: 100%; }
+.gridder-list.activeThumb { margin-bottom:30px; }
+.gridder-list.activeThumb:after { content : ""; background: url("../images/common/arrow_expanded_top.png") no-repeat; width: 33px;height: 20px;margin-bottom: -26px;left: 40%;position: absolute;bottom:0px;z-index:1;}
+
+.gridder-content { display: none; width:810px; }  
+.gridder-show { position: relative; border: 1px solid #d7d7d7; float: left;margin-bottom: 60px;  margin-left:40px; margin-top:-20px;-moz-box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.25);-webkit-box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.25);box-shadow:1px 1px 3px -1px rgba(0, 0, 0, 0.25); background:#ecf0f1}
+
+.list-show { position: relative; border: 1px solid #d7d7d7; float: left;margin-bottom:10px;  margin-left:40px; -moz-box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.25);-webkit-box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.25);box-shadow:1px 1px 3px -1px rgba(0, 0, 0, 0.25); background:#ecf0f1}
+
+.gridder-single-panel { position: relative; border: 1px solid #d7d7d7; float: left; margin-bottom:10px; -moz-box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.25);-webkit-box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 0.25);box-shadow:1px 1px 3px -1px rgba(0, 0, 0, 0.25); background:#ecf0f1}
+.gridder-show .content p.smlFont {font-size: 11px;}
+.gridder-show .innerContent { display: none; }
+
+.gridder-show:after { content: "."; display: block; height: 0; overflow: hidden; }
+.gridder-close {cursor: pointer; position: absolute; top:5px; right: 15px;background-image: url("../images/common/iconSprite.png"); background-position: -125px -254px;background-repeat: no-repeat;height: 16px; width: 16px; z-index:1}
+
+
+
+.tagPanel{width: 100%;}
+.holidayFntClr {color: #34A78A !important;}
+.expandedViewHeader a{color:#363465!important;}
+
+
+
+
+h4.gridTitle{ font-size:18px;}
+.itemHeader{background:#FFF; padding:10px; overflow:hidden; font-weight:400;}
+.addToCompListView{ display:block; margin:0px 0px 0px 40px;}
+
+
+
+/*****************Media Queries*****************************/
+
+@media only screen and (max-width: 768px){
+.gridder-list { display: inline-block; *display: inline; white-space-collapsing: discard; zoom: 1; margin-bottom: 60px;cursor: pointer; position: relative; width:auto; margin-left:40px; width:27.3%; margin-top:0px; }
+ .selectContLarge { width: 181px;}
+ .selectContLargeInput { width: 161px;}
+ .holidayAbstract{ font-size:12px;}
+ .holidayLocDur{ font-size:12px}
+ .saveTag{font-size:12px;}
+ .savePos{right: -12px}
+ .tagBtm{bottom: -20px;}
+ .dealsTxt{font-size: 13px;}
+ .saveTagPosn{ width:class="close_accorHrdr_icon fL" title="Delete"; position:absolute; top:5px; z-index:1}
+ .expandedViewHeader {background: #eeede8; padding: 10px 5px 10px 16px; color: #34a78a; font-weight: bold; border-bottom: 1px solid #d7d7d7; float: left;width:100%;}
+ @media screen and (-webkit-min-device-pixel-ratio:0) {.expandedViewHeader{padding: 10px 5px 10px 16px; width:100%;}}
+ 
+.tagCloudPanel{ float:left; width:57%;padding:0px 0px 0px 40px; } 
+.togglePanel{ padding-right:0px; float:right; width:55%;}
+.togglePanel .dropdown{ margin-left:25px;}
+.saveTagComp {margin-top: 100px;position: absolute!important;margin-right: 5px;width: 100px;}
+.stackChkBox{width: 25%;}
+ .gridHeader{margin-left:40px;}
+ .group_posn_mTn20{margin:-20px 0px 0px 0px!important;}
+ .group_posn{margin:34px 0px 0px 0px;}	
+}
+@media only screen and (min-width: 768px) and (max-width: 968px){
+.gridder-list { display: inline-block; *display: inline; white-space-collapsing: discard; zoom: 1; margin-bottom: 60px;cursor: pointer; position: relative; margin-left:40px; width:27.2%; margin-top:0px; }
+.white_content_inner .gridder-list {width:27.4%;}
+.white_content_inner_all{width:28%}
+ .selectContLarge { width: 181px;}
+ .selectContLargeInput { width: 161px;}
+ .holidayAbstract{ font-size:12px;}
+ .holidayLocDur{ font-size:12px}
+ .saveTag{font-size:12px;}
+ .savePos{right: -12px}
+ .tagBtm{bottom: -20px;}
+ .dealsTxt{font-size: 13px;}
+ .saveTagPosn{ width:class="close_accorHrdr_icon fL" title="Delete"; position:absolute; top:5px; z-index:1}
+ .expandedViewHeader {background: #eeede8; padding: 10px 5px 10px 16px; color: #34a78a; font-weight: bold; border-bottom: 1px solid #d7d7d7; float: left;width:100%;}
+ @media screen and (-webkit-min-device-pixel-ratio:0) {.expandedViewHeader{padding: 10px 5px 10px 16px; width:100%;}}
+ 
+.tagCloudPanel{ float:left; width:57%;padding:0px 0px 0px 40px; } 
+.togglePanel{ padding-right:0px; float:right; width:55%;}
+.togglePanel .dropdown{ margin-left:25px;}
+.saveTagComp {margin-top: 100px;position: absolute!important;margin-right: 5px;width: 100px;}
+.stackChkBox{width: 25%;}
+ .gridHeader{margin-left:40px;}
+ .group_posn_mTn20{margin:-20px 0px 0px 0px!important;}
+ .group_posn{margin:-50px 0px 0px 0px;}
+}
+
+@media only screen and (min-width: 969px) and (max-width: 1168px){
+.gridder-list { display: inline-block; *display: inline; white-space-collapsing: discard; zoom: 1; margin-bottom: 60px;cursor: pointer; position: relative; width:auto; margin-left:39px; width:27%; margin-top:0px; }
+.selectContLarge { width: 200px;}
+.selectContLargeInput { width: 161px;}
+.holidayAbstract{ font-size:12px;}
+.holidayLocDur{ font-size:12px; right:}
+.saveTag{font-size:12px;}
+.savePos{right: -12px}
+.tagBtm{bottom: -20px;}
+.dealsTxt{font-size: 13px;}
+.saveTagPosn{width:160px; position:absolute; top:5px; z-index:1}
+.expandedViewHeader {background: #eeede8; padding: 10px 5px 10px 18px; color: #34a78a; font-weight: bold; border-bottom: 1px solid #d7d7d7; float: left;width:640px; width:100%;}
+@media screen and (-webkit-min-device-pixel-ratio:0) {.expandedViewHeader{padding: 10px 5px 10px 18px; width:100%;}}
+.tagCloudPanel{ padding:0px 0px 0px 40px; float:left; width:45%; } 
+.togglePanel{ padding-right:0px; float:right; width:40%;}
+.togglePanel .dropdown{ margin-left:20px;}
+.saveTagComp {margin-top: 10px;position: absolute!important;margin-right: 5px;width: 163px;}
+.stackChkBox{width: 25%;}
+.gridHeader{margin-left:39px;}
+.group_posn_mTn20{margin:-20px 0px 0px 0px!important;}
+.group_posn{margin:15px 0px 0px 0px;}	
+}
+
+@media only screen and (min-width: 1169px) and (max-width: 1366px){
+.gridder-list { display: inline-block; *display: inline; white-space-collapsing: discard; zoom: 1; margin-bottom: 60px;cursor: pointer; position: relative; width:auto; margin-left:40px; width:28.1%;  margin-top:0px; }
+.selectContLarge { width: 240px;}
+.selectContLargeInput { width: 161px;}	
+.holidayAbstract{ font-size:14px;}
+.holidayLocDur{ font-size:14px;}
+.dealsTxt{font-size: 14px;}
+.savePos{right: -5px}
+.saveTagPosn{width:200px; position:absolute; top:5px; z-index:1}
+.expandedViewHeader {background: #eeede8; padding: 10px 5px 10px 45px; color: #34a78a; font-weight: bold; border-bottom: 1px solid #d7d7d7; float: left;width:100%;}
+.tagCloudPanel{ padding:0px 0px 0px 40px; float:left; width:45%; } 
+.togglePanel{ padding-right:0px; float:right; width:45%;}
+.togglePanel .dropdown{ margin-right:0px;}
+.saveTagComp {margin-top: 10px;position: absolute!important;margin-right:5px;width: 200px;}
+.stackChkBox{width: 30%;}
+.gridHeader{margin-left:40px;}
+.group_posn{margin:20px 0px 0px 0px;}	
+}
+
+@media only screen and (min-width: 1367px) and (max-width: 1600px){
+.gridder-list { display: inline-block; *display: inline; white-space-collapsing: discard; zoom: 1; margin-bottom: 60px;cursor: pointer; position: relative; width:auto; margin-left:40px; width:28%;  margin-top:0px; }	
+.expandedViewHeader{padding: 10px 5px 10px 20px; width:100%;background: #eeede8; border-bottom: 1px solid #d7d7d7; font-weight: bold;}
+.holidayAbstract{ font-size:14px;}
+.holidayLocDur{ font-size:14px;}	
+.dealsTxt{font-size: 14px;}
+.savePos{right: -5px}
+.togglePanel .dropdown{ margin:0px;}
+.saveTagPosn{width:200px; position:absolute; top:5px; z-index:1} 
+.stackChkBox{width: 30%;}
+.gridHeader{margin-left:40px;}
+.group_posn{margin:20px 0px 0px 0px;}	
+}
+
+@media only screen and (min-width: 1601px) and (max-width: 1920px){
+.gridder-list { display: inline-block; *display: inline; white-space-collapsing: discard; zoom: 1; margin-bottom: 60px;cursor: pointer; position: relative; width:auto; margin-left:40px; width:28%;  margin-top:0px; }	
+.expandedViewHeader{padding: 10px 5px 10px 20px; width:100%;background: #eeede8; border-bottom: 1px solid #d7d7d7; font-weight: bold;}
+.holidayAbstract{ font-size:14px;}
+.holidayLocDur{ font-size:16px;}	
+.dealsTxt{font-size: 14px;}
+.savePos{right: -5px}
+.togglePanel .dropdown{ margin:0px;}
+.saveTagPosn{width:200px; position:absolute; top:5px; z-index:1} 
+.stackChkBox{width: 30%;}
+.gridHeader{margin-left:40px;}
+.group_posn{margin:20px 0px 0px 0px;}	
+}
+
+.gridder-list { display: inline-block\9; *display: inline; white-space-collapsing: discard\9; zoom: 1\9; margin-bottom: 60px\9;cursor: pointer\9; position: relative\9; margin-left:40px; width:28.1%\9;  margin-top:0px\9; }

@@ -1,0 +1,25 @@
+
+"INSERT_UPDATE WorkflowTemplate";"code[unique=true]";"name[lang=de]";"name[lang=en]";"owner(uid)";"description[lang=de]";"description[lang=en]";"activationscript";"visibleForPrincipals(uid)";;;
+;"reconfirmationConfigWorkflowTemplate";"reconfirmationConfig Workflow";"reconfirmationConfig Workflow";"admin";;;;"admingroup";;;
+
+
+"INSERT_UPDATE WorkflowActionTemplate";"code[unique=true]";"name[lang=de]";"name[lang=en]";"description[lang=de]";"description[lang=en]";"principalAssigned(uid)";"workflow(code)[unique=true]";"sendEmail";"emailAddress";"rendererTemplate(code)";"actionType(code)"
+;"RC_Confirm";"Bestätigung";"Confirmation";;;"admingroup";"reconfirmationConfigWorkflowTemplate";"false";;;"start"
+;"RC_End";"Ende";"End";;;"admin";"reconfirmationConfigWorkflowTemplate";"false";;;"end"
+
+"INSERT_UPDATE AutomatedWorkflowActionTemplate";"code[unique=true]";"name[lang=de]";"name[lang=en]";"description[lang=de]";"description[lang=en]";"principalAssigned(uid)";"workflow(code)[unique=true]";"sendEmail";"emailAddress";"rendererTemplate(code)";"actionType(code)";jobHandler
+;"RC_Confirm_Positive";"Template bestätigt";"Template confirmed";;;"admin";"reconfirmationConfigWorkflowTemplate";"false";;;"normal";reconfirmationConfigConfirmationActionJob
+;"RC_Confirm_Negative";"Template nicht bestätigt";"Template declined";;;"admin";"reconfirmationConfigWorkflowTemplate";"false";;;"normal";reconfirmationConfigDeclineActionJob
+
+"INSERT_UPDATE WorkflowDecisionTemplate";"code[unique=true]";"name[lang=de]";"name[lang=en]";"actionTemplate(code)";"description[allownull=true]";;;;;;
+;"RC001";"Spieler bestätigen";"Confirm Template";"RC_Confirm";;;;;;;
+;"RC002";"Spieler nicht bestätigen";"Decline Template";"RC_Confirm";;;;;;;
+;"RC003";"Ende";"End";"RC_Confirm_Positive";;;;;;;
+;"RC004";"Ende";"End";"RC_Confirm_Negative";;;;;;;
+
+"# new Workflow Model";;;;;;;;;;;
+"insert_update WorkflowActionTemplateLinkTemplateRelation";"source(code)[unique=true]";"target(code)[unique=true]";"andConnectionTemplate";"qualifier";;;;;;;
+;"RC001";"RC_Confirm_Positive";"false";"WorkflowActionTemplateLinkTemplateRelation";;;;;;;
+;"RC002";"RC_Confirm_Negative";"false";"WorkflowActionTemplateLinkTemplateRelation";;;;;;;
+;"RC003";"RC_End";"false";"WorkflowActionTemplateLinkTemplateRelation";;;;;;;
+;"RC004";"RC_End";"false";"WorkflowActionTemplateLinkTemplateRelation";;;;;;;

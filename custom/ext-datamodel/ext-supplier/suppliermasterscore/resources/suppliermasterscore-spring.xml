@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+	<alias name="defaultPolicyIdService" alias="policyIdService" />
+	<bean id="defaultPolicyIdService"
+		class="com.cnk.travelogix.supplier.masters.core.services.impl.DefaultPolicyIdService">
+		<property name="keyGenerator" ref="policyIdKeyGenerator" />
+	</bean>
+	
+	<bean id="policyIdKeyGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="Policy_id" />
+		<property name="digits" value="3" />
+		<property name="start" value="001" />
+		<property name="numeric" value="true" />
+	</bean>
+	
+	<bean id="travelogixPolicyPrepareInterceptor"
+		class="com.cnk.travelogix.supplier.masters.core.interceptors.TravelogixPolicyPrepareInterceptor">
+		<property name="policyIdService" ref="policyIdService" />
+	</bean>
+
+	<bean id="travelogixPolicyPrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="travelogixPolicyPrepareInterceptor" />
+		<property name="typeCode" value="TravelogixPolicy" />
+	</bean>
+	
+	<alias name="defaultAccoDynamicPolicyDao" alias="accoDynamicPolicyDao" />
+	<bean id="defaultAccoDynamicPolicyDao"
+		class="com.cnk.travelogix.supplier.core.daos.impl.DefaultAccoDynamicPolicyDao">
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+		<property name="modelService" ref="modelService" />
+	</bean>
+	
+	<alias name="defaultAccoDynamicPolicyService" alias="accoDynamicPolicyService" />
+	<bean id="defaultAccoDynamicPolicyService"
+		class="com.cnk.travelogix.supplier.core.daos.services.impl.DefaultAccoDynamicPolicyService">
+		<property name="accoDynamicPolicyDao" ref="accoDynamicPolicyDao" />
+	</bean>
+	
+	
+	<bean id="accoDynamicPolicyValidateInterceptor"
+		class="com.cnk.travelogix.supplier.masters.core.interceptors.AccoDynamicPolicyValidateInterceptor">
+		<property name="accoDynamicPolicyService" ref="accoDynamicPolicyService" />
+	</bean>
+
+	<bean id="accoDynamicPolicyValidateInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="accoDynamicPolicyValidateInterceptor" />
+		<property name="typeCode" value="AccoDynamicPolicy" />
+	</bean>
+	
+	<alias name="defaultTravelogixPolicyDao" alias="travelogixPolicyDao" />
+	<bean id="defaultTravelogixPolicyDao"
+		class="com.cnk.travelogix.supplier.core.daos.impl.DefaultTravelogixPolicyDao">
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+		<property name="modelService" ref="modelService" />
+	</bean>
+	
+	<alias name="defaultTravelogixPolicyService" alias="travelogixPolicyService" />
+	<bean id="defaultTravelogixPolicyService"
+		class="com.cnk.travelogix.supplier.core.daos.services.impl.DefaultTravelogixPolicyService">
+		<property name="travelogixPolicyDao" ref="travelogixPolicyDao" />
+	</bean>
+	
+	<bean id="travelogixPolicyValidateInterceptor"
+		class="com.cnk.travelogix.supplier.masters.core.interceptors.TravelogixPolicyValidateInterceptor">
+		<property name="travelogixPolicyService" ref="travelogixPolicyService" />
+	</bean>
+	
+	<bean id="travelogixPolicyValidateInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="travelogixPolicyValidateInterceptor" />
+		<property name="typeCode" value="TravelogixPolicy" />
+	</bean>
+	
+	
+	
+
+	<!-- The hybris platform provides one single Spring application context 
+		for beans located at the jalo layer. Each extension can add beans to this 
+		context by specifying them at this configuration file. You can use and/or 
+		redefine beans defined at configuration files of other extensions as well 
+		as adding new one. If you want to locate this file at a different location 
+		or want to use several files for better, structuring, please use the '<yourextension>.application-context' 
+		property at your project.properties file. There you can specify a comma separated 
+		list of files where first is tried to find a file per classpath and then 
+		per file system. If you want to configure beans for your web module please 
+		have a look at your web/webroot/WEB-INF/<extname>-web-spring.xml. -->
+
+	<!-- Example how to override a manager -->
+	<!-- <bean id="core.productManager" class="com.cnk.travelogix.supplier.masters.core.jalo.SuppliermasterscoreProductManager" 
+		init-method="init" destroy-method="destroy" /> -->
+
+
+	<!-- Example how to configure the class to use for jalo session creation -->
+	<!-- <bean id="jalosession" class="de.hybris.platform.jalo.JaloSessionFactory"> 
+		<property name="targetClassName" value="com.cnk.travelogix.supplier.masters.core.jalo.SuppliermasterscoreJaloSession"/> 
+		</bean> -->
+
+
+	<!-- Example how to override an item -->
+	<!-- <bean id="de.hybris.platform.jalo.product.Product" class="com.cnk.travelogix.supplier.masters.core.jalo.SuppliermasterscoreProduct" 
+		scope="prototype" /> -->
+
+	<!-- Example how to register and use an AOP aspect Also see http://static.springframework.org/spring/docs/2.5.x/reference/aop.html -->
+
+	<!-- <bean id="suppliermasterscoreProfBean" class="com.cnk.travelogix.supplier.masters.core.aop.SuppliermasterscoreProfilingAspect"/> 
+		<aop:config proxy-target-class="true"> <aop:aspect id="suppliermasterscoreProfAspect" 
+		ref="suppliermasterscoreProfBean" > <aop:pointcut id="profiledMethods" expression="execution(* 
+		getModificationTime(..))" /> <aop:around pointcut-ref="profiledMethods" method="profile" 
+		/> </aop:aspect> </aop:config> -->
+
+
+	<!-- some other examples of a pointcut that matches everything: <aop:pointcut 
+		id="profiledMethods" expression="bean(de.hybris.platform.jalo.user.Customer) 
+		&amp;&amp; !execution(* getPK(..))" /> <aop:pointcut id="profiledMethods" 
+		expression="execution(* *(..))" /> -->
+
+</beans>

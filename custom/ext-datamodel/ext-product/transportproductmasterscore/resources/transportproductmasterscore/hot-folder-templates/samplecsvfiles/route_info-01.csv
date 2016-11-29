@@ -1,0 +1,5 @@
+CruiseRouteCode,localArrivalTime,localDepartureTime,Remark,ItineraryId
+CruiseRoute_01,02:00:00,20:00:00,remark,cruise_itinerary_1
+CruiseRoute_02,02:00:00,20:00:00,remark,cruise_itinerary_1
+CruiseRoute_01,02:00:00,20:00:00,remark,cruise_itinerary_2
+CruiseRoute_02,02:00:00,20:00:00,remark,cruise_itinerary_2

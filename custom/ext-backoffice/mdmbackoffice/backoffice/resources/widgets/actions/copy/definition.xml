@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<action-definition id="com.cnk.travelogix.mdmbackoffice.actions.copy"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/action-definition.xsd">
+
+	<name>Copy.Action</name>
+	<description>Copy Action</description>
+	<author>hybris</author>
+	<version>0.1</version>
+
+	<sockets>
+		<input id="copyObject" type="java.lang.Object" />
+		<output id="copiedObject" type="java.lang.Object" />
+	</sockets>
+
+	<actionClassName>com.cnk.travelogix.mdmbackoffice.actions.CopyAction</actionClassName>
+	<customRendererClassName>com.cnk.travelogix.mdmbackoffice.renderer.CustomActionRenderer</customRendererClassName>
+	<inputType>java.lang.Object</inputType>
+	<outputType>java.lang.Object</outputType>
+
+	<iconUri>icons/copybutton-default.png</iconUri>
+	<iconHoverUri>icons/copybutton-active.png</iconHoverUri>
+</action-definition>

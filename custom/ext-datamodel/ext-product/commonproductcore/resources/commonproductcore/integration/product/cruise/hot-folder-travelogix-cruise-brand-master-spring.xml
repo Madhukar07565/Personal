@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2015 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+
+   <context:annotation-config />
+	<bean id="baseDirectoryTravelogixCruiseBrandMaster" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogix/cruiseBrand/master" />
+	</bean>
+	
+	
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesTravelogixCruiseBrandMaster"
+		directory="#{baseDirectoryTravelogixCruiseBrandMaster}" filename-regex="cruise_brand-(\d+)\.csv"
+		comparator="fileOrderComparatorCruiseBrandMaster">
+		<int:poller fixed-rate="100" />
+	</file:inbound-channel-adapter>
+	
+	<bean id="fileOrderComparatorCruiseBrandMaster"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.FileOrderComparator">
+		<property name="prefixPriority">
+			<map>
+				<!-- default priority is 0 -->
+				<entry key="cruise_brand_master" value="150" />
+			</map>
+		</property>
+	</bean>
+	
+	
+	
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogixCruiseBrandMaster"
+		reply-channel="travelogixCruiseBandMasterBatchFilesProc" directory="#{baseDirectoryTravelogixCruiseBrandMaster}/processing"
+		delete-source-files="true" />
+
+	<int:service-activator input-channel="travelogixCruiseBandMasterBatchFilesProc"
+		output-channel="travelogixCruiseBandMasterBatchFilesHeaderInit" ref="travelogixCruiseBrandMasterHeaderSetupTask"
+		method="execute" />
+
+	<bean id="travelogixCruiseBrandMasterHeaderSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogixCruiseBrandMaster" />
+	</bean>
+	
+	<!-- 2) move the file to processing and setup header, partly site dependent -->
+	<int:service-activator input-channel="travelogixCruiseBandMasterBatchFilesHeaderInit"
+		output-channel="travelogixCruiseBrandMasterBatchFilesHeader" ref="headerInitTask"
+		method="execute" />
+	<bean id="headerInitTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderInitTask">
+		<property name="sequenceIdParser" ref="batchSequenceIdParser" />
+		<property name="languageParser" ref="batchLanguageParser" />
+		<property name="fallbackLanguage" value="en" />
+	</bean>
+
+	<bean id="batchSequenceIdParser"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.util.SequenceIdParser">
+		<property name="parser">
+			<bean class="de.hybris.platform.acceleratorservices.util.RegexParser">
+				<property name="regex" value="-(\d+)\.csv" />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="travelogixCruiseBrandMasterBatchFilesHeader"
+		output-channel="batchFilesTran" ref="travelogixCruiseBrandMasterBatchTransformerTask"
+		method="execute" />
+
+	<bean id="travelogixCruiseBrandMasterBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+	
+	
+	<!-- Common Header -->
+
+	<bean id="cruiseBrandMasterDefaultHeader" class="java.lang.String">
+		<constructor-arg>
+			<value># ImpEx for importing data into $CATALOG$
+				# ImpEx for importing data into $CATALOG$
+				$productCatalog=EZ-IN
+				$productCatalogName=ezeego1-IN
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+				$approved=approvalstatus(code)[default='approved']
+			</value>
+		</constructor-arg>
+	</bean>
+	<!-- End Of Common Header -->
+	
+<bean id="batchCnkCruiseBrandMasterConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_brand" p:converter-ref="batchCnkCruiseBrandMasterConverter" />
+		
+	<bean id="batchCnkCruiseBrandMasterConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{cruiseBrandMasterDefaultHeader}
+				INSERT_UPDATE CruiseBrand;$catalogVersion[unique=true];code[unique=true];commonID;name;brandName[unique=true];cruiseBrandDetails;financeControlID;notes;copiedFrom;affiliation(code);effectiveFromDate[dateformat=$dateformat];active;approvalStatus(code);reason;remarks
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'CruiseBrand'"/>
+   		</bean>
+  		</property>
+	</bean>
+		
+	<bean id="batchCruiseBrandMediaConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_brand" p:converter-ref="batchCruiseBrandMediaConverter" />
+
+	<bean id="batchCruiseBrandMediaConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK FacilityMedia
+				#{cruiseBrandMasterDefaultHeader}
+				$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+				$importFolder=file:$BASE_SOURCE_DIR$
+				INSERT_UPDATE Media;code[unique=true];mime[default='image/jpeg'];$catalogVersion;folder(qualifier)[default=images];realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator];company(CruiseBrand.code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{2};{3};{1};;{2};$importFolder/{2};{4}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'Media'"/>
+   		</bean>
+  		</property>
+	</bean>
+	<!-- Social Networking Details Feed -->
+	
+	<bean id="batchCnkSocialNetworkingConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_brand" p:converter-ref="batchCnkCruiseBrandSocialNetworkingConverter" />
+		
+	<bean id="batchCnkCruiseBrandSocialNetworkingConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{cruiseBrandMasterDefaultHeader}
+				INSERT_UPDATE SocialNetworkingDetails;socialNetworkingID[unique=true];socialNetworkingName;company(CruiseBrand.code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'SocialNetworkingDetails'"/>
+   		</bean>
+  		</property>
+	</bean>
+	
+	<!-- Email Address Feed -->
+	
+	<bean id="batchCnkBrandEmailAddressConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_brand" p:converter-ref="batchCnkBrandEmailAddressConverter" />
+		
+	<bean id="batchCnkBrandEmailAddressConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{cruiseBrandMasterDefaultHeader}
+				INSERT_UPDATE EmailAddress;newsLetterRequired;webpageAddress;displayName;emailAddress[unique=true];emailAddressType(code);company(CruiseBrand.code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'EmailAddresses'"/>
+   		</bean>
+  		</property>
+	</bean>	
+	<bean id="batchCnkBrandAddressConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_brand" p:converter-ref="batchBrandCnkAddressConverter" />
+		
+	<bean id="batchBrandCnkAddressConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{cruiseBrandMasterDefaultHeader}
+				INSERT_UPDATE Address;owner(CruiseBrand.code)[unique=true];streetname[unique=true];streetnumber;street3;street4;street5;postalcode;town;country(isocode);landmark;addressType(code);city(City.isocode);suburbDowntown(isocode);area;location(isocode)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'Address'"/>
+   		</bean>
+  		</property>
+	</bean>
+	
+	<bean id="batchCnkBrandWithAddressConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_brand" p:converter-ref="batchCnkAddressBrandMapConverter" />
+	
+	
+	<bean id="batchCnkAddressBrandMapConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{cruiseBrandMasterDefaultHeader}
+				UPDATE CruiseBrand;$catalogVersion[unique=true];code[unique=true];address(Address.streetname,Address.addressType(code))			
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}:{12}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'Address'"/>
+   		</bean>
+  		</property>
+	</bean>
+	
+	</beans>

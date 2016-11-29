@@ -1,0 +1,39 @@
+        <air1:AirInterfaceRQ xmlns:air="http://www.coxandkings.com/integ/suppl/air" xmlns:com="http://www.coxandkings.com/integ/suppl/common" xmlns:air1="http://www.coxandkings.com/integ/suppl/airinterface" xmlns:ns="http://www.opentravel.org/OTA/2003/05">
+         <air:RequestHeader xmlns:air2="http://www.coxandkings.com/integ/suppl/air">
+            <!--Optional:-->
+            <com:UserID>Venkatesh</com:UserID>
+            <com:SessionID>20160717T1347</com:SessionID>
+            <com:TransactionID>1347</com:TransactionID>
+            <!--Optional:-->
+            <com:SupplierCredentialsList>
+               <!--1 or more repetitions:-->
+               <com:SupplierCredentials>
+                  <com:SupplierID>SABRE</com:SupplierID>
+                  <com:Credentials>
+                     <com:Credential name="Username">1000</com:Credential>
+                     <com:Credential name="Password">table55</com:Credential>
+                     <com:Credential name="Organization">L7H8</com:Credential>
+                     <com:Credential name="PseudoCityCode">L7H8</com:Credential>
+                     <com:Credential name="CompanyCode">TN</com:Credential>
+                  </com:Credentials>
+               </com:SupplierCredentials>
+            </com:SupplierCredentialsList>
+         </air:RequestHeader>
+         <air1:RequestBody>
+            <air:OTA_AirAvailRQWrapper xmlns:air2="http://www.coxandkings.com/integ/suppl/air">
+               <air:SupplierID>SABRE</air:SupplierID>
+               <air:Sequence>1</air:Sequence>
+               <ns:OTA_AirAvailRQ  Version="1.00" Target="Test">
+                  <ns:POS>
+                     <ns:Source/>
+                  </ns:POS>
+                  <ns:OriginDestinationInformation RPH="1">
+                     <!--You have a CHOICE of the next 2 items at this level-->
+                     <ns:DepartureDateTime>2016-08-07T11:00:00</ns:DepartureDateTime>
+                     <ns:OriginLocation LocationCode="BOM"/>
+                     <ns:DestinationLocation LocationCode="DEL"/>
+                  </ns:OriginDestinationInformation>
+               </ns:OTA_AirAvailRQ>
+            </air:OTA_AirAvailRQWrapper>
+         </air1:RequestBody>
+      </air1:AirInterfaceRQ>

@@ -1,0 +1,26 @@
+
+Payment_Schedule;P101;ADVANCE;400;INR;;12-08-2016;NOTPAID;200;200;7
+
+Company_Info;Ezeego1;E000;E000
+
+List_Cut_Offs;HOURS;FINAL;Prior_To_Travel;10;5;1
+
+Free_Of_Cost_SeatsOrTickets;NO_OF_BOOKINGS;8;7;6.5;70
+
+Cut_Off_For_FreeSale;DAYS;Days20;Prior_To_Travel
+
+Cut_Offs_And_Charges;6;5;700;INR;AMOUNT;ABOVE
+
+Change_Request_Cut_Offs_And_Charges;BASE_FARE
+
+Change_Request_Penalty_Charges;DAYS;NAME_CHANGE;BASE_FARE
+
+Associate_Inventory
+
+Payment_Information;INR;500;10000;;20-06-2016
+
+Payment_Details_Vmpd;2562589;INR;100000;20000;10-09-2015
+
+Pre_Payment_Detail;FULL;creditcard;ICICIB;23456789;9876543;INR;675000;0;19-01-15;true;Payment done
+
+Inventory_Payment_Advice;Ezeego1;P301;PAID;Holiday_Inv_Def_0001;E000;E000;;IN;10000;20-06-2016;2562589;FULL;ICICIB

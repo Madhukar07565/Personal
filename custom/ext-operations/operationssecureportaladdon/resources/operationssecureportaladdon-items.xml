@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2016 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+
+  
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<itemtypes>
+<!--
+		<itemtype generate="true"
+		   code="MyProduct"
+		   jaloclass="com.cnk.travelogix.operations.jalo.MyProduct"
+		   extends="Product"
+		   autocreate="true"
+	   >
+			<attributes>
+				<attribute qualifier="myExampleInitialStringField" type="java.lang.String">
+					<description>My Example Initial String Value</description>
+					<modifiers initial="true"/>
+					<persistence type="property"/>
+				</attribute>
+
+				<attribute qualifier="myExampleBooleanField" type="java.lang.Boolean">
+					<description>Example Initial Boolean Field</description>
+               <persistence type="property"/>
+				</attribute>
+
+				<attribute qualifier="media" type="Media">
+					<persistence type="property"/>
+				</attribute>
+
+			</attributes>
+		</itemtype>
+-->
+
+        <itemtype code="CMSSecurePortalRestriction" jaloclass="com.cnk.travelogix.operations.jalo.restrictions.CMSSecurePortalRestriction" extends="AbstractRestriction" autocreate="true" generate="true">
+            <attributes>
+                <attribute qualifier="description" redeclare="true" type="java.lang.String">
+                    <persistence type="dynamic" attributeHandler="cmsSecurePortalRestrictionDynamicDescription"/>
+                    <modifiers write="false"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+		<itemtype code="CMSSite" autocreate="false" generate="false">
+			<attributes>
+				<attribute type="boolean" qualifier="requiresAuthentication">
+					<persistence type="property" />
+					<modifiers optional="false" />
+					<defaultvalue>true</defaultvalue>
+					<description>Indicates if the website requires authentication or not.</description>
+				</attribute>
+				<attribute type="boolean" qualifier="enableRegistration">
+					<persistence type="property" />
+					<modifiers optional="false" />
+					<defaultvalue>true</defaultvalue>
+					<description>Indicates if the website supports registration request.</description>
+				</attribute>
+			</attributes>
+		</itemtype>
+
+	</itemtypes>
+</items>

@@ -1,0 +1,32 @@
+$lang=en
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+
+
+################## ActivityProductSubType ##############################
+INSERT_UPDATE ActivityProductSubType;$catalogVersion;code[unique=true];startingPoint;endingPoint;duration;uniqueSellingPoint;isPickupAndDropOff;pickUpDropOffAddress;fromTime;toTime;exclusionDescription
+;;3001;Newyork;SanJose;10;;true;;;;;
+;;3002;Newyork;California;15;;true;;;;;
+
+################## Vendor ##################
+INSERT_UPDATE Vendor;code[unique=true];name
+;default;Default Vendor
+
+################## Warehouse ###############
+INSERT_UPDATE Warehouse;code[unique=true];name;vendor(code)[default=default];default[default=true]
+;default;Default Warehouse
+;warehouse_s;Warehouse South
+
+################## ActivityInventoryDetail ###############
+INSERT_UPDATE ActivityInventoryDetail;travelDates[dateformat=dd-MM-yyyy hh:mm:ss];requested;timeOfDay(code);time;auditoriumName[lang=$lang];seatingClass(code);remark;ticket;seats;product(code,$catalogVersion)[unique=true];warehouse(Warehouse.code)
+;21-04-2016 12:00:00,25-04-2016 12:00:00;15;MIDNIGHT;05:00;Bel's auditorium;AC;the Lido is cabaret;TRUE;TRUE;AP1001;warehouse_s
+;23-04-2016 12:00:00,28-04-2016 12:00:00;20;MIDDAY;06:00;Ashley auditorium;NON_AC;the Lido is cabaret;TRUE;TRUE;AP1002;warehouse_s
+;28-04-2016 12:00:00,30-04-2016 12:00:00;20;AFTERNOON;07:00;Ashley auditorium;EXCLUSIVE;the Lido is cabaret;TRUE;TRUE;AP1003;warehouse_s
+
+################## ActivityInventoryRequest ###############
+INSERT_UPDATE ActivityInventoryRequest;$catalogVersion;id[unique=true];product(ActivityProduct.code);productCategorySubType(Category.code,$catalogVersion);productNameSubtype(ActivityProductSubType.code);city(City.isocode);detailedInventoryRequestGrid;dateGroupedInventoryRequestGrid;inventoryDetails(AccoInventoryDetail.product(code,$catalogVersion))
+;;11117;AP1001;C001ST001;3001;AAA;TRUE;TRUE;AP1001
+;;11118;AP1002;C001ST002;3002;AAA;TRUE;TRUE;AP1002
+;;11119;AP1003;C001ST003;3002;AAA;TRUE;TRUE;AP1003

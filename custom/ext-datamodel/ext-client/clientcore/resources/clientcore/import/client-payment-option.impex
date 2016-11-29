@@ -1,0 +1,56 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$approved=approvalstatus(code)[default='approved']
+$lang-EN
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.common.initialdata.setup.InitialDataSystemSetup&\productsetup\import\images\96Wx96H
+
+####DUMMY DATA###
+
+
+INSERT_UPDATE RateCode;code[unique=true];name[lang=en]
+;76589;Rate Code 1
+;76590;Rate Code 2
+;76591;Rate Code 3
+
+INSERT_UPDATE RateType;code[unique=true];name[lang=en]
+;18561002;Published Rates
+;18561003;Contracted Rates
+;18561004;Display Rates
+
+INSERT_UPDATE PointOfSale;pointOfSale(code)[unique=true]
+;WEBSITE
+
+INSERT_UPDATE UserGroup;UID[unique=true];locname[lang=en];backOfficeLoginDisabled;paymentOptions(ClientPaymentOption.paymentMode(ModeOfPayment.code))
+;123;Backoffice admin group;false;CREDIT_CARD
+
+##########SurchargeLevelApplicability##########
+INSERT_UPDATE SurchargeLevelApplicability;surchargeType(code)[unique=true];surchargeSubType(code)
+;ROOM_SURCHARGE;DRIVER_ALLOWANCE
+
+##########AdvanceApplicability##########
+INSERT_UPDATE AdvanceApplicability;owner(SurchargeLevelApplicability.surchargeType(code))[unique=true];pointOfSales(pointOfSale(code));nationality(Country.isocode);countryOfResidence(Country.isocode);ancillary(Ancillary.code);applicableCategoriesAndProduct(CategoriesAndProductLevelApplicability.category(Category.code,$catalogVersion));surchargesApplicability(SurchargeLevelApplicability.surchargeType(code))
+;ROOM_SURCHARGE;WEBSITE;IN;IN;ANC111;C001;ROOM_SURCHARGE;
+
+##########AcquirerInfo##########
+INSERT_UPDATE AcquirerInfo;supplier(MerchantIdentificationDetails.midNumber);clientMSFFeeValue;clientMSFFeePercentage;cardTypes(CreditCardType.code);advanceApplicability(AdvanceApplicability.owner(SurchargeLevelApplicability.surchargeType(code)))[unique=true]
+;121;10.0;20.0;amex;ROOM_SURCHARGE
+
+##########ClientPaymentOption##########
+INSERT_UPDATE ClientPaymentOption;paymentMode(ModeOfPayment.code)[unique=true];acquirers(AcquirerInfo.advanceApplicability(AdvanceApplicability.owner(SurchargeLevelApplicability.surchargeType(code))))
+;CREDIT_CARD;ROOM_SURCHARGE
+
+##########CategoriesAndProductLevelApplicability##########
+INSERT_UPDATE CategoriesAndProductLevelApplicability;category(Category.code,$catalogVersion)[unique=true];productCategorySubtype(ProductCategorySubtype.code);product(Product.code);productVariant(VariantProduct.code)
+;C001;C001ST100;87762;
+
+##########RoomLevelApplicability##########
+INSERT_UPDATE RoomLevelApplicability;roomCategory(RoomCategory.code)[unique=true];roomType(RoomType.code)[unique=true]
+;STANDARD;DOUBLE_ROOM
+
+
+##########SupplierRateTypeAndCode##########
+INSERT_UPDATE SupplierRateTypeAndCode;rateType(RateType.code)[unique=true];rateCode(RateCode.code)[unique=true]
+;18561002;76589

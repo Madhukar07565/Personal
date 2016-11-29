@@ -1,0 +1,54 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$approved=approvalstatus(code)[default='approved']
+
+
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.product.transport.masters.core.setup.TransportProductSetup&\transportproductmasterscore\import\sampledata\images\96Wx96H
+
+# Media Folders
+INSERT_UPDATE MediaFolder;qualifier[unique=true];path[unique=true]
+;CruiseCompanyMedia;CruiseCompanyMasterMedia
+
+###########################  Media ##########################
+INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier)
+;CruiseCompany-123;$siteResource\CruiseCompany-123.jpg;;;CruiseCompanyMedia
+;CruiseCompany-456;$siteResource\CruiseCompany-456.jpg;;;CruiseCompanyMedia
+
+################## Affiliation ##############################
+INSERT_UPDATE Affiliation;code[unique=true];name
+;1201;FIICCO
+
+INSERT_UPDATE Suburb;isocode[unique=true];name
+;AE;Andheri(East)
+
+INSERT_UPDATE CruiseCompany;$catalogVersion[unique=true];code[unique=true];commonID;name;financeControlID;notes;copiedFrom;affiliation(code);effectiveFromDate[dateformat=$dateformat];active;approvalStatus(code);reason;remarks;medias(Media.code)
+;;CruiseCompany_8556;9876543;Star Cruise;6785;;copiedFrom;1201;01-01-2017;false;approved;;;CruiseCompany-123
+;;CruiseCompany_9030;1782446;Royal Caribbean International;6786;;copiedFrom1;1201;01-01-2017;false;approved;;;CruiseCompany-456
+
+
+#INSERT_UPDATE Address;addressType;country;city;Suburbs;Area;Location
+###########################  AddressDetails ##########################
+INSERT_UPDATE Address;owner(CruiseCompany.code)[unique=true];streetname[unique=true];streetnumber;street3;street4;street5;postalcode;town;country(isocode);landmark;addressType(code);city(City.isocode);suburbDowntown(isocode);area;location(isocode)
+;CruiseCompany_8556;5 Canton Road;1528 Ocean Centre;;;;400 059;Mumbai;IN;near ABC Hospital;HEADQUARTER;BOM;AE;;AAA
+;CruiseCompany_9030;Caribbean Way;1050;;;;400 059;Mumbai;IN;near ABC Hospital;CORPORATE;BOM;AE;;AAA
+
+UPDATE CruiseCompany;$catalogVersion[unique=true];code[unique=true];address(Address.streetname,Address.addressType(code))
+;;CruiseCompany_8556;5 Canton Road:HEADQUARTER
+;;CruiseCompany_9030;Caribbean Way:CORPORATE
+
+
+INSERT_UPDATE SocialNetworkingDetails;socialNetworkingID[unique=true];socialNetworkingName;company(CruiseCompany.code)
+;1111;facebook;CruiseCompany_8556
+;2222;twitter;CruiseCompany_8556
+;3333;linkedin;CruiseCompany_9030
+
+
+#INSERT_UPDATE EmailAddress;emailAddressType
+INSERT_UPDATE EmailAddress;newsLetterRequired;webpageAddress;displayName;emailAddress[unique=true];emailAddressType(code);company(CruiseCompany.code)
+;true;http://www.msccruises.com;cruisemail;expressuser@expresscheckout.com;COMPANY;CruiseCompany_8556
+;false;gmail;cruisemail;expressuser@gmail.com;COMPANY;CruiseCompany_8556
+;true;www.yahoo.com;newcruisemail;expressuser@yahoo.com;COMPANY;CruiseCompany_9030
+

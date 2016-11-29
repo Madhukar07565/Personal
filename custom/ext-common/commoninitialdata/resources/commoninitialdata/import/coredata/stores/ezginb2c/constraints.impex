@@ -1,0 +1,2 @@
+INSERT_UPDATE AttributeConstraint;id[unique=true];annotation[allownull=true];descriptor(enclosingType(code),qualifier);qualifier;severity(code,itemtype(code));target;type(code);active
+;CustomerName;de.hybris.platform.validation.annotations.NotBlank;Customer:name;name;ERROR:Severity;de.hybris.platform.core.model.user.CustomerModel;Customer;false

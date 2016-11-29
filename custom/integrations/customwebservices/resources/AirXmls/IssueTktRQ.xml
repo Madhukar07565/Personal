@@ -1,0 +1,42 @@
+<air1:AirInterfaceRQ xmlns:air="http://www.coxandkings.com/integ/suppl/air" xmlns:com="http://www.coxandkings.com/integ/suppl/common" xmlns:air1="http://www.coxandkings.com/integ/suppl/airinterface" xmlns:ns="http://www.opentravel.org/OTA/2003/05">
+  <air:RequestHeader>
+            <com:UserID>Venkatesh</com:UserID>
+        <com:SessionID>1739</com:SessionID>
+        <com:TransactionID>1739</com:TransactionID>
+            <com:SupplierCredentialsList>
+               <com:SupplierCredentials>
+               <com:SupplierID>SABRE</com:SupplierID>
+               <com:Credentials>
+                     <com:Credential name="Username">1000</com:Credential>
+                     <com:Credential name="Password">table55</com:Credential>
+                     <com:Credential name="Organization">L7H8</com:Credential>
+                     <com:Credential name="PseudoCityCode">L7H8</com:Credential>
+                     <com:Credential name="CompanyCode">TN</com:Credential>
+                  </com:Credentials>
+                </com:SupplierCredentials>
+            </com:SupplierCredentialsList>
+         </air:RequestHeader>
+    <air1:RequestBody>
+   <air:OTA_AirDemandTicketRQWrapper>
+            <air:SupplierID>SABRE</air:SupplierID>
+            <air:Sequence>1</air:Sequence>
+              <ns:OTA_AirDemandTicketRQ Version="1.0">
+      <!--Optional:-->
+      <ns:DemandTicketDetail>
+        <!--0 to 4 repetitions:-->
+        <ns:BookingReferenceID ID="QTZZKB" Type="24">
+          <!--Optional:-->
+          <!--Optional:-->
+        </ns:BookingReferenceID>
+        <ns:PaymentInfo PaymentType="CA"/>
+        <ns:TPA_Extensions>
+          <air:CarrierCode>9W</air:CarrierCode>
+          <air:NumResponses>1</air:NumResponses>
+        </ns:TPA_Extensions>
+      </ns:DemandTicketDetail>
+    </ns:OTA_AirDemandTicketRQ>
+  
+ </air:OTA_AirDemandTicketRQWrapper>
+             
+            </air1:RequestBody>
+</air1:AirInterfaceRQ>

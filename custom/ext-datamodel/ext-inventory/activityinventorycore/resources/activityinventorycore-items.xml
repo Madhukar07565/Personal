@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<enumtypes>
+		<enumtype generate="true" code="TimeOfDay" autocreate="true"
+			dynamic="true">
+			<description>Time Of Day</description>
+			<value code="MIDNIGHT" />
+			<value code="MIDDAY" />
+			<value code="MORNING" />
+			<value code="AFTERNOON" />
+			<value code="EVENING" />
+			<value code="DAWN" />
+			<value code="DUSK" />
+			<value code="DAY" />
+			<value code="NIGHT" />
+		</enumtype>
+	</enumtypes>
+
+	<relations>
+		<relation
+			code="ActivitySupplierAdvanceDefinitionToChangeRequestPenaltyCharges"
+			localized="false">
+			<sourceElement type="ActivitySupplierAdvanceDefinition"
+				cardinality="one" qualifier="activitySupplierAdvanceDefinition">
+			</sourceElement>
+			<targetElement type="ChangeRequestPenaltyCharges"
+				cardinality="many" qualifier="changeRequestPenaltyCharges">
+			</targetElement>
+		</relation>
+
+		<!-- <relation code="ActivitySupplierAdvanceDefinitionToOverbookingLimit" 
+			localized="false"> <sourceElement type="ActivitySupplierAdvanceDefinition" 
+			cardinality="one" qualifier="activitySupplierAdvanceDefinition"> </sourceElement> 
+			<targetElement type="OverBookingLimit" cardinality="many" qualifier="overbookingLimit"> 
+			</targetElement> </relation> -->
+
+		<relation code="ActivitySupplierAdvanceDefinitionToPenaltyCharges"
+			localized="false">
+			<sourceElement type="ActivitySupplierAdvanceDefinition"
+				cardinality="one" qualifier="activitySupplierAdvanceDefinition">
+			</sourceElement>
+			<targetElement type="ActivityPenaltyCharges"
+				cardinality="many" qualifier="penaltyCharges">
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityPenaltyChargesToCharges" localized="false">
+			<sourceElement type="ActivityPenaltyCharges"
+				cardinality="one" qualifier="activityPenaltyCharges">
+			</sourceElement>
+			<targetElement type="ActivityCutoffAndCharges"
+				cardinality="many" qualifier="charges">
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityCompanyAdvanceDefinitionToPenaltyCharges"
+			localized="false">
+			<sourceElement type="ActivityCompanyAdvanceDefinition"
+				cardinality="one" qualifier="activityCompanyAdvanceDefinition">
+			</sourceElement>
+			<targetElement type="ActivityCompanyPenaltyCharges"
+				cardinality="many" qualifier="penaltyCharges">
+			</targetElement>
+		</relation>
+
+		<relation
+			code="AbstractActivityCompanySpecificInventoryToInventoryAssociations"
+			localized="false">
+			<sourceElement type="AbstractActivityCompanySpecificInventory"
+				cardinality="one" qualifier="abstractActivityCompanySpecificInventory">
+			</sourceElement>
+			<targetElement type="AssociateInventory" cardinality="many"
+				qualifier="inventoryAssociations">
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityInventoryDefinitionToDistributedInventories"
+			localized="false">
+			<sourceElement type="ActivityInventoryDefinition"
+				cardinality="one" qualifier="activityInventoryDefinition">
+			</sourceElement>
+			<targetElement type="AbstractActivityCompanySpecificInventory"
+				cardinality="many" qualifier="distributedInventories">
+			</targetElement>
+		</relation>
+
+		<relation code="ActivityInventoryDefinitionToInventoryDetails"
+			localized="false">
+			<sourceElement type="ActivityInventoryDefinition"
+				cardinality="one" qualifier="activityInventoryDefinition">
+			</sourceElement>
+			<targetElement type="ActivityInventoryDetail"
+				cardinality="many" qualifier="inventoryDetails">
+			</targetElement>
+		</relation>
+	</relations>
+
+	<itemtypes>
+		<itemtype code="ActivityInventoryRequest" autocreate="true"
+			generate="true" extends="AbstractInventoryRequest"
+			jaloclass="com.cnk.travelogix.datamodel.activityinventory.core.jalo.ActivityInventoryRequest">
+			<description>Activity Inventory Request</description>
+			<deployment table="actinvreq" typecode="21134" />
+			<attributes>
+				<attribute qualifier="product" type="ActivityProduct">
+					<description>Product Name</description>
+					<modifiers read="true" write="true" optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="productNameSubtype" type="ActivityProductSubtype">
+					<description>Product Name Subtype</description>
+					<modifiers read="true" write="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="city" type="City">
+					<description>City</description>
+					<modifiers read="true" write="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="detailedInventoryRequestGrid" type="java.lang.Boolean">
+					<description>Detailed Inventory Request Grid</description>
+					<modifiers read="true" write="true" />
+					<defaultvalue>Boolean.FALSE</defaultvalue>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="dateGroupedInventoryRequestGrid"
+					type="java.lang.Boolean">
+					<description>Date Grouped Inventory Request Grid</description>
+					<modifiers read="true" write="true" />
+					<defaultvalue>Boolean.FALSE</defaultvalue>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="AbstractActivityInventoryDetail" autocreate="true"
+			abstract="true" extends="AbstractInventoryDetail"
+			jaloclass="com.cnk.travelogix.datamodel.activityinventory.core.jalo.AbstractActivityInventoryDetail">
+			<description>Abstract Activity Inventory Detail</description>
+			<attributes>
+				<attribute qualifier="timeOfDay" type="TimeOfDay">
+					<description>Time Of Day</description>
+					<modifiers read="true" write="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="time" type="java.lang.String">
+					<description>Time</description>
+					<modifiers read="true" write="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="auditoriumName" type="localized:java.lang.String">
+					<description>Auditorium Name</description>
+					<modifiers read="true" write="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="seatingClass" type="RailSeatClass">
+					<description>Seating Class</description>
+					<modifiers read="true" write="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="remark" type="java.lang.String">
+					<description>Remark</description>
+					<modifiers read="true" write="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="ticket" type="java.lang.Boolean">
+					<description>Ticket</description>
+					<defaultvalue>Boolean.FALSE</defaultvalue>
+					<modifiers read="true" write="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="seats" type="java.lang.Boolean">
+					<description>Seats</description>
+					<modifiers read="true" write="true" />
+					<defaultvalue>Boolean.FALSE</defaultvalue>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="ActivityInventoryDetail" autocreate="true"
+			generate="true" extends="AbstractActivityInventoryDetail"
+			jaloclass="com.cnk.travelogix.datamodel.activityinventory.core.jalo.ActivityInventoryDetail">
+			<description>Activity Inventory Detail</description>
+			<deployment table="activityinvdetail" typecode="23073" />
+		</itemtype>
+
+		<itemtype code="ActivityTicketDetail" autocreate="true"
+			generate="true" extends="ActivityInventoryDetail"
+			jaloclass="com.cnk.travelogix.datamodel.activityinventory.core.jalo.ActivityTicketDetail">
+			<description>Activity Ticket Detail</description>
+			<attributes>
+				<attribute qualifier="ticketType" type="RailSeatClass">
+					<description>Ticket Type</description>
+					<modifiers read="true" write="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="ActivityPaxOrSeatDetail" autocreate="true"
+			generate="true" extends="ActivityInventoryDetail"
+			jaloclass="com.cnk.travelogix.datamodel.activityinventory.core.jalo.ActivityPaxOrSeatDetail">
+			<description>Activity Pax Or Seat Details</description>
+		</itemtype>
+
+		<itemtype code="ActivitiesDate" autocreate="true" generate="true"
+			extends="ActivityInventoryDetail"
+			jaloclass="com.cnk.travelogix.datamodel.activityinventory.core.jalo.ActivitiesDate">
+			<description>Activities Dates</description>
+			<attributes>
+				<attribute qualifier="timeFrom" type="java.lang.String">
+					<description>Time From</description>
+					<modifiers read="true" write="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="timeTo" type="java.lang.String">
+					<description>Time To</description>
+					<modifiers read="true" write="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<typegroup name="ActivityInventoryDefinitionGroup">
+			<itemtype code="ActivityInventoryDefinition" autocreate="true"
+				generate="true" extends="AbstractProductInventoryDefinition"
+				jaloclass="com.cnk.travelogix.activity.inventory.core.jalo.ActivityInventoryDefinition">
+				<description>Activity Inventory Definition</description>
+				<deployment table="actinvdefinition" typecode="21807" />
+				<attributes>
+					<attribute qualifier="city" type="City">
+						<description>City</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="country" type="Country">
+						<description>Country</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="rateType" type="RateType">
+						<description>Rate Type</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="effectiveFrom" type="java.util.Date">
+						<description>Effective From Date</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="confirmedInventory" type="java.lang.Long">
+						<description>Confirmed Inventory</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="advanceDefinition" type="ActivitySupplierAdvanceDefinition">
+						<description>Activity Advance Definition</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="companyAdvanceDefinition" type="ActivityCompanyAdvanceDefinition">
+						<description>Company Advance Definition</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ActivityFreeOfCostSeatsOrTickets"
+				autocreate="true" generate="true" extends="FreeOfCostSeatsOrTickets"
+				jaloclass="com.cnk.travelogix.activity.inventory.core.jalo.ActivityFreeOfCostSeatsOrTickets">
+				<description>Activity Free Of Cost Seats Or Tickets</description>
+				<attributes>
+					<attribute qualifier="priceComponent" type="NonAirPriceComponentType">
+						<description>Price Component</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ActivitySupplierAdvanceDefinition"
+				autocreate="false" generate="true">
+				<description>Extending the AbstractSupCommercialAdvDef in  suppliercommercialscore extension</description>
+				<attributes>
+					<attribute qualifier="blockOutDates"
+						type="de.hybris.platform.util.StandardDateRange">
+						<description>Block out Dates</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="activityFreeOfCostSeatsOrTickets"
+						type="ActivityFreeOfCostSeatsOrTickets">
+						<description>Activity Free Of Cost Seats Or Tickets</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ActivityPenaltyCharges" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.activity.inventory.core.jalo.ActivityPenaltyCharges">
+				<description>Activity Penalty Charges</description>
+				<deployment table="actpenaltycharge" typecode="21135" />
+				<attributes>
+					<attribute qualifier="definedBy" type="DefinedBy">
+						<description>Policy 
+						Defined By Type</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="appliedOn" type="AppliedOn">
+						<description>Applied 
+						On</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="releaseTime" type="java.lang.String">
+						<description>Release Time</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="utilizationThreshold" type="java.lang.Long">
+						<description>Utilization Threshold</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="utilizationThresholdOf" type="UtilizationThresholdType">
+						<description>Utilization Threshold Of</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="specificDates" type="DateCollection">
+						<description>Specific Dates</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="dateRange"
+						type="de.hybris.platform.util.StandardDateRange">
+						<description>Date Range</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ActivityCompanyPenaltyCharges" autocreate="true"
+				generate="true" extends="ActivityPenaltyCharges"
+				jaloclass="com.cnk.travelogix.activity.inventory.core.jalo.ActivityCompanyPenaltyCharges">
+				<description>Activity Company Penalty Charges</description>
+				<attributes>
+
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ActivityCutoffAndCharges" autocreate="true"
+				generate="true" extends="CutOffsAndCharges"
+				jaloclass="com.cnk.travelogix.activity.inventory.core.jalo.ActivityCutoffAndCharges">
+				<description>Activity Cut off And Charges</description>
+				<attributes>
+
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ActivityCompanyAdvanceDefinition"
+				autocreate="true" generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.activity.inventory.core.jalo.ActivityCompanyAdvanceDefinition">
+				<description>Activity Company Advance Definition</description>
+				<deployment table="actcompadvandef" typecode="21136" />
+				<attributes>
+					<attribute qualifier="blockOutDates"
+						type="de.hybris.platform.util.StandardDateRange">
+						<description>Block Out Dates</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="overBookingAllowed" type="java.lang.Boolean">
+						<description>Over Booking Allowed</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AbstractActivityCompanySpecificInventory"
+				autocreate="true" generate="true" extends="GenericItem" abstract="true"
+				jaloclass="com.cnk.travelogix.activity.inventory.core.jalo.AbstractActivityCompanySpecificInventory">
+				<description>Activity Company Advance Definition</description>
+				<attributes>
+               <attribute qualifier="stopSales" type="java.Lang.Boolean">
+						<description>Stop Sales</description>
+						<persistence type="property" />
+						<defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="liabilityOnUtilization" type="java.Lang.Double">
+						<description>Liability On Utilization</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ActivityOtherCompanyInventoryDistribution"
+				autocreate="true" generate="true"
+				extends="AbstractActivityCompanySpecificInventory"
+				jaloclass="com.cnk.travelogix.activity.inventory.core.jalo.ActivityOtherCompanyInventoryDistribution">
+				<description>Activity Other Company Inventory Distribution</description>
+				<deployment table="activothcominvedist" typecode="21137" />
+				<attributes>
+					<attribute qualifier="distributionToCompany" type="CatalogVersion">
+						<description>Distribution To Company</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ActivityClientInventoryDistribution"
+				autocreate="true" generate="true"
+				extends="AbstractActivityCompanySpecificInventory"
+				jaloclass="com.cnk.travelogix.activity.inventory.core.jalo.ActivityClientInventoryDistribution">
+				<description>Activity Client Inventory Distribution</description>
+				<deployment table="activclientinvendis" typecode="21138" />
+				<attributes>
+					<attribute qualifier="clientType" type="ClientType">
+						<description>Client Type</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientName" type="Principal">
+						<description>Client Name</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientGroup" type="B2BUserGroup">
+						<description>Client Group</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+
+			<itemtype code="ActivityWithinCompanyInventoryDistribution"
+				autocreate="true" generate="true"
+				extends="AbstractActivityCompanySpecificInventory"
+				jaloclass="com.cnk.travelogix.activity.inventory.core.jalo.ActivityWithinCompanyInventoryDistribution">
+				<description>Activity Within Company Inventory Distribution</description>
+				<attributes>
+					<attribute qualifier="sbu" type="StrategicBusinessUnit">
+						<description>SBU</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="bu" type="BusinessUnit">
+						<description>BU</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="market" type="Market">
+						<description>Market</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="distributionChannel" type="DistributionChannel">
+						<description>Distribution Channel</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="division" type="Division">
+						<description>Division</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="salesOffice" type="SalesOffice">
+						<description>Sales Office</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="settleWith" type="java.lang.String">
+						<description>Settle With</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

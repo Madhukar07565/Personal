@@ -1,0 +1,776 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+	<collectiontypes>
+		<collectiontype code="CountryList" elementtype="Country" autocreate="true" generate="true" type="list" />
+		<collectiontype code="PassengerTypeList" elementtype="PaxType" autocreate="true" generate="true" type="list" />
+		<collectiontype code="RoomCategoryList" elementtype="RoomCategory" autocreate="true" generate="true" type="list" />
+		<collectiontype code="RoomTypeList" elementtype="RoomType" autocreate="true" generate="true" type="list" />
+		<collectiontype code="TrvlrRatingList" elementtype="TrvlrRating" autocreate="true" generate="true" type="list" />
+		<collectiontype code="MealPlanList" elementtype="MealPlanType" autocreate="true" generate="true" type="list" />
+		<collectiontype code="ReservationBookingDesignatorList" elementtype="ReservationBookingDesignator" autocreate="true" generate="true" type="list" />
+		<collectiontype code="JourneyTypeList" elementtype="JourneyType" autocreate="true" generate="true" type="list" />
+		<collectiontype code="DealCodeList" elementtype="DealCode" autocreate="true" generate="true" type="list" />
+		<collectiontype code="TourCodeList" elementtype="java.lang.String" autocreate="true" generate="true" type="list" />
+	</collectiontypes>
+
+	<relations>
+		<relation code="ClientCompanyCommercialDetailToAdditionalPayable" localized="false"
+			autocreate="true" generate="false">
+			<sourceElement type="ClientCompanyCommercialDetail" cardinality="one" qualifier="clientCompanyCommercial" />
+			<targetElement type="AbstractCompanyCommercial" cardinality="many" qualifier="additionalPayables" />
+		</relation>
+
+		<relation code="ClientCompanyCommercialDetailToAdditionalRecievable" localized="false"
+			autocreate="true" generate="false">
+			<sourceElement type="ClientCompanyCommercialDetail" cardinality="one" qualifier="clientCompanyCommercial" />
+			<targetElement type="AbstractCompanyCommercial" cardinality="many" qualifier="additionalReceivables" />
+		</relation>
+
+		<relation code="ClientCompanyCommercialDetailToRetensionPayable" localized="false"
+			autocreate="true" generate="false">
+			<sourceElement type="ClientCompanyCommercialDetail" cardinality="one" qualifier="clientCompanyCommercial" />
+			<targetElement type="AbstractCompanyCommercial" cardinality="many" qualifier="retentionPayables" />
+		</relation>
+
+		<relation code="ClientCompanyCommercialDetailToRetensionRecievable" localized="false"
+			autocreate="true" generate="false">
+			<sourceElement type="ClientCompanyCommercialDetail" cardinality="one" qualifier="clientCompanyCommercial" />
+			<targetElement type="AbstractCompanyCommercial" cardinality="many" qualifier="retentionReceivables" />
+		</relation>
+		
+		<!-- <relation code="ClientCompanyCommercialDetailToSupplierCommercials" localized="false"
+			autocreate="true" generate="false">
+			<sourceElement type="ClientCompanyCommercialDetail" cardinality="one" qualifier="clientCompanyCommercial" />
+			<targetElement type="AbstractCommercialDefinition" cardinality="many" qualifier="supplierCommercials" />
+		</relation> -->
+		
+		<relation code="ClientCompanyCommercialDetailToMarkups" localized="false"
+			autocreate="true" generate="false">
+			<sourceElement type="ClientCompanyCommercialDetail" cardinality="one" qualifier="clientCompanyCommercialDetail" />
+			<targetElement type="MarkUpCompanyCommercial" cardinality="many" qualifier="markups" />
+		</relation>
+
+		<relation code="BudgetMargin2ClientCompanyCommercialDetail"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="budgetMargin" type="BudgetMargin"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="commercials"
+				type="ClientCompanyCommercialDetail" cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		
+		<relation code="PrincipalToBudgetMargin" 
+			localized="false">
+			<sourceElement type="Principal" cardinality="one"
+				qualifier="client">
+			</sourceElement>
+			<targetElement type="BudgetMargin" cardinality="many"
+				qualifier="clientCommercial">
+			</targetElement>
+		</relation>
+		
+		<relation code="AbstractClientCompanyAdvanceDefinition2Ancillary" localized="false">
+			<sourceElement type="AbstractClientCompanyAdvanceDefinition" cardinality="one" qualifier="absclntCompanyAdvanceDefinition" />
+			<targetElement type="Ancillary" cardinality="many" qualifier="ancillaries">
+				<modifiers optional="false"/>
+			</targetElement>
+		</relation>
+		
+		<relation code="FlightClientCompanyAdvanceDefinition2FlightNumber" autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="flightCompanyAdvanceDefinition" type="FlightClientCompanyAdvanceDefinition" cardinality="one" />
+			<targetElement qualifier="flightNumbers" type="FlightNumber" cardinality="many">
+				<modifiers optional="false"/>
+			</targetElement>
+		</relation>
+		
+		<relation code="FlightClientCompanyAdvanceDefinition2FareDetail" autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="flightCompAdvDefFare" type="FlightClientCompanyAdvanceDefinition" cardinality="one"  />
+			<targetElement qualifier="fareDetails" type="FareDetail" cardinality="many">
+				<modifiers optional="false"/>
+			</targetElement>
+		</relation>
+		
+		<relation code="AbstractClientCompanyAdvanceDefinition2Product" localized="false">
+			<sourceElement qualifier="abstcompclntAdvDef" type="AbstractClientCompanyAdvanceDefinition" cardinality="one" />
+			<targetElement qualifier="products" type="Product" cardinality="many">
+				<modifiers optional="false"/>
+			</targetElement>
+		</relation>
+		
+		<relation code="AbstractClientCompanyAdvanceDefinition2TravelDestination"
+			localized="false">
+			<sourceElement type="AbstractClientCompanyAdvanceDefinition"
+				cardinality="one" qualifier="abstcompclntAdvDefTravelDest" />
+			<targetElement type="TravelDestination" cardinality="many"
+				qualifier="travelDestination" />
+		</relation>
+		
+		<relation code="OtherFeeCompanyCommercial2Fees" autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="otherFee" type="OtherFeeCompanyCommercial" cardinality="one" />
+			<targetElement qualifier="fees" type="Fees" cardinality="many"  >
+				<modifiers optional="false" />
+			</targetElement>
+        </relation>
+
+		<relation code="PenaltyKickBackFeeCompanyCommercial2Criteria" autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="penaltyKickBackFee" type="PenaltyKickBackFeeCompanyCommercial" cardinality="one" />
+			<targetElement qualifier="criterias" type="Criteria" cardinality="many">
+			 <modifiers optional="false"/>
+			</targetElement>
+        </relation>
+		
+		<relation code="PenaltyKickBackFeeCompanyCommercial2Penalty" autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="penaltyKickBackFee" type="PenaltyKickBackFeeCompanyCommercial" cardinality="one" />
+			<targetElement qualifier="penalties" type="Penalty" cardinality="many" >
+				<modifiers optional="false"/>
+			</targetElement>
+		</relation>
+	</relations>
+	
+	<itemtypes>
+			<itemtype code="AbstractCompanyCommercial" abstract="true" extends="AbstractCommercialDefinition"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.AbstractCompanyCommercial">
+				<attributes>
+					<attribute qualifier="uid" type="java.lang.String">
+						<persistence type="property" />
+					</attribute>
+					<attribute redeclare="true" qualifier="commercialHead" type="CommercialHead">
+						<persistence type="property" />
+					</attribute>
+					<attribute redeclare="true" qualifier="commercialType" type="CommercialType">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="companyFareComponent" type="NonAirPriceComponentType">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="companyCurrency" type="Currency ">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="companyAmount" type="java.lang.Double">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="companyPercentage" type="java.lang.Double">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientFareComponent" type="NonAirPriceComponentType">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientCurrency" type="Currency">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientAmount" type="java.lang.Double">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientPercentage" type="java.lang.Double">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="validFrom " type="java.util.Date">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="validTo" type="java.util.Date">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="advanceDefinition" type="AbstractClientCompanyAdvanceDefinition">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="rateType" type="RateType">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="slabType" type="CommercialSlabType">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="OveridingCompanyCommerical" autocreate="true" generate="true" extends="AbstractCompanyCommercial"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.OveridingCompanyCommerical">
+				<deployment table="overridingcompnycomrcial" typecode="24004" />
+			</itemtype>
+			
+			<itemtype code="StandardCompanyCommercial" autocreate="true" generate="true" extends="AbstractCompanyCommercial"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.StandardCompanyCommercial">
+				<deployment table="standardcompnycomrcial" typecode="24014" />
+			</itemtype>
+			
+			<itemtype code="MarkUpCompanyCommercial" autocreate="true" generate="true" extends="AbstractCompanyCommercial"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.MarkUpCompanyCommercial">
+				<deployment table="markupcompany" typecode="24017" />
+				<attributes>
+					<attribute qualifier="companyMinSellingPrice" type="java.lang.Double">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="companyMinSellingCurrency" type="Currency">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientMinSellingPrice" type="java.lang.Double">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientMinSellingCurrency" type="Currency">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="TerminationFeeCompanyCommercial" autocreate="true" generate="true" extends="AbstractCompanyCommercial"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.TerminationFeeCompanyCommercial">
+				<deployment table="terminationfee" typecode="24022" />
+				<attributes>
+					<attribute redeclare="true" qualifier="commercialHead" type="CommercialHead">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="intrest" type="java.lang.Double">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="TopUpIncentiveCompanyCommercial" autocreate="true" generate="true" extends="AbstractCompanyCommercial"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.TopUpIncentiveCompanyCommercial">
+				<deployment table="topupincentive" typecode="24023" />
+				<attributes>
+					<attribute qualifier="modeOfPayment" type="ModeOfPayment">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="bankName" type="Bank">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="singleTopUp" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="topUpPeriod" type="OpeningSchedule">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="AbstractLookToBookCompanyCommercial" autocreate="true" generate="true" abstract="true" extends="AbstractCompanyCommercial"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.AbstractLookToBookCompanyCommercial">
+				<attributes>
+					<attribute qualifier="waiver" type="de.hybris.platform.util.StandardDateRange">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="LookToBookRateCompanyCommercial" autocreate="true" generate="true" extends="AbstractLookToBookCompanyCommercial"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.LookToBookRateCompanyCommercial">
+				<deployment table="looktobookcommercial" typecode="24024" />
+	             <attributes>
+					<attribute qualifier="lookCurrency" type="Currency">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="lookAmount" type="java.math.BigDecimal">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="bookCurrency" type="Currency">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="bookAmount" type="java.math.BigDecimal">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="LookToBookRatioCompanyCommercial" autocreate="true" generate="true" extends="AbstractLookToBookCompanyCommercial"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.LookToBookRatioCompanyCommercial">
+				<deployment table="looktobookratio" typecode="24025" />
+			  <attributes>
+				<attribute qualifier="lookFromRatio" type="java.lang.Double">
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="lookToRatio" type="java.lang.Double">
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="bookRatio" type="java.lang.Double">
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		  </itemtype>
+			
+			<itemtype code="OtherFeeCompanyCommercial" autocreate="true" generate="true" extends="AbstractCompanyCommercial"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.OtherFeeCompanyCommercial">
+				<deployment table="otherfee" typecode="24026" />
+				<attributes>
+					<attribute qualifier="refundable" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="oneTime" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="fixed" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="perDay" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="Fees" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.Fees">
+				<deployment table="fees" typecode="24030" />
+				<attributes>
+					<attribute qualifier="commercialHead" type="CommercialHead">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="percentage" type="java.lang.Double">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="dates" type="de.hybris.platform.util.StandardDateRange">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="SignUpBonusCompanyCommercial" autocreate="true" generate="true" extends="AbstractCompanyCommercial"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.SignUpBonusCompanyCommercial">
+				<deployment table="signupbonus" typecode="24027" />
+				<attributes>
+					<attribute qualifier="slab" type="SlabCompanyCommercial">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="SlabCompanyCommercial" autocreate="true" generate="true" extends="AbstractCompanyCommercial"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.SlabCompanyCommercial">	
+				<deployment table="slab" typecode="24028" />
+				<attributes>
+					<attribute qualifier="cumulative" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="targetPeriod" type="de.hybris.platform.util.StandardDateRange">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="fromValue" type="java.math.BigDecimal">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="toValue" type="java.math.BigDecimal">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="PenaltyKickBackFeeCompanyCommercial" autocreate="true" generate="true" extends="AbstractCompanyCommercial"
+				jaloclass="com.cnk.travelogix.client.commercials.core.jalo.PenaltyKickBackFeeCompanyCommercial">
+				<deployment table="penaltykickbackfee" typecode="24029" />
+            </itemtype>
+			
+			<itemtype code="Criteria" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.Criteria">
+				<deployment table="criteria" typecode="24033" />
+				<attributes>
+					<attribute qualifier="slab" type="SlabCompanyCommercial">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="minimumAchiveTo" type="java.lang.Double">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="mininumAchiveFrom" type="java.lang.Double">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="achivementPeriod" type="TimePeriod">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Penalty" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.Penalty">
+				<deployment table="penalty" typecode="24032" />
+				<attributes>
+					<attribute qualifier="transactionWise" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="periodwise" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="percentage" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="amount" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="slabType" type="CommercialSlabType">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="currency" type="Currency">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="valueFrom" type="java.math.BigDecimal">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="valueTo" type="java.math.BigDecimal">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		
+		<typegroup name="clientcompanycommercial">
+			<itemtype code="ClientCompanyCommercialDetail" autocreate="true" generate="true"
+			    jaloclass="com.cnk.travelogix.client.commercials.core.jalo.ClientCompanyCommercialDetail">
+				<description>Represents Client Company Commercial Detail </description>
+				<deployment table="clientcompanycommercial" typecode="24013" />
+				<attributes>
+					<attribute qualifier="commercialId" type="java.lang.String">
+						<modifiers unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="commercialName" type="java.lang.String">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="byProduct" type="java.lang.Boolean">
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="iscommissionable" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="passAllSupplierComm" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="supplierName" type="Supplier">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientNetMarginPercentage" type="java.lang.Double">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientNetMarginAmount" type="java.lang.Double">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="markup" type="MarkUpCompanyCommercial">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="retentionPayable" type="AbstractCompanyCommercial">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="retentionReceivable" type="AbstractCompanyCommercial">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="additionalReceivable" type="AbstractCompanyCommercial">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="additionalPayable" type="AbstractCompanyCommercial">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="supplierCommercial" type="AbstractCommercialDefinition">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="reason" type="localized:java.lang.String">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="remark" type="java.lang.String">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="status" type="Status">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="approvalRequired" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="companyNetMarginPercentage" type="java.lang.Double">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="companyNetMarginAmount" type="java.lang.Double">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="BudgetMargin" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.client.commercials.core.jalo.BudgetMargin">
+				<deployment table="budgetedmargin" typecode="24005" />
+				<attributes>
+					<attribute type="Category" qualifier="category">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="ProductCategorySubType" qualifier="productCategorySubType">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="percentageOrAmt" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="currency" type="Currency">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="percentageOramountValue" type="java.math.BigDecimal">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="catalogVersion" type="CatalogVersion">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="market" type="Market">
+						<description>Market</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		
+		<typegroup name="clientCompanyAdvanceDefinition">
+			<itemtype code="AbstractClientCompanyAdvanceDefinition" autocreate="true" abstract="true" generate="true"
+				jaloclass="com.cnk.travelogix.client.commercials.core.jalo.definition.AbstractClientCompanyAdvanceDefinition">
+				<attributes>
+					<attribute qualifier="validity" type="Validity">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="nationality" type="CountryList">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="passengerType" type="PassengerTypeList">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="perBooking" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="perPassenger" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="supplierType" type="SupplierType">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="loginCredential" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="companyClientPCC" type="CompanyClientPCC">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="calculationType" type="CalculationType">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="netOff" type="CommercialHead">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="travelDestInclusion" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="CompanyClientPCC" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.definition.CompanyClientPCC">>
+				<deployment table="companyclientpcc" typecode="24007" />
+				<attributes>
+					<attribute qualifier="mainOrmirrorPcc" type="java.lang.String">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="usage" type="java.lang.String">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="hap" type="java.lang.String">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="priority" type="java.lang.String">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="Validity" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.definition.Validity">
+				<deployment table="validity" typecode="24008" />
+				<attributes>
+					<attribute qualifier="sale" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="validity" type="Validity">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="travel" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="saleandTravel" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="ticketing" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="tiicketingAndTravel" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="travelDates" type="StandardDateRangeSet">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="travelblockOutDates" type="StandardDateRangeSet">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="saleDates" type="StandardDateRangeSet">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="saleblockOutDates" type="StandardDateRangeSet">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="ticketingDates" type="StandardDateRangeSet">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="ActivityClientCompanyAdvanceDefinition"
+				autocreate="true" generate="true" extends="AbstractClientCompanyAdvanceDefinition"
+				jaloclass="com.cnk.travelogix.client.commercials.core.jalo.definition.ActivityClientCompanyAdvanceDefinition">
+				<deployment table="activitycomclntadvdefn" typecode="24009" />
+			</itemtype>
+			
+			<itemtype code="TransportClientCompanyAdvanceDefinition"
+				autocreate="true" generate="true" extends="AbstractClientCompanyAdvanceDefinition"
+				jaloclass="com.cnk.travelogix.client.commercials.core.jalo.definition.TransportClientCompanyAdvanceDefinition">
+				<deployment table="transportcomclntadvdefn" typecode="24010" />
+			</itemtype>
+			
+			<itemtype code="HolidayClientCompanyAdvanceDefinition"
+				autocreate="true" generate="true" extends="AbstractClientCompanyAdvanceDefinition"
+				jaloclass="com.cnk.travelogix.client.commercials.core.jalo.definition.HolidayClientCompanyAdvanceDefinition">
+				<deployment table="holidaycomclntadvdefn" typecode="24011" />
+			</itemtype>
+			
+			<itemtype code="AccoClientCompanyAdvanceDefinition"
+				autocreate="true" generate="true" extends="AbstractClientCompanyAdvanceDefinition"
+				jaloclass="com.cnk.travelogix.client.commercials.core.jalo.definition.AccoClientCompanyAdvanceDefinition">
+				<deployment table="accocomclntadvdefn" typecode="24012" />
+				<attributes>
+					<attribute qualifier="inclusion" type="java.lang.Boolean">
+			            <persistence type="property" />
+					</attribute>
+					<attribute qualifier="roomLevelInclusion" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="roomCategory" type="RoomCategoryList">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="roomType" type="RoomTypeList">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="starCategoryInclusion" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="starCategory" type="TrvlrRatingList">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="maxNight" type="java.lang.Integer">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="minNight" type="java.lang.Integer">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="maxPassangers" type="java.lang.Integer">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="minPassangers" type="java.lang.Integer">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="ismealPlanInclusion" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="mealPlan" type="MealPlanList">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="FlightClientCompanyAdvanceDefinition" autocreate="true" generate="true"
+				extends="AbstractClientCompanyAdvanceDefinition" jaloclass="com.cnk.travelogix.company.commercials.core.jalo.definition.FlightClientCompanyAdvanceDefinition">
+				<deployment table="flightcomclntadvdefn" typecode="24018" />
+				<attributes>
+					<attribute qualifier="productInclusion" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="flightNumberInclusion" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="bookingClassInclusion" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="cabinclass" type="CabinClass">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="rbd" type="ReservationBookingDesignatorList">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="fareClassInclusion" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="fareType" type="FareType">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="dealCodes" type="DealCodeList">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="tourCodes" type="TourCodeList">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="journeyType" type="JourneyTypeList">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="directFlights" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="via" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="online" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="interline" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="codeShareFlightInclued" type="java.lang.Boolean">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="flightTiming" type="StandardDateRangeSet">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="FareDetail" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.company.commercials.core.jalo.definition.FareDetail">
+	            <deployment table="faredetail" typecode="24019" />
+				<attributes>
+					<attribute qualifier="fareBasis" type="FareBasis">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="fareValue" type="java.lang.String">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="TravelDestination" autocreate="true" generate="true"
+							jaloclass="com.cnk.travelogix.company.commercials.core.jalo.definition.TravelDestination">
+				<deployment table="traveldestination" typecode="24021" />
+				<attributes>
+					<attribute qualifier="continent" type="Continent">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="country" type="Country">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="city" type="City">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="state" type="Region">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="product" type="Product">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

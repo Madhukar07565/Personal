@@ -1,0 +1,41 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+#$siteResource=jar:com.cnk.travelogix.product.transport.masters.core.setup.TransportProductSetup&\transportproductmasterscore\import\sampledata\images\96Wx96H
+
+
+########################## PaymentInformation #################################
+INSERT_UPDATE PaymentInformation;currency(isocode);balFromLastPaymentAdv[unique=true];amount[unique=true];paymentType[unique=true];paymentDueDate[dateformat=$dateformat,unique=true];remark;&ref
+;INR;0;100000;BALANCE;10-01-2015;;paymentInformation1
+;INR;0;110000;BALANCE;10-02-2015;;paymentInformation2
+;INR;0;120000;BALANCE;10-03-201;;paymentInformation3
+;INR;0;130000;BALANCE;10-04-2015;;paymentInformation4
+;INR;0;140000;BALANCE;10-05-2015;;paymentInformation5
+
+########################## PaymentAdvice #################################
+INSERT_UPDATE InventoryPaymentAdvice;paymentAdviceNo[unique=true];paymentAdviceStatus(code);inventoryID(code,$catalogVersion);sbu(uid);bu(uid);supplierName(code);country(Country.isocode);paymentInformation(&ref);vmpdPaymentDetails(PaymentDetailsVmpd.vmpdNumber)
+;PDV-3456;PARTPAID;14889;SBU - Air;BU - Air;Jet Airways;IN;paymentInformation1;2562589
+;PDV-3457;PARTPAID;14889;SBU - Air;BU - Air;Jet Airways;IN;paymentInformation2;2562590
+;PDV-3458;PARTPAID;14569;SBU - Non-Air;BU - Non Air;Taj_Hotel;IN;paymentInformation3;2562591
+;PDV-3459;PARTPAID;14569;SBU - Non-Air;BU - Non Air;Taj_Hotel;IN;paymentInformation4;2562592
+;PDV-3460;PARTPAID;14569;SBU - Non-Air;BU - Non Air;Taj_Hotel;IN;paymentInformation5;2562593
+
+
+########################## PaymentDetailsVmpd #################################
+INSERT_UPDATE PaymentDetailsVmpd;vmpdNumber[unique=true];currency(isocode);amount;amountPending;dateOfGeneration[dateformat=$dateformat];remark
+;2562589;INR;100000;0;10-01-2015;Payment details for VMPD
+;2562590;INR;100000;0;10-02-2015;Payment details for VMPD
+;2562591;INR;100000;0;10-03-2015;Payment details for VMPD
+;2562592;INR;100000;0;10-04-2015;Payment details for VMPD
+;2562593;INR;100000;0;10-05-2015;Payment details for VMPD
+
+########################## PrePaymentDetail #################################
+INSERT_UPDATE PrePaymentDetail;typeOfPayment(PrePaymentType.code)[unique=true];modeOfPayment(ModeOfPayment.code)[unique=true];drawnOn(Bank.code)[unique=true];paymentRefNo;finSystemRefNo;currency(Currency.isocode);amount;amountPending;date[dateformat=$dateformat];remark;partPayment;inventoryPaymentAdvice(paymentAdviceNo)
+;FULL;CHEQUE;ICICIB;23456789;9876543;INR;675000;0;19-01-15;Payment done;true;PDV-3456
+;FULL;CHEQUE;ICICIB;23456790;9876543;INR;675000;0;19-02-15;Payment done;true;PDV-3457
+;FULL;CHEQUE;ICICIB;23456791;9876543;INR;675000;0;19-03-15;Payment done;true;PDV-3458
+;FULL;CHEQUE;ICICIB;23456792;9876543;INR;675000;0;19-04-15;Payment done;true;PDV-3458
+;FULL;CHEQUE;ICICIB;23456793;9876543;INR;675000;0;19-05-15;Payment done;true;PDV-3459

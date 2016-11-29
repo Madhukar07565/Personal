@@ -1,0 +1,22 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd/MM/yyyy
+
+######################## Dependency Headers #######################
+INSERT_UPDATE UserGroup;uid[unique=true]
+;clientgroup
+
+INSERT_UPDATE Measure;code[unique=true]
+;1212
+
+INSERT_UPDATE Employee;name;uid[unique=true];firstName;lastName;contactEmail;designation
+                      ;Rodelf Watson;rodalf@taj.com;Rodelf;Watson;rodalf@gmail.com;architect
+					  
+################################# KPI Info ################################
+INSERT_UPDATE KPIInfo;effectiveFrom[dateformat=$dateformat];effectiveTo[dateformat=$dateformat];functionalRole(UserGroup.uid)[unique=true];roleName(UserGroup.uid);userName(Employee.uid)[unique=true];kpiId[unique=true][forceWrite=true]
+;2/5/16;3/5/16;clientgroup;clientgroup;rodalf@taj.com;1111
+
+################################# KPI Definition ################################
+INSERT_UPDATE KPIDefinition;targetKPI;value;remark;currency(Currency.isocode);kpi(code);function(UserGroup.uid)[unique=true];measure(Measure.code);equation(code)
+;100;2;This is Kpi remark;USD;Turnover;clientgroup;1212;Less_Than

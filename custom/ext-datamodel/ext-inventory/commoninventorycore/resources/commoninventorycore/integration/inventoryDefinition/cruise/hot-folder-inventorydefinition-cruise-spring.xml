@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2015 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+	<context:annotation-config />
+	<bean id="baseDirectoryInventoryDefinitionCruise" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogix/inventoryDefinition/cruise" />
+	</bean>
+
+	
+	<file:inbound-channel-adapter id="batchFilesTravelogixInventoryDefinitionCruise"
+		directory="#{baseDirectoryInventoryDefinitionCruise}" filename-regex="cruise_definition_inventory-(\d+)\.csv"
+		comparator="fileOrderComparatorInventoryDefinitionCruise">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+
+	<bean id="fileOrderComparatorInventoryDefinitionCruise"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.FileOrderComparator">
+		<property name="prefixPriority">
+			<map>
+				 <entry key="cruise_definition_inventory" value="100" />
+		   </map>
+		</property>
+	</bean>
+
+	<file:outbound-gateway request-channel="batchFilesTravelogixInventoryDefinitionCruise"
+		reply-channel="inventoryDefinitionCruiseBatchFilesProc" directory="#{baseDirectoryInventoryDefinitionCruise}/processing"
+		delete-source-files="true" />
+
+	<int:service-activator input-channel="inventoryDefinitionCruiseBatchFilesProc"
+		output-channel="inventoryDefinitionCruiseBatchFilesHeaderInit" ref="inventoryDefinitionCruiseHeaderSetupTask"
+		method="execute" />
+
+	<bean id="inventoryDefinitionCruiseHeaderSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryInventoryDefinitionCruise" />
+	</bean>
+
+	
+	<int:service-activator input-channel="inventoryDefinitionCruiseBatchFilesHeaderInit"
+		output-channel="inventoryDefinitionCruiseBatchFilesHeader" ref="headerInitTask"
+		method="execute" />
+		
+	<!-- <bean id="headerInitTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderInitTask">
+		<property name="sequenceIdParser" ref="batchSequenceIdParser" />
+		<property name="languageParser" ref="batchLanguageParser" />
+		<property name="fallbackLanguage" value="en" />
+	</bean> -->
+
+	<!-- <bean id="batchSequenceIdParser"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.util.SequenceIdParser">
+		<property name="parser">
+			<bean class="de.hybris.platform.acceleratorservices.util.RegexParser">
+				<property name="regex" value="cruise_definition_inventory-(\d+)\.csv" />
+			</bean>
+		</property>
+	</bean> -->
+
+	
+	<int:service-activator input-channel="inventoryDefinitionCruiseBatchFilesHeader"
+		output-channel="batchFilesTran" ref="inventoryDefinitionCruiseBatchTransformerTask"
+		method="execute" />
+
+	<bean id="inventoryDefinitionCruiseBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+	
+	<bean id="batchCruiseInventoryDefinitionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_definition_inventory" p:converter-ref="batchCruiseInventoryDefinitionConverter" />
+	
+	<bean id="batchCruiseCutOffsAndChargesMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_definition_inventory" p:converter-ref="batchCruiseCutOffsAndChargesConverter" />
+	
+	<bean id="batchCruiseSupplierAdvanceDefinitionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_definition_inventory" p:converter-ref="batchCruiseSupplierAdvanceDefinitionConverter" />
+		
+	<bean id="batchCruiseCompanyAdvanceDefinitionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_definition_inventory" p:converter-ref="batchCruiseCompanyAdvanceDefinitionConverter" />
+	
+	<bean id="batchCruisePenaltyChargesMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_definition_inventory" p:converter-ref="batchCruisePenaltyChargesConverter" />
+	
+	<bean id="batchCruiseOtherCompanyInventoryDistributionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_definition_inventory" p:converter-ref="batchCruiseOtherCompanyInventoryDistributionConverter" />
+		
+	<bean id="batchCruiseClientInventoryDistributionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_definition_inventory" p:converter-ref="batchCruiseClientInventoryDistributionConverter" />
+		
+		
+		<bean id="batchCruiseWithinCompanyInventoryDistributionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_definition_inventory" p:converter-ref="batchCruiseWithinCompanyInventoryDistributionConverter" />
+
+	<bean id="batchCruiseMediaPackageConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_definition_inventory" p:converter-ref="batchCruiseMediaPackageConverter" />
+
+	<bean id="inventoryDefinitionCruiseDefaultHeader" class="java.lang.String">
+		<constructor-arg>
+			<value># ImpEx for importing data into $CATALOG$
+				$productCatalog=EZ-IN
+				$productCatalogName=ezeego1-IN
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+
+			</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="batchCruiseMediaPackageConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Media
+				#{inventoryDefinitionCruiseDefaultHeader}
+				$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+				$importFolder=file:$BASE_SOURCE_DIR$
+				INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier);
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{12};$importFolder/{12};{13};{14};;</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'CruiseAdvanceDefinition'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchCruiseInventoryDefinitionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Cruise Inventory Definition
+				#{inventoryDefinitionCruiseDefaultHeader}
+				INSERT_UPDATE CruiseInventoryDefinition;inventoryId[unique=true];cruiseCompany;cruiseBrand;active;effectiveFrom[dateformat=$dateformat];reason;supplierAdvanceDefinition;companyAdvanceDefinition;abstractInventoryRequest(AbstractInventoryRequest.id)
+
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'CruiseInventoryDefinition'" />
+			</bean>
+		</property>
+	</bean>
+	
+		<bean id="batchCruiseCutOffsAndChargesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Itinerary Product Info
+				#{inventoryDefinitionCruiseDefaultHeader}
+				INSERT_UPDATE CruiseCutOffsAndCharges;cutOffFromDay[unique=true];cutOffToDay[unique=true];amount[unique=true];currency(isocode);amountType(code);range(code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'CruiseCutOffsAndCharges'" />
+			</bean>
+		</property>
+	</bean> 
+	
+	<bean id="batchCruiseSupplierAdvanceDefinitionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Itinerary Product Info
+				#{inventoryDefinitionCruiseDefaultHeader}
+				INSERT_UPDATE CruiseSupplierAdvanceDefinition;blockOutDates;penaltyCharges(CruisePenaltyCharges.definedBy(CruiseDefinedBy.code))[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'CruiseSupplierAdvanceDefinition'" />
+			</bean>
+		</property>
+	</bean> 
+	
+	<bean id="batchCruiseCompanyAdvanceDefinitionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Cruise Info
+				#{inventoryDefinitionCruiseDefaultHeader}
+				INSERT_UPDATE CruiseCompanyAdvanceDefinition;inventoryId[unique=true];blockOutDates;overBookingAllowed;abstractInventoryRequest(AbstractInventoryRequest.id);penaltyCharges(CruisePenaltyCharges.definedBy(CruiseDefinedBy.code))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'CruiseCompanyAdvanceDefinition'" />
+			</bean>
+		</property>
+	</bean> 
+	
+	
+	<bean id="batchCruisePenaltyChargesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Cruise Advance Definition
+				#{inventoryDefinitionCruiseDefaultHeader}
+				INSERT_UPDATE CruisePenaltyCharges;definedBy(CruiseDefinedBy.code)[unique=true];deck(Deck.deckLevel,Deck.deckName);cabin(Cabin.cabinType(code),Cabin.cabinCategory(code));minimumUtilizationThreshold;specificDates[dateformat=$dateformat];dateRange;charges(CruiseCutOffsAndCharges.cutOffFromDay,CruiseCutOffsAndCharges.cutOffToDay,CruiseCutOffsAndCharges.amount)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2}:{3};{4}:{5};{6};{7};{8};{9}:{10}:{11}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'CruisePenaltyCharges'" />
+			</bean>
+		</property>
+	</bean> 
+	
+	
+
+	<bean id="batchCruiseOtherCompanyInventoryDistributionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Payment Schedule Info
+				#{inventoryDefinitionCruiseDefaultHeader}
+				INSERT_UPDATE CruiseOtherCompanyInventoryDistribution;$distributionToCompany[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'CruiseOtherCompanyInventoryDistribution'" />
+			</bean>
+		</property>
+	</bean> 
+	
+	
+	<bean id="batchCruiseClientInventoryDistributionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Update Cruise Inventory Definition
+				#{inventoryDefinitionCruiseDefaultHeader}
+				INSERT_UPDATE CruiseClientInventoryDistribution;clientType(code)[unique=true];clientName[unique=true];clientGroup
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'CruiseClientInventoryDistribution'" />
+			</bean>
+		</property>
+	</bean> 
+	
+		<bean id="batchCruiseWithinCompanyInventoryDistributionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Update Cruise Inventory Definition
+				#{inventoryDefinitionCruiseDefaultHeader}
+				INSERT_UPDATE CruiseWithinCompanyInventoryDistribution;sbu;bu;market(Market.uid)[unique=true];distributionChannel[unique=true];division;salesOfficeLocation;salesOffice;settleWith
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8}</value>
+		</property>
+		<property name="rowFilter">
+			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'CruiseWithinCompanyInventoryDistribution'" />
+			</bean>
+		</property>
+	</bean> 
+	
+</beans> 

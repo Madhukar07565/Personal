@@ -1,0 +1,64 @@
+# Macros / Replacement Parameter definitions
+$productCatalog=EZ-IN
+$classificationCatalog=EZ-IN-CS
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$classCatalogVersion=catalogversion(catalog(id[default=$classificationCatalog]),version[default='1.0'])[unique=true,default=$classificationCatalog:1.0]
+$classSystemVersion=systemVersion(catalog(id[default=$classificationCatalog]),version[default='1.0'])[unique=true]
+$class=classificationClass(ClassificationClass.code,$classCatalogVersion)[unique=true]
+$supercategories=source(code, $classCatalogVersion)[unique=true]
+$categories=target(code, $catalogVersion)[unique=true]
+$attribute=classificationAttribute(code,$classSystemVersion)[unique=true]
+$unit=unit(code,$classSystemVersion)
+
+
+INSERT_UPDATE ClassificationClass;$classCatalogVersion;code[unique=true];allowedPrincipals(uid)[default='customergroup'];;;;;
+;;Weights-Bike;;;;;;
+;;Breaks-Bike;;;;;;
+;;Wheelsandtyers-Bike;;;;;;
+;;Engine-Bike;;;;;;
+;;Acceleration-Bike;;;;;;
+;;Chassis-Bike;;;;;;
+;;Suspension-Bike;;;;;;
+;;Transmission-Bike;;;;;;
+;;Dimensions-Bike;;;;;;
+
+INSERT_UPDATE ClassAttributeAssignment;$class;$attribute;position;$unit;attributeType(code[default=string]);multiValued[default=false];range[default=false];localized[default=true]
+
+;Weights-Bike;Kerbweights-Weights-Bike;1;;;;;
+;Weights-Bike;Maxpayload-Weights-Bike;2;;;;;
+;Breaks-Bike;Front-Breaks-Bike;3;;;;;
+;Breaks-Bike;Rear-Breaks-Bike;4;;;;;
+;Breaks-Bike;Breakfluid-Breaks-Bike;5;;;;;  
+;Wheelsandtyers-Bike;Frontrimsize-Wheelsandtyers-Bike;6;;;;;
+;Wheelsandtyers-Bike;Rearrimsize-Wheelsandtyers-Bike;7;;;;;
+;Wheelsandtyers-Bike;Fronttyersize-Wheelsandtyers-Bike;8;;;;;
+;Engine-Bike;Type-Engine-Bike;9;;;;;
+;Engine-Bike;Displacement-Engine-Bike;10;;;;;
+
+;Engine-Bike;CylinderArrangeMent-Engine-Bike;10;;;;;
+
+;Engine-Bike;MaximumTorque-Engine-Bike;11;;;;;
+;Engine-Bike;BoreStroke-Engine-Bike;12;;;;;
+;Engine-Bike;CompressionRation-Engine-Bike;13;;;;;
+;Engine-Bike;Carburetor-Engine-Bike;14;;;;;
+;Engine-Bike;Starting-Engine-Bike;15;;;;;
+;Engine-Bike;CompressionRationValve-Engine-Bike;15;;;;;
+;Engine-Bike;IdealSpeed-Engine-Bike;16;;;;;
+;Engine-Bike;StartingMode-Engine-Bike;17;;;;;
+;Engine-Bike;PowerToWaightRatio-Engine-Bike;18;;;;;
+
+
+;Engine-Bike;Maximumpower-Engine-Bike;19;;;;;       
+;Acceleration-Bike;Maxspeed_Kmph-Acceleration-Bike;20;;;;;
+;Chassis-Bike;Type-Chassis-Bike;21;;;;;
+;Suspension-Bike;Front-Suspension-Bike;22;;;;;
+;Suspension-Bike;Rear-Suspension-Bike;23;;;;;
+;Transmission-Bike;Clutch-Transmission-Bike;24;;;;;
+;Transmission-Bike;Primaryreduction-Transmission-Bike;25;;;;;
+;Transmission-Bike;Finalreduction-Transmission-Bike;26;;;;;
+;Dimensions-Bike;Length-Dimensions-Bike;27;;;;;
+;Dimensions-Bike;Height-Dimensions-Bike;28;;;;;
+;Dimensions-Bike;Width-Dimensions-Bike;29;;;;;
+;Dimensions-Bike;Wheelbase_Bike-Dimensions-Bike;30;;;;;
+;Dimensions-Bike;Groundclearance_Mm_Bike-Dimensions-Bike;31;;;;;
+

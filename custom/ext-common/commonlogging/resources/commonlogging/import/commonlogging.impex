@@ -1,0 +1,18 @@
+# Sample data of common logging.
+$lang=en
+
+INSERT_UPDATE TravelogixErrorMaster; errorCode[unique=true]; errorCategory(code); errorType(code); handling(code); presentationMsg; reportingRequired[default=false];operationRequired[default=false];supplierError[default=false]
+;ERROR001;EXCEPTION;RECOVERABLE;UNKNOWN;test to error report master;true;false;false
+;ERROR002;EXCEPTION;RECOVERABLE;UNKNOWN;test to error operation master;false;true;false
+;ERROR003;EXCEPTION;RECOVERABLE;UNKNOWN;test to error operation master;false;false;true
+;ERROR004;EXCEPTION;RECOVERABLE;UNKNOWN;test to error operation master;false;false;true
+;ERROR005;EXCEPTION;RECOVERABLE;UNKNOWN;test to error operation master;false;false;true 
+;ERROR006;EXCEPTION;RECOVERABLE;UNKNOWN;test to error report master;true;false;false
+;ERROR007;EXCEPTION;RECOVERABLE;UNKNOWN;test to error operation master;false;true;false
+;ERROR008;EXCEPTION;RECOVERABLE;UNKNOWN;test to error operation master;false;false;true
+;ERROR009;EXCEPTION;RECOVERABLE;UNKNOWN;test to error operation master;false;false;true
+;ERROR0010;EXCEPTION;RECOVERABLE;UNKNOWN;test to error operation master;false;false;true
+;ERROR0011;EXCEPTION;RECOVERABLE;UNKNOWN;test to error operation master;false;false;true
+;ERROR0012;EXCEPTION;RECOVERABLE;UNKNOWN;test to error operation master;false;false;true
+;ERROR0013;EXCEPTION;RECOVERABLE;UNKNOWN;test to error operation master;false;true;true
+;ERROR0014;EXCEPTION;RECOVERABLE;UNKNOWN;This is sample exception for Supplier;false;true;true 

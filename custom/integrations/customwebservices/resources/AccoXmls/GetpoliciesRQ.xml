@@ -1,0 +1,108 @@
+<acc:AccoInterfaceRQ  xmlns:acc="http://www.coxandkings.com/integ/suppl/accointerface" xmlns:acco="http://www.coxandkings.com/integ/suppl/acco" xmlns:com="http://www.coxandkings.com/integ/suppl/common" xmlns:ns="http://www.opentravel.org/OTA/2003/05">
+	 <acco:RequestHeader>
+		<!--Optional:-->
+		<com:UserID>1</com:UserID>
+		<com:SessionID>2</com:SessionID>
+		<com:TransactionID>3</com:TransactionID>
+		<!--Optional:-->
+		<com:SupplierCredentialsList>
+		   <!--1 or more repetitions:-->
+			<com:SupplierCredentials>
+                <com:SupplierID>TRAVELBULLZ</com:SupplierID>
+                <com:Credentials>
+                    <!--1 to 5 repetitions:-->
+                    <com:Credential name="Username" isEncrypted="false">EzeegoOneTravel_DEV</com:Credential>
+					<com:Credential name="Password" isEncrypted="false">5wphJynXArxNqrTm3ETA9Mg</com:Credential>
+                </com:Credentials>
+            </com:SupplierCredentials>
+			<com:SupplierCredentials>
+				<com:SupplierID>JACOB</com:SupplierID>
+				<com:Credentials>
+				   <com:Credential name="APPLICATION_NAME">TS HOTELS API 1.0</com:Credential>
+				   <com:Credential name="LICENCE_KEY">E322B0A6-156E-4BA7-9A03-CD51E8992EBD</com:Credential>
+				</com:Credentials>
+			 </com:SupplierCredentials>
+		</com:SupplierCredentialsList>
+	 </acco:RequestHeader>
+	 <acc:RequestBody>
+		<acco:OTA_HotelGetCancellationPolicyRQWrapper>
+		   <acco:SupplierID>TRAVELBULLZ</acco:SupplierID>
+		   <acco:Sequence>1</acco:Sequence>
+		   	<ns:OTA_HotelGetCancellationPolicyRQ>
+				<ns:HotelID>205112</ns:HotelID>
+				<ns:Supplier>TPXv43</ns:Supplier>
+				<ns:CountryID>SG</ns:CountryID>
+				<ns:State/>
+				<ns:CityID>7355</ns:CityID>
+				<ns:CheckInDate>2015-07-20</ns:CheckInDate>
+				<ns:CheckOutDate>2015-07-21</ns:CheckOutDate>
+				<ns:NationalityID>81</ns:NationalityID>
+				<ns:IsPackageRate>true</ns:IsPackageRate>
+				<ns:RoomClass>
+				  <ns:TotalPrice>45</ns:TotalPrice>
+				  <ns:CurrencyCode>USD</ns:CurrencyCode>
+				  <ns:Rooms>
+					 <ns:Room>
+						<ns:ProductID>258</ns:ProductID>
+						<ns:Adults>2</ns:Adults>
+						<ns:Childs>0</ns:Childs>
+						<ns:ChildsAge/>
+						<ns:MapRoomID>0</ns:MapRoomID>
+						<ns:AgreementID>58</ns:AgreementID>
+						<ns:SupplierCode>TPXv43</ns:SupplierCode>
+						<ns:SupplierRef>
+						   <ns:SupplierRef>
+							  <ns:ID>1</ns:ID>
+							  <ns:Value>m+E2Bjfjqu0LuCEwb5pP4b93tDHSwLUsOnkG3nH27DF/Qwaj/EIGOAAOHBQn3MVy</ns:Value>
+						   </ns:SupplierRef>
+						   <ns:SupplierRef>
+							  <ns:ID>6</ns:ID>
+							  <ns:Value>7zDzxW0GioD5fytTxvcbLagyGlJlgHvcKQ3L1ZMiXmo=</ns:Value>
+						   </ns:SupplierRef>
+						   <ns:SupplierRef>
+							  <ns:ID>7</ns:ID>
+							  <ns:Value>YP1ky71V9lXHWTi52wY1Ssg3NC0P3JIczmfsF2LguVgY6hKK6lNaFu2NH0jZbN7Hjmr wR9f0oCctE1hs6xFx6jMG7ngeKv7njKRL9rFyJKBLnoTSWkLriCMr1KUC3yvwrvZu9e1HmDXlP0AtDYsWDOpXoLj4BW m62iNYFU2w14wBRHqeAdjO17slywDyyWT1Ue22PbY0WK9gLyoE 1yJTViWNamI42EjyZgijXIpL/QSl2TVNnwJJiJ/gFM38knX8wptXgryz0kORHqfuJaYxcogR5tD3zv9a5Ju/sEyt4yP/c4JSb9bDxof3hOsvTxwHKEzGpd7gA4 YLLOyCRrcVX7H1vjHnfPvppDIfglF27jUSQkRGa9cdVgtarGV3LIm7ZHc0hPQaR7OVCbsF9YWPQA0 L3fhdTf I8Tggqmm1BWp1AaJMAGpPu0OVDwZskLF8MSMfeaTBWNplmL6Slp7VSi5YEqu7Mqotl8/rZai7kNFc0M90eeVBEJ4XL5BbzxU/LZXBSkvac0RdtYj5D2QHfJ80z2eg5D1eB7dP9w8 OuuEjuWGwwF6beatYN1GJGarmKpohwXHiMf7k iQQ==</ns:Value>
+						   </ns:SupplierRef>
+						</ns:SupplierRef>
+					 </ns:Room>
+					 <ns:Room>
+						<ns:ProductID>257</ns:ProductID>
+						<ns:Adults>1</ns:Adults>
+						<ns:Childs>2</ns:Childs>
+						<ns:ChildsAge>
+							<ns:Age>3</ns:Age>
+							<ns:Age>4</ns:Age>
+						</ns:ChildsAge>
+						<ns:MapRoomID>0</ns:MapRoomID>
+						<ns:AgreementID>58</ns:AgreementID>
+						<ns:SupplierCode>TPXv43</ns:SupplierCode>
+						<ns:SupplierRef>
+							<ns:SupplierRef>
+							   <ns:ID>1</ns:ID>
+							   <ns:Value>npat5fNAyevc4ETOkTxEeVM6fcaDBPKcLLyukw7Kk6K++5c2BU340ul+zAdl3SP0</ns:Value>
+							</ns:SupplierRef>
+							<ns:SupplierRef>
+							   <ns:ID>6</ns:ID>
+							   <ns:Value>7zDzxW0GioD5fytTxvcbLagyGlJlgHvcKQ3L1ZMiXmo=</ns:Value>
+							</ns:SupplierRef>
+							<ns:SupplierRef>
+							   <ns:ID>7</ns:ID>
+							   <ns:Value>YP1ky71V9lXHWTi52wY1Ssg3NC0P3JIczmfsF2LguVgY6hKK6lNaFu2NH0jZbN7Hjmr wR9f0oCctE1hs6xFx6jMG7ngeKv7njKRL9rFyJKBLnoTSWkLriCMr1KUC3yvwrvZu9e1HmDXlP0AtDYsWDOpXoLj4BW m62iNYFU2w14wBRHqeAdjO17slywDyyWT1Ue22PbY0WK9gLyoE 1yJTViWNamI42EjyZgijXIpL/QSl2TVNnwJJiJ/gFM38knX8wptXgryz0kORHqfuJaYxcogR5tD3zv9a5Ju/sEyt4yP/c4JSb9bDxof3hOsvTxwHKEzGpd7gA4 YLLOyCRrcVX7H1vjHnfPvppDIfglF27jUSQkRGa9cdVgtarGV3LIm7ZHc0hPQaR7OVCbsF9YWPQA0 L3fhdTf I8Tggqmm1BWp1AaJMAGpPu0OVDwZskLF8MSMfeaTBWNplmL6Slp7VSi5YEqu7Mqotl8/rZai7kNFc0M90eeVBEJ4XL5BbzxU/LZXBSkvac0RdtYj5D2QHfJ80z2eg5D1eB7dP9w8 OuuEjuWGwwF6beatYN1GJGarmKpohwXHiMf7k iQQ==</ns:Value>
+							</ns:SupplierRef>
+						</ns:SupplierRef>
+					 </ns:Room>
+				  </ns:Rooms>
+				</ns:RoomClass>
+			</ns:OTA_HotelGetCancellationPolicyRQ>		   
+		</acco:OTA_HotelGetCancellationPolicyRQWrapper>
+		<acco:OTA_HotelGetCancellationPolicyRQWrapper>
+		   <acco:SupplierID>JACOB</acco:SupplierID>
+		   <acco:Sequence>2</acco:Sequence>
+			<ns:OTA_HotelGetCancellationPolicyRQ>
+				<ns:dtCheckIn>2016-07-01</ns:dtCheckIn>
+				<ns:dtCheckOut>2016-07-03</ns:dtCheckOut>
+				<ns:RoomInfo RoomID="99" />
+			</ns:OTA_HotelGetCancellationPolicyRQ>
+		</acco:OTA_HotelGetCancellationPolicyRQWrapper>
+	</acc:RequestBody>
+  </acc:AccoInterfaceRQ>

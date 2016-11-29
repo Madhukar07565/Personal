@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="beans.xsd">
+	
+	<bean class="com.cnk.travelogix.operations.employee.data.EmployeeData"
+		extends="de.hybris.platform.commercefacades.user.data.PrincipalData">
+		<property name="defaultBillingAddress"
+			type="de.hybris.platform.commercefacades.user.data.AddressData" />
+		<property name="defaultShippingAddress"
+			type="de.hybris.platform.commercefacades.user.data.AddressData" />
+		<property name="titleCode" type="String" />
+		<property name="uid" type="String" />
+		<property name="firstName" type="String" />
+		<property name="lastName" type="String" />
+		<property name="currency"
+			type="de.hybris.platform.commercefacades.storesession.data.CurrencyData" />
+		<property name="language"
+			type="de.hybris.platform.commercefacades.storesession.data.LanguageData" />
+		<property name="displayUid" type="String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.operations.data.WorkflowActionSearchData">
+		<property name="fileHandler" type="String" />
+		<property name="priority" type="String" />
+		<property name="name" type="String" />
+		<property name="code" type="String" />
+		<property name="clientType" type="String" />
+		<property name="productName" type="String" />
+		<property name="functionalArea" type="String" />
+		<property name="companyMarket" type="String" />
+		<property name="companyName" type="String" />
+		<property name="assignedToMe" type="boolean" />
+		<property name="assignedByMe" type="boolean" />
+		<property name="lockedBy" type="String" />
+		<property name="dueDate" type="java.util.Date" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.operations.data.WorkflowActionData">
+		<property name="code" type="String" />
+		<property name="order"
+			type="de.hybris.platform.commercefacades.order.data.OrderData" />
+		<property name="name" type="String" />
+		<property name="desc" type="String" />
+		<property name="comments" type="String" />
+		<property name="status" type="String" />
+		<property name="assignedUser" type="String" />
+		<property name="secondaryAssignedUser" type="String" />
+		<property name="priority" type="String" />
+		<property name="dueDate" type="java.util.Date" />
+		<property name="parent" type="String" />
+		<property name="taskType" type="String" />
+		<property name="product"
+			type="de.hybris.platform.commercefacades.product.data.ProductData" />
+		<property name="taskCategory" type="String" />
+		<property name="lockedBy" type="String" />
+		<property name="companyMarket" type="String" />
+		<property name="companyName" type="String" />
+		<property name="clientType" type="String" />
+		<property name="functionalArea" type="String" />
+		<property name="clientCategory" type="String" />
+		<property name="clientSubCategory" type="String" />
+		<property name="suggestedAction" type="String" />
+		<property name="overdueDays" type="Integer"/>
+		<property name="taskStatus" type="String" />
+		<property name="assignedTo" type="String" />
+		<property name="isRead" type="java.lang.Boolean" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.operations.data.FlightSearchResultData">
+		<property name="bookingRef" type="String" />
+		<property name="orderEntry"
+			type="de.hybris.platform.commercefacades.order.data.OrderEntryData" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.operations.data.FlightChangeRequestData">
+		<property type="java.lang.String" name="requestId" />
+		<property type="java.lang.Boolean" name="isProceed" />
+		<property type="String" name="flightChangesOption" />
+		<property type="java.lang.String" name="bookingReg" />
+		<property type="java.lang.String" name="bookingEntryNumber" />
+		<property type="java.lang.String" name="flightNumber" />
+		<property type="java.lang.String" name="sector" />
+		<property type="java.lang.String" name="leadPassengerName" />
+		<property type="java.lang.String" name="departureDate" />
+		<property type="java.lang.String" name="departureTime" />
+		<property type="java.lang.String" name="arrivalDate" />
+		<property type="java.lang.String" name="arrivalTime" />
+		<property type="java.lang.String" name="customerConfirmation" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.operations.data.AirlneSearchFilterData">
+		<property type="java.lang.String" name="sectorFrom" />
+		<property type="java.lang.String" name="sectorTo" />
+		<property type="java.lang.String" name="flightNumber" />
+		<property type="java.lang.String" name="flightTime" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.operations.data.ToDoSnapshotData">
+		<property name="user" type="String" />
+		<property name="status" type="String" />
+		<property name="tasks"
+			type="java.util.List&lt;com.cnk.travelogix.operations.data.ToDoSnapshotTaskData&gt;" />
+		<property name="count" type="java.lang.Integer" />
+		<property name="overdueCount" type="java.lang.Integer" />
+		
+	</bean>
+
+	<bean class="com.cnk.travelogix.operations.data.ToDoSnapshotTaskData">
+		<property name="status" type="String" />
+		<property name="user" type="String" />
+		<property name="count" type="java.lang.Integer" />
+		<property name="overdueCount" type="java.lang.Integer" />
+	</bean>
+
+	<bean
+		class="com.cnk.travelogix.operations.bookingdocument.data.BookingDocumentData">
+		<property name="name" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.operations.data.ToDoApprovalTaskData">
+		<property name="code" type="String" />
+		<property name="remark" type="String" />
+	</bean>
+	<!--Added for Saved Queries  -->
+	<bean class="com.cnk.travelogix.operations.data.SearchFilterData">
+		<!--Booking details -->
+		<property name="bookingRefNumber" type="String" />
+		<property name="bookingDateFrom" type="String" />
+		<property name="BookingDateTo" type="String" />
+		<property name="assignment" type="String" />
+		<property name="userName" type="String" />
+		<property name="bookingType" type="String" />
+		<property name="bookingStatus" type="String" />
+		<property name="bookingPriority" type="String" />
+		<property name="financialControlId" type="String" />
+		<!--Product details  -->
+		<property name="supplierCode" type="String"/>
+		<!--Company details  -->
+		<property name="marketUid" type="String" />
+		<property name="companyUid" type="String" />
+		<property name="groupCompanyUid" type="String" />
+		<property name="groupOfCompanyUid" type="String" />
+		<!--Client&Passenger details  -->
+		<property name="travellerName" type="String"/>
+		<property name="travellerPhoneNumber" type="String"/>
+		<property name="travellerEmailId" type="String"/>
+		<property name="savedQueryName" type="String"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.operations.data.GroupOfCompaniesData">
+		<property name="uid" type="String"/>
+		<property name="name" type="String"/>
+	</bean>
+	<bean class="com.cnk.travelogix.operations.data.GroupCompanyData">
+		<property name="uid" type="String"/>
+		<property name="name" type="String"/>
+	</bean>
+	<bean class="com.cnk.travelogix.operations.data.CompanyData">
+		<property name="uid" type="String"/>
+		<property name="name" type="String"/>
+	</bean>
+	<bean class="com.cnk.travelogix.operations.data.MarketData">
+		<property name="uid" type="String"/>
+		<property name="name" type="String"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.operations.data.StrategicBusinessUnitData">
+		<property name="uid" type="String"/>
+		<property name="name" type="String"/>
+	</bean>
+	<bean class="com.cnk.travelogix.operations.data.BusinessUnitData">
+		<property name="uid" type="String"/>
+		<property name="name" type="String"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.operations.data.SavedQueryData">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+		<property name="query" type="String"/>
+	</bean>
+	<bean class="de.hybris.platform.commercefacades.order.data.OrderData">
+		<property name="groupCompany" type="com.cnk.travelogix.operations.data.GroupCompanyData"/>
+		<property name="pointOfSale" type="String"/>
+		<property name="paymentStatus" type="String"/>
+	</bean>
+	<!--End for Saved Queries  -->
+
+	<!-- Service Order START -->
+	<bean class="com.cnk.travelogix.operations.data.ServiceOrderSearchParameterData">
+		<property name="serviceOrderType" type="java.lang.String" />
+		<property name="serviceOrderId" type="java.lang.String" />
+		<property name="supplierName" type="java.lang.String" />
+		<property name="supplierId" type="java.lang.String" />
+		<property name="supplierCurrency" type="java.lang.String" />
+		<property name="supplierSettlementStatus" type="java.lang.String" />
+		<property name="supplierBillPassingStatus" type="java.lang.String" />
+		<property name="productCategory" type="java.lang.String" />
+		<property name="productCategorySubType" type="java.lang.String" />
+		<property name="productName" type="java.lang.String" />
+		<property name="bookingRefNumber" type="java.lang.String" />
+		<property name="eticketId" type="java.lang.String" />
+		<property name="passengerName" type="java.lang.String" />
+		<property name="searchDateType" type="java.lang.String" />
+		<property name="fromDate" type="java.util.Date" />
+		<property name="toDate" type="java.util.Date" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.operations.data.ServiceOrderData">
+		<property name="supplierName" type="java.lang.String" />
+		<property name="psoId" type="java.lang.String" />
+		<property name="pslId" type="java.lang.String" />
+		<property name="fsoId" type="java.lang.String" />
+		<property name="fslId" type="java.lang.String" />
+		<property name="netAmountPayable" type="java.lang.Double" />
+		<property name="amountPaid" type="java.lang.Double" />
+		<property name="balanceAmountPayable" type="java.lang.Double" />
+		<property name="differenceSupplierInvoice" type="java.lang.Double" />
+		<property name="creditDebitNote" type="java.lang.String" />
+		<property name="paymentAdviceStatus" type="java.lang.String" />
+		<property name="supplierSettlementStatus" type="java.lang.String" />
+		<property name="supplierBillEntry" type="java.lang.String" />
+		<property name="supplierBillStatus" type="java.lang.String" />
+		<property name="paymentAdvice" type="java.lang.String" />
+		<property name="stopPayment" type="java.lang.String" />
+	</bean>
+	<!-- Service Order END -->
+
+	<!-- Reconfirmation Config -->
+	<bean class="com.cnk.travelogix.operations.data.ReconfirmationConfigData">
+		<property name="approvalStatus" type="java.lang.String" />
+		<property name="code" type="java.lang.String" />
+		<property name="active" type="java.lang.Boolean" />
+		<property name="reason" type="String" />
+		<property name="creationTime" type="java.lang.String" />
+		<property name="confirmationFor" type="String" />
+		<property name="lockedBy"
+			type="com.cnk.travelogix.operations.employee.data.EmployeeData" />
+		<property name="product"
+			type="de.hybris.platform.commercefacades.product.data.ProductData" />
+		<property name="productCategory"
+			type="de.hybris.platform.commercefacades.product.data.CategoryData" />
+		<property name="productCategorySubType"
+			type="de.hybris.platform.commercefacades.product.data.ProductCategorySubTypeData" />
+		<property name="supplierReconfirmationConfigs"
+			type="java.util.List&lt;com.cnk.travelogix.operations.data.SupplierReconfirmationConfigData&gt;" />
+		<property name="clientReconfirmationConfigs"
+			type="java.util.List&lt;com.cnk.travelogix.operations.data.ClientReconfirmationConfigData&gt;" />
+		<property name="reconfirmationintervals"
+			type="java.util.List&lt;com.cnk.travelogix.operations.data.ReconfirmationIntervalData&gt;" />
+		<property name="reconfirmationTravelDestinations"
+			type="java.util.List&lt;com.cnk.travelogix.operations.data.ReconfirmationTravelDestinationData&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.operations.data.ReconfirmationIntervalData">
+		<property type="java.lang.String" name="reconfirmationCutOff" />
+		<property type="java.lang.Integer" name="cutoff" />
+		<property type="java.lang.String" name="cutOffDaysOrHours" />
+	</bean>
+
+	<bean
+		class="com.cnk.travelogix.operations.data.ClientReconfirmationConfigData">
+		<property name="client"
+			type="com.cnk.travelogix.operations.data.TravelogixB2BUnitData"></property>
+		<property name="reconfirmationTo" type="java.lang.String"></property>
+	<property name="clientReconfirmationInterval"
+			type="com.cnk.travelogix.operations.data.ReconfirmationIntervalData" />
+		</bean>
+
+	<bean
+		class="com.cnk.travelogix.operations.data.SupplierReconfirmationConfigData">
+		<property name="supplier"
+			type="com.cnk.travelogix.common.core.cart.data.SupplierData" />
+		<property name="reconfirmationTo" type="java.lang.String" />
+		<property name="supplierReconfirmationInterval"
+			type="com.cnk.travelogix.operations.data.ReconfirmationIntervalData" />
+	</bean>
+
+	<bean
+		class="com.cnk.travelogix.operations.data.ReconfirmationTravelDestinationData">
+		<property name="inclusion" type="java.lang.Boolean" />
+		<property name="city" type="com.cnk.travelogix.common.core.cart.data.CityData" />
+		<property name="country" type="de.hybris.platform.commercefacades.user.data.CountryData" />
+		<property name="continent" type="com.cnk.travelogix.operations.data.ContinentData" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.operations.data.ContinentData">
+		<property name="isocode" type="java.lang.String" />
+		<property name="name" type="java.lang.String" />
+		<property name="countries"
+			type="java.util.List&lt;de.hybris.platform.commercefacades.user.data.CountryData&gt;" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.operations.data.TravelogixB2BUnitData"
+		extends="de.hybris.platform.b2bcommercefacades.company.data.B2BUnitData">
+		<property name="code" type="String" />
+		<property name="clientCategory" type="String" />
+		<property name="clientSubCategory" type="String" />
+		<property name="clientGroupCompany" type="String" />
+		<property name="trvlClientType" type="String" />
+	</bean>
+
+	<bean
+		class="com.cnk.travelogix.operations.data.ReconfirmationSearchParameterData">
+		<property name="configurationFor" type="String" />
+		<property name="productCategoryCode" type="String" />
+		<property name="productCategorySubTypeCode" type="String" />
+		<property name="productCode" type="String" />
+		<property name="supplierCode" type="String" />
+		<property name="clientType" type="String" />
+		<property name="clientCategory" type="String" />
+		<property name="clientSubCategory" type="String" />
+		<property name="clientCode" type="String" />
+		<property name="clientGroup" type="String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.operations.data.ActivateParameterData">
+		<property name="effectiveFromDate" type="java.util.Date" />
+		<property name="active" type="Boolean" />
+		<property name="reason" type="String" />
+		<property name="code" type="String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.operations.data.ProductDto">
+		<property name="code" type="String" />
+		<property name="name" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.operations.data.CategoryDto">
+		<property name="code" type="String" />
+		<property name="name" type="java.lang.String" />
+		<property name="subCategory"
+			type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.CategoryData&gt;" />
+	</bean>	
+	
+	<bean class="com.cnk.travelogix.operations.data.EnumerationDto">
+		<property name="code" type="String" />
+		<property name="name" type="java.lang.String" />
+	</bean>
+	<bean class="com.cnk.travelogix.operations.data.SupplierDto">
+		<property name="code" type="String" />
+		<property name="name" type="java.lang.String" />
+	</bean>
+	<bean class="com.cnk.travelogix.operations.data.ClientDto">
+		<property name="code" type="String" />
+		<property name="name" type="java.lang.String" />
+	</bean>
+
+	<bean class="de.hybris.platform.commercefacades.product.data.ProductCategorySubTypeData" extends="de.hybris.platform.commercefacades.product.data.CategoryData">
+		<property name="suppliers" type="java.util.List&lt;com.cnk.travelogix.common.core.cart.data.SupplierData&gt;" />
+	</bean>
+		
+<bean class="com.cnk.travelogix.operations.data.TravelogixClientDetailsData">
+	<property name="clientType" type="java.util.List&lt;com.cnk.travelogix.operations.data.EnumerationDto&gt;"/>
+	<property name="clientCategory" type="java.util.List&lt;com.cnk.travelogix.operations.data.EnumerationDto&gt;"/>
+	<property name="clientSubCategory" type="java.util.List&lt;com.cnk.travelogix.operations.data.EnumerationDto&gt;"/>
+	<property name="clientName" type="java.lang.String"/>
+	<property name="clientId" type="java.lang.String"/>
+	<property name="passengerName" type="java.lang.String"/>
+</bean>
+	<bean class="de.hybris.platform.commercefacades.order.data.CCPaymentInfoData">   
+		<property name="paymentMethod" type="java.lang.String"/>
+		<property name="paymentCurrency" type="java.lang.String"/>
+		<property name="bankCurrency" type="java.lang.String"/>
+		<property name="MSFCharges" type="java.lang.Integer"/>
+		<property name="transactionDate" type="java.util.Date"/>
+		<property name="dateOfPayment" type="java.util.Date"/>
+		<property name="modeOfPayment" type="java.lang.String"/>
+		<property name="transactionAmount" type="java.lang.Double"/>
+		<property name="paymentStatus" type="java.lang.String"/>
+		<property name="bankName" type="java.lang.String"/>
+		<property name="cardNo" type="java.lang.String"/>
+		<!-- <property name="cardType" type="java.lang.String"/> -->
+		<property name="fromBankName" type="java.lang.String"/>
+		<property name="toBankName" type="java.lang.String"/>
+		<property name="ifscCode" type="java.lang.String"/>
+		<property name="intermediaryBankSwift" type="java.lang.Double"/>
+		<property name="nameOnCard" type="java.lang.String"/>
+		<property name="accountNumber" type="java.lang.String"/>
+		<property name="cvvNumber" type="java.lang.String"/>
+		<property name="expiryOfCard" type="java.util.Date" />
+		<property name="chequeNo" type="java.lang.String"/>
+		<property name="chequeDate" type="java.util.Date" />
+		<property name="dateOfDeposit" type="java.util.Date" />
+		<property name="panCardNumber" type="java.lang.String"/>
+		<property name="reasonOfIssueReceipt" type="java.lang.String"/>
+		<property name="remarks" type="java.lang.String"/>
+	    <property name="transactionReferenceNo" type="java.lang.String"/>
+	    <property name="contactPerson" type="java.lang.String"/>
+	    <property name="mobileNo" type="java.lang.String"/>
+	    <property name="Denominations" type="java.lang.String"/>
+	    <property name="chequeOrDDToBank" type="java.lang.String"/>
+	    <property name="chequeOrDDNumber" type="java.lang.String"/>
+	    <property name="chequeOrDDIssuingBank" type="java.lang.String"/>
+	    <property name="chequeOrDDDate" type="java.lang.String"/>
+ 	</bean>	
+	<bean class="com.cnk.travelogix.operations.data.TravelogixPaymentReceiptData">
+		<property name="receiptType" type="java.lang.String"/>
+		<property name="referenceId" type="java.lang.String" />		
+		<property name="entityType" type="java.lang.String"/>	
+		<property name="travelogixPaymentInfoData" type="de.hybris.platform.commercefacades.order.data.CCPaymentInfoData" />		
+		<property name="totalReceiptAmount" type="java.lang.Double"/>
+		<property name="inFavourOf" type="java.lang.String"/>
+		<property name="amountReceived" type="java.lang.Double"/>
+		<property name="receiptCreationDate" type="java.util.Date"/>
+		<property name="receiptNumber" type="java.lang.Integer"/>
+		<property name="passengerName" type="java.lang.String"/>
+		<property name="receiptAmount" type="java.lang.Double"/>
+		<property name="roe" type="java.lang.Double"/>
+		<property name="functionalReceiptAmount" type="java.lang.Double" />
+		<property name="unAppliedAmount" type="java.lang.Double" />
+		<property name="functionalUnAppliedAmount" type="java.lang.Double" />
+		<property name="createdBy" type="java.lang.String"/>
+		<property name="receiptStatus" type="java.util.List&lt;com.cnk.travelogix.operations.data.EnumerationDto&gt;"/>
+		<property name="fromDate" type="java.util.Date" />
+		<property name="toDate" type="java.util.Date" />
+		<property name="pos" type="java.lang.String"/>
+		<property name="supplierReceipt" type="com.cnk.travelogix.operations.data.SupplierReceiptData" />		
+		<property name="invoiceData" type="java.util.List&lt;com.cnk.travelogix.operations.data.TravelogixInvoiceData&gt;" />
+		<property name="remarksData" type="java.util.List&lt;com.cnk.travelogix.operations.data.TravelogixRemarksData&gt;" />
+		<property name="supplier" type="com.cnk.travelogix.common.core.cart.data.SupplierData" />
+		<property name="travelogixClientDetailsData" type="com.cnk.travelogix.operations.data.TravelogixClientDetailsData" />
+		<property name="travelogixProductData" type="de.hybris.platform.commercefacades.product.data.ProductData" />
+		<property name="clientData" type="com.cnk.travelogix.operations.data.TravelogixClientB2BData"/>
+	</bean>
+
+	<bean class="com.cnk.travelogix.operations.data.SupplierReceiptData">
+		<property name="supplierReceiptType" type="java.lang.String"/>
+		<property name="bookingReferenceID" type="java.lang.String" />
+		<property name="supplierName" type="java.lang.String"/>
+		<property name="receiptStatus" type="java.lang.String"/>
+		<property name="receiptFromDate" type="java.util.Date" />
+		<property name="receiptToDate" type="java.util.Date" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.operations.data.TravelogixInvoiceData">
+		<property name="code" type="java.lang.String"/>
+		<property name="totalCost" type="java.lang.Double"/>
+		<property name="bookingRefNo" type="java.lang.String"/>
+		<property name="outstandingAmount" type="java.lang.Double"/>
+		<property name="invoiceParticulars" type="de.hybris.platform.commercefacades.order.data.OrderEntryData"/>
+		<property name="client" type="de.hybris.platform.b2bcommercefacades.company.data.UserData"/>
+		<property name="receiptDetails" type="com.cnk.travelogix.operations.data.TravelogixReceiptDetailsData" />
+		<property name="totalAppliedAmount" type="java.lang.Double"/>
+		<property name="receipts" type="java.util.List&lt;com.cnk.travelogix.operations.data.TravelogixPaymentReceiptData&gt;"/>
+	</bean>
+
+	<bean class="com.cnk.travelogix.operations.data.TravelogixReceiptDetailsData">
+		<property name="invoiceID" type="java.lang.String"/>
+		<property name="receiptId" type="java.lang.String"/>
+		<property name="appliedCost" type="java.lang.Double"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.operations.data.TravelogixRemarksData">
+		<property name="createdBy" type="com.cnk.travelogix.operations.employee.data.EmployeeData"/>
+		<property name="commentsText" type="java.lang.String"/>
+		<property name="changedStatus" type="java.lang.String"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.operations.data.TravelogixClientB2BData">
+		<property name="clientType" type="java.util.List&lt;com.cnk.travelogix.operations.data.EnumerationDto&gt;"/>
+		<property name="clientCategory" type="java.util.List&lt;com.cnk.travelogix.operations.data.EnumerationDto&gt;"/>
+		<property name="clientSubCategory" type="java.util.List&lt;com.cnk.travelogix.operations.data.EnumerationDto&gt;"/>
+		<property name="receiptStatus" type="java.util.List&lt;com.cnk.travelogix.operations.data.EnumerationDto&gt;"/>
+	</bean>
+</beans>

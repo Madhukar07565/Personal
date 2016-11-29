@@ -1,0 +1,62 @@
+# Sample data of client type.
+$lang=en
+
+#ProfileInformation 
+INSERT_UPDATE ProfileInformation; title;&profileId;firstName[unique=true];middleName;lastName[unique=true];mobileNumber[unique=true];dietRemarks;spRemarks;birthDate[unique=true, dateFormat=dd-MM-yyyy];nationality(Country.isocode);gender(code);differentiallyAble[default=false];veg[default=false];picture(Media.code);
+;Mr;RAJSPROFILE;Rajesh;Kumar;Roy;9234567897;No Preference;Vegetarian;10-04-1978;IN;MALE;;;;
+;Mrs;TINAPROFILE;Tina;Mallisa;Bomit;9234567897;Vegetarian;Vegetarian;10-04-1978;IN;FEMALE;;;;
+
+#Address--corporateAddress
+INSERT_UPDATE Address;owner(Company.uid)[unique=true];&caddressId;appartment;streetname;streetnumber;street3;street4;street5;suburbDowntown(isocode);postalcode;country(isocode);city(isocode);area;location(isocode);latitude;longitude
+;CnkB2BUnit;corporateAddress;;Mg Road;;;;;;220014;IN;BOM;;;;;;true;01-04-2016;31-12-9999
+
+#Address--residentalAddress
+INSERT_UPDATE Address;owner(Company.uid)[unique=true];&raddressId;appartment;streetname;streetnumber;street3;street4;street5;suburbDowntown(isocode);postalcode;country(isocode);city(isocode);area;location(isocode);latitude;longitude
+;CnkB2BUnit;residentalAddress;;Bhawani nagar;Marol;;;;;220014;IN;BOM;;;;;;true;01-04-2016;31-12-9999
+
+#Address--permanentAddress
+INSERT_UPDATE Address;owner(Company.uid)[unique=true];&paddressId;appartment;streetname;streetnumber;street3;street4;street5;suburbDowntown(isocode);postalcode;country(isocode);city(isocode);area;location(isocode);latitude;longitude
+;CnkB2BUnit;permanentAddress;;Adarsh nagar;Marol maroshi;;;;;220014;IN;BOM;;;;;;true;01-04-2016;31-12-9999
+
+#FriendDetail
+INSERT_UPDATE FriendDetail;name;address; telephone; mobile[unique=true, allownull=true]; emails[unique=true, allownull=true];&frnd
+;Rajhu;Abdeheri East;;9176809234;test1@coxandkings.com;Rajhu
+;krany;Saaki Naka;;;test3@coxandkings.com;krany
+
+#EmergencyContact
+INSERT_UPDATE EmergencyContact;name[unique=true];relationShip(code);&emerg
+;krany;BROTHER;krany
+
+#TravellerFamilyDetails
+INSERT_UPDATE TravellerFamilyDetails;profileInformation(&profileId);relationShip(code)[unique=true];&family
+;TINAPROFILE;SISTER;tina
+
+#LoyalityProgramInformation
+INSERT_UPDATE LoyalityProgramInformation;memborShipNumber[unique=true];category;productCategorySubType; nameOnCard; memberShipLevel;programName(code);product(Product.code);&loyal
+;LOYAL1234;;;;;STAR_ALLIANCE;;LOYAL1234
+
+#PassportDetails
+INSERT_UPDATE PassportDetails;passportNumber[unique=true];hasValifdPassport[default=false]; passportType(code);issueDate[dateFormat=dd-MM-yyyy] ;expiryDate[dateFormat=dd-MM-yyyy];country(isocode);placeOfIssue;blankPages;&passport
+;H72KLOP21;true;REGULAR;;;IN;Bangalore;;H72KLOP21
+
+#VisaDetails
+INSERT_UPDATE VisaDetails;passportNumber[unique=true];number[unique=true, allownull=true]; documentType(code); territory(code) ;country(isocode);visaType(code); visaCategory(code); issuePlace; issueDate[dateFormat=dd-MM-yyyy]; validFrom[dateFormat=dd-MM-yyyy]; validTo[dateFormat=dd-MM-yyyy];&visadet
+;H72KLOP211;12133;VISA;SCHENGEN;IN;WORK;SINGLE_ENTRY;Bangalore;;01-04-2009;01-04-2019;H72KLOP211
+
+#Preference
+INSERT_UPDATE Preference;insuranceCompany(code)[unique=true];insuranceType(code)[unique=true];busOperator(code)[unique=true]:busClass(code):seatingType(code);&pref
+#;BAJAJ_ALLIANZ;CORPORATE;NEETA_TOURS_AND_TRAVELS;AC;AC;preff12
+
+#TravellerProfile 
+INSERT_UPDATE TravellerProfile;clientName(Principal.uid);profileInformation(&profileId);&travellerProfile;offEmailId[unique=true, allownull=true];number;personalEmailId;married[default=false];nationalIdentificationType(code);profileType(code);grade(code);employeeStatus(code);joiningDate[unique=true, dateFormat=dd-MM-yyyy];corporateAddress(&caddressId);residentalAddress(&raddressId);permanentAddress(&paddressId);emergencyContact(&emerg);travellerFamilyDetails(&family);loyalityProgramInformation(&loyal);passportDetails(&passport);visaDetails(&visadet);preferences(&pref)
+;anonymous;RAJSPROFILE;travellerofcoxandkings;test1@coxandkings.com;Inx01245jn;rajesh@test.com;true;AADHAR_CARD;VIP;SENIOR_MANAGEMENT;PERMANENT;01-04-2013;corporateAddress;residentalAddress;permanentAddress;krany;tina;LOYAL1234;H72KLOP21;H72KLOP211;
+#Preference;Designation;Department
+
+#CorporateTravellerProfile
+INSERT_UPDATE CorporateTravellerProfile;employeeId[unique=true];userId[unique=true, allownull=true];approvalRequired[default=false];selfBookingToolUser[default=false];personalTravelAllowed[default=false];reportingManager(&travellerProfile)
+;1866553;1866553;;;;travellerofcoxandkings
+#Location Project CostCentre 
+
+#B2CTravellerProfile
+INSERT_UPDATE B2CTravellerProfile;companyName[unique=true];friendDetail(&frnd)
+;JPGroupOfCompany;Rajhu,krany

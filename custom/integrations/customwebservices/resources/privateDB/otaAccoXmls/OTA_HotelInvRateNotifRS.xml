@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:OTA_HotelInvRateNotifRS xmlns:p="http://www.coxandkings.com/suppl/acco" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.coxandkings.com/suppl/acco OTA_HotelInvRateNotifRS.xsd ">
+  <p:ResponseBody>
+    <p:ResponseCode>0</p:ResponseCode>
+    <p:ResponseDescription>Success</p:ResponseDescription>
+  </p:ResponseBody>
+</p:OTA_HotelInvRateNotifRS>

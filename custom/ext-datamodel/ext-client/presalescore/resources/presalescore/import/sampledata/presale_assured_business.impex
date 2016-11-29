@@ -1,0 +1,20 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$productCategorySubType=productCategorySubType(code,$catalogVersion)
+$dateformat=dd-MM-yyyy
+$lang=en
+
+
+#Before importing this header please import Continent header
+INSERT_UPDATE AdvanceParameter;continent(isocode)[unique=true];country(isocode)[unique=true];include;exclude
+;AF;IN;true;false
+
+
+INSERT_UPDATE AssuredBusinessTargetProductVolume;productCategory(Category.code,$catalogVersion)[unique=true];$productCategorySubType[unique=true];product[unique=true];expectedSales
+;C001;C001ST001;;1000000;10000
+
+
+#Before importing import Market
+INSERT_UPDATE AssuredBusiness;assuredBusinessId;currency(isocode);clientCategory(code);clientSubCategory(code);clientType(code);clientName[unique=true];validFrom[dateFormat=dd-MM-yyyy][unique=true];validTo[dateFormat=dd-MM-yyyy][unique=true];market(uid);noOfLevels;language(isocode);parentAssociation;typeOfAssociation(code);hierarchy;transactional;clientCommercials;settlement;pointOfSale(code);targetProductWiseSales;targetTotalSales;targetSalesforAllProducts;targetSales;targetProductvolumes(AssuredBusinessTargetProductVolume.productCategory(Category.code,$catalogVersion))
+                             ;ASB98741234      ;INR              ;CORPORATE           ;BANKS                  ;B2B             ;Purple Travels         ;08-08-2016                                   ;09-08-2016                                 ;IND        ;3         ;en               ;None             ;SUB_AGENT              ;2        ;true         ;true             ;true      ;WEBSITE          ;false                 ;FALSE           ;150000                   ;100000     ;

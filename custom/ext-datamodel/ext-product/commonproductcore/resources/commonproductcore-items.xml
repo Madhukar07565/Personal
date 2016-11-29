@@ -1,0 +1,1124 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+	<collectiontypes>
+		<collectiontype elementtype="Country" code="Countries"
+			autocreate="true" />
+		<collectiontype elementtype="City" code="Cities"
+			autocreate="true" />
+		<collectiontype elementtype="HashTag" code="HashTagCollection"
+			autocreate="true" />
+	</collectiontypes>
+	<enumtypes>
+		<enumtype code="VehicleCategory" dynamic="true">
+			<value code="MINI" />
+			<value code="ECONOMY" />
+			<value code="COMPACT" />
+			<value code="INTERMEDIATE" />
+			<value code="STANDARD" />
+			<value code="FULLSIZE" />
+			<value code="PREMIUM" />
+			<value code="LUXARY" />
+			<value code="SPECIAL" />
+			<value code="OVERSIZE" />
+		</enumtype>
+
+		<enumtype code="Theme" dynamic="true">
+			<value code="BUDGET" />
+			<value code="LUXURY" />
+			<value code="PVT_TOURS" />
+			<value code="FAMILY" />
+			<value code="THEME_WATER_PARK" />
+			<value code="ADVENTURE" />
+			<value code="TREKKING" />
+			<value code="WALKING" />
+			<value code="BIKING" />
+			<value code="HIKING" />
+			<value code="SPA_RELAXATION" />
+			<value code="NATURE_WILDLIFE" />
+			<value code="SHOPPING" />
+			<value code="GOURMET" />
+			<value code="BANQUET" />
+			<value code="GOLF" />
+			<value code="SPORTS" />
+			<value code="SKI" />
+			<value code="WATER_SPORTS" />
+			<value code="SHOW_LIVE_ENT" />
+			<value code="NIGHT_LIFE" />
+			<value code="WATER_EXP" />
+		</enumtype>
+
+		<enumtype code="VisaType" dynamic="true">
+			<value code="BUSINESS" />
+			<value code="CONFERENCE" />
+			<value code="EMPLOYMENTR" />
+			<value code="FAMIL_REUNION" />
+			<value code="HONEYMOON" />
+			<value code="LONG_STAY" />
+			<value code="MEDICAL_TREATMENT" />
+			<value code="SEAMEN" />
+			<value code="SHORT_STAY" />
+			<value code="STUDIES" />
+			<value code="TOURISM" />
+			<value code="TRANSIT" />
+			<value code="WORK" />
+		</enumtype>
+
+		<enumtype code="Rating" dynamic="true">
+			<value code="ONE" />
+			<value code="TWO" />
+			<value code="THREE" />
+			<value code="FOUR" />
+			<value code="FIVE" />
+			<value code="SIX" />
+			<value code="SEVEN" />
+			<value code="STANDARD" />
+			<value code="SUPERIOR" />
+			<value code="DELUXE" />
+			<value code="LUXARY" />
+			<value code="BOUTIQUE" />
+		</enumtype>
+
+		<enumtype code="ActivationStatus">
+			<value code="ACTIVE" />
+			<value code="IN_ACTIVE" />
+		</enumtype>
+
+		<enumtype code="PlaceCategory" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="Museum" />
+			<value code="Hospital" />
+			<value code="Restaurant" />
+			<value code="Embassy" />
+			<value code="Entertainment" />
+			<value code="Convention_Center" />
+			<value code="Activity" />
+		</enumtype>
+
+		<enumtype code="ModeOfTransport" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="ROAD" />
+			<value code="AIR" />
+			<value code="WATER" />
+			<value code="RAIL" />
+		</enumtype>
+
+		<enumtype code="FacilityCategory" dynamic="true">
+			<value code="RECREATIONAL" />
+			<value code="RESTRAURAT_AND_BAR" />
+			<value code="SPA_AND_RELAXATION" />
+			<value code="ACTIVITIES" />
+		</enumtype>
+
+		<enumtype code="RetentionFactor" dynamic="true">
+			<value code="AMOUNT" />
+			<value code="PERCENTAGE" />
+		</enumtype>
+
+		<enumtype code="PointOfServiceTypeEnum" dynamic="true"
+			autocreate="false">
+			<value code="WEBSITE" />
+			<value code="WHITELABEL" />
+			<value code="XML" />
+			<value code="ASP" />
+			<value code="CALLCENTRE" />
+			<value code="BRANCH" />
+			<value code="MOBILE" />
+			<value code="ALL" />
+		</enumtype>
+
+		<enumtype code="UpdateType" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="Renovation" />
+			<value code="Destination" />
+			<value code="Facilities" />
+			<value code="Amenities" />
+		</enumtype>
+
+		<enumtype code="DescriptionType" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="External" />
+			<value code="Internal" />
+			<value code="Both" />
+		</enumtype>
+
+		<enumtype code="ResortType" autocreate="true" generate="true"
+			dynamic="true">
+		</enumtype>
+
+		<enumtype code="HealthAndSafetyCategory" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="DOCUMENTED_SAFETY_PROCEDURES_AND_PROTOCOLS" />
+			<value code="ENGINEERING_SERVICES_SYSTEMS_AND_PROCEDURES" />
+			<value code="GUEST_AND_OCCUPATIONAL_SAFETY_COMMITTEE" />
+			<value code="EMERGENCY_PLANNING_AND_PREPAREDNESS" />
+			<value code="TRAINING_LIFE_AND_GENERAL_SAFETY" />
+			<value code="BOILER_PLANT_AND_WATER_SYSTEMS" />
+			<value code="HEATING_VENTILATION_AND_AIR_CONDITIONING_HVAC" />
+			<value code="CHILLERS_AND_REFRIGERATION_SYSTEMS" />
+			<value code="POWER_SUPPLY_AND_DISTRIBUTION_AND_ENERGY_MANAGEMENT" />
+			<value code="ELECTRICAL_SAFETY" />
+			<value code="INCIDENT_RESPONSE_MANAGEMENT_RECORDING_AND_INVESTIGATIONS" />
+			<value code="WASTE_AND_ENVIRONMENTAL_MANAGEMENT_SYSTEMS_FACILITIES" />
+			<value code="INSURANCES" />
+			<value code="RISK_MANAGEMENT_IN_PURCHASING_AND_RECEIVING" />
+			<value code="SPORTING_FACILITIES_AND_SERVICES" />
+			<value code="SECURITY_OPERATIONS_AND_SYSTEMS" />
+			<value code="CLOSED_CIRCUIT_TV_AND_ALARM_SYSTEMS" />
+			<value code="HOUSEKEEPING_AND_CLEANING_OPERATIONS" />
+			<value code="LAUNDRY_OPERATIONS_AND_FACILITIES" />
+			<value code="LOADING_DOCK_RECEIVING_OPERATIONS" />
+			<value code="LIFTS_ESCALATORS_AND_WALKWAYS" />
+			<value code="FOOD_AND_BEVERAGE_SERVICES_KITCHEN_OPERATIONS" />
+			<value code="FIRE_SAFETY_SYSTEMS_PROCEDURES_AND_EQUIPMENT" />
+			<value code="VALET_AND_OTHER_PARKING" />
+			<value code="SWIMMING_POOLS_BEACHFRONTS_AND_SPAS" />
+			<value code="CHILDRENS_FACILITIES_AND_CHILD_MINDING" />
+			<value code="FITNESS_AND_HEALTH_CENTRES" />
+			<value code="LUGGAGE_HANDLING_AND_STORAGE_FACILITIES" />
+			<value code="GARDENS_TERRACES_AND_GROUNDS" />
+			<value code="GUEST_ROOMS_AND_FLOOR_SAFETY" />
+			<value code="MANAGEMENT_AND_LEADERSHIP" />
+		</enumtype>
+
+		<enumtype code="FacilityType" dynamic="true">
+			<value code="SWIMMING_POOL" />
+			<value code="CONTINENTAL_RESTAURANT" />
+			<value code="INDIAN_RESTAURANT" />
+			<value code="BADMINTON_COURT" />
+			<value code="GAME_ZONE" />
+		</enumtype>
+		<enumtype code="EntryType">
+			<value code="Single_Entry" />
+			<value code="Double_Entry" />
+			<value code="Multiple_Entry" />
+			<value code="Re_Entry" />
+			<value code="Transit" />
+		</enumtype>
+
+		<enumtype code="ProductReferenceTypeEnum" autocreate="false"
+			generate="false">
+			<value code="PAID" />
+			<value code="COMPLEMENTARY" />
+		</enumtype>
+	</enumtypes>
+
+	<relations>
+		<relation code="ProductTOMarketDeactivationConfig"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="product" type="Product"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="marketDeactivationConfig"
+				type="DeactivationConfig" cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="PriceRetentionToIndividualRetentions"
+			autocreate="true" localized="false">
+			<sourceElement qualifier="priceRetention" type="PriceRetention"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="individualRetentions" type="Individual"
+				cardinality="many">
+			</targetElement>
+		</relation>
+
+		<relation code="CombinationProductToProductDefinitions"
+			autocreate="true" localized="false">
+			<sourceElement qualifier="combinationProduct" type="CombinationProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="products" type="ProductDefinition"
+				cardinality="many">
+				<modifiers optional="false" />
+			</targetElement>
+		</relation>
+
+		<relation code="CombinationProductToPointOfSale" autocreate="true"
+			localized="false">
+			<deployment table="comboproductpos" typecode="21204" />
+			<sourceElement qualifier="combinationProduct" type="CombinationProduct"
+				cardinality="many">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="pointOfSale" type="PointOfSale"
+				cardinality="many">
+			</targetElement>
+		</relation>
+
+		<relation code="ProductDefinitionToAttachedProducts"
+			autocreate="true" localized="false">
+			<deployment table="productdefattachedprod" typecode="21203" />
+			<sourceElement qualifier="productDefinition" type="ProductDefinition"
+				cardinality="many">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="attachedProducts" type="AttachedProduct"
+				cardinality="many">
+			</targetElement>
+		</relation>
+
+		<relation code="ProductToshortDescriptions" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="productShortDescription"
+				type="Product" cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="shortDescriptions" type="DescriptionDetails"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="ProductTolongDescriptions" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="productLongDescription" type="Product"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="longDescriptions" type="DescriptionDetails"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="ProductToProductUpdate" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="product" type="Product"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="productUpdates" type="ProductUpdate"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="StaffInformationToEContactInfos" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="staffInformation" type="StaffInformation"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="eContactInfos" type="EContactInfo"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+	</relations>
+
+	<itemtypes>
+		<typegroup name="Affiliation">
+			<itemtype code="Affiliation" extends="AbstractCommonMasterType"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.Affiliation">
+			</itemtype>
+			<itemtype code="Interest" extends="AbstractCommonMasterType"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.Interest">
+			</itemtype>
+			<itemtype code="TravelogixRuleType" extends="AbstractCommonMasterType"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.TravelogixRuleType">
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="Product">
+			<itemtype code="Product" generate="false" autocreate="false">
+				<attributes>
+					<attribute qualifier="commonProductID" type="java.lang.String">
+						<persistence type="property" />
+						<description>Product Id which is not company specific. It has
+							same value for all companies.
+						</description>
+						<modifiers initial="true" write="false" />
+					</attribute>
+					<attribute qualifier="financeControlId" type="java.lang.String">
+						<persistence type="property" />
+						<description>finance control Id has same
+							value for all companies.
+						</description>
+						<modifiers unique="true" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="reason">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="active">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="lockedBy" type="Employee">
+						<persistence type="property" />
+						<description>The User Who Changed the status.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="copiedFrom" type="java.lang.String">
+						<persistence type="property" />
+						<description>Copied From </description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="displayName" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Display Name</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="interest" type="Interest">
+						<persistence type="property" />
+						<description>Interest</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="usp" type="java.lang.String">
+						<persistence type="property" />
+						<description>USP  </description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="highlights" type="java.lang.String">
+						<persistence type="property" />
+						<description>highlights  </description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="sellingTips" type="java.lang.String">
+						<persistence type="property" />
+						<description>selling Tips </description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="workFlowStatus" type="ApprovalWorkFlowStatus">
+						<description>Work Flow Status</description>
+						<defaultvalue>em().getEnumerationValue("WorkFlowStatus","DRAFT")</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="isProductSharable">
+						<persistence type="property" />
+						<description>First Booking Check </description>
+			   		</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="DeactivationConfig" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.DeactivationConfig"
+				extends="GenericItem">
+				<description>Represents DeactivationConfig</description>
+				<deployment table="deactivationconfig" typecode="21001" />
+				<attributes>
+					<attribute qualifier="companyMarket" type="Market">
+						<persistence type="property" />
+						<description>To show company Market.</description>
+						<modifiers initial="true" optional="false" />
+					</attribute>
+					<attribute qualifier="validityStartDate" type="java.util.Date">
+						<persistence type="property" />
+						<description>To show validity Start Date.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="validityEndDate" type="java.util.Date">
+						<persistence type="property" />
+						<description>To show validity End Date.</description>
+						<modifiers />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="status">
+						<persistence type="property" />
+						<description>Status of market whether active or inactive
+						</description>
+						<modifiers />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="reason">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="DescriptionDetails" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.DescriptionDetails">
+				<description>Description Details</description>
+				<deployment table="descriptiondetails" typecode="21012" />
+				<attributes>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Description</description>
+					</attribute>
+					<attribute qualifier="fromToDate"
+						type="de.hybris.platform.util.StandardDateRange">
+						<persistence type="property" />
+						<description>From Date</description>
+					</attribute>
+					<attribute qualifier="source" type="java.lang.String">
+						<persistence type="property" />
+						<description>Source</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="HealthAndSafety" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.HealthAndSafety">
+				<description>Health And Safety</description>
+				<deployment table="healthandsafety" typecode="21014" />
+				<attributes>
+					<attribute qualifier="healthAndSafetyCategory" type="HealthAndSafetyCategory">
+						<persistence type="property" />
+						<description>Health And Safety Category</description>
+					</attribute>
+					<attribute qualifier="healthAndSafetyName" type="java.lang.String">
+						<persistence type="property" />
+						<description>Health And Safety Name</description>
+					</attribute>
+					<attribute qualifier="remarks" type="java.lang.String">
+						<persistence type="property" />
+						<description>Remarks</description>
+					</attribute>
+					<attribute qualifier="value" type="java.lang.String">
+						<persistence type="property" />
+						<description>Value</description>
+					</attribute>
+					<attribute qualifier="lastUpdate" type="java.util.Date">
+						<persistence type="property" />
+						<description>LastUpdate</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="PlaceDescription" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.PlaceDescription">
+				<description>Place Description</description>
+				<deployment table="placedescription" typecode="21009" />
+				<attributes>
+					<attribute qualifier="placeOfCategory" type="PlaceCategory">
+						<persistence type="property" />
+						<description>Place Category</description>
+					</attribute>
+					<attribute qualifier="placeName" type="java.lang.String">
+						<persistence type="property" />
+						<description>Place Name</description>
+					</attribute>
+					<attribute qualifier="distanceFromProperty" type="java.lang.String">
+						<persistence type="property" />
+						<description>Distance From Property</description>
+					</attribute>
+					<attribute qualifier="distanceUnit" type="DistanceUnit">
+						<persistence type="property" />
+						<description>Distance Unit</description>
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Description</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="NameOfPlace" autocreate="true" generate="true"
+				extends="AbstractCommonMasterType" jaloclass="com.cnk.travelogix.product.common.core.jalo.NameOfPlace">
+				<deployment table="nameofplace" typecode=" 21522" />
+			</itemtype>
+
+			<itemtype code="Route" autocreate="true" generate="true"
+				extends="GenericItem" jaloclass="com.cnk.travelogix.product.common.core.jalo.Route">
+				<description>Represents Route</description>
+				<deployment table="route" typecode="21008" />
+				<attributes>
+					<attribute qualifier="from" type="Location">
+						<persistence type="property" />
+						<description>From</description>
+					</attribute>
+					<attribute qualifier="nameOfPlace" type="NameOfPlace">
+						<persistence type="property" />
+						<description>Name Of Place</description>
+					</attribute>
+					<attribute qualifier="modeOfTransport" type="ModeOfTransport">
+						<persistence type="property" />
+						<description>Mode Of Transport</description>
+					</attribute>
+
+					<attribute qualifier="transportType" type="ProductCategorySubType">
+						<persistence type="property" />
+						<description>Transport Type</description>
+					</attribute>
+					<attribute qualifier="distanceFromProperty" type="java.lang.Double">
+						<persistence type="property" />
+						<description>Distance From Property</description>
+					</attribute>
+					<attribute qualifier="approximateDuration" type="java.lang.String">
+						<persistence type="property" />
+						<description>Approximate Duration</description>
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Description</description>
+					</attribute>
+					<attribute qualifier="drivingDirection" type="java.lang.String">
+						<persistence type="property" />
+						<description>Driving Direction</description>
+					</attribute>
+					<attribute qualifier="validFromTO"
+						type="de.hybris.platform.util.StandardDateRange">
+						<persistence type="property" />
+						<description>Valid From</description>
+					</attribute>
+					<attribute qualifier="distanceUnit" type="DistanceUnit">
+						<persistence type="property" />
+						<description>Distance Unit</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Ancillary" autocreate="true" generate="true"
+				extends="Product" jaloclass="com.cnk.travelogix.product.common.core.jalo.Ancillary">
+				<description>Ancillary</description>
+				<deployment table="ancillary" typecode="21017" />
+				<attributes>
+					<attribute qualifier="ancillaryType" type="AncillaryType">
+						<persistence type="property" />
+						<description>Ancillary Type</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Facility" autocreate="true" generate="true"
+				extends="GenericItem" jaloclass="com.cnk.travelogix.product.common.core.jalo.Facility">
+				<description>Facility</description>
+				<deployment table="facility" typecode="21013" />
+				<attributes>
+					<attribute qualifier="facilityName" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Facility Name</description>
+					</attribute>
+					<attribute qualifier="facilityCategory" type="FacilityCategory">
+						<persistence type="property" />
+						<description>Facility Category</description>
+					</attribute>
+					<attribute qualifier="facilityType" type="FacilityType">
+						<persistence type="property" />
+						<description>Facility Type</description>
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Description</description>
+					</attribute>
+					<attribute qualifier="dateRange"
+						type="de.hybris.platform.util.StandardDateRange">
+						<persistence type="property" />
+						<description>Date Range</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Brochure" autocreate="true" generate="true"
+				extends="GenericItem" jaloclass="com.cnk.travelogix.product.common.core.jalo.Brochure">
+				<description>Brochure Master</description>
+				<deployment table="brochure" typecode="21121" />
+				<attributes>
+					<attribute qualifier="code" type="java.lang.String">
+						<persistence type="property" />
+						<description>Description</description>
+					</attribute>
+					<attribute qualifier="name" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Description</description>
+					</attribute>
+					<attribute qualifier="media" type="localized:Media">
+						<persistence type="property" />
+						<description>Description</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+		</typegroup>
+
+		<typegroup name="productupdate">
+			<itemtype code="ProductUpdate" autocreate="true" generate="true"
+				extends="DescriptionDetails" jaloclass="com.cnk.travelogix.product.common.core.jalo.ProductUpdate">
+				<description>ProductUpdate</description>
+				<deployment table="productupdate" typecode="23009" />
+				<attributes>
+					<attribute qualifier="updateType" type="UpdateType">
+						<persistence type="property" />
+						<description>Update Type</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="descriptionType" type="DescriptionType">
+						<persistence type="property" />
+						<description>Description Type</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="sendToCustomer" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Send To Customer</description>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="showOnVoucher" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Show On Voucher</description>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="modeOfCommunication" type="CommunicationMedium">
+						<persistence type="property" />
+						<description>Mode Of Communication</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+		</typegroup>
+
+		<typegroup name="ComboProduct">
+			<itemtype code="CombinationProduct" autocreate="true"
+				generate="true" extends="Product"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.CombinationProduct">
+				<description>Combination Product Master</description>
+				<attributes>
+					<attribute qualifier="comboFailDueToSingleProduct" type="java.lang.Boolean">
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<persistence type="property" />
+						<modifiers optional="false" />
+						<description>Fail Entire Combination if any product Failed in the booking</description>
+					</attribute>
+					<attribute qualifier="singleProductCancellation" type="java.lang.Boolean">
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<persistence type="property" />
+						<modifiers optional="false" />
+						<description>Whether single product cancellation is allowed or not from the combination product</description>
+					</attribute>
+					<attribute qualifier="priceRetention" type="PriceRetention">
+						<persistence type="property" />
+						<description>Price retention</description>
+					</attribute>
+					<attribute qualifier="entity" type="Principal">
+						<persistence type="property" />
+						<description>Entity Type </description>
+					</attribute>
+					<attribute qualifier="companyMarket" type="Market">
+						<persistence type="property" />
+						<description>Company Market</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="PriceRetention" autocreate="true" generate="true"
+				extends="GenericItem" jaloclass="com.cnk.travelogix.product.common.core.jalo.PriceRetention">
+				<description>Price Retention </description>
+				<deployment table="priceretention" typecode="21531" />
+				<attributes>
+					<attribute qualifier="includeStandardCommission" type="java.lang.Boolean">
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<persistence type="property" />
+						<modifiers optional="false" />
+						<description>Whether standard commission is to be included to calculate 'Retention on Difference'</description>
+					</attribute>
+					<attribute qualifier="isCombo" type="java.lang.Boolean">
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+						<persistence type="property" />
+						<modifiers optional="false" />
+						<description>Retention type. If selected value is TRUE then Retention type is Combo Retention and if FALSE is selected then Retention type is Individual Product Retention</description>
+					</attribute>
+					<attribute qualifier="comboRetention" type="Combo">
+						<persistence type="property" />
+						<description>Combo Retention </description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AbstractPriceRetention" autocreate="true"
+				generate="true" abstract="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.AbstractPriceRetention">
+				<description>Abstract Price Retention </description>
+				<deployment table="abstractpriceretention" typecode="21532" />
+				<attributes>
+					<attribute qualifier="retentionFactor" type="RetentionFactor">
+						<persistence type="property" />
+						<modifiers optional="false" />
+						<description>Whether retention factor is AMOUNT or PERCENTAGE</description>
+					</attribute>
+					<attribute qualifier="value" type="java.math.BigDecimal">
+						<persistence type="property">
+							<columntype>
+								<value>java.math.BigDecimal</value>
+							</columntype>
+						</persistence>
+						<modifiers optional="false" />
+						<description>Amount value or percentage value</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Individual" autocreate="true" generate="true"
+				extends="AbstractPriceRetention" jaloclass="com.cnk.travelogix.product.common.core.jalo.Individual">
+				<description>Individual product retention</description>
+				<attributes>
+					<attribute qualifier="category" type="ProductCategorySubType">
+						<persistence type="property" />
+						<description>This will be Product Category SubType</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Combo" autocreate="true" generate="true"
+				extends="AbstractPriceRetention" jaloclass="com.cnk.travelogix.product.common.core.jalo.Combo">
+				<description>Combo product retention</description>
+			</itemtype>
+
+			<itemtype code="ProductDefinition" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.ProductDefinition">
+				<description>Product Definition</description>
+				<deployment table="productdefinition" typecode="21533" />
+				<attributes>
+					<attribute qualifier="attachId" type="java.lang.String">
+						<persistence type="property" />
+						<description>This will be generated by system while click on save button on front end</description>
+					</attribute>
+					<attribute qualifier="category" type="ProductCategorySubType">
+						<persistence type="property" />
+						<modifiers optional="false" />
+						<description>This will be Product Category SubType</description>
+					</attribute>
+
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AttachedProduct" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.AttachedProduct">
+				<description>Product Definition</description>
+				<deployment table="attachedproduct" typecode="21534" />
+				<attributes>
+					<attribute qualifier="include" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Whether the attached product is to be included/excluded on front end </description>
+					</attribute>
+					<attribute qualifier="product" type="Product">
+						<persistence type="property" />
+						<description>Product to be attached</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="PointOfSale" autocreate="true" generate="true"
+				extends="GenericItem" jaloclass="com.cnk.travelogix.product.common.core.jalo.PointOfSale">
+				<description>Point of Sale</description>
+				<deployment table="pointofsale" typecode="21536" />
+				<attributes>
+					<attribute qualifier="pointOfSale" type="PointOfServiceTypeEnum">
+						<persistence type="property" />
+						<modifiers optional="false" />
+						<description>Whether the attached product is to be included/excluded on front end </description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="RuleInfo" autocreate="true" generate="true"
+				extends="GenericItem" jaloclass="com.cnk.travelogix.product.common.core.jalo.RuleInfo">
+				<description>Rule Info</description>
+				<deployment table="ruleInfo" typecode="21010" />
+				<attributes>
+					<attribute qualifier="ruleType" type="TravelogixRuleType">
+						<persistence type="property" />
+						<description>Rule Type</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="description" type="java.lang.String">
+						<persistence type="property" />
+						<description>Description</description>
+						<modifiers unique="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="HolidayAbstract">
+			<itemtype code="AbstractVisaDetails" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.AbstractVisaDetails">
+				<description>Abstract Visa Details</description>
+				<deployment table="abstractvisadet" typecode="21549" />
+				<attributes>
+					<attribute type="Category" qualifier="productCategory">
+						<persistence type="property" />
+						<description>Product category</description>
+					</attribute>
+					<attribute type="ProductCategorySubType" qualifier="ProductCategorySubType">
+						<persistence type="property" />
+						<description>Product category sub type</description>
+					</attribute>
+					<attribute type="Country" qualifier="country">
+						<persistence type="property" />
+						<description>Country for which Visa is.</description>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="duration">
+						<persistence type="property" />
+						<description>Duration of Visa</description>
+					</attribute>
+					<attribute type="EntryType" qualifier="entryType">
+						<persistence type="property" />
+						<description>Entry type</description>
+					</attribute>
+					<attribute type="VisaType" qualifier="purposeOfTravel">
+						<persistence type="property" />
+						<description>Purpose of travel</description>
+					</attribute>
+					<attribute type="Country" qualifier="passportIssedIn">
+						<persistence type="property" />
+						<description>Country in which passport issued</description>
+					</attribute>
+					<attribute type="Country" qualifier="whereAreYouLocated">
+						<persistence type="property" />
+						<description>Country where your located.</description>
+					</attribute>
+					<attribute type="Country" qualifier="citizenShip">
+						<persistence type="property" />
+						<description>Citizenship</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AbstractDayWiseItinerary" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.AbstractDayWiseItinerary">
+				<description>Abstract Day Wise Itinerary</description>
+				<deployment table="abstrdaywiseitinry" typecode="21550" />
+				<attributes>
+					<attribute type="City" qualifier="city">
+						<persistence type="property" />
+						<description>City</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="sequenceNumber">
+						<persistence type="property" />
+						<description>Sequence number</description>
+					</attribute>
+					<attribute type="Category" qualifier="productCategory">
+						<persistence type="property" />
+						<description>Product category</description>
+					</attribute>
+					<attribute type="ProductCategorySubType" qualifier="ProductCategorySubType">
+						<persistence type="property" />
+						<description>Product category sub type</description>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="day">
+						<persistence type="property" />
+						<description>Day</description>
+					</attribute>
+					<attribute type="PriceRow" qualifier="standardPrice">
+						<persistence type="property" />
+						<description>Standard price</description>
+					</attribute>
+					<attribute type="PriceRow" qualifier="deluxePrice">
+						<persistence type="property" />
+						<description>Deluxe price</description>
+					</attribute>
+					<attribute type="PriceRow" qualifier="superiorPrice">
+						<persistence type="property" />
+						<description>Superior price</description>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="itineraryBrief">
+						<persistence type="property" />
+						<description>Itinerary brief</description>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="itineraryDetails">
+						<persistence type="property" />
+						<description>Itinerary details</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="FileName" extends="AbstractCommonMasterType"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.FileName">
+			</itemtype>
+
+			<itemtype code="Media" autocreate="false" generate="false">
+				<attributes>
+					<attribute qualifier="roomCategory" type="RoomCategory">
+						<persistence type="property" />
+						<description>Room Category</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="validFromTO"
+						type="de.hybris.platform.util.StandardDateRange">
+						<persistence type="property" />
+						<description>Valid From</description>
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="name">
+						<persistence type="property" />
+						<description>Name of Park Map</description>
+					</attribute>
+					<attribute type="FileName" qualifier="fileName">
+						<persistence type="property" />
+						<description>Name of the media</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="Accommodation">
+			<itemtype code="AccommodationBrand"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.AccommodationBrand">
+				<deployment table="accobrands" typecode="21000" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="code">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="name">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AccommodationChain"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.AccommodationChain">
+				<deployment table="accochains" typecode="21300" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="code">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="name">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="displayName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="address">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="description">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="email">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="url">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="Accommodation" autocreate="true" generate="true"
+				extends="Product" jaloclass="com.cnk.travelogix.product.common.core.jalo.Accommodation">
+				<description>Represents Accommodation</description>
+				<attributes>
+					<attribute qualifier="chain" type="AccommodationChain">
+						<persistence type="property" />
+						<description>To show the Chain.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="brand" type="AccommodationBrand">
+						<persistence type="property" />
+						<description>Brand.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="affiliation" type="Affiliation">
+						<persistence type="property" />
+						<description>Affiliation.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="address" type="Address">
+						<persistence type="property" />
+						<description>Address.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="hotelRating" type="Rating">
+						<persistence type="property" />
+						<description>To show Rating.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="companyRating" type="Rating">
+						<persistence type="property" />
+						<description>To show Rating.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="ratingDate" type="java.util.Date">
+						<persistence type="property" />
+						<description>dated</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="totalFloors" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>Total Floors</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="totalRooms" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>Total Rooms</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="recommendedFor" type="RecommondationType">
+						<persistence type="property" />
+						<description>Recommended</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="checkinTime" type="java.lang.String">
+						<persistence type="property" />
+						<description>Checkin Time.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="checkoutTime" type="java.lang.String">
+						<persistence type="property" />
+						<description>Checkout Time.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="internalRemark" type="java.lang.String">
+						<persistence type="property" />
+						<description>Internal Remark.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="hashTags" type="HashTagCollection">
+						<persistence type="property" />
+						<description>HashTag</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="companyRecommended" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>companyRecommended</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="mysteryProduct" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Mystery Product</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="resortType" type="ResortType">
+						<persistence type="property" />
+						<description>Resort Type</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		<typegroup>
+			<itemtype code="ActualPrices" generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.ActualPrices"
+				extends="GenericItem">
+				<description>Represents Actual Prices</description>
+				<deployment table="actualprices" typecode="21554" />
+				<attributes>
+					<!-- <attribute type="Supplier" qualifier="supplier"> <persistence type="property" 
+						/> <description>Supplier</description> </attribute> -->
+					<attribute type="java.util.Date" qualifier="onlineFrom">
+						<persistence type="property" />
+						<description>Online from date</description>
+					</attribute>
+					<attribute type="java.util.Date" qualifier="offlineFrom">
+						<persistence type="property" />
+						<description>Offline from date</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

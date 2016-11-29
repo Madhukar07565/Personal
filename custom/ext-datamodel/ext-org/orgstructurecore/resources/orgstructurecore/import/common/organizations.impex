@@ -1,0 +1,61 @@
+INSERT_UPDATE GroupOfCompanies;uid[unique=true,forceWrite=true];name;approvalStatus(code);active[default=true];activeFrom[dateFormat=dd-MM-yyyy];activeTo[dateFormat=dd-MM-yyyy]
+;C001;Cox & kings Group of Companies;approved;true;01-04-2016;31-12-9999
+
+INSERT_UPDATE GroupCompany;uid[unique=true,forceWrite=true];name;groupOfCompanies(uid);approvalStatus(code);active[default=true];activeFrom[dateFormat=dd-MM-yyyy];activeTo[dateFormat=dd-MM-yyyy]
+;E001;Ezeego One Group;C001;approved;true;01-04-2016;31-12-9999
+
+INSERT_UPDATE Address;owner(Company.uid)[unique=true];&addressId;streetname[unique=true];streetnumber[unique=true];postalcode;duplicate;town;country(isocode);street3;street4;street5;suburbDowntown;area;location;latitude;longitude;addressType;branchName;city(isocode);
+;E000;E000;Crystal Drive;1480;18551;true;Safegard;US;
+
+INSERT_UPDATE Company;uid[unique=true,forceWrite=true];name;groupCompany(uid);taxHeads(key(code),value);currency(isocode);telephone;contactAddress(&addressId);approvalStatus(code);active[default=true];activeFrom[dateFormat=dd-MM-yyyy];activeTo[dateFormat=dd-MM-yyyy]
+;E000;Ezeego One Tour & Travels India;E001;VAT_REG_NO->687785;INR;+912241440000;E000;approved;true;01-04-2016;31-12-9999
+
+INSERT_UPDATE StrategicBusinessUnit;uid[unique=true,forceWrite=true];name;approvalStatus(code);company(uid);active[default=true];activeFrom[dateFormat=dd-MM-yyyy];activeTo[dateFormat=dd-MM-yyyy]
+;SBU - Out Bound;Out Bound;approved;E000;true;01-04-2016;31-12-9999
+;SBU - IBT;IBT;approved;E000;true;01-04-2016;31-12-9999
+;SBU - Domestic;Domestic;approved;E000;true;01-04-2016;31-12-9999
+;SBU - Air;Air;approved;E000;true;01-04-2016;31-12-9999
+;SBU - Non-Air;Non-Air;approved;E000;true;01-04-2016;31-12-9999
+
+INSERT_UPDATE BusinessUnit;uid[unique=true,forceWrite=true];name;approvalStatus(code);strategicBusinessUnit(uid);active[default=true];activeFrom[dateFormat=dd-MM-yyyy];activeTo[dateFormat=dd-MM-yyyy]
+;BU - FIT;FIT;approved;SBU - Domestic;true;01-04-2016;31-12-9999
+;BU - Duniya Dekho;Duniya Dekho;approved;SBU - Domestic;true;01-04-2016;31-12-9999
+;BU - Bharat Dekho;Bharat Dekho;approved;SBU - Domestic;true;01-04-2016;31-12-9999
+;BU - MICE;MICE;approved;SBU - Domestic;true;01-04-2016;31-12-9999
+;BU - Air;Air;approved;SBU - Domestic;true;01-04-2016;31-12-9999
+;BU - Non Air;Non Air;approved;SBU - Domestic;true;01-04-2016;31-12-9999
+
+INSERT_UPDATE Market;uid[unique=true,forceWrite=true];name;businessUnit(uid);marketDateFormat[default=dd/MM/yyyy];localCurrency(isocode);constituentCountries(isocode);approvalStatus(code);active[default=true];activeFrom[dateFormat=dd-MM-yyyy];activeTo[dateFormat=dd-MM-yyyy]
+;IND;India;BU - Air;dd/MM/yyyy;INR;IN;approved;true;01-04-2016;31-12-9999
+;AU;Australia;BU - Air;dd/MM/yyyy;INR;AU;approved;true;01-04-2016;31-12-9999
+;ALL;All;BU - Air;dd/MM/yyyy;INR;IN,AU;approved;true;01-04-2016;31-12-9999
+
+INSERT_UPDATE DistributionChannel;uid[unique=true,forceWrite=true];name;approvalStatus(code);company(uid);active[default=true];activeFrom[dateFormat=dd-MM-yyyy];activeTo[dateFormat=dd-MM-yyyy]
+;Website;Website;approved;E000;true;01-04-2016;31-12-9999
+;Whitelabel;White Label;approved;E000;true;01-04-2016;31-12-9999
+;XML;XML;approved;E000;true;01-04-2016;31-12-9999
+;ASP;ASP;approved;E000;true;01-04-2016;31-12-9999
+;Call Centre;Call Centre;approved;E000;true;01-04-2016;31-12-9999
+;Branch;Branch;approved;E000;true;01-04-2016;31-12-9999
+;Mobile;Mobile;approved;E000;true;01-04-2016;31-12-9999
+
+INSERT_UPDATE Division;uid[unique=true,forceWrite=true];name;approvalStatus(code);distributionChannel(uid);active[default=true];activeFrom[dateFormat=dd-MM-yyyy];activeTo[dateFormat=dd-MM-yyyy]
+;Out Bound;Out Bound;approved;Website;true;01-04-2016;31-12-9999
+;IBT;IBT;approved;Website;true;01-04-2016;31-12-9999
+;Domestic;Domestic;approved;Website;true;01-04-2016;31-12-9999
+;Air;Air;approved;Website;true;01-04-2016;31-12-9999
+;Non Air;Non Air;approved;Website;true;01-04-2016;31-12-9999
+;FIT;FIT;approved;Website;true;01-04-2016;31-12-9999
+;Duniya Dekho;Duniya Dekho;approved;Website;true;01-04-2016;31-12-9999
+;Bharat Dekho;Bharat Dekho;approved;Website;true;01-04-2016;31-12-9999
+;MICE;MICE;approved;Website;true;01-04-2016;31-12-9999
+
+INSERT_UPDATE Address;owner(SalesOffice.uid)[unique=true];&addressId;appartment;streetname;streetnumber;street3;street4;street5;suburbDowntown(isocode);postalcode;country(isocode);city(isocode);area;location(isocode);latitude;longitude
+;VMN01;VMN01;Vaman Center;Makwana Road;;;;;;220014;IN;BOM;;;;;;true;01-04-2016;31-12-9999
+
+INSERT_UPDATE SalesOffice;uid[unique=true,forceWrite=true];name;approvalStatus(code);division(uid);active[default=true];activeFrom[dateFormat=dd-MM-yyyy];activeTo[dateFormat=dd-MM-yyyy];address(&addressId);salesGroups(uid);buAvailability(uid);telephone
+;VMN01;Vaman Center;approved;Domestic;true;01-04-2016;31-12-9999;VMN01;SG01,SG02;BU - Air,BU - Non Air;+912241440000
+
+INSERT_UPDATE SalesGroup;uid[unique=true,forceWrite=true];name;approvalStatus(code);salesOffices(uid);active[default=true];activeFrom[dateFormat=dd-MM-yyyy];activeTo[dateFormat=dd-MM-yyyy]
+;SG01;Sales Group 01;approved;VMN01;true;01-04-2016;31-12-9999;
+;SG02;Sales Group 02;approved;;true;01-04-2016;31-12-9999;

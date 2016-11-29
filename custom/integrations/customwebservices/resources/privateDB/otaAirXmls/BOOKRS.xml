@@ -1,0 +1,8 @@
+<AirRS xmlns="http://www.coxandkings.com/suppl/airinterface" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+   <ResponseHeader xmlns="http://www.coxandkings.com/suppl/air">
+      <Status xmlns="http://www.coxandkings.com/suppl/common">SUCCESS</Status>
+      <UserID xmlns="http://www.coxandkings.com/suppl/common">Venkatesh</UserID>
+      <SessionID xmlns="http://www.coxandkings.com/suppl/common">20160717T1347</SessionID>
+      <TransactionID xmlns="http://www.coxandkings.com/suppl/common">1347</TransactionID>
+   </ResponseHeader>
+   </AirRS>

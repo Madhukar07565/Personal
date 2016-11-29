@@ -1,0 +1,137 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600);
+/* Common CSS */
+body{ font-family: 'Open Sans', sans-serif;; font-weight: 400; font-size: 12px; background: #fff;}
+a, a:visited, a:focus, input, button{ outline: none !important;}
+a{ color: #004f93; }
+a:hover{ text-decoration: none; color: #0d4779;}
+cite{ font-style: normal;}
+.container { width: 1280px;}
+header{ background: #004f93; }
+label{ font-weight: normal;}
+input[type="text"], input[type="date"]{ width: 100%;}
+/* Header */
+.navbar-brand{ height: auto; min-height: 50px; padding: 8px 0}
+.navbar-collapse{ padding-left: 180px; }
+.navbar-collapse .nav{ height: 96px; display: table; float: none;}
+.navbar-collapse li{ display: table-cell; vertical-align: middle; float: none;}
+.navbar-collapse li a{ color: #fff; }
+.navbar-collapse li a:hover, .navbar-collapse li a:active, .navbar-collapse li a:focus{ background: #0d4779; border-radius: 6px; color: #fff;}
+.float-right{ float: right;}
+.navbar-collapse .float-right{ padding-top: 6px;}
+.select-country{ color: #fff; font-size: 12px;}
+.select-country label{ color: #fff; background: #0d4779; font-weight: 600 !important; font-size: 12px; margin-left: 4px; padding: 2px 4px;}
+.person-dtl{ padding: 0;}
+.person-dtl li{ display: block; color: #fff; font-size: 12px; margin-top: 4px;}
+.person-dtl li i{ color: #fff;}
+.mail-head{ padding-right: 12px; float: left;}
+.navbar-collapse ul li i{ padding-right: 4px; }
+.phone-head{ float: left;}
+/* Communication */
+article{ margin: 0 0 40px 0;}
+.comm-blocks{ border: 1px solid #666; border-radius: 4px; background: #fff; padding: 0; width: 70px; }
+.comm-blocks cite, .comm-blocks button{ text-align: center;}
+.comm-blocks cite{ font-size: 16px; padding: 2px; display: block; float: none; font-weight: 400; color: #656565;}
+.communication button.plus{ border: none; border-radius: 6px; background: #666 !important; border-radius: 4px; color: rgba(0,0,0,0.9); color: rgba(255,255,255,0.8)}
+.communication button:hover{ background: #e7e7e7; box-shadow: 0 3px 5px rgba(0, 0, 0, 0.125) inset;}
+.communication button:active{ background: #fff;}
+.comm-blocks i{ font-size: 16px; float: left; border-right: 1px solid #666; padding: 4px 6px; color: #666;}
+h1{ color: #004f93; font-weight: 300; margin: 16px 0 20px 0; }
+h1 span{ font-weight: 600;}
+.communication h4{ font-weight: 300; color: #004f93; margin: 0 0 12px 0;}
+.counter{ padding: 0 6px; float: left;}
+.counter-value{ padding-left: 15px;}
+.counter .btn-default{ padding: 4px 7px; font-size: 12px; text-align: center;}
+.counter-value .comm-container{ padding: 0 0 15px 0;}
+.comm-container .row{ margin: 0 -6px; padding: 0;}
+.comm-container h4{ color: #dedfd9; font-size: 16px;}
+/* Booking Tab*/
+.booking-overview{ margin: 16px 0 0 0 }
+.full-row li.form-group{ margin: 0 0 12px 0;}
+.full-row.no-margin li.form-group{ margin: 0;}
+.tab-content{ float: left; width: 100%; padding: 12px; border: 1px solid #dddfd8; border-top: none; border-bottom: 5px solid #dedfd9; background: url(../images/slider-bg.gif) repeat-x bottom;}
+.full-row{ float: left; width: 100%; padding: 0; margin: 0; list-style: none;}
+.full-row li label.control-label{ font-weight: 600; color: #333; margin-bottom: 4px; padding: 0;}
+.full-row a{ text-decoration: underline;}
+.nav-tabs{ background: #dedfd9; }
+.nav-tabs li a{ color: #333;}
+.nav-tabs li.active a, .nav-tabs li.active a:hover, .nav-tabs li.active a:active, .nav-tabs li a:hover{ background: #fff; color: #004f93;}
+input.form-control{ box-shadow: none;}
+.error-msg{ color: #FC5D5D;}
+.msg-label i{ font-size: 18px; color: #F94040; padding: 0 5px 0 0 !important;}
+.control-label + p{ margin-bottom: 2px; font-weight: 500;}
+
+/* Product Summary */
+#productSummary .slick-track{ padding: 20px;}
+.product-view{ margin: 16px 0 0 0;}
+.product-view .tab-content{ border: 1px solid #ddd; border-top: 0; padding: 0; }
+.product-items{ height: 100px; padding: 0 40px}
+.item-group{ width: 70%; float: left; position: relative; margin-left: 30%;}
+.item-group button{ width: 100%; }
+.item-icon{ width: 30%; float: left; text-align: center;}
+.big-icon{ font-size: 48px; position: absolute; top: 10px; left: -35%; margin-top: 0;}
+.item-group button{ background: #fff; border: 1px solid #eee; padding: 0; margin: 0 0 1px 0;}
+.info-head{ background: #dddfd8; padding: 4px 6px; }
+.info-head i{ float: left; text-align: left; color: #888; font-size: 16px; padding: 2px 0 0 0;}
+.info-head label{ display: block; font-weight: 500; color: #444; font-size: 16px; margin: 0;}
+.info-med{ padding: 12px 0; background: #fff;}
+.info-bottom{ background: #dddfd8; color: #444; padding: 4px 6px; font-size: 12px;}
+.overview-outstading{ list-style: none; margin: 0; padding: 8px; background: #0d4779; float: left; width:100%;}
+.overview-outstading li{ color: #fff; font-size: 18px; font-weight: 600; font-style: italic;}
+.overview-outstading li label{ font-size: 16px; font-weight: 300; color: #fff; margin: 0; font-style: normal;}
+
+/* Flight Details */
+.main-table th{ padding: 8px;}
+.sub-table{ border: 0;}
+.sub-table table{ table-layout: fixed; border: none;}
+.sub-table td, .sub-table th{ padding: 4px; word-wrap: break-word; border: 1px solid #ddd;}
+.flight-table{ margin: 16px 0 0 0;}
+.main-table{ border: 1px solid #ddd; border-top: 0;}
+.full-column th{ background: #888; font-size: 18px; font-weight: 600;}
+.sub-table tr:first-child th{ background: #ccc; border: 1px solid #ddd; font-size: 16px; font-weight: 500; text-align: left; border-top: 0;}
+.sub-table td input, .sub-table td select{ width: 100%;}
+.sub-table th{ font-size: 12px; font-weight: 600; vertical-align: top; text-align: center;}
+.sub-table td{ font-size: 12px; line-height: 1; text-align: center;}
+.full-column > th > label{ float: left; }
+.full-column .other-events, .flight-time a{ float: left; font-size: 12px; color: #fff; padding-left: 40px;}
+.flight-details{ width: 100%; overflow: auto; border: 1px solid #ddd; border-top: none;}
+.block-info{ margin-top: 12px;}
+.block-info label{ display: block;}
+.sub-table td .block-info input{ width: 70%; text-align: center;}
+.date-time input{ margin-bottom: 6px;}
+td > label{ font-weight: bold;}
+/*.table-collapse table tr{ display: none; overflow: hidden;}*/
+.table-collapse label{ display: inline-block; text-overflow: ellipsis; width: 34px; overflow: hidden; white-space: nowrap; margin: 0;}
+.exp-collapse{ cursor: pointer;}
+.table-collapse .exp-collapse i{ transform: rotate(180deg); }
+/*.table-collapse table, .table-collapse table tr.three-column{ display: inline-block; width: 50px;}*/
+
+.client-payment-details{ margin: 16px 0 0 0;}
+.client-payment-details .panel-heading{ background: #dedfd9;}
+.client-payment-details .panel-heading .list-inline{ margin: 0;}
+.client-payment-details .panel-heading li h5{ margin: 0; font-weight: 500; font-size: 16px; }
+
+.client-table{ table-layout: fixed;}
+.client-table th, .client-table td{ border: 1px solid #ddd; text-align: center; font-size: 12px; vertical-align: middle; word-wrap: break-word; padding: 4px;}
+.set-date{ padding: 0 !important;}
+.client-table th{ font-weight: 600; vertical-align: middle; }     
+.travel-list.active{ display: block; }
+.travel-list{ display: none;}
+.item-group button.active .info-head label, .item-group button.active .info-head i, .item-group button.active .info-med, .item-group button.active .info-bottom{ color: #004f93;}
+.item-group button.active{ pointer-events: none; }
+.product-items:visited, .product-items:active, .product-items:focus{ outline: none;}
+
+/* Order List */
+.search-order{ margin: 0 0 16px 0;}
+.order-list .table-striped th{ font-size: 12px; font-weight: 600; }
+.order-list .table-striped th, .order-list .table-striped td{ text-align: center; /*border: 1px solid #eee;*/}
+.order-list .table-striped td{ font-size: 12px;}
+
+/* Category */
+.category a{ display: block; text-align: center;}
+.category a i{ margin-top: 30px; background: #004f93; border-radius: 100%; padding: 32px; font-size: 32px; color: #fff;}
+.category a h4{ margin: 40px 0 0 0; padding: 12px; background: #dedfd9; border-radius: 4px; font-weight: 500; font-size: 18px;}
+.signin{ margin: 0 auto; width: 100%;}
+.signin-block{ float: none; margin: 0 auto;}
+.form-signin input:first-child{ margin-top: 0; }
+.form-signin input{ margin-top: 16px;}
+.form-signin .btn-block{ margin: 16px 0 0 0;}

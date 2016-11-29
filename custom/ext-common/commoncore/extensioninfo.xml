@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2016 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+
+	<extension abstractclassprefix="Generated" classprefix="CommonCore" managername="CommonCoreManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="commoncore">
+
+		<!-- you should add all required extensions to this list, except platform 
+			extensions which are automatically required -->
+		<requires-extension name="acceleratorcms"/>
+		<requires-extension name="hmc"/>
+		<requires-extension name="solrserver"/>
+		<requires-extension name="orgstructurecore"/>
+		<requires-extension name="suppliercore"/>
+		<requires-extension name="suppliermasterscore"/>
+		<requires-extension name="suppliercredentialscore"/>
+		<requires-extension name="masterdatacore"/>
+		<requires-extension name="oauthauthorizationserver"/>
+		<requires-extension name="clientconfig"/>
+		<requires-extension name="sapintegrations"/>
+		<requires-extension name="suppliers"/>
+		<requires-extension name="clientcore"/> 
+		<coremodule generated="true" manager="com.cnk.travelogix.common.core.jalo.CommonCoreManager" packageroot="com.cnk.travelogix.common.core"/>
+
+		<hmcmodule extensionclassname="com.cnk.travelogix.common.core.hmc.CommonCoreHMCExtension"/>
+
+		
+		
+		<meta key="backoffice-module" value="true"/>
+	</extension>
+
+</extensioninfo>

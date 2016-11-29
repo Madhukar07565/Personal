@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+		<collectiontype code="Ratings" elementtype="Rating"
+			autocreate="true" generate="true" type="list" />
+	</collectiontypes>
+
+	<enumtypes>
+
+	</enumtypes>
+
+	<relations>
+		<relation code="AccoInventoryDetailToInventoryRoomInfo"
+			generate="false" localized="false" autocreate="true">
+			<sourceElement type="AccoInventoryDetail" cardinality="one"
+				qualifier="accoInventoryDetail">
+				<modifiers read="true" write="true" search="true" />
+			</sourceElement>
+			<targetElement type="InventoryRoomInfo" cardinality="many"
+				qualifier="inventoryRoomInfo">
+				<modifiers read="true" write="true" search="true" />
+			</targetElement>
+		</relation>
+
+
+		<relation
+			code="AbstractAccoCompanySpecificInventoryToInventoryAssociations"
+			localized="false">
+			<sourceElement type="AbstractAccoCompanySpecificInventory"
+				cardinality="one" qualifier="abstractAccoCompanySpecificInventory">
+			</sourceElement>
+			<targetElement type="AssociateInventory" cardinality="many"
+				qualifier="inventoryAssociations">
+			</targetElement>
+		</relation>
+
+		<relation code="AccoInventoryDefinitionToDistributedInventories"
+			localized="false">
+			<sourceElement type="AccoInventoryDefinition"
+				cardinality="one" qualifier="accoInventoryDefinition">
+			</sourceElement>
+			<targetElement type="AbstractAccoCompanySpecificInventory"
+				cardinality="many" qualifier="distributedInventories">
+			</targetElement>
+		</relation>
+
+		<relation code="AccoSupplierAdvanceDefinitionToAccoPenaltyChargesRelease"
+			generate="false" localized="false" autocreate="true">
+			<sourceElement type="AccoSupplierAdvanceDefinition"
+				cardinality="one" qualifier="accoSupplierAdvanceDefinition">
+			</sourceElement>
+			<targetElement type="AccoPenaltyChargesRelease"
+				cardinality="many" qualifier="penaltyCharges">
+			</targetElement>
+		</relation>
+
+		<relation code="AccoPenaltyChargesReleaseToAccoCutoffAndCharges"
+			generate="false" localized="false" autocreate="true">
+			<sourceElement type="AccoPenaltyChargesRelease"
+				cardinality="one" qualifier="accoPenaltyChargesRelease">
+			</sourceElement>
+			<targetElement type="AccoCutoffAndCharges" cardinality="many"
+				qualifier="charges">
+			</targetElement>
+		</relation>
+
+		<relation code="AccoCompanyAdvanceDefinitionToPenaltyCharges"
+			localized="false">
+			<sourceElement type="AccoCompanyAdvanceDefinition"
+				cardinality="one" qualifier="accoCompanyAdvanceDefinition">
+			</sourceElement>
+			<targetElement type="AccoCompanyPenaltyCharges"
+				cardinality="many" qualifier="penaltyCharges">
+			</targetElement>
+		</relation>
+
+		<relation code="AccoSupplierAdvanceDefinitionToOverbookinglimits"
+			localized="false">
+			<sourceElement type="AccoSupplierAdvanceDefinition"
+				cardinality="one" qualifier="accoSupplierAdvanceDefinition">
+			</sourceElement>
+			<targetElement type="OverBookingLimit" cardinality="many"
+				qualifier="overbookinglimits">
+			</targetElement>
+		</relation>
+		
+		<relation code="InventoryRoomInfoToAbstractAccoInventoryDetail"
+			localized="false">
+			<sourceElement type="AbstractAccoInventoryDetail"
+				cardinality="one" qualifier="abstractAccoInventoryDetail">
+			</sourceElement>
+			<targetElement type="InventoryRoomInfo" cardinality="many"
+				qualifier="inventoryRoomInfos">
+			</targetElement>
+		</relation>
+		
+		<relation code="AccommodationInventoryRequestToAccoInventoryGrid"
+			localized="false">
+			<sourceElement type="AccommodationInventoryRequest"
+				cardinality="one" qualifier="accoInventoryRequest">
+			</sourceElement>
+			<targetElement type="AccoInventoryGrid" cardinality="many"
+				qualifier="inventoryDetails">
+			</targetElement>
+		</relation>
+		
+		<relation code="AccoInventoryGridToAbstractAccoInventoryDetail"
+			localized="false">
+			<sourceElement type="AccoInventoryGrid" cardinality="one"
+				qualifier="accoInventoryGrid">
+			</sourceElement>
+			<targetElement type="AbstractAccoInventoryDetail"
+				cardinality="many" qualifier="inventoryDetails">
+			</targetElement>
+		</relation>
+	
+		<relation code="AccoInventoryDefinitionToAccoInventoryGrid"
+			localized="false">
+			<sourceElement type="AccoInventoryDefinition"
+				cardinality="one" qualifier="accoInventoryDefinition">
+			</sourceElement>
+			<targetElement type="AccoInventoryGrid" cardinality="many"
+				qualifier="inventoryDetails">
+			</targetElement>
+		</relation>
+		
+		<relation
+			code="AccoSupplierAdvanceDefinitionToAccoPenaltyChargesForAmendments"
+			localized="false">
+			<sourceElement type="AccoSupplierAdvanceDefinition"
+				cardinality="one" qualifier="accoSupplierAdvanceDefinition">
+			</sourceElement>
+			<targetElement type="AccoPenaltyChargesForAmendments"
+				cardinality="many" qualifier="accoPenaltyChargesForAmendments">
+			</targetElement>
+		</relation>
+
+		<relation code="AccoSupplierAdvanceDefinitionToRoomingListCutOffs"
+			generate="false" localized="false" autocreate="true">
+			<sourceElement type="AccoSupplierAdvanceDefinition"
+				cardinality="one" qualifier="accoSupplierAdvanceDefinition">
+			</sourceElement>
+			<targetElement type="RoomingListCutOffs" cardinality="many"
+				qualifier="roominglistCutoffs">
+			</targetElement>
+		</relation>
+		
+		<relation localized="false" code="AccoCompanyInventoryToAccoAssoInventory">
+			<sourceElement type="AbstractAccoCompanySpecificInventory"
+				qualifier="accoCompanySpecificInventory" cardinality="one" />
+			<targetElement type="AccoAssociateInventory" qualifier="accoAssociateInventory"
+				cardinality="many" />
+		</relation>
+		
+		<relation  code="AbstractAccoInventoryDetailToAccommodation" generate="true" localized="false" autocreate="true" >
+			<deployment table="accoproduct" typecode="23110" />
+			<sourceElement type="AbstractAccoInventoryDetail"
+				qualifier="abstractAccoInventoryDetail" cardinality="many" />
+			<targetElement type="Accommodation" qualifier="products"
+				cardinality="many" />
+		</relation>
+		
+	</relations>
+
+	<itemtypes>
+		<typegroup name="AccommodationInventoryRequest">
+			<itemtype code="AccommodationInventoryRequest" autocreate="true"
+				generate="true" extends="AbstractInventoryRequest"
+				jaloclass="com.cnk.travelogix.accoinventory.core.jalo.AccommodationInventoryRequest">
+				<description> Accommodation Inventory Request.</description>
+				<deployment table="accoinvreq" typecode="21131" />
+				<attributes>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AbstractAccoInventoryDetail" autocreate="true"
+				abstract="true" generate="true" extends="AbstractInventoryDetail"
+				jaloclass="com.cnk.travelogix.accoinventory.core.jalo.AbstractAccoInventoryDetail">
+				<description> Abstract Accommodation Inventory Detail.</description>
+				<attributes>
+					<attribute qualifier="city" type="City">
+						<description>City</description>
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="travelChain" type="AccommodationChain">
+						<description>Travel Chain</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="hotelCategory" type="Ratings">
+						<description>Hotel Category</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="currency" type="Currency">
+						<description>Currency</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="priceRangeFrom" type="java.math.BigDecimal">
+						<description>Price Range From</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="priceRangeTo" type="java.math.BigDecimal">
+						<description>Price Range From</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="product" type="Accommodation">
+						<description>Accommodation product</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="remark" type="java.lang.String">
+						<description>Remark</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AccoInventoryGrid" autocreate="true"
+				generate="true" extends="GenericItem">
+				<description> Accommodation Inventory Grid</description>
+				<deployment table="accoinvgrid" typecode="23100" />
+				<attributes>
+					<attribute qualifier="gridId" type="java.Lang.Integer">
+						<description>Grid Id</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AccoInventoryDetail" autocreate="true"
+				generate="true" extends="AbstractAccoInventoryDetail"
+				jaloclass="com.cnk.travelogix.accoinventory.core.jalo.AccoInventoryDetail">
+				<description> Accommodation Inventory Details.</description>
+				<deployment table="accoinvdetail" typecode="23072" />
+				<attributes>
+					<attribute qualifier="inventoryAssociation" type="AssociateInventory">
+						<description>inventory association</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="InventoryRoomInfo" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.accoinventory.core.jalo.InventoryRoomInfo">
+				<description> Inventory Room Info</description>
+				<deployment table="inventoryroominfo" typecode="21133" />
+				<attributes>
+					<attribute qualifier="roomCategory" type="RoomCategory">
+						<description>Room Category</description>
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="roomType" type="RoomType">
+						<description>Room Type</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="noOfRoomRequested" type="java.Lang.Integer">
+						<description>No Of Room Requested</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="supplierReferenceNumber" type="java.Lang.String">
+						<description>Supplier Reference Number</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="rateCode" type="java.Lang.String">
+						<description>Rate Code</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="rateType" type="RateType">
+						<description>Rate Type</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="inventoryAssociation" type="AccoAssociateInventory">
+						<description>Inventory Association</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="daysOfWeek" type="WeekDayCollection">
+						<description>Days Of Week</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="distressSalesUtilizationThreshhold"
+						type="java.lang.Long">
+						<persistence type="property" />
+						<description>Minimum Utilization Threshold</description>
+					</attribute>
+					<attribute qualifier="distressSalesThreshholdCutOffDays"
+						type="java.lang.Long">
+						<persistence type="property" />
+						<description>Threshold CutOff Days</description>
+					</attribute>
+					<attribute qualifier="requestedQuantity" type="java.lang.Long">
+						<persistence type="property" />
+						<description>Requested</description>
+					</attribute>
+					<attribute qualifier="distributedQuantity" type="java.lang.Long">
+						<persistence type="property" />
+						<description>Distributed Quantity</description>
+					</attribute>
+					<attribute qualifier="availableQuantity" type="java.lang.Long">
+						<persistence type="property" />
+						<description>Available  Quantity</description>
+					</attribute>
+					<attribute qualifier="reservedQuantity" type="java.lang.Long">
+						<persistence type="property" />
+						<description>Reserved Quantity</description>
+					</attribute>
+					<attribute qualifier="cutOffDaysForBlockedQuantity" type="java.lang.Long">
+						<persistence type="property" />
+						<description>Reserved Quantity</description>
+					</attribute>
+					<attribute qualifier="stopSales" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Steps Sales</description>
+					</attribute>
+					<attribute qualifier="liabilityOnUtilization" type="java.lang.Double">
+						<persistence type="property" />
+						<description>Liability On Utilization</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AccoAssociateInventory" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.common.inventory.core.jalo.AccoAssociateInventory"
+				extends="AssociateInventory">
+				<description>Acco Associate Inventory</description>
+				<deployment table="accoassoinventory" typecode="23111" />
+				<attributes>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="AccommodationInventoryDefinition">
+			<itemtype code="AbstractAccoCompanySpecificInventory"
+				autocreate="true" generate="true" extends="AbstractAccoInventoryDetail"
+				abstract="true"
+				jaloclass="com.cnk.travelogix.accoinventory.core.jalo.AbstractAccoCompanySpecificInventory">
+				<description> Abstract Acco Company Specific Inventory</description>
+				<attributes>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AccoOtherCompanyInventoryDistribution"
+				autocreate="true" generate="true" extends="AbstractAccoCompanySpecificInventory"
+				jaloclass="com.cnk.travelogix.accoinventory.core.jalo.AccoOtherCompanyInventoryDistribution">
+				<description>Acco Other Company Inventory Distribution</description>
+				<deployment table="accoothercompinvendis" typecode="21152" />
+				<attributes>
+					<attribute qualifier="distributionToCompany" type="Company">
+						<description>Distribution To Company</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="companies" type="companies">
+						<description>Collection of Companies</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AccoClientInventoryDistribution" autocreate="true"
+				generate="true" extends="AbstractAccoCompanySpecificInventory"
+				jaloclass="com.cnk.travelogix.accoinventory.core.jalo.AccoClientInventoryDistribution">
+				<description>Acco Client Inventory Distribution</description>
+				<deployment table="accoclientinvendis" typecode="21153" />
+				<attributes>
+					<attribute qualifier="clientType" type="ClientType">
+						<description>Client Type</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientName" type="Principal">
+						<description>Client Name</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientGroup" type="B2BUserGroup">
+						<description>Client Group</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AccoWithinCompanyInventoryDistribution"
+				autocreate="true" generate="true" extends="AbstractAccoCompanySpecificInventory"
+				jaloclass="com.cnk.travelogix.accoinventory.core.jalo.AccoWithinCompanyInventoryDistribution">
+				<description>Acco Within Company Inventory Distribution</description>
+				<deployment table="accowithcompinvendis" typecode="23038" />
+				<attributes>
+					<attribute qualifier="sbu" type="StrategicBusinessUnit">
+						<description>SBU</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="bu" type="BusinessUnit">
+						<description>BU</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="market" type="Market">
+						<description>Market</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="distributionChannel" type="DistributionChannel">
+						<description>Distribution Channel</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="division" type="Division">
+						<description>Division</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="salesOffice" type="SalesOffice">
+						<description>Sales Office</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="settleWith" type="java.lang.String">
+						<description>Settle With</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AccoInventoryDefinition" autocreate="true"
+				generate="true" extends="AbstractProductInventoryDefinition"
+				jaloclass="com.cnk.travelogix.accoinventory.core.jalo.AccoInventoryDefinition">
+				<description>Acco Inventory Definition</description>
+				<deployment table="accoinvendefin" typecode="23037" />
+				<attributes>
+					<attribute qualifier="supplierAdvanceDefinition" type="AccoSupplierAdvanceDefinition">
+						<description>Supplier Advance Definition</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="companyAdvanceDefinition" type="AccoCompanyAdvanceDefinition">
+						<description>Company Advance Definition</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AccoSupplierAdvanceDefinition" autocreate="false"
+				generate="false">
+				<description>Extending the Abstract Sup Commercial Adv Def in suppliercommercialscore extension</description>
+				<attributes>
+					<attribute qualifier="blockoutDates" type="StandardDateRangeSet">
+						<description>Block out Dates</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="minNoOfNights" type="java.lang.Integer">
+						<description>Min No Of Nights</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="maxNoOfNights" type="java.lang.Integer">
+						<description>Max No Of Nights</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="cutOfForFreeSale" type="CutOffForFreeSale">
+						<description>Cut Off For Free Sale</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AccoCompanyAdvanceDefinition" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.accoinventory.core.jalo.AccoCompanyAdvanceDefinition">
+				<description>Acco Company Advance Definition</description>
+				<deployment table="accocomadvdefin" typecode="23039" />
+				<attributes>
+					<attribute qualifier="blockOutDates" type="StandardDateRangeSet">
+						<description>Block Out Dates</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="overBookingAllowed" type="java.lang.Boolean">
+						<description>Over Booking Allowed</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="minimumNumberOfNights" type="java.lang.Integer">
+						<description>Minimum Number Of Nights</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="maximumNumberOfNights" type="java.lang.Integer">
+						<description>Maximum Number Of Nights</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AccoCutoffAndCharges" autocreate="true"
+				generate="true" extends="CutOffsAndCharges"
+				jaloclass="com.cnk.travelogix.accoinventory.core.jalo.AccoCutoffAndCharges">
+				<description>Acco Cut off And Charges</description>
+				<attributes>
+					<attribute qualifier="minUtilizationThreshold" type="java.lang.Long">
+						<description>Min Utilization Threshold</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AccoPenaltyChargesRelease" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.accoinventory.core.jalo.AccoPenaltyChargesRelease">
+				<description>Acco Penalty Charges and release</description>
+				<deployment table="accopenaltycharges" typecode="23040" />
+				<attributes>
+					<attribute qualifier="roomCategory" type="RoomCategory">
+						<description>Room Category</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="roomType" type="RoomType">
+						<description>Room Type</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="mealType" type="MealType">
+						<description>Meal Type</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="definedBy" type="DefinedBy">
+						<description>Defined By</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="specificDates" type="DateCollection">
+						<description>Specific Dates</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="dateRange"
+						type="de.hybris.platform.util.StandardDateRange">
+						<description>Date Range</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="appliedOn" type="AppliedOn">
+						<description>Applied On</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="releaseTime" type="java.lang.String">
+						<description>Applied On</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AccoCompanyPenaltyCharges" autocreate="true"
+				generate="true" extends="AccoPenaltyChargesRelease"
+				jaloclass="com.cnk.travelogix.accoinventory.core.jalo.AccoCompanyPenaltyCharges">
+				<description>Acco Penalty Charges</description>
+				<attributes>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AccoPenaltyChargesForAmendments" autocreate="true"
+				generate="true" extends="ChangeRequestPenaltyCharges"
+				jaloclass="com.cnk.travelogix.accoinventory.core.jalo.AccoPenaltyChargesForAmendments">
+				<description>Acco Penalty Charges For Amendments</description>
+				<deployment table="accopenchforamen" typecode="23102" />
+				<attributes>
+					<attribute qualifier="fareChargesAppliedToInventoryUtilization"
+						type="java.lang.Boolean">
+						<description>Room Category</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="RoomingListCutOffs" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.accoinventory.core.jalo.RoomingListCutOffs">
+				<description>Rooming List CutOffs</description>
+				<deployment table="roomlistcutOf" typecode="23103" />
+				<attributes>
+					<attribute qualifier="definedBy" type="DefinedBy">
+						<description>Defined By</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="appliedOn" type="AppliedOn">
+						<description>Applied On</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="typeOfList" type="TypeOfList">
+						<description>typeOfList</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="supplierCutOffDays" type="java.lang.Integer">
+						<description>supplierCutOffDays</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="bufferDays" type="java.lang.Integer">
+						<description>bufferDays</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="noOfNTBAS" type="java.lang.Integer">
+						<description>noOfNTBAS</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="releaseTime" type="java.lang.String">
+						<description>releaseTime</description>
+						<persistence type="property" />
+					</attribute>
+
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

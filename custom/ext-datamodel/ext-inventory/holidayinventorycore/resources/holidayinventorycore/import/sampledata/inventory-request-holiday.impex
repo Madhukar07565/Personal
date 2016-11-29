@@ -1,0 +1,35 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.holiday.inventory.core.setup.HolidayInventoryCoreSystemSetup&\holidayinventorycore\import\media
+
+INSERT_UPDATE HolidayInventoryRequest;$catalogVersion;id;visibleToSupplier;status(RequestStatus.code);createdBy(Employee.uid);productCategorySubType(Category.code,$catalogVersion);country(Country.isocode);medias;currency(isocode);supplierDetails(InitialInvReqSupplierDetail.emailId);companyDetails(company.uid);product(HolidayProduct.code)[unique=true];productFlavour;priceRangeFrom;priceRangeTo;remarks;inventoryDefnitionCode;isFlightIncluded;packageCategory(PackageCategory.code)
+;;7897;true;CANCELLED;admin;C001ST001;IN;;INR;;E000;HolidayProduct;;0;1000;;ID001;False;LUXURY
+
+####DEPENDENCY HEADER 
+INSERT_UPDATE Vendor;code[unique=true];name
+;default;Default Vendor
+INSERT_UPDATE Warehouse;code[unique=true];name;vendor(code)[default=default];default[default=true]
+;warehouse_h;Warehouse South;
+
+
+##################################
+INSERT_UPDATE HolidayRoomInfo;city(isocode)[unique=true];checkInDate[dateformat=$dateformat];checkOutDate[dateformat=$dateformat];roomCategory(RoomCategory.code);rating(Rating.code);accommodation(Accommodation.code)
+;BQH;10-01-2014;12-01-2014;STANDARD;THREE;87762;
+;PAR;12-01-2014;14-01-2014;DELUXE;TWO;15740;
+;ZYA;14-01-2014;16-01-2014;STANDARD;TWO;12121
+
+INSERT_UPDATE HolidayInventoryDetail;travelDates[dateformat=dd-MM-yyyy hh:mm:ss][unique=true];noOfPax;anyRooms;roomTypeSingle;roomTypeDouble;roomTypeTriple;product(code,$catalogVersion)[unique=true];warehouse(Warehouse.code)
+;1-01-2014 12:00:00,8-01-2014 12:00:00;10;20;;;;AA;warehouse_h;
+
+
+UPDATE HolidayInventoryDetail;travelDates[dateformat=dd-MM-yyyy hh:mm:ss][unique=true];holidayProductRoomInfo(HolidayRoomInfo.city(isocode),HolidayRoomInfo.checkInDate[dateformat=$dateformat],HolidayRoomInfo.accommodation(code))
+;1-01-2014 12:00:00,8-01-2014 12:00:00;BQH:10-01-2014:87762
+;1-01-2014 12:00:00,8-01-2014 12:00:00;PAR:12-01-2014:15740
+;1-01-2014 12:00:00,8-01-2014 12:00:00;ZYA:14-01-2014:12121
+
+
+
+

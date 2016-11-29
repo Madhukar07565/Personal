@@ -1,0 +1,44 @@
+Header Name;Description;From To Date;Source
+DescriptionDetails;Pool is under Renovation, so it will be closed for usage;23/04/2016 12:00:00,27/04/2016 12:00:00;Supplier1
+DescriptionDetails;Few Hotel Rooms are under Renovation, there will be noise due to that;23/04/2016 12:00:00,27/04/2016 12:00:00;Hotel
+DescriptionDetails;Pool is under Renovation, so it will be closed for usage;23/04/2016 12:00:00,27/04/2016 12:00:00;Supplier2
+DescriptionDetails;Pool is under Renovation, so it will be closed for usage;23/04/2016 12:00:00,27/04/2016 12:00:00;Supplier3
+DescriptionDetails;Pool is under Renovation, so it will be closed for usage;23/04/2016 12:00:00,27/04/2016 12:00:00;Supplier4
+DescriptionDetails;Pool is under Renovation, so it will be closed for usage;23/04/2016 12:00:00,27/04/2016 12:00:00;Supplier5
+DescriptionDetails;Pool is under Renovation, so it will be closed for usage;23/04/2016 12:00:00,27/04/2016 12:00:00;Supplier6
+;Highlights;Selling Tips;Unique Selling Points;Long Description;Short Description
+ShipDescription;Cruise Ship highlights;Tip 01;usp;Supplier1,Supplier2,Supplier3;Supplier4,Supplier5,Supplier6;
+;Company Name;Facility Type;Description;Facility Name;Media Name;MIME Type
+FacilityDetail;Ezeego1;HOSPITALITY;Swimming Pool;Swimming Pool;resorts.jpg;image\jpg
+FacilityDetail;Ezeego1;RESTAURANT;Continental Restaurant;Continental Restaurant;tents.jpg;image\jpg
+FacilityDetail;Ezeego1;HEALTH;Sauna;Sauna;villas.jpg;image\jpg
+;Deck Name;Deck Level;Description;Deck Facility Type;Deck Facility Name
+Deck;Deck2;2;Deck 2;HOSPITALITY;Swimming Pool
+;Cabin Type;Cabin Category;Number Of Cabin;Cabin Size;Unit;Cabin Facility Type;Cabin Facility Name;Description;Deck Level;Deck Name
+Cabin;I_INSIDE_CABIN;K_INTERIOR_STATEROOM;1;400;SQ_FEET;RESTAURANT;Continental Restaurant;Continental Restaurant;2;Deck2
+;Max Pax;Max Child;Max Adult;From Age For Child;To Age For Child;Cabin Type;Cabin Category
+CabinOccupancy;3;1;2;10;12;I_INSIDE_CABIN;K_INTERIOR_STATEROOM
+;Length Overall;Length At WaterLine;Beam;Gross Tonnage;Draft Min;Draft Max;Height At WaterLine;Overall Height
+ShipDimensionDetails;121;58.2;;11204;;;84.23;95.6
+;Quantity;Fuel Type;Manufacturer;Model;Power;Total Power;Propulsion
+ShipEngineDetails;40L;Diesel;Kirloskar;Eng-1;;10HP;
+;Name;Type;Model;Builder;Naval Architect;Exterior Design;Interior Design;Year;Refurbished;Refurbished Description;Flag;SubType;MCA;Ship Class;Hull NB;Hull Color;Formaly KnownAs
+ShipOverview;CruiseShipOverview;CruiseShips;ScaleModel;GardenReach;GHSport;Carnival Breeze;Carnival Breeze;05-04-2015;;changed lights ;;;1092;first;;;Cruise
+;Guest;Cabins Total;Cabins;Crew;No Of Wheelchairs Accessible Cabins;No Of Cabins With Private Balconies;No Of Decks
+ShipAccomadationDetails;691;50;50;;12;10;20
+;Generator;Stabilizers;Thrusters;Amenities;No Of Navigation System_GPS
+ShipEquipmentDetails;generator;stabilizers;thrusters;;  
+;Max Speed;Cruising Speed;Range;Fuel Capacity;Water Capacity
+ShipPerformanceCapabilities;15;10;;100L;100L
+;CDC Score;CDC Date;No Of LifeBoats;No Of Tenders;No Of RescueBoats
+RescueSecurityDetails;25;08-04-2017;5;7;3;CruiseRescueSecurityRef
+;Hull Material;Super Structure;Deck Material;Deck NB;Hull Configuration
+ShipConstructionDetails;abc;abc;abc;abc;abc
+;Company Name;Code;Ship Common ID;Approval Status;Cruise Company ID;Cruise Brand ID;Cruise Destination Code;Ship Code;Ship Rating;Ship Display Name;Ship Class;Ship Category;Cruise Type;Cruise SubType;Is Multiple Deck Available;Copied From;Online Date;Offline Date;Ship Description Highlights;Ship Description SellingTips;Ship Facility Type;Ship Facility Name;Cabin Type;Cabin Category;Ship Overview Name;Construction Details hull Material;EngineDetails Fuel Type;DimensionDetails LengthOverall;Ship Performance Capabilities Cruising Speed;Accommodation Details;Equipment Details Generator;Rescue Security Details CDC Score;Ship Name;Deck Name
+Ship;Ezeego1;201;202;approved;CruiseCompany_8556;CruiseBrand_8556;987654_CruiseDest;LH;ONE;ROYAL CRUISE;OASIS_CLASS;ADVENTURE;RIVER_CRUISES;OVERNIGHT_CRUISE;true;;28-12-2015;1-1-2016;Cruise Ship highlights;Tip 01;HEALTH;Sauna;I_INSIDE_CABIN;K_INTERIOR_STATEROOM;CruiseShipOverview;abc;Diesel;121;10;;generator;25;MS Kong Harald;Deck2
+;Description;Description Type;Date Range;Source;Ship Code
+CruiseUpdate;All 465 soundproofed rooms feature free WiFi and 24-hour room service. ;Internal;26-04-2016 12:00:00,30-04-2016 12:00:00;;201
+;Rule Name;Rule Information For;Deck Level;Deck Name;Cabin Type;Cabin Category;Ship code
+CruiseRuleInformation;Dress code;DECK;2;Deck2;I_INSIDE_CABIN;K_INTERIOR_STATEROOM;201
+;Health And Safety Category;Health And SafetyName;Remarks;Value;LastUpdate;Ship Code
+HealthAndSafety;;Hygienic Food;;10;05-04-2015;201

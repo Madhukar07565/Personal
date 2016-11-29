@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2015 hybris AG ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of hybris ~ ("Confidential Information"). You shall not disclose such Confidential 
+	~ Information and shall use it only in accordance with the terms of the ~ 
+	license agreement you entered into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+	<util:list id="qcAndPublishWorkflow" value-type="java.lang.String">
+		<value>QC_Approval_Workflow</value>
+		<value>Publish_Approval_Workflow</value>
+	</util:list>
+	
+	<util:list id="supervisorAndFinanceWorkflow" value-type="java.lang.String">
+		<value>Supervisor_Approval_Workflow</value>
+		<value>Finance_Approval_Workflow</value>
+	</util:list>
+
+	<util:list id="onlyPublishWorkflow" value-type="java.lang.String">
+		<value>Publish_Approval_Workflow</value>
+	</util:list>
+
+	<bean id="workflowMap" class="java.util.HashMap">
+		<constructor-arg>
+		    <!-- key is model deployment table name and value is work flow you want for it. use any of these 2 list beans "qcAndPublishWorkflow" or "onlyPublishWorkflow"-->
+			<!-- key is model deployment table name and value is work flow you want 
+				for it. use any of these 2 list beans "qcAndPublishWorkflow" or "onlyPublishWorkflow" -->
+			<map key-type="java.lang.String" value-type="java.util.List">
+				<entry key="21131" value-ref="qcAndPublishWorkflow" />
+				<entry key="23037" value-ref="onlyPublishWorkflow" />
+				<entry key="Accommodation" value-ref="qcAndPublishWorkflow" />
+				<entry key="AccommodationInventoryRequest" value-ref="qcAndPublishWorkflow" />
+				<entry key="AccoInventoryDefinition" value-ref="onlyPublishWorkflow" />
+				<entry key="SalesOffice" value-ref="qcAndPublishWorkflow" />
+				<entry key="FlightProduct" value-ref="onlyPublishWorkflow" />
+				<entry key="Company" value-ref="qcAndPublishWorkflow" />
+				<entry key="AirRoute" value-ref="onlyPublishWorkflow" />
+
+
+				<entry key="BookingConfiguration" value-ref="onlyPublishWorkflow" />
+				<entry key="ReconfirmationConfig" value-ref="onlyPublishWorkflow" />
+				<entry key="MarketMapping" value-ref="onlyPublishWorkflow" />
+				<entry key="DiscountOnRate" value-ref="qcAndPublishWorkflow" />
+				<entry key="DiscountOnNight" value-ref="qcAndPublishWorkflow" />
+				<entry key="DiscountOnFreeNight" value-ref="qcAndPublishWorkflow" />
+				<entry key="DiscountOnRoomOrCabin" value-ref="qcAndPublishWorkflow" />
+				<entry key="DiscountOnPax" value-ref="qcAndPublishWorkflow" />
+				<entry key="DiscountPerAge" value-ref="qcAndPublishWorkflow" />
+				<entry key="DiscountLongStay" value-ref="qcAndPublishWorkflow" />
+				<entry key="Complimentary" value-ref="qcAndPublishWorkflow" />
+				<entry key="RoomOrCabinUpgrade" value-ref="qcAndPublishWorkflow" />
+				<entry key="FOCOffer" value-ref="qcAndPublishWorkflow" />
+				<entry key="AncillaryOfferRate" value-ref="qcAndPublishWorkflow" />
+				<entry key="OfferRateProduct" value-ref="qcAndPublishWorkflow" />
+				<entry key="AncillaryDiscount" value-ref="qcAndPublishWorkflow" />
+				<entry key="AncillaryFOC" value-ref="qcAndPublishWorkflow" />
+				<entry key="TicketCappingIndent" value-ref="supervisorAndFinanceWorkflow" />
+				<entry key="CreditDepositIndent" value-ref="supervisorAndFinanceWorkflow" />
+				<entry key="SupplierStandardCommercial" value-ref="onlyPublishWorkflow" />
+				<entry key="SupplierSignUpBonusCommercialRecord" value-ref="onlyPublishWorkflow" />
+				<entry key="SupplierLookToBookCommercialRecord" value-ref="onlyPublishWorkflow" />
+				<entry key="SupplierIncentiveOnTopupRecord" value-ref="onlyPublishWorkflow" />
+				<entry key="SupplierTerminationFeeCommercialRecord" value-ref="onlyPublishWorkflow" />
+				<entry key="SupplierMSFFeeRecord" value-ref="onlyPublishWorkflow" />
+				<entry key="SupplierPenaltyKickBackCommercialRecord" value-ref="onlyPublishWorkflow" />
+				<entry key="SupplierOtherFeeCommercialRecord" value-ref="onlyPublishWorkflow" />
+				<entry key="TravelogixPolicy" value-ref="onlyPublishWorkflow" />
+				<entry key="AccoDynamicPolicy" value-ref="onlyPublishWorkflow" />
+				<entry key="SupplierSettlement" value-ref="onlyPublishWorkflow" />
+				<entry key="AccommodationSupplierRate" value-ref="qcAndPublishWorkflow"></entry>
+				
+				<entry key="PartPaymentMasterConfig" value-ref="onlyPublishWorkflow" />
+				<entry key="B2BUserGroup" value-ref="onlyPublishWorkflow" />
+				<entry key="ClientPaymentOption" value-ref="onlyPublishWorkflow" />
+				<entry key="AssociatedCategories" value-ref="qcAndPublishWorkflow" />
+				<entry key="AbstractCommercialDefinition" value-ref="qcAndPublishWorkflow" />
+				<entry key="Prospect" value-ref="qcAndPublishWorkflow" />
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="workflowAfterSaveListener"
+		class="com.cnk.travelogix.mdmbackoffice.listeners.WorkflowAfterSaveListener">
+		<property name="modelService" ref="modelService" />
+		<property name="workflowMap" ref="workflowMap" />
+	</bean>
+
+<bean id="workflowSubmitActionJob" abstract="true" class="com.cnk.travelogix.mdmbackoffice.workflow.AbstractWorkflowSubmitActionJob">
+      <property name="modelService" ref="modelService" />
+		<property name="workflowTemplateService" ref="workflowTemplateService" />
+		<property name="workflowProcessingService" ref="workflowProcessingService" />
+		<property name="userService" ref="userService" />		
+		<property name="workflowService" ref="newestWorkflowService" />	
+</bean>
+
+	<bean id="workflowPublishApprovedActionJob" parent="workflowSubmitActionJob" class="com.cnk.travelogix.mdmbackoffice.workflow.WorkflowPublishApprovedActionJob" />
+
+   <bean id="workflowFinanceApprovedActionJob" parent="workflowSubmitActionJob" class="com.cnk.travelogix.mdmbackoffice.workflow.WorkflowFinanceApprovedActionJob" />
+
+ <bean id="workflowSupervisorApprovedActionJob" parent="workflowSubmitActionJob" class="com.cnk.travelogix.mdmbackoffice.workflow.WorkflowSupervisorApprovedActionJob" />
+
+	<bean id="workflowRejectActionJob" parent="workflowSubmitActionJob" class="com.cnk.travelogix.mdmbackoffice.workflow.WorkflowRejectActionJob" />
+
+	<bean id="workflowQCApprovedActionJob" parent="workflowSubmitActionJob" class="com.cnk.travelogix.mdmbackoffice.workflow.WorkflowQCApprovedActionJob" >
+		<property name="workflowMap" ref="workflowMap" />
+	</bean>
+
+	<!-- <bean id="workflowQCApprovedActionJob"
+		class="com.cnk.travelogix.mdmbackoffice.workflow.WorkflowQCApprovedActionJob" />
+ -->
+	<bean id="mdmBackofficeCoreSystemSetup"
+		class="com.cnk.travelogix.mdmbackoffice.masters.core.setup.MDMBackofficeCoreSystemSetup"
+		parent="abstractCoreSystemSetup" />
+
+
+	<!-- ValidateInterceptor for validate the employee contactEmail is unique 
+		or not -->
+	<bean id="employeeEmailUniqueValueValidateInterceptor"
+		class="com.cnk.travelogix.mdmbackoffice.interceptor.EmployeeEmailUniqueValueValidateInterceptor"
+		autowire="byName"></bean>
+	<bean id="EmployeeEmailUniqueValueValidateInterceptor"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="employeeEmailUniqueValueValidateInterceptor" />
+		<property name="typeCode" value="Employee" />
+
+	</bean>
+
+	<!-- PrepareInterceptor for making employee name with combination of of 
+		firstName+middleName+lastName -->
+	<bean id="employeePrepareIntercepter"
+		class="com.cnk.travelogix.mdmbackoffice.interceptor.EmployeePrepareIntercepter"
+		autowire="byName">
+	</bean>
+	<bean id="EmployeePrepareIntercepter"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="employeePrepareIntercepter" />
+		<property name="typeCode" value="Employee" />
+	</bean>
+
+	<!-- AfterSaveListener for handle the employee creation event -->
+	<bean id="employeeAfterSaveListener"
+		class="com.cnk.travelogix.mdmbackoffice.listeners.EmployeeAfterSaveListener">
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="modelService" ref="modelService" />
+		<property name="cmsSiteService" ref="cmsSiteService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+
+	<!-- employee process definition Resource -->
+	<bean id="employeeRegistrationProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource"
+			value="classpath:/mdmbackoffice/process/employeeRegistrationEmailProcess.xml" />
+	</bean>
+
+	<bean id="employeeRegistrationEmailContext"
+		class="com.cnk.travelogix.mdmbackoffice.email.context.EmployeeRegistrationEmailContext"
+		parent="abstractEmailContext" scope="prototype"></bean>
+
+	<!-- process engine action bean for employee confirmation -->
+	<bean id="employeePasswordGenerateAction"
+		class="com.cnk.travelogix.mdmbackoffice.process.action.EmployeePasswordGenerateAction"
+		parent="abstractAction">
+		<property name="configurationService" ref="configurationService" />
+		<property name="modelService" ref="modelService" />
+		<property name="userService" ref="userService" />
+	</bean>
+
+	<bean id="employeeRegistrationPasswordNotificationEmailAction"
+		class="com.cnk.travelogix.mdmbackoffice.process.action.EmployeeRegistrationPasswordNotificationEmailAction"
+		parent="abstractGenerateEmailAction">
+		<property name="emailService" ref="emailService" />
+		<property name="modelService" ref="modelService" />
+		<property name="frontendTemplateName" value="RegistrationConfirmEmailTemplate" />
+	</bean>
+
+	<alias alias="typeService" name="extendedTypeService"/>
+    <bean id="extendedTypeService" class="com.cnk.travelogix.mdmbackoffice.services.ExtendedTypeService"
+          parent="defaultTypeService"/>
+          
+    <alias alias="genericSearchService" name="travelogixGenericSearchService"/>
+    <bean id="travelogixGenericSearchService" parent="defaultGenericSearchService"
+          class="com.cnk.travelogix.mdmbackoffice.services.TravelogixGenericSearchService">
+        <property name="typeService" ref="typeService"/>
+        <property name="sessionService" ref="sessionService"/>
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+        <property name="commonI18NService" ref="commonI18NService"/>
+    </bean>
+    
+    <bean id="travelLogicsRoeAfterSaveListener" class="com.cnk.travelogix.mdmbackoffice.listeners.TravelogixROEAfterSaveListener" />
+	
+    <bean id="templateConfirmationActionTRJob" class="com.cnk.travelogix.mdmbackoffice.listeners.TravelogixROEConfirmationActionJob" />
+	
+    <bean id="templateDeclineActionTRJob" class="com.cnk.travelogix.mdmbackoffice.listeners.TravelogixROEDeclineActionJob" />
+         
+</beans>

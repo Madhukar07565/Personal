@@ -1,0 +1,22 @@
+$contentCatalog=operationsContentCatalog
+$contentCV=catalogVersion(catalog(id[default=$contentCatalog]),version[default='Staged'])
+$jarResourceCmsImages=jar:com.cnk.travelogix.operation.constants.OperationmastercoreConstants&/operationmastercore/import/sampledata/images
+
+INSERT_UPDATE Media;$contentCV[unique=true];code[unique=true]		   ;mime		;realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite=true]
+				   ;					  ;searchViewFilterBookingMedia;text/png	;cnk.png	 ;$jarResourceCmsImages/cnk.png
+				   
+INSERT_UPDATE SimpleBannerComponent;$contentCV[unique=true];uid[unique=true]						;name							        	;&componentRef					       ;urlLink ;media(code)
+								   ;					   ;searchViewFilterBookingBannerComponent	;Search View Filter Booking Banner Component;searchViewFilterBookingBannerComponent;"/#"	;searchViewFilterBookingMedia
+								   
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true]			  				   ;name							  ;active	;cmsComponents(uid,$contentCV)
+						;						 ;searchViewFilterTopHeaderSlot-SearchViewPage ;Top Header Slot for SearchViewPage;true    ;searchViewFilterBookingBannerComponent
+						 
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]		       			 ;position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+								;						;searchViewFilterTopHeader-SearchViewPage;TopHeaderSlot		  ;cnkSearchViewFilterBookingPage	;searchViewFilterTopHeaderSlot-SearchViewPage
+								
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name								  				;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false']
+						 ;						 ;cnkSearchViewFilterBookingPage ;CNK SearchViewFilter Booking Page	;CNKSearchViewFilterBookingPageTemplate;/order/searchview		
+								
+						 
+								   
+				   

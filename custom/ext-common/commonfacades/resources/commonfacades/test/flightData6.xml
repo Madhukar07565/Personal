@@ -1,0 +1,72 @@
+<!--Nonstop-->
+<com.cnk.travelogix.common.facades.product.data.flight.FlightData>
+  <id>flight6</id>
+  <flightNumber>TR2458</flightNumber>
+  <cabinClass>Economy</cabinClass>
+  <airlineIATA>
+    <airlineName>TigerAir</airlineName>
+    <accountingCode>TR</accountingCode>
+    <airlinePrefix>2458</airlinePrefix>
+  </airlineIATA>
+  <departureTime>2016-07-01 09:50:00.00 UTC</departureTime>
+  <arrivalTime>2016-07-01 10:55:00.00 UTC</arrivalTime>
+  <duration>1h 5m Nonstop</duration>
+  <fromSection>
+    <city>Singapore</city>
+    <airport>Singapore International Airport</airport>
+    <terminal>3C</terminal>
+  </fromSection>
+  <toSection>
+    <city>KualaLumpur</city>
+    <airport>KualaLumpur International Airport</airport>
+    <terminal>2A</terminal>
+  </toSection>
+  <fareSummary>
+    <listPrice>4680</listPrice>
+    <webPrice>4380</webPrice>
+    <currency>currency</currency>
+    <pointEarn>20</pointEarn>
+  </fareSummary>
+  <fareDetail>
+    <currency>currency</currency>
+    <baseFare>2230</baseFare>
+    <fuelSurcharge>1950</fuelSurcharge>
+    <jnTax>150</jnTax>
+    <psgrSvcFee>250</psgrSvcFee>
+    <serviceTax>250</serviceTax>
+  </fareDetail>
+  <flightDetails>
+    <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+      <cabinClass>Economy</cabinClass>
+      <fromSection>
+        <city>Singapore</city>
+        <airport>Singapore International Airport</airport>
+        <terminal>3C</terminal>
+      </fromSection>
+      <toSection>
+        <city>KualaLumpur</city>
+        <airport>KualaLumpur International Airport</airport>
+        <terminal>2A</terminal>
+      </toSection>
+      <departureTime>2016-07-01 09:50:00.00 UTC</departureTime>
+      <arrivalTime>2016-07-01 10:55:00.00 UTC</arrivalTime>
+      <duration>01:05:00.00 UTC</duration>
+    </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+    <!--
+    <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+      <cabinClass>Economy</cabinClass>
+      <fromSection>
+        <city>Ahmedabad</city>
+        <terminal>2A</terminal>
+      </fromSection>
+      <toSection>
+        <city>Delhi</city>
+        <terminal>3A</terminal>
+      </toSection>
+      <departureTime>2015-09-18 06:35:00.00 UTC</departureTime>
+      <arrivalTime>2015-09-18 07:50:00.00 UTC</arrivalTime>
+      <duration>01:05:00.00 UTC</duration>
+    </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+     -->
+  </flightDetails>
+</com.cnk.travelogix.common.facades.product.data.flight.FlightData>

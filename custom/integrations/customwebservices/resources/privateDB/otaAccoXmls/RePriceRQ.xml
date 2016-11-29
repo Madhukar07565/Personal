@@ -1,0 +1,34 @@
+<acc:AccommodationRQ xmlns:acc="http://www.coxandkings.com/suppl/accointerface" xmlns:acco="http://www.coxandkings.com/suppl/acco" xmlns:com="http://www.coxandkings.com/suppl/common" xmlns:ns="http://www.opentravel.org/OTA/2003/05">
+   <acco:RequestHeader>
+      <!--Optional:-->
+      <com:UserID>1</com:UserID>
+      <com:SessionID>2</com:SessionID>
+      <com:TransactionID>3</com:TransactionID>
+   </acco:RequestHeader>
+   <acc:RequestBody>
+      <acco:OTA_HotelAvailRQWrapper>
+         <acco:SupplierID>ATI</acco:SupplierID>
+         <acco:Sequence>1</acco:Sequence>
+         <ns:OTA_HotelAvailRQ Version="1.0">
+            <ns:AvailRequestSegments>
+               <ns:AvailRequestSegment>
+                  <ns:HotelSearchCriteria>
+                     <ns:Criterion>
+                        <ns:HotelRef HotelCode="HNLAQP"/>
+                        <ns:StayDateRange Start="2016-07-15" End="2016-07-19"/>
+                        <ns:RoomStayCandidates>
+                           <ns:RoomStayCandidate>
+                              <ns:GuestCounts>
+                                 <ns:GuestCount AgeQualifyingCode="10" Count="1"/>
+                                 <ns:GuestCount AgeQualifyingCode="8" Age="3" Count="1"/>
+                              </ns:GuestCounts>
+                           </ns:RoomStayCandidate>
+                        </ns:RoomStayCandidates>
+                     </ns:Criterion>
+                  </ns:HotelSearchCriteria>
+               </ns:AvailRequestSegment>
+            </ns:AvailRequestSegments>
+         </ns:OTA_HotelAvailRQ>
+      </acco:OTA_HotelAvailRQWrapper>
+   </acc:RequestBody>
+</acc:AccommodationRQ>

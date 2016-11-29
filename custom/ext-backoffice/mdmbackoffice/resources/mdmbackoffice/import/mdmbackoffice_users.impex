@@ -1,0 +1,15 @@
+$defaultPassword=1234
+
+INSERT_UPDATE UserGroup;UID[unique=true];locName[lang=en];groups(uid)[mode=append]
+;qcapprovergroup;QC Approver Group;backofficeadmingroup
+;mainapprovergroup;Main Approver Group;backofficeadmingroup
+;supervisorapprovergroup;Supervisor Approver Group;backofficeadmingroup
+;financeapprovergroup;Finance Approver Group;backofficeadmingroup
+
+INSERT_UPDATE Employee;UID[unique=true];name;groups(uid);password[default=$defaultPassword];firstName;lastName;contactEmail;designation
+;qcapprover;QC Approver1;qcapprovergroup;;QC;Approver1;qcapprover1@gmail.com;employee
+;mainapprover;Main Approver1;mainapprovergroup;;Main;Approver1;mainapprover1@gmail.com;employee
+
+;indent_creator;Indent Creator1;backofficeadmingroup;;Indent;Creator1;indentcreator1@gmail.com;employee
+;supervisor_approver;Supervisor Approver1;supervisorapprovergroup;;Supervisor;Approver;supervisorapprover@gmail.com;employee
+;finance_approver;Finance Approver1;financeapprovergroup;;QC;Approver1;qcapprover1@gmail.com;employee

@@ -1,0 +1,34 @@
+#
+# Import the BaseStore
+#
+
+# Language
+$lang=en
+
+# Create Base Store
+UPDATE BaseStore;uid[unique=true];name[lang=$lang]
+ ;ezginb2c;"Ezeego1 India B2C Store"
+
+
+UPDATE BaseStore;uid[unique=true];ezeeBalancesEnabled;cashOnDeliveryEnabled;supportedCreditCardTypes(code)[collection-delimiter=,];supportedDebitCardTypes(code)[collection-delimiter=,];supportedNetBankingCardTypes(code)[collection-delimiter=,];supportedEmiCardTypes(code)[collection-delimiter=,];
+;ezginb2c;true;true;amex,visa,master,maestro,rupay,diners;amex,visa,master,maestro,rupay,diners; axis,hdfc,citi,icici,sbi,kotak,dena,india,union,punjab,tjsb;axis,hdfc,citi,icici,sbi,kotak
+
+$catalogVersion=catalogVersion(catalog(id[default='ezgb2cContentCatalog']),version[default='Staged'])[unique=true];
+
+# Add CreditCardType icon media
+INSERT_UPDATE Media;code[unique=true];$catalogVersion; mime;realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite=true];
+;creditCard_amex;;image/png;creditCard_american.png;jar:com.cnk.travelogix.common.initialdata.constants.CommonInitialDataConstants&/commoninitialdata/import/coredata/stores/ezginb2c/images/creditCard_american.png
+;creditCard_visa;;image/png;creditCard_visa.png;jar:com.cnk.travelogix.common.initialdata.constants.CommonInitialDataConstants&/commoninitialdata/import/coredata/stores/ezginb2c/images/creditCard_visa.png
+;creditCard_master;;image/png;creditCard_master.png;jar:com.cnk.travelogix.common.initialdata.constants.CommonInitialDataConstants&/commoninitialdata/import/coredata/stores/ezginb2c/images/creditCard_master.png
+;creditCard_maestro;;image/png;creditCard_maestro.png;jar:com.cnk.travelogix.common.initialdata.constants.CommonInitialDataConstants&/commoninitialdata/import/coredata/stores/ezginb2c/images/creditCard_maestro.png
+;creditCard_rupay;;image/png;creditCard_rupay.png;jar:com.cnk.travelogix.common.initialdata.constants.CommonInitialDataConstants&/commoninitialdata/import/coredata/stores/ezginb2c/images/creditCard_rupay.png
+;creditCard_diners;;image/png;creditCard_DC.png;jar:com.cnk.travelogix.common.initialdata.constants.CommonInitialDataConstants&/commoninitialdata/import/coredata/stores/ezginb2c/images/creditCard_DC.png
+
+# Add icon media to CreditCardType
+INSERT_UPDATE CreditCardType;code[unique=true];icon(code,$catalogVersion);
+;"amex";"creditCard_amex";
+;"visa";"creditCard_visa";
+;"master";"creditCard_master";
+;"maestro";"creditCard_maestro";
+;"rupay";"creditCard_rupay";
+;"diners";"creditCard_diners";

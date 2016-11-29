@@ -1,0 +1,22 @@
+## messageSource=classpath:/commoninitialdata/import/coredata/contentCatalogs/ezgb2cContentCatalog/emails/email-customerActivation_$lang.properties
+#macro(genHtmlLinkStartTag $url)
+<a href="$url"><font color="#666666">
+#end
+#macro(genHtmlLinkEndTag)
+</font></a>
+#end
+#macro(genHtmlLink $url $textColor $bodyContent)
+<a href="$url"><font color="$textColor">$bodyContent</font></a>
+#end
+
+<html>
+<head>
+</head>
+<body>
+<p>Dear,</p>
+<p>We've received a request to create an  Account using your e-mail address.</p>
+<p>You already have an  Account with this e-mail address.</p>
+<p>Please click below link to activate your account.</p>
+<p><a href="${ctx.secureActivateAccountUrl}">${ctx.secureActivateAccountUrl}</a></p>
+</body>
+</html>

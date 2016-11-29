@@ -1,0 +1,33 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.presales.masters.core.setup.PresalesSystemSetup&\presalescore\import\sampledata\images\96Wx96H
+$lang=en
+
+# Media Folders
+INSERT_UPDATE MediaFolder;qualifier[unique=true];path[unique=true]
+;images;images
+
+INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier)
+;checklistImg1;$siteResource\travel.jpg;;;images
+
+INSERT_UPDATE Role;code[unique=true];name[lang=$lang]
+;R001;PRODUCT CREATOR
+;R002;PRODUCT APPROVER
+
+###### Already defined commented for reference #########
+#INSERT_UPDATE StaffInformation;uid[unique=true];title(Title.code);firstName;middleName;lastName;department(Department.code);designation;role;responsibilities;gender(code);birthDate[dateformat=$dateformat];anniversaryDate[dateformat=$dateformat];internalText;timeZone(TimeZone.value);medias(code);accommodation(Accommodation.code);availabilityTimeFrom(key(code),value);availabilityTimeTo(key(code),value)
+#;125;mr;Umesh;Vaman;Patil;IT;software engineer;admin;admin;MALE;28-08-1992;28-08-1992;;GMT;umeshpatil.jpg;87762;MON->mon;MON->mon
+
+#INSERT_UPDATE ChecklistDetails;task
+INSERT_UPDATE ChecklistDetails;checklist(implementationChecklistId);department(DepartmentType.code);role(Role.code);resource(StaffInformation.uid);taskDueDate[dateformat=$dateformat][unique=true];actualCompletionDate[dateformat=$dateformat][unique=true];status(TaskStatus.code);remarks;checklistMedia(Media.code)
+;IC11;PRODUCTS;R001;125;17-07-2017;17-07-2017;OPEN;remark1;checklistImg1
+;IC11;OPERATIONS;R002;125;18-07-2018;18-07-2018;PENDING;remark2;checklistImg1
+
+
+#INSERT_UPDATE Checklist;checklist(Lead.Id);
+INSERT_UPDATE Checklist;title(QuestionTitle.code);implementationChecklistId[unique=true];onlineDate[dateformat=$dateformat]
+;TRACK_RECORD;IC11;18-07-2020

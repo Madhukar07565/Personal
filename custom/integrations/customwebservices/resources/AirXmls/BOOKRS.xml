@@ -1,0 +1,11 @@
+<!--This is due to EchoToken/SessionID PNR: TNVSXH -->
+
+   <ns0:AirBusinessServiceRS xmlns:n1="http://www.opentravel.org/OTA/2003/05" xmlns:fusion="http://www.coxandkings.com/integ/suppl/common" xmlns:ns0="http://www.coxandkings.com/integ/suppl/air">
+         <ns0:ResponseHeader>
+            <fusion:Status>ERROR</fusion:Status>
+            <fusion:UserID>Venkatesh</fusion:UserID>
+            <fusion:SessionID>2248</fusion:SessionID>
+            <fusion:TransactionID>2248</fusion:TransactionID>
+         </ns0:ResponseHeader>
+         <ns0:ResponseBody/>
+      </ns0:AirBusinessServiceRS>

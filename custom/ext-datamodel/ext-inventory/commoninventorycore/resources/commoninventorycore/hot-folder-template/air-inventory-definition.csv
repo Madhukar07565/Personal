@@ -1,0 +1,67 @@
+Header;code[unique=true];$catalogVersion[unique=true];origin(Airport.code);destination(Airport.code);sectorType(SectorType.code);flightType(flightType.code);flightNumber[unique=true];departureDate[dateformat=dd-MM-yyyy hh:mm:ss];arrivalDate[dateformat=dd-MM-yyyy hh:mm:ss];cabinClass(code);requestedQuantity;inventoryAssociation(inventoryFor(code));noOfSeatsConfirmed;rbd(code);pnr;pnrStatus(code);perPax;baseFare;distressSalesUtilizationThreshhold;distressSalesThreshholdCutOffDays;reservedQuantity;uqTax;
+AirInventoryDetail;0001;;DEL;IXL;FLIGHT;DIRECT;194;10-02-2015 6:40:00;13-02-2015 7:55:00;ECONOMY;5;COMBINATION;20;A;ABCNFG;CONFIRM;9500;;5;14;
+AirInventoryDetail;0002;;IXL;DEL;FLIGHT;DIRECT;193;12-02-2015 10:30:00;13-02-2015 11:50:00;PREMIER;5;COMBINATION;20;B;12NIRT;PENDING;8500;;5;14;
+AirInventoryDetail;0003;;DEL;IXL;FLIGHT;DIRECT;194;13-02-2015 6:40:00;14-02-2015 7:55:00;BUSINESS;5;COMBINATION;20;A;785JNR;CONFIRM;9500;;5;14;
+AirInventoryDetail;0004;;IXL;DEL;FLIGHT;DIRECT;193;14-02-2015 10:30:00;15-02-2015 11:50:00;ECONOMY;5;COMBINATION;20;B;WENR47;CONFIRM;7500;;5;14;
+#Header;gridId[unique=true];inventoryDetails(code,$catalogVersion)
+AirInventoryGrid;1;0001,0002
+AirInventoryGrid;2;0003,0004
+#Header;definedBy(code)[unique=true];typeOfList(code)[unique=true];appliedOn(code)[unique=true];supplierCutOffDays;bufferDays;noOfNTBAS;releaseTime;abstractInventoryDefinition(code,$catalogVersion)
+NamingListCutOffs;DAYS;PRELIMINARY;Prior_To_Travel;10;5;
+NamingListCutOffs;DAYS;FINAL;Prior_To_Travel;7;2;
+#Header;definedBy(code)[unique=true];appliedOn(code)[unique=true];supplierCutOffDays[unique=true];bufferDays;&ref2
+TicketingCutOffDays;DAYS;Prior_To_Travel;5;2;TicketingCutoff
+#Header;systemFare[unique=true];fareBasis[unique=true];netFarePerPax[unique=true];fareChargesAppliedToInventoryUtilization;&ref5
+UpgradeCharges;false;W2IPO;25000;true;UpgradeCharges1
+#Header;cabinClass(code)[unique=true];rbd(code)[unique=true];fareComponent(code)[unique=true];noTicketsOrUpgrade;freeOfCostPercentageAmount;DiscountType(code)[unique=true];slabType(code);fromValue;toValue;numberOfFrees;every;&ref3
+AirFreeOfCostSeatsOrTickets;ECONOMY;J;BASE_FARE;5;100;FREEOFCOSTTICKETS;NO_OF_PASSENGERS;1;500;;;AirFreeOfCostSeatsOrTickets1
+#Header;code[unique=true];policy(code);
+TravelogixPolicyDetail;1;PR001
+TravelogixPolicyDetail;2;PR002  
+#Header;blockOutDates[unique=true];overBookingAllowed[unique=true];&ref4;
+AirCompanyAdvanceDefinition;May 25\\\, 2016 12:00:00 AM\,May 27\\\, 2016 12:00:00 AM;true;companyAdvanceDefinition;
+#Header;salesDates[unique=true];blockoutDates[unique=true];fareBasis[unique=true];tourOrDealCode;&ref;ticketingCutOffDays(&ref2);airFreeOfCostSeatsOrTickets(&ref3);amendmentPolicies(code);cancellationPolicies(code);staticpolicies(code);
+AirInventorySupplierAdvanceDefinition;May 25\\\, 2016 12:00:00 AM\,May 27\\\, 2016 12:00:00 AM;May 30\\\, 2016 12:00:00 AM\,May 31\\\, 2016 12:00:00 AM;P2IPO;G8-ZZITX2ZZ;supAdvanceDefinition;TicketingCutoff;AirFreeOfCostSeatsOrTickets1;1;2;PR001;         
+#Header;code[unique=true];$catalogVersion[unique=true];productCategorySubType(code,$catalogVersion);inventoryDetails(gridId);inventoryRequest(code,$catalogVersion);supplier(code,$catalogVersion);inventoryType(code);approvalStatus(code);distressSaleMinimumThreshold;distressSaleThresholdCutoffDays;blockedQuantity;cutOffDaysForBlockedQuantity;settleWithCompany[default=true];associations(inventoryFor(code));supplierAdvanceDefinition(&ref);companyAdvanceDefinition(&ref4)
+AirInventoryDefinition;14889;;C001ST001;1,2;14568;Jet Airways;PREPAID;approved;10;5;10;5;;COMBINATION;supAdvanceDefinition;companyAdvanceDefinition
+#Header;limit[unique=true];cabinClass(code)[unique=true];airInventorySupplierAdvanceDefinition(&ref)[unique=true]
+OverBookingLimit;1;ECONOMY;supAdvanceDefinition
+#Header;fareChargesAppliedToInventoryUtilization;definedBy(code);penaltyChangesFor(code)[unique=true];airInventorySupplierAdvanceDefinition(&ref)
+AirPenaltyChargesForAmendments;true;DAYS;NAME_CHANGE;supAdvanceDefinition
+AirPenaltyChargesForAmendments;false;DAYS;ROUTE_CHANGE;supAdvanceDefinition
+AirPenaltyChargesForAmendments;true;DAYS;DATE_CHANGE;supAdvanceDefinition
+#Header;priceComponent(code);cutOffFromDay[unique=true];cutOffToDay[unique=true];actualAmount;currency(isocode);percentageAmount;range(code);changeRequestPenaltyCharges(penaltyChangesFor(code))[unique=true]
+ChangeRequestCutOffsAndCharges;;365;30;0;INR;;BETWEEN;NAME_CHANGE
+ChangeRequestCutOffsAndCharges;;30;15;2500;INR;;BETWEEN;NAME_CHANGE
+ChangeRequestCutOffsAndCharges;;14;0;5000;INR;;BETWEEN;NAME_CHANGE
+ChangeRequestCutOffsAndCharges;;365;30;0;INR;;BETWEEN;ROUTE_CHANGE
+ChangeRequestCutOffsAndCharges;;30;15;2500;INR;;BETWEEN;ROUTE_CHANGE
+ChangeRequestCutOffsAndCharges;;14;0;5000;INR;;BETWEEN;ROUTE_CHANGE
+ChangeRequestCutOffsAndCharges;;365;30;0;INR;;BETWEEN;DATE_CHANGE
+ChangeRequestCutOffsAndCharges;;30;15;2500;INR;;BETWEEN;DATE_CHANGE
+ChangeRequestCutOffsAndCharges;;14;0;5000;INR;;BETWEEN;DATE_CHANGE
+#Header;cutOffFromDay[unique=true];cutOffToDay[unique=true];actualAmount;currency(isocode);percentageAmount;range(code);&ref1
+AirCutoffAndCharges;365;30;0;INR;;BETWEEN;cutoff1
+AirCutoffAndCharges;30;15;2500;INR;;BETWEEN;cutoff2
+AirCutoffAndCharges;14;0;5000;INR;;BETWEEN;cutoff3
+AirCutoffAndCharges;360;29;0;INR;;BETWEEN;cutoff4
+AirCutoffAndCharges;29;14;2500;INR;;BETWEEN;cutoff5
+AirCutoffAndCharges;13;0;5000;INR;;BETWEEN;cutoff6
+#Header;ticketOwner(code)[unique=true];booking;ticketing;gds;pcc;loginId[unique=true];airInventorySupplierAdvanceDefinition(&ref)[unique=true];
+AirPCCCredentialInfo;SUPPLIER;true;true;false;;123456;supAdvanceDefinition
+#Header;definedBy(code)[unique=true];appliedOn(code)[unique=true];utilizationThreshold;utilizationThresholdOf(code);dateRange[dateformat=$dateformat];airInventorySupplierAdvanceDefinition(&ref);charges(&ref1)
+AirPenaltyChargesRelease;DAYS;Prior_To_Travel;90;TOTAL_NUMBER_OF_SEAT;15-08-2016,15-09-2016;supAdvanceDefinition;cutoff1,cutoff2,cutoff3
+#Header;fareRule;description[unique=true];airInventorySupplierAdvanceDefinition(&ref)[unique=true]
+FareRulesAndTermsAndConditions;true;"Fare rules for your flight Each fare you book carries it's own set of rules & restrictions";supAdvanceDefinition
+#Header;fareInclusive;pulledFromSupplier;pulledFull;percentageAmount;actualAmount;cabinClass(code);taxComponent(code)[unique=true];applicableFareComponent(code)
+TaxComponentSpecificDetail;true;true;true;10;2400;ECONOMY;SERCHARGE;BASE_FARE
+TaxComponentSpecificDetail;true;true;false;10;2500;ECONOMY;PSF;BASE_FARE
+#Header;code[unique=true];paxType(code);taxes(taxComponent(code));airInventoryDefinition(code,$catalogVersion)[mode=append]
+Tax;0001;ADULT;SERCHARGE;14889
+Tax;0003;ADULT;PSF;14889
+#Header;systemFare[unique=true];fareBasis[unique=true];netFarePerPax[unique=true];fareChargesAppliedToInventoryUtilization;&ref6
+CompanyUpgradeCharges;false;W2IPO;25000;true;
+#Header;definedBy(code)[unique=true];appliedOn(code)[unique=true];utilizationThreshold;utilizationThresholdOf(code);dateRange[dateformat=$dateformat];airCompanyAdvanceDefinition(&ref4)[unique=true];charges(&ref1)
+AirCompanyPenaltyChargesDAYS;Prior_To_Travel;90;TOTAL_NUMBER_OF_SEAT;15-08-2016,15-09-2016;companyAdvanceDefinition;cutoff4,cutoff5,cutoff6
+#Header;paymentType(code)[unique=true];percentageAmount;currency(isocode);remark;paymentDueDate[dateformat=$dateformat];paymentStatus;actualAmount;balance;paymentAdviceNumber;daysBeforeTravel;abstractInventoryDefinition(code,$catalogVersion)[unique=true]
+PaymentSchedule;ADVANCE;50;INR;;15-09-2016;;;;;14;14889

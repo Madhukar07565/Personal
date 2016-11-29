@@ -1,0 +1,11 @@
+INSERT_UPDATE CronJob;code[unique=true];job(code);singleExecutable;sessionLanguage(isocode);
+;supplierCountryMappingCronjob;supplierCountryMappingCronjob;false;en
+;supplierCityMappingCronjob;supplierCityMappingCronjob;false;en
+;supplierHotelCityMappingCronjob;supplierHotelCityMappingCronjob;false;en
+;supplierProductMappingCronjob;supplierProductMappingCronjob;false;en
+
+INSERT_UPDATE Trigger;cronjob(code)[unique=true];second;minute;hour;day;month;year;relative;active;maxAcceptableDelay
+;supplierCountryMappingCronjob;0;0;3;-1;-1;-1;false;true;-1
+;supplierCityMappingCronjob;0;0;3;-1;-1;-1;false;true;-1
+;supplierHotelCityMappingCronjob;0;0;3;-1;-1;-1;false;true;-1
+;supplierProductMappingCronjob;0;0;3;-1;-1;-1;false;true;-1

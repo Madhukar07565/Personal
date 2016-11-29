@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	<alias name="defaultSAPServicesFacade" alias="sapServicesFacade"/>
+	<bean id="defaultSAPServicesFacade" class="com.cnk.travelogix.sapintegrations.facade.DefaultSAPServicesFacade">
+		<property name="accDocPostRequestDataConverter" ref="accdocPostDataRequestConverter"/>
+		<property name="accDocPostResponseDataConverter" ref="accdocPostResponseDataConverter"/>
+		<property name="billingDocCancelRequestDataConverter" ref="billingDocCancelRequestDataConverter"/>
+		<property name="billingDocCancelResponseDataConverter" ref="billingDocCancelResponseDataConverter"/>
+		<property name="accountClearRequestDataConverter" ref="accountClearRequestDataConverter"/>
+		<property name="accountClearResponseDataConverter" ref="accountClearResponseDataConverter"/>
+		<property name="invoiceCreateRequestDataConverter" ref="invoiceCreateRequestDataConverter"/>
+		<property name="invoiceCreateResponseDataConverter" ref="invoiceCreateResponseDataConverter"/>
+		<property name="sapWebServicesFactory" ref="sapWebServicesFactory"/>
+		<property name="vendorCreateChangeRequestDataConverter" ref="vendorCreateChangeRequestDataConverter"/>
+		<property name="vendorCreateChangeResponseDataConverter" ref="vendorCreateChangeResponseDataConverter"/>		
+	</bean>
+	<alias name="defaultCCServicesFacade" alias="ccServicesFacade"/>
+	<bean id="defaultCCServicesFacade" class="com.cnk.travelogix.sapintegrations.facade.DefaultCCServicesFacade">
+		<property name="subscriberAccMaintaintRequestDataConverter" ref="subscriberAccMaintaintRequestDataConverter"/>
+		<property name="subscriberAccMaintaintResponseDataConverter" ref="subscriberAccMaintaintResponseDataConverter"/>
+		<property name="externalAccMaintaintRequestDataConverter" ref="externalAccMaintaintRequestDataConverter"/>
+		<property name="externalAccMaintaintResponseDataConverter" ref="externalAccMaintaintResponseDataConverter"/>
+		<property name="mappingTableRowMaintainRequestDataConverter" ref="mappingTableRowMaintainRequestDataConverter"/>
+		<property name="mappingTableRowMaintainResponseDataConverter" ref="mappingTableRowMaintainResponseDataConverter"/>
+		<property name="maintainMappingTableRequestDataConverter" ref="maintainMappingTableRequestDataConverter"/>
+		<property name="maintainMappingTableResponseDataConverter" ref="maintainMappingTableResponseDataConverter"/>
+		<property name="contractProvisioningRequestConverter" ref="contractProvisioningRequestConverter"/>
+		<property name="contractProvisioningResponseConverter" ref="contractProvisioningResponseConverter"/>
+		<property name="itemChargingResponseConverter" ref="itemChargingResponseConverter"/>
+		<property name="itemChargingRequestConverter" ref="itemChargingRequestConverter"/>
+		<property name="sapWebServicesFactory" ref="sapWebServicesFactory"/>
+	</bean>
+	<!-- Sales Oder Create Change -->
+	<alias name="defaultSalesOrderCreateChangeRequestDataConverter" alias="salesOrderCreateChangeRequestDataConverter"/>
+	<bean id="defaultSalesOrderCreateChangeRequestDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.so.createchange.ZifTerpSalesOrder"/>
+		<property name="populators">
+			<list>
+				<ref bean="soCreateChangeDataRequestPopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultSOCreateChangeDataRequestPopulator" alias="soCreateChangeDataRequestPopulator"/>
+	<bean id="defaultSOCreateChangeDataRequestPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultSOCreateChangeRequestDataPopulator"/>
+	
+	<alias name="defaultSalesOrderCreateChangeResponseDataConverter" alias="salesOrderCreateChangeResponseDataConverter"/>
+	<bean id="defaultSalesOrderCreateChangeResponseDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.sapintegrations.so.createchange.data.ZifTerpSalesOrderDataResponse"/>
+		<property name="populators">
+			<list>
+				<ref bean="soCreateChangeDataResponsePopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultSOCreateChangeDataResponsePopulator" alias="soCreateChangeDataResponsePopulator"/>
+	<bean id="defaultSOCreateChangeDataResponsePopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultSOCreateChangeResponseDataPopulator"/>
+	
+	<!-- Account Doc Post -->
+	<alias name="defaultAccdocPostDataRequestConverter" alias="accdocPostDataRequestConverter"/>
+	<bean id="defaultAccdocPostDataRequestConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.zifws.accdocpost.ZIffmAccountDocument"/>
+		<property name="populators">
+			<list>
+				<ref bean="accdocPostDataRequestPopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultAccdocPostDataRequestPopulator" alias="accdocPostDataRequestPopulator"/>
+	<bean id="defaultAccdocPostDataRequestPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultAccdocPostRequestDataPopulator"/>
+	
+	<alias name="defaultAccdocPostResponseDataConverter" alias="accdocPostResponseDataConverter"/>
+	<bean id="defaultAccdocPostResponseDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.sapintegrations.accdocpost.data.ZIffmAccountDocumentResponse"/>
+		<property name="populators">
+			<list>
+				<ref bean="accdocPostDataResponsePopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultAccdocPostDataResponsePopulator" alias="accdocPostDataResponsePopulator"/>
+	<bean id="defaultAccdocPostDataResponsePopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultAccdocPostResponseDataPopulator"/>
+	<!-- Invoice Cancel Request-->
+	<alias name="defaultBillingDocCancelRequestDataConverter" alias="billingDocCancelRequestDataConverter"/>
+	<bean id="defaultBillingDocCancelRequestDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.zifwsb.inv.cancel.ZIffmBillingdocCancel"/>
+		<property name="populators">
+			<list>
+				<ref bean="billingDocInvoiceCancelRequestDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultBillingDocInvoiceCancelRequestDataPopulator" alias="billingDocInvoiceCancelRequestDataPopulator"/>
+	<bean id="defaultBillingDocInvoiceCancelRequestDataPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultBillingDocInvoiceCancelRequestDataPopulator"/>
+	
+	<alias name="defaultBillingDocCancelResponseDataConverter" alias="billingDocCancelResponseDataConverter"/>
+	<bean id="defaultBillingDocCancelResponseDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.zifwsb.inv.cancel.data.ZIffmBillingdocCancelDataResponse"/>
+		<property name="populators">
+			<list>
+				<ref bean="billingDocInvoiceCancelResponseDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultBillingDocInvoiceCancelResponseDataPopulator" alias="billingDocInvoiceCancelResponseDataPopulator"/>
+	<bean id="defaultBillingDocInvoiceCancelResponseDataPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultBillingDocInvoiceCancelResponseDataPopulator"/>
+	
+	<!-- Account Clear Request-->
+	<alias name="defaultAccountClearRequestDataConverter" alias="accountClearRequestDataConverter"/>
+	<bean id="defaultAccountClearRequestDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.zifws.account.clear.ZIffmAccountClear"/>
+		<property name="populators">
+			<list>
+				<ref bean="accountClearRequestDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultAccountClearRequestDataPopulator" alias="accountClearRequestDataPopulator"/>
+	<bean id="defaultAccountClearRequestDataPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultAccountClearRequestDataPopulator"/>
+	
+	<alias name="defaultAccountClearResponseDataConverter" alias="accountClearResponseDataConverter"/>
+	<bean id="defaultAccountClearResponseDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.zifws.account.clear.data.ZIffmAccountClearDataResponse"/>
+		<property name="populators">
+			<list>
+				<ref bean="accountClearResponseDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultAccountClearResponseDataPopulator" alias="accountClearResponseDataPopulator"/>
+	<bean id="defaultAccountClearResponseDataPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultAccountClearResponseDataPopulator"/>	
+	<alias name="defaultCRMServicesFacade" alias="crmServicesFacade"/>
+	<bean id="defaultCRMServicesFacade" class="com.cnk.travelogix.sapintegrations.facade.DefaultCRMServicesFacade">
+		<property name="partnerSaveRequestDataConverter" ref="partnerSaveRequestDataConverter"/>
+		<property name="partnerSaveResponseDataConverters" ref="partnerSaveResponseDataConverters"/>
+		<property name="partnerSaveB2BRequestDataConverter" ref="partnerSaveB2BRequestDataConverter"/>
+		<property name="partnerSaveB2BResponseDataConverters" ref="partnerSaveB2BResponseDataConverters"/>
+		<property name="complaintsFeedbackRequestDataConverter" ref="complaintsFeedbackRequestDataConverter"/>
+		<property name="complaintsFeedbackResponseDataConverters" ref="complaintsFeedbackResponseDataConverters"/>
+		<property name="opportunityRequestDataConverter" ref="opportunityRequestDataConverter"/>
+		<property name="opportunityResponseDataConverters" ref="opportunityResponseDataConverters"/>		
+		<property name="sapWebServicesFactory" ref="sapWebServicesFactory"/>
+		<property name="salesOrderCreateChangeRequestDataConverter" ref="salesOrderCreateChangeRequestDataConverter"/>
+		<property name="salesOrderCreateChangeResponseDataConverter" ref="salesOrderCreateChangeResponseDataConverter"/>		
+	</bean>
+	
+	<!-- Partner Save -->
+	<alias name="defaultPartnerSaveRequestDataConverter" alias="partnerSaveRequestDataConverter"/>
+	<bean id="defaultPartnerSaveRequestDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.zif.erp.ws.custmastercreate.ZifTerpPartnerSave"/>
+		<property name="populators">
+			<list>
+				<ref bean="customerMasterCreateRequestDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+    <alias name="defaultCustomerMasterCreateRequestDataPopulator" alias="customerMasterCreateRequestDataPopulator"/>
+	<bean id="defaultCustomerMasterCreateRequestDataPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultCustomerMasterCreateRequestDataPopulator"/>
+
+	<alias name="defaultPartnerSaveResponseDataConverters" alias="partnerSaveResponseDataConverters"/>
+	<bean id="defaultPartnerSaveResponseDataConverters" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.sapintegrations.zif.erp.ws.custmastercreate.data.ZifTerpPartnerSaveDataResponse"/>
+		<property name="populators">
+			<list>
+				<ref bean="customerMasterCreateResponseDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+		
+	<alias name="defaultCustomerMasterCreateResponseDataPopulator" alias="customerMasterCreateResponseDataPopulator"/>
+	<bean id="defaultCustomerMasterCreateResponseDataPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultCustomerMasterCreateResponseDataPopulator"/>
+	
+	<!-- Partner Save B2B -->
+	<alias name="defaultPartnerSaveB2BRequestDataConverter" alias="partnerSaveB2BRequestDataConverter"/>
+	<bean id="defaultPartnerSaveB2BRequestDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.zif.erp.ws.custmastercreate.b2b.ZifTerpPartnerSaveB2B"/>
+		<property name="populators">
+			<list>
+				<ref bean="customerMasterCreateB2BRequestDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+    <alias name="defaultCustomerMasterCreateB2BRequestDataPopulator" alias="customerMasterCreateB2BRequestDataPopulator"/>
+	<bean id="defaultCustomerMasterCreateB2BRequestDataPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultCustomerMasterCreateB2BRequestDataPopulator"/>
+
+	<alias name="defaultPartnerSaveB2BResponseDataConverters" alias="partnerSaveB2BResponseDataConverters"/>
+	<bean id="defaultPartnerSaveB2BResponseDataConverters" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.sapintegrations.zif.erp.ws.custmastercreate.b2b.data.ZifTerpPartnerSaveB2BDataResponse"/>
+		<property name="populators">
+			<list>
+				<ref bean="customerMasterCreateB2BResponseDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+		
+	<alias name="defaultCustomerMasterCreateB2BResponseDataPopulator" alias="customerMasterCreateB2BResponseDataPopulator"/>
+	<bean id="defaultCustomerMasterCreateB2BResponseDataPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultCustomerMasterCreateB2BResponseDataPopulator"/>
+	
+	<!-- Complaints Feedback -->
+	
+	<alias name="defaultComplaintsFeedbackRequestDataConverter" alias="complaintsFeedbackRequestDataConverter"/>
+	<bean id="defaultComplaintsFeedbackRequestDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.zif.erp.ws.complaints.feedback.ZifTerpComplaints"/>
+		<property name="populators">
+			<list>
+				<ref bean="complaintsFeedbackRequestDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+    <alias name="defaultComplaintsFeedbackRequestDataPopulator" alias="complaintsFeedbackRequestDataPopulator"/>
+	<bean id="defaultComplaintsFeedbackRequestDataPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultComplaintsFeedbackRequestDataPopulator"/>
+
+	<alias name="defaultComplaintsFeedbackResponseDataConverters" alias="complaintsFeedbackResponseDataConverters"/>
+	<bean id="defaultComplaintsFeedbackResponseDataConverters" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.sapintegrations.zif.erp.ws.complaints.feedback.data.ZifTerpComplaintsDataResponse"/>
+		<property name="populators">
+			<list>
+				<ref bean="complaintsFeedbackResponseDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+		
+	<alias name="defaultComplaintsFeedbackResponseDataPopulator" alias="complaintsFeedbackResponseDataPopulator"/>
+	<bean id="defaultComplaintsFeedbackResponseDataPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultComplaintsFeedbackResponseDataPopulator"/>
+	
+	<!-- Opportunity Feedback -->
+	
+	<alias name="defaultOpportunityRequestDataConverter" alias="opportunityRequestDataConverter"/>
+	<bean id="defaultOpportunityRequestDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.zif.erp.ws.opportunity.ZifTerpOpportunity"/>
+		<property name="populators">
+			<list>
+				<ref bean="opportunityRequestDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+    <alias name="defaultOpportunityRequestDataPopulator" alias="opportunityRequestDataPopulator"/>
+	<bean id="defaultOpportunityRequestDataPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultOpportunityRequestDataPopulator"/>
+
+	<alias name="defaultOpportunityResponseDataConverters" alias="opportunityResponseDataConverters"/>
+	<bean id="defaultOpportunityResponseDataConverters" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.sapintegrations.zif.erp.ws.opportunity.data.ZifTerpOpportunityDataResponse"/>
+		<property name="populators">
+			<list>
+				<ref bean="opportunityResponseDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+		
+	<alias name="defaultOpportunityResponseDataPopulator" alias="opportunityResponseDataPopulator"/>
+	<bean id="defaultOpportunityResponseDataPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultOpportunityResponseDataPopulator"/>
+
+	<!-- Subscriber Account Maintain -->
+	<alias name="defaultSubscriberAccMaintaintRequestDataConverter" alias="subscriberAccMaintaintRequestDataConverter"/>
+	<bean id="defaultSubscriberAccMaintaintRequestDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.subscribe.account.SubscriberAccountMaintainRequest"/>
+		<property name="populators">
+			<list>
+				<ref bean="subscriberAccMaintaintRequestPopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultSubscriberAccMaintaintRequestPopulator" alias="subscriberAccMaintaintRequestPopulator"/>
+	<bean id="defaultSubscriberAccMaintaintRequestPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultSubscribeAccMaintainRequestPopulator"/>
+	
+	<alias name="defaultSubscriberAccMaintaintResponseDataConverter" alias="subscriberAccMaintaintResponseDataConverter"/>
+	<bean id="defaultSubscriberAccMaintaintResponseDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.sapintegrations.subscribe.account.data.SubscriberAccountOperationResponseData"/>
+		<property name="populators">
+			<list>
+				<ref bean="subscriberAccMaintaintResponsePopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultSubscriberAccMaintaintResponsePopulator" alias="subscriberAccMaintaintResponsePopulator"/>
+	<bean id="defaultSubscriberAccMaintaintResponsePopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultSubscribeAccMaintainResponsePopulator"/>
+	
+	<!-- External Account Maintain Request-->
+	<alias name="defaultExternalAccMaintaintRequestDataConverter" alias="externalAccMaintaintRequestDataConverter"/>
+	<bean id="defaultExternalAccMaintaintRequestDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.subscribe.account.ExternalAccountMaintainRequest"/>
+		<property name="populators">
+			<list>
+				<ref bean="externalAccMaintaintRequestPopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultExternalAccMaintaintRequestPopulator" alias="externalAccMaintaintRequestPopulator"/>
+	<bean id="defaultExternalAccMaintaintRequestPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultExternalAccMaintainRequestPopulator"/>
+	<!-- External Account Maintain Response-->
+	<alias name="defaultExternalAccMaintaintResponseDataConverter" alias="externalAccMaintaintResponseDataConverter"/>
+	<bean id="defaultExternalAccMaintaintResponseDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.sapintegrations.subscribe.account.data.ExternalAccountOperationResponseData"/>
+		<property name="populators">
+			<list>
+				<ref bean="externalAccMaintaintResponsePopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultExternalAccMaintaintResponsePopulator" alias="externalAccMaintaintResponsePopulator"/>
+	<bean id="defaultExternalAccMaintaintResponsePopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultExternalAccMaintainResponsePopulator"/>
+	
+	<!-- mapping table row maintain -->
+	<alias name="defaultMappingTableRowMaintainRequestDataConverter" alias="mappingTableRowMaintainRequestDataConverter"/>
+	<bean id="defaultMappingTableRowMaintainRequestDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.mappingtable.maintain.MaintainMappingTableRowRequest"/>
+		<property name="populators">
+			<list>
+				<ref bean="mappingTableRowMaintainRequestPopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultMappingTableRowMaintainRequestPopulator" alias="mappingTableRowMaintainRequestPopulator"/>
+	<bean id="defaultMappingTableRowMaintainRequestPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultMappingTableRowMaintainRequestPopulator"/>
+
+	<alias name="defaultMappingTableRowMaintainResponseDataConverter" alias="mappingTableRowMaintainResponseDataConverter"/>
+	<bean id="defaultMappingTableRowMaintainResponseDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.sapintegrations.mappingtable.maintain.data.MappingTableOperationResponseData"/>
+		<property name="populators">
+			<list>
+				<ref bean="mappingTableRowMaintainResponsePopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultMappingTableRowMaintainResponsePopulator" alias="mappingTableRowMaintainResponsePopulator"/>
+	<bean id="defaultMappingTableRowMaintainResponsePopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultMappingTableRowMaintainResponsePopulator"/>
+
+	<!-- Maintain Mapping Table maintain -->
+	<alias name="defaultMaintainMappingTableRequestDataConverter" alias="maintainMappingTableRequestDataConverter"/>
+	<bean id="defaultMaintainMappingTableRequestDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.mappingtable.maintain.MaintainMappingTableRequest"/>
+		<property name="populators">
+			<list>
+				<ref bean="maintainMappingTableRequestPopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultMaintainMappingTableRequestPopulator" alias="maintainMappingTableRequestPopulator"/>
+	<bean id="defaultMaintainMappingTableRequestPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultMaintainMappingTableRequestPopulator"/>
+
+	<alias name="defaultMaintainMappingTableResponseDataConverter" alias="maintainMappingTableResponseDataConverter"/>
+	<bean id="defaultMaintainMappingTableResponseDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.sapintegrations.mappingtable.maintain.data.MappingTableOperationResponseData"/>
+		<property name="populators">
+			<list>
+				<ref bean="maintainMappingTableResponsePopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultMaintainMappingTableResponsePopulator" alias="maintainMappingTableResponsePopulator"/>
+	<bean id="defaultMaintainMappingTableResponsePopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultMaintainMappingTableResponsePopulator"/>
+	
+	<!-- Invoice create  -->
+	<alias name="defaultInvoiceCreateRequestDataConverter" alias="invoiceCreateRequestDataConverter"/>
+	<bean id="defaultInvoiceCreateRequestDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.zifwsb.invoice.create.ZIffmBillDocCreate"/>
+		<property name="populators">
+			<list>
+				<ref bean="invoiceCreateDataRequestPopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultInvoiceCreateDataRequestPopulator" alias="invoiceCreateDataRequestPopulator"/>
+	<bean id="defaultInvoiceCreateDataRequestPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultInvoiceCreateDataRequestPopulator"/>
+	
+	<alias name="defaultInvoiceCreateResponseDataConverter" alias="invoiceCreateResponseDataConverter"/>
+	<bean id="defaultInvoiceCreateResponseDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.sapintegrations.invoice.create.data.ZIffmBillDocCreateResponseData"/>
+		<property name="populators">
+			<list>
+				<ref bean="invoiceCreateDataResponsePopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultInvoiceCreateDataResponsePopulator" alias="invoiceCreateDataResponsePopulator"/>
+	<bean id="defaultInvoiceCreateDataResponsePopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultInvoiceCreateResponseDataPopulator"/>
+	
+	
+	<alias name="defaultVendorCreateChangeRequestDataConverter" alias="vendorCreateChangeRequestDataConverter"/>
+	<bean id="defaultVendorCreateChangeRequestDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.ziffm.vendor.createchange.ZVendorCreateChangeService"/>
+		<property name="populators">
+			<list>
+				<ref bean="vendorCreateChangeRequestDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultVendorCreateChangeRequestDataPopulator" alias="vendorCreateChangeRequestDataPopulator"/>
+	<bean id="defaultVendorCreateChangeRequestDataPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultVendorCreateChangeRequestDataPopulator"/>
+	
+	<alias name="defaultVendorCreateChangeResponseDataConverter" alias="vendorCreateChangeResponseDataConverter"/>
+	<bean id="defaultVendorCreateChangeResponseDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.sapintegrations.ziffm.vendor.createchange.data.ZVendorCreateChangeServiceDataResponse"/>
+		<property name="populators">
+			<list>
+				<ref bean="vendorCreateChangeResponseDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultVendorCreateChangeResponseDataPopulator" alias="vendorCreateChangeResponseDataPopulator"/>
+	<bean id="defaultVendorCreateChangeResponseDataPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultVendorCreateChangeResponseDataPopulator"/>
+	
+	<alias name="defaultContractProvisioningRequestConverter" alias="contractProvisioningRequestConverter"/>
+	<bean id="defaultContractProvisioningRequestConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.contract.provisioning.MaintainChargingContractRequest"/>
+		<property name="populators">
+			<list>
+				<ref bean="contractProvisioningRequestPopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultContractProvisioningRequestPopulator" alias="contractProvisioningRequestPopulator"/>
+	<bean id="defaultContractProvisioningRequestPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultContractProvisioningRequestPopulator"/>
+
+	<alias name="defaultContractProvisioningResponseDataConverter" alias="contractProvisioningResponseConverter"/>
+	<bean id="defaultContractProvisioningResponseDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.contract.provisioning.data.ContractOperationResponseData"/>
+		<property name="populators">
+			<list>
+				<ref bean="contractProvisioningResponsePopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultContractProvisioningResponsePopulator" alias="contractProvisioningResponsePopulator"/>
+	<bean id="defaultContractProvisioningResponsePopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultContractProvisioningResponsePopulator"/>
+	
+	<alias name="defaultItemChargingRequestConverter" alias="itemChargingRequestConverter"/>
+	<bean id="defaultItemChargingRequestConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.custom.chargeable.itemcharging.ChargeableItemChargeRequest"/>
+		<property name="populators">
+			<list>
+				<ref bean="itemChargingRequestPopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultItemChargingRequestPopulator" alias="itemChargingRequestPopulator"/>
+	<bean id="defaultItemChargingRequestPopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultItemChargingRequestPopulator"/>
+
+	<alias name="defaultItemChargingResponseDataConverter" alias="itemChargingResponseConverter"/>
+	<bean id="defaultItemChargingResponseDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.sapintegrations.chargeable.itemcharging.data.ChargeableItemChargeResponseData"/>
+		<property name="populators">
+			<list>
+				<ref bean="itemChargingResponsePopulator"/>
+			</list>
+		</property>
+	</bean>
+	<alias name="defaultItemChargingResponsePopulator" alias="itemChargingResponsePopulator"/>
+	<bean id="defaultItemChargingResponsePopulator" class="com.cnk.travelogix.sapintegrations.converters.populator.DefaultItemChargingResponsePopulator"/>
+</beans>

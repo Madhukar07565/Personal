@@ -1,0 +1,11 @@
+#INSERT_UPDATE CoverageConstraintGroup;id[unique=true];coverageDomainID;dedicatedTypes(code);interfaceName
+#;default;defaultDomain;Item;de.hybris.platform.validation.groupinterfaces.DefaultBackofficeValidationGroup
+
+INSERT_UPDATE NotNullConstraint;descriptor(enclosingType(code),qualifier);id[unique=true,allownull=true]         ;qualifier[allownull=true];severity(code,itemtype(code));target[allownull=true];type(code);constraintGroups(id)
+ ;CompanyInventoryRestriction:company                ;companyNotNullConstraint                  ;company              ;ERROR:Severity               ;com.cnk.travelogix.common.inventory.model.CompanyInventoryRestrictionModel;CompanyInventoryRestriction;defaultBackofficeValidationGroup
+ ;CompanyInventoryRestriction:sbu                ;sbuNotNullConstraint                  ;sbu              ;ERROR:Severity               ;com.cnk.travelogix.common.inventory.model.CompanyInventoryRestrictionModel;CompanyInventoryRestriction;defaultBackofficeValidationGroup
+ ;CompanyInventoryRestriction:clientGroup                ;clientGroupNotNullConstraint                  ;clientGroup              ;ERROR:Severity               ;com.cnk.travelogix.common.inventory.model.CompanyInventoryRestrictionModel;CompanyInventoryRestriction;defaultBackofficeValidationGroup
+ ;CompanyInventoryRestriction:clientType                ;clientTypeNotNullConstraint                  ;clientType              ;ERROR:Severity               ;com.cnk.travelogix.common.inventory.model.CompanyInventoryRestrictionModel;CompanyInventoryRestriction;defaultBackofficeValidationGroup
+ ;CompanyInventoryRestriction:client                ;clientNotNullConstraint                  ;client              ;ERROR:Severity               ;com.cnk.travelogix.common.inventory.model.CompanyInventoryRestrictionModel;CompanyInventoryRestriction;defaultBackofficeValidationGroup                               
+
+$de.hybris.platform.core.Registry.getApplicationContext().getBean(de.hybris.platform.validation.services.ValidationService.class).reloadValidationEngine()

@@ -1,0 +1,170 @@
+<air1:AirInterfaceRQ xmlns:air="http://www.coxandkings.com/integ/suppl/air" xmlns:com="http://www.coxandkings.com/integ/suppl/common" xmlns:air1="http://www.coxandkings.com/integ/suppl/airinterface" xmlns:ns="http://www.opentravel.org/OTA/2003/05">
+    <air:RequestHeader>
+       <com:UserID>1</com:UserID>
+       <com:SessionID>2</com:SessionID>
+        <com:TransactionID>3</com:TransactionID>
+      <com:SupplierCredentialsList>
+         <com:SupplierCredentials>
+            <com:SupplierID>ELSYARRES</com:SupplierID>
+            <com:Credentials>
+      
+               <com:Credential name="UserID">ezeego1</com:Credential>
+               <com:Credential name="Password">87095140</com:Credential>
+            </com:Credentials>
+         </com:SupplierCredentials>
+      </com:SupplierCredentialsList>
+    </air:RequestHeader>
+    <air1:RequestBody>
+   <air:OTA_AirPriceRQWrapper>
+            <air:SupplierID>ELSYARRES</air:SupplierID>
+            <air:Sequence>1</air:Sequence>
+         <ns:OTA_AirPriceRQ Version="8.2" PrimaryLangID="EN">
+         <ns:POS>
+            <ns:Source/>
+         </ns:POS>
+        
+         <ns:AirItinerary >
+            <ns:OriginDestinationOptions>
+               <ns:OriginDestinationOption>
+                  <ns:FlightSegment ArrivalDateTime="2016-07-09T01:30:00" DepartureDateTime="2016-07-09T00:00:00"  >
+                     <ns:DepartureAirport LocationCode="CGN" CodeContext="Cologne"/>
+                     <ns:ArrivalAirport LocationCode="TXL" CodeContext="Berlin Tegel"/>
+                     <ns:OperatingAirline FlightNumber="_11000" Code="_1" CompanyShortName="Fake Carrier"/>
+                     <ns:TPA_Extensions>
+                        <air:ExtendedRPH>_4-160701063731-01-1628196-6307|_4-160701063731-01-1628348-5821</air:ExtendedRPH>
+                     </ns:TPA_Extensions>
+                  </ns:FlightSegment>
+               </ns:OriginDestinationOption>
+            </ns:OriginDestinationOptions>
+         </ns:AirItinerary>
+          <ns:TravelerInfoSummary>
+            <ns:AirTravelerAvail>
+			
+               <ns:PassengerTypeQuantity Code="ADT" Quantity="1"/>
+			   <ns:AirTraveler Gender="Male" BirthDate="1987-09-24" CurrencyCode="INR" PassengerTypeCode="ADT" >
+					<ns:PersonName>
+						<ns:GivenName>VK</ns:GivenName>
+						<ns:Surname>Clv</ns:Surname>
+					</ns:PersonName>
+					<ns:Telephone CountryAccessCode="91" AreaCityCode="022" PhoneNumber="8553456"/>
+					<ns:Email>abc@gmail.com</ns:Email>
+					<ns:Address>
+					<ns:StreetNmbr>12</ns:StreetNmbr>
+					<ns:BldgRoom>2</ns:BldgRoom>
+					<ns:CityName>Thane</ns:CityName>
+					<ns:PostalCode>401107</ns:PostalCode>
+					<ns:CountryName Code="IN">India</ns:CountryName>
+					</ns:Address>
+					
+					<ns:Document DocIssueLocation="Mumbai" DocID="008809" DocType="02" EffectiveDate="2015-01-22" ExpireDate="2017-01-22" DocIssueCountry="IN"/>
+					<ns:TravelerRefNumber RPH="111"/>
+				</ns:AirTraveler>
+            </ns:AirTravelerAvail>
+			<ns:AirTravelerAvail>
+			
+               <ns:PassengerTypeQuantity Code="ADT" Quantity="1"/>
+			   <ns:AirTraveler Gender="Female" BirthDate="1989-06-01" CurrencyCode="INR" PassengerTypeCode="ADT" >
+					<ns:PersonName>
+						<ns:GivenName>ANJ</ns:GivenName>
+						<ns:Surname>Clv</ns:Surname>
+					</ns:PersonName>
+					<ns:Telephone CountryAccessCode="91" AreaCityCode="022" PhoneNumber="8553456"/>
+					<ns:Email>abcanj@gmail.com</ns:Email>
+					<ns:Address>
+					<ns:StreetNmbr>12</ns:StreetNmbr>
+					<ns:BldgRoom>2</ns:BldgRoom>
+					<ns:CityName>Thane</ns:CityName>
+					<ns:PostalCode>401107</ns:PostalCode>
+					<ns:CountryName Code="IN">India</ns:CountryName>
+					</ns:Address>
+					
+					<ns:Document DocIssueLocation="Mumbai" DocID="008810" DocType="02" EffectiveDate="2015-01-22" ExpireDate="2017-01-22" DocIssueCountry="IN"/>
+					<ns:TravelerRefNumber RPH="222"/>
+				</ns:AirTraveler>
+            </ns:AirTravelerAvail>
+            <ns:AirTravelerAvail>
+               <ns:PassengerTypeQuantity Code="CHD" Quantity="1"/>
+			   <ns:AirTraveler Gender="Male" BirthDate="2010-01-22" CurrencyCode="INR" PassengerTypeCode="CHD" >
+					<ns:PersonName>
+						<ns:GivenName>Vian</ns:GivenName>
+						<ns:Surname>Clv</ns:Surname>
+					</ns:PersonName>
+					<ns:Document DocIssueLocation="Mumbai" DocID="009018" DocType="02" EffectiveDate="2015-01-22" ExpireDate="2017-01-22" DocIssueCountry="IN"/>
+					<ns:TravelerRefNumber RPH="333"/>
+				</ns:AirTraveler>
+            </ns:AirTravelerAvail>
+            <ns:AirTravelerAvail>
+               <ns:PassengerTypeQuantity Code="INF" Quantity="1"/>
+			   <ns:AirTraveler Gender="Female" BirthDate="2015-01-22" CurrencyCode="INR" PassengerTypeCode="INF" >
+					<ns:PersonName>
+						<ns:GivenName>Anvi</ns:GivenName>
+						<ns:Surname>Clv</ns:Surname>
+					</ns:PersonName>
+					<ns:Document DocIssueLocation="Mumbai" DocID="009019" DocType="02" EffectiveDate="2015-01-22" ExpireDate="2017-01-22" DocIssueCountry="IN"/>
+					<ns:TravelerRefNumber RPH="444"/>
+				</ns:AirTraveler>
+            </ns:AirTravelerAvail>
+            
+			  <ns:TPA_Extensions>
+			<air:SSR>
+			<SeatRequests>
+                 <SeatRequest SeatNumber="28A" TravelerRefNumberRPHList="111" RowNumber="28" FlightRefNumberRPHList="Outbound"></SeatRequest>
+				<SeatRequest SeatNumber="28B" TravelerRefNumberRPHList="222" RowNumber="28" FlightRefNumberRPHList="Outbound"></SeatRequest>
+				 <SeatRequest SeatNumber="28C" TravelerRefNumberRPHList="333" RowNumber="28" FlightRefNumberRPHList="Outbound"></SeatRequest>
+				<SeatRequest SeatNumber="28D" TravelerRefNumberRPHList="444" RowNumber="28" FlightRefNumberRPHList="Outbound"></SeatRequest>
+               <SeatRequest SeatNumber="13B" TravelerRefNumberRPHList="111" RowNumber="28" FlightRefNumberRPHList="Inbound"></SeatRequest>
+				<SeatRequest SeatNumber="13C" TravelerRefNumberRPHList="222" RowNumber="28" FlightRefNumberRPHList="Inbound"></SeatRequest>
+				<SeatRequest SeatNumber="13D" TravelerRefNumberRPHList="333" RowNumber="28" FlightRefNumberRPHList="Inbound"></SeatRequest>
+				<SeatRequest SeatNumber="13E" TravelerRefNumberRPHList="444" RowNumber="28" FlightRefNumberRPHList="Inbound"></SeatRequest>
+                  </SeatRequests>
+                  <OtherServiceInformations>
+                  <OtherServiceInformation RPH="BookingOption" Operation="BookingOption : SpeedBoarding"/>
+                  </OtherServiceInformations>
+			</air:SSR>  
+			  <air:MealRequests>
+			  <air:MealRequest TravelerRefNumberRPHList="A1" FlightRefNumberRPHList="G9$SHJ/BOM$2005103$20160615164000$20160615211000" DepartureDate ="2016-06-15" FlightNumber="401" mealCode="EGGOM" mealQuantity="1"/>
+			  <air:MealRequest TravelerRefNumberRPHList="C2" FlightRefNumberRPHList="G9$SHJ/BOM$2005103$20160615164000$20160615211000" DepartureDate ="2016-06-15" FlightNumber="401" mealCode="EGGOM" mealQuantity="1"/>
+			  </air:MealRequests>
+			  <air:BaggageRequests>
+			  <air:BaggageRequest TravelerRefNumberRPHList="A1" FlightRefNumberRPHList="G9$SHJ/BOM$2005103$20160615164000$20160615211000" DepartureDate ="2016-06-15" FlightNumber="401" baggageCode="1/20" baggageOndGroupId="1"/>
+			  </air:BaggageRequests>
+			   <air:TripType>Return</air:TripType>
+			   <air:NearbyDepartures>false</air:NearbyDepartures>
+			   <air:NearbyDestinations>false</air:NearbyDestinations>
+			   <air:TotalAmount>41446.07</air:TotalAmount>
+			   <air:CustomerInfo Gender="Male" BirthDate="1987-09-24" CurrencyCode="INR" PassengerTypeCode="ADT" >
+					<ProfileRef>
+                                        <UniqueID ID="1234" Type="CustomerID"/>
+                                        </ProfileRef>
+                                        <PersonName>
+						<GivenName>CNK</GivenName>
+						<Surname>CKIL</Surname>
+					</PersonName>
+					<Telephone CountryAccessCode="91" AreaCityCode="022" PhoneNumber="8553456"/>
+					<Email>cnk@gmail.com</Email>
+					<Address>
+					<StreetNmbr>34</StreetNmbr>
+					<BldgRoom>1</BldgRoom>
+					<CityName>Mumbai</CityName>
+					<PostalCode>400067</PostalCode>
+					<CountryName Code="IN">India</CountryName>
+					</Address>
+					
+				</air:CustomerInfo>
+            </ns:TPA_Extensions>
+            <ns:PaymentDetail>
+            <ns:PaymentCard ExpireDate="0599">
+            <ns:CardType Code="123" Description="MASTERCARD">VISA</ns:CardType>
+            <ns:CardHolderName>Holder</ns:CardHolderName>
+            <ns:CardNumber>
+            <ns:PlainText>4111111111111111</ns:PlainText>
+            </ns:CardNumber>
+            </ns:PaymentCard>
+            </ns:PaymentDetail>
+         </ns:TravelerInfoSummary>
+		  
+      </ns:OTA_AirPriceRQ>
+	  </air:OTA_AirPriceRQWrapper>
+        
+            </air1:RequestBody>
+</air1:AirInterfaceRQ>

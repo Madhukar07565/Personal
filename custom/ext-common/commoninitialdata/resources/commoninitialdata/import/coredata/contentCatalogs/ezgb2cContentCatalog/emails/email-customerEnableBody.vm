@@ -1,0 +1,20 @@
+## messageSource=classpath:/commoninitialdata/import/coredata/contentCatalogs/ezgb2cContentCatalog/emails/email-customerEnable_$lang.properties
+#macro(genHtmlLinkStartTag $url)
+<a href="$url"><font color="#666666">
+#end
+#macro(genHtmlLinkEndTag)
+</font></a>
+#end
+#macro(genHtmlLink $url $textColor $bodyContent)
+<a href="$url"><font color="$textColor">$bodyContent</font></a>
+#end
+
+<html>
+<head>
+</head>
+<body>
+
+<p>Dear,</p>
+<a href="${ctx.secureResetPasswordUrl}">Click here to reset password in order to enable your account</a>
+</body>
+</html>

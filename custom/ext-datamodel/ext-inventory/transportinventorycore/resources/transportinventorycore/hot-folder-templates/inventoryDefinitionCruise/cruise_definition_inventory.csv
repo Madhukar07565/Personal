@@ -1,0 +1,17 @@
+HeaderName;inventoryID;supplierType;effectiveFrom;reason;status;abstractInventoryRequest
+CruiseInventoryDefinition;12;SOURCE;12-3-2016;New Reason;ACTIVE;1001;
+
+;blockForLastMinuteSale_NoOfSeats;blockForLastMinuteSale_CutOffDays;distressSaleMinimumUtilisationThreshold_NoOfSeats;distressSaleUtilisationThreshold_CutOffDays;
+CruiseCommonDefinition;8;5;4;2;
+
+;code;ship_code;shipName;packageName;noOfNights;supplierRateType;supplierRateCode;inventoryType;itineraryDetail;Company Name
+CruiseInfo;1231111;SHP-444;Ship;Name Of Package;5;1853;76589;FREESALE;cruise_itinerary_1;Ezeego1
+
+;deckLevel;deckName;cabinType;cabinCategory;definedBy;minimumUtilizationThreshold;advanceDefinitionID;cutOffChargereleaseTime;CutOffChargeminimumUtilizationThreshold;cutOffRoomingListsupplierCutOffDays;cutOffRoomingListnoOfNTBAs);media;Media Mime Type;Company Name
+CruiseAdvanceDefinition;2;Deck2;U_OUTSIDE_CABIN;GS_GRAND_SUITE;DAY;15;121;12;10006;10;2;hotel.jpg;image/jpg;Ezeego1
+
+;paymentType;specificDate;daysPriorToTravelDate;percentage;amount;remark;currency
+PaymentScheduleInfo;ADVANCE;12-8-2016;5;80;300;This is a remark.;INR
+
+;inventoryID;paymentType;specificDate;daysPriorToTravelDate;cruiseInfo;cruiseAdvanceDefinition;blockForLastMinuteSale_NoOfSeats;distressSaleMinimumUtilisationThreshold_NoOfSeats;distributeInventory
+UpdateCruiseInventoryDefinition;12;ADVANCE;12-8-2016;5;1231111;121;8;4;I101

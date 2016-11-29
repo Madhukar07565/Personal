@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!--
+	The hybris platform provides one single Spring application context for beans located at the jalo layer.
+	Each extension can add beans to this context by specifying them at this configuration file.
+	 
+	You can use and/or redefine beans defined at configuration files of other extensions as well as
+	adding new one.
+		
+	If you want to locate this file at a different location or want to use several files for better,
+	structuring, please use the '<yourextension>.application-context' property at your project.properties file.
+	There you can specify a comma separated list of files where first is tried to find a file per classpath and
+	then per file system.
+
+	
+	If you want to configure beans for your web module please have a look at
+	your web/webroot/WEB-INF/<extname>-web-spring.xml.
+	-->
+	
+	<!--  Example how to override a manager -->
+	<!--
+	<bean id="core.productManager"   class="com.cnk.travelogix.supplier.mappings.core.jalo.SuppliermappingscoreProductManager" 	init-method="init"	destroy-method="destroy" />
+	-->
+	
+	
+ 	<!--  Example how to configure the class to use for jalo session creation -->
+	<!--
+	<bean id="jalosession"   class="de.hybris.platform.jalo.JaloSessionFactory">
+		<property name="targetClassName" value="com.cnk.travelogix.supplier.mappings.core.jalo.SuppliermappingscoreJaloSession"/>
+	</bean>
+	-->
+
+	
+	<!--  Example how to override an item  -->
+	<!-- 
+	<bean id="de.hybris.platform.jalo.product.Product" class="com.cnk.travelogix.supplier.mappings.core.jalo.SuppliermappingscoreProduct" scope="prototype" />		
+ 	-->
+
+	<!--  
+	 Example how to register and use an AOP aspect 
+     Also see http://static.springframework.org/spring/docs/2.5.x/reference/aop.html	
+     -->
+	
+	<!-- 
+	<bean id="suppliermappingscoreProfBean" class="com.cnk.travelogix.supplier.mappings.core.aop.SuppliermappingscoreProfilingAspect"/>
+	<aop:config proxy-target-class="true">
+  		<aop:aspect id="suppliermappingscoreProfAspect" ref="suppliermappingscoreProfBean" >
+    	  <aop:pointcut id="profiledMethods" 
+	      	expression="execution(* getModificationTime(..))" />  	            
+	   		<aop:around pointcut-ref="profiledMethods" method="profile" />
+  		</aop:aspect>
+	</aop:config>
+	 -->
+
+	
+	<!-- some other examples of a pointcut that matches everything:
+
+    	  <aop:pointcut id="profiledMethods" 
+	      	expression="bean(de.hybris.platform.jalo.user.Customer) &amp;&amp; 
+	      	            !execution(* getPK(..))" />  	            
+	       <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />	
+	  -->
+	  
+	<bean id="supplierMappingsCoreSystemSetup" class="com.cnk.travelogix.supplier.mappings.core.setup.SupplierMappingsCoreSystemSetup" parent="abstractCoreSystemSetup">
+		<property name="typeService" ref="typeService" />
+		<property name="modelService" ref="modelService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	  
+	 <bean id="compositMappingIdGenerator" class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator" init-method="init"
+		scope="tenant">
+		<property name="key" value="${keygen.compositesupplier.code.name}" />
+		<property name="digits" value="${keygen.compositesupplier.code.digits}"/>
+		<property name="start" value="${keygen.compositesupplier.code.start}" />
+		<property name="type" value="${keygen.compositesupplier.code.type}"/>
+	</bean>
+	  <bean id="compositeSupplierPrepareInterceptor" class="com.cnk.travelogix.supplier.mappings.compositesupplier.interceptors.CompositeSupplierPrepareInterceptor">
+		<property name="compositMappingIdGenerator" ref="compositMappingIdGenerator" />
+	</bean>
+
+	<bean id="compositeSupplierPrepareInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="compositeSupplierPrepareInterceptor" />
+		<property name="typeCode" value="CompositeSupplier" />
+	</bean>
+	
+<!-- 	SUPPLIER MARKET MAPPING PREPARE INTERCEPTOR -->
+	<bean id="marketMappingUidGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="marketMapping_code" /> 
+		<property name="digits" value="7" />
+		<property name="start" value="0000001" />
+		<property name="numeric" value="true" />
+	</bean>
+	<bean id="supplierMarketMappingPrepareInterceptor"
+	 class="com.cnk.travelogix.supplier.mappings.interceptor.SupplierMarketMappingPrepareInterceptor">
+		<property name="keyGenerator" ref="marketMappingUidGenerator"/>
+	</bean>
+	
+	<bean id="supplierMarketMappingInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="supplierMarketMappingPrepareInterceptor"/>
+		<property name="typeCode" value="MarketMapping"/>
+	</bean>
+			
+	<bean id="marketMappingDao"
+	 class="com.cnk.travelogix.supplier.mappings.daos.impl.DefaultMarketMappingDao">
+	 <property name="flexibleSearchService" ref="flexibleSearchService" />
+		<property name="modelService" ref="modelService"/>
+	</bean>
+	
+	<bean id="marketMappingService"
+	 class="com.cnk.travelogix.supplier.mappings.services.impl.DefaultMarketMapping">
+	 <property name="marketMappingDao" ref="marketMappingDao"/>
+	</bean>
+		
+	<bean id="validateDuplicateEntries"
+	 class="com.cnk.travelogix.supplier.mappings.interceptor.MarketMappingValidateInterceptor">          
+	 <property name="marketMappingService" ref="marketMappingService"/>
+	</bean>
+	
+	
+	<bean id="validateDuplicateEntriesMapping"
+	class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+	 <property name="interceptor" ref="validateDuplicateEntries"/>
+   <property name="typeCode" value="MarketMapping"/>	
+   </bean>	
+   
+    <bean id="marketMappingRemoveInterceptor"
+	 class="com.cnk.travelogix.supplier.mappings.interceptor.MarketMappingRemoveInterceptor">          
+	</bean>
+	
+	<bean id="marketMappingRemovalMapping"
+	class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+	 <property name="interceptor" ref="marketMappingRemoveInterceptor"/>
+   <property name="typeCode" value="MarketMapping"/>	
+   </bean>	 
+   
+<!--    SUPPLIER ACCOMMODATION MAPPING  -->
+   <bean id="supplierAccommodationMappingDao"
+	 class="com.cnk.travelogix.supplier.mappings.daos.impl.DefaultSupplierAccommodationMappingDao">
+	 	<property name="flexibleSearchService" ref="flexibleSearchService" />
+		<property name="modelService" ref="modelService"/>
+	</bean>
+	
+	<bean id="supplierAccommodationMappingServiceId"
+	 class="com.cnk.travelogix.supplier.mappings.services.impl.DefaultSupplierAccommodationMappingServiceImpl">
+		<property name="supplierAccommodationMappingDao" ref="supplierAccommodationMappingDao"/>
+	</bean>
+	
+<!-- 	PREPARE INTERCEPTOR -->
+	<bean id="supplierAccommodationMappingPrepareInterceptor" class="com.cnk.travelogix.supplier.mappings.interceptor.SupplierAccommodationMappingPrepareInterceptor" >
+		<property name="supplierMappingService" ref="supplierAccommodationMappingServiceId"/>
+	</bean>
+
+	<bean id="supplierAccommodationMappingPrepareInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="supplierAccommodationMappingPrepareInterceptor" />
+		<property name="typeCode" value="SupplierAccommodationMapping" />
+	</bean>
+	
+	<!-- VALIDATE INTERCEPTOR -->
+	<bean id="supplierAccommodationMappingValidateInterceptor"
+	 class="com.cnk.travelogix.supplier.mappings.interceptor.SupplierAccommodationMappingValidateInterceptor">          
+		<property name="supplierMappingService" ref="supplierAccommodationMappingServiceId"/>
+	</bean>
+	
+	<bean id="supplierAccommodationMappingValidateInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="supplierAccommodationMappingValidateInterceptor" />
+		<property name="typeCode" value="SupplierAccommodationMapping" />
+	</bean>
+	
+<!--    SUPPLIER COUNTRY MAPPING -->
+	<bean id="supplierCountryMappingDao"
+	 class="com.cnk.travelogix.supplier.mappings.daos.impl.DefaultSupplierCountryMappingDao">
+	 	<property name="flexibleSearchService" ref="flexibleSearchService" />
+		<property name="modelService" ref="modelService"/>
+	</bean>
+   
+	<bean id="supplierCountryMappingServiceId"
+	 class="com.cnk.travelogix.supplier.mappings.services.impl.DefaultSupplierCountryMappingServiceImpl">
+		<property name="supplierCountryMappingDao" ref="supplierCountryMappingDao"/>
+	</bean>
+	
+	<!-- PREPARE INTERCEPTOR -->
+	<bean id="supplierCountryMappingPrepareInterceptor" class="com.cnk.travelogix.supplier.mappings.interceptor.SupplierCountryMappingPrepareInterceptor" >
+		<property name="supplierMappingService" ref="supplierCountryMappingServiceId" />
+	</bean>
+
+	<bean id="supplierCountryMappingPrepareInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="supplierCountryMappingPrepareInterceptor" />
+		<property name="typeCode" value="SupplierCountryMapping" />
+	</bean>
+	
+<!-- 	VALIDATE INTERCEPTOR -->
+	<bean id="supplierCountryMappingValidateInterceptor"
+	 class="com.cnk.travelogix.supplier.mappings.interceptor.SupplierCountryMappingValidateInterceptor">          
+		<property name="supplierMappingService" ref="supplierCountryMappingServiceId"/>
+	</bean>
+	
+	<bean id="supplierCountryMappingValidateInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="supplierCountryMappingValidateInterceptor" />
+		<property name="typeCode" value="SupplierCountryMapping" />
+	</bean>	
+		
+<!-- 	SUPPLIER CITY MAPPING -->
+   <bean id="supplierCityMappingDao"
+	 class="com.cnk.travelogix.supplier.mappings.daos.impl.DefaultSupplierCityMappingDao">
+	 	<property name="flexibleSearchService" ref="flexibleSearchService" />
+		<property name="modelService" ref="modelService"/>
+	</bean>
+	
+	<bean id="supplierCityMappingServiceId"
+	 class="com.cnk.travelogix.supplier.mappings.services.impl.DefaultSupplierCityMappingServiceImpl">
+		<property name="supplierCityMappingDao" ref="supplierCityMappingDao"/>
+	</bean>
+	
+	<!-- 	SUPPLIER CITY MAPPING PREPARE INTERCEPTOR -->
+	<bean id="supplierCityMappingPrepareInterceptor" class="com.cnk.travelogix.supplier.mappings.interceptor.SupplierCityMappingPrepareInterceptor">
+		<property name="supplierMappingService" ref="supplierCityMappingServiceId" />
+	</bean>
+
+	<bean id="supplierCityMappingPrepareInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="supplierCityMappingPrepareInterceptor" />
+		<property name="typeCode" value="SupplierCityMapping" />
+	</bean>
+	
+<!-- 	VALIDATE INTERCEPTOR -->
+	<bean id="supplierCityMappingValidateInterceptor"
+	 class="com.cnk.travelogix.supplier.mappings.interceptor.SupplierCityMappingValidateInterceptor">          
+		<property name="supplierMappingService" ref="supplierCityMappingServiceId"/>
+	</bean>
+	
+	<bean id="supplierCityMappingValidateInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="supplierCityMappingValidateInterceptor" />
+		<property name="typeCode" value="SupplierCityMapping" />
+	</bean>
+</beans>

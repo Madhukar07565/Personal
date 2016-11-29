@@ -1,0 +1,14 @@
+$productCatalog=EZ-IN
+$classificationCatalog=EZ-IN-CS
+$classCatalogVersion=catalogversion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true,default='$classificationCatalog:1.0']
+$classSystemVersion=systemVersion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true]
+$lang=en
+
+INSERT_UPDATE ClassificationAttribute;code[unique=true];$classSystemVersion;name[lang=$lang]
+;History-General-Activity;;History
+;YearBuilt-General-Activity;;YearBuilt
+;YearRenovated-General-Activity;;YearRenovated
+;Stories-General-Activity;;Stories
+;AboutUs-General-Activity;;AboutUs
+;CelebrityComments-General-Activity;;CelebrityComments
+;AwardsReceived-General-Activity;;AwardsReceived

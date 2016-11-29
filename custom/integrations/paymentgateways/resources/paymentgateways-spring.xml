@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2016 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd">
+           
+    <context:annotation-config/> 
+    
+    <!-- Import Impex on Init config -->
+    <bean id="paymentgatewaysCoreSystemSetup" class="com.cnk.travelogix.setup.PaymentgatewaysCoreSystemSetup" parent="abstractCoreSystemSetup" />	
+    <!-- Import Impex on Init config -->
+   
+    <!-- Import section -->    
+    <import resource="classpath:paymentgateways/request/payment-request-decorators-config-spring.xml" />
+	<import resource="classpath:paymentgateways/response/payment-response-decorators-config-spring.xml" />
+	
+	<!-- fraud spring config imports section -->
+	
+	<import resource="classpath:paymentgateways/fraudcheck/paymentgateways-fms-spring.xml" />
+	
+	<!-- End of fraud imports section -->
+    
+    <!-- End of Import section  -->
+
+	<bean id="paymentgatewaysCoreDataImportedEventListener" parent="abstractCoreDataImportedEventListener">
+		<property name="supportedChannels">
+			<list value-type="de.hybris.platform.commerceservices.enums.SiteChannel">
+				<value>B2C</value>
+				<!--
+								<value>B2B</value>
+				-->
+			</list>
+		</property>
+		<property name="addonExtensionMetadata">
+			<bean class="de.hybris.platform.addonsupport.data.AddonExtensionMetadata">
+				<property name="suffixChannel" value="false"/>
+				<property name="baseExtensionName" value="paymentgateways"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="paymentgatewaysSampleDataEventListener" parent="abstractGenericAddOnSampleDataEventListener"  >
+		<property name="extensionName" value="paymentgateways" />
+	</bean>
+	
+	<alias name="defaultUserSelectedValueUpdatedMapPopulator" alias="userSelectedValueUpdatedMapPopulator"/>
+	<bean id="defaultUserSelectedValueUpdatedMapPopulator"
+	      class="com.cnk.travelogix.converters.populators.request.PaymentRequestUserSelectedValueDataPopulator"/>
+	 
+	<alias name="defaultUserSelectedValueUpdatedMapConverter" alias="userSelectedValueUpdatedMapConverter"/>
+	<bean id="defaultUserSelectedValueUpdatedMapConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="java.util.HashMap"/>
+		<property name="populators">
+			<list>
+				<ref bean="userSelectedValueUpdatedMapPopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="paymentRequestFormGeneratorService" class="com.cnk.travelogix.services.paymentgateways.request.PaymentRequestFormGeneratorService">
+	<property name="userSelectedValueUpdatedMapConverter" ref="userSelectedValueUpdatedMapConverter" />
+	</bean>
+	   
+	
+	 <bean id="paymentGatewayProviderRequestService" class="com.cnk.travelogix.services.paymentgateways.request.PaymentGatewayProviderRequestService">
+	 	<property name="paymentRequestFormGeneratorService" ref="paymentRequestFormGeneratorService" />
+	 	<property name="paymentGatewayProviderRequestTemplateMap">
+	 	<map>
+	 	<entry>
+	 			<key>
+					<value type="java.lang.String">skash_cc_payment_gateway_request</value>
+				</key>
+				<bean class="java.lang.String">
+  				<constructor-arg value="paymentgateways/request/skash/skash-payment-form.xml"/>  						
+				</bean>
+			</entry>
+	 		<entry>
+	 			<key>
+					<value type="java.lang.String">paytm_payment_gateway_request</value>
+				</key>
+				<bean class="java.lang.String">
+  				<constructor-arg value="paymentgateways/request/paytm/paytm-payment-form.xml"/>  						
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">ccavenue_cc_payment_gateway_request</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/request/ccavenue/ccavenue-cc-payment-form.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">ccavenue_nb_payment_gateway_request</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/request/ccavenue/ccavenue-nb-payment-form.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">asiapay_payment_gateway_request</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/request/asiapay/asiapay-payment-form.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">amex_payment_gateway_request</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/request/amex/amex-payment-form.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">icici_payment_gateway_request</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/request/icici/icici-payment-form.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">hdfc_payment_gateway_request</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/request/hdfc/hdfc-payment-form.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">billdesk_cc_payment_gateway_request</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/request/billdesk/billdesk-cc-payment-form.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">billdesk_nb_payment_gateway_request</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/request/billdesk/billdesk-nb-payment-form.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">nab_cc_payment_gateway_request</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/request/nab/nab-cc-payment-form.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">firstdata_payment_gateway_request</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/request/firstdata/firstData-payment-form.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">mashreq_payment_gateway_request</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/request/mashreq/mashreq-payment-form.xml"/>
+				</bean>
+			</entry>
+		</map>		
+	 </property>
+	 </bean> 
+	 
+	 
+	 
+	 <alias name="defaultPaymentTransactionDataPopulator" alias="paymentTransactionDataPopulator"/>
+	<bean id="defaultPaymentTransactionDataPopulator"
+	      class="com.cnk.travelogix.converters.populators.response.PaymentTransactionDataPopulator"/>
+	 
+	<alias name="defaultPaymentTransactionDataConverter" alias="paymentTransactionDataConverter"/>
+	<bean id="defaultPaymentTransactionDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.integrations.payment.response.beans.PaymentServiceResponseData"/>
+		<property name="populators">
+			<list>
+				<ref bean="paymentTransactionDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+	 
+	 
+	 
+	 <bean id="paymentResponseDataGeneratorService" class="com.cnk.travelogix.services.paymentgateways.response.PaymentResponseDataGeneratorService">
+	 <property name="paymentTransactionDataConverter" ref="paymentTransactionDataConverter"/>
+	 </bean>
+	 
+	  <bean id="paymentGatewayProviderResponseService" class="com.cnk.travelogix.services.paymentgateways.response.PaymentGatewayProviderResponseService">
+	 	<property name="paymentResponseDataGeneratorService" ref="paymentResponseDataGeneratorService" />
+	 	<property name="paymentGatewayProviderResponseTemplateMap">
+	 	<map>
+	 	<entry>
+	 			<key>
+					<value type="java.lang.String">skash_cc_payment_gateway_response</value>
+				</key>
+				<bean class="java.lang.String">
+  				<constructor-arg value="paymentgateways/response/skash/skash-payment-response.xml"/>  						
+				</bean>
+			</entry>
+	 		<entry>
+	 			<key>
+					<value type="java.lang.String">paytm_payment_gateway_response</value>
+				</key>
+				<bean class="java.lang.String">
+  				<constructor-arg value="paymentgateways/response/paytm/paytm-payment-response.xml"/>  						
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">ccavenue_cc_payment_gateway_response</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/response/ccavenue/ccavenue-cc-payment-response.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">ccavenue_nb_payment_gateway_response</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/response/ccavenue/ccavenue-nb-payment-response.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">asiapay_payment_gateway_response</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/response/asiapay/asiapay-payment-response.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">amex_payment_gateway_response</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/response/amex/amex-payment-response.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">icici_payment_gateway_response</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/response/icici/icici-payment-response.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">hdfc_payment_gateway_response</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/response/hdfc/hdfc-payment-response.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">billdesk_cc_payment_gateway_response</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/response/billdesk/billdesk-cc-payment-response.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">billdesk_nb_payment_gateway_response</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/response/billdesk/billdesk-nb-payment-response.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">nab_cc_payment_gateway_response</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/response/nab/nab-cc-payment-response.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">firstdata_payment_gateway_response</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/response/firstdata/firstData-payment-response.xml"/>
+				</bean>
+			</entry>
+			<entry>
+	 			<key>
+					<value type="java.lang.String">mashreq_payment_gateway_response</value>
+				</key>
+				<bean class="java.lang.String">
+  						<constructor-arg value="paymentgateways/response/mashreq/mashreq-payment-response.xml"/>
+				</bean>
+		</entry>
+		</map>		
+	 </property>
+	 </bean>  
+
+<alias name="defaultPaymentGatewayMapperService" alias="paymentGatewayMapperService"/>
+    <bean id="defaultPaymentGatewayMapperService" class="com.cnk.travelogix.services.modelservice.impl.PaymentGatewayMapperServiceImpl">
+        <property name="paymentGatewayDao" ref="paymentGatewayDao"></property>
+</bean>
+
+<alias name="defaultPaymentGatewayDao" alias="paymentGatewayDao"/>
+<bean id="defaultPaymentGatewayDao" class="com.cnk.travelogix.dao.impl.PaymentGatewayDaoImpl" parent="abstractItemDao"/>
+
+<alias name="defaultPaymentGatwayMapperListPopulator" alias="paymentGatwayMapperListPopulator" />
+	<bean id="defaultPaymentGatwayMapperListPopulator" class="com.cnk.travelogix.converters.populators.pgmodelmapper.PaymentGatewayMapperListPopulator">
+	<property name="paymentGatewayDetailDataConverter" ref="paymentGatewayDetailDataConverter"/>
+	</bean>
+		
+<alias name="defaultPaymentGatwayMapperListConverter" alias="paymentGatwayMapperListConverter" />
+	<bean id="defaultPaymentGatwayMapperListConverter" parent="abstractPopulatingConverter">	
+		<property name="targetClass" value="java.util.ArrayList" />
+		<property name="populators">
+			<list>
+				<ref bean="paymentGatwayMapperListPopulator" />
+			</list>
+		</property>		
+	</bean>
+
+<alias name="defaultPaymentGatwayMapperPopulator" alias="paymentGatwayMapperPopulator" />
+	<bean id="defaultPaymentGatwayMapperPopulator"
+		class="com.cnk.travelogix.converters.populators.pgmodelmapper.PaymentGatwayMapperPopulator"/>
+
+<alias name="defaultPaymentGatwayMapperConverter" alias="paymentGatwayMapperConverter" />
+	<bean id="defaultPaymentGatwayMapperConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.integrations.payment.request.beans.PaymentUserSelectedData" />
+		<property name="populators">
+			<list>
+				<ref bean="paymentGatwayMapperPopulator" />
+			</list>
+		</property>	
+	</bean>
+
+<alias name="defaultPaymentGatewayDetailListPopulator" alias="paymentGatewayDetailListPopulator" />
+	<bean id="defaultPaymentGatewayDetailListPopulator" class="com.cnk.travelogix.converters.populators.pgmodelmapper.PaymentGatewayDetailListPopulator">
+	<property name="paymentGatewayKeyValueMapDataConverter" ref="paymentGatewayKeyValueMapDataConverter"/>
+	</bean>
+
+<alias name="defaultPaymentGatewayDetailDataConverter" alias="paymentGatewayDetailDataConverter" />
+	<bean id="defaultPaymentGatewayDetailDataConverter" parent="abstractPopulatingConverter">
+	<property name="targetClass" value="java.util.ArrayList" />
+		<property name="populators">
+			<list>
+				<ref bean="paymentGatewayDetailListPopulator" />
+			</list>
+		</property>		
+	</bean>
+	
+<alias name="defaultPaymentGatewayKeyValueMapListPopulator" alias="paymentGatewayKeyValueMapListPopulator" />
+	<bean id="defaultPaymentGatewayKeyValueMapListPopulator" class="com.cnk.travelogix.converters.populators.pgmodelmapper.PaymentGatewayKeyValueMapListPopulator"/>
+
+<alias name="defaultPaymentGatewayKeyValueMapDataConverter" alias="paymentGatewayKeyValueMapDataConverter" />
+	<bean id="defaultPaymentGatewayKeyValueMapDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="java.util.ArrayList" />
+		<property name="populators">
+			<list>
+				<ref bean="paymentGatewayKeyValueMapListPopulator" />
+			</list>
+		</property>
+</bean>
+	
+<alias name="defaultPaymentGatwayMapperDataPopulator" alias="paymentGatwayMapperDataPopulator" />
+	<bean id="defaultPaymentGatwayMapperDataPopulator" class="com.cnk.travelogix.converters.populators.pgmodelmapper.PaymentGatewayMapperDataPopulator">
+	<property name="paymentGatewayDetailDataConverter" ref="paymentGatewayDetailDataConverter"/>
+	</bean>
+		
+<alias name="defaultPaymentGatwayMapperDataConverter" alias="paymentGatwayMapperDataConverter" />
+	<bean id="defaultPaymentGatwayMapperDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.integrations.payment.request.beans.PaymentGatewayMappingData" />
+		<property name="populators">
+			<list>
+				<ref bean="paymentGatwayMapperDataPopulator" />
+			</list>
+		</property>		
+	</bean>	
+	
+<alias name="defaultPaymentGatwayMapperFacade" alias="paymentGatwayMapperFacade"/>
+    <bean id="defaultPaymentGatwayMapperFacade" class="com.cnk.travelogix.facades.impl.DefaultPaymentGatwayUserValueMapperFacade">
+        <property name="paymentGatewayMapperService" ref="paymentGatewayMapperService"></property>
+        <property name="paymentGatwayMapperConverter" ref="paymentGatwayMapperConverter"></property>
+        <property name="paymentGatwayMapperListConverter" ref="paymentGatwayMapperListConverter"></property>
+        <property name="paymentGatwayMapperDataConverter" ref="paymentGatwayMapperDataConverter"></property>        
+</bean>	
+	
+</beans>
+
+
+
+

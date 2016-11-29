@@ -1,0 +1,952 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+
+	<collectiontypes>
+		<collectiontype code="Companies" elementtype="Company"
+			autocreate="true" generate="true" type="list" />
+		<collectiontype code="PackageCategoryCollection"
+			elementtype="PackageCategory" autocreate="true" />
+		<collectiontype code="CollectionOfDates" elementtype="java.util.Date"
+			autocreate="true" generate="true" type="list" />
+		<collectiontype code="Categories" elementtype="Category"
+			autocreate="true" generate="true" type="collection" />
+		<collectiontype code="ProductCategorySubTypes"
+			elementtype="ProductCategorySubType" autocreate="true" generate="true"
+			type="collection" />
+		<collectiontype code="Products" elementtype="Product"
+			autocreate="true" generate="true" type="collection" />
+		<collectiontype code="VariantProducts" elementtype="VariantProduct"
+			autocreate="true" generate="true" type="collection" />
+	</collectiontypes>
+
+	<enumtypes>
+		<enumtype code="InventoryAvailFor" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="STANDALONE" />
+			<value code="COMBINATION" />
+			<value code="HOLIDAY" />
+		</enumtype>
+	
+		<enumtype code="InventoryType" autocreate="true" generate="true"
+			dynamic="true">
+			<description>Defines the Inventory Type </description>
+			<value code="FREESALE" />
+			<value code="PREPAID" />
+			<value code="POSTPAID" />
+		</enumtype>
+ 
+ 		<enumtype code="Range" autocreate="true" generate="true"
+			dynamic="true">
+			<description>Range</description>
+			<value code="ABOVE" />
+			<value code="BETWEEN" />
+		</enumtype>
+		<enumtype code="PenaltyChangesFor" autocreate="true"
+			generate="true" dynamic="true">
+			<description>Penalty Changes For</description>
+			<value code="NAME_CHANGE" />
+			<value code="DATE_CHANGE" />
+			<value code="ROUTE_CHANGE" />
+		</enumtype>
+		<enumtype code="DefinedBy" autocreate="true" generate="true"
+			dynamic="true">
+			<description>Defined By</description>
+			<value code="DAYS" />
+			<value code="HOURS" />
+		</enumtype>
+		<enumtype code="PackageCategory" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="STANDARD" />
+			<value code="SUPERIOR" />
+			<value code="DELUXE" />
+			<value code="LUXURY" />
+		</enumtype>
+		<enumtype generate="true" code="RequestStatus" autocreate="true"
+			dynamic="true">
+			<description>Request status</description>
+			<value code="SENT_TO_SUPPLIER" />
+			<value code="SAVED_IN_SYSTEM" />
+			<value code="CANCELLED" />
+		</enumtype>
+		<enumtype code="ValidType" autocreate="true" generate="true"
+			dynamic="true">
+			<description>Supplier rate types</description>
+			<value code="AJITOURDATES" />
+			<value code="SPECIFICTOURDATES" />
+		</enumtype>
+		<enumtype code="TypeOfList" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="FINAL"/>
+			<value code="PRELIMINARY"></value>
+		</enumtype>
+		<enumtype code="AppliedOn" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="PRIOR_TO_TRAVEL"/>
+			<value code="AFTER_BOOKING_DATE"/>
+		</enumtype>
+		<enumtype code="SettleType" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="COMPANY"/>
+			<value code="SUPPLIER"/>
+		</enumtype>
+	</enumtypes>
+		
+
+	<relations>
+		<relation code="InventoryRequestToVersionDetail" generate="true"
+			localized="false" autocreate="true">
+			<sourceElement type="AbstractInventoryRequest"
+				cardinality="one" qualifier="inventoryRequest">
+				<modifiers read="true" write="true" search="true" unique="true"/>
+			</sourceElement>
+			<targetElement type="VersionDetail" cardinality="many"
+				qualifier="versionDetails" ordered="true">
+				<modifiers read="true" write="true" search="true" />
+			</targetElement>
+		</relation>
+		<relation code="InventoryRequestToCompanyInventoryRestriction" generate="true"
+			localized="false" autocreate="true">
+			<sourceElement type="AbstractInventoryRequest"
+				cardinality="one" qualifier="companiesInventoryRequest">
+				<modifiers read="true" write="true" search="true" unique="true"/>
+			</sourceElement>
+			<targetElement type="CompanyInventoryRestriction" cardinality="many"
+				qualifier="companies" ordered="true">
+				<modifiers read="true" write="true" search="true" />
+			</targetElement>
+		</relation>
+		<relation code="AbstractInventoryDefinitionToCompanies"
+			localized="false">
+			<sourceElement type="AbstractInventoryDefinition"
+				cardinality="one" qualifier="abstractInventoryDefinition">
+			</sourceElement>
+			<targetElement type="AssociatedCompanies" cardinality="many"
+				qualifier="companies">
+			</targetElement>
+		</relation>
+
+		<relation code="AbstractInventoryDefinitionToPaymentSchedule"
+			localized="false">
+			<sourceElement type="AbstractInventoryDefinition"
+				cardinality="one" qualifier="abstractInventoryDefinition">
+			</sourceElement>
+			<targetElement type="PaymentSchedule" cardinality="many"
+				qualifier="paymentSchedules">
+			</targetElement>
+		</relation>
+
+		<relation code="AbstractInventoryRequestToAbstractInventoryDefinition"
+			localized="false">
+			<sourceElement type="AbstractInventoryRequest"
+				cardinality="one" qualifier="inventoryRequest">
+			</sourceElement>
+			<targetElement type="AbstractInventoryDefinition"
+				cardinality="many" qualifier="definitions">
+			</targetElement>
+		</relation>
+
+		<relation code="AbstractInventoryDefinitionToListCutOffs"
+			localized="false">
+			<sourceElement type="AbstractInventoryDefinition"
+				cardinality="one" qualifier="abstractInventoryDefinition">
+			</sourceElement>
+			<targetElement type="NamingListCutOffs" cardinality="many"
+				qualifier="listCutOffs">
+			</targetElement>
+		</relation>
+
+		<relation code="AbstractInventoryDefinitionToMedia"
+			localized="false">
+			<sourceElement type="AbstractInventoryDefinition"
+				cardinality="one" qualifier="abstractInventoryDefinition">
+			</sourceElement>
+			<targetElement type="Media" cardinality="many"
+				qualifier="medias">
+			</targetElement>
+		</relation>
+
+		<relation
+			code="ChangeRequestPenaltyChargesToChangeRequestCutOffsAndCharges"
+			generate="true" localized="false" autocreate="true">
+			<sourceElement type="ChangeRequestPenaltyCharges"
+				cardinality="one" qualifier="changeRequestPenaltyCharges">
+			</sourceElement>
+			<targetElement type="ChangeRequestCutOffsAndCharges"
+				cardinality="many" qualifier="changeRequestCutOffsAndCharges">
+			</targetElement>
+		</relation>
+
+		<relation code="InventoryPaymentAdviceToMedias" autocreate="true"
+			generate="true" localized="false">
+			<sourceElement qualifier="inventoryPaymentAdvice" type="InventoryPaymentAdvice"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="medias" type="Media"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="InventoryPaymentAdviceToPrePayment" generate="true"
+			localized="false" autocreate="true">
+			<sourceElement type="InventoryPaymentAdvice"
+				cardinality="one" qualifier="inventoryPaymentAdvice">
+				<modifiers read="true" write="true" search="true" />
+			</sourceElement>
+			<targetElement type="PrePaymentDetail" cardinality="many"
+				qualifier="prePaymentDetails" ordered="true">
+				<modifiers read="true" write="true" search="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="InventoryPaymentAdviceToVmpdPaymentDetails"
+			generate="true" localized="false" autocreate="true">
+			<sourceElement type="InventoryPaymentAdvice"
+				cardinality="one" qualifier="inventoryPaymentAdvice">
+				<modifiers read="true" write="true" search="true" />
+			</sourceElement>
+			<targetElement type="PaymentDetailsVmpd" cardinality="many"
+				qualifier="vmpdPaymentDetails" ordered="true">
+				<modifiers read="true" write="true" search="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="AbstractProductInventoryDefinitionToAssociateInventory"
+			generate="true" localized="false" autocreate="true">
+			<sourceElement type="AbstractProductInventoryDefinition"
+				cardinality="one" qualifier="abstractProductInventoryDefinition">
+				<modifiers read="true" write="true" search="true" />
+			</sourceElement>
+			<targetElement type="AssociateInventory" cardinality="many"
+				qualifier="associations" ordered="true">
+				<modifiers read="true" write="true" search="true" />
+			</targetElement>
+		</relation>
+	</relations>
+
+	<itemtypes>
+		<itemtype code="AbstractInventoryDetail" autocreate="true"
+			generate="true" abstract="true"
+			jaloclass="com.cnk.travelogix.common.inventory.jalo.AbstractInventoryDetail"
+			extends="AbstractTravelogixItem">
+			<description>Abstract Inventory Details.</description>
+			<attributes>
+				<attribute qualifier="departureDate"
+					type="java.util.Date">
+					<persistence type="property" />
+					<description>Departure Date</description>
+				</attribute>
+				<attribute qualifier="arrivalDate"
+					type="java.util.Date">
+					<persistence type="property" />
+					<description>Arrival Dates</description>
+				</attribute>
+				<attribute qualifier="inventoryType" type="InventoryType">
+					<persistence type="property" />
+					<description>Inventory Type</description>
+				</attribute>
+				<attribute qualifier="reservedCutOffDays" type="java.lang.Long">
+					<persistence type="property" />
+					<description>Reserved CutOff Days</description>
+				</attribute>
+				<attribute qualifier="releasedDate" type="java.util.Date">
+					<persistence type="property" />
+					<description>Inventory Released Date</description>
+				</attribute>
+				<attribute qualifier="createdDate" type="java.util.Date">
+					<persistence type="property" />
+					<description>Inventory Created Date</description>
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="AbstractInventoryRequest" autocreate="true"
+			generate="true" abstract="true"
+			jaloclass="com.cnk.travelogix.common.inventory.jalo.AbstractInventoryRequest"
+			extends="AbstractTravelogixItem">
+			<description>Abstract Inventory Request.</description>
+			<attributes>
+				<attribute qualifier="visibleToSupplier" type="java.lang.Boolean">
+					<description>Visible To Supplier</description>
+					<defaultvalue>Boolean.FALSE</defaultvalue>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="status" type="RequestStatus">
+					<description>Status</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="createdBy" type="Employee">
+					<description>Created By</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="productCategorySubType" type="Category">
+					<description>Product Category Sub Type</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="country" type="Country">
+					<description>Country</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="medias" type="MediaCollection">
+					<description>Medias</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="currency" type="Currency">
+					<description>Currency</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="supplierDetails" type="InitialInvReqSupplierDetail">
+					<description>Supplier Detail</description>
+					<persistence type="property" />
+				</attribute>
+				<!-- <attribute qualifier="companyDetails" type="companies">
+					<description>Collection of Companies</description>
+					<persistence type="property" />
+				</attribute> -->
+				<!-- <attribute qualifier="workFlowStatus" type="ApprovalWorkFlowStatus">
+					<description>Work Flow Status</description>
+					<defaultvalue>em().getEnumerationValue("WorkFlowStatus","DRAFT")</defaultvalue>
+					<persistence type="property" />					
+				</attribute> -->
+			</attributes>
+		</itemtype>
+
+		<itemtype code="OverBookingLimit" autocreate="true" generate="true"
+			extends="GenericItem" jaloclass="com.cnk.travelogix.common.inventory.jalo.OverBookingLimit">
+			<description>Represents Over Booking</description>
+			<deployment table="overBookingLimit" typecode="23053" />
+			<attributes>
+				<attribute type="java.lang.Integer" qualifier="limit">
+					<description>limit</description>
+					<modifiers read="true" write="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute type="CabinClass" qualifier="cabinClass">
+					<description>cabin class </description>
+					<modifiers read="true" write="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="CompanyInventoryRestriction" autocreate="true"
+			generate="true" extends="GenericItem"
+			jaloclass="com.cnk.travelogix.common.inventory.jalo.CompanyInventoryRestriction">
+			<description> Company Inventory</description>
+			<deployment table="cmpinventoryrestriction" typecode="23087" />
+			<attributes>
+				<attribute qualifier="company" type="Company">
+					<description>Company</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="sbu" type="StrategicBusinessUnit">
+					<description>Stratergic Business Unit</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="bu" type="BusinessUnit">
+					<description>Business Unit</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="clientGroup" type="B2BUserGroup">
+					<description>B2B UserGroup</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="clientType" type="TravelogixClientType">
+					<description>Client Type</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="client" type="TravelogixB2Bunit">
+					<description>B2Bunit</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="settlewith" type="SettleType">
+					<description>Settle With</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		<itemtype code="InitialInvReqSupplierDetail" autocreate="true"
+			generate="true" extends="GenericItem"
+			jaloclass="com.cnk.travelogix.common.inventory.jalo.InitialInvReqSupplierDetail">
+			<description> Supplier Detail.</description>
+			<deployment table="invsupplierdetail" typecode="23070" />
+			<attributes>
+				<attribute qualifier="supplierName" type="java.lang.String">
+					<description>Supplier Name</description>
+					<modifiers read="true" write="true" optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="emailId" type="java.lang.String">
+					<description>Email Id</description>
+					<modifiers read="true" write="true" optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="faxNum" type="java.lang.String">
+					<description>Fax Num</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="sendToSupplier" type="java.lang.Boolean">
+					<description>Send To Supplier</description>
+					<defaultvalue>Boolean.FALSE</defaultvalue>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="supplierCode" type="java.lang.String">
+					<description>Supplier Code</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="supplierType" type="SupplierType">
+					<description>Supplier Code</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<typegroup name="InventoryDefinition">
+			<itemtype code="AbstractInventoryDefinition" generate="true"
+				abstract="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.common.inventory.core.jalo.AbstractInventoryDefinition"
+				extends="AbstractTravelogixItem">
+				<description>Represents Abstract Inventory Definition</description>
+				<attributes>
+					<attribute qualifier="supplier" type="Supplier">
+						<persistence type="property" />
+						<description>Supplier.</description>
+					</attribute>
+					<attribute qualifier="productCategorySubtype" type="ProductCategorySubtype">
+						<persistence type="property" />
+						<description>Product Category Sub type</description>
+					</attribute>
+					<attribute qualifier="inventoryType" type="InventoryType">
+						<persistence type="property" />
+						<description>Inventory Type</description>
+					</attribute>
+<!-- 					<attribute qualifier="approvalStatus" type="ArticleApprovalStatus">
+						<persistence type="property" />
+						<description>Approval Status</description>
+					</attribute>
+					<attribute qualifier="lockedBy" type="Employee">
+						<persistence type="property" />
+						<description>Locked By</description>
+					</attribute>
+-->
+					<attribute qualifier="excelUpload" type="Media">
+						<persistence type="property" />
+						<description>Excel Upload</description>
+					</attribute>
+					<attribute qualifier="bulkUpload" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Bulk Upload</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="PaymentSchedule" generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.common.inventory.core.PaymentSchedule"
+				extends="GenericItem">
+				<description>Represents Payment Schedule</description>
+				<deployment table="paymentschedule" typecode="21154" />
+				<attributes>
+					<attribute qualifier="paymentType" type="PaymentType">
+						<persistence type="property" />
+						<description>To show Payment Type.</description>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="percentageAmount" type="java.lang.Double">
+						<persistence type="property" />
+						<description>To show percentage Amount.</description>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="currency" type="Currency">
+						<persistence type="property" />
+						<description>To show currency.</description>
+						<modifiers read="true" write="true" optional="false" />
+					</attribute>
+					<attribute qualifier="remark" type="java.lang.String">
+						<persistence type="property" />
+						<description>To show remark.</description>
+					</attribute>
+					<attribute qualifier="paymentDueDate" type="java.util.Date">
+						<persistence type="property" />
+						<description>To show Payment Due Date.</description>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="paymentStatus" type="PaymentStatus">
+						<persistence type="property" />
+						<description>To show payment status.</description>
+					</attribute>
+					<attribute qualifier="actualAmount" type="java.lang.Double">
+						<persistence type="property" />
+						<description>To show Actual Amount Paid.</description>
+					</attribute>
+					<attribute qualifier="balance" type="java.lang.Double">
+						<persistence type="property" />
+						<description>Balance</description>
+					</attribute>
+					<attribute qualifier="paymentAdviceNumber" type="java.lang.String">
+						<persistence type="property" />
+						<description>To show payment advice no.</description>
+					</attribute>
+					<attribute qualifier="daysBeforeTravel" type="java.lang.Long">
+						<persistence type="property" />
+						<description>Days Before Travel.</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AbstractProductInventoryDefinition"
+				autocreate="true" generate="true" abstract="true"
+				extends="AbstractInventoryDefinition"
+				jaloclass="com.cnk.travelogix.common.inventory.core.AbstractProductInventoryDefinition">
+				<description>Abstract Product Inventory Definition</description>
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="distressSaleMinimumThreshold">
+						<description>Minimum Threshold</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="distressSaleThresholdCutoffDays">
+						<description>Threshold Cut off Days</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="blockedQuantity">
+						<description>Blocked Quantity</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="cutOffDaysForBlockedQuantity">
+						<description>Cut Off Days For Blocked Quantity</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="settleWithCompany">
+						<description>Settle With Company</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AssociatedCompanies" autocreate="true" generate="true"
+				extends="GenericItem" jaloclass="com.cnk.travelogix.common.inventory.core.jalo.AssociatedCompanies">
+				<description>Company Info</description>
+				<deployment table="associatecompanies" typecode="24035" />
+				<attributes>
+					<attribute qualifier="catalogVersion" type="CatalogVersion">
+						<description>Catalog Version</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="bu" type="BusinessUnit">
+						<description>BU</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="sbu" type="StrategicBusinessUnit">
+						<description>SBU</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="NamingListCutOffs" autocreate="true" generate="true"
+				extends="GenericItem" jaloclass="com.cnk.travelogix.common.inventory.core.jalo.NamingListCutOffs">
+				<description>NamingList Cut Offs</description>
+				<deployment table="listcutoffs" typecode="23031" />
+				<attributes>
+					<attribute qualifier="definedBy" type="DefinedBy">
+						<description>Defined By</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="typeOfList" type="TypeOfList">
+						<description>Type Of List</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="appliedOn" type="AppliedOn">
+						<description>Applied On</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="supplierCutOffDays" type="java.lang.Integer">
+						<description>supplier Cut Off Days</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="bufferDays" type="java.lang.Integer">
+						<description>Buffer Days</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="noOfNTBAS" type="java.lang.Integer">
+						<description>No Of NTBAS</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="releaseTime" type="java.lang.String">
+						<description>Release Time</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="FreeOfCostSeatsOrTickets" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.common.inventory.core.jalo.FreeOfCostSeatsOrTickets"
+				extends="GenericItem">
+				<description>Free Of Cost Seats Or Tickets</description>
+				<deployment table="freeofcostseatsticket" typecode="23033" />
+				<attributes>
+					<attribute qualifier="slabType" type="CommercialSlabType">
+						<persistence type="property" />
+						<description>Slab Type</description>
+					</attribute>
+					<attribute qualifier="fromValue" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>From Value.</description>
+					</attribute>
+					<attribute qualifier="toValue" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>From Value.</description>
+					</attribute>
+					<attribute qualifier="numberOfFrees" type="java.lang.Long">
+						<persistence type="property" />
+						<description>Number Of Frees.</description>
+					</attribute>
+					<attribute qualifier="freeOfCostPercentage" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>Free Of Cost Percentage.</description>
+					</attribute>
+					<attribute qualifier="every" type="java.lang.String">
+						<persistence type="property" />
+						<description>Every</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CutOffForFreeSale" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.common.inventory.core.jalo.CutOffForFreeSale"
+				extends="GenericItem">
+				<description>Cut Off For Free Sale</description>
+				<deployment table="cutoffforfreesale" typecode="23034" />
+				<attributes>
+					<attribute qualifier="definedBy" type="DefinedBy">
+						<persistence type="property" />
+						<description>Defined By</description>
+					</attribute>
+					<attribute qualifier="releaseDayOrHrs" type="java.lang.String">
+						<persistence type="property" />
+						<description>Release Day Or Hrs</description>
+					</attribute>
+					<attribute qualifier="appliedOn" type="AppliedOn">
+						<persistence type="property" />
+						<description>Applied On.</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CutOffsAndCharges" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.common.inventory.core.jalo.CutOffsAndCharges"
+				extends="GenericItem">
+				<description>Cut Off For Free Sale</description>
+				<deployment table="cutoffsandcharges" typecode="23035" />
+				<attributes>
+					<attribute qualifier="cutOffFromDay" type="java.lang.Long">
+						<persistence type="property" />
+						<description>Cut Off From Day</description>
+					</attribute>
+					<attribute qualifier="cutOffToDay" type="java.lang.Long">
+						<persistence type="property" />
+						<description>Cut Off To Day</description>
+					</attribute>
+					<attribute qualifier="actualAmount" type="java.lang.Double">
+						<persistence type="property" />
+						<description>Amount.</description>
+					</attribute>
+					<attribute qualifier="currency" type="Currency">
+						<persistence type="property" />
+						<description>Currency.</description>
+					</attribute>
+					<attribute qualifier="percentageAmount" type="java.lang.Double">
+						<persistence type="property" />
+						<description>Amount Type.</description>
+					</attribute>
+					<attribute qualifier="range" type="Range">
+						<persistence type="property" />
+						<description>Range.</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ChangeRequestCutOffsAndCharges" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.common.inventory.core.jalo.ChangeRequestCutOffsAndCharges"
+				extends="CutOffsAndCharges">
+				<description>Change Request Cut Offs And Charges</description>
+				<attributes>
+					<attribute qualifier="priceComponent" type="NonAirPriceComponentType">
+						<persistence type="property" />
+						<description>Price Component</description>
+						<modifiers read="true" write="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ChangeRequestPenaltyCharges" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.common.inventory.core.jalo.ChangeRequestPenaltyCharges"
+				extends="GenericItem">
+				<description>Change Request Penalty Charges</description>
+				<deployment table="changereqpencharges" typecode="23036" />
+				<attributes>
+					<attribute qualifier="definedBy" type="DefinedBy">
+						<persistence type="property" />
+						<description>Defined By</description>
+					</attribute>
+					<attribute qualifier="penaltyChangesFor" type="PenaltyChangesFor">
+						<persistence type="property" />
+						<description>Penalty Changes For</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AssociateInventory" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.common.inventory.core.jalo.AssociateInventory"
+				extends="GenericItem">
+				<description>Associate Inventory</description>
+				<deployment table="associateinventory" typecode="21521" />
+				<attributes>
+					<attribute type="InventoryAvailFor" qualifier="inventoryFor">
+						<persistence type="property" />
+						<description>Inventory available for</description>
+					</attribute>
+					<attribute type="Categories" qualifier="productCategories">
+						<persistence type="property" />
+						<description>Collection of product categories</description>
+					</attribute>
+					<attribute type="ProductCategorySubTypes" qualifier="productCategorySubType">
+						<persistence type="property" />
+						<description>Collection of ProductCategorySubTypes</description>
+					</attribute>
+					<attribute type="Products" qualifier="products">
+						<persistence type="property" />
+						<description>Collection of products</description>
+					</attribute>
+					<attribute type="VariantProducts" qualifier="variants">
+						<persistence type="property" />
+						<description>Collection of variant products</description>
+					</attribute>
+					<attribute type="java.lang.Long" qualifier="numberOfDistributedInventory">
+						<persistence type="property" />
+						<description>Number of distributed inventory</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="InventoryPaymentAdvice">
+			<itemtype code="InventoryPaymentAdvice" autocreate="true"
+				extends="GenericItem" generate="true"
+				jaloclass="com.cnk.travelogix.common.inventory.core.jalo.InventoryPaymentAdvice">
+				<description>Payment advice</description>
+				<deployment table="paymentadvice" typecode="21517" />
+				<attributes>
+					<attribute type="Company" qualifier="company">
+						<description>Company</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="paymentAdviceNo" type="java.lang.String">
+						<persistence type="property" />
+						<description>To show payment advice no.</description>
+					</attribute>
+					<attribute qualifier="paymentAdviceStatus" type="PaymentStatus">
+						<persistence type="property" />
+						<description>To show payment status.</description>
+					</attribute>
+					<attribute qualifier="inventoryID" type="AbstractInventoryDefinition">
+						<persistence type="property" />
+						<description>Represents Inventory ID.</description>
+					</attribute>
+					<attribute type="StrategicBusinessUnit" qualifier="sbu">
+						<description>SBU</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="BusinessUnit" qualifier="bu">
+						<description>BU</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Supplier" qualifier="supplierName">
+						<description>Supplier name</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Country" qualifier="country">
+						<description>Country</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PaymentInformation" qualifier="paymentInformation">
+						<description>Payment Information</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="contractedFare">
+						<description>Contracted Fare</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="PrePaymentDetail" autocreate="true" extends="GenericItem"
+				generate="true"
+				jaloclass="com.cnk.travelogix.common.inventory.core.jalo.PrePaymentDetail">
+				<description>Pre Payment Detail</description>
+				<deployment table="prepaydet" typecode="21518" />
+				<attributes>
+					<attribute qualifier="typeOfPayment" type="PrePaymentType">
+						<description>Type Of Payment</description>
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="modeOfPayment" type="ModeOfPayment">
+						<description>Mode Of Payment</description>
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Bank" qualifier="drawnOn">
+						<description>Drawn on</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="paymentRefNo">
+						<description>Payment Reference Number</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="finSystemRefNo">
+						<description>Finance system reference number</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="currency" type="Currency">
+						<description>Currency</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="amount" type="java.math.BigDecimal">
+						<description>Amount</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="amountPending" type="java.math.BigDecimal">
+						<description>Amount Pending</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="date" type="java.util.Date">
+						<description>Date</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="partPayment" type="java.lang.Boolean">
+						<description>Part Payment</description>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="remark">
+						<description>Remark</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="PaymentDetailsVmpd" autocreate="true"
+				extends="GenericItem" generate="true"
+				jaloclass="com.cnk.travelogix.common.inventory.core.jalo.PaymentDetailsVmpd">
+				<description>Payment Details Vmpd</description>
+				<deployment table="paydetVmpd" typecode="21519" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="vmpdNumber">
+						<description>VMPD number</description>
+						<modifiers optional="false" read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="currency" type="Currency">
+						<description>Currency</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="amount" type="java.math.BigDecimal">
+						<description>Amount</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="amountPending" type="java.math.BigDecimal">
+						<description>Amount Pending</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="dateOfGeneration" type="java.util.Date">
+						<description>Date Of Generation</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="remark">
+						<description>Remark</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+
+			</itemtype>
+
+			<itemtype code="PaymentInformation" autocreate="true"
+				extends="GenericItem" generate="true"
+				jaloclass="com.cnk.travelogix.common.inventory.core.jalo.PaymentInformation">
+				<description>Payment Information</description>
+				<deployment table="payinfo" typecode="21520" />
+				<attributes>
+					<attribute qualifier="currency" type="Currency">
+						<description>Currency</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="balFromLastPaymentAdv" type="java.math.BigDecimal">
+						<description>Balance From Last Payment Advance</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.math.BigDecimal" qualifier="amount">
+						<description>Amount</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="paymentType">
+						<description>Payment type</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="paymentDueDate">
+						<description>Payment due date</description>
+						<modifiers optional="false" read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="remark">
+						<description>Payment remark</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="OperationDuration" autocreate="false"
+				generate="false" >
+				<attributes>
+					<attribute qualifier="supplierName" type="Supplier"> 
+						<persistence type="property"/>
+						<description>Supplier Name</description> 
+						<modifiers read="true" write="true" optional="true"/> 
+					</attribute>
+				</attributes>
+			</itemtype>
+				
+			<itemtype code="PickupAndDropOff" autocreate="false"
+				generate="false">
+				<attributes>
+					<attribute qualifier="supplierName" type="Supplier"> 
+						<persistence type="property" /> 
+						<description>Supplier Name</description> 
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+					<attribute type="VehicleDetails" qualifier="vehicleDetails">
+						<description>Vehicle Details</description>
+						<persistence type="property"/>
+						<modifiers read="true" write="true" optional="true"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+		</typegroup>
+	</itemtypes>
+</items>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ [y] hybris Platform
+  ~ 
+  ~ Copyright (c) 2000-2016 SAP SE
+  ~ All rights reserved.
+  ~ 
+  ~ This software is the confidential and proprietary information of SAP 
+  ~ Hybris ("Confidential Information"). You shall not disclose such 
+  ~ Confidential Information and shall use it only in accordance with the 
+  ~ terms of the license agreement you entered into with SAP Hybris.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	
+	<bean id="clientCoreSystemSetup" class="com.cnk.travelogix.client.core.setup.ClientCoreSystemSetup" parent="abstractCoreSystemSetup"/>		
+	
+	<bean id="defaultOrganizationUidGenerator"
+	      class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+	      init-method="init" scope="tenant">
+		<property name="key" value="${keygen.organization.uid.name}"/>
+		<property name="digits" value="${keygen.organization.uid.digits}"/>
+		<property name="start" value="${keygen.organization.uid.start}"/>
+		<property name="type" value="${keygen.organization.uid.type}"/>
+		<property name="template" value="${keygen.organization.uid.template}"/>
+	</bean>
+	
+	<bean id="travelogixB2BUnitPrepareInterceptor" class="com.cnk.travelogix.client.core.interceptors.TravelogixB2BUnitPrepareInterceptor">
+		<property name="keyGenerator" ref="defaultOrganizationUidGenerator"/>
+	</bean>
+	
+ 	<bean id="b2bUserGroupIdPrepareInterceptor"
+		class="com.cnk.travelogix.client.core.interceptors.B2BUserGroupIdPrepareInterceptor">
+		<property name="b2bUserGroupIdService" ref="b2bUserGroupIdService" />
+	</bean>
+ 	
+	<alias name="defaultB2BUserGroupService" alias="b2bUserGroupIdService" />
+	<bean id="defaultB2BUserGroupService"
+		class="com.cnk.travelogix.client.core.services.impl.DefaultB2BUserGroupService">
+		<property name="keyGenerator" ref="b2bUserGroupIdKeyGenerator" />
+	</bean>
+
+ 	<bean id="b2bUserGroupIdPrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="b2bUserGroupIdPrepareInterceptor" />
+		<property name="typeCode" value="B2BUserGroup" />
+	</bean>
+
+	<bean id="b2bUserGroupIdKeyGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="clientGroup_Id" />
+		<property name="digits" value="8" />
+		<property name="start" value="01234567" />
+		<property name="numeric" value="false" />
+	</bean>
+
+	
+	<!--  Bean Entry for MID-->
+	<bean id="merchantIdentificationDetailsPrepareInterceptor"
+		class="com.cnk.travelogix.client.core.interceptors.MerchantIdentificationDetailsPrepareInterceptor">
+		<property name="merchantIdentificationService" ref="merchantIdentificationService" />
+	</bean>
+	
+	<alias name="defaultMerchantIdentificationDetailService" alias="merchantIdentificationService" />
+	<bean id="defaultMerchantIdentificationDetailService"
+		class="com.cnk.travelogix.client.core.services.impl.DefaultMerchantIdentificationDetailService">
+		<property name="keyGenerator" ref="mIDKeyGenerator" />
+	</bean>
+
+	<bean id="merchantIdentificationDetailsPrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="merchantIdentificationDetailsPrepareInterceptor" />
+		<property name="typeCode" value="MerchantIdentificationDetails" />
+	</bean>
+	
+	<bean id="mIDKeyGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="MID_Number" />
+		<property name="digits" value="8" />
+		<property name="start" value="98765432" />
+		<property name="numeric" value="true" />
+	</bean>
+	
+	<bean id="serviceTaxDetailsValidateInterceptor"
+		class="com.cnk.travelogix.client.core.interceptors.ServiceTaxDetailsValidateInterceptor" />
+
+	<bean id="serviceTaxDetailsValidateInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="serviceTaxDetailsValidateInterceptor" />
+		<property name="typeCode" value="ServiceTaxDetails" />
+	</bean>
+	
+		
+<bean id="companyOfferService"
+  class="com.cnk.travelogix.client.core.companyoffers.service.impl.CompanyOffersServiceImpl"> 
+  <property name="keyGenerator" ref="companyOfferIdGenerator" />
+</bean>
+
+	
+<bean id="companyOfferDao"
+  class="com.cnk.travelogix.client.core.companyoffers.dao.impl.CompanyOfferDaoImpl">
+  <property name="flexibleSearchService" ref="flexibleSearchService" />
+</bean>
+
+	
+ <bean id="companyOfferIdGenerator"
+  class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+  init-method="init" scope="tenant">
+  <property name="key" value="companyOffer_id" />
+  <property name="digits" value="8" />
+  <property name="start" value="00000001" />
+  <property name="numeric" value="true" />
+ </bean>
+ 
+ 
+ <bean id="companyOfferUIDInterceptor"
+  class="com.cnk.travelogix.client.core.interceptors.CompanyOfferUIDInterceptor">  
+ </bean>
+ 
+ <bean id="redemptionOfferConstructUIDInterceptor"
+  class="com.cnk.travelogix.client.core.interceptors.RedemptionOfferConstructUIDInterceptor">  
+ </bean>
+ 
+ <bean id="redemptionCodesGenerationInterceptor"
+  class="com.cnk.travelogix.client.core.interceptors.RedemptionCodesGenerationInterceptor">  
+ </bean>
+ 
+ <bean id="redemptionOfferConstructUIDInterceptorMapping"
+  class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+  scope="tenant">
+  <property name="interceptor" ref="redemptionOfferConstructUIDInterceptor" />
+  <property name="typeCode" value="RedemptionCompanyOffers" />
+ </bean>
+			
+
+ <bean id="companyOfferUIDInterceptorMapping"
+  class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+  scope="tenant">
+  <property name="interceptor" ref="companyOfferUIDInterceptor" />
+  <property name="typeCode" value="CompanyOffers" />
+ </bean>
+ 
+ 
+ <bean id="redemptionOfferConstructInterceptorMapping"
+  class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+  scope="tenant">
+  <property name="interceptor" ref="redemptionCodesGenerationInterceptor" />
+  <property name="typeCode" value="CodeDetailsRedemption" />
+ </bean>
+
+	<bean id="paymentIdGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="payment_id" />
+		<property name="digits" value="7" />
+		<property name="start" value="1111111" />
+		<property name="numeric" value="true" />
+	</bean>
+	
+	<bean id="clientPaymentOptionPrepareInterceptor" class="com.cnk.travelogix.client.core.interceptors.ClientPaymentOptionPrepareInterceptor">
+		<property name="keyGenerator" ref="paymentIdGenerator"/>
+	</bean>
+	
+	<bean id="clientPaymentOptionPrepareInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="clientPaymentOptionPrepareInterceptor"/>
+		<property name="typeCode" value="ClientPaymentOption"/>
+	</bean>
+	
+	<alias name="defaultTravelogixClientTypeService" alias="travelogixClientTypeService" />
+	<bean id="defaultTravelogixClientTypeService"
+		class="com.cnk.travelogix.client.core.services.impl.DefaultTravelogixClientTypeService">
+	</bean>
+	
+	<bean id="travelogixClientTypePrepareInterceptor" class="com.cnk.travelogix.client.core.interceptors.TravelogixClientTypePrepareInterceptor">
+		<property name="travelogixClientTypeService" ref="travelogixClientTypeService" />
+	</bean>
+	
+	<bean id="travelogixClientTypePrepareInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="travelogixClientTypePrepareInterceptor"/>
+		<property name="typeCode" value="TravelogixClientType"/>
+	</bean>		
+	
+	<bean id="corporateTravelPolicyValidateInterceptor"
+		class="com.cnk.travelogix.client.core.interceptors.CorporateTravelPolicyValidateInterceptor">
+	</bean>
+
+	<bean id="corporateTravelPolicyValidateInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="corporateTravelPolicyValidateInterceptor" />
+		<property name="typeCode" value="CorporateTravelPolicy" />
+	</bean>
+			
+</beans>

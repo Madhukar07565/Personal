@@ -1,0 +1,2040 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+		<collectiontype code="CurrencyCollection" type="list"
+			elementtype="Currency" autocreate="true" generate="false" />
+	</collectiontypes>
+	<enumtypes>
+		<enumtype generate="true" code="CabinClassType" autocreate="true">
+			<description>Defines the Cabin Class Type </description>
+			<value code="ECONOMY" />
+			<value code="BUSINESS" />
+			<value code="PREMIERE" />
+			<value code="FIRST_CLASS" />
+		</enumtype>
+		<enumtype generate="true" code="AirlineType" autocreate="true">
+			<description>Defines the Airline Type </description>
+			<value code="LCC" />
+			<value code="FSC" />
+			<value code="BOTH" />
+		</enumtype>
+		<enumtype generate="true" code="URLType" autocreate="true">
+			<description>Defines the URL Type </description>
+			<value code="CHECK_IN" />
+			<value code="WEBSITE" />
+			<value code="TERMSANDCONDITIONS" />
+		</enumtype>
+		<enumtype generate="true" code="DifficultyLevelType"
+			autocreate="true">
+			<description>Defines the URL Type </description>
+			<value code="EASY" />
+			<value code="DIFFICULT" />
+			<value code="MODERATE" />
+		</enumtype>
+		<enumtype generate="true" code="CruiseSubType" autocreate="true">
+			<description>Cruise SubType </description>
+			<value code="DAY_CRUISE" />
+			<value code="OVERNIGHT_CRUISE" />
+		</enumtype>
+		<enumtype generate="true" code="ShipCategory" autocreate="true">
+			<description>Ship Category</description>
+			<value code="ADVENTURE" />
+			<value code="LEISURE" />
+			<value code="LUXURY" />
+			<value code="PREMIUM" />
+			<value code="CASUAL" />
+			<value code="FORMAL" />
+		</enumtype>
+		<enumtype generate="true" code="CruiseType" autocreate="true">
+			<description>Cruise Type </description>
+			<value code="RIVER_CRUISES" />
+			<value code="OCEAN_CRUISES" />
+		</enumtype>
+		<enumtype generate="true" code="ShipClass" autocreate="true">
+			<description>Ship Class</description>
+			<value code="OASIS_CLASS" />
+			<value code="RADIANCE_CLASS" />
+			<value code="VOYAGER_CLASS" />
+			<value code="VISION_CLASS" />
+		</enumtype>
+		<enumtype generate="true" code="RuleInformationFor"
+			autocreate="true">
+			<description>Rule Information For</description>
+			<value code="DECK" />
+			<value code="CABIN" />
+			<value code="SHIP" />
+		</enumtype>
+		<enumtype generate="true" code="CruiseInformationType"
+			autocreate="true">
+			<description>Cruise Information Type</description>
+			<value code="SELLING_TIPS" />
+			<value code="BOARDING" />
+			<value code="DISEMBARKATION" />
+			<value code="EMBARKATING" />
+		</enumtype>
+		<enumtype generate="true" code="PortType" autocreate="true">
+			<description>Port Type</description>
+			<value code="MAJOR_PORT" />
+			<value code="MINOR_PORT" />
+		</enumtype>
+	</enumtypes>
+
+	<relations>
+		<relation code="FlightProductToTravelPrograms" autocreate="true"
+			generate="false" localized="false">
+			<deployment table="flighttravelprogram" typecode="21123" />
+			<sourceElement qualifier="flightProduct" type="FlightProduct"
+				cardinality="many">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="travellerPrograms" type="TravellerProgram"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+
+		<relation code="FlightProductToAirlineDetails" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="flightProduct" type="FlightProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="airLineDetails" type="AirLineDetails"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="FlightProductToMarketDisplayName" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="flightProduct" type="FlightProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="marketDisplayNames" type="AirMarketDisplayName"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="FlightProductToMarketSpecificLogo"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="flightProduct" type="FlightProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="marketSpecificLogo" type="MarketSpecificLogo"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="FlightProductToMarketSpecificURL" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="flightProduct" type="FlightProduct"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="marketSpecificURL" type="MarketSpecificURL"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="RouteConnectionToSector" autocreate="true"
+			generate="false" localized="false">
+			<deployment table="routeTOSector" typecode="21124" />
+			<sourceElement qualifier="routeConnection" type="RouteConnection"
+				cardinality="many">
+			</sourceElement>
+			<targetElement qualifier="sectors" type="Sector"
+				cardinality="many">
+			</targetElement>
+		</relation>
+
+		<relation code="SectorTOFlightProduct" autocreate="true"
+			generate="false" localized="false">
+			<deployment table="sectortoflight" typecode="21125" />
+			<sourceElement qualifier="sectors" type="Sector"
+				cardinality="many">
+			</sourceElement>
+			<targetElement qualifier="airlineProducts" type="FlightProduct"
+				cardinality="many">
+			</targetElement>
+		</relation>
+
+		<relation code="CruiseToSocialNetworkingDetails" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="company" type="AbstractCruiseItem"
+				cardinality="one">
+				<modifiers read="true" write="true" />
+			</sourceElement>
+			<targetElement qualifier="socialNetworkingDetails"
+				type="SocialNetworkingDetails" cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="CruiseToEmailAddressDetails" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="company" type="AbstractCruiseItem"
+				cardinality="one">
+				<modifiers read="true" write="true" />
+			</sourceElement>
+			<targetElement qualifier="emailAddressDetails" type="EmailAddress"
+				cardinality="many">
+				<modifiers read="true" write="true" search="true" partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="CruiseDestinationToDestinationMedias"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="cruiseDestination" type="CruiseDestination"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="destinationMedias" type="Media"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="CruisePortToPorts" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="cruisePort" type="CruisePort"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="portInfos" type="PortInfo"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="CruisePortToRoute" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="cruisePort" type="CruisePort"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="inAndAnround" type="CruisePlaceDescription"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="ShipDescriptionToLongDescription" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="shipDescription" type="ShipDescription"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="longDescription" type="DescriptionDetails"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="CruisePortToRoutes" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="cruisePort" type="CruisePort"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="routes" type="Route"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="ShoreExcursionToShoreExcursionMedias"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="shoreExcursions" type="ShoreExcursion"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="shoreExcursionMedias" type="Media"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="CruiseItineraryToCruiseItinerariesMedias"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="cruiseItinerary" type="CruiseItinerary"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="cruiseItinerariesMedias"
+				type="ItineraryMedia" cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="ShoreExcursionToItinerary" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="shoreExcursion" type="ShoreExcursion"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="itineraries" type="CruiseItinerary"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="CruisePackageToItineraries" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="cruisePackage" type="CruisePackage"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="itineraries" type="CruiseItinerary"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="RouteInfoToItineraries" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="itineraries" type="CruiseItinerary"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="routes" type="RouteInfo"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="CruisePackageToAncillaries" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="cruisePackage" type="CruisePackage"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="cruiseAncillaries" type="Ancillary"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="CruisePackageToVisaRequirements" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="cruisePackage" type="CruisePackage"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="visaRequirements" type="VisaRequirement"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="CruisePackageTOThemes" localized="false">
+			<deployment table="cruisepkg2themes" typecode="21092" />
+			<sourceElement qualifier="cruisePackage" type="CruisePackage"
+				cardinality="many" />
+			<targetElement qualifier="themes" type="Theme"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="ShipDescriptionToShortDescription"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="shipDescription" type="ShipDescription"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="shortDescription" type="DescriptionDetails"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="ShipToCruiseUpdates" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="ship" type="Ship"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="cruiseUpdates" type="CruiseUpdate"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="ShipToCruiseRuleInformations" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="ship" type="Ship"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="cruiseRuleInformations" type="CruiseRuleInformation"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="ShipToHealthAndSafetyRules" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="ship" type="Ship"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="healthAndSafetyRules" type="HealthAndSafety"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="CabinToCabinOccupancies" autocreate="true"
+			generate="false" localized="false">
+			<deployment table="cabintooccupancy" typecode="22301" />
+			<sourceElement qualifier="cabin" type="Cabin"
+				cardinality="many">
+			</sourceElement>
+			<targetElement qualifier="cabinOccupancies" type="CabinOccupancy"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="ShipToFacilities" autocreate="true" generate="false"
+			localized="false">
+			<deployment table="shiptofacility" typecode="22302" />
+			<sourceElement qualifier="ship" type="Ship"
+				cardinality="many">
+			</sourceElement>
+			<targetElement qualifier="shipFacilities" type="FacilityDetail"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="CabinToCabinFacilities" autocreate="true"
+			generate="false" localized="false">
+			<deployment table="cabintofacility" typecode="22300" />
+			<sourceElement qualifier="cabin" type="Cabin"
+				cardinality="many">
+			</sourceElement>
+			<targetElement qualifier="cabinFacilities" type="FacilityDetail"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="DeckToFacilities" autocreate="true" generate="false"
+			localized="false">
+			<deployment table="decktofacility" typecode="22101" />
+			<sourceElement qualifier="deck" type="Deck"
+				cardinality="many">
+			</sourceElement>
+			<targetElement qualifier="deckFacilities" type="FacilityDetail"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="ShipToDeck" autocreate="true" generate="false"
+			localized="false">
+			<sourceElement qualifier="ship" type="Ship"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="deckDetails" type="Deck"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation code="CruiseRouteToDetails" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="cruiseRoute" type="CruiseRoute"
+				cardinality="one">
+			</sourceElement>
+			<targetElement qualifier="routeDetails" type="RouteDetail"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="CruiseToMedias" generate="false" localized="false"
+			autocreate="true">
+			<sourceElement type="AbstractCruiseItem" cardinality="one"
+				qualifier="company">
+				<modifiers read="true" write="true" search="true" />
+			</sourceElement>
+			<targetElement type="Media" cardinality="many"
+				qualifier="medias">
+				<modifiers read="true" write="true" search="true" />
+			</targetElement>
+		</relation>
+	</relations>
+
+	<itemtypes>
+		<typegroup name="FlightProduct">
+			<itemtype code="FlightProduct" generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.FlightProduct"
+				extends="Product">
+				<description>Represents Flight Products</description>
+				<attributes>
+					<attribute qualifier="airlineIATA" type="AirlineIATAItem">
+						<persistence type="property" />
+						<description>To show the Airline IATA code.</description>
+						<modifiers optional="false" unique="true"/>
+						
+					</attribute>
+					<attribute qualifier="ticketDesignator" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>To show the ticket designator.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="airlineType" type="AirlineType">
+						<persistence type="property" />
+						<description>To show the Airline Type</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="brandAirline" type="java.lang.Boolean">
+						<description>To show the main Flight Product.</description>
+					<!-- 	<persistence type="dynamic" attributeHandler="brandAirlineDynamicAttributeHandler" /> -->
+					<persistence type="property"/>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="mainAirlineProduct" type="FlightProduct">
+						<persistence type="property" />
+						<description>To show the main Flight Product.</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AirLineDetails" generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.AirLineDetails"
+				extends="GenericItem">
+				<description>Represents Air Line Details</description>
+				<deployment table="airlinedetails" typecode="21003" />
+				<attributes>
+					<attribute qualifier="airlineType" type="AirlineType">
+						<persistence type="property" />
+						<description>To show the Airline type.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="flightNumberTo" type="java.lang.Long">
+						<persistence type="property" />
+						<description>To show the flight Numbers.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="flightNumberFrom" type="java.lang.Long">
+						<persistence type="property" />
+						<description>To show the flight From Numbers.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="sectorFrom" type="Airport">
+						<persistence type="property" />
+						<description>To show the sectorFrom.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="sectorTo" type="Airport">
+						<persistence type="property" />
+						<description>To show the sector to.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="cabinClass" type="CabinClassType">
+						<persistence type="property" />
+						<description>To show the cabinClass.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="rbds" type="ReservationBookingDesignatorList">
+						<persistence type="property" />
+						<description>To show the rbds.</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AirMarketDisplayName" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.AirMarketDisplayName"
+				extends="GenericItem">
+				<description>Represents MarketDisplayName</description>
+				<deployment table="marketdisplayname" typecode="21002" />
+				<attributes>
+					<attribute qualifier="market" type="Market">
+						<persistence type="property" />
+						<description>To show Market.</description>
+						<modifiers initial="true" />
+					</attribute>
+					<attribute qualifier="displayName" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>To show display Name.</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="MarketSpecificLogo" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.MarketSpecificLogo"
+				extends="GenericItem">
+				<description>Represents Market Specific LOGO</description>
+				<deployment table="marketlogo" typecode="21104" />
+				<attributes>
+					<attribute qualifier="market" type="Market">
+						<persistence type="property" />
+						<description>To show Market.</description>
+						<modifiers initial="true" />
+					</attribute>
+					<attribute qualifier="sectorFrom" type="Airport">
+						<persistence type="property" />
+						<description>To show sector From.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="sectorTo" type="Airport">
+						<persistence type="property" />
+						<description>To show sector To.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="cabinClass" type="CabinClassType">
+						<persistence type="property" />
+						<description>To show cabin Class.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="logo" type="localized:Media">
+						<persistence type="property" />
+						<description>To show logo.</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="MarketSpecificURL" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.MarketSpecificURL"
+				extends="GenericItem">
+				<description>Represents AirMarket URL</description>
+				<deployment table="marketurls" typecode="21105" />
+				<attributes>
+					<attribute qualifier="market" type="Market">
+						<persistence type="property" />
+						<description>To show Market.</description>
+						<modifiers initial="true" />
+					</attribute>
+					<attribute qualifier="url" type="java.lang.String">
+						<persistence type="property" />
+						<description>To show the Traveler Program ID</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="urlType" type="URLType">
+						<persistence type="property" />
+						<description>To show the Traveler Program Localized Name
+						</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="AirlineRouteMapping">
+			<itemtype code="AirRoute" generate="true" autocreate="true"
+				extends="AbstractTravelogixItem"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.AirRoute">
+				<description>Represents the AirRoute details</description>
+				<deployment table="airroute" typecode="21043" />
+				<attributes>
+					<attribute qualifier="fromCountry" type="Country">
+						<persistence type="property" />
+						<description>To show the AirRoute from Country.</description>
+					</attribute>
+					<attribute qualifier="routeFromCity" type="Airport">
+						<persistence type="property" />
+						<description>To show the AirRoute From City.</description>
+						<modifiers unique="true" />
+					</attribute>
+					<attribute qualifier="toCountry" type="Country">
+						<persistence type="property" />
+						<description>To show the AirRoute to Country.</description>
+					</attribute>
+					<attribute qualifier="routeToCity" type="Airport">
+						<persistence type="property" />
+						<description>To show the AirRoute to City.</description>
+						<modifiers unique="true" />
+					</attribute>
+					<attribute qualifier="onlineDate" type="java.util.Date">
+						<persistence type="property" />
+						<description>To show the online Date.</description>
+					</attribute>
+					<attribute qualifier="offlineDate" type="java.util.Date">
+						<persistence type="property" />
+						<description>To show the Offline Date.</description>
+					</attribute>
+					<attribute qualifier="sectors" type="RouteConnection">
+						<persistence type="property" />
+						<description>To show the sectors.</description>
+					</attribute>
+					<!-- <attribute qualifier="workFlowStatus" type="ApprovalWorkFlowStatus">
+						<description>Work Flow Status</description>
+						<defaultvalue>em().getEnumerationValue("WorkFlowStatus","DRAFT")</defaultvalue>
+						<persistence type="property" />					
+					</attribute> -->
+				</attributes>
+			</itemtype>
+
+			<itemtype code="RouteConnection" generate="true" autocreate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.RouteConnection">
+				<description>Represents the Sector details</description>
+				<deployment table="routeconnection" typecode="21235" />
+				<attributes>
+					<attribute qualifier="connectionId" type="java.lang.String">
+						<modifiers unique="true" />
+						<persistence type="property" />
+						<description>Route connection ID</description>
+					</attribute>
+					<attribute qualifier="active" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>To show the Sector Status.</description>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="onlineDate" type="java.util.Date">
+						<persistence type="property" />
+						<description>To show the Sector onlineDate.</description>
+					</attribute>
+					<attribute qualifier="offlineDate" type="java.util.Date">
+						<persistence type="property" />
+						<description>To show the offlineDate.</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Sector" generate="true" autocreate="true"
+				extends="GenericItem" jaloclass="com.cnk.travelogix.product.common.core.jalo.Sector">
+				<description>Represents the Sector details</description>
+				<deployment table="sector" typecode="21044" />
+				<attributes>
+					<attribute qualifier="fromCountry" type="Country">
+						<persistence type="property" />
+						<description>To show the Sector from Country.</description>
+					</attribute>
+					<attribute qualifier="fromCity" type="Airport">
+						<persistence type="property" />
+						<description>To show the Sector from City.</description>
+					</attribute>
+					<attribute qualifier="toCountry" type="Country">
+						<persistence type="property" />
+						<description>To show the Sector to Country.</description>
+					</attribute>
+					<attribute qualifier="toCity" type="Airport">
+						<persistence type="property" />
+						<description>To show the Sector to City.</description>
+					</attribute>
+					<attribute qualifier="sameAirlineorSameTerminal" type="java.lang.String">
+						<persistence type="property" />
+						<description>To show the Sector same Air line or same Terminal.
+						</description>
+					</attribute>
+					<attribute qualifier="sameAirlineorDifferentTerminal"
+						type="java.lang.String">
+						<persistence type="property" />
+						<description>To show the Sector same Airline or different
+							Terminal.
+						</description>
+					</attribute>
+					<attribute qualifier="differentAirlineorSameTerminal"
+						type="java.lang.String">
+						<persistence type="property" />
+						<description>To show the Sector different Airline or same
+							Terminal.
+						</description>
+					</attribute>
+					<attribute qualifier="differentAirlineorDifferentTerminal"
+						type="java.lang.String">
+						<persistence type="property" />
+						<description>To show the Sector different Airline or different
+							Terminal.
+						</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+		</typegroup>
+
+		<typegroup name="Cruise">
+
+			<itemtype code="CruisePackage" autocreate="true" generate="true"
+				extends="Product" jaloclass="com.cnk.travelogix.product.common.core.jalo.CruisePackage">
+				<description>Represents shore excursions for all cruise
+				</description>
+				<attributes>
+					<attribute qualifier="cruiseCompanyName" type="CruiseCompany">
+						<persistence type="property" />
+						<description>To show the cruiseCompanyName.</description>
+					</attribute>
+					<attribute qualifier="cruiseBrandName" type="CruiseBrand">
+						<persistence type="property" />
+						<description>To show the cruiseBrandName.</description>
+					</attribute>
+					<attribute qualifier="shipName" type="Ship">
+						<persistence type="property" />
+						<description>To show the shipName.</description>
+					</attribute>
+					<attribute qualifier="cruiseDestinationName" type="CruiseDestination">
+						<persistence type="property" />
+						<description>To show the cruiseDestinationName.</description>
+					</attribute>
+					<attribute qualifier="pakageName" type="java.lang.String">
+						<persistence type="property" />
+						<description>To show the pakageName.</description>
+					</attribute>
+					<attribute qualifier="supplierProductCode" type="java.lang.String">
+						<persistence type="property" />
+						<description>To show the supplierProductCode.</description>
+					</attribute>
+					<attribute qualifier="companyRecommended" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>To show the companyRecommended.</description>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="supplierRating" type="Rating">
+						<persistence type="property" />
+						<description>To show the supplierRating.</description>
+						<modifiers read="true" write="true" optional="false" />
+					</attribute>
+					<attribute qualifier="companyRating" type="Rating">
+						<persistence type="property" />
+						<description>To show the companyRating.</description>
+						<modifiers read="true" write="true" optional="false" />
+					</attribute>
+					<attribute qualifier="supplierRatingAsOnDate" type="java.util.Date">
+						<persistence type="property" />
+						<description>To show the supplierRatingAsOnDate.</description>
+					</attribute>
+					<attribute qualifier="companyRatingAsOnDate" type="java.util.Date">
+						<persistence type="property" />
+						<description>To show the companyRatingAsOnDate.</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AbstractCruiseItem" autocreate="true"
+				generate="true" abstract="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.AbstractCruiseItem"
+				extends="AbstractTravelogixItem">
+				<description>Represents Abstract Cruise Item</description>
+				<attributes>
+					<attribute qualifier="commonID" type="java.lang.String">
+						<description>Cruise Item Common Id</description>
+						<modifiers read="true" write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="name" type="java.lang.String">
+						<description>Cruise Item Name</description>
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="financeControlID " type="java.lang.String">
+						<description>Finance Control Id</description>
+						<modifiers read="true" write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="notes" type="java.lang.String">
+						<description>Notes</description>
+						<modifiers read="true" write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="copiedFrom" type="java.lang.String">
+						<description>Copied From</description>
+						<modifiers read="true" write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="affiliation" type="Affiliation">
+						<description>Affiliation</description>
+						<modifiers read="true" write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="effectiveFromDate" type="java.util.Date">
+						<description>Effective Date</description>
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="address" type="Address">
+						<description>Address</description>
+						<modifiers read="true" write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CruiseCompany" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.CruiseCompany"
+				extends="AbstractCruiseItem">
+				<description>Represents Cruise Company</description>
+			</itemtype>
+
+			<itemtype code="CruiseDestination" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.CruiseDestination"
+				extends="AbstractTravelogixItem">
+				<description> Represents Cruise Destination.</description>
+				<deployment table="cruisedestination" typecode="21015" />
+				<attributes>
+					<attribute qualifier="destinationName" type="Continent">
+						<description>Cruise Destination Name</description>
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="country" type="Countries">
+						<description>Country</description>
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="cruiseDestinationCommonID" type="java.lang.String">
+						<description>Cruise Destination Common ID</description>
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="description" type="java.lang.String">
+						<description>Description</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="continent" type="Continent">
+						<description>Continent</description>
+						<modifiers read="true" write="true" optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="copiedFrom" type="java.lang.String">
+						<description>Copied From</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="onlineDate" type="java.util.Date">
+						<description>Online Date</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="offlineDate">
+						<description>Offline Date</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CruiseBrand" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.CruiseBrand"
+				extends="AbstractCruiseItem">
+				<description> Represents Cruise Brand</description>
+				<deployment table="cruisebrand" typecode="21183" />
+				<attributes>
+					<attribute type="localized:java.lang.String" qualifier="cruiseBrandDetails">
+						<description>Cruise Brands details</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="brandName" type="java.lang.String">
+						<persistence type="property" />
+						<description>Brand Name</description>
+						<modifiers optional="false" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Ship" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.Ship"
+				extends="AbstractTravelogixItem">
+				<description> Represents Ship</description>
+				<deployment table="shiptable" typecode="21027" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="shipCommonID">
+						<description>Ship Common ID</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CruiseBrand" qualifier="cruiseBrandName">
+						<description>Cruise Brand Name</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CruiseCompany" qualifier="cruiseCompanyName">
+						<description>Cruise Company Name</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="shipName">
+						<description>Ship Name</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="shipCode">
+						<description>Ship Code</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Rating" qualifier="shipRating">
+						<description>Ship Rating</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="shipDisplayName" type="localized:java.lang.String">
+						<description>Ship Display Name</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ShipClass" qualifier="shipClass">
+						<description>Ship Class</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CruiseDestination" qualifier="cruiseDestinationName">
+						<description>Cruise Destination Name</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ShipCategory" qualifier="shipCategory">
+						<description>Ship 
+						Category</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CruiseType" qualifier="cruiseType">
+						<description>Cruise Types</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CruiseSubType" qualifier="cruiseSubType">
+						<description>Cruise Sub Types</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="isMultipleDeckAvailable">
+						<description>Is Multiple Deck Available</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.util.Date" qualifier="onlineDate">
+						<description>Online Date</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="offlineDate">
+						<description>offline Date</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute type="ShipDescription" qualifier="shipDescription">
+						<description>Ship Description</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Cabin" qualifier="cabinInformation">
+						<description>Cabin Information</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="copiedFrom">
+						<description>CopiedFrom</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ShipOverview" qualifier="shipOverview">
+						<description>Ship Overview</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ShipConstructionDetails" qualifier="constructionDetails">
+						<description>Construction Details</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ShipEngineDetails" qualifier="engineDetails">
+						<description>Engine Details</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ShipDimensionDetails" qualifier="dimensionDetails">
+						<description>Dimension Details</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ShipPerformanceCapabilities" qualifier="shipPerformanceCapabilities">
+						<description>Ship Performance Capabilities</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ShipAccomadationDetails" qualifier="accommodationDetails">
+						<description>Accommodation Details</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ShipEquipmentDetails" qualifier="equipmentDetails">
+						<description>Equipment Details</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RescueSecurityDetails" qualifier="rescueSecurityDetails">
+						<description>Rescue Security Details</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Cabin" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.Cabin"
+				extends="GenericItem">
+				<description> Represents Cabin </description>
+				<deployment table="cabin" typecode="21037" />
+				<attributes>
+					<attribute type="CabinType" qualifier="cabinType">
+						<description>Cabin Type</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute type="CabinCategory" qualifier="cabinCategory">
+						<description>Cabin Category</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute type="Deck" qualifier="deck">
+						<description>Deck</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="numberOfCabin">
+						<description>Number Of Cabin</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="cabinSize">
+						<description>Cabin Size</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CabinUnit" qualifier="unit">
+						<description>Unit</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="description">
+						<description>Description</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+
+			<itemtype code="ShipAccomadationDetails" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.ShipAccomadationDetails"
+				extends="GenericItem">
+				<description> Represents Ship Accomadation Details</description>
+				<deployment table="shipaccomadationdetails" typecode="21041" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="guest">
+						<description>Guest</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="cabinsTotal">
+						<description>Cabins Total</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="cabins">
+						<description>Cabins</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="crew">
+						<description>Crew</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="noOfWheelchairsAccessibleCabins">
+						<description>No Of Wheel Chairs Accessible Cabins</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="noOfCabinsWithPrivateBalconies">
+						<description>No Of Cabins With Private Balconies</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="noOfDecks">
+						<description>No Of Decks</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ShipDimensionDetails" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.ShipDimensionDetails"
+				extends="GenericItem">
+				<description> Represents Ship Dimension Details</description>
+				<deployment table="shipdimensiondetails" typecode="21030" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="lengthOverall">
+						<description>Length Over all</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="lengthAtWaterLine">
+						<description>Length At WaterLine</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="beam">
+						<description>Beam</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="grossTonnage">
+						<description>Gross Tonnage</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="draftMin">
+						<description>Draft Min</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="draftMax">
+						<description>Draft Max</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="heightAtWaterLine">
+						<description>Height At Water Line</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="overallHeight">
+						<description>Over all Height</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ShipPerformanceCapabilities" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.ShipPerformanceCapabilities"
+				extends="GenericItem">
+				<description> Represents Ship Performance Capabilities</description>
+				<deployment table="performancecapabilities" typecode="21040" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="maxSpeed">
+						<description>max Speed</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="cruisingSpeed">
+						<description>Cruising Speed</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="range">
+						<description>Range</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="fuelCapacity">
+						<description>Fuel Capacity</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="waterCapacity">
+						<description>Water Capacity</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ShipConstructionDetails" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.ShipConstructionDetails"
+				extends="GenericItem">
+				<description> Represents Ship Construction Details</description>
+				<deployment table="shipconstructiondetails" typecode="21022" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="hullMaterial">
+						<description>Hull Material</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="superStructure">
+						<description>Super Structure</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="deckMaterial">
+						<description>Deck Material</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="deckNB">
+						<description>Deck NB</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="hullConfiguration">
+						<description>Hull Configuration</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="RescueSecurityDetails" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.RescueSecurityDetails"
+				extends="GenericItem">
+				<description> Represents Rescue Security Details</description>
+				<deployment table="rescuesecuritydetails" typecode="21034" />
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="cdcScore">
+						<description>Cdc Score</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="cdcDate">
+						<description>Cdc Date</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="noOfLifeboats">
+						<description>No Of Life boats</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="noOfTenders">
+						<description>No Of Tenders</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="noOfRescueBoats">
+						<description>No Of Rescue Boats</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ShipEquipmentDetails" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.ShipEquipmentDetails"
+				extends="GenericItem">
+				<description> Represents Ship Equipment</description>
+				<deployment table="shipequipmentdetails" typecode="21031" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="generator">
+						<description>Generator</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="stabilizers">
+						<description>Stabilizers</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="thrusters">
+						<description>Thrusters</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="amenities">
+						<description>Amenities</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="noOfNavigationSystem_GPS">
+						<description>No Of Navigation System_GPS</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ShipEngineDetails" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.ShipEngineDetails"
+				extends="GenericItem">
+				<description> Represents Ship EngineDetails</description>
+				<deployment table="shipenginedetails" typecode="21023" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="quantity">
+						<description>Quantity</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="fuelType">
+						<description>Fuel Type</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="manufacturer">
+						<description>manufacturer</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="model">
+						<description>model</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="power">
+						<description>Power</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="totalPower">
+						<description>TotalPower</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="propulsion">
+						<description>Propulsion</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ShipOverview" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.ShipOverview"
+				extends="GenericItem">
+				<description> Represents Ship Overview</description>
+				<deployment table="shipoverview" typecode="21025" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="name">
+						<description>name</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="type">
+						<description>Type</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="model">
+						<description>Model</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="builder">
+						<description>Builder</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="navalArchitect">
+						<description>Naval Architect</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="exteriorDesign">
+						<description>Exterior Design</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="interiorDesign">
+						<description>Interior Design</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="year">
+						<description>Year</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="refurbished">
+						<description>Refurbished</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="refurbishedDescription">
+						<description>Refurbished Description</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="flag">
+						<description>Flag</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="subType">
+						<description>SubType</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="mca">
+						<description>Mca</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="shipClass">
+						<description>Class</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="hullNB">
+						<description>Hull NB</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="hullColor">
+						<description>Hull Color</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="formalyKnownAs">
+						<description>Formaly Known As</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ShipDescription" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.ShipDescription"
+				extends="GenericItem">
+				<description> Represents Ship Description</description>
+				<deployment table="shipdescription" typecode="21028" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="highlights">
+						<description>Highlights</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="sellingTips">
+						<description>Selling Tips</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="uniqueSellingPoints">
+						<description>Unique Selling Points</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Deck" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.product.common.core.jalo.Deck"
+				extends="GenericItem">
+				<description> Represents Deck Facility</description>
+				<deployment table="deck" typecode="21033" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="deckName">
+						<description>Deck Name</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="deckLevel">
+						<description>Deck Level</description>
+						<modifiers optional="false" read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="description">
+						<description>Description</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="SocialNetworkingDetails" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.SocialNetworkingDetails"
+				extends="GenericItem">
+				<description>Represents SocialNetworking Details</description>
+				<deployment table="socialnetworkingdetails" typecode="21005" />
+				<attributes>
+					<attribute qualifier="socialNetworkingName" type="java.lang.String">
+						<description>Social Networking Name </description>
+						<persistence type="property" />
+						<modifiers read="true" write="true" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="socialNetworkingID">
+						<description>Social Networking ID </description>
+						<persistence type="property" />
+						<modifiers read="true" write="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Address" autocreate="false" generate="false">
+				<attributes>
+					<attribute type="java.lang.String" qualifier="landmark">
+						<description>Landmark</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="notes">
+						<description>Notes</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CruisePort" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.CruisePort"
+				extends="AbstractTravelogixItem">
+				<description> Represents Cruise Port.</description>
+				<deployment table="cruiseport" typecode="21018" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="portOfCall">
+						<description>Port Of Call</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="portCommonID">
+						<description>Port Common ID</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Country" qualifier="country">
+						<description>Country</description>
+						<modifiers optional="false" read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="City" qualifier="city">
+						<description>City</description>
+						<modifiers optional="false" read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PortType" qualifier="portType">
+						<description>Port Type</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="portAlias">
+						<description>Port Alias</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="portShortName">
+						<description>Port Short Name</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="description">
+						<description>Description</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="LanguageCollection" qualifier="localLanguage">
+						<description>local Language</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CurrencyCollection" qualifier="currency">
+						<description>Currency</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="onlineDate">
+						<description>Online Date</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="offlineDate">
+						<description>Offline Date</description>
+						<modifiers optional="false" read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="copiedFrom">
+						<description>Copied From</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Address" qualifier="address">
+						<description>Address</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="MediaCollection" qualifier="medias">
+						<description>Collection Of Media</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CruisePlaceDescription" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.CruisePlaceDescription"
+				extends="PlaceDescription">
+				<description>Cruise Place Description</description>
+				<attributes>
+					<attribute type="MediaCollection" qualifier="medias">
+						<description>Medias</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="PortInfo" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.PortInfo"
+				extends="GenericItem">
+				<description> Port Info.</description>
+				<deployment table="portinfo" typecode="21019" />
+				<attributes>
+					<attribute type="CruiseInformationType" qualifier="informationType">
+						<description>Information Type</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="description">
+						<description>Description</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="CruiseRouting">
+
+			<itemtype code="RouteDetail" generate="true" autocreate="true"
+				abstract="false"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.RouteDetail"
+				extends="GenericItem">
+				<description>Route Detail</description>
+				<deployment table="routedetail" typecode="21024" />
+				<attributes>
+					<attribute qualifier="country" type="Country">
+						<persistence type="property" />
+						<description>To show the country.</description>
+					</attribute>
+					<attribute qualifier="city" type="City">
+						<persistence type="property" />
+						<description>To show the City Name.</description>
+					</attribute>
+					<attribute qualifier="placeType" type="PlaceType">
+						<persistence type="property" />
+						<description>To show the Place Type.</description>
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute qualifier="portName" type="CruisePort">
+						<persistence type="property" />
+						<description>To show the Cruise Port Name.</description>
+					</attribute>
+					<attribute qualifier="day" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>To show the day.</description>
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CruiseRoute" generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.CruiseRoute"
+				extends="AbstractTravelogixItem">
+				<description>Represents Cruise Route</description>
+				<attributes>
+					<attribute qualifier="routingCommonID" type="java.lang.String">
+						<persistence type="property" />
+						<description>To show the routing Common IDs.</description>
+					</attribute>
+					<attribute qualifier="cruiseDestinationName" type="CruiseDestination">
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+						<description>To show the destination Name.</description>
+					</attribute>
+					<attribute qualifier="numberOfNights" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>To show the number Of Nights.</description>
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute qualifier="routingName" type="java.lang.String">
+						<persistence type="property" />
+						<description>To show the Cruise Route.</description>
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute qualifier="copiedFrom" type="java.lang.String">
+						<persistence type="property" />
+						<description>To show the copied From.</description>
+					</attribute>
+					<attribute qualifier="onlineDate" type="java.util.Date">
+						<persistence type="property" />
+						<description>To show the Online Date.</description>
+					</attribute>
+					<attribute qualifier="offlineDate" type="java.util.Date">
+						<persistence type="property" />
+						<description>To show the Offline Date.</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="Ship">
+			<itemtype code="CruiseUpdate" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.CruiseUpdate"
+				extends="GenericItem">
+				<description> Represents Cruise Update </description>
+				<deployment table="cruiseupdate" typecode="21035" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="description">
+						<description>Description</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="descriptionType">
+						<description>Description Type</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="de.hybris.platform.util.StandardDateRange"
+						qualifier="dateRange">
+						<description>Display From Date</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="source">
+						<description>Source</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CruiseRuleInformation" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.CruiseRuleInformation"
+				extends="GenericItem">
+				<description> Represents Cruise Rule Information </description>
+				<deployment table="cruiseruleinformation" typecode="21036" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="ruleName">
+						<description>Rule Name</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="description">
+						<description>Description</description>
+						<persistence type="property" />
+						<modifiers read="true" write="true" />
+					</attribute>
+					<attribute type="RuleInformationFor" qualifier="ruleInformationFor">
+						<description>Rule Information For</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute type="Deck" qualifier="deck">
+						<description>Deck</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Cabin" qualifier="cabin">
+						<description>Cabin</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AbstractFacility" autocreate="true"
+				generate="true" abstract="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.AbstractFacility"
+				extends="GenericItem">
+				<description>Abstract Facility</description>
+				<deployment table="abstractfacility" typecode="21038" />
+				<attributes>
+					<attribute type="FacilityType" qualifier="facilityType">
+						<description>Facility Type</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<description>Facility Description</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="facilityName" type="java.lang.String">
+						<description>Facility Name</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="FacilityDetail" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.FacilityDetail"
+				extends="AbstractFacility">
+				<description>Facility Detail</description>
+				<attributes>
+					<attribute type="MediaCollection" qualifier="medias">
+						<description>Media Collections</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CruiseOpeningSchedule" autocreate="true"
+				generate="true" extends="OpeningSchedule"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.CruiseOpeningSchedule">
+				<description>CruiseOpeningSchedule Details</description>
+				<attributes>
+					<attribute qualifier="operationalPeriod" type="TimePeriod">
+						<persistence type="property" />
+						<description>OperationalDay</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="RouteInfo" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.RouteInfo"
+				extends="GenericItem">
+				<description> Represents Cruise Route Information</description>
+				<deployment table="routeinfo" typecode="21042" />
+				<attributes>
+					<attribute type="CruiseRoute" qualifier="cruiseRoute">
+						<description>Description</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="localArrivalTime" type="java.lang.String">
+						<persistence type="property" />
+						<description>Local Arrival Time</description>
+						<modifiers read="true" write="true" optional="false" />
+					</attribute>
+					<attribute qualifier="localDepartureTime" type="java.lang.String">
+						<persistence type="property" />
+						<description>Local Departure Time</description>
+						<modifiers read="true" write="true" optional="false" />
+					</attribute>
+					<attribute qualifier="dayDescriptionRemark" type="java.lang.String">
+						<persistence type="property" />
+						<description>Day Description Remark</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CabinOccupancy" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.CabinOccupancy"
+				extends="GenericItem">
+				<description> Represents Cabin Occupancy </description>
+				<deployment table="cabinoccupancy" typecode="21039" />
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="maxPax">
+						<description>Max Pax</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="maxChild">
+						<description>Max Child</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="maxAdult">
+						<description>Max Adult</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="ageForChildFrom">
+						<description>Age For Child From</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="ageForChildTo">
+						<description>Age For Child To</description>
+						<persistence type="property" />
+						<modifiers optional="false" read="true" write="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="CruisePackage">
+			<itemtype code="ShoreExcursion" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.ShoreExcursion">
+				<description>Represents shore excursions for all cruise
+				</description>
+				<deployment table="shoreexcursion" typecode="21055" />
+				<attributes>
+					<attribute qualifier="portName" type="CruisePort">
+						<persistence type="property" />
+						<description>To show the Cruise Port.</description>
+						<modifiers read="true" write="true" optional="false" />
+					</attribute>
+					<attribute qualifier="excursionCode" type="java.lang.String">
+						<persistence type="property" />
+						<description>To show the excursionCode.</description>
+						<modifiers read="true" write="true" optional="false" />
+					</attribute>
+					<attribute qualifier="excursionType" type="java.lang.String">
+						<persistence type="property" />
+						<description>To show the excursionType.</description>
+						<modifiers read="true" write="true" optional="false" />
+					</attribute>
+					<attribute qualifier="excursionName" type="java.lang.String">
+						<persistence type="property" />
+						<description>To show the excursionName.</description>
+						<modifiers read="true" write="true" optional="false" />
+					</attribute>
+					<attribute qualifier="duration" type="java.lang.String">
+						<persistence type="property" />
+						<description>To show the duration.</description>
+						<modifiers read="true" write="true" optional="false" />
+					</attribute>
+					<attribute qualifier="difficultyLevel" type="DifficultyLevelType">
+						<persistence type="property" />
+						<description>To show the DifficultyLevel.</description>
+						<modifiers read="true" write="true" optional="false" />
+					</attribute>
+					<!-- this can be uncommented after HighLight master data is created -->
+					<!-- <attribute qualifier="highLight" type="HighLights"> <persistence 
+						type="property" /> <description>To show the highLight.</description> </attribute> -->
+
+					<attribute qualifier="saleble" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>To show the saleble.</description>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<modifiers read="true" write="true" optional="false" />
+					</attribute>
+					<attribute qualifier="description" type="java.lang.String">
+						<persistence type="property" />
+						<description>To show the description.</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="VisaRequirement" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.VisaRequirement">
+				<description>Represents shore VisaRequirement for all CruisePackage
+				</description>
+				<deployment table="visarequirement" typecode="21054" />
+				<attributes>
+					<attribute qualifier="nationality" type="Country">
+						<persistence type="property" />
+						<description>To show the nationalities.</description>
+						<modifiers read="true" write="true" optional="false" />
+					</attribute>
+					<attribute qualifier="travellingCountry" type="Country">
+						<persistence type="property" />
+						<description>To show the travellingCountry.</description>
+						<modifiers read="true" write="true" optional="false" />
+					</attribute>
+					<!-- <attribute qualifier="visa" type="Visa"> <persistence type="property" 
+						/> <description>To show the visa.</description> </attribute> -->
+
+					<attribute qualifier="remark" type="java.lang.String">
+						<persistence type="property" />
+						<description>Day Description Remark</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AbstractItinerary" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.AbstractItinerary">
+				<description>AbstractItinerary Details</description>
+				<deployment table="abstractitinerary" typecode="21053" />
+				<attributes>
+					<attribute qualifier="itineraryId" type="java.lang.String">
+						<persistence type="property" />
+						<description>ItineraryId</description>
+						<modifiers read="true" write="true" />
+					</attribute>
+					<attribute qualifier="itineraryName" type="java.lang.String">
+						<persistence type="property" />
+						<description>ItineraryName</description>
+						<modifiers read="true" write="true" optional="false" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CruiseItinerary" autocreate="true" generate="true"
+				extends="AbstractItinerary"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.CruiseItinerary">
+				<description>Represents CruiseItinerary</description>
+				<attributes>
+					<attribute qualifier="departureDates" type="StandardDateRangeSet">
+						<persistence type="property" />
+						<description>Collection of DepartureDate</description>
+					</attribute>
+					<attribute qualifier="blockOutDepartureDates" type="StandardDateRangeSet">
+						<persistence type="property" />
+						<description>BlockOutDepartureDate</description>
+					</attribute>
+					<attribute qualifier="sailingDates" type="DateCollection">
+						<persistence type="property" />
+						<description>Collection of SailingDates</description>
+						<modifiers read="true" write="true" optional="false" />
+					</attribute>
+					<attribute qualifier="cruiseOperationalDay" type="CruiseOpeningSchedule">
+						<persistence type="property" />
+						<description>CruiseOperationalDay</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ItineraryMedia" autocreate="true" generate="true"
+				extends="Media"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.ItineraryMedia">
+				<description>ItineraryMedia Details</description>
+				<attributes>
+					<attribute qualifier="day" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>Day</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="Vehicle">
+			<itemtype code="Vehicle" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.Vehicle"
+				extends="Product">
+				<description> Vehicle Category.</description>
+				<attributes>
+					<attribute qualifier="vehicleCategory" type="VehicleCategory">
+						<description>Vehicle Category</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="VehicleDetails" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.product.transport.masters.core.jalo.VehicleDetails"
+				extends="GenericItem">
+				<description> Vehicle Details.</description>
+				<deployment table="vehicledetails" typecode="21073" />
+				<attributes>
+					<attribute qualifier="vehicleType" type="ProductCategorySubType">
+						<description>Vehicle Type</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="vehicleCategory" type="VehicleCategory">
+						<description>Vehicle Category</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="vehicleName" type="Vehicle">
+						<description>Vehicle Name</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="airCondition" type="java.lang.Boolean">
+						<description>Air Condition</description>
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="classification">
+			<itemtype code="ClassAttributeAssignment" generate="false"
+				autocreate="false">
+				<attributes>
+					<!-- <attribute qualifier="businessProcess" type="Business_Process"> 
+						<persistence type="property" /> <description>Business Process</description> 
+						</attribute> -->
+					<!-- <attribute qualifier="businessFunction" type="BusinessFunction"> 
+						<persistence type="property" /> <description>Business Function.</description> 
+						</attribute> -->
+					<!-- <attribute qualifier="productCategory" type="Category"> <persistence 
+						type="property" /> <description>Product Category</description> </attribute> -->
+					<!-- <attribute qualifier="productCategorySubType" type="Category"> 
+						<persistence type="property" /> <description>Product Category SubType</description> 
+						</attribute> -->
+					<!-- <attribute qualifier="controlType" type="ControlType"> <persistence 
+						type="property" /> <description>Control Type </description> </attribute> -->
+					<attribute qualifier="dropDownDataSource" type="EnumerationMetaType">
+						<persistence type="property" />
+						<description>Drop Down Data Source</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

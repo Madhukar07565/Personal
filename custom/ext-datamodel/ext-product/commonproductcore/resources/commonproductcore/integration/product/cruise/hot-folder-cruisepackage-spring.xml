@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+
+	<context:annotation-config />
+	<bean id="baseDirectoryCruisePackage" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogix/cruise/package" />
+	</bean>
+
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesCruisePackage"
+		directory="#{baseDirectoryCruisePackage}" filename-regex="cruise_package-(\d+)\.csv"
+		comparator="fileOrderComparatorCruisePackage">
+		<int:poller fixed-rate="100" />
+	</file:inbound-channel-adapter>
+
+	<bean id="fileOrderComparatorCruisePackage"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.FileOrderComparator">
+		<property name="prefixPriority">
+			<map>
+				<!-- default priority is 0 -->
+				<entry value="1" key="cruise_package" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesCruisePackage"
+		reply-channel="CruisePackageBatchFilesProc" directory="#{baseDirectoryCruisePackage}/processing"
+		delete-source-files="true" />
+
+	<int:service-activator input-channel="CruisePackageBatchFilesProc"
+		output-channel="CruisePackageBatchFilesHeaderInit" ref="CruisePackageHeaderSetupTask"
+		method="execute" />
+
+	<bean id="CruisePackageHeaderSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryCruisePackage" />
+	</bean>
+
+	<!-- 2) move the file to processing and setup header, partly site dependent -->
+	<int:service-activator input-channel="CruisePackageBatchFilesHeaderInit"
+		output-channel="CruisePackageBatchFilesHeader" ref="headerInitTask"
+		method="execute" />
+	<bean id="headerInitTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderInitTask">
+		<property name="languageParser" ref="batchLanguageParser" />
+		<property name="fallbackLanguage" value="en" />
+	</bean>
+	
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="CruisePackageBatchFilesHeader"
+		output-channel="batchFilesTran" ref="CruisePackageBatchTransformerTask"
+		method="execute" />
+
+	<bean id="CruisePackageBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+
+    <!-- Transformer converters mappings -->
+	
+	<bean id="batchCruisePackageMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_package" p:converter-ref="batchCruisePackageConverter" />
+	
+	<bean id="batchShoreExcursionConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_package" p:converter-ref="batchShoreExcursionConverter" />
+	
+	<bean id="batchShoreExcursionMediaConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_package" p:converter-ref="batchShoreExcursionMediaConverter" />
+	
+	<bean id="batchCruiseOperationalDayConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_package" p:converter-ref="batchCruiseOperationalDayConverter" />
+	
+	<bean id="batchCruisePackageItineraryConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_package" p:converter-ref="batchCruisePackageItineraryConverter" />
+	
+	<bean id="batchCruiseMediaPackageMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_package" p:converter-ref="batchCruiseMediaPackageConverter" />
+	
+	<bean id="batchVisaRequirementConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_package" p:converter-ref="batchVisaRequirementConverter" />
+	
+	<bean id="batchCruiseAncillaryConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_package" p:converter-ref="batchCruiseAncillaryConverter" />
+	
+	<bean id="batchCruiseAncillaryProductRefConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_package" p:converter-ref="batchCruiseAncillaryProductRefConverter" />
+
+	<bean id="batchRouteInfoConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="cruise_package" p:converter-ref="batchRouteInfoConverter" />
+	
+	
+	<!-- Common Header -->
+
+	<bean id="cruisePackageDefaultHeader" class="java.lang.String">
+		<constructor-arg>
+			<value># ImpEx for importing data into $CATALOG$
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+                $timeformat = hh:mm
+                $approved=approvalstatus(code)[default='approved']
+                              
+			</value>
+		</constructor-arg>
+	</bean>
+	<!-- End Of Common Header -->
+	
+	<bean id="batchCruisePackageConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK CruisePackage
+				#{cruisePackageDefaultHeader}
+				INSERT_UPDATE CruisePackage;$catalogVersion;code[unique=true];name;pakageName[unique=true];supplierProductCode;displayName;companyRecommended;supplierRatingAsOnDate[dateformat=$dateformat];companyRatingAsOnDate[dateformat=$dateformat];supplierRating(code);companyRating(code);cruiseCompanyName(code)[unique=true];cruiseBrandName(code)[unique=true];shipName(code)[unique=true];cruiseDestinationName;
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15}</value>
+		</property>
+		<property name="rowFilter">
+   		     <bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	         <property name="expression" value="row[0] == 'CruisePackage'"/>
+   		     </bean>
+  		</property>
+	</bean>
+	
+	<bean id="batchShoreExcursionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK ShoreExcursion
+				INSERT_UPDATE ShoreExcursion;excursionCode[unique=true];excursionType[unique=true];excursionName[unique=true];duration[unique=true];saleble[unique=true];description;difficultyLevel(code)[unique=true];portName(code)[unique=true];
+          </value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8}</value>
+		</property>
+		<property name="rowFilter">
+   		     <bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	         <property name="expression" value="row[0] == 'ShoreExcursion'"/>
+   		     </bean>
+  		</property>
+	</bean>
+		
+	<bean id="batchShoreExcursionMediaConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK ShoreExcursion Media
+				#{cruisePackageDefaultHeader}
+				$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+				$importFolder=file:$BASE_SOURCE_DIR$/images
+				INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier)[default=images];shoreExcursions(excursionCode)
+           </value>
+		</property>
+		<property name="impexRow">
+			<value>;ShoreExcursion/{2};$importFolder\{2};;{1};;{3}</value>
+		</property>
+		<property name="rowFilter">
+   		     <bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	         <property name="expression" value="row[0] == 'ShoreExcursionMedia'"/>
+   		     </bean>
+  		</property>
+	</bean>
+		
+	<bean id="batchCruiseOperationalDayConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK CruiseItinerary
+				#{cruisePackageDefaultHeader}
+				INSERT_UPDATE CruiseOpeningSchedule;code[unique=true];name;operationalPeriod(code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{4};{5};{6}</value>
+		</property>
+		<property name="rowFilter">
+   		     <bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	         <property name="expression" value="row[0] == 'CruiseItinerary'"/>
+   		     </bean>
+  		</property>
+	</bean>
+		
+	<bean id="batchCruisePackageItineraryConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK CruiseItinerary
+				#{cruisePackageDefaultHeader}
+				INSERT_UPDATE CruiseItinerary;itineraryId;itineraryName[unique=true];departureDates[dateformat= dd-mm-yyy hh:mm:ss];blockOutDepartureDates[dateformat= dd-mm-yyy hh:mm:ss];sailingDates[dateformat=$dateformat];cruiseOperationalDay(code)[unique=true];cruisePackage(code);shoreExcursion(excursionCode)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};;;{3};{4};{7};{8}</value>
+		</property>
+		<property name="rowFilter">
+   		     <bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	         <property name="expression" value="row[0] == 'CruiseItinerary'"/>
+   		     </bean>
+  		</property>
+	</bean>
+	   	
+	<bean id="batchCruiseMediaPackageConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK CruisePackage
+				#{cruisePackageDefaultHeader}
+				$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+				$importFolder=file:$BASE_SOURCE_DIR$/images
+				
+				INSERT_UPDATE ItineraryMedia;code[unique=true];mime;$catalogVersion;folder(qualifier)[default=images];realfilename;$media;day[unique=true];cruiseItinerary(itineraryName)[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;CruisePackage96Wx96H/{2};{5};{1};;{2};$importFolder\{2};{3};{4}</value>
+		</property>
+		<property name="rowFilter">
+   		     <bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	         <property name="expression" value="row[0] == 'CruiseItineraryMedia'"/>
+   		     </bean>
+  		</property>
+	</bean>
+	
+	<bean id="batchVisaRequirementConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK VisaRequirement
+				INSERT_UPDATE VisaRequirement;cruisePackage(code);nationality(isocode)[unique=true];travellingCountry(isocode)[unique=true];remark
+           </value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}</value>
+		</property>
+		<property name="rowFilter">
+   		     <bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	         <property name="expression" value="row[0] == 'VisaRequirement'"/>
+   		     </bean>
+  		</property>
+	</bean>	
+		
+	<bean id="batchCruiseAncillaryConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK Ancillary
+				#{cruisePackageDefaultHeader}
+				INSERT_UPDATE Ancillary;$catalogVersion[unique=true];code[unique=true];name;$approved;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];description;ancillaryType(code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8}</value>
+		</property>
+		<property name="rowFilter">
+   		     <bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	         <property name="expression" value="row[0] == 'Ancillary'"/>
+   		     </bean>
+  		</property>
+	</bean>
+	
+	<bean id="batchCruiseAncillaryProductRefConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK AncillaryProductReference
+				#{cruisePackageDefaultHeader}
+				INSERT_UPDATE ProductReference;source(code,catalogVersion(catalog(id),version))[unique=true,cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator];target(code,catalogVersion(catalog(id),version))[unique=true,cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator];referenceType(code);active;preselected
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{2}:{1};{3}:{1};{4};{5};{6}</value>
+		</property>
+		<property name="rowFilter">
+   		     <bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	         <property name="expression" value="row[0] == 'AncillaryProductRef'"/>
+   		     </bean>
+  		</property>
+	</bean>
+	
+	<bean id="batchRouteInfoConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK RouteInfo
+				INSERT_UPDATE RouteInfo;cruiseRoute(code)[unique=true];localArrivalTime[unique=true];localDepartureTime[unique=true];dayDescriptionRemark;itineraries(itineraryName)
+           </value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}</value>
+		</property>
+		<property name="rowFilter">
+   		     <bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	         <property name="expression" value="row[0] == 'RouteInfo'"/>
+   		     </bean>
+  		</property>
+	</bean>	
+</beans>

@@ -1,0 +1,83 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.client.document.core.setup.ClientDocumentSetup&/clientdocumentcore/import/sampledata/images
+$contentCatalog=Default
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+
+############################################# Point of Sale #######################################################
+INSERT_UPDATE PointOfSale ;pointOfSale(code)[unique=true]
+;WEBSITE
+;ALL
+
+INSERT_UPDATE Supplier;$contentCV;code[unique=true];commonUid;supplierType(code);enablerCategories(code);lobs(code)
+;;Taj Hotel;2131;ENABLER;DIRECT_CONNECT;FIT
+
+#Media medias
+INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\xls'];$catalogVersion;folder(qualifier);
+;documentdetails;$siteResource\documentdetails.xlsx;;;images
+
+################ template master
+#INSERT_UPDATE FormAndAttachment ; templateName;
+
+INSERT_UPDATE FormAndAttachment ; uploadForm[unique=true];attachTemplate;filePath(code)[unique=true];
+;true;false;documentdetails;
+
+INSERT_UPDATE DocumentSetting ; salesStage(code)[unique=true];documentType(code)[unique=true];documentName(code);documentMandatory;handoverDocumentGeneration;documentBy(code);documentAsPer(code);documentFormat(code);emailCommunication;smsCommmunication;courierCommunication;documentCutOffDays;cutOffDaysAndHours(code);cutOffDaysType(code);autoGenerationHandover;autoGeHandoverDaysAndHours(code);autoGenerationHandoverType(code);formAndAttachment(uploadForm,filePath(code));
+;ENQUIRY;HANDOVER_DOCUMENTS;HOTEL_VOCHER;true;false;SYSTEM_TO_COMPUTER;PASSENGER_WISE;E_DOCUMENT;true;false;true;15;DAYS;PRIOR_TO_TRAVEL;true;HOURS;FROM_BOOKING_DATE;true:documentdetails;
+
+INSERT_UPDATE ForexProductDocument ; includeProducts[unique=true];
+;true;
+
+INSERT_UPDATE TransportationExceptFlightAndCruiseProductDocument ; includeProducts[unique=true];category(code,$catalogVersion);transferType(code)[unique=true];
+;true;C001;SHARED;
+
+INSERT_UPDATE TransportationFlightProductDocument ; includeProducts;oneWay;return;multiCity;airlineName(code,$catalogVersion)[unique=true];countryFrom(isocode);cityFrom(isocode)[unique=true];countryTo(isocode);cityTo(isocode)[unique=true];
+;true;false;true;true;123;US;ABE;US;ABL;
+
+INSERT_UPDATE TransportationCruiseProductDocument ; includeProducts;cruiseBrandName(code)[unique=true];cruisePackage(code,$catalogVersion);ancillaryName(ancillaryName[lang=en,unique=true]);shipName(code,$catalogVersion)[unique=true];itineraryName(itineraryId);
+;true;1254;1809;CruiseAncillary_01;SHP-444;cruise_itinerary_1;
+
+INSERT_UPDATE AccommodationProductDocument ; includeProducts;continent(isocode);chain(code)[unique=true];productName(code,$catalogVersion)[unique=true];country(isocode);city(isocode);brand(code);ancillaryName(ancillaryName[lang=en,unique=true]);
+;true;AS;160;87762;US;ABE;ACCO_BR_01;Taj Khazana;
+
+INSERT_UPDATE ActivitiesProductDocument ; includeProducts;continent(isocode);productNameSubType(code,$catalogVersion)[unique=true];productName(code,$catalogVersion)[unique=true];country(isocode);city(isocode);ancillaryName(ancillaryName[lang=en,unique=true]);
+;true;AS;3001;121;US;ABE;Golf Hyat;
+
+INSERT_UPDATE Product;$catalogVersion;code[unique=true];
+;;123A;
+
+INSERT_UPDATE VisaProductDocument ; visaProduct(code,$catalogVersion)[unique=true];
+;123A;
+
+INSERT_UPDATE InsuranceProductDocument ; insuranceProduct(code,$catalogVersion)[unique=true];
+;123A;
+
+INSERT_UPDATE HolidaysProductDocument ; includeProducts[unique=true];flavorType(code,$catalogVersion)[unique=true];destination[unique=true];productName(code,$catalogVersion);brand;country(isocode);productFlavorName(code,$catalogVersion);
+;true;;;;;IN;;
+
+INSERT_UPDATE DocumentHandlingConfigMaster ; commonDocumentHandlingMasterId[unique=true];companyDocumentHandlingMasterId;copiedFrom;nationality(Country.isocode);status;effectiveFrom[dateformat=$dateformat];reason;remark;pointOfSale(pointOfSale(code));supplier(code);documentSetting(salesStage(code),documentType(code));activitiesProductDocument(productNameSubType(code),productName(code));accommodationProductDocument(chain(code),productName(code));transportationCruiseProductDocument(cruiseBrandName(code),shipName(code));transportationFlightProductDocument(cityFrom(isocode),cityTo(isocode));transportationExceptFlightAndCruiseProductDocument(includeProducts,transferType(code));forexProductDocument(includeProducts);visaProductDocument(visaProduct(code));insuranceProductDocument(insuranceProduct(code));holidaysProductDocument(includeProducts);
+;DocumentHandlingConfigMaster_1020;DocumentHandling_JetAirways;JetAirways_1025;IN,US;;12-05-2016;reasons;Document is not good;WEBSITE;Taj Hotel;ENQUIRY:HANDOVER_DOCUMENTS;3001:121;160:87762;1254:SHP-444;ABE:ABL;true:SHARED;true;123A;123A;true;
+
+
+INSERT_UPDATE PaymentCriteria ; modeOfPayment(code)[unique=true];criteriaName(code)[unique=true];approvalRequired;paymentRealization;
+;CREDIT_CARD;ON_REQUEST;true;false;
+
+INSERT_UPDATE BookingStatusCriteria ; criteriaName(code)[unique=true]; approvalRequired[unique=true];
+;CONFIRMED;false;
+
+INSERT_UPDATE EnquiryCriteria ; criteriaName(code)[unique=true]; approvalRequired[unique=true];
+;CONFIRMED;false;
+
+INSERT_UPDATE QuotationCriteria ; criteriaName(code)[unique=true]; approvalRequired[unique=true];
+;CONFIRMED;false;
+
+INSERT_UPDATE NumberOfNightsCriteria ; numberofDays[unique=true];numberOfDaysDetails(code)[unique=true];
+;8;ABOVE;
+
+INSERT_UPDATE TriggerEvent ; paidBookings;timeLimitBooking[unique=true];criteriaType(code)[unique=true];paymentCriteria(modeOfPayment(code),criteriaName(code));bookingStatusCriteria(criteriaName(code),approvalRequired);enquiryCriteria(criteriaName(code),approvalRequired);quotationCriteria(criteriaName(code),approvalRequired);numberOfNightsCriteria(numberofDays,numberOfDaysDetails(code));
+;true;false;PAYMENT_TYPE;CREDIT_CARD:ON_REQUEST;CONFIRMED:false;CONFIRMED:false;CONFIRMED:false;8:ABOVE;
+

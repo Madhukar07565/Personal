@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+   <context:annotation-config />
+	
+	<bean id="baseDirectoryCommonInvDef" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogix/inventoryDefinition/common" />
+	</bean>
+	
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesCommonInvDef"
+		directory="#{baseDirectoryCommonInvDef}" filename-regex="inventory_definition_common-(\d+)\.csv"
+		comparator="fileOrderComparator">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+	
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesCommonInvDef"
+		reply-channel="commonInvDefBatchFilesProc" directory="#{baseDirectoryCommonInvDef}/processing"
+		delete-source-files="true" />
+		
+	<int:service-activator input-channel="commonInvDefBatchFilesProc"
+		output-channel="commonInvDefBatchFilesHeaderInit" ref="commonInvDefHeaderSetupTask"
+		method="execute" />
+
+	<bean id="commonInvDefHeaderSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryCommonInvDef" />
+	</bean>
+
+	<int:service-activator input-channel="commonInvDefBatchFilesHeaderInit"
+		output-channel="commonInvDefBatchFilesHeader" ref="headerInitTask"
+		method="execute" />
+		
+	<bean id="headerInitTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderInitTask">
+		<property name="sequenceIdParser" ref="batchSequenceIdParser" />
+		<property name="languageParser" ref="batchLanguageParser" />
+		<property name="fallbackLanguage" value="en" />
+	</bean>
+
+	<!-- <bean id="batchSequenceIdParser"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.util.SequenceIdParser">
+		<property name="parser">
+			<bean class="de.hybris.platform.acceleratorservices.util.RegexParser">
+				<property name="regex" value="-(\d+)\.csv" />
+			</bean>
+		</property>
+	</bean> -->
+
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="commonInvDefBatchFilesHeader"
+		output-channel="batchFilesTran" ref="commonInvDefBatchTransformerTask"
+		method="execute" />
+
+	<bean id="commonInvDefBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>	
+	
+	
+	<!-- Transformer converters mappings -->
+	
+	<!-- PaymentSchedule -->
+	<bean id="batchPaymentScheduleMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_common" p:converter-ref="batchPaymentScheduleConverter" />
+
+	<bean id="batchPaymentScheduleConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			$dateformat=dd-MM-yyyy
+			INSERT_UPDATE PaymentSchedule;paymentAdviceNo[unique=true];paymentType(code);amount;currency(isocode);remark;paymentDueDate[dateformat=$dateformat];paymentStatus(code);actualAmountPaid;balance;daysBeforeTravel
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Payment_Schedule'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- CompanyInfo -->
+	<bean id="batchCompanyInfoMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_common" p:converter-ref="batchCompanyInfoConverter" />
+
+	<bean id="batchCompanyInfoConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+			INSERT_UPDATE CompanyInfo;$catalogVersion[unique=true];sbu(Company.uid)[unique=true];bu(Company.uid)[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Company_Info'" />
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<!-- ListCutOffs -->
+	<bean id="batchListCutOffsMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_common" p:converter-ref="batchListCutOffsConverter" />
+
+	<bean id="batchListCutOffsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>INSERT_UPDATE ListCutOffs;definedBy[unique=true](code);typeOfList(code);appliedOn(code);supplierCutOffDays[unique=true];bufferDays;noOfNTBAS;releaseTime
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'List_Cut_Offs'" />
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<!-- FreeOfCostSeatsOrTickets -->
+	<bean id="batchFreeOfCostSeatsOrTicketsMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_common" p:converter-ref="batchFreeOfCostSeatsOrTicketsConverter" />
+
+	<bean id="batchFreeOfCostSeatsOrTicketsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>INSERT_UPDATE FreeOfCostSeatsOrTickets;slabType(code)[unique=true];fromValue[unique=true];toValue[unique=true];numberOfFrees;freeOfCostPercentage
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Free_Of_Cost_SeatsOrTickets'" />
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<!-- CutOffForFreeSale -->
+	<bean id="batchCutOffForFreeSaleMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_common" p:converter-ref="batchCutOffForFreeSaleConverter" />
+
+	<bean id="batchCutOffForFreeSaleConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>INSERT_UPDATE CutOffForFreeSale;definedBy(code)[unique=true];releaseDayOrHrs[unique=true];appliedOn(code)[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Cut_Off_For_FreeSale'" />
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<!-- CutOffsAndCharges -->
+	<bean id="batchCutOffsAndChargesMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_common" p:converter-ref="batchCutOffsAndChargesConverter" />
+
+	<bean id="batchCutOffsAndChargesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>INSERT_UPDATE CutOffsAndCharges;cutOffFromDay[unique=true];cutOffToDay[unique=true];amount[unique=true];currency(isocode);amountType(code);range(code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Cut_Offs_And_Charges'" />
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<!-- ChangeRequestCutOffsAndCharges -->
+	<bean id="batchChangeRequestCutOffsAndChargesMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_common" p:converter-ref="batchChangeRequestCutOffsAndChargesConverter" />
+
+	<bean id="batchChangeRequestCutOffsAndChargesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>INSERT_UPDATE ChangeRequestCutOffsAndCharges;priceComponent[unique=true](code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Change_Request_Cut_Offs_And_Charges'" />
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<!-- ChangeRequestPenaltyCharges -->
+	<bean id="batchChangeRequestPenaltyChargesMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_common" p:converter-ref="batchChangeRequestPenaltyChargesConverter" />
+
+	<bean id="batchChangeRequestPenaltyChargesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>INSERT_UPDATE ChangeRequestPenaltyCharges;definedBy(code)[unique=true];penaltyChangesFor(code)[unique=true];changeRequestCutOffsAndCharges(ChangeRequestCutOffsAndCharges.priceComponent(code))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Change_Request_Penalty_Charges'" />
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<!-- AssociateInventory -->
+<!-- 	<bean id="batchAssociateInventoryMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_common" p:converter-ref="batchAssociateInventoryConverter" />
+
+	<bean id="batchAssociateInventoryConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+			INSERT_UPDATE AssociateInventory;inventoryFor(code)[unique=true];productCategories[unique=true](code,$catalogVersion);productCategorySubType(code);products;variants;numberOfDistributedInventory
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Associate_Inventory'" />
+			</bean>
+		</property>
+	</bean> -->
+	
+	
+	<!-- PaymentInformation -->
+	<bean id="batchPaymentInformationMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_common" p:converter-ref="batchPaymentInformationConverter" />
+
+	<bean id="batchPaymentInformationConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			$dateformat=dd-MM-yyyy
+			INSERT_UPDATE PaymentInformation;currency(isocode);balFromLastPaymentAdv;amount[unique=true];paymentType;paymentDueDate[dateformat=$dateformat][unique=true];remark
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Payment_Information'" />
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<!-- PaymentDetailsVmpd -->
+	<bean id="batchPaymentDetailsVmpdMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_common" p:converter-ref="batchPaymentDetailsVmpdConverter" />
+
+	<bean id="batchPaymentDetailsVmpdConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			$dateformat=dd-MM-yyyy
+			INSERT_UPDATE PaymentDetailsVmpd;vmpdNumber[unique=true];currency(isocode);amount;amountPending;dateOfGeneration[dateformat=$dateformat];remark;
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Payment_Details_Vmpd'" />
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<!-- PrePaymentDetail -->
+	<bean id="batchPrePaymentDetailMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_common" p:converter-ref="batchPrePaymentDetailConverter" />
+
+	<bean id="batchPrePaymentDetailConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			$dateformat=dd-MM-yyyy
+			INSERT_UPDATE PrePaymentDetail;typeOfPayment(code)[unique=true];modeOfPayment(PaymentMode.code);drawnOn(Bank.code)[unique=true];paymentRefNo;finSystemRefNo;currency(isocode);amount;amountPending;date[dateformat=$dateformat];partPayment;remark
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Pre_Payment_Detail'" />
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<!-- InventoryPaymentAdvice -->
+	<bean id="batchInventoryPaymentAdviceMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="inventory_definition_common" p:converter-ref="batchInventoryPaymentAdviceConverter" />
+
+	<bean id="batchInventoryPaymentAdviceConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+			$dateformat=dd-MM-yyyy
+			INSERT_UPDATE InventoryPaymentAdvice;$catalogVersion;paymentAdviceNo[unique=true];paymentStatus(code);inventoryID(HolidayInventoryDefinition.inventoryID);sbu(Company.uid);bu(Company.uid);supplierName(code);country(isocode);paymentInformation(PaymentInformation.amount,PaymentInformation.paymentDueDate[dateformat=$dateformat]);vmpdPaymentDetails(PaymentDetailsVmpd.vmpdNumber);prePaymentDetails(PrePaymentDetail.typeOfPayment(code),PrePaymentDetail.drawnOn(Bank.code));medias
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9}:{10};{11};{12}:{13}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Inventory_Payment_Advice'" />
+			</bean>
+		</property>
+	</bean>
+	
+	</beans>

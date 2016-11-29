@@ -1,0 +1,109 @@
+<AirInterfaceRS xmlns="http://www.coxandkings.com/integ/suppl/airinterface" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:ns6="http://www.coxandkings.com/integ/suppl/air/AirBusinessSyncService">
+   <ResponseHeader xmlns="http://www.coxandkings.com/integ/suppl/air">
+      <Status xmlns="http://www.coxandkings.com/integ/suppl/common">SUCCESS</Status>
+      <UserID xmlns="http://www.coxandkings.com/integ/suppl/common">Test</UserID>
+      <SessionID xmlns="http://www.coxandkings.com/integ/suppl/common">123</SessionID>
+      <TransactionID xmlns="http://www.coxandkings.com/integ/suppl/common">10</TransactionID>
+   </ResponseHeader>
+   <ResponseBody>
+      <OTA_AirPriceRSWrapper xmlns="http://www.coxandkings.com/integ/suppl/air">
+         <SupplierID>MYSTIFLY</SupplierID>
+		 <Sequence>1</Sequence>
+       <tns:OTA_AirPriceRS Target="Test" xmlns:tns="http://www.opentravel.org/OTA/2003/05">
+         <tns:Success>true</tns:Success>
+         <tns:PricedItineraries>
+            <tns:PricedItinerary SequenceNumber="1" PriceType="WebFare">
+               <tns:AirItinerary DirectionInd="OneWay">
+                  <tns:OriginDestinationOptions>
+                     <tns:OriginDestinationOption>
+                        <tns:FlightSegment MealCode="" FlightNumber="5267" ResBookDesigCode="" DepartureDateTime="2016-07-11T07:35:00" ArrivalDateTime="2016-07-11T10:00:00" StopQuantity="0">
+                           <tns:DepartureAirport LocationCode="LHR"/>
+                           <tns:ArrivalAirport LocationCode="DUS"/>
+                           <tns:OperatingAirline Code="AB" FlightNumber="5267"/>
+                           <tns:Equipment/>
+                           <tns:MarketingAirline Code="AB"/>
+                           <tns:MarriageGrp/>
+                           <tns:StopLocation LocationCode=""/>
+                        </tns:FlightSegment>
+                        <tns:FlightSegment MealCode="" FlightNumber="7480" ResBookDesigCode="" DepartureDateTime="2016-07-11T17:05:00" ArrivalDateTime="2016-07-11T19:30:00" StopQuantity="0">
+                           <tns:DepartureAirport LocationCode="DUS"/>
+                           <tns:ArrivalAirport LocationCode="JFK"/>
+                           <tns:OperatingAirline Code="AB" FlightNumber="7480"/>
+                           <tns:Equipment/>
+                           <tns:MarketingAirline Code="AB"/>
+                           <tns:MarriageGrp/>
+                           <tns:StopLocation LocationCode=""/>
+                        </tns:FlightSegment>
+                     </tns:OriginDestinationOption>
+                  </tns:OriginDestinationOptions>
+               </tns:AirItinerary>
+               <tns:AirItineraryPricingInfo ValidatingAirlineCode="AB" QuoteID="MjEwMDAwMCZURiZURiYwMTQwYzFjMi0yODc2LTRiNmMtOWNlOS1lYzEyMmQ2YjI2MjMmVEYm">
+                  <tns:ItinTotalFare>
+                     <tns:BaseFare CurrencyCode="GBP" DecimalPlaces="2" Amount="1748.32"/>
+                     <tns:EquivFare CurrencyCode="INR" DecimalPlaces="2" Amount="1748.32"/>
+                     <tns:Taxes>
+                        <tns:Tax CurrencyCode="INR" DecimalPlaces="2" Amount="60502.51"/>
+                     </tns:Taxes>
+                     <tns:TotalFare CurrencyCode="INR" DecimalPlaces="2" Amount="229844.86"/>
+                  </tns:ItinTotalFare>
+                  <tns:PTC_FareBreakdowns>
+                     <tns:PTC_FareBreakdown>
+                        <tns:PassengerTypeQuantity Code="ADT" Quantity="2"/>
+                        <tns:FareBasisCodes>
+                           <tns:FareBasisCode>AAB5267AAB7480</tns:FareBasisCode>
+                        </tns:FareBasisCodes>
+                        <tns:PassengerFare>
+                           <tns:BaseFare CurrencyCode="GBP" DecimalPlaces="2" Amount="724.00"/>
+                           <tns:EquivFare CurrencyCode="INR" DecimalPlaces="2" Amount="70126.50"/>
+                           <tns:Taxes>
+                              <tns:Tax Amount="25077.97" TaxCode="MISCTAX" CurrencyCode="INR" DecimalPlaces="2"/>
+                           </tns:Taxes>
+                           <tns:TotalFare CurrencyCode="INR" DecimalPlaces="2" Amount="95204.48"/>
+                        </tns:PassengerFare>
+                        <tns:Endorsements NonRefundableIndicator="InformationNotAvailable"/>
+                     </tns:PTC_FareBreakdown>
+                     <tns:PTC_FareBreakdown>
+                        <tns:PassengerTypeQuantity Code="INF" Quantity="2"/>
+                        <tns:FareBasisCodes>
+                           <tns:FareBasisCode>IAB5267IAB7480</tns:FareBasisCode>
+                        </tns:FareBasisCodes>
+                        <tns:PassengerFare>
+                           <tns:BaseFare CurrencyCode="GBP" DecimalPlaces="2" Amount="150.16"/>
+                           <tns:EquivFare CurrencyCode="INR" DecimalPlaces="2" Amount="14544.67"/>
+                           <tns:Taxes>
+                              <tns:Tax Amount="5173.28" TaxCode="MISCTAX" CurrencyCode="INR" DecimalPlaces="2"/>
+                           </tns:Taxes>
+                           <tns:TotalFare CurrencyCode="INR" DecimalPlaces="2" Amount="19717.95"/>
+                        </tns:PassengerFare>
+                        <tns:Endorsements NonRefundableIndicator="InformationNotAvailable"/>
+                     </tns:PTC_FareBreakdown>
+                  </tns:PTC_FareBreakdowns>
+                  <tns:TPA_Extensions>
+                     <ns6:Baggages/>
+                     <ns6:Meals/>
+                     <ns6:SSRs/>
+                  </tns:TPA_Extensions>
+               </tns:AirItineraryPricingInfo>
+               <tns:TicketingInfo TicketType="eTicket"/>
+            </tns:PricedItinerary>
+         </tns:PricedItineraries>
+         <tns:Errors>
+            <tns:Error ShortText="" Code=""/>
+         </tns:Errors>
+      </tns:OTA_AirPriceRS>
+   </OTA_AirPriceRSWrapper>
+   <OTA_AirPriceRSWrapper xmlns="http://www.coxandkings.com/integ/suppl/air">
+         <SupplierID>INDIGO</SupplierID>
+         <Sequence>2</Sequence>
+         <tns:OTA_AirPriceRS xmlns:tns="http://www.opentravel.org/OTA/2003/05">
+   <tns:PricingOverview>
+      <tns:FareInfo>
+         <tns:BaseFare Amount="13689.00000"/>
+         <tns:EquivFare Amount="13689.00000"/>
+         <tns:TotalFare Amount="13689.00000"/>
+      </tns:FareInfo>
+   </tns:PricingOverview>
+</tns:OTA_AirPriceRS>
+</OTA_AirPriceRSWrapper>
+   </ResponseBody>
+</AirInterfaceRS>

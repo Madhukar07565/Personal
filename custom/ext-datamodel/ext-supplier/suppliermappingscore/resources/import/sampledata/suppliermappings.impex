@@ -1,0 +1,13 @@
+INSERT_UPDATE SupplierProduct;code[unique=true];name;supplier(code)
+;Supp Jet Air;Supp Jet Airways;Jet Airways
+;SuppTaj;Supplier Taj;Taj Group
+;SuppHilton;Supplier Hilton;Hilton
+
+INSERT_UPDATE SupplierCity;code[unique=true];name;stateCode;countryCode;supplier(code);active;
+;BOM;Bombay;MH;IND;Jet Airways;true;
+;DEL;Delhi;DEL;IND;Taj Group;true;
+;JBP;Jabalpur;MP;IND;Hilton;true;
+
+INSERT_UPDATE SupplierCountry;code[unique=true];name;supplier(code);active;
+;AUS;Australia;Taj Group;true;
+;ENG;England;Hilton;true;

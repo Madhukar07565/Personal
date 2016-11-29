@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<relations>
+		<relation localized="false" code="SupplierMapping2DumRel">
+			<deployment table="supmapng2dumprel" typecode="20802" />
+			<sourceElement type="AbstractSupplierMapping"
+				qualifier="mappings" cardinality="many" />
+			<targetElement type="AbstractSupplierDumpItem"
+				qualifier="dumpItems" cardinality="many" />
+		</relation>
+		<relation localized="false" code="SupplierMapping2CategoryRel">
+			<deployment table="supmapng2catrel" typecode="20803" />
+			<sourceElement type="AbstractSupplierMapping"
+				qualifier="mappingsForCategory" cardinality="many" />
+			<targetElement type="Category" qualifier="categoriesForMapping"
+				cardinality="many" />
+		</relation>
+		<!--relation localized="false" code="CompanyProductMappingRel"> <deployment 
+			table="comprodmaprel" typecode="20806" /> <sourceElement type="ProductMapping" 
+			qualifier="productMappings" cardinality="many" /> <targetElement type="Product" 
+			qualifier="companyProducts" cardinality="many" /> </relation> <relation localized="false" 
+			code="ComaonyCountryMappingRel"> <deployment table="supcountrymaprel" typecode="20809" 
+			/> <sourceElement type="SupplierCountryMapping" qualifier="countryMappings" 
+			cardinality="many" /> <targetElement type="Country" qualifier="countries" 
+			cardinality="many" /> </relation> <relation localized="false" code="ComaonyCityappingRel"> 
+			<deployment table="supcitymaprel" typecode="20810" /> <sourceElement type="SupplierCityMapping" 
+			qualifier="cityMappings" cardinality="many" /> <targetElement type="City" 
+			qualifier="cities" cardinality="many" /> </relation> <relation localized="false" 
+			code="SupplierProductMappingRel"> <deployment table="supprodmaprel" typecode="20811" 
+			/> <sourceElement type="ProductMapping" qualifier="productMappings" cardinality="many" 
+			/> <targetElement type="SupplierProduct" qualifier="supplierProducts" cardinality="many" 
+			/> </relation -->
+		<relation localized="false" code="CompSupplier2EnablersMapping">
+			<sourceElement type="CompositeSupplier" qualifier="compositeSupplier"
+				cardinality="one" />
+			<targetElement type="SupplierEnablersMapping"
+				qualifier="enablersMappings" cardinality="many">
+				<modifiers partof="true" optional="false" />
+			</targetElement>
+		</relation>
+		<relation localized="false" code="SupplierRoomMappingRel">
+			<deployment table="supproommaprel" typecode="20812" />
+			<sourceElement type="SupplierRoomMapping" qualifier="roomMappings"
+				cardinality="many" />
+			<targetElement type="SupplierRoomCategory" qualifier="supplierRoomCategory"
+				cardinality="many" />
+		</relation>
+
+	</relations>
+
+	<itemtypes>
+		<typegroup name="suppliermapping">
+			<itemtype code="AbstractSupplierMapping" abstract="true"
+				extends="AbstractTravelogixItem"
+				jaloclass="com.cnk.travelogix.supplier.mappings.jalo.AbstractSupplierMapping">
+				<deployment table="suppliermappings" typecode="20800" />
+				<attributes>
+					<attribute qualifier="workFlowStatus" type="ApprovalWorkFlowStatus">
+						<description>Work Flow Status</description>
+						<defaultvalue>em().getEnumerationValue("WorkFlowStatus","DRAFT")
+						</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="SupplierCountryMapping" extends="AbstractSupplierMapping"
+				jaloclass="com.cnk.travelogix.supplier.mappings.country.jalo.SupplierCountryMapping">
+				<attributes>
+					<attribute type="Country" qualifier="country">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SupplierCountry" qualifier="supplierCountry">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="SupplierCityMapping" extends="AbstractSupplierMapping"
+				jaloclass="com.cnk.travelogix.supplier.mappings.city.jalo.SupplierCityMapping">
+				<attributes>
+					<attribute type="City" qualifier="city">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SupplierCity" qualifier="supplierCity">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AbstractSupplierDumpItem" abstract="true"
+				jaloclass="com.cnk.travelogix.supplier.mappings.dump.jalo.AbstractSupplierDumpItem">
+				<deployment table="supplierdumps" typecode="20801" />
+				<attributes>
+					<attribute type="Supplier" qualifier="supplier">
+						<modifiers optional="false" unique="true" initial="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="code">
+						<modifiers optional="false" unique="true" initial="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="name">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="active">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="SupplierCountry" extends="AbstractSupplierDumpItem"
+				jaloclass="com.cnk.travelogix.supplier.mappings.country.jalo.SupplierCountry" />
+
+			<itemtype code="SupplierCity" extends="AbstractSupplierDumpItem"
+				jaloclass="com.cnk.travelogix.supplier.mappings.city.jalo.SupplierCity">
+				<attributes>
+					<attribute type="java.lang.String" qualifier="stateCode">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="stateName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="countryCode">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="countryName">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="MarketMapping" extends="AbstractSupplierMapping"
+				jaloclass="com.cnk.travelogix.supplier.mappings.market.jalo.MarketMapping">
+				<attributes>
+					<attribute type="Supplier" qualifier="supplier">
+						<modifiers optional="false" unique="true" initial="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ClientType" qualifier="clientType">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SupplierMarket" qualifier="supplierMarket">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Market" qualifier="companyMarket">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="effectiveFrom">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="marketMappingExist">
+						<persistence type="property" />
+						<defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="ratesDefined">
+						<persistence type="property" />
+						<defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="SupplierProduct" extends="AbstractSupplierDumpItem"
+				jaloclass="com.cnk.travelogix.supplier.mappings.product.jalo.SupplierProduct">
+				<attributes>
+					<attribute type="java.lang.String" qualifier="address">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="telephone">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="country">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="city">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="location">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="firstBookingEnabled">
+						<persistence type="property" />
+						<defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+						<modifiers read="true" write="true" optional="true"
+							search="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<!--itemtype code="ProductMapping" extends="AbstractTravelogixItem" jaloclass="com.cnk.travelogix.supplier.mappings.product.jalo.ProductMapping"> 
+				<deployment table="productmappings" typecode="20805" /> </itemtype -->
+
+			<itemtype code="SupplierProductMapping" extends="AbstractSupplierMapping"
+				abstract="true"
+				jaloclass="com.cnk.travelogix.supplier.mappings.product.jalo.SupplierProductMapping">
+				<deployment table="supplierproductmappings" typecode="20805" />
+				<attributes>
+					<attribute type="SupplierProduct" qualifier="supplierProduct">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="SupplierAccommodationMapping" extends="SupplierProductMapping"
+				jaloclass="com.cnk.travelogix.supplier.mappings.product.jalo.SupplierAccommodationMapping">
+				<attributes>
+					<attribute type="Accommodation" qualifier="accommodation">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CompositeSupplier" extends="AbstractSupplierMapping"
+				jaloclass="com.cnk.travelogix.supplier.mappings.compositesupplier.jalo.CompositeSupplier">
+				<attributes>
+					<attribute type="Market" qualifier="companyMarket">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Supplier" qualifier="supplier">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="SupplierEnablersMapping"
+				jaloclass="com.cnk.travelogix.supplier.mappings.enablers.jalo.SupplierEnablersMapping">
+				<deployment table="supenbmappings" typecode="20808" />
+				<attributes>
+					<attribute type="Supplier" qualifier="connectivityEnabler">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Supplier" qualifier="settlementEnabler">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="active">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.util.Date" qualifier="activeFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="activeTo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Market" qualifier="companyMarket">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="SupplierRoomMapping" extends="AbstractSupplierMapping"
+				jaloclass="com.cnk.travelogix.supplier.mappings.room.jalo.SupplierRoomMapping">
+				<description>Describes mapping between supplier rooms and travelogix
+					rooms</description>
+				<attributes>
+					<attribute type="Accommodation" qualifier="product">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RoomCategory" qualifier="roomCategory">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RoomType" qualifier="roomType">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="SupplierRoomCategory" extends="AbstractSupplierDumpItem"
+				jaloclass="com.cnk.travelogix.supplier.mappings.room.jalo.SupplierRoomCategory">
+				<attributes>
+					<attribute type="java.lang.String" qualifier="hotelId">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="roomCategory">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="roomType">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+		</typegroup>
+	</itemtypes>
+</items>

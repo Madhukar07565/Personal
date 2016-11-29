@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<process xmlns="http://www.hybris.de/xsd/processdefinition" start="sendAlertNotificationAction" name="workflowTriggerProcess"
+		processClass="de.hybris.platform.processengine.model.BusinessProcessModel" onError="error">
+
+	<action id="sendAlertNotificationAction" bean="sendAlertNotificationAction">
+		<transition name="OK" to="success"/>
+		<transition name="NOK" to="error"/>
+	</action>
+
+	<end id="error" state="ERROR">Something went wrong while sending Alert to the Customer.</end>
+	<end id="success" state="SUCCEEDED">Sent Notification to Customer Successfully.</end>
+
+</process>

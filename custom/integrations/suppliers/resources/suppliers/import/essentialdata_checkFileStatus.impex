@@ -1,0 +1,12 @@
+# Impex for creating paymentrelation clean up Cron Job
+
+INSERT_UPDATE ServicelayerJob;code[unique=true];springId;sessionUser(uid);sessionLanguage(isoCode)
+;checkFileStatusJob;checkFileStatusJob;admin;en
+
+INSERT_UPDATE CheckFileStatusCronJob;code[unique=true];job(code);sessionUser(uid);sessionLanguage(isoCode);sessionCurrency(isocode)
+;checkFileStatusCronJob;checkFileStatusJob;admin;en;USD
+
+INSERT_UPDATE Trigger;cronJob(code)[unique=true];second;minute;hour;day;month;year;relative;active;maxAcceptableDelay
+;checkFileStatusCronJob;0;5;0;-1;-1;-1;false;true;-1
+
+

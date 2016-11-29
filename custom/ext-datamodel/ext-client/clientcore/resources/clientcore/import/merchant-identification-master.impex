@@ -1,0 +1,12 @@
+# Sample data of MID(Merchant Identification Master) Master profile.
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+
+INSERT_UPDATE MerchantIdentificationDetails;midNumber[unique=true];midTypes(MidType.code);alias;clientType(code);currency(Currency.isocode);bankDetail(intermediaryBranchCode);acquirers(Supplier.code,$catalogVersion);enabler(Supplier.code,$catalogVersion);status(code)
+;121;EMI;Ax;B2B;INR;;GTA;Jet Airways;ACTIVE
+;122;OFFER;SB;B2C;INR;;GTA;Jet Airways;ACTIVE
+;123;EMI;BOB;B2C;INR;;GTA;Jet Airways;ACTIVE
+;124;EMI;ABB;B2B;INR;;GTA;Jet Airways;ACTIVE
+

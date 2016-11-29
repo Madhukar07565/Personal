@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<process xmlns="http://www.hybris.de/xsd/processdefinition" start="sendCustomerToCRM" name="sendCustomerToCRMProcess"
+		processClass="com.cnk.travelogix.common.core.model.SendCustomerToCRMProcessModel" onError="error">
+
+	<action id="sendCustomerToCRM" bean="sendCustomerToCRM">
+		<transition name="OK" to="success"/>
+		<transition name="NOK" to="error"/><!-- retry to=sendCustomerToCRM-->
+	</action>
+
+	<end id="error" state="ERROR">Something went wrong.</end>
+	<end id="failed" state="FAILED">Could not send customer to CRM.</end>
+	<end id="success" state="SUCCEEDED">Sent customer to CRM.</end>
+
+</process>

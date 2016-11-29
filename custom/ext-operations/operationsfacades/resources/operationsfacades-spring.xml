@@ -1,0 +1,868 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">           
+<import resource="classpath*:operationsfacades-reconfirmation-spring.xml" />
+	<!-- The hybris platform provides one single Spring application context 
+		for beans located at the jalo layer. Each extension can add beans to this 
+		context by specifying them at this configuration file. You can use and/or 
+		redefine beans defined at configuration files of other extensions as well 
+		as adding new one. If you want to locate this file at a different location 
+		or want to use several files for better, structuring, please use the '<yourextension>.application-context' 
+		property at your project.properties file. There you can specify a comma separated 
+		list of files where first is tried to find a file per classpath and then 
+		per file system. If you want to configure beans for your web module please 
+		have a look at your web/webroot/WEB-INF/<extname>-web-spring.xml. -->
+
+	<!-- Example how to override a manager -->
+	<!-- <bean id="core.productManager" class="com.cnk.travelogix.operations.facades.jalo.OperationsfacadesProductManager" 
+		init-method="init" destroy-method="destroy" /> -->
+
+
+	<!-- Example how to configure the class to use for jalo session creation -->
+	<!-- <bean id="jalosession" class="de.hybris.platform.jalo.JaloSessionFactory"> 
+		<property name="targetClassName" value="com.cnk.travelogix.operations.facades.jalo.OperationsfacadesJaloSession"/> 
+		</bean> -->
+
+
+	<!-- Example how to override an item -->
+	<!-- <bean id="de.hybris.platform.jalo.product.Product" class="com.cnk.travelogix.operations.facades.jalo.OperationsfacadesProduct" 
+		scope="prototype" /> -->
+
+	<!-- Example how to register and use an AOP aspect Also see http://static.springframework.org/spring/docs/2.5.x/reference/aop.html -->
+
+	<!-- <bean id="operationsfacadesProfBean" class="com.cnk.travelogix.operations.facades.aop.OperationsfacadesProfilingAspect"/> 
+		<aop:config proxy-target-class="true"> <aop:aspect id="operationsfacadesProfAspect" 
+		ref="operationsfacadesProfBean" > <aop:pointcut id="profiledMethods" expression="execution(* 
+		getModificationTime(..))" /> <aop:around pointcut-ref="profiledMethods" method="profile" 
+		/> </aop:aspect> </aop:config> -->
+
+
+	<!-- some other examples of a pointcut that matches everything: <aop:pointcut 
+		id="profiledMethods" expression="bean(de.hybris.platform.jalo.user.Customer) 
+		&amp;&amp; !execution(* getPK(..))" /> <aop:pointcut id="profiledMethods" 
+		expression="execution(* *(..))" /> -->
+
+	<bean id="orderListFacade"
+		class="com.cnk.travelogix.operations.facades.impl.OrderListFacadeImpl">
+		<property name="orderConverter" ref="orderConverter" />
+		<property name="operationOrderService" ref="operationOrderService" />
+	</bean>
+
+	<alias name="travelogixCmsComponentFacadeImpl" alias="travelogixCmsComponentFacade" />
+	<bean id="travelogixCmsComponentFacadeImpl"
+		class="com.cnk.travelogix.operations.facades.cms.impl.TravelogixCmsComponentFacadeImpl" />
+
+	<alias name="defaultEmployeeConverter" alias="employeeConverter" />
+	<bean id="defaultEmployeeConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.operations.employee.data.EmployeeData" />
+		<property name="populators">
+			<list>
+				<ref bean="employeePopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultEmployeePopulator" alias="employeePopulator" />
+	<bean id="defaultEmployeePopulator"
+		class="com.cnk.travelogix.user.converters.populator.EmployeePopulator">
+		<property name="currencyConverter" ref="currencyConverter" />
+		<property name="languageConverter" ref="languageConverter" />
+	</bean>
+
+
+	<alias name="defaultEmployeeFacade" alias="employeeFacade" />
+	<bean id="defaultEmployeeFacade"
+		class="com.cnk.travelogix.operations.facades.impl.DefaultEmployeeFacade">
+		<property name="userService" ref="userService" />
+		<property name="storeSessionFacade" ref="storeSessionFacade" />
+		<property name="userFacade" ref="userFacade" />
+		<property name="employeeConverter" ref="employeeConverter" />
+		<property name="operationUserService" ref="operationUserService" />
+	</bean>
+
+	<alias name="defaultToDoTaskFacade" alias="toDoTaskFacade" />
+	<bean id="defaultToDoTaskFacade"
+		class="com.cnk.travelogix.operations.facades.impl.DefaultToDoTaskFacade">
+		<property name="toDoTaskService" ref="toDoTaskService" />
+		<property name="todoLockUnlockService" ref="todoLockUnlockService" />
+		<property name="toDoTaskConverter" ref="toDoTaskConverter" />
+		<property name="modelService" ref="modelService" />
+		<property name="userService" ref="userService" />
+		<property name="workflowService" ref="newestWorkflowService" />
+		<property name="workflowTemplateService" ref="workflowTemplateService" />
+		<property name="workflowProcessingService" ref="workflowProcessingService" />
+		<property name="operationOrderService" ref="operationOrderService" />
+		<property name="productService" ref="productService" />
+	</bean>
+
+	<alias name="defaultToDoTaskPopulator" alias="toDoTaskPopulator" />
+	<bean id="defaultToDoTaskPopulator"
+		class="com.cnk.travelogix.operations.facades.populator.ToDoTaskPopulator">
+		<property name="orderConverter" ref="orderConverter" />
+		<property name="enumerationService" ref="enumerationService"></property>
+	</bean>
+
+	<alias name="defaultToDoTaskConverter" alias="toDoTaskConverter" />
+	<bean id="defaultToDoTaskConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.operations.data.WorkflowActionData" />
+		<property name="populators">
+			<list>
+				<ref bean="toDoTaskPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- <alias name="defaultFirstBookingCheckFacade" alias="firstBookingCheckFacade" 
+		/> <bean id="defaultFirstBookingCheckFacade" class="com.cnk.travelogix.operations.facades.impl.DefaultFirstBookingCheckFacade"> 
+		</bean> -->
+
+
+	<!-- Update Order Entry Data -->
+	<alias name="defaultTravelogixOrderEntryPopulator" alias="orderEntryPopulator" />
+	<bean id="defaultTravelogixOrderEntryPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.TravelogixOrderEntryPopulator"
+		parent="defaultOrderEntryPopulator">
+		<property name="orderFlightDetailInfoConverter" ref="orderFlightDetailInfoConverter" />
+	</bean>
+
+	<!-- OrderFlightDetailInfo Converter -->
+	<alias name="defaultOrderFlightDetailInfoConverter" alias="orderFlightDetailInfoConverter" />
+	<bean id="defaultOrderFlightDetailInfoConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.OrderFlightDetailInfoData" />
+		<property name="populators">
+			<list>
+				<!-- wait for ops team fix 
+				<ref bean="orderFlightDetailInfoPopulator" />
+				-->
+			</list>
+		</property>
+	</bean>
+	
+<!-- wait for ops team fix
+
+	<alias name="defaultOrderFlightDetailInfoPopulator" alias="orderFlightDetailInfoPopulator" />
+	<bean id="defaultOrderFlightDetailInfoPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.OrderFlightDetailInfoPopulator">
+		<property name="airlineIATAConverter" ref="airlineIATAConverter" />
+		<property name="flightTravellerConverter" ref="flightTravellerConverter" />
+		<property name="orderFlightDetailEntryInfoConverter" ref="orderFlightDetailEntryInfoConverter" />
+		<property name="supplierConverter" ref="supplierConverter" />
+	</bean>
+  -->
+  
+	<!-- AirlineIATA Converter -->
+	<alias name="defaultAirlineIATAConverter" alias="airlineIATAConverter" />
+	<bean id="defaultAirlineIATAConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.AirlineIATAData" />
+		<property name="populators">
+			<list>
+				<ref bean="airlineIATAPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultAirlineIATAPopulator" alias="airlineIATAPopulator" />
+	<bean id="defaultAirlineIATAPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.AirlineIATAPopulator">
+	</bean>
+
+	<!-- flight Traveller Populator -->
+	<alias name="defaultFlightTravellerConverter" alias="flightTravellerConverter" />
+	<bean id="defaultFlightTravellerConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.FlightTravellerData" />
+		<property name="populators">
+			<list>
+				<ref bean="flightTravellerPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultFlightTravellerPopulator" alias="flightTravellerPopulator" />
+	<bean id="defaultFlightTravellerPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.FlightTravellerPopulator">
+		<property name="travellerConverter" ref="travellerConverter" />
+	</bean>
+
+	<!-- OrderFlightDetailEntryInfoData Populator -->
+	<alias name="defaultOrderFlightDetailEntryInfoConverter" alias="orderFlightDetailEntryInfoConverter" />
+	<bean id="defaultOrderFlightDetailEntryInfoConverter" parent="abstractPopulatingConverter">
+		<!-- <property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.OrderFlightDetailEntryInfoData" />
+		 -->	
+		<property name="populators">
+			
+			<list>
+			<!--  wait for ops team's fix
+				<ref bean="orderFlightDetailEntryInfoPopulator" />
+				-->
+				<null/>
+			</list>
+			
+		</property>
+	</bean>
+
+<!--  wait for ops team's fix
+	<alias name="defaultOrderFlightDetailEntryInfoPopulator" alias="orderFlightDetailEntryInfoPopulator" />
+	<bean id="defaultOrderFlightDetailEntryInfoPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.OrderFlightDetailEntryInfoPopulator">
+	</bean>
+-->
+	<!-- Travelogix order populator Update -->
+	<alias name="travelogixOrderPopulator" alias="orderPopulator" />
+	<bean id="travelogixOrderPopulator" parent="defaultOrderPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.TravelogixOrderPopulator">
+		<property name="groupCompanyPopulator" ref="groupCompanyPopulator"/>
+	</bean>
+	<bean id="groupCompanyPopulator" class="com.cnk.travelogix.operations.order.converters.populator.GroupCompanyPopulator"/>
+	<!-- Sector Populator -->
+	<alias name="defaultSectorConverter" alias="sectorConverter" />
+	<bean id="defaultSectorConverter" parent="abstractPopulatingConverter">
+		<!-- <property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.SectorData" />
+		 -->	
+		<property name="populators">
+			<list>
+			<!-- wait for ops team's fix 
+				<ref bean="sectorPopulator" />
+				-->
+			</list>
+		</property>
+	</bean>
+
+<!-- wait for ops team's fix 
+	<alias name="defaultSectorPopulator" alias="sectorPopulator" />
+	<bean id="defaultSectorPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.SectorPopulator">
+		<property name="airportConverter" ref="airportConverter" />
+		<property name="countryConverter" ref="countryConverter" />
+	</bean>
+-->
+	<!-- Airport Populator -->
+	<alias name="defaultAirportConverter" alias="airportConverter" />
+	<bean id="defaultAirportConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.facades.product.data.flight.AirportData" />
+		<property name="populators">
+			<list>
+				<ref bean="airportPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultAirportPopulator" alias="airportPopulator" />
+	<bean id="defaultAirportPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.AirportPopulator">
+	</bean>
+
+	<!-- Country Populator -->
+<!-- 	<alias name="defaultTravelogixCountryPopulator" alias="countryPopulator" />
+	<bean id="defaultTravelogixCountryPopulator" parent="defaultCountryPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.TravelogixCountryPopulator" >
+		<property name="cityConverter" ref="cityConverter"/>
+	</bean>
+ -->
+	<!-- TravelogixAirlineOrderUpdateFacade Bean -->
+	<!-- <alias name="defaultTravelogixAirlineOrderUpdateFacade" alias="airlineOrderUpdateFacade" 
+		/> <bean id="defaultTravelogixAirlineOrderUpdateFacade" class="com.cnk.travelogix.operations.facades.flight.booking.impl.TravelogixAirlineOrderUpdateFacadeImpl"> 
+		<property name="sectorConverter" ref="sectorConverter" /> <property name="orderEntryConverter" 
+		ref="orderEntryConverter" /> <property name="airlineOrderUpdateService" ref="airlineOrderUpdateService" 
+		/> </bean> -->
+
+	<alias name="defaultCustomerConverter" alias="customerConverter" />
+	<bean id="defaultCustomerConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="de.hybris.platform.commercefacades.user.data.CustomerData" />
+		<property name="populators">
+			<list>
+				<ref bean="customerPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultTravelogixCustomerPopulator" alias="customerPopulator" />
+	<bean id="defaultTravelogixCustomerPopulator"
+		class="com.cnk.travelogix.user.converters.populator.TravelogixCustomerPopulator"
+		parent="defaultCustomerPopulator">
+	</bean>
+
+	<!-- <alias name="defaultTravelogixUserFacade" alias="userFacade" /> <bean 
+		id="defaultTravelogixUserFacade" class="com.cnk.travelogix.operations.facades.impl.DefaultTravelogixUserFacade" 
+		parent="defaultUserFacade"> <property name="userService" ref="userService" 
+		/> <property name="modelService" ref="modelService" /> </bean> -->
+
+
+	<bean id="travellerPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.TravellerPopulator" />
+	<alias name="defaulttravellerConverter" alias="travellerConverter" />
+	<bean id="defaulttravellerConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.TravellerData" />
+		<property name="populators">
+			<list>
+				<ref bean="travellerPopulator" />
+			</list>
+		</property>
+	</bean>
+	
+	
+
+	<!-- AccommodationTravellerPopulator -->
+	<alias name="defaultAccommodationTravellerPopulator" alias="accommodationTravellerPopulator" />
+	<bean id="defaultAccommodationTravellerPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.AccommodationTravellerPopulator">
+		<property name="travellerConverter" ref="travellerConverter" />
+	</bean>
+
+
+	<bean id="accommodationTravellerConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.AccommodationTravellerData" />
+		<property name="populators">
+			<list>
+				<ref bean="accommodationTravellerPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="visaInfoPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.VisaInfoPopulator" />
+	<bean id="visaInfoConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.VisaInfoData" />
+		<property name="populators">
+			<list>
+				<ref bean="visaInfoPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Order Hotel Details Info populator -->
+	<alias name="defaultOrderHotelDetailInfoPopulator" alias="orderHotelDetailInfoPopulator" />
+	<bean id="defaultOrderHotelDetailInfoPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.OrderHotelDetailInfoPopulator">
+		<property name="priceInfoConverter" ref="priceInfoConverter" />
+		<property name="orderRoomDetailInfoConverter" ref="orderRoomDetailInfoConverter" />
+	</bean>
+	<alias name="defaultOrderHotelDetailInfoConverter" alias="orderHotelDetailInfoConverter" />
+	<bean id="defaultOrderHotelDetailInfoConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.OrderHotelDetailInfoData" />
+		<property name="populators">
+			<list>
+				<ref bean="orderHotelDetailInfoPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Price Info Populator -->
+	<alias name="defaultPriceInfoPopulator" alias="priceInfoPopulator" />
+	<bean id="defaultPriceInfoPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.PriceInfoPopulator">
+		<property name="currencyConverter" ref="currencyConverter" />
+	</bean>
+	<alias name="defaultPriceInfoConverter" alias="priceInfoConverter" />
+	<bean id="defaultPriceInfoConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.PriceInfoData" />
+		<property name="populators">
+			<list>
+				<ref bean="priceInfoPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- OrderRoomDetailInfoPopulator -->
+
+	<alias name="defaultOrderRoomDetailInfoPopulator" alias="orderRoomDetailInfoPopulator" />
+	<bean id="defaultOrderRoomDetailInfoPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.OrderRoomDetailInfoPopulator">
+		<property name="accommodationTravellerConverter" ref="accommodationTravellerConverter" />
+
+	</bean>
+	<alias name="defaultOrderRoomDetailInfoConverter" alias="orderRoomDetailInfoConverter" />
+	<bean id="defaultOrderRoomDetailInfoConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.OrderRoomDetailInfoData" />
+		<property name="populators">
+			<list>
+				<ref bean="orderRoomDetailInfoPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- OrderProductInfoPopulator -->
+
+	<alias name="defaultOrderProductInfoPopulator" alias="orderProductInfoPopulator" />
+	<bean id="defaultOrderProductInfoPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.OrderProductInfoPopulator">
+		<property name="priceInfoConverter" ref="priceInfoConverter" />
+
+	</bean>
+	<alias name="defaultOrderProductInfoConverter" alias="orderProductInfoConverter" />
+	<bean id="defaultOrderProductInfoConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.OrderProductInfoData" />
+		<property name="populators">
+			<list>
+				<ref bean="orderProductInfoPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- RoomAncillaryPopulator -->
+	<alias name="defaultRoomAncillaryPopulator" alias="roomAncillaryPopulator" />
+	<bean id="defaultRoomAncillaryPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.RoomAncillaryPopulator" />
+
+	<alias name="defaultRoomAncillaryConverter" alias="roomAncillaryConverter" />
+	<bean id="defaultRoomAncillaryConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.RoomAncillaryData" />
+		<property name="populators">
+			<list>
+				<ref bean="roomAncillaryPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- WifiSubAncillaryPopulator -->
+	<alias name="defaultWifiSubAncillaryPopulator" alias="wifiSubAncillaryPopulator" />
+	<bean id="defaultWifiSubAncillaryPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.WifiSubAncillaryPopulator">
+	</bean>
+
+	<alias name="defaultWifiSubAncillaryConverter" alias="wifiSubAncillaryConverter" />
+	<bean id="defaultWifiSubAncillaryConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.WifiSubAncillaryData" />
+		<property name="populators">
+			<list>
+				<ref bean="wifiSubAncillaryPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- ActivitySubAncillaryPopulator -->
+	<alias name="defaultActivitySubAncillaryPopulator" alias="activitySubAncillaryPopulator" />
+	<bean id="defaultActivitySubAncillaryPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.ActivitySubAncillaryPopulator">
+	</bean>
+
+	<alias name="defaultActivitySubAncillaryConverter" alias="activitySubAncillaryConverter" />
+	<bean id="defaultActivitySubAncillaryConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.ActivitySubAncillaryData" />
+		<property name="populators">
+			<list>
+				<ref bean="activitySubAncillaryPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- CarParkingSubAncillaryPopulator -->
+	<alias name="defaultCarParkingSubAncillaryPopulator" alias="carParkingSubAncillaryPopulator" />
+	<bean id="defaultCarParkingSubAncillaryPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.CarParkingSubAncillaryPopulator">
+	</bean>
+
+	<alias name="defaultCarParkingSubAncillaryConverter" alias="carParkingSubAncillaryConverter" />
+	<bean id="defaultCarParkingSubAncillaryConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.CarParkingSubAncillaryData" />
+		<property name="populators">
+			<list>
+				<ref bean="carParkingSubAncillaryPopulator" />
+			</list>
+		</property>
+	</bean>
+
+
+
+	<!-- EarlyCheckInSubAncillaryPopulator -->
+	<alias name="defaultEarlyCheckInSubAncillaryPopulator" alias="earlyCheckInSubAncillaryPopulator" />
+	<bean id="defaultEarlyCheckInSubAncillaryPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.EarlyCheckInSubAncillaryPopulator">
+	</bean>
+
+	<alias name="defaultEarlyCheckInSubAncillaryConverter" alias="earlyCheckInSubAncillaryConverter" />
+	<bean id="defaultEarlyCheckInSubAncillaryConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.EarlyCheckInSubAncillaryData" />
+		<property name="populators">
+			<list>
+				<ref bean="earlyCheckInSubAncillaryPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- EuipmentSubAncillaryPopulator -->
+	<alias name="defaultEuipmentSubAncillaryPopulator" alias="euipmentSubAncillaryPopulator" />
+	<bean id="defaultEuipmentSubAncillaryPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.EuipmentSubAncillaryPopulator">
+	</bean>
+
+	<alias name="defaultEuipmentSubAncillaryConverter" alias="euipmentSubAncillaryConverter" />
+	<bean id="defaultEuipmentSubAncillaryConverter" parent="abstractPopulatingConverter">
+		<!-- <property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.EuipmentSubAncillaryData" />
+		 -->	
+		<property name="populators">
+			<list>
+				<ref bean="euipmentSubAncillaryPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- LateCheckOutSubAncillaryPopulator -->
+	<alias name="defaultLateCheckOutSubAncillaryPopulator" alias="lateCheckOutSubAncillaryPopulator" />
+	<bean id="defaultLateCheckOutSubAncillaryPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.LateCheckOutSubAncillaryPopulator">
+	</bean>
+
+	<alias name="defaultLateCheckOutSubAncillaryConverter" alias="lateCheckOutSubAncillaryConverter" />
+	<bean id="defaultLateCheckOutSubAncillaryConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.LateCheckOutSubAncillaryData" />
+		<property name="populators">
+			<list>
+				<ref bean="lateCheckOutSubAncillaryPopulator" />
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- PetSubAncillaryPopulator -->
+	<alias name="defaultPetSubAncillaryPopulator" alias="petSubAncillaryPopulator" />
+	<bean id="defaultPetSubAncillaryPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.PetSubAncillaryPopulator">
+	</bean>
+
+	<alias name="defaultPetSubAncillaryConverter" alias="petSubAncillaryConverter" />
+	<bean id="defaultPetSubAncillaryConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.PetSubAncillaryData" />
+		<property name="populators">
+			<list>
+				<ref bean="petSubAncillaryPopulator" />
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- RestaurantSubAncillaryPopulator -->
+	<alias name="defaultRestaurantSubAncillaryPopulator" alias="restaurantSubAncillaryPopulator" />
+	<bean id="defaultRestaurantSubAncillaryPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.RestaurantSubAncillaryPopulator">
+	</bean>
+
+	<alias name="defaultRestaurantSubAncillaryConverter" alias="restaurantSubAncillaryConverter" />
+	<bean id="defaultRestaurantSubAncillaryConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.RestaurantSubAncillaryData" />
+		<property name="populators">
+			<list>
+				<ref bean="restaurantSubAncillaryPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- SpaSubAncillaryPopulator -->
+	<alias name="defaultSpaSubAncillaryPopulator" alias="spaSubAncillaryPopulator" />
+	<bean id="defaultSpaSubAncillaryPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.SpaSubAncillaryPopulator">
+	</bean>
+
+	<alias name="defaultSpaSubAncillaryConverter" alias="spaSubAncillaryConverter" />
+	<bean id="defaultSpaSubAncillaryConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.SpaSubAncillaryData" />
+		<property name="populators">
+			<list>
+				<ref bean="spaSubAncillaryPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- TransferSubAncillaryPopulator -->
+	<alias name="defaultTransferSubAncillaryPopulator" alias="transferSubAncillaryPopulator" />
+	<bean id="defaultTransferSubAncillaryPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.TransferSubAncillaryPopulator">
+	</bean>
+
+	<alias name="defaultTransferAncillaryConverter" alias="transferAncillaryConverter" />
+	<bean id="defaultTransferAncillaryConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.TransferSubAncillaryData" />
+		<property name="populators">
+			<list>
+				<ref bean="transferSubAncillaryPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- SupplierPopulator -->
+	<alias name="defaultSupplierPopulator" alias="supplierPopulator" />
+	<bean id="defaultSupplierPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.SupplierPopulator">
+		<property name="addressConverter" ref="addressConverter" />
+
+	</bean>
+
+	<alias name="defaultSupplierConverter" alias="supplierConverter" />
+	<bean id="defaultSupplierConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.SupplierData" />
+		<property name="populators">
+			<list>
+				<ref bean="supplierPopulator" />
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- Service Order START -->
+	<alias name="defaultServiceOrderFacade" alias="serviceOrderFacade"/>
+	<bean id="defaultServiceOrderFacade" class="com.cnk.travelogix.operations.facades.impl.DefaultServiceOrderFacade">
+		<property name="serviceOrderService" ref="serviceOrderService"></property>
+		<property name="enumerationService" ref="enumerationService"></property>
+		<property ref="serviceOrderConverter" name="serviceOrderConverter" />
+	</bean>
+
+	<alias name="defaultServiceOrderConverter" alias="serviceOrderConverter" />
+	<bean id="defaultServiceOrderConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.operations.data.ServiceOrderData" />
+		<property name="populators">
+			<list>
+				<ref bean="serviceOrderPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultServiceOrderPopulator" alias="serviceOrderPopulator" />
+	<bean id="defaultServiceOrderPopulator"
+		class="com.cnk.travelogix.operations.facades.populator.ServiceOrderPopulator">
+	</bean>
+	<!-- Service Order END -->
+
+
+	<!--FlightChangeRequestPopulator -->
+
+	<!-- <alias name="defaultFlightChangeRequestPopulator" alias="flightChangeRequestPopulator" 
+		/> <bean id="defaultFlightChangeRequestPopulator" class="com.cnk.travelogix.operations.flight.converter.populator.FlightChangeRequestPopulator"> 
+		</bean> <alias name="defaultFlightChangeRequestConverter" alias="flightChangeRequestConverter" 
+		/> <bean id="defaultFlightChangeRequestConverter" parent="abstractPopulatingConverter"> 
+		<property name="targetClass" value="com.cnk.travelogix.operations.data.FlightChangeRequestData" 
+		/> <property name="populators"> <list> <ref bean="flightChangeRequestPopulator" 
+		/> </list> </property> </bean> -->
+
+	<!-- Flight Update Email Context -->
+	<!-- <bean id="flightUpdateEmailContext" class="com.cnk.travelogix.operations.facades.process.email.context.FlightUpdateEmailContext" 
+		parent="customerEmailContext" scope="prototype"> <property name="customerConverter" 
+		ref="customerConverter" /> <property name="flightChangeRequestConverter" 
+		ref="flightChangeRequestConverter" /> </bean> -->
+
+	<!-- NonPrimaryTravellerPopulator -->
+	<alias name="defaultNonPrimaryTravellerPopulator" alias="nonPrimaryTravellerPopulator" />
+	<bean id="defaultNonPrimaryTravellerPopulator"
+		class="com.cnk.travelogix.operations.order.converters.populator.NonPrimaryTravellerPopulator">
+	</bean>
+
+	<alias name="defaultNonPrimaryTravellerConverter" alias="nonPrimaryTravellerConverter" />
+	<bean id="defaultNonPrimaryTravellerConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.AccommodationNonPrimaryTravellerData" />
+		<property name="populators">
+			<list>
+				<ref bean="nonPrimaryTravellerPopulator" />
+			</list>
+		</property>
+	</bean>
+	<!-- FirstBookingCheck Facade -->
+	<alias name="defaultFirstBookingCheckFacade" alias="firstBookingCheckFacade" />
+	<bean id="defaultFirstBookingCheckFacade"
+		class="com.cnk.travelogix.operations.facades.impl.DefaultFirstBookingCheckFacade">
+	</bean>
+
+<!-- TimeLimit Booking -->
+	<alias name="defaultTimeLimitBookingFacade" alias="timeLimitBookingFacade" />
+	<bean id="defaultTimeLimitBookingFacade"
+		class="com.cnk.travelogix.operations.facades.impl.DefaultTimeLimitBookingFacade">
+		<property name="timeLimitBookingService" ref="timeLimitBookingService" />
+	</bean>
+	<alias name="defaultBookingDocumentFacade" alias="bookingdocumentFacade" />
+	<bean id="defaultBookingDocumentFacade"
+		class="com.cnk.travelogix.operations.facades.impl.DefaultBookingDocumentFacade">
+		<property name="bookingDocumentService" ref="bookingDocumentService"></property>
+	</bean>
+	
+	<bean id="timeLimitBookingDeclineJob"
+		class="com.cnk.travelogix.operations.workflow.DefaultTimeLimitBookingConfirmationJob" />
+
+	<bean id="timeLimitBookingConfirmationJob"
+		class="com.cnk.travelogix.operations.workflow.DefaultTimeLimitBookingDeclineJob" />
+		
+	<bean id="timeLimitBookingEventListener"
+	      class="com.cnk.travelogix.operations.facades.events.listeners.TimeLimitBookingEventListener" parent="abstractAcceleratorSiteEventListener">
+			<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>	
+	
+	<bean id="timeLimitBookingCancelEventListener"
+	      class="com.cnk.travelogix.operations.facades.events.listeners.TimeLimitBookingCancelEventListener" parent="abstractAcceleratorSiteEventListener">
+			<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>	
+
+	<bean id="timeLimitBookingCronJob" class="com.cnk.travelogix.operations.cronjob.TimeLimitBookingCronJob">
+    </bean>	
+    
+    <bean id="timeLimitBookingEmailContext"
+		class="com.cnk.travelogix.operations.facades.process.email.context.TimeLimitBookingEmailContext"
+		parent="abstractEmailContext" scope="prototype">
+		<property name="orderConverter" ref="orderConverter"/>
+	</bean>
+
+	<bean id="toDoTaskJob" class="com.cnk.travelogix.operations.facades.todo.job.ToDoTaskJob" scope="tenant" parent="abstractJobPerformable"/>
+	<alias name="travelogixPaymentReceiptFacade" alias="travelogixPaymentReceiptFacade" />
+	<bean id="travelogixPaymentReceiptFacade"
+		class="com.cnk.travelogix.operations.facades.impl.DefaultTravelogixPaymentReceiptFacade">
+	</bean>
+
+	<alias name="travelogixReceiptSearchPopulator" alias="travelogixReceiptSearchPopulator" />
+	<bean id="travelogixReceiptSearchPopulator"
+		class="com.cnk.travelogix.operations.facades.populator.TravelogixReceiptSearchPopulator">
+	</bean>
+
+	<alias name="receiptSearchConverter" alias="receiptSearchConverter" />
+	<bean id="receiptSearchConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.operations.data.TravelogixPaymentReceiptData" />
+		<property name="populators">
+			<list>
+				<ref bean="travelogixReceiptSearchPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="travelogixReceiptClientDetailsPopulator" alias="travelogixReceiptClientDetailsPopulator" />
+	<bean id="travelogixReceiptClientDetailsPopulator"
+		class="com.cnk.travelogix.operations.facades.populator.TravelogixReceiptClientDetailsPopulator">
+	</bean>
+
+	<alias name="travelogixClientDetailsConverter" alias="travelogixClientDetailsConverter" />
+	<bean id="travelogixClientDetailsConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.operations.data.TravelogixClientDetailsData" />
+		<property name="populators">
+			<list>
+				<ref bean="travelogixReceiptClientDetailsPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="travelogixPaymentInfoPopulator" alias="travelogixPaymentInfoPopulator" />
+	<bean id="travelogixPaymentInfoPopulator"
+		class="com.cnk.travelogix.operations.facades.populator.TravelogixPaymentInfoPopulator">
+	</bean>
+
+	<alias name="travelogixPaymentInfoConverter" alias="travelogixPaymentInfoConverter" />
+	<bean id="travelogixPaymentInfoConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="de.hybris.platform.commercefacades.order.data.CCPaymentInfoData" />
+		<property name="populators">
+			<list>
+				<ref bean="travelogixPaymentInfoPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="travelogixViewReceiptPopulator" alias="travelogixViewReceiptPopulator" />
+	<bean id="travelogixViewReceiptPopulator"
+		class="com.cnk.travelogix.operations.facades.populator.TravelogixViewReceiptPopulator">
+	</bean>
+
+	<alias name="receiptViewConverter" alias="receiptViewConverter" />
+	<bean id="receiptViewConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.operations.data.TravelogixPaymentReceiptData" />
+		<property name="populators">
+			<list>
+				<ref bean="travelogixViewReceiptPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="travelogixReceiptDetailsConverter" alias="travelogixReceiptDetailsConverter"/>
+	<bean id="travelogixReceiptDetailsConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.operations.data.TravelogixReceiptDetailsData"/>
+		<property name="populators" >
+			<list>
+				<ref bean="travelogixReceiptDetailsPopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<alias name="travelogixReceiptDetailsPopulator" alias="travelogixReceiptDetailsPopulator"/>
+	<bean id="travelogixReceiptDetailsPopulator" class="com.cnk.travelogix.operations.facades.populator.TravelogixReceiptDetailsPopulator"/>
+	
+	<alias name="travelogixReceiptRemarksConverter" alias="travelogixReceiptRemarksConverter"/>
+	<bean id="travelogixReceiptRemarksConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.operations.data.TravelogixRemarksData"/>
+		<property name="populators" >
+			<list>
+				<ref bean="travelogixRemarksPopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<alias name="travelogixRemarksPopulator" alias="travelogixRemarksPopulator"/>
+	<bean id="travelogixRemarksPopulator" class="com.cnk.travelogix.operations.facades.populator.TravelogixRemarksPopulator">
+		<property name="employeeConverter" ref="employeeConverter"/>
+	</bean>
+	
+	<alias name="travelogixInvoiceConverter" alias="travelogixInvoiceConverter"/>
+	<bean id="travelogixInvoiceConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.operations.data.TravelogixInvoiceData" />
+		<property name="populators" >
+			<list>
+				<ref bean="travelogixInvoicePopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<alias name="travelogixInvoicePopulator" alias="travelogixInvoicePopulator"/>
+	<bean id="travelogixInvoicePopulator" class="com.cnk.travelogix.operations.facades.populator.TravelogixInvoicePopulator">
+		<property name="travelogixReceiptDetailsConverter" ref="travelogixReceiptDetailsConverter"/>
+		<property name="orderEntryConverter" ref="orderEntryConverter"/>
+		<property name="receiptSearchConverter" ref="receiptSearchConverter"/>
+	</bean>
+
+	<alias name="travelogixB2BClientConverter" alias="travelogixB2BClientConverter"/>
+	<bean id="travelogixB2BClientConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.operations.data.TravelogixClientDetailsData" />
+		<property name="populators" >
+			<list>
+				<ref bean="travelogixB2BClientPopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<alias name="travelogixB2BClientPopulator" alias="travelogixB2BClientPopulator"/>
+	<bean id="travelogixB2BClientPopulator" class="com.cnk.travelogix.operations.facades.populator.TravelogixB2BClientPopulator">
+	</bean>
+	
+</beans>

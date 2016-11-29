@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2016 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+<bean class="de.hybris.platform.commercefacades.product.data.ProductData">
+		<property name="isProductSharable" type="java.lang.Boolean"/>
+		<property name="firstBookingCheck" type="java.lang.Boolean"/>
+	</bean>
+<!-- 
+	<bean class="com.cnk.travelogix.common.facades.product.data.GenderData">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+	</bean>
+-->	
+    <!-- Enquiry START -->
+	<bean class="com.cnk.travelogix.common.facades.userjourney.data.UserJourneyInfoData" abstract="true">
+		<property name="itemId" type="java.lang.String"/>
+		<property name="firstName" type="java.lang.String"/>
+		<property name="groupId" type="java.lang.String"/>
+		<property name="middleName" type="java.lang.String"/>
+		<property name="destination" type="java.lang.String"/>
+		<property name="customer" type="java.lang.String"/>
+		<property name="productInfoList" type="java.util.List"/>
+		<property name="title" type="java.lang.String"/>
+		<property name="noteList" type="java.util.List"/>
+		<property name="mobileNo" type="UserJourneyPhoneData"/>
+		<property name="submitter" type="java.lang.String"/>
+		<property name="lastName" type="java.lang.String"/>
+		<property name="siteChannel" type="de.hybris.platform.commerceservices.enums.SiteChannel"/>
+		<property name="email" type="java.lang.String"/>
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.userjourney.data.BaseEnquiryData" extends="com.cnk.travelogix.common.facades.userjourney.data.UserJourneyInfoData">
+		<property name="status" type="com.cnk.travelogix.common.core.enums.EnquiryStatus"/>
+		<property name="captcha" type="java.lang.String"/>
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.userjourney.data.EnquiryBookData" extends="com.cnk.travelogix.common.facades.userjourney.data.BaseEnquiryData">
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.userjourney.data.EnquiryDropsoutData" extends="com.cnk.travelogix.common.facades.userjourney.data.BaseEnquiryData">
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.userjourney.data.EnquiryCallBackData" extends="com.cnk.travelogix.common.facades.userjourney.data.BaseEnquiryData">
+		<property name="preferredContactTime" type="java.lang.String"/>
+		<property name="contactDate" type="java.util.Date"/>
+		<property name="preferredWayToCall" type="java.lang.String"/>
+		<property name="residentialPhoneNo" type="UserJourneyPhoneData"/>
+		<property name="departureCity" type="java.lang.String"/>
+		<property name="contactTime" type="java.util.Date"/>
+		<property name="remark" type="java.lang.String"/>
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.userjourney.data.EnquiryWebFormData" extends="com.cnk.travelogix.common.facades.userjourney.data.BaseEnquiryData">
+		<property name="preferredContactTime" type="java.lang.String"/>
+		<property name="contactDate" type="java.util.Date"/>
+		<property name="preferredWayToCall" type="java.lang.String"/>
+		<property name="residentialPhoneNo" type="UserJourneyPhoneData"/>
+		<property name="departureCity" type="java.lang.String"/>
+		<property name="contactTime" type="java.util.Date"/>
+		<property name="remark" type="java.lang.String"/>
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.userjourney.data.EnquiryChatData" extends="com.cnk.travelogix.common.facades.userjourney.data.BaseEnquiryData">
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.userjourney.data.EnquiryClickToCallData" extends="com.cnk.travelogix.common.facades.userjourney.data.BaseEnquiryData">
+		<property name="preferredWayToCall" type="java.lang.String"/>
+		<property name="residentialPhoneNo" type="UserJourneyPhoneData"/>
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.userjourney.data.EnquiryEmailData" extends="com.cnk.travelogix.common.facades.userjourney.data.BaseEnquiryData">
+		<property name="residentialPhoneNo" type="UserJourneyPhoneData"/>
+		<property name="officePhoneNo" type="UserJourneyPhoneData"/>
+		<property name="remark" type="java.lang.String"/>
+		<property name="preferredLandline" type="java.lang.String"/>
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.userjourney.data.UserJourneyNoteData">
+		<property name="journeyInfo" type="UserJourneyInfoData"/>
+		<property name="submitter" type="java.lang.String"/>
+		<property name="text" type="java.lang.String"/>
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.userjourney.data.UserJourneyProductInfoData" abstract="true">
+		<property name="product" type="java.lang.String"/>
+		<property name="productDumpValue" type="java.lang.String"/>
+		<property name="productDumpApproach" type="java.lang.String"/>
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.userjourney.data.EnquiryProductInfoData" extends="com.cnk.travelogix.common.facades.userjourney.data.UserJourneyProductInfoData">
+		<property name="productSpecific" type="BaseEnquiryProductSpecificData"/>
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.userjourney.data.BaseEnquiryProductSpecificData" abstract="true">
+		<property name="numberOfAdults" type="java.lang.Integer"/>
+		<property name="numberOfChildren" type="java.lang.Integer"/>
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.userjourney.data.EnquiryProductAccommodationData" extends="com.cnk.travelogix.common.facades.userjourney.data.BaseEnquiryProductSpecificData">
+		<property name="checkInDate" type="java.util.Date"/>
+		<property name="numberOfRooms" type="java.lang.Integer"/>
+		<property name="checkOutDate" type="java.util.Date"/>
+		<property name="numberOfNights" type="java.lang.Integer"/>
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.userjourney.data.EnquiryProductFlightData" extends="com.cnk.travelogix.common.facades.userjourney.data.BaseEnquiryProductSpecificData">
+		<property name="departureDate" type="java.util.Date"/>
+		<property name="returnDate" type="java.util.Date"/>
+		<property name="preferredAirline" type="java.lang.String"/>
+		<property name="numberOfinfants" type="java.lang.Integer"/>
+		<property name="serviceClass" type="java.lang.String"/>
+		<property name="from" type="java.lang.String"/>
+		<property name="to" type="java.lang.String"/>
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.userjourney.data.UserJourneyPhoneData">
+		<property name="countryCode" type="java.lang.Integer"/>
+		<property name="number" type="java.lang.Long"/>
+		<property name="areaCode" type="java.lang.Integer"/>
+	</bean>
+    <!-- Enquiry END -->
+
+	<bean class="com.cnk.travelogix.common.facades.product.data.BasePageableSearchData">
+		<description>This bean contains the search parameters</description>		
+		<property name="pageNum" type="int" /><!-- the request page of the search results -->
+		<property name="pageSize" type="int"/>	
+		<property name="supplierId" type="java.lang.String" /><!-- the supplier ID -->	
+		<property name="productId" type="java.lang.String" /><!-- the product ID. When search product detail. e.g. hotel -->	
+		<property name="facets" type="java.util.List&lt;com.cnk.travelogix.common.facades.product.data.CnkFacetDataList>"/>	
+		<property name="sortConditionList" type="java.util.List&lt;CnkSortedDataList>"/>	
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.FlightHotelSearchData" extends="BasePageableSearchData">
+		<description>This bean contains the search parameters for hotel and flight</description>
+		<property name="entrys" type="java.util.List&lt;FlightHotelSearchEntryData>"/>
+		<property name="flightHotelSearchRooms" type="java.util.List&lt;com.cnk.travelogix.common.facades.product.data.FlightHotelSearchRoomData>"/>
+		<property name="currentSection" type="int"/>
+		<property name="flightType" type="java.lang.String"/>
+		<property name="directFlightOnly" type="java.lang.Boolean" />
+		<property name="refundableFlightOnly" type="java.lang.Boolean" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.FlightHotelSearchRoomData">
+		<property name="adultCount" type="java.lang.Integer" />
+		<property name="children" type="java.util.List&lt;java.lang.Integer>" />
+		<property name="infants" type="java.util.List&lt;java.lang.Integer>" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.FlightHotelSearchEntryData">
+		<description>This bean contains the search parameters for hotel and flight</description>
+		<property name="departureFlightSearchData"
+			type="com.cnk.travelogix.common.facades.product.data.FlightSearchData" />
+		<property name="hotelSearchData"
+			type="com.cnk.travelogix.common.facades.product.data.HotelSearchData" />
+		<property name="returnFlightSearchData"
+			type="com.cnk.travelogix.common.facades.product.data.FlightSearchData" />
+		<property name="pageNum" type="java.lang.Integer" /><!-- the request page of the search results -->	
+		<property name="supplierId" type="java.lang.String" /><!-- the supplier ID -->				
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.common.facades.product.data.FlightSearchData">
+		<property name="fromCity" type="java.lang.String" />
+		<property name="toCity" type="java.lang.String" />
+		<property name="departureDate" type="java.util.Date" />
+		<property name="numberOfAdult" type="java.lang.Integer" />
+		<property name="numberOfChild" type="java.lang.Integer" />
+		<property name="numberOfInfant" type="java.lang.Integer" />
+		<property name="flightClass" type="java.lang.String" />
+		<property name="specificAirline" type="java.lang.String[]" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.common.facades.product.data.HotelSearchData" extends="BasePageableSearchData">
+		<property name="destination" type="java.lang.String" />
+		<property name="checkInDate" type="java.util.Date" />
+		<property name="checkOutDate" type="java.util.Date" />
+		<property name="priceFrom" type="java.lang.String"></property>
+		<property name="priceto" type="java.lang.String"></property>
+		<property name="fixedDate" type="java.lang.Boolean" />
+		<property name="noOfRooms" type="java.lang.Integer" />
+		<property name="nights" type="java.lang.Integer" />
+		<property name="starRate" type="java.lang.String[]" />
+		<property name="accType" type="java.lang.String[]" />
+		<property name="hotelSearchRooms" type="java.util.List&lt;com.cnk.travelogix.common.facades.product.data.FlightHotelSearchRoomData>"/>
+		
+		
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.RoomSearchData">
+		<property name="adultNo" type="java.lang.Integer" />
+		<property name="childNo" type="java.lang.Integer" />
+	</bean>
+
+	
+	<!--  Search result bean definition Start .... -->
+	<bean class="com.cnk.travelogix.common.facades.product.data.CnkProductSearchPageData&lt;RESULT>">
+		<description>POJO that includes all necessary data for creating proper result in facet search.</description>
+		<!-- The CNK bread crumb -->
+		<property name="breadcrumbs" type="java.util.List&lt;CnkBreadcrumbData>"/>
+		<!-- The facets -->
+		<property name="facets" type="java.util.List&lt;CnkFacetDataList>"/>
+		<!-- Product result. E.g. HotelData, FlightData  etc.  -->
+		<property name="bestPriceRecommend" type="java.util.List&lt;RESULT>"/>
+		<!-- Product result. E.g. HotelData, FlightData  etc.  -->
+		<property name="result" type="java.util.List&lt;RESULT>"/>
+		<!-- current page number -->
+		<property name="pageNum" type="int"/>
+		<!-- each page size -->
+		<property name="pageSize" type="int"/>
+		<!-- total pages -->
+		<property name="totalPage" type="int"/>
+		<!-- lowest price -->
+		<property name="startAtPrice" type="double"/>
+		
+		<property name="totalSize" type="int"/>
+		
+		<property name="sortConditionList" type="java.util.List&lt;CnkSortedDataList>"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.FlightProductSearchPageData&lt;RESULT>" 
+		extends="com.cnk.travelogix.common.facades.product.data.CnkProductSearchPageData">
+		<description>POJO that includes all necessary data for creating proper result in facet search.</description>
+		<property name="currentSection" type="int"/>
+		<property name="flightType" type="String"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.CnkBreadcrumbData">
+		<property name="section" type="java.lang.String" />
+	</bean>
+	
+	<enum class="com.cnk.travelogix.common.facades.product.data.FacetType">
+			<description>facet types.</description>
+			<value>diesel</value>
+			<value>gasoline</value>
+			<value>electric</value>
+	</enum>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.CnkFacetDataList">
+		<property name="code" type="String"/>
+		<property name="facets" type="java.util.List&lt;CnkFacetData>"/>
+	</bean>
+		
+	<bean class="com.cnk.travelogix.common.facades.product.data.CnkFacetData">
+		
+		<description>POJO representing a facet.</description>
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+		<property name="value" type="String"/>
+		<property name="priority" type="int"/>
+		<property name="category" type="boolean"/>
+		<property name="multiSelect" type="boolean"/>
+		<property name="visible" type="boolean"/>
+		<property name="type" type="com.cnk.travelogix.common.facades.product.data.FacetType"/>
+		<property name="values" type="java.util.List&lt;CnkFacetValueData>"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.CnkFacetValueData">
+		<description>POJO representing a facet value.</description>
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+		<property name="count" type="long"/>
+		<property name="value" type="String"/>
+		<property name="selected" type="boolean"/>
+		<property name="currentSelected" type="boolean"/>
+		<property name="doubleValue" type="double"/>
+		<property name="dateValue" type="java.util.Date"/>
+	</bean>	
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.CnkSortedDataList">
+		<property name="code" type="String"/>
+		<property name="conditions" type="java.util.List&lt;CnkProductSortConditionData>"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.CnkProductSortConditionData">
+		<description>POJO representing a sort.</description>
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+		<property name="selected" type="boolean"/>
+		<property name="desc" type="boolean"/>
+	</bean>
+	<!--  Search result bean definition End .... -->
+	
+	<!--  Bean product bean definition Start .... -->
+	<bean class="com.cnk.travelogix.common.facades.product.data.BaseProductData">
+		<description>The base product for CNK.</description>
+		<property name="id" type="java.lang.String" />
+	</bean>
+	<!--  Bean product bean definition End .... -->
+	
+	
+	<!--  Flight and Hotel bean definition Start .... -->
+	<bean class="com.cnk.travelogix.common.facades.product.data.combination.FlightAndHotelData" 
+			extends="com.cnk.travelogix.common.facades.product.data.BaseProductData">
+		<description>Data model for One-way or two-way</description>
+		<property name="departureFlight" type="com.cnk.travelogix.common.facades.product.data.flight.FlightData" />	
+		<property name="hotel" type="com.cnk.travelogix.common.facades.product.data.hotel.HotelData" />		
+		<property name="returnFlight" type="com.cnk.travelogix.common.facades.product.data.flight.FlightData">
+			<description>This field is optional, and only applicable for the case where return flight is used.</description>
+		</property>
+		<property name="priceInfo" type="com.cnk.travelogix.common.facades.product.data.hotel.PriceInfoData" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.combination.FlightAndHotelMulticityData" 
+			extends="com.cnk.travelogix.common.facades.product.data.BaseProductData">
+		<description>Data model for multi-city</description>
+		<property name="listOfFlightHotel" type="java.util.List&lt;com.cnk.travelogix.common.facades.product.data.combination.FlightAndHotelData>">
+			<description>In multi-city case, each and every record in the result list will contain a set of flight+hotel.</description>
+		</property>
+	</bean>
+	<!--   Flight and Hotel bean definition End .... -->
+	
+	
+	<!--  Flight bean definition Start .... -->
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.flight.FlightResultData" 
+			extends="com.cnk.travelogix.common.facades.product.data.BaseProductData">
+		<description>Flight Data model for multi-city</description>
+		<property name="listOfFlights" type="java.util.List&lt;com.cnk.travelogix.common.facades.product.data.flight.FlightData>">
+			<description>In multi-city case, each and every record in the result list will contain a set of flight+hotel.</description>
+		</property>
+		
+		<property name="fareCarouselMap" type="java.util.Map&lt;java.lang.String, FareSummaryData>">
+			<description>In multi-city case, each and every record in the result list will contain a set of flight+hotel.</description>
+		</property>
+		
+		<property name="selectedItemKey" type="java.lang.String">
+			<description>add by Felix for demo 2016-8-16</description>
+		</property>
+		
+		
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.flight.FlightData" 
+			extends="com.cnk.travelogix.common.facades.product.data.BaseProductData">
+		
+		<!-- flightNumber: e.g. CA9868 -->
+		<property name="flightNumber" type="java.lang.String" />
+		<!-- cabinClass: e.g. economy -->
+		<property name="cabinClass" type="java.lang.String" />
+		
+		<!-- airlineIATAData: airline company info -->
+		<property name="airlineIATA" type="AirlineIATAData"/>
+		
+		<!-- departureTime: e.g. 13:00 -->
+		<property name="departureTime" type="java.util.Date" />
+		
+		<!-- departureTime: e.g. 13:00 -->
+		<property name="displayDepartureTime" type="java.lang.String" />
+		
+		<!-- arrivalTime: e.g. 18:00 -->
+		<property name="arrivalTime" type="java.util.Date" />
+		
+		<!-- departureTime: e.g. 13:00 -->
+		<property name="displayArrivalTime" type="java.lang.String" />
+		
+		<!-- duration: e.g. 2:30 -->
+		<property name="duration" type="java.lang.String" />		
+		
+		<!-- fromSection: e.g. Delhi -->
+		<property name="fromSection" type ="AirportData"/>
+		<!-- toSection: e.g. Paris -->
+		<property name="toSection" type ="AirportData"/>
+		
+		<!-- fareSummary: Fare Summary-->
+		<property name="fareSummary" type="java.util.List&lt;FareSummaryData>" />
+		
+		<!-- fare: Fare details-->
+		<property name="fareDetail" type="java.util.List&lt;FareDetailData>" />
+		
+		<!-- numberOfStops: number of stops-->
+		<property name="numberOfStops" type="java.lang.String" />
+		
+		<!-- type: fly,  fly + bag,  fly +meal ...-->
+		<property name="selectdFareType" type="int" />
+		
+		<!-- services: 20KG baggage, refundable, meal included ... -->
+		<property name="services" type="java.util.List&lt;java.lang.String>" />
+		
+		
+		<property name="flightDetails" type="java.util.List&lt;com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>"></property>	
+		
+		<!-- departureTime: e.g. 25 Sep, Sun  -->
+		<property name="displayDepartureDate" type="java.lang.String" />
+		
+		<!-- departureTime: e.g. 25 Sep, Su -->
+		<property name="displayArrivalDate" type="java.lang.String" />
+		
+		<!-- departureTime: e.g. 3h 45m -->
+		<property name="displayDuration" type="java.lang.String" />
+		
+		<!-- departureTime: e.g. 2 stop -->
+		<property name="displayNumberOfStops" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.flight.PopularFlightData" extends="com.cnk.travelogix.common.facades.product.data.BaseProductData">
+		<property name="fromSector" type="java.lang.String"></property>
+		<property name="toSector" type="java.lang.String"></property>
+		<property name="listPrice" type="java.lang.Double"></property>
+		<property name="webPrice" type="java.lang.Double"></property>
+		<property name="savings" type="java.lang.Double"></property>
+		<property name="departureTime" type="java.lang.String"/>
+		<property name="returnTime" type="java.lang.String"/>
+		<property name="totalBook" type="java.lang.Integer"></property>
+		<property name="month" type="java.lang.String"></property>
+		<property name="day" type="java.lang.String"></property>
+		<property name="flightType" type="java.lang.String"></property>
+	</bean>
+	
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.flight.PopularHotelCityData" extends="com.cnk.travelogix.common.facades.product.data.BaseProductData">
+		<property name="city" type="java.lang.String"></property>
+		<property name="totalBook" type="java.lang.Integer"></property>
+		<property name="startTime" type="java.lang.String"/>
+		<property name="endTime" type="java.lang.String"/>
+		<property name="hotelList" type="java.util.List&lt;com.cnk.travelogix.common.facades.product.data.flight.PopularHotelData>"></property>
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.product.data.flight.PopularHotelData" extends="com.cnk.travelogix.common.facades.product.data.BaseProductData">
+		<property name="hotelName" type="java.lang.String"></property>
+		<property name="hotelLocation" type="java.lang.String"></property>
+		<property name="hotelImage" type="java.lang.String"></property>
+		<property name="hotelStarRating" type="java.lang.Integer"></property>
+		<property name="hotelListPrice" type="java.lang.Double"></property>
+		<property name="hotelWebPrice" type="java.lang.Double"></property>
+		<property name="savings" type="java.lang.Double"></property>
+		<property name="checkInDate" type="java.lang.String"></property>
+		<property name="checkOutDate" type="java.lang.String"></property>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.flight.AirlineIATAData">
+		<!-- airlineName: IndiaGo-->
+		<property name="airlineName" type="java.lang.String"/>
+		<!-- accountingCode: 198-->
+		<property name="accountingCode" type="java.lang.String"/>		
+		<!-- accountingCode: 6E-->
+		<property name="airlinePrefix" type="java.lang.String"/>
+		
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData" extends="FlightData">
+		
+		<property name="layover" type="java.lang.String"/>
+		
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.flight.FareSummaryData">
+		<property name="type" type="java.lang.String" />
+		<!-- listPrice: e.g. 1,900 -->
+		<property name="listPrice" type="java.lang.String" />
+		<!-- webPrice: e.g. 1,900 -->
+		<property name="webPrice" type="java.lang.String" />
+		<!-- currency: e.g. USD -->
+		<property name="currency" type="java.lang.String" />
+		<!-- pointEarn: points earn from airline company e.g. 20 -->
+		<property name="pointEarn" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.flight.FareDetailData">
+		<property name="type" type="java.lang.String" />
+		<!-- currency: e.g. USD -->
+		<property name="currency" type="java.lang.String" />
+		<!-- baseFare: e.g. 2230 -->
+		<property name="baseFare" type="java.lang.String" />
+		<!-- fuelSurcharge: e.g. 340 -->
+		<property name="fuelSurcharge" type="java.lang.String" />
+		<!-- jnTax: e.g. 50 -->
+		<property name="jnTax" type="java.lang.String" />
+		<!-- psgrSvcFee: e.g. 150 -->
+		<property name="psgrSvcFee" type="java.lang.String" />
+		<!-- serviceTax: e.g. 250 -->
+		<property name="serviceTax" type="java.lang.String" />
+		
+		<property name="total" type="java.lang.String" />
+		
+		<property name="refundable" type="boolean" />
+		
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.flight.AirportData">
+		<!-- city: e.g. Beijing -->
+		<property name="city" type="java.lang.String" />
+		<property name="airport" type="java.lang.String" />
+		<!-- terminal: e.g. T3 -->
+		<property name="terminal" type="java.lang.String" />
+		
+	</bean>
+	<!--  Flight bean definition End .... -->
+	
+	<!--  Hotel bean definition Start .... -->
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.HotelData" 
+			extends="com.cnk.travelogix.common.facades.product.data.BaseProductData">
+		<!-- chain of the hotel: e.g. Holiday Inn -->
+		<property name="chain" type="java.lang.String" />
+		
+		<!-- brand of the hotel: e.g. East Holiday Inn -->
+		<property name="brand" type="java.lang.String" />
+		
+		<property name="checkInTime" type="java.lang.String"/>
+		
+		<property name="checkOutTime" type="java.lang.String"/>
+		
+		<!-- address of the hotel: e.g. 3 Bellios Street, Little India, Singapore /n 5.2 km from Airport -->
+		<property name="address" type="java.lang.String" />
+		
+		<property name="marker" type="HotelMarkerData"></property>
+		
+		<!-- hotel rating: e.g. 5 -->
+		<property name="hotelRating" type="java.lang.String" />
+		
+		<property name="noOfRooms" type="java.lang.Integer"/>
+		
+		<property name="noOfFloors" type="java.lang.Integer"/>
+		
+		<!-- hotel travellertype == hashTag -->
+		<property name="travellerType" type="java.util.List&lt;java.lang.String>"/>
+		
+		<property name="accommodationType" type="java.lang.String"/>
+		
+		<property name="location" type="java.lang.String"/>
+		
+		<property name="payAtHotel" type="java.lang.Boolean"/>
+		
+		<property name="freeCancel" type="java.lang.Boolean"/>
+		
+		<property name="freeCancelDate" type="java.util.Date"/>
+		<!-- hotel reviews: e.g. 242 -->
+		<property name="reviews" type="ReviewData" />	
+		<!-- currentAttentions: how many customers are viewing this hotel e.g. 12 -->
+		<property name="currentAttentions" type="java.lang.Integer" />
+		
+		<!-- hotelPictureUrl: e.g. /Ezeego1/B2C/images/diy/hotel2.jpg -->
+		<property name="hotelPictureUrl" type="java.util.List&lt;java.lang.String>" />
+
+		<!-- show price shoted and viewed -->
+		<property name="showPrice" type="ShowPriceSortedData" /> 
+		
+		<!-- promotionInfo: e.g. 2 offers available: 10% discount -->
+		<property name="rooms" type="java.util.List&lt;RoomData>" />
+		
+		<!-- overview: e.g. Sprawled across 28 acres of lush tropical gardens & lawns The Downtown offers a breathtaking view of The Sentosa Islands... -->
+		<property name="overview" type="java.lang.String" />
+		
+		<!-- facilities: e.g. WIFI, breakfast ... -->
+		<property name="facilities" type="FacilityData"/>
+		
+		<!-- landmarksNearby: e.g. airport 8KM ... -->
+		<property name="landmarksNearby" type="java.util.List&lt;LandmarkData>"/>	
+		
+		<property name="inAndAround" type="java.util.List&lt;LandmarkData>"/>	
+		
+		<!-- priceCalendar: Wed Oct 1st  ... -->
+		<property name="priceCalendar" type="PriceCalendarData"/>
+		
+		<!-- offers: e.g. Book & avail 20% cash back ... -->
+		<property name="offers" type="java.util.List&lt;OfferData>"/>	
+		
+		<!-- bookingPolicies: e.g. Cancellation policy ... -->
+		<property name="bookingPolicies" type="java.util.List&lt;BookingPolicyData>"/>
+					
+		<!-- brand of the hotel: e.g. East Holiday Inn -->
+		<property name="popularity" type="java.lang.Integer" />		
+		<property name="webPrice" type="java.lang.Integer" />	
+		<property name="recommended" type="java.lang.Integer" />		
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.TravellerTypeData">
+		<property name="code" type="java.lang.String"></property>
+		<property name="name" type="java.lang.String"></property>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.HotelMarkerData">
+		<!-- lngitude e.g. -23.23487234236 -->
+		<property name="longitude" type="java.lang.String"></property>
+		<!-- latitude e.g. -23.23487234236 -->
+		<property name="latitude" type="java.lang.String"></property>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.HotelCompareData" 
+		  extends="com.cnk.travelogix.common.facades.product.data.BaseProductData">
+		  <property name="picture" type="java.lang.String"></property>
+		  <property name="propertyName" type="java.lang.String"></property>
+		  <property name="starRating" type="java.lang.Integer"></property>
+		  <property name="location" type="java.lang.String"></property>
+		  <property name="tripAdvisorRate" type="java.lang.Integer"></property>
+		  <property name="price" type="java.lang.Double"></property>
+		  <property name="checkInTime" type="java.lang.String"></property>
+		  <property name="checkOutTime" type="java.lang.String"></property>
+		  <property name="noOfRooms" type="java.lang.Integer"></property>
+		  <property name="noOfFloors" type="java.lang.Integer"></property>
+		  <property name="payAtHotel" type="java.lang.Boolean"></property>
+		  <property name="airportDistance" type="java.lang.String"></property>
+		  <property name="cityCenterDistance" type="java.lang.String"></property>
+		  <property name="locationStationDistance" type="java.lang.String"></property>
+		  <property name="railwayStationDistance" type="java.lang.String"></property>
+		  <property name="airCondition" type="java.lang.Boolean"></property>
+  		  <property name="bar" type="java.lang.Boolean"></property>
+  		  <property name="freewifi" type="java.lang.Boolean"></property>
+  		  <property name="checkIn" type="java.lang.Boolean"></property>
+  		  <property name="gym" type="java.lang.Boolean"></property>
+  		  <property name="pool" type="java.lang.Boolean"></property>
+  		  <property name="restaurant" type="java.lang.Boolean"></property>
+  		  <property name="rommService" type="java.lang.Boolean"></property>
+		  <property name="laundryService" type="java.lang.Boolean"></property>
+		  <property name="businessCenter" type="java.lang.Boolean"></property>
+		  <property name="coffeeShop" type="java.lang.Boolean"></property>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.PriceInfoData">
+		<!-- currency: e.g. USD -->
+		<property name="currency" type="java.lang.String" />
+		<!-- listPrice: e.g. 9,500 -->
+		<property name="listPrice" type="java.lang.String" />
+		<!-- webPrice: e.g. 9,350 -->
+		<property name="webPrice" type="java.lang.String" />
+		<!-- otherDescription: e.g. +17.5% service tax -->
+		<property name="otherDescription" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.ShowPriceSortedData">
+		<!-- currency: e.g. USD -->
+		<property name="currency" type="java.lang.String" />
+		<property name="avgPrice" type="java.lang.Double"/>
+		<property name="totalPrice" type="java.lang.Double"/>
+		<property name="avgPriceAfterDisCount" type="java.lang.Double"/>
+		<property name="totalPriceAfterDisCount" type="java.lang.Double"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.RoomData">
+		<property name="description" type="java.lang.String" />
+		<!-- room category: e.g. Standard Double Room -->
+		<property name="roomType" type="java.lang.String"/>
+		<!-- room offersBook now and avail 10 % discount -->
+		<property name="roomOffer" type="OfferData"/>
+		<!-- room Occupacy:occupacy info  -->
+		<property name="roomOccupacy " type="RoomOccupancyData"/>
+		<!-- roomInfos: e.g. with breakfast -->
+		<property name="roomDetails" type="java.util.List&lt;RoomDetailData>" />
+		<property name="pictures" type="java.util.List&lt;String>"></property>
+		<property name="ancillary" type="java.util.List&lt;com.cnk.travelogix.common.core.cart.data.RoomAncillaryData>"></property>
+		<property name="roomAmenities" type="java.util.List&lt;AmentyData>" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.RoomOccupancyData">
+		<property name="maxAdultNo" type="java.lang.Integer"></property>
+		<property name="maxChildrenNo" type="java.lang.Integer"></property>
+		<property name="maxinfantNo" type="java.lang.Integer"></property>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData">
+		<property name="roomId" type="java.lang.String"/>
+		<!-- description: e.g. With breakfast -->
+		<property name="option" type="java.lang.String"/>
+		<property name="description" type="java.lang.String" />
+		<!-- numLeft: How many rooms left available. e.g. 3 -->
+		<property name="numLeft" type="java.lang.Integer" />
+		<!-- price: Rs2,355 Average / Night -->
+		<property name="showPrice" type="ShowPriceSortedData" />
+		<!-- for current day price per room  used for cart checkout--> 
+		<property name="price" type="RoomPriceInfo" />
+		<!-- price calendar  has more than one month price list -->
+		<property name="priceCalendar" type="PriceCalendarData"/>
+		<property name="freeCancelation" type="java.lang.boolean" />
+		<property name="cancelDate" type="java.util.Date"/>
+		<property name="payAtHotel" type="java.lang.boolean" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.RoomPriceInfo">
+		<!-- currency: e.g. USD -->
+		<property name="currency" type="java.lang.String" />
+		<!-- listPrice: e.g. 9,500 -->
+		<property name="listPrice" type="java.lang.String" />
+		<!-- webPrice: e.g. 9,350 -->
+		<property name="webPrice" type="java.lang.String" />
+		<!-- unit: e.g. Average / Nigh -->
+		<property name="unit" type="java.lang.String" />
+		
+		<!-- otherInfo: e.g. Pay at hotel, FREE Cancellation etc -->
+		<property name="otherInfo" type="java.util.List&lt;java.lang.String>" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.FacilityData">
+		<!-- facilitydetails: e.g. WIFI... -->
+		<property name="facilitydetails" type="java.util.List&lt;FacilityDetailData>" />
+		<!-- hotelAmenities: e.g. Hotel Amenities -->
+		<property name="hotelAmenities" type="java.util.List&lt;AmentyData>" />
+		<!-- otherAmenities: e.g. Other Amenities -->
+		<property name="otherAmenities" type="java.util.List&lt;AmentyData>" />
+		<!-- businessService: e.g. Business Service -->
+		<property name="businessService" type="java.util.List&lt;AmentyData>" />
+		
+		<!-- otherFacilities: e.g. Business Service -->
+		<property name="otherDescriptions" type="java.util.List&lt;DescriptionData>" />
+	</bean>	
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData">
+		<!-- name: e.g. WIFI -->
+		<property name="name" type="java.lang.String" />
+		<!-- name: e.g. /Ezeego1/B2C/images/diy/wifi.jpg -->
+		<property name="icon" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.AmentyData">
+		<!-- name: e.g. Front desk -->
+		<property name="name" type="java.lang.String" />
+		
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.DescriptionData">
+		<!-- title: e.g. Hotel features -->
+		<property name="title" type="java.lang.String" />
+		<!-- description: e.g. X Tra Hotel's restaurant serves breakfast, lunch.... -->
+		<property name="description" type="java.lang.String" />
+	</bean>
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData">
+		<!-- name: e.g. International Airport -->
+		<property name="name" type="java.lang.String" />
+		<!-- distance: e.g. International Airport -->
+		<property name="distance" type="java.lang.String" />
+		<!-- m  cm  km -->
+		<property name="unit" type="java.lang.String"/>
+		<!-- description: e.g. 10-minute trek from Mount Altis -->
+		<property name="description" type="java.lang.String" />
+		<!-- near by position point -->
+		<property name="marker" type="HotelMarkerData"/>
+	</bean>	
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarData">
+		<!-- price: the price of the day. e.g. 3,500 -->
+		<property name="priceEntries" type="java.util.List&lt;PriceCalendarEntryData>"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData">
+		<!-- date: Wed Oct 1st -->
+		<property name="date" type="java.util.Date" />
+		<!-- price: the price of the day. e.g. 3,500 -->
+		<property name="price" type="RoomPriceInfo"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.ReviewData">
+		<!-- numReviews: e.g. 265 -->
+		<property name="numReviews" type="java.lang.Integer" />
+		<!-- ranking: e.g. 70% -->
+		<property name="ranking" type="java.lang.String" />
+		
+		<property name="rankingCity" type="java.lang.String" />
+		
+		<property name="tripAdvisorRates" type="java.util.List&lt;com.cnk.travelogix.common.facades.product.data.hotel.TripAdvRatingData>"></property>
+		
+		<!-- cleanlinessRating: e.g. 4.5 -->
+		<property name="reviewContent" type="java.util.List&lt;ReviewContentData>" />
+	</bean>	
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.TripAdvRatingData">
+		<property name="rateName" type="java.lang.String"/>
+		<property name="rating" type="java.lang.Integer"/>
+	</bean>
+	
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.ReviewContentData">
+		<!-- title: e.g. Good overnight stay -->
+		<property name="title" type="java.lang.String" />
+		<!-- author: e.g. Derek272 -->
+		<property name="author" type="java.lang.String" />
+		<!-- reviewDate: e.g. Oct 24, 2014 -->
+		<property name="reviewDate" type="java.lang.String" />
+		<!-- "content": e.g. Stayed here overnight in April with my children,.... -->
+		<property name="content" type="java.lang.String" />
+		
+	</bean>	
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.OfferData">
+		<!-- title: e.g. Book & avail 20% cash back -->
+		<property name="title" type="java.lang.String" />
+		<!-- promoCode: e.g. YU8789 -->
+		<property name="promoCode" type="java.lang.String" />
+
+		<!-- "content": e.g. Stayed here overnight in April with my children, an.... -->
+		<property name="content" type="java.lang.String" />
+		
+	</bean>	
+	
+	<bean class="com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData">
+		<!-- title: e.g. Cancellation policy -->
+		<property name="title" type="java.lang.String" />
+		
+		<!-- "content": e.g. xoxoxoxo xoox.... -->	
+		<property name="content" type="java.lang.String" />
+		
+	</bean>	
+	
+	<!--  Hotel bean definition End .... -->
+	
+	<bean class="com.cnk.travelogix.common.facades.search.data.AutoSearchResultData">
+		<property name="hotelData" type="com.cnk.travelogix.common.facades.product.data.hotel.HotelData"></property>
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.common.facades.home.data.TravellerDealData">
+		<property name="productCategory" type="String"></property>
+		<property name="productCategprySubType" type="String"></property>
+		<property name="offerId" type="String"></property>
+		<property name="offerImage" type="String"></property>
+		<property name="offerName" type="String"></property>
+		<property name="offerValidity" type="java.util.Date"></property>
+		<property name="offerType" type="String"></property>
+		<property name="offerShortDesc" type="String"></property>
+		<property name="link" type="String"></property>
+		<property name="userIdentity" type="String"></property>
+		<property name="destination" type="String"></property>
+		<property name="saving" type="Double"></property>
+		<property name="from" type="String"></property>
+		<property name="to" type="String"></property>
+	</bean>
+	
+	
+	
+	
+</beans>

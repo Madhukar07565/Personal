@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="masterDataCoreSystemSetup" class="com.cnk.travelogix.masterdata.core.setup.MasterDataCoreSystemSetup" parent="abstractCoreSystemSetup"/>
+	
+	<bean id="staffUidGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="staff_uid" />
+		<property name="digits" value="5" />
+		<property name="start" value="00001" />
+		<property name="numeric" value="true" />
+	</bean>
+	
+	<bean id="staffInformationPrepareInterceptor" class="com.cnk.travelogix.masterdata.core.interceptors.StaffInformationPrepareInterceptor">
+		<property name="keyGenerator" ref="staffUidGenerator"/>
+	</bean>
+	<bean id="staffInformationPrepareInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="staffInformationPrepareInterceptor"/>
+		<property name="typeCode" value="StaffInformation"/>
+	</bean>
+
+	<alias name="defaultbankDetailService" alias="bankDetailService" />
+	<bean id="defaultbankDetailService"
+		class="com.cnk.travelogix.masterdata.core.services.impl.DefaultBankDetailService">
+		<property name="bankDetailDao" ref="bankDetailDao"/>
+	</bean>
+
+	<alias name="defaultBankDetailDao" alias="bankDetailDao" />
+	<bean id="defaultBankDetailDao" parent="abstractItemDao"
+		class="com.cnk.travelogix.masterdata.dao.impl.DefaultBankDetailDao">
+	</bean>			
+
+	<bean id="bankAccountDetailValidateInterceptor"
+		class="com.cnk.travelogix.masterdata.core.interceptors.BankAccountDetailValidateInterceptor">
+		<property name="bankDetailService" ref="bankDetailService" />
+	</bean>
+	<bean id="bankAccountDetailValidateInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="bankAccountDetailValidateInterceptor" />
+		<property name="typeCode" value="BankAccountDetail" />
+	</bean>
+			
+</beans>

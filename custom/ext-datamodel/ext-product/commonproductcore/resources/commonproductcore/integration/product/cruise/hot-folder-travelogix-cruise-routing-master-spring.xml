@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2015 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+
+   <context:annotation-config />
+	<bean id="baseDirectoryTravelogixCruiseRoutingMaster" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogix/cruiseRoute/master" />
+	</bean>
+	
+	
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesTravelogixCruiseRoutingMaster"
+		directory="#{baseDirectoryTravelogixCruiseRoutingMaster}" filename-regex="routing_master_cruise-(\d+)\.csv"
+		comparator="fileOrderComparator">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+	
+	
+	
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogixCruiseRoutingMaster"
+		reply-channel="travelogixCruiseRoutingMasterBatchFilesProc" directory="#{baseDirectoryTravelogixCruiseRoutingMaster}/processing"
+		delete-source-files="true" />
+
+	<int:service-activator input-channel="travelogixCruiseRoutingMasterBatchFilesProc"
+		output-channel="travelogixCruiseRoutingMasterBatchFilesHeaderInit" ref="travelogixCruiseRoutingMasterHeaderSetupTask"
+		method="execute" />
+
+	<bean id="travelogixCruiseRoutingMasterHeaderSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogixCruiseRoutingMaster" />
+	</bean>
+	
+	<!-- 2) move the file to processing and setup header, partly site dependent -->
+	<int:service-activator input-channel="travelogixCruiseRoutingMasterBatchFilesHeaderInit"
+		output-channel="travelogixCruiseRoutingMasterBatchFilesHeader" ref="headerInitTask"
+		method="execute" />
+	<bean id="headerInitTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderInitTask">
+		<property name="sequenceIdParser" ref="batchSequenceIdParser" />
+		<property name="languageParser" ref="batchLanguageParser" />
+		<property name="fallbackLanguage" value="en" />
+	</bean>
+
+	<!-- <bean id="batchSequenceIdParser"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.util.SequenceIdParser">
+		<property name="parser">
+			<bean class="de.hybris.platform.acceleratorservices.util.RegexParser">
+				<property name="regex" value="-(\d+)\.csv" />
+			</bean>
+		</property>
+	</bean> -->
+	
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="travelogixCruiseRoutingMasterBatchFilesHeader"
+		output-channel="batchFilesTran" ref="travelogixCruiseRoutingMasterBatchTransformerTask"
+		method="execute" />
+
+	<bean id="travelogixCruiseRoutingMasterBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+	
+	
+	<!-- Common Header -->
+
+	<bean id="cruiseRoutingMasterDefaultHeader" class="java.lang.String">
+		<constructor-arg>
+			<value># ImpEx for importing data into $CATALOG$
+				$productCatalog=EZ-IN
+				$productCatalogName=ezeego1-IN
+				$approved=approvalstatus(code)[default='approved']
+            $catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+		      $dateformat=dd-MM-yyyy
+			</value>
+		</constructor-arg>
+	</bean>
+	<!-- End Of Common Header -->
+	
+	<!-- Transformer converters mappings -->
+	
+	<bean id="batchCruiseRoutingMasterConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="routing_master_cruise" p:converter-ref="batchMasterCruiseRoutingConverter" />
+		
+	<bean id="batchRoutingDetailMasterConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="routing_master_cruise" p:converter-ref="batchRoutingDetailMasterConverter" />
+		
+	<!-- Cruise Brand Feed -->
+		
+	<bean id="batchMasterCruiseRoutingConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Cruise Routes
+				#{cruiseRoutingMasterDefaultHeader}
+				INSERT_UPDATE CruiseRoute;$catalogVersion[unique=true];routingCommonId;code[unique=true];numberOfNights[unique=true];routingName[unique=true];cruiseDestinationName(code,catalogVersion(catalog(id),version))[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator];approvalStatus(code);onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];reason;copiedFrom
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{+1};{2};{3};{4};{5};{6}:{1};{7};{8};{9};{10};{11}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'CruiseRoute'"/>
+   		</bean>
+  		</property>
+	</bean>
+
+	
+	<bean id="batchRoutingDetailMasterConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert Cruise Routes
+				#{cruiseRoutingMasterDefaultHeader}
+				INSERT_UPDATE RouteDetail;day;country(isoCode)[unique=true];city(isocode)[unique=true];portName(CruisePort.portCommonId)[unique=true];placeType(PlaceType.code)[unique=true];cruiseRoute(code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{+1};{2};{3};{4};{5};{6}</value>
+		</property>
+		<property name="rowFilter">
+   		<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    	<property name="expression" value="row[0] == 'RouteDetail'"/>
+   		</bean>
+  		</property>
+	</bean>
+</beans>

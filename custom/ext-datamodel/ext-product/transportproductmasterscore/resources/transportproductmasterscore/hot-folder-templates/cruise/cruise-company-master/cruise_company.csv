@@ -1,0 +1,17 @@
+Header Type;Company Name;CruiseCompanyId;CruiseCompanyCommonId;CruiseCompanyName;financeControlID;notes;copiedFrom;Affiliation;EffectiveFromDate;Active;ApprovalStatus(code);reason;remarks
+CruiseCompany;Ezeego1;CruiseCompany_8556;9876543;Star Cruise;6785;;;1201;01-01-2017;false;approved;;;
+CruiseCompany;Ezeego1;CruiseCompany_9030;1782446;Royal Caribbean International;6786;;;1201;01-01-2017;false;approved;;;
+;Company Name;Media Name;Media Type;CruiseCompanyId
+Media;Ezeego1;CruiseCompany-456.jpg;image/jpg;CruiseCompany_8556
+Media;Ezeego1;CruiseCompany-123.jpg;image/jpg;CruiseCompany_9030
+;Company Name;CruiseCompanyId;Street 1;Street 2;Street 3;Street 4;street5;Postal Code;Town;Country;Landmark;AddressType;City;SuburbDowntown;Area;Location
+Address;Ezeego1;CruiseCompany_8556;5 Canton Road;1528 Ocean Centre;;;;400 059;Mumbai;IN;near ABC Hospital;HEADQUARTER;BOM;AE;;AAA
+Address;Ezeego1;CruiseCompany_9030;Caribbean Way;1050;;;;400 059;Mumbai;IN;near ABC Hospital;CORPORATE;BOM;AE;;AAA
+;socialNetworkingID;socialNetworkingName;CruiseCompanyId
+SocialNetworkingDetails;1111;facebook;CruiseCompany_8556
+SocialNetworkingDetails;2222;twitter;CruiseCompany_8556
+SocialNetworkingDetails;3333;linkedin;CruiseCompany_9030
+;newsLetterRequired;webpageAddress;displayName;EmailAddress;EmailAddressType;CruiseCompanyId
+EmailAddresses;true;http://www.msccruises.com;cruisemail;expressuser@expresscheckout.com;COMPANY;CruiseCompany_8556
+EmailAddresses;false;gmail;cruisemail;expressuser@gmail.com;COMPANY;CruiseCompany_8556
+EmailAddresses;true;www.yahoo.com;newcruisemail;expressuser@yahoo.com;COMPANY;CruiseCompany_9030

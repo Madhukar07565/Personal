@@ -1,0 +1,30 @@
+#   Ancillary Rate Definition     #
+INSERT_UPDATE AncillaryRateDefinition;clientType(code)[unique=true,allownull=true];currency(isocode)[allownull=true];seasonality(code);supplierMarket(catalogVersion(catalog(id),version),code)[allownull=true];travelPeriod[dateformat=dd.MM.yyyy hh:mm:ss]
+;B2B;INR;MID_SEASON;Default:Online:ASIA;01.04.2015 12:00:00,30.09.2015 12:00:00
+
+#     Ancillary    #
+INSERT_UPDATE Ancillary;code[unique=true,allownull=true];ancillaryName[lang=en]
+;456;Meet & greet
+;654;Parking
+
+#    Transport Ancillary Rate    #
+INSERT_UPDATE TransportAncillaryRate;ancillaryCategory(code);ancillaryName(code);ancillaryType(code);calculatedOn(code);commissionThreshold(code)[unique=true,allownull=true];commissionType(code);commissionValue;cost[allownull=true];customerLiabilities[lang=en];daysOfWeek(code)[allownull=true]
+;SERVICE;456;PARKING;PER_MILE;AMOUNT;NET;;400;;SUNDAY
+
+#    Supplier Ancillary Rate       #   
+INSERT_UPDATE SupplierAncillaryRate;active[allownull=true];approvalStatus(code)[allownull=true];catalogVersion(catalog(id),version)[unique=true,allownull=true];code[unique=true,allownull=true];reason;remarks
+;true;approved;Default:Online;321;Reason;Remark
+
+
+
+
+
+
+
+
+
+
+
+
+
+

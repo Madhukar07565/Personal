@@ -1,0 +1,45 @@
+#  SUPPLIER MARKET    #
+INSERT_UPDATE SupplierMarket;active[allownull=true];approvalStatus(code)[allownull=true];catalogVersion(catalog(id),version)[unique=true,allownull=true];code[unique=true,allownull=true];lockedBy(uid);name[lang=en];reason;remarks
+;true;approved;Default:Online;IND;;India;;
+;true;approved;Default:Online;ASIA;;Asia;;
+
+
+#   TRANSPORT SUPPLIER RATE    #
+INSERT_UPDATE TransportSupplierRate;&srId;catalogVersion(catalog(id),version)[unique=true,allownull=true];code[unique=true,allownull=true];currency(isocode)[allownull=true];effectiveFrom[allownull=true,dateformat=dd.MM.yyyy hh:mm:ss];product(catalogVersion(catalog(id),version),code,commonProductID);productSubCategory(catalogVersion(catalog(id),version),code);supplier(catalogVersion(catalog(id),version),code);supplierMarket(catalogVersion(catalog(id),version),code)[allownull=true];validityPeriod[allownull=true,dateformat=dd.MM.yyyy hh:mm:ss]
+;sr01;Default:Online;200955;INR;13.04.2016 12:00:00;;;;Default:Online:IND;06.04.2016 12:00:00,21.04.2016 12:00:00;
+
+#   Compamy Rate     #
+INSERT_UPDATE RateType;&rateId;code[unique=true,allownull=true];name[lang=en]
+;rate01;707;Rate1
+
+#    TRANSPORT RATE DEFINITION    #
+INSERT_UPDATE TransportRateDefinition;&trdId;clientType(code)[allownull=true];commisionType(code)[allownull=true];commissionThreshold(code);commissionValue;companyRateCode(code);companyType(&rateId)[allownull=true];country(isocode)[unique=true];freeSaleUnlimited[allownull=true];priceComponent(code);rateTypeApplicableFor(code)[allownull=true];seasonality(code)[allownull=true];supplierRateCode(code);supplierType(&rateId);travelFrom[allownull=true,dateformat=dd.MM.yyyy hh:mm:ss];absSupplierRate(&srId)
+;trd1;B2B;NET;AMOUNT;600;;rate01;IN;true;;BOTH;MID_SEASON;;rate01;01.04.2015 12:00:00,30.09.2016 12:00:00;sr01;
+
+#    ADDING CUSTOMER    #
+INSERT_UPDATE Customer;uid[unique=true,allownull=true];name
+;500;Rohan
+
+#    ADDING ADDRESS FOR THE CUSTOMER    #
+INSERT_UPDATE Address;&addId;owner(Customer.uid)[unique=true,allownull=true]
+;add1;500;
+
+#     TRANSPORT RATE DETAIL    #
+INSERT_UPDATE TransportRateDetail;calculatedOn(code)[unique=true,allownull=true];daysOfWeek(code)[unique=true,allownull=true];dropOffPoint(code)[unique=true];dropOffPoints(&addId)[allownull=true];pickUpPointType(code)[unique=true,allownull=true];pickUpPoints(&addId)[allownull=true];viaPointName(&addId)[allownull=true];viaPointType(code)[unique=true];carGroup(code)[unique=true];journeyType(code)[unique=true];cityTier(code)[unique=true];unit(code);transferType(code)[unique=true];ratesDefinedFor(code)[unique=true];transportratedefinition(&trdId);advanceDefinition(&tradId)
+;TOTAL_COST;SUNDAY;HOTEL;add1;AIRPORT;add1;add1;STATION;B;RETURN;TIER_1;km;PRIVATE;CITY_TRANSFERRED;trd1;trad1
+
+#     TRANSPORT RATE ADV DEFINITION    #
+INSERT_UPDATE TransportRateAdvDefinition;&tradId;blockOutDate;childPolicy[lang=en];dayWorkingHours[dateformat=dd.MM.yyyy hh:mm:ss];maxPax[unique=true,allownull=true];minPax[unique=true,allownull=true];nightWorkingHours[dateformat=dd.MM.yyyy hh:mm:ss];priceExclusion[lang=en];priceInclusion[lang=en];salesDate
+;trad1;;;05.04.2016 12:00:00,12.04.2016 12:00:00;;1;06.04.2016 12:00:00,13.04.2016 12:00:00;1) All extras to be collected directly from guest.;1) The above cost does not include State entry permits / fee, Parking Charges, Toll to be paid directly to driver or at counter.;
+
+#      TRANSPORT SURCHARGE SUPP DETAIL   #
+INSERT_UPDATE TransportSurchargeSuppDetail;charge[allownull=true];subType(code)[allownull=true];supplement(code);surchargeId[unique=true,allownull=true];surchargeName[lang=en];travelDate;type(code)
+;500;NIGHT_CHARGE;;1345;;;SURCHARGE
+
+
+
+
+
+
+
+

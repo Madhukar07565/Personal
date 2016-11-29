@@ -1,0 +1,8 @@
+
+INSERT_UPDATE TravellerProgram;code[unique=true];name;airline(code)
+;TravellerProgram1;Traveller Program 1;6E
+;TravellerProgram2;Traveller Program 2;6E
+;TravellerProgram3;Traveller Program 3;9W
+;TravellerProgram4;Traveller Program 4;EK
+;TravellerProgram5;Traveller Program 5;AI
+;TravellerProgram6;Traveller Program 6;EY

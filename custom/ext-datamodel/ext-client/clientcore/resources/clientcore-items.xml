@@ -1,0 +1,3388 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+	
+	<collectiontypes>
+		<collectiontype code="PointOfSaleCollection"
+			elementtype="PointOfSale" autocreate="true" type="set" />
+		
+		<collectiontype code="AncillaryCollection"
+			elementtype="Ancillary" autocreate="true" />
+			
+	<collectiontype code="CompanyOffersSet" elementtype="CompanyOffers" autocreate="true" generate="false" type="set"/>
+ 	 <collectiontype code="MediaCollectionRedemption" elementtype="Media" autocreate="true" generate="true"/>
+ 	<collectiontype code="Codes" elementtype="java.lang.String" autocreate="true" generate="true" type="list"/>
+	
+		<collectiontype code="MarketCollection"
+			elementtype="Market" autocreate="true" type="set" />
+		
+		<collectiontype code="ClientCurrencyCollection"
+			elementtype="Currency" autocreate="true" type="set" />
+		
+		<collectiontype code="PointOfSalesEnumCollection"
+			elementtype="PointOfSale" autocreate="true" />	
+			
+		<collectiontype code="DisplayOptionCollection"
+			elementtype="DisplayOption" autocreate="true" />	
+			
+	</collectiontypes>
+	
+	
+	<enumtypes>
+		<enumtype code="SurchargeType" dynamic="true">
+			<description>Surcharge Type</description>
+			<value code="ROOM_SURCHARGE"></value>
+			<value code="SURCHARGE_FOR_SINGLE_PERSON_TRAVELLING"></value>
+			<value code="CROWN_METROPOL_SATUERDAY_NIGHT_SURCHARGE"></value>
+			<value
+				code="FOUR_DAY_CAR_HIRE_SUPPLEMENT_FOR_SINGLE_SHARE_PAX_TRAVELLING_ALONE"></value>
+			<value code="HOTEL_NEW_YEAR_SURCHARGES"></value>
+			<value code="GITEX_HOTEL_SURCHARGE"></value>
+			<value code="GITEX_TECHNOLOGY_SURCHARGE"></value>
+			<value code="EID_AL_ADHA_SURCHARGES"></value>
+			<value code="MIDNIGHT_EARLY_MOARNING_SURCHARGE"></value>
+		</enumtype>
+		<enumtype code="SalesStage" dynamic="true">
+			<description>Sales Stage</description>
+			<value code="ENQUIRY"></value>
+			<value code="QUATATION"></value>
+			<value code="PRESALES"></value>
+			<value code="POSTBOOKING"></value>
+		</enumtype>
+		<enumtype generate="true" code="ClientGroupReason"
+			autocreate="true">
+			<description>Defines Client Group Reason</description>
+			<value code="HOTEL_IS_SHUT_DOWN" />
+			<value code="CLOSED_DUE_TO_RENOVATION" />
+			<value code="OTHERS" />
+		</enumtype>
+		<enumtype code="IndustrySector" autocreate="true" generate="false"
+			dynamic="true">
+			<value code="PHARMA"></value>
+			<value code="MEDICINE"></value>
+			<value code="IT_SOFTWARE"></value>
+		</enumtype>	
+		<enumtype code="BookingCriteriaStatus" dynamic="true">
+			<value code="OnRequest" />
+			<value code="Confirmed" />
+		</enumtype>
+		<enumtype code="BookingBasedOn" dynamic="true">
+			<value code="TravelDate" />
+			<value code="BookingDate" />
+		</enumtype>
+		<enumtype code="BookingCriteriaAttribute" dynamic="true">
+			<value code="Reconfirmed" />
+			<value code="ReconfirmationReject" />
+		</enumtype>
+		<enumtype code="BookingPriority" dynamic="true">
+			<value code="Low" />
+			<value code="Medium" />
+			<value code="High" />
+		</enumtype>
+		
+		<enumtype code="OfferApplicability" dynamic="true">
+			<description>Defines offer applicability for a company</description>
+			<value code="WITHREDEMPTION" />
+			<value code="WITHOUTREDEMPTION" />
+		</enumtype>
+		<enumtype code="CompanyOfferValue" dynamic="true">
+			<description>Defines offer value for a company</description>
+			<value code="FIXED" />
+			<value code="SLAB" />
+			<value code="LASTDIGITCREDITCARD" />
+			<value code="RETENSION" />
+			<value code="FREEORDISCOUNTED" />
+		</enumtype>
+		<enumtype code="ApplicableOn" dynamic="true">
+			<description>Defines offer value for a company</description>
+			<value code="PERPASSENGER" />
+			<value code="PERPASSENGERTYPE" />
+			<value code="PERROOM" />
+			<value code="PERSECTOR" />
+			<value code="PERTICKET" />
+			<value code="PERNIGHT" />
+			<value code="PERTRANSACTIONS" />
+			<value code="FIRSTADULT" />
+			<value code="SECONDADULT" />
+			<value code="FIRSTCHILD" />
+			<value code="SECONDCHILD" />
+			<value code="PERBOOKING" />
+			<value code="PERVEHICLE" />
+		</enumtype>
+		<enumtype code="CodeGeneratedBy" dynamic="true">
+			<description>Defines offer value for a company</description>
+			<value code="CommonCode" />
+			<value code="ProductWiseCode" />
+		</enumtype>
+		
+		
+
+		<enumtype code="OfferValueRange" dynamic="true">
+			<description>Defines offer value Range for a company</description>
+			<value code="HIGHER" />
+			<value code="LOWER" />
+		</enumtype>
+		<enumtype code="OfferCalculatedOn" dynamic="true">
+			<description>Defines offer calculated on for a company</description>
+			<value code="HIGHEST_RATE"></value>
+			<value code="EXTENSION_NIGHT"></value>
+			<value code="LAST_NIGHT"></value>
+			<value code="LOWEST_RATE"></value>
+		</enumtype>
+		<enumtype code="Condition" dynamic="true">
+			<description>Defines condition for a company</description>
+			<value code="AND" />
+			<value code="OR" />
+		</enumtype>
+		<enumtype code="FreeOn" dynamic="true">
+			<description>Free On for a company</description>
+			<value code="PASSENGER" />
+			<value code="PRODUCTS" />
+			<value code="TICKETS" />
+			<value code="ROOMS" />
+			<value code="CABINS" />
+			<value code="UPGRADES" />
+			<value code="GOODIES" />
+			<value code="SHIPPINGVOUCHER" />
+			<value code="ANCILLARY" />
+			<value code="OPTIONAL" />
+			<value code="NIGHTS" />
+			<value code="ACTIVITIES" />
+			<value code="PACKAGES" />
+			<value code="OPTIONALPACKAGES" />
+		</enumtype>
+		<enumtype code="CompanyTargetOffer"  dynamic="true">
+			<description>company target offer values</description>
+			<value code="NOOFPASSENGER" />
+			<value code="NOOFROOMS" />
+			<value code="NOOFNIGHTS" />
+			<value code="NOOFTICKETS" />
+			<value code="NOOFBOOKINGS" />
+			<value code="NOOFSEGMENTS" />
+		</enumtype>
+		
+		<enumtype code="CodeGeneration" dynamic="true">
+			<description>Code Generation values</description>
+			<value code="SINGLECODE" />
+			<value code="MULTIPLECODE" />
+			<value code="PREGENERATEDCODE" />
+			<value code="REALTIMECODE" />
+
+		</enumtype>
+		<enumtype code="EligibilityCondition" dynamic="true">
+			<description>Eligibility Condition</description>
+			<value code="MINIMUMONEPASSENGER" />
+			<value code="ALLPASSENGERNAME" />
+			<value code="USERID" />
+			<value code="BOOKINGVALUEUPTOCERTAINAMT" />
+			<value code="CARDTOBEUSEDNTIMES" />
+			<value code="USERIDTOBEUSEDNTIMES" />
+			<value code="MAXIMUMNOOFBOOKING" />
+			<value code="MAXIMUMMMINIMUMBILLVALUE" />
+			<value code="DISCOUNTAMTLIMIT" />
+			<value code="MAXIMUMMINIMUMPRODUCTSBOOKEDINOFFER" />
+			<value code="OFFERAPPLICABLEONPASSENGER" />
+			<value code="OFFERONFIRSTNPASSENGER" />
+			<value code="BOOKINGFORCREDITCARDXDIGITS" />
+			<value code="BOOKINGCREDITCARDFORLASTXTOTOTALX" />
+			<value code="MINIMUMMAXIMUMNOOFNIGHTS" />
+			<value code="BILLINGVALUEGREATERTHANEQTOCERTAINAMOUNT" />
+			<value code="MAXIMUMMINIMUMPASSENGERS" />
+			<value code="FIRSTTIMEBOOKING" />
+			<value code="MAXIMUMMINIMUMNOOFROOMS" />
+			<value code="MAXIMUMMINIMUMNOOFADULTS" />
+			<value code="BOOKINGSPECIFICPAYMENTMODE" />
+			<value code="PASSENGERBTWDATERANGE" />
+			<value code="PASSENGERBTWAGERANGE" />
+			<value code="GENDEROFPASSENGER" />
+			<value code="PASSENGERWEDDINGANIVERSARYDATERANGE" />
+			<value code="MINIMUMMAXIMUMNOOFOPTIONALPACKAGES" />
+			<value code="MINIMUMMAXIMUMNOOFSERVICES" />
+			<value code="TOPREVENUEACROSSPRODUCT" />
+			<value code="MINIMUMMAXIMUMNOOFARCILLARY" />
+		</enumtype>
+		
+		<enumtype code="DisplayOption" dynamic="true">
+			<description>Display Option</description>
+			<value code="ON_REQUEST" />
+			<value code="AVAILABLE" />
+			<value code="TIME_LIMIT" />
+		</enumtype>
+		
+		<enumtype code="SortOrderFields" dynamic="true">
+			<description>Sort Order Fields</description>
+			<value code="PRICE" />
+			<value code="NAME" />
+		</enumtype>
+		
+		<enumtype code="ShowRateType" dynamic="true"> 
+			<description>Show Rate Type</description>
+			<value code="SINGLE_SUPPLIER" />
+			<value code="MULTI_SUPPLIER" />
+		</enumtype>
+		
+		<enumtype code="RetentionThresholdType" dynamic="true">
+			<description>Retention Threshold Type</description>
+			<value code="RETENTION" />
+			<value code="RE_PRICING_THRESHOLD" />
+		</enumtype>
+	</enumtypes>
+	
+	
+	<relations>
+		<relation code="MerchantIdentificationDetailsToTravelogixB2BUnit"
+			localized="false">
+			<sourceElement type="MerchantIdentificationDetails"
+				cardinality="one" qualifier="merchantIdentificationDetails" />
+			<targetElement type="TravelogixB2BUnit" cardinality="many"
+				qualifier="users">
+			</targetElement>
+		</relation>
+
+		<relation code="TravelogixClientType2Market" localized="false">
+			<deployment table="clientmarket" typecode="25002" />
+			<sourceElement type="TravelogixClientType" cardinality="many"
+				qualifier="travelogixClientType" collectiontype="set" />
+			<targetElement type="Market" cardinality="many"
+				qualifier="companyMarkets" collectiontype="set">
+				<modifiers optional="false" />
+			</targetElement>
+		</relation>
+
+		<relation code="TravelogixClientType2Currency" localized="false">
+			<deployment table="trnxalcurrency" typecode="25003" />
+			<sourceElement type="TravelogixClientType" cardinality="many"
+				qualifier="travelogixClientType" collectiontype="set" />
+			<targetElement type="Currency" cardinality="many"
+				qualifier="transactionalCurrency" collectiontype="set">
+				<modifiers optional="false" />
+			</targetElement>
+		</relation>
+
+		<relation code="TravelogixClientType2DistributionChannel"
+			localized="false">
+			<sourceElement type="TravelogixClientType" cardinality="one"
+				qualifier="travelogixClientType" />
+			<targetElement type="DistributionChannel" cardinality="many"
+				qualifier="pointOfSale" collectiontype="set">
+				<modifiers optional="false" />
+			</targetElement>
+		</relation>
+
+		<relation code="B2BCustomer2LoginParameters" localized="false">
+			<sourceElement type="B2BCustomer" cardinality="one"
+				qualifier="b2bCustomer" />
+			<targetElement type="LoginParameters" cardinality="many"
+				qualifier="loginParameters" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="TravelogixB2BUnit2StaffInformation"
+			localized="false">
+			<sourceElement type="TravelogixB2BUnit" cardinality="one"
+				qualifier="travelogixB2BUnit" />
+			<targetElement type="StaffInformation" cardinality="many"
+				qualifier="staffInformation" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="TravelogixB2BUnit2AffiliationInformation"
+			localized="false">
+			<sourceElement type="TravelogixB2BUnit" cardinality="one"
+				qualifier="travelogixB2BUnit" />
+			<targetElement type="AffiliationInformation"
+				cardinality="many" qualifier="affiliationInformation"
+				collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="AffiliationInformation2MediaRelation"
+			localized="false">
+			<sourceElement type="AffiliationInformation"
+				cardinality="one" qualifier="affiliationInformation" />
+			<targetElement type="Media" cardinality="many"
+				qualifier="medias" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="TravelogixB2BUnit2BankAccountDetail"
+			localized="false">
+			<sourceElement type="TravelogixB2BUnit" cardinality="one"
+				qualifier="travelogixB2BUnit">
+				<!-- Bank Master Change -->
+			</sourceElement>
+			<targetElement type="BankAccountDetail" cardinality="many"
+				qualifier="bankAccountDetail" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="TravelogixCorporateUnit2BusinessInformation"
+			localized="false">
+			<sourceElement type="TravelogixCorporateUnit"
+				cardinality="one" qualifier="travelogixCorporateUnit" />
+			<targetElement type="BusinessInformation" cardinality="many"
+				qualifier="businessInformation" collectiontype="set">
+				<!-- <modifiers partof="true" optional="false" /> -->
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="TravelogixCorporateUnit2Designation"
+			localized="false">
+			<sourceElement type="TravelogixCorporateUnit"
+				cardinality="one" qualifier="travelogixCorporateUnit" />
+			<targetElement type="Designation" cardinality="many"
+				qualifier="designation" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="TravelogixCorporateUnit2CostCentre"
+			localized="false">
+			<sourceElement type="TravelogixCorporateUnit"
+				cardinality="one" qualifier="travelogixCorporateUnit" />
+			<targetElement type="CostCentre" cardinality="many"
+				qualifier="costCentre" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="TravelogixCorporateUnit2Department"
+			localized="false">
+			<sourceElement type="TravelogixCorporateUnit"
+				cardinality="one" qualifier="travelogixCorporateUnit" />
+			<targetElement type="Department" cardinality="many"
+				qualifier="department" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="TravelogixCorporateUnit2Project" localized="false">
+			<sourceElement type="TravelogixCorporateUnit"
+				cardinality="one" qualifier="travelogixCorporateUnit" />
+			<targetElement type="Project" cardinality="many"
+				qualifier="project" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="TravelogixCorporateUnit2ClientDocument"
+			localized="false">
+			<sourceElement type="TravelogixCorporateUnit"
+				cardinality="one" qualifier="travelogixCorporateUnitDoc" />
+			<targetElement type="ClientDocument" cardinality="many"
+				qualifier="clientDocument" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="TravelogixCorporateUnit2Grade" localized="false">
+			<sourceElement type="TravelogixCorporateUnit"
+				cardinality="one" qualifier="travelogixCorporateUnitGrade" />
+			<targetElement type="Grade" cardinality="many"
+				qualifier="grade" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="TravelogixCorporateUnit2BookingInformation"
+			localized="false">
+			<sourceElement type="TravelogixCorporateUnit"
+				cardinality="one" qualifier="travelogixCorporateUnitBookingInfo" />
+			<targetElement type="Information" cardinality="many"
+				qualifier="bookingInformation" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="TravelogixCorporateUnit2EmployeeInformation"
+			localized="false">
+			<sourceElement type="TravelogixCorporateUnit"
+				cardinality="one" qualifier="travelogixCorporateUnitEmpInfo" />
+			<targetElement type="Information" cardinality="many"
+				qualifier="employmentInformation" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="CorporateTravelPolicy2VersionDetail"
+			localized="false">
+			<sourceElement type="CorporateTravelPolicy"
+				cardinality="one" qualifier="corporateTravelPolicy" />
+			<targetElement type="VersionDetail" cardinality="many"
+				qualifier="versionDetails" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="CorporateTravelPolicy2Grade" localized="false">
+			<sourceElement type="CorporateTravelPolicy"
+				cardinality="one" qualifier="corporateTravelPolicy" />
+			<targetElement type="Grade" cardinality="many"
+				qualifier="grade" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="CorporateTravelPolicy2Location" localized="false">
+			<sourceElement type="CorporateTravelPolicy"
+				cardinality="one" qualifier="corporateTravelPolicy" />
+			<targetElement type="Location" cardinality="many"
+				qualifier="locations" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="CorporateTravelPolicy2Country" localized="false">
+			<sourceElement type="CorporateTravelPolicy"
+				cardinality="one" qualifier="corporateTravelPolicy" />
+			<targetElement type="Country" cardinality="many"
+				qualifier="countries" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="TravellerProfile2OtherAddress" localized="false">
+			<sourceElement type="TravellerProfile" cardinality="one"
+				qualifier="travellerProfile" />
+			<targetElement type="Address" cardinality="many"
+				qualifier="otherAddress" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="TravellerProfile2EmergencyContact" localized="false">
+			<sourceElement type="TravellerProfile" cardinality="one"
+				qualifier="travellerProfile" />
+			<targetElement type="EmergencyContact" cardinality="many"
+				qualifier="emergencyContact" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="TravellerProfile2LoyalityProgramInformation"
+			localized="false">
+			<sourceElement type="TravellerProfile" cardinality="one"
+				qualifier="travellerProfile" />
+			<targetElement type="LoyalityProgramInformation"
+				cardinality="many" qualifier="loyalityProgramInformation"
+				collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="TravellerProfile2VisaDetails" localized="false">
+			<sourceElement type="TravellerProfile" cardinality="one"
+				qualifier="travellerProfile" />
+			<targetElement type="VisaDetails" cardinality="many"
+				qualifier="visaDetails" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="TravellerProfile2PassportDetails" localized="false">
+			<sourceElement type="TravellerProfile" cardinality="one"
+				qualifier="travellerProfile" />
+			<targetElement type="PassportDetails" cardinality="many"
+				qualifier="passportDetails" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="TravellerProfile2TrvlrPreference" localized="false">
+			<sourceElement type="TravellerProfile" cardinality="one"
+				qualifier="travellerProfile" />
+			<targetElement type="Preference" cardinality="many"
+				qualifier="preferences" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="TravellerProfile2CarPreferences" localized="false">
+			<sourceElement type="TravellerProfile" cardinality="one"
+				qualifier="travellerProfile" />
+			<targetElement type="CarPreference" cardinality="many"
+				qualifier="carPreferences" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="TravellerProfile2HotelPreferences" localized="false">
+			<sourceElement type="TravellerProfile" cardinality="one"
+				qualifier="travellerProfile" />
+			<targetElement type="HotelPreference" cardinality="many"
+				qualifier="hotelPreferences" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="TravellerProfile2FlightPreference" localized="false">
+			<sourceElement type="TravellerProfile" cardinality="one"
+				qualifier="travellerProfile" />
+			<targetElement type="FlightPrefernce" cardinality="many"
+				qualifier="flightPreferences" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="TravellerProfile2TravellerFamilyDetails"
+			localized="false">
+			<sourceElement type="TravellerProfile" cardinality="one"
+				qualifier="travellerProfile" />
+			<targetElement type="TravellerFamilyDetails"
+				cardinality="many" qualifier="travellerFamilyDetails"
+				collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="TravellerProfile2MediaRelation" localized="false">
+			<sourceElement type="TravellerProfile" cardinality="one"
+				qualifier="travellerProfile" />
+			<targetElement type="Media" cardinality="many"
+				qualifier="medias" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="B2CTravellerProfile2Interest" localized="false">
+			<sourceElement type="B2CTravellerProfile" cardinality="one"
+				qualifier="b2cTravellerProfile" />
+			<targetElement type="Interest" cardinality="many"
+				qualifier="interests" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="B2CTravellerProfile2Identity" localized="false">
+			<sourceElement type="B2CTravellerProfile" cardinality="one"
+				qualifier="b2cTravellerProfile" />
+			<targetElement type="Identity" cardinality="many"
+				qualifier="Identity" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="B2CTravellerProfile2FriendDetail" localized="false">
+			<sourceElement type="B2CTravellerProfile" cardinality="one"
+				qualifier="b2cTravellerProfile" />
+			<targetElement type="FriendDetail" cardinality="many"
+				qualifier="friendDetail" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="FlightPrefernce2AirlineDetail" localized="false">
+			<sourceElement type="FlightPrefernce" cardinality="one"
+				qualifier="flightPrefernce" />
+			<targetElement type="AirlineDetail" cardinality="many"
+				qualifier="airlineDetail" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="FlightPrefernce2SpecialRequest" localized="false">
+			<sourceElement type="FlightPrefernce" cardinality="one"
+				qualifier="flightPrefernce" />
+			<targetElement type="SpecialRequest" cardinality="many"
+				qualifier="specialRequest" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="CMSSite2Principal" localized="false">
+			<deployment table="sitetoprincipal" typecode="25045" />
+			<sourceElement type="CMSSite" cardinality="many"
+				qualifier="cmsSites" />
+			<targetElement type="Principal" cardinality="many"
+				qualifier="principals" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation code="Principal2KPIInfo" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="Principal" cardinality="one"
+				qualifier="principals">
+			</sourceElement>
+			<targetElement type="KPIInfo" cardinality="many"
+				qualifier="kpiOptions">
+			</targetElement>
+		</relation>
+
+		<relation code="MLMDistribution2Principal" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="Principal" cardinality="one"
+				qualifier="client">
+			</sourceElement>
+			<targetElement type="MLMDistribution" cardinality="many"
+				qualifier="mlmDistributions">
+			</targetElement>
+		</relation>
+
+		<relation localized="false" code="BookingConfigurationToBookingClient">
+			<sourceElement type="BookingConfiguration" qualifier="client"
+				cardinality="one" />
+			<targetElement type="BookingClientDetail" qualifier="clientdetails"
+				cardinality="many" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation localized="false" code="BookingConfigurationToBookingCriteria">
+			<sourceElement type="BookingConfiguration" qualifier="criteria"
+				cardinality="one" />
+			<targetElement type="BookingCriteria" qualifier="bookingcriterias"
+				cardinality="many" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation localized="false" code="BookingConfigurationToSupplier">
+			<sourceElement type="BookingConfiguration" qualifier="bookingsupplier"
+				cardinality="one" />
+			<targetElement type="Supplier" qualifier="suppliers"
+				cardinality="many" collectiontype="set">
+			</targetElement>
+		</relation>
+
+		<relation localized="false" code="BookingConfigurationToProductInclusion">
+			<sourceElement type="BookingConfiguration" qualifier="inclusion"
+				cardinality="one" />
+			<targetElement type="Product" qualifier="inclusionProduct"
+				cardinality="many" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation localized="false" code="BookingConfigurationToProductExclusion">
+			<sourceElement type="BookingConfiguration" qualifier="exclusion"
+				cardinality="one" />
+			<targetElement type="Product" qualifier="exclusionProduct"
+				cardinality="many" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation localized="false" code="BookingConfigurationToCompanyOffers">
+			<sourceElement type="BookingConfiguration" qualifier="bookingconfigoffer"
+				cardinality="one" />
+			<targetElement type="CompanyOffers" qualifier="bookingcompanyoffer"
+				cardinality="many" collectiontype="set">
+			</targetElement>
+		</relation>
+		
+		<relation code="PrincipalToClientPaymentOption" 
+			localized="false">
+			<sourceElement type="Principal" cardinality="one"
+				qualifier="client">
+			</sourceElement>
+			<targetElement type="ClientPaymentOption" cardinality="many"
+				qualifier="paymentOptions">
+			</targetElement>
+		</relation>
+		
+		<relation code="ClientPaymentOptionToAcquirerInfo" 
+			localized="false">
+			<sourceElement type="ClientPaymentOption" cardinality="one"
+				qualifier="paymentOptions">
+			</sourceElement>
+			<targetElement type="AcquirerInfo" cardinality="many" 
+				qualifier="acquirers">
+				<modifiers optional="false"/>
+			</targetElement>
+		</relation>
+		
+		<relation code="AdvanceApplToCatAndProAppl" 
+			localized="false">
+			<sourceElement type="AdvanceApplicability" cardinality="one"
+				qualifier="advanceApplicability">
+			</sourceElement>
+			<targetElement type="CategoriesAndProductLevelApplicability" cardinality="many"
+				qualifier="applicableCategoriesAndProduct">
+			</targetElement>
+		</relation>
+		
+		<relation code="AdvanceApplToSurchargeLevelAppl" 
+			localized="false">
+			<sourceElement type="AdvanceApplicability" cardinality="one"
+				qualifier="advanceApplicability">
+			</sourceElement>
+			<targetElement type="SurchargeLevelApplicability" cardinality="many"
+				qualifier="surchargesApplicability">
+			</targetElement>
+		</relation>
+		
+		<relation code="AdvanceApplToSupplierRateTypeAndCode" 
+			localized="false">
+			<sourceElement type="AdvanceApplicability" cardinality="one"
+				qualifier="advanceApplicability">
+			</sourceElement>
+			<targetElement type="SupplierRateTypeAndCode" cardinality="many"
+				qualifier="rateTypeAndCodeApplicability">
+			</targetElement>
+		</relation>
+		
+		<relation code="AdvanceApplToRoomLevelApplicability" 
+			localized="false">
+			<sourceElement type="AdvanceApplicability" cardinality="one"
+				qualifier="advanceApplicability">
+			</sourceElement>
+			<targetElement type="RoomLevelApplicability" cardinality="many"
+				qualifier="roomLevelApplicability">
+			</targetElement>
+		</relation>
+		
+		<relation code="CompanyOffers2ClientDetails" generate="false"
+			localized="false" autocreate="true">
+			<deployment table="compClientDetails" typecode="23134" />
+			<sourceElement type="CompanyOffers" cardinality="many"
+				qualifier="companyClientDetails">
+			</sourceElement>
+			<targetElement type="ClientDetails" cardinality="many"
+				qualifier="clientCompanyOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		<relation code="CompanyOffers2CompanyDetails" generate="false"
+			localized="false" autocreate="true">
+			<deployment table="compCompanyDetails" typecode="23135" />
+			<sourceElement type="CompanyOffers" cardinality="many"
+				qualifier="companyCompanyDetails">
+			</sourceElement>
+			<targetElement type="CompanyDetails" cardinality="many"
+				qualifier="companyOffersCompany">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		
+		<relation code="CompanyOffers2CompanyOffers" generate="false"
+			localized="false" autocreate="true">
+			<deployment table="compCompDetails" typecode="23138" />
+			<sourceElement type="CompanyOffers" cardinality="many"
+				qualifier="companyOffers">
+			</sourceElement>
+			<targetElement type="CompanyOffers" cardinality="many"
+				qualifier="combineOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>	
+		
+		<relation code="CompanyOffers2BookingDateValidity" generate="false"
+			localized="false" autocreate="true">
+			
+			<sourceElement type="CompanyOffers" cardinality="one"
+				qualifier="companyBookingDateValidity">
+			</sourceElement>
+			<targetElement type="BookingDateValidity" cardinality="many"
+				qualifier="bookingDateCompanyOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>	
+		
+		<relation code="RedemptionCompanyOffers2BookingValidity" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="RedemptionCompanyOffers" cardinality="one"
+				qualifier="redempOffersBookingDateValidity">
+			</sourceElement>
+			<targetElement type="BookingDateValidity" cardinality="many"
+				qualifier="bookingDateRedempOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		
+		<relation code="CompanyOffers2TravelDateValidity" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="CompanyOffers" cardinality="one"
+				qualifier="companyTravelDateValidity">
+			</sourceElement>
+			<targetElement type="TravelDateValidity" cardinality="many"
+				qualifier="travelDateCompanyOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		
+			<relation code="RedemptionCompanyOffers2TravelValidity" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="RedemptionCompanyOffers" cardinality="one"
+				qualifier="redempOffersValidity">
+			</sourceElement>
+			<targetElement type="TravelDateValidity" cardinality="many"
+				qualifier="travelDateRedempOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		
+		<relation code="CompanyOffers2CombineOffer" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="CompanyOffers" cardinality="one"
+				qualifier="companyCombineOffer">
+			</sourceElement>
+			<targetElement type="CombineOffer" cardinality="many"
+				qualifier="CombineOfferCompanyOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		<relation code="CompanyOffers2OfferProduct" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="CompanyOffers" cardinality="one"
+				qualifier="companyOfferProduct">
+			</sourceElement>
+			<targetElement type="OfferProduct" cardinality="many"
+				qualifier="offerProductCompanyOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		<relation code="CompanyOffers2EligibilityCondition" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="CompanyOffers" cardinality="one"
+				qualifier="companyOfferEligibilityCondition">
+			</sourceElement>
+			<targetElement type="OfferEligibilityCondition" cardinality="many"
+				qualifier="eligibilityConditionCompanyOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+			<relation code="RedemptionCompanyOffers2EligibilityCondition" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="RedemptionCompanyOffers" cardinality="one"
+				qualifier="redempCompOffersligibilityCondition">
+			</sourceElement>
+			<targetElement type="OfferEligibilityCondition" cardinality="many"
+				qualifier="eligibilityConditionRedempCompOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		
+		<relation code="RedemptionCompanyOffers2SupplierCredentials" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="RedemptionCompanyOffers" cardinality="one"
+				qualifier="redempCompOfferSuppCred">
+			</sourceElement>
+			<targetElement type="SupplierCredentials" cardinality="many"
+				qualifier="suppCredRedemptionOfferComp">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		<relation code="CompanyOffers2SupplierCredentials" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="CompanyOffers" cardinality="one"
+				qualifier="companyOfferSupplierCredentials">
+			</sourceElement>
+			<targetElement type="SupplierCredentials" cardinality="many"
+				qualifier="supplierCredentialsCompanyOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+			
+		<relation code="CompanyOffers2TravelogixCancellationPolicy" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="CompanyOffers" cardinality="one"
+				qualifier="companyOfferTravelogixCancePolicy">
+			</sourceElement>
+			<targetElement type="TravelogixPolicy" cardinality="many"
+				qualifier="policyCanceCompanyOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		<relation code="CompanyOffers2TravelogixAmendantPolicy" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="CompanyOffers" cardinality="one"
+				qualifier="companyOfferTravelogixAmenPolicy">
+			</sourceElement>
+			<targetElement type="TravelogixPolicy" cardinality="many"
+				qualifier="policyAmenCompanyOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+	
+		<relation code="CompanyOffers2TravelogixPaymentPolicy" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="CompanyOffers" cardinality="one"
+				qualifier="companyOfferTravelogixPaymPolicy">
+			</sourceElement>
+			<targetElement type="TravelogixPolicy" cardinality="many"
+				qualifier="policyPaymCompanyOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+			<relation code="CompanyOffers2TravelogixBookingPolicy" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="CompanyOffers" cardinality="one"
+				qualifier="companyOfferTravelogixBookPolicy">
+			</sourceElement>
+			<targetElement type="TravelogixPolicy" cardinality="many"
+				qualifier="policyBookCompanyOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		
+	 <relation code="RedemptionCompanyOffers2TravelogixCancelPolicy" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="RedemptionCompanyOffers" cardinality="one"
+				qualifier="redemptionCompOffers">
+			</sourceElement>
+			<targetElement type="TravelogixPolicy" cardinality="many"
+				qualifier="policyRedemptionCompOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		<relation code="RedemptionCompanyOffers2TravelogixBookingPolicy" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="RedemptionCompanyOffers" cardinality="one"
+				qualifier="redemptionCompOffers">
+			</sourceElement>
+			<targetElement type="TravelogixPolicy" cardinality="many"
+				qualifier="policyBookingRedemptionCompOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		<relation code="RedemptionCompanyOffers2TravelogixAmendantPolicy" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="RedemptionCompanyOffers" cardinality="one"
+				qualifier="redemptionCompOffers">
+			</sourceElement>
+			<targetElement type="TravelogixPolicy" cardinality="many"
+				qualifier="policyAmenRedemptionCompOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		<relation code="RedemptionCompanyOffers2TravelogixPaymentPolicy" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="RedemptionCompanyOffers" cardinality="one"
+				qualifier="redemptionCompOffers">
+			</sourceElement>
+			<targetElement type="TravelogixPolicy" cardinality="many"
+				qualifier="policyPaymentRedemptionCompOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		
+			<relation code="TravelogixPolicy2DefinedPolicy" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="TravelogixPolicy" cardinality="one"
+				qualifier="travelogixPolicyDefinedPolicy">
+			</sourceElement>
+			<targetElement type="DefinedPolicy" cardinality="many"
+				qualifier="definedTravelogixDefinedPolicy">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		
+		<relation code="EligibilityCondition2RoomLevel" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="EligibilityCondition" cardinality="one"
+				qualifier="eligibilityConditionRoomLevel">
+			</sourceElement>
+			<targetElement type="RoomLevel" cardinality="many"
+				qualifier="roomLevelEligibilityCondition">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		
+		<relation code="FreeOrDiscountedOfferType2RoomLevel" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="FreeOrDiscountedOfferType" cardinality="one"
+				qualifier="freeRoomLevels">
+			</sourceElement>
+			<targetElement type="RoomLevel" cardinality="many"
+				qualifier="roomLevelFree">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		
+		<relation code="FreeOrDiscountedOfferType2Passenger" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="FreeOrDiscountedOfferType" cardinality="one"
+				qualifier="freePassengers">
+			</sourceElement>
+			<targetElement type="Passenger" cardinality="many"
+				qualifier="passengersFree">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		
+		
+		<relation code="CodeDetailsRedemption2UploadCodeDetails" generate="false"
+			localized="false" autocreate="true">
+			<sourceElement type="CodeDetailsRedemption" cardinality="one"
+				qualifier="codeRedempCodeDetails">
+			</sourceElement>
+			<targetElement type="UploadCodeDetails" cardinality="many"
+				qualifier="uploadCodeDetailsRedemption">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		
+		<relation code="Product2Companyoffers" generate="false"
+			localized="false" autocreate="true">
+		    <sourceElement qualifier="products" type="Product" cardinality="many">
+				</sourceElement>
+			<targetElement type="CompanyOffers" cardinality="one"
+				qualifier="productCompanyOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		
+		<relation code="ExclusionProduct2Companyoffers" generate="false"
+			localized="false" autocreate="true">
+		    <sourceElement qualifier="exclusionProducts" type="Product" cardinality="many">
+				</sourceElement>
+			<targetElement type="CompanyOffers" cardinality="one"
+				qualifier="exclProductCompanyOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		<relation code="ExclusionProduct2RedemptionCompanyOffers" generate="false"
+			localized="false" autocreate="true">
+		    <sourceElement qualifier="exclusionProducts" type="Product" cardinality="many">
+				</sourceElement>
+			<targetElement type="RedemptionCompanyOffers" cardinality="one"
+				qualifier="exclProductRedemptionCompanyOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		<relation code="Product2RedemptionCompanyOffers" generate="false"
+			localized="false" autocreate="true">
+		    <sourceElement qualifier="products" type="Product" cardinality="many">
+				</sourceElement>
+			<targetElement type="RedemptionCompanyOffers" cardinality="one"
+				qualifier="productRedemptionCompanyOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		
+		<relation code="BookingDateValidity2BlockOutDate" generate="false"
+			localized="false" autocreate="true">
+		    <sourceElement qualifier="bookingDateBlockDate" type="BookingDateValidity" cardinality="one">
+				</sourceElement>
+			<targetElement type="BlockOutDate" cardinality="many"
+				qualifier="blockOutDatesBooking">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		<relation code="TravelDateValidity2BlockOutDate" generate="false"
+			localized="false" autocreate="true">
+		    <sourceElement qualifier="travelDateBlockOut" type="TravelDateValidity" cardinality="one">
+				</sourceElement>
+			<targetElement type="BlockOutDate" cardinality="many"
+				qualifier="blockOutDateTravel">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		<relation code="CompanyOffers2DeactivateCompanyDetails" generate="false"
+			localized="false" autocreate="true">
+		    <sourceElement qualifier="deactivateOffersCompany" type="CompanyOffers" cardinality="one">
+				</sourceElement>
+			<targetElement type="CompanyDetails" cardinality="many" 
+				qualifier="companyDeactivateOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		<relation code="CompanyOffers2DeactivateClientDetails" generate="false"
+			localized="false" autocreate="true">
+		    <sourceElement qualifier="deactivateOffersClient" type="CompanyOffers" cardinality="one">
+				</sourceElement>
+			<targetElement type="ClientDetails" cardinality="many" 
+				qualifier="clientDeactivateOffers">
+				<modifiers optional="true" />
+			</targetElement>
+		</relation>
+		
+		<relation code="PrincipalToPartPaymentMasterConfig" 
+			localized="false">
+			<sourceElement type="Principal" cardinality="one"
+				qualifier="client">
+			</sourceElement>
+			<targetElement type="PartPaymentMasterConfig" cardinality="many"
+				qualifier="partPayments">
+			</targetElement>
+		</relation>
+		
+		<relation code="PrincipalToTimeLimitMasterConfig" 
+			localized="false">
+			<sourceElement type="Principal" cardinality="one"
+				qualifier="client">
+			</sourceElement>
+			<targetElement type="TimeLimitMasterConfig" cardinality="many"
+				qualifier="timeLimits">
+			</targetElement>
+		</relation>
+		
+		<relation code="PrincipalToDocumentHandlingConfigMaster" 
+			localized="false">
+			<sourceElement type="Principal" cardinality="one"
+				qualifier="client">
+			</sourceElement>
+			<targetElement type="DocumentHandlingConfigMaster" cardinality="many"
+				qualifier="documentHandlingMasters">
+			</targetElement>
+		</relation>
+		
+		<relation code="PrincipalToCombinationProduct" 
+			localized="false">
+			<sourceElement type="Principal" cardinality="one"
+				qualifier="client">
+			</sourceElement>
+			<targetElement type="CombinationProduct" cardinality="many"
+				qualifier="combinationProducts">
+			</targetElement>
+		</relation>
+		
+		<relation code="PrincipalToRetentionThreshold" 
+			localized="false">
+			<sourceElement type="Principal" cardinality="one"
+				qualifier="client">
+			</sourceElement>
+			<targetElement type="RetentionThreshold" cardinality="many"
+				qualifier="retentionThresholds">
+			</targetElement>
+		</relation>
+		
+		<relation code="PrincipalToPaidProductRanking" 
+			localized="false">
+			<sourceElement type="Principal" cardinality="one"
+				qualifier="client">
+			</sourceElement>
+			<targetElement type="PaidProductRanking" cardinality="many"
+				qualifier="paidProductRankings" >
+			</targetElement>
+		</relation>
+		
+		<relation code="PrincipalToPassiveBookingDetail" 
+			localized="false">
+			<sourceElement type="Principal" cardinality="one"
+				qualifier="client">
+			</sourceElement>
+			<targetElement type="PassiveBookingDetail" cardinality="many"
+				qualifier="passiveBookingDetailsForFlights" >
+			</targetElement>
+		</relation>
+		
+		<relation code="PaidProdRankingToClientPaidProdDetail" 
+			localized="false">
+			<sourceElement type="PaidProductRanking" cardinality="one"
+				qualifier="paidProductRanking">
+			</sourceElement>
+			<targetElement type="ClientPaidProductDetail" cardinality="many"
+				qualifier="productDetails" >
+			</targetElement>
+		</relation>
+		
+		<relation code="PaidProdRankingToClientPaidPaymentDetail" 
+			localized="false">
+			<sourceElement type="PaidProductRanking" cardinality="one"
+				qualifier="paidProductRanking">
+			</sourceElement>
+			<targetElement type="ClientPaidPaymentDetail" cardinality="many"
+				qualifier="paymentDetails" >
+			</targetElement>
+		</relation>
+		
+		<relation code="TravelogixB2BUnitToCorporateDealCodes" 
+			localized="false">
+			<sourceElement type="TravelogixB2BUnit" cardinality="one"
+				qualifier="travelogixB2BUnit">
+			</sourceElement>
+			<targetElement type="CorporateDealCodes" cardinality="many"
+				qualifier="dealCodes" >
+			</targetElement>
+		</relation>
+		
+		<relation code="TravelogixB2BUnitToTravelogixPolicy" 
+			localized="false">
+			<sourceElement type="TravelogixB2BUnit" cardinality="one"
+				qualifier="travelogixB2BUnit">
+			</sourceElement>
+			<targetElement type="TravelogixPolicy" cardinality="many"
+				qualifier="travelPolicies" >
+			</targetElement>
+		</relation>
+		
+		<relation code="TravelogixB2BUnitToConsortiumMember" 
+			localized="false">
+			<sourceElement type="TravelogixB2BUnit" cardinality="one"
+				qualifier="travelogixB2BUnit">
+			</sourceElement>
+			<targetElement type="ConsortiumMember" cardinality="many"
+				qualifier="consortiumMembers" >
+			</targetElement>
+		</relation>
+		
+		<relation code="TravelogixB2BUnitToCorporateTraveller" 
+			localized="false">
+			<sourceElement type="TravelogixB2BUnit" cardinality="one"
+				qualifier="travelogixB2BUnit">
+			</sourceElement>
+			<targetElement type="CorporateTraveller" cardinality="many"
+				qualifier="corporateTravellers" >
+			</targetElement>
+		</relation>
+		
+		<relation code="B2BCustomerToUserGroup" 
+			localized="false">
+			<sourceElement type="B2BCustomer" cardinality="one"
+				qualifier="b2bCustomer">
+			</sourceElement>
+			<targetElement type="UserGroup" cardinality="many"
+				qualifier="usergroups" >
+			</targetElement>
+		</relation>
+
+	</relations>
+
+	<itemtypes>
+		<typegroup name="b2bclientprofile">
+			<itemtype code="TravelogixClientType" extends="UserGroup"
+				jaloclass="com.cnk.travelogix.client.core.clienttype.jalo.TravelogixClientType">
+				<deployment table="trvlclienttype" typecode="25008" />
+				<attributes>
+					<attribute qualifier="language" type="Language">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="defaultCurrency" type="Currency">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="transactional" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+					</attribute>
+					<attribute qualifier="clientCommercials" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+					</attribute>
+					<attribute qualifier="settlement" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+					</attribute>
+					<attribute qualifier="activeClientCount" type="java.lang.String" >
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="reason" type="localized:java.lang.String">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="remarks" type="localized:java.lang.String">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientType" type="TrvlClientType">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="TravelogixB2BUnit" extends="B2BUnit"
+				jaloclass="com.cnk.travelogix.client.core.b2bunit.jalo.TravelogixB2BUnit">
+				<deployment table="travelogixb2bunit" typecode="25009" />
+				<attributes>
+					<!-- Start of Change -->
+					<!-- <attribute type="Market" qualifier="clientMarket">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute> -->
+					<attribute type="Language" qualifier="language">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientCommercials" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="transactional" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="defaultCurrency" type="Currency">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Market" qualifier="companyMarket">
+						<description>Company Market</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="settlement" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="reason">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="remarks">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="reportingSaleOfficeType" type="ReportingSaleOfficeType">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="groupCompany" type="GroupCompany"
+						redeclare="true">
+						<description>Group Company</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TaxHead" qualifier="taxHeads" redeclare="true">
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="telephone"
+						redeclare="true">
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ArticleApprovalStatus" qualifier="approvalStatus"
+						redeclare="true">
+						<modifiers optional="true" />
+						<persistence type="property" />
+						<defaultvalue>em().getEnumerationValue("ArticleApprovalStatus","check")</defaultvalue>
+					</attribute>
+					<attribute type="TrvlClientType" qualifier="trvlClientType">
+						<persistence type="property" />
+					</attribute>
+					<!-- End of Change -->
+					<attribute type="SalesOffice" qualifier="reportingSaleOffice">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="B2BUnit" qualifier="reportingFranchisee">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ClientSubCategory" qualifier="clientSubCategory">
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ClientCategory" qualifier="clientCategory">
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="autoEmailInvoice" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="ClientGroupCompany" qualifier="clientGroupCompany">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="financeControlId">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="establishedIn">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="noOfOutLets">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ModeOfRegistration" qualifier="modeOfRegistration">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CompanyType" qualifier="companyType">
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TypeOfAssociation" qualifier="typeOfAssociation">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="KYCInformation" qualifier="kycInformation">
+						<persistence type="property" />
+						<modifiers optional="true" partof="true" />
+					</attribute>
+					<attribute type="ServiceTaxDetails" qualifier="serviceTaxDetails">
+						<persistence type="property" />
+						<modifiers partof="true" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="contractValidityFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="contractValidityTo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="leadId">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="TravelogixCorporateUnit" extends="TravelogixB2BUnit"
+				jaloclass="com.cnk.travelogix.client.core.corporate.jalo.TravelogixCorporateUnit">
+				<deployment table="trvlcorpunit" typecode="25020" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="clientFinanceCode">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="budget">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="BusinessInformation"
+				jaloclass="com.cnk.travelogix.client.core.corporate.jalo.BusinessInformation">
+				<deployment table="trvlcorpbussinfo" typecode="25021" />
+				<attributes>
+					<attribute type="IndustrySector" qualifier="industry">
+						<description>industry for BusinessInformation</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="IndustrySector" qualifier="sector">
+						<description>sector for BusinessInformation</description>
+						<modifiers optional="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="ClientProduct" qualifier="product">
+						<description>product for BusinessInformation</description>
+						<persistence type="property"></persistence>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Designation"
+				jaloclass="com.cnk.travelogix.client.core.corporate.jalo.Designation">
+				<deployment table="trvlcorpdesgn" typecode="25022" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="designation">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Grade" qualifier="grade">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CostCentre"
+				jaloclass="com.cnk.travelogix.client.core.corporate.jalo.CostCentre">
+				<deployment table="trvlcorpcostctr" typecode="25023" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="costCentreName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="costCentreCode">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="clientFinanceCode">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Project"
+				jaloclass="com.cnk.travelogix.client.core.corporate.jalo.Project">
+				<deployment table="trvlcorproj" typecode="25024" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="projectName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="projectCode">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="clientFinanceCode">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CostCentre" qualifier="costCentre">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="fromDate">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="toDate">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<!-- <itemtype code="VersionDetails" jaloclass="com.cnk.travelogix.client.core.corporate.policy.jalo.VersionDetails"> 
+				<deployment table="trvlversdtls" typecode="25025" /> <attributes> <attribute 
+				type="java.lang.Double" qualifier="version"> <persistence type="property" 
+				/> </attribute> <attribute type="java.util.Date" qualifier="versionDate"> 
+				<persistence type="property" /> </attribute> <attribute type="java.lang.String" 
+				qualifier="remarks"> <persistence type="property" /> </attribute> </attributes> 
+				</itemtype> -->
+
+			<itemtype code="CorporateTravelPolicy"
+				jaloclass="com.cnk.travelogix.client.core.corporate.policy.jalo.CorporateTravelPolicy">
+				<deployment table="corptrvlpolicy" typecode="25026" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="policyName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PolicyParameterName" qualifier="policyParameterName">
+						<modifiers unique="true"/>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Product" qualifier="policyProduct">
+						<modifiers unique="true"/>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="effectiveFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="effectiveTo">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="booleanConstruct" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="value">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="valueTo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Operator" qualifier="operator">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Currency" qualifier="currency">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="StringCollection" qualifier="listConstruct">
+						<persistence type="property" />
+					</attribute>
+					<!-- <attribute type="Cities" qualifier="cities"> <persistence type="property" 
+						/> </attribute> -->
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ProfileInformation"
+				jaloclass="com.cnk.travelogix.client.core.traveller.general.jalo.ProfileInformation">
+				<deployment table="trvlgenprofileinfo" typecode="25027" />
+				<attributes>
+					<attribute type="Title" qualifier="title">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="firstName">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="middleName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="lastName">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="mobileNumber">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="dietRemarks">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="spRemarks">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="differentiallyAble" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="veg" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.util.Date" qualifier="birthDate">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Media" qualifier="picture">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Country" qualifier="nationality">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Gender" qualifier="gender">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="TravellerFamilyDetails"
+				jaloclass="com.cnk.travelogix.client.core.traveller.general.jalo.ProfileInformation">
+				<deployment table="trvlfamilyinfo" typecode="25028" />
+				<attributes>
+					<attribute type="Relationship" qualifier="relationShip">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ProfileInformation" qualifier="profileInformation">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="PassportDetails"
+				jaloclass="com.cnk.travelogix.client.core.traveller.general.jalo.PassportDetails">
+				<deployment table="trvlpassportinfo" typecode="25029" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="passportNumber">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="hasValifdPassport" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="PassportType" qualifier="passportType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="issueDate">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="expiryDate">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Country" qualifier="country">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="placeOfIssue">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="blankPages">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Media" qualifier="passportCopy">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="VisaDetails"
+				jaloclass="com.cnk.travelogix.client.core.traveller.general.jalo.VisaDetails">
+				<deployment table="trvlvisainfo" typecode="25030" />
+				<attributes>
+					<attribute type="TrvlrDocumentType" qualifier="documentType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="number">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Territory" qualifier="territory">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Country" qualifier="country">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="VisaTypes" qualifier="visaType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="VisaCategory" qualifier="visaCategory">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="issuePlace">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="issueDate">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="validFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="validTo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Media" qualifier="visaCopy">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="passportNumber">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="FlightPrefernce"
+				jaloclass="com.cnk.travelogix.client.core.traveller.prefernce.jalo.FlightPrefernce">
+				<deployment table="trvlflightpref" typecode="25031" />
+				<attributes>
+					<attribute type="MealPreference" qualifier="mealPreference">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SeatPreference" qualifier="seatPreference">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Country" qualifier="destinationCountry">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AirlineDetail"
+				jaloclass="com.cnk.travelogix.client.core.traveller.prefernce.jalo.AirlineDetail">
+				<deployment table="trvlairlineinfo" typecode="25032" />
+				<attributes>
+					<attribute type="TrvlrAirlineType" qualifier="airlineType">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Product" qualifier="airlineName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AirlineClass" qualifier="airlineClass">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="seatNumber">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="HotelPreference"
+				jaloclass="com.cnk.travelogix.client.core.traveller.prefernce.jalo.HotelPreference">
+				<deployment table="trvlhotelpref" typecode="25033" />
+				<attributes>
+					<attribute type="City" qualifier="destinationCity">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Product" qualifier="hotelName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TrvlrRating" qualifier="hotelCategory">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RoomCategory" qualifier="roomCategory">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RoomType" qualifier="roomType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="StringCollection" qualifier="amenities">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="roomNumber">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CarPreference"
+				jaloclass="com.cnk.travelogix.client.core.traveller.prefernce.jalo.CarPreference">
+				<deployment table="trvlcarpref" typecode="25034" />
+				<attributes>
+					<attribute type="Country" qualifier="destinationCountry">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TrvlrCarGroupType" qualifier="carGroupType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AcrissCode" qualifier="acrissCode">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CarCategory" qualifier="carCategory">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Product" qualifier="vehicleName">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="withAc" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="withChauffer" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Preference"
+				jaloclass="com.cnk.travelogix.client.core.traveller.prefernce.jalo.Preference">
+				<deployment table="trvlpreference" typecode="25035" />
+				<attributes>
+					<attribute qualifier="meatGreet" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="parkingAtAirport" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="airportLounge" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="dinningInResturant" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="concierge" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="newInsurnace" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="InsuranceCompany" qualifier="insuranceCompany">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="InsuranceType" qualifier="insuranceType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CoachClass" qualifier="coahClass">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CoachType" qualifier="coachType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TrvlrBusOperator" qualifier="busOperator">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SeatClass" qualifier="busClass">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SeatClass" qualifier="seatingType">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="EmergencyContact"
+				jaloclass="com.cnk.travelogix.client.core.traveller.general.jalo.EmergencyContact">
+				<deployment table="trvlemergcontact" typecode="25036" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="name">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="address">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="telephoneBusinessHr">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="telephoneAfterHr">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="mobileNunber">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="StringCollection" qualifier="emails">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RelationShip" qualifier="relationShip">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="TravellerProfile"
+				jaloclass="com.cnk.travelogix.client.core.traveller.jalo.TravellerProfile">
+				<deployment table="trvlprofileinfo" typecode="25037" />
+				<attributes>
+					<attribute type="Principal" qualifier="clientName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ProfileInformation" qualifier="profileInformation">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="personalEmailId">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="number">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="married" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.util.Date" qualifier="anniversaryDate">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="NationalIdentificationType" qualifier="nationalIdentificationType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Address" qualifier="corporateAddress">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Address" qualifier="residentalAddress">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Address" qualifier="permanentAddress">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Preference" qualifier="preference">
+						<persistence type="property" />
+						<modifiers partof="true" />
+					</attribute>
+					<attribute type="Grade" qualifier="grade">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Designation" qualifier="designation">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Department" qualifier="department">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="EmployeeStatus" qualifier="employeeStatus">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="offEmailId">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="joiningDate">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ProfileType" qualifier="profileType">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CorporateTravellerProfile" extends="TravellerProfile"
+				jaloclass="com.cnk.travelogix.client.core.traveller.jalo.CorporateTravellerProfile">
+				<deployment table="trvlcorpprofinfo" typecode="25038" />
+				<attributes>
+					<attribute qualifier="lockedBy" type="Employee">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="employeeId">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="approvalRequired" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="Location" qualifier="location">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Project" qualifier="projectCode">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CostCentre" qualifier="costCentreCode">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TravellerProfile" qualifier="reportingManager">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="selfBookingToolUser" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="personalTravelAllowed" type="java.lang.Boolean">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="userId">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="B2CTravellerProfile" extends="TravellerProfile"
+				jaloclass="com.cnk.travelogix.client.core.traveller.jalo.B2CTravellerProfile">
+				<deployment table="b2ctrvlprofinfo" typecode="25039" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="companyName">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="FriendDetail"
+				jaloclass="com.cnk.travelogix.client.core.traveller.general.jalo.FriendDetail">
+				<deployment table="trvlfriendinfo" typecode="25040" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="name">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="address">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="telephone">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="mobile">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="StringCollection" qualifier="emails">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="LoyalityProgramInformation"
+				jaloclass="com.cnk.travelogix.client.core.traveller.general.jalo.LoyalityProgramInformation">
+				<deployment table="trvlloyalityinfo" typecode="25041" />
+				<attributes>
+					<attribute type="Category" qualifier="category">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ProductCategorySubType" qualifier="productCategorySubType">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Product" qualifier="product">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="nameOnCard">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="memborShipNumber">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="memberShipLevel">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="validFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="validTo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TrvlrProgram" qualifier="programName">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="KycInformation"
+				jaloclass="com.cnk.travelogix.client.core.kyc.jalo.KYCInformation">
+				<deployment table="kycinfo" typecode="25000" />
+				<attributes>
+					<attribute type="KYCReqDocument" qualifier="reqDocument">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="ClientKYCDocumentType" qualifier="kycDocumentType">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="KYCReqDocument"
+				jaloclass="com.cnk.travelogix.client.core.kyc.jalo.KYCReqDocument">
+				<deployment table="kycreqdoc" typecode="25048" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="kycDocId">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="media" qualifier="Media">
+						<persistence type="property" />
+						<!-- <modifiers optional="false" /> -->
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AffiliationInformation"
+				jaloclass="com.cnk.travelogix.client.core.affiliation.jalo.AffiliationInformation">
+				<deployment table="affiliationinfo" typecode="25001" />
+				<attributes>
+					<attribute type="AffiliationNames" qualifier="affiliationName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="affiliationSince">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="registrationNo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="remarks">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="b2bcustomer">
+			<itemtype code="B2BCustomer" autocreate="false">
+				<attributes>
+					<attribute type="java.lang.String" qualifier="loginEmail">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="loginPhoneNo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="LoginValidation" qualifier="loginValidation">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="MerchantIdentificationNumber">
+			<itemtype code="MerchantIdentificationDetails" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.client.core.mid.jalo.MerchantIdentificationDetails">
+				<deployment table="middetails" typecode="25005" />
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="midNumber">
+						<modifiers write="true" unique="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="MidType" qualifier="midTypes">
+						<modifiers write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="alias">
+						<modifiers write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ClientType" qualifier="clientType">
+						<modifiers write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Currency" qualifier="currency">
+						<persistence type="property" />
+						<modifiers write="true" optional="true" />
+					</attribute>
+					<attribute type="BankAccountDetail" qualifier="bankDetail">
+						<modifiers write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Supplier" qualifier="acquirers">
+						<modifiers write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Supplier" qualifier="enabler">
+						<modifiers write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Status" qualifier="status">
+						<modifiers write="true" optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="lockedBy" type="Employee">
+						<persistence type="property" />
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="ClientGroup">
+			<itemtype code="B2BUserGroup" generate="false" extends="UserGroup" autocreate="false">		
+				<attributes>
+					<attribute qualifier="workFlowStatus" type="ApprovalWorkFlowStatus">
+						<description>Work Flow Status</description>
+						<defaultvalue>em().getEnumerationValue("WorkFlowStatus","DRAFT")</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="lockedBy" type="Employee">
+						<persistence type="property" />
+						<description>The User Who Changed the status.</description>
+						<modifiers />
+					</attribute>
+					<attribute type="Market" qualifier="companyMarket">
+						<description>Company Market</description>
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="active">
+						<description>Active</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="effectiveFrom">
+						<description>Effective From</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ClientGroupReason" qualifier="reason">
+						<description>Reason</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="remarks">
+						<description>Remarks</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="clientusergroup">
+			<itemtype code="TravelogixUserGroup" extends="UserGroup"
+				jaloclass="com.cnk.travelogix.client.core.usergroup.jalo.TravelogixUserGroup">
+				<deployment table="trvlprincipal" typecode="25046" />
+				<attributes>
+					<attribute type="LoginConfig" qualifier="loginConfig">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PartPaymentMasterConfig" qualifier="partPaymentMasterConfig">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TimeLimitMasterConfig" qualifier="timeLimitMasterConfig">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="B2BRegistrationConfig" qualifier="b2bRegistrationConfig">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="B2CRegistrationConfig" qualifier="b2cRegistrationConfig">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TravelogixClientType" qualifier="trvlClientType">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="BookingConfiguration">
+			<itemtype code="BookingConfiguration" autocreate="true"
+				generate="true" abstract="false" extends="AbstractTravelogixItem"
+				jaloclass="com.cnk.travelogix.supplier.masterdata.core.bookingconfig.BookingConfiguration">
+				<description> Booking Configuration Detail.</description>
+				<deployment table="bookingconfiguration" typecode="23140" />
+				<attributes>
+					<attribute qualifier="priority" type="BookingPriority">
+						<description>Booking Priority</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="companyMarket" type="Market">
+						<description>Company Market</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="productSubCategory" type="ProductCategorySubType">
+						<description>Product SubCategory</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="colourCode" type="java.lang.String">
+						<description>Colour</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="BookingClientDetail" autocreate="true"
+				generate="true" extends="GenericItem">
+				<description> Booking Client Detail.</description>
+				<deployment table="bookingclientdetail" typecode="23141" />
+				<attributes>
+					<attribute qualifier="entityType" type="ClientType">
+						<description>Entity Type</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="entityCategory" type="ClientCategory">
+						<description>Entity Category</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="entitySubCategory" type="ClientSubCategory">
+						<description>Entity SubCategory</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="entityGroup" type="ClientGroupCompany">
+						<description>Entity Group</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="entityName" type="localized:java.lang.String">
+						<description>Entity Name</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="BookingCriteria" autocreate="true" generate="true"
+				extends="GenericItem">
+				<description> Booking Criteria</description>
+				<deployment table="bookingcriteria" typecode="23142" />
+				<attributes>
+					<attribute qualifier="bookingAttribute" type="BookingCriteriaAttribute">
+						<description>Booking Attribute</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="status" type="BookingCriteriaStatus">
+						<description>Booking Status</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="basedOn" type="BookingBasedOn">
+						<description>Booking Based on</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="cutOffDayHours" type="CutOffDaysAndHours">
+						<description>CutOff Day and Hours</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="cutOff" type="java.lang.Integer">
+						<description>CutOff</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		<typegroup name="organization">
+			
+				<itemtype code="AbstractOfferValue" autocreate="true" generate="true" abstract="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.AbstractOfferValue">	
+			 	 <description>Defines Retention value and type of company.</description>
+				 <deployment table="abstractOfferValue" typecode="23131"/>   
+				 <attributes>
+				 	<attribute qualifier="priceComponent" type="NonAirPriceComponentType">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+						<attribute qualifier="offerApplicableOn" type="ApplicableOn">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+						<attribute type="OfferCalculatedOn" qualifier="discountCalculatedOn">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ThresholdType" qualifier="thresholdType">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="discountValue">
+						<persistence type="property" />
+						
+					</attribute>
+					<attribute type="OfferValueRange" qualifier="offerValueRange">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Condition" qualifier="condition">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					 </attributes>  
+			</itemtype>
+			
+			<itemtype code="Retention" extends="AbstractOfferValue" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.Retention">	
+			 	 <description>Defines Retention value and type of company.</description>			   
+				 <attributes>
+				 	<attribute qualifier="retensionValue" type="java.lang.Double">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+						<attribute qualifier="currency" type="Currency">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+				 </attributes>  
+			</itemtype>
+			
+			<itemtype code="FixedCompanyOfferValueType" extends="AbstractOfferValue" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.FixedCompanyOfferValueType">	
+			 	 <description>Defines fixed company offer value and type of company.</description>			   
+				 <attributes>
+						<attribute qualifier="currency" type="Currency">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+				 </attributes>  
+			</itemtype>
+			
+			
+			<itemtype code="FreeOrDiscountedOfferType" extends="AbstractOfferValue" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.FreeOrDiscountedOfferType">	
+			 	 <description>Defines Retention value and type of company.</description>
+				
+				 <attributes>
+				 	<attribute qualifier="freeOn" type="FreeOn">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+						<attribute qualifier="noOfFrees" type="java.lang.Double">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+					
+					<attribute qualifier="appliedOn" type="AppliedOn">
+						<persistence type="property"/>
+					</attribute>
+				 </attributes>  
+			</itemtype>
+			<itemtype code="CompanySlabType" extends="AbstractOfferValue" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.CompanySlabType">	
+			 	 <description>Defines Retention value and type of company.</description>			
+				 <attributes>
+				 		<attribute qualifier="slabType" type="CommercialSlabType">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+						<attribute qualifier="fromValueInWords" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="toValuesInWords" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="fromValue" type="java.lang.Integer">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="toValues" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="currency" type="Currency">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+						</attribute>				
+				 </attributes>  
+			</itemtype>
+			<itemtype code="CreditCardLastThreeDigitType" extends="AbstractOfferValue" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.CreditCardLastThreeDigitType">	
+			 	 <description>Defines Retention value and type of company.</description>
+				
+				 <attributes>
+				 	<attribute qualifier="lastThreeDigit" type="java.lang.Double">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+				 </attributes>  
+			</itemtype>
+			
+			<itemtype code="DeactivateOffer" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.DeactivateOffer">	
+			 	 <description>offer which are Deactivated </description>
+				 <deployment table="deactivateOffer" typecode="23119"/>   
+				 <attributes>
+				 	<attribute qualifier="companyDetails" type="CompanyDetails">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="clientDetails" type="ClientDetails">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="remarks" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="reason" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+				    <attribute qualifier="approvalStatus" type="ArticleApprovalStatus">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="effectiveFrom" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+				 </attributes>  
+			</itemtype>
+			
+			<itemtype code="CompanyOffers" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.CompanyOffers">
+			<description>Company Offers Details</description>
+			 <deployment table="companyOffers" typecode="23137"/>  
+			<attributes>
+		     	<attribute type="java.lang.String" qualifier="offerID">
+					<modifiers optional="false"/>
+						<persistence type="property" />
+					</attribute>
+					
+				<attribute qualifier="workFlowStatus" type="ApprovalWorkFlowStatus">
+							<description>Work Flow Status</description>
+							<defaultvalue>em().getEnumerationValue("WorkFlowStatus","DRAFT")</defaultvalue>
+							<persistence type="property" />					
+						</attribute>
+
+					<attribute type="java.lang.String" qualifier="offerName">
+					<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="OfferType" qualifier="offerType">
+					<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					
+					<attribute type="OfferSubType" qualifier="offerSubType">
+					
+						<persistence type="property" />
+					</attribute>
+					
+			    	<attribute type="ProductCategorySubType" qualifier="productSubCategory">
+					
+						<persistence type="property" />
+					</attribute>
+					
+					
+					
+					<attribute type="OfferApplicability" qualifier="offerApplicability">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+						<attribute type="java.lang.String" qualifier="longDescription">
+						<persistence type="property" />
+					</attribute>
+					
+						<attribute type="RedemptionCompanyOffers" qualifier="redemptionCompanyOffers">
+						<persistence type="property" />
+					</attribute>
+					
+						<attribute type="java.lang.String" qualifier="shortDescription">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					
+					<attribute type="java.util.Date" qualifier="fromBookingDate">
+						<persistence type="property" />
+				
+					</attribute>
+					
+					<attribute type="java.util.Date" qualifier="fromTravelStartDate">
+						<persistence type="property" />
+					
+					</attribute>
+					
+					<attribute type="java.util.Date" qualifier="afterTravelEndDate">
+						<persistence type="property" />
+						
+					</attribute>
+					
+					<attribute type="java.lang.String" qualifier="value">
+						<persistence type="property" />
+						
+					</attribute>
+					<attribute type="WeekDayCollection" qualifier="workingDaysOfWeek">
+						<persistence type="property" />
+						
+					</attribute>
+					<attribute type="CompanyOfferValue" qualifier="companyOfferValue">
+						<persistence type="property" />
+						<modifiers optional="false" />
+					</attribute>
+					<attribute type="Retention" qualifier="retention">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="FreeOrDiscountedOfferType" qualifier="freeDiscountType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CompanySlabType" qualifier="companySlabType">
+						<persistence type="property" />
+					</attribute>
+						<attribute type="CreditCardLastThreeDigitType" qualifier="lastThreedigit">
+						<persistence type="property" />
+					</attribute>
+						<attribute type="FixedCompanyOfferValueType" qualifier="fixedCompanyOfferValue">
+						<persistence type="property" />
+					</attribute>	
+					<attribute type="DateRange" qualifier="dateRange">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="date">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="offerInclusionNote">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="offerExclusionNote">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="voucherDetails">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="internalDetails">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="externalDetails">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DeactivateOffer" qualifier="deactivateOffer">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="active">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="Employee" qualifier="lockedBy">
+						<persistence type="property" />
+					</attribute>					
+					<attribute type="java.lang.String" qualifier="copiedFrom">
+					
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="remarks" type="java.lang.String">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="reason" type="java.lang.String">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+				    <attribute qualifier="approvalStatus" type="ArticleApprovalStatus">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="effectiveFrom" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="offerValidityFromDate" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="offerValidityToDate" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+		
+			
+			<itemtype code="Passenger" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.Passenger">	
+			 	 <description>Defines passenger information</description>
+				 <deployment table="passenger" typecode="23116"/>   
+				 <attributes>
+				 	<attribute qualifier="passengerType" type="PaxType">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="minimumAge" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="childWithBed" type="java.lang.Boolean">
+						<persistence type="property"/>
+					</attribute>
+				    <attribute qualifier="miximumAge" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="childWithoutBed" type="java.lang.Boolean">
+						<persistence type="property"/>
+					</attribute>
+				 </attributes>  
+			</itemtype>
+			
+			<itemtype code="CompanyDetails" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.CompanyDetails">	
+			 	 <description>Defines details of the company</description>
+				 <deployment table="companyDetails" typecode="23117"/>   
+				 <attributes>
+				
+				 	<attribute qualifier="sbu" type="StrategicBusinessUnit">
+						<persistence type="property"/>
+						
+					</attribute>
+					<attribute qualifier="bu" type="BusinessUnit">
+						<persistence type="property"/>
+						
+					</attribute>
+					<attribute qualifier="division" type="Division">
+						<persistence type="property"/>
+						
+					</attribute>
+					<attribute qualifier="saleOffice" type="SalesOffice">
+						<persistence type="property"/>
+					</attribute>
+					
+					<attribute qualifier="companyMarket" type="Market">
+						<persistence type="property"/>
+						
+					</attribute>
+					<attribute qualifier="sapCampaign" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+				 </attributes>  
+			</itemtype>
+			
+			<itemtype code="ClientDetails" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.ClientDetails">	
+			 	 <description>Defines details of the company</description>
+				 <deployment table="clientDetails" typecode="23118"/>   
+				 <attributes>
+				 
+				 	<attribute qualifier="clientType" type="ClientType">
+						<persistence type="property"/>
+						
+					</attribute>
+					<attribute qualifier="clientCategory" type="ClientCategory">
+						<persistence type="property"/>
+						
+					</attribute>
+					<attribute qualifier="clientSubCategory" type="ClientSubCategory">
+						<persistence type="property"/>
+						
+					</attribute>
+					<attribute qualifier="clientName" type="ClientCategory">
+						<persistence type="property"/>
+						
+					</attribute>
+				    <attribute qualifier="clientGroup" type="ClientGroupCompany">
+						<persistence type="property"/>
+						
+					</attribute>
+					<attribute qualifier="nationality" type="Country">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="pointOfSale" type="PointOfSale">
+						<persistence type="property"/>
+						
+					</attribute>
+				 </attributes>  
+			</itemtype>
+			
+			<itemtype code="TravelDateValidity" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.TravelDateValidity">	
+			 	 <description>offer which are Deactivated </description>
+				 <deployment table="travelDateValidity" typecode="23120"/>   
+				 <attributes>
+				 	<attribute qualifier="travelDateFrom" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="travelDateTo" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+				    <attribute qualifier="arrivaldaysOfWeek" type="WeekDay">
+						<persistence type="property"/>
+					</attribute>
+					  <attribute qualifier="staydaysOfWeek" type="WeekDay">
+						<persistence type="property"/>
+					</attribute>
+				
+				 </attributes>  
+			</itemtype>
+			<itemtype code="BookingDateValidity" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.BookingDateValidity">	
+			 	 <description>offer which are Deactivated </description>
+				 <deployment table="bookingDateValidity" typecode="23121"/>   
+				 <attributes>
+				 	<attribute qualifier="bookingDateFrom" type="java.util.Date">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="bookingDateTo" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+				
+				    <attribute qualifier="daysValid" type="WeekDay">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="bookingTimeFrom" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="bookingTimeTo" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="companyTarget" type="CompanyTarget">
+						<persistence type="property"/>
+					</attribute>
+				 </attributes>  
+			</itemtype>
+			
+			<itemtype code="CompanyTarget" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.CompanyTarget">	
+			 	 <description>offer which are Deactivated </description>
+				 <deployment table="companyTarget" typecode="23122"/>   
+				 <attributes>
+				 	<attribute qualifier="targetValue" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="targetType" type="CompanyTargetOffer">
+						<persistence type="property"/>
+					</attribute>
+				 </attributes>  
+			</itemtype>
+			
+			<itemtype code="CombineOffer" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.CombineOffer">	
+			 	 <description>offer which are Deactivated </description>
+				 <deployment table="combineOffer" typecode="23123"/>   
+				 <attributes>
+				 	<attribute qualifier="companyOffers" type="CompanyOffersSet">
+						<persistence type="property"/>
+					</attribute>
+					
+				 </attributes>  
+			</itemtype>
+			<itemtype code="OfferProduct" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.OfferProduct">	
+			 	 <description>offer which are Deactivated </description>
+				 <deployment table="offerProduct" typecode="23136"/>   
+				 <attributes>
+				 	<attribute qualifier="productCategorySubType" type="ProductCategorySubType">
+						<persistence type="property"/>
+					</attribute>
+					
+				 </attributes>  
+			</itemtype>
+			
+			<itemtype code="OfferEligibilityCondition" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.OfferEligibilityCondition">	
+			 	 <description>offer which are Deactivated </description>
+				 <deployment table="offerEligibility" typecode="23124"/>   
+				 <attributes>
+				 	<attribute qualifier="eligibilityCondition" type="EligibilityCondition">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="currency" type="Currency">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="noOfTimes" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="noOfTransactions" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="maximumNo" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="minimumNo" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="noOfPassengers" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="everyNthPerson" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="noOfLastDigit" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="endingNumber" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="digitOfCreditCardNumber" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="minimumAge" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="maximumAge" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="ageFrom" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="ageTo" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="fromDate" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="toDate" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="gender" type="Gender">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="bankDetails" type="CompanyBankDetails">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="greaterThan" type="java.lang.Boolean">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="equalTo" type="java.lang.Boolean">
+						<persistence type="property"/>
+					</attribute>
+				 </attributes>  
+			</itemtype>
+			
+			<itemtype code="CompanyBankDetails" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.CompanyBankDetails">	
+			 	 <description>offer which are Deactivated </description>
+				 <deployment table="companyBankDetails" typecode="23125"/>   
+				 <attributes>
+				 	<attribute qualifier="bankName" type="Bank">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="cardType" type="CreditCardType">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="paymentType" type="PaymentType">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="modeOfPayment" type="ModeOfPayment">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="lastDigit" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="startingDigit" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="totalDigits" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+				 </attributes>  
+			</itemtype>
+			
+				<itemtype code="UploadCodeDetails" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.UploadCodeDetails">	
+			 	 <description>offer which are Deactivated </description>
+				 <deployment table="uploadCodeDetails" typecode="23126"/>   
+				 <attributes>
+				 	<attribute qualifier="requireCodeGeneration" type="java.lang.Boolean">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="bankDetails" type="CompanyBankDetails">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="isCreditCardNoUsedAsCode" type="java.lang.Boolean">
+						<persistence type="property"/>
+					</attribute>
+					
+					
+				 </attributes>  
+			</itemtype>
+			<itemtype code="CodeDetailsRedemption" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.CodeDetailsRedemption">	
+			 	 <description>offer which are Deactivated </description>
+				 <deployment table="codeDetailsRedemption" typecode="23127"/>   
+				 <attributes>
+				 	<attribute qualifier="isThirdPartyUser" type="java.lang.Boolean">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+										
+					<attribute qualifier="generateCodeDetails" type="MediaCollectionRedemption">
+						<persistence type="property"/>
+						<modifiers optional="false" />
+					</attribute>
+					
+					<attribute qualifier="prefix" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="codeGeneratedBy" type="CodeGeneratedBy">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="applicableOn" type="ApplicableOn">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="codeGeneration" type="CodeGeneration">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="noOfCodeToBeGenerated" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="codes" type="Codes">
+						<persistence type="property"/>
+					</attribute>
+				 </attributes>  
+			</itemtype>
+				<itemtype code="RedemptionCompanyOffers" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.RedemptionCompanyOffers">	
+			 	 <description>offer which are Deactivated </description>
+				 <deployment table="redempCompanyOffers" typecode="23130"/>   
+				 <attributes>
+				 	<attribute qualifier="codeDetails" type="CodeDetailsRedemption">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="redemptionOfferId" type="java.lang.String">
+						<persistence type="property"/>
+					</attribute>
+						<attribute type="java.lang.String" qualifier="offerInclusionNote">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="offerExclusionNote">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="voucherDetails">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="internalDetails">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="externalDetails">
+						<persistence type="property" />
+					</attribute>
+		        </attributes>  
+				</itemtype>
+		
+			     <itemtype code="DefinedPolicy" extends="AbstractDynamicPolicy" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.DefinedPolicy">	
+			 	 <description>defines the policy</description>
+			  
+				 <attributes>
+				 	<attribute qualifier="nights" type="java.lang.Integer">
+						<persistence type="property"/>
+					</attribute>
+				
+					<attribute qualifier="priceApplicableOn" type="ApplicableOn">
+						<persistence type="property"/>
+					</attribute>
+				 </attributes>  
+			</itemtype>
+			
+			<itemtype code="DateRange" autocreate="true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.DateRange">	
+			 	 
+			 <description>defines the policy</description>
+			  <deployment table="daterange" typecode="23129"/>   
+				 <attributes>
+				 	<attribute qualifier="fromDate" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+				
+					<attribute qualifier="toDate" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+					
+						<attribute qualifier="days" type="WeekDay">
+						<persistence type="property"/>
+					</attribute>
+				 </attributes>  
+			</itemtype>
+			
+			
+			<itemtype code="BlockOutDate" autocreate=" true" generate="true" jaloclass="com.cnk.travelogix.client.core.companyoffer.jalo.BlockOutDate">
+			 <description>defines the block out of offer</description>
+			  <deployment table="blockOutDate" typecode="23133"/>  
+			  <attributes>
+			  	<attribute qualifier="blockOutDateFrom" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+					<attribute qualifier="blockOutDateTo" type="java.util.Date">
+						<persistence type="property"/>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+
+		</typegroup>
+		
+		<typegroup name="ClientPaymentOption">
+		
+			<itemtype code="AdvanceApplicability" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.client.core.jalo.AdvanceApplicability"
+				autocreate="true" generate="true">
+				<deployment table="advanceappability" typecode="21195" />
+				<attributes>
+					<attribute qualifier="pointOfSales" type="PointOfSaleCollection">
+						<description>Point Of Sales</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="nationality" type="CountryCollection">
+						<description>Nationality</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="countryOfResidence" type="CountryCollection">
+						<description>Country Of Residence</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="ancillary" type="AncillaryCollection">
+						<description>Ancillary</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="AcquirerInfo" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.client.core.jalo.AcquirerInfo"
+				autocreate="true" generate="true">
+				<deployment table="acquirerinfo" typecode="23093" />
+				<attributes>
+					<attribute qualifier="supplier" type="MerchantIdentificationDetails" >
+						<description>Supplier</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientMSFFeeValue" type="java.lang.Double">
+						<description>Client MSF Fee Value</description>
+						<modifiers optional="false"/>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientMSFFeePercentage" type="java.lang.Double">
+						<description>Client MSF Fee Percentage</description>
+						<modifiers optional="false"/>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="cardTypes" type="CreditCardType">
+						<description>Card Types</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="advanceApplicability" type="AdvanceApplicability">
+						<description>Advance Applicability</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="ClientPaymentOption" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.client.core.jalo.ClientPaymentOption"
+				autocreate="true" generate="true">
+				<deployment table="clientpaymentoption" typecode="21190" />
+				<attributes>
+					<attribute qualifier="paymentId" type="java.lang.String">
+						<description>Payment Option ID</description>
+						<persistence type="property" />
+					</attribute>	
+					<attribute qualifier="paymentMode" type="ModeOfPayment">
+						<description>Payment Mode</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="CategoriesAndProductLevelApplicability" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.client.core.jalo.CategoriesAndProductLevelApplicability"
+				autocreate="true" generate="true">
+				<deployment table="catandprolevelapp" typecode="23094" />
+				<attributes>
+					<attribute qualifier="category" type="Category">
+						<description>Category</description>
+						<persistence type="property" />
+						<modifiers unique="true"/>
+					</attribute>
+					<attribute qualifier="productCategorySubtype" type="ProductCategorySubtype">
+						<description>Product Category Subtype</description>
+						<persistence type="property" />
+						<modifiers unique="true"/>
+					</attribute>
+					<attribute qualifier="product" type="Product">
+						<description>Product</description>
+						<persistence type="property" />
+						<modifiers unique="true"/>
+					</attribute>
+					<attribute qualifier="productVariant" type="VariantProduct">
+						<description>Variant Product</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="RoomLevelApplicability" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.client.core.jalo.RoomLevelApplicability"
+				autocreate="true" generate="true">
+				<deployment table="roomlevelapp" typecode="23095" />
+				<attributes>
+					<attribute qualifier="roomCategory" type="RoomCategory">
+						<description>Room Category</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="roomType" type="RoomType">
+						<description>Room Type</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="SurchargeLevelApplicability" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.client.core.jalo.SurchargeLevelApplicability"
+				autocreate="true" generate="true">
+				<deployment table="surchargeLlevelapp" typecode="23096" />
+				<attributes>
+					<attribute qualifier="surchargeType" type="SurchargeType">
+						<description>Surcharge Type</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="surchargeSubType" type="SurchargeSubType">
+						<description>Surcharge Sub Type</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="SupplierRateTypeAndCode" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.client.core.jalo.SupplierRateTypeAndCode"
+				autocreate="true" generate="true">
+				<deployment table="suppratetypeandcode" typecode="21196" />
+				<attributes>
+					<attribute qualifier="rateType" type="RateType">
+						<description>Supplier Rate Type</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="rateCode" type="RateCode">
+						<description>Supplier Rate Code</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		
+		<typegroup>
+		<itemtype code="FlightNumber" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.client.core.jalo.FlightNumber">
+				<deployment table="flightnumber" typecode="24020" />
+				<attributes>
+					<attribute qualifier="rangeFrom" type="java.lang.String">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="rangeTo" type="java.lang.String">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="includeorExclude" type="java.lang.Boolean">
+						<description> Flight Number Exclude Include</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+		
+		<typegroup name="ClientConfigurationDashBoard ">
+		
+			<itemtype code="RetentionThreshold" extends="GenericItem" autocreate="true" generate="true"
+					jaloclass="com.cnk.travelogix.client.core.jalo.RetentionThreshold">
+				<deployment table="retentionthreshold" typecode="23992"/>
+				<attributes>
+					<attribute type="RetentionThresholdType" qualifier="type">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AmountType" qualifier="amountType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="amount">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		
+			<itemtype code="Principal" autocreate="false" generate="false">
+				<attributes>
+					<attribute type="java.lang.String" qualifier="remark">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PointOfSalesEnumCollection" qualifier="pointOfSales">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ShowRateType" qualifier="showRateOf">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SortOrderFields" qualifier="defaultSortOrder">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="enabledOnlineCancellation">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="enabledOnlineAmendment">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DisplayOptionCollection" qualifier="displayOptions">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="ClientPaidProductDetail" extends="GenericItem" autocreate="true" generate="true"
+					jaloclass="com.cnk.travelogix.client.core.jalo.ClientPaidProductDetail">
+				<deployment table="clientpaidprodetail" typecode="23993"/>
+				<attributes>
+					<attribute type="java.lang.String" qualifier="productDetailsId">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Category" qualifier="category">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ProductCategorySubtype" qualifier="productCategorySubtype">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Continent" qualifier="continent">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Country" qualifier="country">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="City" qualifier="city">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AccommodationChain" qualifier="chain">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AccommodationBrand" qualifier="brand">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Product" qualifier="product">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="VariantProduct" qualifier="variantProduct">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="rankingOrder">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="PaidProductRanking" extends="GenericItem" autocreate="true" generate="true"
+					jaloclass="com.cnk.travelogix.client.core.jalo.PaidProductRanking">
+				<deployment table="paidproductranking" typecode="23994"/>
+				<attributes>
+					<attribute type="Supplier" qualifier="supplier">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="validFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="validTo">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="ClientPaidPaymentDetail" extends="GenericItem" autocreate="true" generate="true"
+					jaloclass="com.cnk.travelogix.client.core.jalo.ClientPaidPaymentDetail">
+				<deployment table="clientpaidpayment" typecode="23995"/>
+				<attributes>
+					<attribute type="java.lang.String" qualifier="paymentDetailId">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DocumentType" qualifier="documentType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="documentId">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="documentDate">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="PassiveBookingDetail" extends="GenericItem" autocreate="true" generate="true"
+					jaloclass="com.cnk.travelogix.client.core.jalo.PassiveBookingDetail">
+				<deployment table="passivebookingdet" typecode="23996"/>
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="passiveBookingEnabled">
+						<persistence type="property" />
+					</attribute>
+					<!-- <attribute type="GDS" qualifier="gds">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PCC" qualifier="pcc">
+						<persistence type="property" />
+					</attribute> -->
+					<attribute type="java.lang.String" qualifier="gdsQueueNumber">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="retentionLine">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+		 	<itemtype code="ClientTier" extends="TravelogixClientType"
+				jaloclass="com.cnk.travelogix.client.core.jalo.ClientTier" autocreate="true" generate="true">
+				<deployment table="clienttier" typecode="23997" />
+				<attributes>
+					<attribute qualifier="tierNumber" type="java.lang.Integer">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="TravelogixB2BUnit" extends="B2BUnit" autocreate="false" generate="false">
+				<attributes>
+					<attribute type="B2BCustomer" qualifier="customers">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>		
+			
+			<itemtype code="ConsortiumMember" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.client.core.jalo.ConsortiumMember" autocreate="true" generate="true">
+				<deployment table="consortiummember" typecode="23998" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="clientName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="mobileNumber">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="emailId">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="contactPersonName">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="CorporateTraveller" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.client.core.jalo.CorporateTraveller" autocreate="true" generate="true">
+				<deployment table="corporatetraveller" typecode="23999" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="contactPersonName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="mobileNumber">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="emailId">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="B2BCustomer" autocreate="false">
+				<attributes>
+					<attribute type="BranchName" qualifier="branch">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="designation">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+		</typegroup>
+	</itemtypes>
+</items>

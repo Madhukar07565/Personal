@@ -1,0 +1,918 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2015 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+
+	<context:annotation-config />
+	<bean id="baseDirectoryTravelogixActivity" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogix/product/activity" />
+	</bean>
+
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesTravelogixActivity"
+		directory="#{baseDirectoryTravelogixActivity}" filename-regex="activity_product_info-(\d+)\.csv"
+		comparator="fileOrderComparator">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+
+	<!-- <bean id="fileOrderComparatorActivity"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.FileOrderComparator">
+		<property name="prefixPriority">
+			<map>
+				default priority is 0
+				<entry key="activity_product_info" value="310" />
+			</map>
+		</property>
+	</bean> -->
+
+
+
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogixActivity"
+		reply-channel="travelogixActivityBatchFilesProc" directory="#{baseDirectoryTravelogixActivity}/processing"
+		delete-source-files="true" />
+
+	<int:service-activator input-channel="travelogixActivityBatchFilesProc"
+		output-channel="travelogixActivityBatchFilesHeaderInit" ref="travelogixActivityHeaderSetupTask"
+		method="execute" />
+
+	<bean id="travelogixActivityHeaderSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogixActivity" />
+	</bean>
+
+	<!-- 2) move the file to processing and setup header, partly site dependent -->
+	<int:service-activator input-channel="travelogixActivityBatchFilesHeaderInit"
+		output-channel="travelogixActivityBatchFilesHeader" ref="headerInitTask"
+		method="execute" />
+
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="travelogixActivityBatchFilesHeader"
+		output-channel="batchFilesTran" ref="travelogixActivityBatchTransformerTask"
+		method="execute" />
+
+	<bean id="travelogixActivityBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+
+
+	<!-- Common Header -->
+	
+		<bean id="activityDefaultHeader" class="java.lang.String">
+			<constructor-arg>
+				<value># ImpEx for importing data into $CATALOG$
+					$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+					$dateformat=dd-MM-yyyy
+					$timeformat = hh:mm
+	                $lang=en
+					$categories=supercategories(code, catalogVersion(catalog(id),version))[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+					$approved=approvalstatus(code)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.ArticleStatusDataDecorator]
+				</value>
+			</constructor-arg>
+		</bean>
+		<!-- End Of Common Header -->
+
+	<bean id="batchCnkActivityMediaConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkActivityMediaConverter" />
+
+	<bean id="batchCnkActivityProductInitialConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkActivityProductInitialConverter" />
+		
+	<bean id="batchMediaNameConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchMediaNameConverter" />
+
+	<bean id="batchCnkShoppingInfoConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkShoppingInfoConverter" />
+
+    <bean id="batchDayOfOperationConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchDayOfOperationConverter" />
+
+	<bean id="batchCnkEventsAndTourInfoConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkEventsAndTourInfoConverter" />
+
+	<bean id="batchCnkMonthlyWeatherConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkMonthlyWeatherConverter" />
+
+	<bean id="batchDayOperationConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchDayOperationConverter" />
+
+	<bean id="batchCnkSuggestedAccommodationConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkSuggestedAccommodationConverter" />
+
+	<bean id="batchCnkMiscellaneousInfoConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkMiscellaneousInfoConverter" />
+
+	<bean id="batchCnkMiscellaneousRestrictionConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkMiscellaneousRestrictionConverter" />
+
+	<bean id="batchCnkGeneralDescInfoConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkActivityGeneralDecsConverter" />
+		
+	<bean id="batchActivityProductConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchActivityProductConverter" />
+		
+	<bean id="batchCnkActivityGeneralConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkActivityGeneralConverter" />
+
+	<bean id="batchCnkPreArrivalConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkPreArrivalConverter" />
+
+	<bean id="batchCnkDiningTipsConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkDiningTipsConverter" />
+	
+	<bean id="batchActivityProductNameConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchActivityProductNameConverter" />
+	
+	<bean id="batchCnkAdditionalActivityInfoConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkAdditionalActivityInfoConverter" />
+	
+	<bean id="batchCnkActivityFacilitiesConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkActivityFacilitiesConverter" />
+		
+	<bean id="batchCnkActivityDefinationConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkActivityDefinationConverter" />
+		
+	<bean id="batchActivitySupplierDescriptionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchActivitySupplierDescriptionConverter" />
+
+	<bean id="batchCnkAssociatedPropertyConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkAssociatedPropertyConverter" />	
+				
+	<bean id="batchCnkActiProductConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkActiProductConverter" />	
+	
+	<bean id="batchCnkActivityDeactivationConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkActivityDeactivationConverter" />
+
+	<bean id="batchCnkDiningInfoConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkDiningInfoConverter" />
+	
+	<bean id="batchCnkSeatingInfoConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkSeatingInfoConverter" />
+
+	<bean id="batchCnkTimingConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkTimingConverter" />
+	
+	<bean id="batchCnkOtherInfoConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkOtherInfoConverter" />
+	
+	<bean id="batchCnkMealInfoConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkMealInfoConverter" />	
+		
+	<bean id="batchCnkContactDetailsConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkContactDetailsConverter" />
+		
+	<bean id="batchCnkContactDetailsNameConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkContactDetailsNameConverter" />
+		
+	<bean id="batchDiningInfoConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchDiningInfoConverter" />
+
+	<bean id="batchCnkActivityStaffConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchCnkActivityStaffConverter" />
+
+   <bean id="batchActiProductFinalConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_product_info" p:converter-ref="batchActiProductFinalConverter" />
+
+	<!-- Transformer converters mappings -->
+
+	<bean id="batchCnkActivityMediaConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+				$importFolder=file:$BASE_SOURCE_DIR$
+				INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier)[default=images];realfilename
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};$importFolder\{2};;Ezeego1;;;</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Media'" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- Activity Initial Info -->
+	<bean id="batchCnkActivityProductInitialConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				$clAttrModifiers=system='EZ-IN-CS',version='1.0',translator=de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator,lang=en
+				$history=@History-General-Activity[$clAttrModifiers]
+				$yearBuilt=@YearBuilt-General-Activity[$clAttrModifiers]
+				$yearRenovated=@YearRenovated-General-Activity[$clAttrModifiers]
+				$stories=@Stories-General-Activity[$clAttrModifiers]
+				$aboutUs=@AboutUs-General-Activity[$clAttrModifiers]
+				$celebrityComments=@CelebrityComments-General-Activity[$clAttrModifiers]
+				$awardReceived=@AwardsReceived-General-Activity[$clAttrModifiers]
+				INSERT_UPDATE ActivityProduct;code;$catalogVersion;commonProductId;name[lang=$lang][unique=true];displayName;affiliation(code);modeOfTransport(code);attachedPolicies(code);chain(code);brand(code);parkMap(code);logo(media.code);interest(code);highlights;$categories;financeControlId;country(isocode)[unique=true];city(isocode)[unique=true];copiedFrom;active;$history;$yearBuilt;$yearRenovated;$stories;$aboutUs;$celebrityComments;$awardReceived
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};Ezeego1;{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14}:Ezeego1;{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'ActivityProduct'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchMediaNameConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE Media;code[unique=true];name[lang=$lang];$catalogVersion
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};Ezeego1;</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Media1'" />
+			</bean>
+		</property>
+	</bean>
+	<!-- Shopping Info -->
+
+	<bean id="batchCnkShoppingInfoConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE ShoppingInfo;nameOfShop[lang=$lang][unique=true];typeOfMerchandise[unique=true];nameOfItem;description;location;whereAbout;paymentDetails;reservation;contactNumber;reservationInfo;notesOnOpeningTime;notesOnClosingTime;activityProduct(name[lang=$lang],country(isocode),city(isocode))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13}:{14}:{15}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'ShoppingInfo'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchDayOfOperationConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE DayOfOperation;daysOfWeek(code);dateRange[dateformat=$dateformat][unique=true];timeFrom;timeTo;shoppingInfo(nameOfShop[lang=$lang],typeOfMerchandise)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2},{3};{4};{5};{6}:{7}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'DayOfOperation'" />
+			</bean>
+		</property>
+	</bean>
+
+  <!-- Events And Tour Info -->
+	<bean id="batchCnkEventsAndTourInfoConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE EventsAndTourInfo;name[lang=$lang][unique=true];type(code)[unique=true];duration;description;whereAbouts;location;reservation;contactNumber;interest(code);guestPolicies;unit(code);guestHeight;ageRangeFromYear;ageRangeFromMonth(code);ageRangeToYear;ageRangeToMonth(code);thrillLevels;accessibility;knowBeforeYouGo;remark;media(code);activityProduct(name[lang=$lang],country(isocode),city(isocode))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22}:{23}:{24}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'EventsAndTourInfo'" />
+			</bean>
+		</property>
+	</bean>
+
+ <bean id="batchDayOperationConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE DayOfOperation;daysOfWeek(code);dateRange[dateformat=$dateformat][unique=true];timeFrom;timeTo;eventsAndTourInfo(name[lang=$lang],type(code))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2},{3};{4};{5};{6}:{7}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'DayOperation2'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Monthly Weather -->
+
+	<bean id="batchCnkMonthlyWeatherConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE MonthlyWeather;month(code)[unique=true];destinationWeather;minTemp;maxTemp;activityProduct(name[lang=$lang],country(isocode),city(isocode))[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}:{6}:{7}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'MonthlyWeather'" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- Suggested Accommodation -->
+	<bean id="batchCnkSuggestedAccommodationConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE SuggestedAccommodation;country(isocode)[unique=true];city(isocode)[unique=true];productName(code)[unique=true];description;activityProduct(name[lang=$lang],country(isocode),city(isocode))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}:{6}:{7}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'SuggestedAccommodation'" />
+			</bean>
+		</property>
+	</bean>
+
+
+<!-- Miscellaneous Info -->
+
+	<bean id="batchCnkMiscellaneousInfoConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE MiscellaneousInfo;owner(ActivityProduct.name[lang=$lang],ActivityProduct.country(isocode),ActivityProduct.city(isocode))[unique=true];
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1}:{2}:{3}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'MiscellaneousInfo'" />
+			</bean>
+		</property>
+	</bean>
+
+
+<!-- Miscellaneous Restriction -->
+	<bean id="batchCnkMiscellaneousRestrictionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE MiscellaneousRestriction;descriptionRestriction(code)[unique=true];allow[unique=true];note;miscellaneousInfo(owner(ActivityProduct.name[lang=$lang],ActivityProduct.country(isocode),ActivityProduct.city(isocode)))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}:{5}:{6}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'MiscellaneousRestriction'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchCnkActivityGeneralDecsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE GeneralDescriptionInfo;name[lang=$lang][unique=true];description;miscellaneousInfo(owner(ActivityProduct.name[lang=$lang],ActivityProduct.country(isocode),ActivityProduct.city(isocode)))[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}:{4}:{5}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'GeneralDescriptionInfo'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchActivityProductConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE ActivityProduct;name[lang=$lang][unique=true];country(isocode)[unique=true];city(isocode)[unique=true];miscellaneousInfo(MiscellaneousInfo.owner(ActivityProduct.name[lang=$lang],ActivityProduct.country(isocode),ActivityProduct.city(isocode)))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}:{5}:{6}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'ActivityProduct2'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchCnkActivityGeneralConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE GeneralDescriptionInfo;name[lang=$lang][unique=true];description;activityProduct(name[lang=$lang],country(isocode),city(isocode))[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}:{4}:{5}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'GeneralDescription2'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Pre - Arrival -->
+	<bean id="batchCnkPreArrivalConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE PreArrivalInfo;name[lang=$lang][unique=true];month(code)[unique=true];description[lang=$lang];monthDescription
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'PreArrivalInfo'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Dining Tips -->
+	<bean id="batchCnkDiningTipsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE DiningTips;diningTipsId[unique=true];reservation;characterDining;casualDining;signatureDining;specialAndUniqueDining;quickServicesDining;barsAndLounges;disneyDiningPlan;preArrival(name[lang=$lang],month(code))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10}:{11}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'DiningTips'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchActivityProductNameConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE ActivityProduct;name[lang=$lang][unique=true];country(isocode)[unique=true];city(isocode)[unique=true];preArrivalInfo(name[lang=$lang],month(code))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}:{5}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'ActivityProduct3'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Additional Activity Info -->
+	<bean id="batchCnkAdditionalActivityInfoConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE AdditionalActivityInfo;name[lang=$lang][unique=true];description[lang=$lang];typeOfInfo(code)[unique=true];activityProduct(name[lang=$lang],country(isocode),city(isocode))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}:{5}:{6}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'AdditionalActivityInfo'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Activity Facility -->
+	<bean id="batchCnkActivityFacilitiesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE Facility;facilityName[lang=$lang];description;facilityCategory(code)[unique=true];facilityType(code)[unique=true];dateRange[dateformat=$dateformat][unique=true];activityProduct(name[lang=$lang],country(isocode),city(isocode))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5},{6};{7}:{8}:{9}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Facility'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchCnkActivityDefinationConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE ActivityDescription;fromToDate[dateformat=$dateformat][unique=true];shortDescription[lang=$lang];longDescription[lang=$lang];activityProduct(name[lang=$lang],country(isocode),city(isocode))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1},{2};{3};{4};{5}:{6}:{7}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'ActivityDescription'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchActivitySupplierDescriptionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE DescriptionDetails;fromToDate[dateformat=$dateformat][unique=true];source[unique=true];description;activityProduct(name[lang=$lang],country(isocode),city(isocode))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1},{2};{3};{4};{5}:{6}:{7}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'DescriptionDetails'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Associated Property -->
+
+	<bean id="batchCnkAssociatedPropertyConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE AssociatedProperty;associatedAccoProduct(code)[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'AssociatedProperty'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchCnkActiProductConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE ActivityProduct;name[lang=$lang][unique=true];country(isocode)[unique=true];city(isocode)[unique=true];associatedProperty(AssociatedProperty.associatedAccoProduct(code));restaurants(restaurantName[lang=$lang])
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'ActivityProduct4'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Deactivation Config -->
+	<bean id="batchCnkActivityDeactivationConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE DeactivationConfig;companyMarket(Market.uid)[unique=true];status[unique=true];reason[unique=true];validityStartDate[dateformat=$dateformat][unique=true];validityEndDate[dateformat=$dateformat];activityProduct(name[lang=$lang],country(isocode),city(isocode))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6}:{7}:{8}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'DeactivationConfig'" />
+			</bean>
+		</property>
+	</bean>
+
+<!-- Dining Info -->
+	<bean id="batchCnkDiningInfoConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE DiningInfo;restaurantName[lang=$lang][unique=true];description;whereAbouts;location
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'DiningInfo'" />
+			</bean>
+		</property>
+	</bean>
+	
+<!-- Seating Info -->
+
+	<bean id="batchCnkSeatingInfoConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE SeatingInfo;restaurant(restaurantName[lang=$lang]);seatType(code)[unique=true];seatingArrangments(code)[unique=true];roomName[lang=$lang][unique=true];purpose(code);seatingCapacity;dateRange[dateformat=$dateformat];media(code)                      
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7},{8};{9}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'SeatingInfo'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Timimg -->
+
+	<bean id="batchCnkTimingConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE Timing;eventType(code)[unique=true];mealType(code)[unique=true];openingTime[unique=true];closingTime[unique=true];validity[dateformat=$dateformat][unique=true];daysOfWeek(code);notesOnOpeningTime;notesOnClosingTime;lastOrderTime;remark;restaurant(restaurantName[lang=$lang])
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5},{6};{7};{8};{9};{10};{11};{12}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Timing'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Other Info for Restaurant -->
+	<bean id="batchCnkOtherInfoConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE OtherInfo;typeOfDining(code);seatingCapacity[unique=true];theme(code)[unique=true];airCondition;smokingAllowed;notesOnSmoking;alcoholServed;petsAllowed;notesOnPets;childrenAllowed;notesOnChildren;drinkOffpremisesAllow;corkageApplicable;ambience;cuisineSpeciality(code)[unique=true];barAndLoungeAvailable;noteOnTips ;validAdimissionAllowed;style(code);typeOfService(code);mealType(code);cuisineType(code);menuType(code);foodType(code);owner(DiningInfo.restaurantName[lang=$lang])[unique=true]             
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'OtherInfo'" />
+			</bean>
+		</property>
+	</bean>
+
+			<!-- Meal Info -->
+	<bean id="batchCnkMealInfoConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE MealInfo;mealType(code)[unique=true];menuName(code)[unique=true];menuItemName[lang=$lang][unique=true];description[lang=$lang];menuValidity[dateformat=$dateformat][unique=true];spiceLevel(code);unit(code);timeFrom;timeTo;daysOfWeek(code);media(code);restaurant(restaurantName[lang=$lang])  
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5},{6};{7};{8};{9};{10};{11};{12};{13};{14}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'MealInfo'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- All Contact Details -->
+
+	<bean id="batchCnkContactDetailsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE ContactDetails;telephone[unique=true];fax[unique=true];websiteUrl[unique=true];email[unique=true];restaurant(restaurantName[lang=$lang])
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'ContactDetails'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchCnkContactDetailsNameConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE ContactDetails;telephone[unique=true];fax[unique=true];websiteUrl[unique=true];email[unique=true];acceptWalkIn;reservationRequired;notesOnReservations;reservationFor(code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'ContactDetails2'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchDiningInfoConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE DiningInfo;restaurantName[lang=$lang][unique=true];other(OtherInfo.owner(DiningInfo.restaurantName[lang=$lang]))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{1}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'DiningInfo2'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchCnkActivityStaffConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE StaffInformation;title(Title.code);firstName[unique=true];middleName;lastName[unique=true];department(Department.code);designation;role ;responsibilities;gender(code);birthDate[dateformat=$dateformat][unique=true];anniversaryDate[dateformat=$dateformat];internalText;timeZone(TimeZone.value);medias(code);addresses(owner(StaffInformation.uid));availabilityTimeFrom(key(code),value);availabilityTimeTo(key(code),value);activityProduct(name[lang=$lang],country(isocode),city(isocode));uid
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18}:{19}:{20};{21}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'StaffInformation'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchActiProductFinalConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{activityDefaultHeader}
+				INSERT_UPDATE ActivityProduct;name[lang=$lang][unique=true];country(isocode)[unique=true];city(isocode)[unique=true];restaurants(restaurantName[lang=$lang])
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'ActivityProduct5'"/>
+			</bean>
+		</property>
+	</bean>
+</beans>
+

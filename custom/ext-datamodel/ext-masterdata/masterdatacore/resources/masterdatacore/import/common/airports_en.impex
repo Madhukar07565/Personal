@@ -1,0 +1,843 @@
+$lang=en
+UPDATE Airport;code[unique=true];name[lang=$lang]
+;AAL;Aalborg Airport
+;AAP;Houston Andrau Airpark
+;AAR;Aarhus Tirstrup Airport
+;ABI;Abilene Regional Apt
+;ABY;Albany Dougherty County Apt
+;ACT;Waco Municipal Apt
+;ACY;Atlantic City International
+;ADB;Izmir Adnan Menderes Apt
+;ADJ;Amman Marka Intl Airport
+;ADL;Adelaide International
+;ADM;Ardmore Municipal Airport
+;ADQ;Kodiak Apt
+;ADS;Dallas/Fort Worth Addison Apt
+;ADW;Camp Springs Andrews AFB
+;AEP;Buenos Aires Aeroparque J. Newbery
+;AEX;Alexandria International Apt
+;AFF;Colorado Springs USAF Academy Airport
+;AFW;Dallas/Fort Worth Alliance Apt
+;AGB;Munich Augsburg Apt
+;AGC;Pittsburgh Allegheny County Apt
+;AGH;Angelholm/Helsingborg Angelholm Apt
+;AGS;Augusta Bush Field
+;AHD;Ardmore Downtown Apt
+;AIY;Atlantic City Bader Field
+;AKC;Akron, Fulton International
+;AKL;Auckland International Apt
+;ALB;Albany International Airport
+;ALM;Alamogordo Municipal Apt
+;ALY;Alexandria El Nouzha Airport
+;AMA;Amarillo International Apt
+;AMK;Durango Animas Airpark
+;AMM;Amman Queen Alia International Apt
+;ANB;Anniston Municipal Apt
+;ANC;Anchorage International Apt
+;ANE;Angers Marce Airport
+;ANK;Ankara Etimesgut Apt
+;APA;Denver Arapahoe County Apt
+;APW;Apia Faleolo Apt
+;ARA;Lafayette New Iberia Apt
+;ARN;Stockholm Arlanda Apt
+;ASP;Alice Springs Airport
+;ATL;Atlanta Hartsfield-Jackson Intl Apt
+;AUH;Abu Dhabi International Apt
+;AUS;Austin-Bergstrom International Apt
+;AUW;Wausau Municipal Apt
+;AVN;Avignon Caumont Airport
+;AVP;Wilkes-Barre Scranton International Apt
+;AVV;Melbourne Avalon Airport
+;AVW;Tucson Avra Valley Apt
+;AVX;Catalina Island Avalon Bay Apt
+;AXS;Altus Municipal Apt
+;AZA;Phoenix Williams Gateway Airport
+;AZI;Abu Dhabi Bateen Apt
+;AZP;Mexico City Atizapan-Jimenez Cantu
+;BAB;Marysville Beale AFB
+;BAD;Shreveport Barksdale AFB
+;BBU;Bucharest Baneasa - Aurel Vlaicu Apt
+;BCN;Barcelona Apt
+;BDL;Hartford Bradley International Apt
+;BEC;Wichita Beech Apt
+;BEO;Newcastle Aeropelican Apt
+;BER;Berlin Brandenburg Apt
+;BET;Bethel Municipal Apt
+;BFH;Curitiba Bacacheri
+;BFI;Seattle Boeing Field
+;BFK;Denver Buckley ANGB
+;BFM;Mobile Aerospace Apt
+;BFS;Belfast International Apt
+;BGS;Big Spring Municipal
+;BGY;Milan Bergamo/Orio al Serio Apt
+;BHD;Belfast George Best City Apt
+;BHW;Sargodha Bhagatanwala Apt
+;BHX;Birmingham Airport
+;BIF;El Paso Biggs AAF
+;BJV;Bodrum Milas Airport
+;BKA;Moscow Bykovo Apt
+;BKK;Bangkok Suvarnabhumi International Apt
+;BKL;Cleveland Burke Lakefront Apt
+;BLD;Las Vegas Boulder City Airport
+;BLQ;Bologna Guglielmo Marconi
+;BMA;Stockholm Bromma Apt
+;BMT;Beaumont Municipal Apt
+;BNH;Hartford Barnes Apt
+;BOD;Bordeaux Merignac Apt
+;BOF;Washington Bolling AFB
+;BOS;Boston Logan International Apt
+;BPM;Hyderabad Begumpet Airport
+;BPT;Beaumont Jefferson County Apt
+;BQK;Brunswick Glynco Jetport
+;BRN;Berne Belp
+;BRU;Brussels Airport
+;BRW;Barrow Wiley Post/Will Rogers Memorial
+;BSL;Basel
+;BTR;Baton Rouge Metropolitan Apt
+;BVA;Paris Beauvais-Tille Airport
+;BWI;Baltimore Washington International Apt
+;BWU;Sydney Bankstown
+;BXN;Bodrum Imsik Airport
+;BYH;Blytheville AFB
+;BZE;Belize City Goldson Intl Apt
+;CAE;Columbia Metropolitan Apt
+;CAK;Akron/Canton Ohio Regional
+;CAS;Casablanca Anfa Apt
+;CBM;Columbus AFB
+;CCB;Upland Cable Apt
+;CCD;Los Angeles Century City Apt
+;CDG;Paris Charles de Gaulle Apt
+;CDV;Cordova Mudhole Smith Airport
+;CEA;Wichita Cessna Aircraft Field
+;CEF;Springfield/Chicopee Westover Metro Apt
+;CEQ;Cannes Mandelieu
+;CGF;Cleveland Cuyahoga County Apt
+;CGH;Sao Paulo Congonhas Apt
+;CGK;Jakarta Soekarno-Hatta Apt
+;CGN;Cologne/Bonn Apt
+;CGX;Chicago Meigs Field
+;CHA;Chattanooga Lovell Field Apt
+;CIA;Rome Ciampino Apt
+;CIB;Catalina Island Airport in the Sky
+;CIU;Sault Ste Marie Chippewa County Apt
+;CJU;Jeju International
+;CKU;Cordova City Apt
+;CLD;San Diego McClellan-Palomar Arpt
+;CLE;Cleveland Hopkins International Apt
+;CLK;Clinton Municipal Airport
+;CMB;Bandaranaike Intl
+;CMH;Columbus Port Columbus Intl Apt
+;CMN;Casablanca Mohammed V Apt
+;CNF;Belo Horizonte Tancredo Neves Int Apt
+;CNW;Waco James Connall Apt
+;COF;Cocoa Patrick AFB
+;COI;Cocoa Merritt Island Apt
+;COS;Colorado Springs Peterson Field
+;CPH;Copenhagen Kastrup Apt
+;CPS;St Louis Bi-State Parks Airport
+;CRE;Myrtle Beach Grand Strand Apt
+;CRG;Jacksonville Craig Municipal Apt
+;CRL;Brussels S. Charleroi Airport
+;CRP;Corpus Christi International Apt
+;CSG;Columbus Metropolitan Apt
+;CSL;San Luis Obispo O'Sullivan AAF
+;CSM;Clinton Sherman Airport
+;CTS;Sapporo New Chitose Apt
+;CUB;Columbia Owens Field
+;CUX;Corpus Christi Cuddihy Field
+;CVA;Pittsburgh Civic Arena H/P
+;CVG;Cincinnati Northern Kentucky Intl Apt
+;CVN;Clovis Municipal Apt
+;CVS;Clovis Cannon AFB
+;CWA;Wausau Central Wisconsin Apt
+;CWB;Curitiba Afonso Pena
+;CWO;Mineral Wells Fort Wolter AAF
+;CXR;Nha Trang Cam Ranh Airport
+;CYS;Cheyenne Municipal Apt
+;DAL;Dallas/Fort Worth Love Field
+;DAY;Dayton Intl Apt
+;DCA;Washington Ronald Reagan National Apt
+;DCF;CaneField
+;DEN;Denver Intl Apt
+;DET;Detroit City Apt
+;DFW;Dallas/Fort Worth Intl Apt
+;DGL;Douglas Municipal Apt
+;DHF;Abu Dhabi Al Dhafra AB Apt
+;DLF;Del Rio Laughlin AFB
+;DLH;Duluth International Apt
+;DMA;Tucson Davis Monthan AFB
+;DME;Moscow Domodedovo Apt
+;DMK;Bangkok Don Mueang International Arpt
+;DNA;Okinawa Kadena AB
+;DNE;Dallas/Fort Worth North Apt
+;DNL;Augusta Daniel Field
+;DNN;Dalton Municipal Airport
+;DNT;Santa Ana Downtown H/P
+;DOM;Dominica Melville Hall Apt
+;DPA;Chicago Du Page County Apt
+;DRO;Durango La Plata Apt
+;DRT;Del Rio International Apt
+;DRW;Darwin International
+;DTN;Shreveport Downtown Apt
+;DTW;Detroit Wayne County
+;DUG;Douglas Bisbee-Douglas International
+;DUR;Durban King Shaka International Apt
+;DUS;Duesseldorf International Airport
+;DVT;Phoenix Deer Valley Municipal Apt
+;DWC;Dubai Al Maktoum Intl
+;DWF;Dayton Wright AFB
+;DWH;Houston David Wayne Hooks Apt
+;DWN;Oklahoma City Downtown Airpark
+;DWS;Orlando Walt Disney World Apt
+;DXB;Dubai International
+;DYS;Abilene Dyess AFB
+;EBJ;Esbjerg Airport
+;EBR;Baton Rouge Downtown Apt
+;ECP;Panama City NW Florida Beaches Intl
+;EDF;Anchorage Elmendorf AFB
+;EFD;Houston Ellington Field
+;EGE;Vail/Eagle County Apt
+;EGI;Valparaiso Duke Field Apt
+;EIL;Fairbanks Eielson AFB
+;EIN;Eindhoven Airport
+;ELP;El Paso International Apt
+;EMA;Nottingham East Midlands Airport
+;EMB;San Francisco Embarcadero Apt
+;ENC;Metz/Nancy Nancy-Essey
+;END;Enid Vance AFB
+;EOH;Medellin Enrique Olaya Herrerra Apt
+;ERS;Windhoek Eros Apt
+;ESB;Ankara Esenboga Apt
+;ESF;Alexandria Esler Field Apt
+;ETZ;Metz/Nancy Lorraine
+;EWR;Newark Liberty International Apt
+;EYW;Key West International Apt
+;EZE;Buenos Aires Ministro Pistarini
+;FAI;Fairbanks International Apt
+;FAT;Fresno Yosemite International Airport
+;FAY;Fayetteville Municipal Apt
+;FBK;Fairbanks Fort Wainwright Apt
+;FCH;Fresno Chandler Apt
+;FCM;Minneapolis Flying Cloud Apt
+;FCO;Rome Fiumicino Apt
+;FCS;Colorado Butts AAF
+;FCT;Yakima Firing Center AAF
+;FEW;Cheyenne Warren AFB
+;FFO;Dayton Patterson AFB
+;FGI;Apia Fagali'i Apt
+;FIH;Kinshasa N'Djili Intl Apt
+;FKB;Karlsruhe/Baden-Baden Baden Airpark
+;FKL;Franklin Chess Lamberton Apt
+;FLE;Petersburg Fort Lee AAF
+;FLG;Grand Canyon Pulliam Field Airport
+;FLL;Fort Lauderdale/Hollywood Intl Apt
+;FLR;Florence Amerigo Vespucci
+;FLU;New York Flushing Airport
+;FLX;Fallon Municipal Apt
+;FMY;Fort Myers Page Field
+;FNA;Freetown Lungi International Apt
+;FNL;Fort Collins/Loveland Municipal Apt
+;FOE;Topeka Forbes AFB
+;FRA;Frankfurt International Apt
+;FTW;Dallas/Fort Worth Meacham Field
+;FTY;Atlanta Fulton County Apt
+;FWA;Fort Wayne Baer Field
+;FWH;Dallas/Fort Worth Carswell AFB
+;FXE;Fort Lauderdale Executive Apt
+;FYV;Fayetteville Municipal Airport
+;GBO;Baltimore Greenbelt Airport
+;GCJ;Johannesburg Grand Central Apt
+;GCN;Grand Canyon National Park Apt
+;GDC;Greenville Donaldson Center Apt
+;GEA;Noumea Magenta Apt
+;GEG;Spokane International Apt
+;GFA;Great Falls Malmstrom AFB
+;GIG;Rio de Janeiro International Apt
+;GLA;Glasgow International Airport
+;GMP;Seoul Gimpo International Airport
+;GMU;Greenville Downtown Apt
+;GNB;Lyon Grenoble-St Geoirs Apt
+;GOF;San Angelo Goodfellow AFB
+;GOT;Goteborg Landvetter Apt
+;GRF;Tacoma Gray AAF
+;GRK;Killeen Gray AAF
+;GRU;Sao Paulo Guarulhos Intl Apt
+;GSE;Goteborg City Apt
+;GSP;Greenville/Spartanburg Apt
+;GST;Gustavus Apt
+;GTF;Great Falls International Apt
+;GTN;Mount Cook Glentanner Apt
+;GTR;Columbus Golden Triangle Regional Apt
+;GUM;Guam Antonio B Won Pat International
+;GUN;Montgomery Gunter AFB
+;GVX;Gavle Sandviken Airport
+;GYD;Baku Heydar Aliyev International Apt
+;GYY;Chicago Gary International Apt
+;HAH;Moroni Prince Said Ibrahim
+;HAJ;Hannover
+;HAM;Hamburg Airport
+;HAR;Harrisburg Skyport Apt
+;HAX;Muskogee Hatbox Field
+;HBB;Hobbs Crossroads Inn Apt
+;HBE;Alexandria Borg el Arab
+;HCA;Big Spring Howard County Apt
+;HCS;Johannesburg Randburg H/P
+;HEL;Helsinki-Vantaa
+;HEM;Helsinki-Malmi
+;HEN;Helsinki Hernesaari Heliport
+;HEY;Ozark Hanchey Army Heliport
+;HFD;Hartford Brainard Apt
+;HGS;Freetown Hastings Apt
+;HHN;Frankfurt Hahn Airport
+;HHP;Sheung Wan Heliport
+;HIC;Pretoria Iscor H/P
+;HIF;Ogden Hill AFB
+;HIJ;Hiroshima
+;HIK;Honolulu Hickam AFB
+;HIW;Hiroshimanishi
+;HKA;Blytheville Municipal Apt
+;HKG;Hong Kong International Apt
+;HKS;Jackson Hawkins Field
+;HLA;Johannesburg Lanseria International Apt
+;HLP;Jakarta Halim Perdanakusuma Apt
+;HLR;Killeen Fort Hood AAF
+;HMN;Alamogordo Holloman AFB
+;HND;Tokyo Intl (Haneda)
+;HNL;Honolulu International Apt
+;HOB;Hobbs Lea County Apt
+;HOU;Houston Hobby Apt
+;HPR;Pretoria Central H/P
+;HPV;Kauai Island Princeville Apt
+;HSH;Las Vegas Henderson Executive Apt
+;HSV;Huntsville International Airport
+;HUA;Huntsville Redstone AAF
+;HYD;Hyderabad Rajiv Gandhi Intl Arpt
+;IAB;Wichita McConnel AFB
+;IAD;Washington Dulles International Apt
+;IAH;Houston George Bush Intercontinental Ap
+;ICN;Seoul Incheon International Airport
+;ICT;Wichita Mid-Continent Apt
+;IEV;Kiev Zhuliany Intl Apt
+;IGL;Izmir Cigli AB
+;IKA;Tehran Imam Khomeini International Apt
+;ILE;Killeen Municipal Apt
+;ILG;Wilmington Greater Wilmington Apt
+;INR;Sault Ste Marie Kincheloe AFB
+;IPL;Imperial County Apt
+;ISC;Isles of Scilly St Mary's Apt
+;IST;Istanbul Ataturk Airport
+;ITM;Osaka Intl (Itami)
+;IWS;Houston West Houston Apt
+;JAE;Atlanta Technology Park H/P
+;JAJ;Atlanta Perimeter Mall H/P
+;JAN;Jackson-Evers International Airport
+;JAO;Atlanta Beaver Ruin H/P
+;JAX;Jacksonville International Apt
+;JBC;Boston City H/P
+;JBP;Los Angeles Commerce Business Plaza H/P
+;JBQ;Santo Domingo Dr. J Balaguer
+;JBT;Bethel City Landing Apt
+;JCA;Cannes Palm Beach Heliport
+;JCC;San Francisco China Basin H/P
+;JCE;Oakland Convention Center H/P
+;JCI;Kansas City Johnson Cnty Industrial Apt
+;JCJ;Jeju Chuja Heliport
+;JCX;Los Angeles Citicorp Plaza H/P
+;JDB;Dallas/Fort Worth Downtown H/P
+;JDM;Miami Downtown H/P
+;JDP;Paris Issy les Moulineaux HP
+;JDT;Minneapolis Downtown H/P
+;JDX;Houston Central Business District H/P
+;JFK;New York J F Kennedy International Apt
+;JGC;Grand Canyon H/P
+;JGL;Atlanta Galleria Heliport
+;JGP;Houston Greenway Plaza H/P
+;JGQ;Houston Transco Tower Galleria H/P
+;JHE;Angelholm/Helsingborg Heliport
+;JID;Los Angeles City Of Industry H/P
+;JIO;Ontario International H/P
+;JLB;Long Beach H/P
+;JLX;Los Angeles Union Station H/P
+;JMA;Houston Marriott Astrodome
+;JMD;Dallas/Fort Worth Market Center H/P
+;JMM;Malmo Harbour Heliport
+;JMN;Mankato Municipal H/P
+;JMY;Freetown Mammy Yoko Heliport
+;JNB;Johannesburg O.R. Tambo International
+;JNH;Dallas/Ft Worth North Park Inn H/P
+;JOC;Santa Ana Centerport Heliport
+;JPN;Washington Pentagon H/P
+;JPT;Houston Park Ten H/P
+;JPU;Paris La Defense H/P
+;JRA;New York West 30th Street H/P
+;JRB;New York Downtown Manhattan H/P
+;JRC;Rochester Municipal H/P
+;JRD;Riverside H/P
+;JRE;New York East 60th Street H/P
+;JSG;San Rafael Heliport
+;JSK;St Cloud Municipal H/P
+;JSL;Atlantic City Steel Pier Heliport
+;JSN;Los Angeles Sherman Oaks H/P
+;JSP;Seogwipo Heliport
+;JUC;Los Angeles Universal City H/P
+;JUP;Upland Cable Heliport
+;JWC;Los Angeles Warner Center Business H/P
+;JWH;Houston Westchase Hilton Helipad
+;JWL;Houston Woodlands H/P
+;KAH;Yarra Bank Heliport
+;KBP;Kiev Borispol Intl Apt
+;KBW;Chignik Bay Apt
+;KCG;Chignik Fisheries Apt
+;KCL;Chignik Lagoon Apt
+;KCQ;Chignik Lake Apt
+;KDK;Kodiak Municipal Apt
+;KEF;Reykjavik Keflavik International Apt
+;KIN;Norman Manley Intl
+;KIP;Wichita Falls Kickapoo Apt
+;KIX;Osaka Kansai International Airport
+;KRS;Kristiansand Kjevik Airport
+;KTN;Ketchikan International Apt
+;KTP;Tinson Pen
+;KUL;Kuala Lumpur International Airport
+;KYO;Tampa Topp of Tampa Apt
+;LAS;Las Vegas McCarran International Apt
+;LAX;Los Angeles International Apt
+;LBB;Lubbock Preston Smith International Apt
+;LBC;Hamburg Luebeck-Blankensee Airport
+;LBG;Paris Le Bourget Apt
+;LCK;Columbus Rickenbacker Apt
+;LCY;London City Apt
+;LED;St Petersburg Pulkovo Apt
+;LEX;Lexington Blue Grass Apt
+;LFK;Nacogdoches Lufkin
+;LFT;Lafayette Regional Apt
+;LGA;New York La Guardia Apt
+;LGB;Long Beach Apt
+;LGF;Yuma Laguna AAF
+;LGG;Liege Apt
+;LGW;London Gatwick Apt
+;LHR;London Heathrow Apt
+;LIH;Kauai Island Lihue Municipal Apt
+;LIL;Lille Lesquin Airport
+;LIN;Milan Linate Apt
+;LJC;Louisville Intercontinental Apt
+;LKI;Duluth Lakeside U S Air Force
+;LME;Le Mans Arnage Airport
+;LNA;West Palm Beach County Apt
+;LNZ;Linz Blue Danube
+;LOR;Ozark Lowe Army H/P
+;LOU;Louisville Bowman Field Airport
+;LPC;Lompoc Apt
+;LRN;Moses Lake Larson AFB
+;LSD;Lexington Creech AFB
+;LSF;Columbus Lawson AAF
+;LSI;Shetland Islands Sumburgh Apt
+;LSV;Las Vegas Nellis AFB
+;LTN;London Luton Apt
+;LTS;Altus AFB
+;LUF;Phoenix Luke AFB
+;LUK;Cincinnati Municipal Apt
+;LUL;Laurel Hesler Noble Field
+;LWK;Shetland Islands Lerwick/Tingwall Apt
+;LYN;Lyon Bron Apt
+;LYS;Lyon St-Exupery Apt
+;MAC;Macon Smart Apt
+;MAD;Madrid Adolfo Suarez-Barajas Apt
+;MAF;Midland Odessa Regional Apt
+;MCC;Sacramento McClellan AFB
+;MCE;Merced Macready Regional Apt
+;MCF;Tampa Mac Dill AFB
+;MCI;Kansas City International Apt
+;MCN;Macon Lewis B Wilson Apt
+;MCO;Orlando International Apt
+;MDA;San Antonio Martindale AAF
+;MDD;Midland Airpark
+;MDE;Medellin Jose Maria Cordova Intl
+;MDT;Harrisburg International Apt
+;MDW;Chicago Midway Apt
+;MEB;Melbourne Essendon Apt
+;MEL;Melbourne Airport
+;MEM;Memphis International Apt
+;MER;Merced Castle AFB
+;MEX;Mexico City Juarez Intl
+;MGE;Marietta Dobbins AFB
+;MGL;Duesseldorf Moenchengladbach
+;MGM;Montgomery Dannelly Field
+;MGR;Moultrie Thomasville Apt
+;MGY;Dayton Montgomery County Apt
+;MHP;Minsk Apt -1
+;MHR;Sacramento Mather AFB
+;MIA;Miami International Apt
+;MIB;Minot AFB
+;MIC;Minneapolis Crystal Apt
+;MIQ;Omaha Millard Apt
+;MKC;Kansas City Downtown Apt
+;MKE;Milwaukee General Mitchell Intl Apt
+;MKF;Columbus McKenna AAF
+;MKO;Muskogee Davis Field
+;MKT;Mankato Municipal Apt
+;MLH;Mulhouse
+;MLW;Monrovia Spriggs Payne Apt
+;MMR;Austin Camp Maybry AHP Airport
+;MMT;Columbia McEntire ANGB
+;MMX;Malmo Airport
+;MNL;Manila Ninoy Aquino International Apt
+;MOB;Mobile Municipal Apt
+;MON;Mount Cook Apt
+;MOT;Minot International Apt
+;MPL;Montpellier Mediterranee Apt
+;MRI;Anchorage Merrill Field
+;MRS;Marseille Provence Apt
+;MRY;Monterey Peninsula Apt
+;MSC;Mesa Falcon Field Apt
+;MSP;Minneapolis International Apt
+;MSQ;Minsk International Apt
+;MSY;New Orleans Louis Armstrong Intl Apt
+;MTC;Mount Clemens Selfridge AFB
+;MTN;Baltimore Glenn L Martin Apt
+;MTX;Fairbanks Metro Field
+;MTY;Monterrey Mariano Escobedo Intl
+;MUC;Munich International Airport
+;MUL;Moultrie Spence Apt
+;MUV;Philadelphia Mustin Aux Landing Field
+;MWC;Milwaukee Lawrence J Timmerman Apt
+;MWH;Moses Lake Grant County Apt
+;MWL;Mineral Wells Apt
+;MXF;Montgomery Maxwell AFB
+;MXP;Milan Malpensa Apt
+;MYF;San Diego Montgomery Field
+;MYR;Myrtle Beach AFB
+;MYV;Marysville Yuba County Apt
+;MZM;Metz/Nancy Metz-Frescaty
+;NAB;Albany NAS
+;NAP;Naples Capodichino Apt
+;NAY;Beijing Nanyuan Apt
+;NBG;New Orleans Alvin Calendar NAS
+;NBO;Nairobi Jomo Kenyatta International Apt
+;NCQ;Marietta Atlanta NAS
+;NDP;Pensacola Ellyson NAS
+;NEW;New Orleans Lakefront Apt
+;NFB;Mount Clemens Detroit NAF
+;NFL;Fallon NAS
+;NGC;Grand Canyon North Rim Apt
+;NGO;Nagoya Chubu Centrair International Apt
+;NGP;Corpus Christi NAS
+;NGU;Norfolk NAS Chambers
+;NGW;Corpus Christi Cabaniss Field
+;NHA;Nha Trang Airport
+;NHD;Dubai Minhad AB
+;NIP;Jacksonville NAS
+;NJK;Imperial NAF
+;NKM;Nagoya Komaki Airport
+;NKX;San Diego Miramar NAS
+;NLO;Kinshasa N'dolo Apt
+;NLU;Mexico City Santa Lucia AFB
+;NOU;La Tontouta
+;NPA;Pensacola NAS
+;NQA;Memphis NAS
+;NQT;Nottingham Airport
+;NQX;Key West NAS
+;NRN;Duesseldorf Weeze Airport
+;NRT;Tokyo Narita Intl
+;NSF;Camp Springs Andrews NAF
+;NSI;Yaounde Nsimalen Intl Apt
+;NTE;Nantes Atlantique Airport
+;NTL;Newcastle Williamtown Apt
+;NTR;Del Norte Intl
+;NUN;Pensacola Sautley NAS
+;NYO;Stockholm Skavsta Airport
+;NZY;San Diego North Island NAS
+;OAK;Oakland International Apt
+;OAR;Monterey Fritzsche AAF
+;OCH;Nacogdoches A.L.Mangham Jnr
+;ODE;Odense Airport
+;OGD;Ogden Municipal Apt
+;OIL;Franklin Seaplane Memorial Apt
+;OJC;Kansas City Johnson Cnty Executive Apt
+;OKA;Okinawa Naha Apt
+;OKC;Oklahoma City Will Rogers Apt
+;OKD;Sapporo Okadama Apt
+;OKO;Tokyo Yokota AB
+;OMA;Omaha Eppley Airfield
+;ONT;Ontario LA/Ontario International Apt
+;OPF;Miami Opa Locka Apt
+;ORD;Chicago O'Hare International Apt
+;ORF;Norfolk International Apt
+;ORG;Paramaribo Zorg en Hoop Apt
+;ORL;Orlando Herndon Apt
+;ORN;Oran Es Senia Apt
+;ORY;Paris Orly Apt
+;OSL;Oslo Gardermoen Airport
+;OSU;Columbus Ohio State University Apt
+;OTP;Bucharest Henri Coanda Apt
+;OZR;Ozark Cairns AAF
+;PAC;Panama City Marcos A.Gelabert Intl
+;PAM;Panama City Tyndall AFB
+;PBA;Barrow Point Barrow Apt
+;PBI;West Palm Beach International Apt
+;PBM;Paramaribo Johan A Pengel Intl Apt
+;PDK;Atlanta De Kalb Peachtree
+;PEK;Beijing Capital Intl Apt
+;PFN;Panama City Bay County Apt
+;PHJ;Newcastle Harbour Heliport
+;PHL;Philadelphia International Apt
+;PHX;Phoenix Sky Harbor Intl Apt
+;PIB;Laurel Hattiesburg-Laurel Regional Apt
+;PIE;Tampa St Petersbrg-Clearwater Intl Apt
+;PII;Fairbanks Phillips Field Apt
+;PIK;Glasgow Prestwick Apt
+;PIP;Pilot Point Airport
+;PIS;Poitiers Biard Airport
+;PIT;Pittsburgh International Apt
+;PLU;Belo Horizonte Pampulha Apt
+;PMF;Milan Parma Apt
+;PNE;Philadelphia North Philadelphia Apt
+;PNS;Pensacola Municipal Apt
+;POB;Fayetteville Pope AFB
+;POX;Paris Pontoise-Cormeilles Apt
+;PRG;Prague Ruzyne
+;PRY;Pretoria Wonderboom Apt
+;PSM;Portsmouth Pease International Airport
+;PSP;Palm Springs Municipal Apt
+;PTB;Petersburg Municipal Apt
+;PTY;Panama City Tocumen International
+;PVG;Shanghai Pudong International Apt
+;PWA;Oklahoma City Wiley Post Apt
+;PWK;Chicago Palwaukee Apt
+;QRA;Johannesburg Rand
+;RAD;Tortola Road Town SPB
+;RAL;Riverside Municipal Apt
+;RAP;Rapid City Regional Apt
+;RBD;Dallas Redbird Airport
+;RCA;Rapid City Ellsworth AFB
+;REE;Lubbock Reese AFB
+;RFD;Chicago Rockford Airport
+;RFG;Refugio Rooke Field Apt
+;RHV;San Jose Reid-Hillview Apt
+;RIR;Riverside Flabob Apt
+;RIV;Riverside March AFB
+;RKE;Copenhagen Roskilde Apt
+;RKV;Reykjavik Apt
+;RLI;Anniston Reilly AAF
+;RML;Colombo Ratmalana Apt
+;RND;San Antonio Randolph AFB
+;RNS;Rennes St Jacques Airport
+;ROB;Monrovia Roberts International Apt
+;ROF;Montague Yreka Rohrer Field Airport
+;RSE;Sydney Rose Bay SPB Apt
+;RST;Rochester Municipal Apt
+;RSW;Fort Myers SW Florida International Apt
+;RTM;Rotterdam Apt
+;RVH;St Petersburg Rzhevka
+;RVS;Tulsa Richard Lloyd Jones Junior Apt
+;RYG;Oslo Moss-Rygge Airport
+;RZH;Lancaster Quartz Hill Apt
+;SAC;Sacramento Executive Apt
+;SAN;San Diego International
+;SAT;San Antonio International Apt
+;SAV;Savannah/Hilton Head International Apt
+;SAW;Istanbul Sabiha Gokcen Apt
+;SBA;Santa Barbara Municipal Apt
+;SBD;San Bernardino International Apt
+;SBP;San Luis Obispo County Apt
+;SBT;San Bernardino Tri-City Apt
+;SCF;Phoenix Scottsdale Municipal Apt
+;SCK;Sacramento Stockton Airport
+;SCN;Saarbruecken Airport
+;SCR;Wilkes-Barre Scranton Municipal Apt
+;SCS;Shetland Islands Scatsta Apt
+;SDF;Louisville International
+;SDM;San Diego Brown Municipal Apt
+;SDQ;Santo Domingo Las Americas Intl
+;SDU;Rio de Janeiro Santos Dumont Apt
+;SDV;Tel Aviv-Yafo Sde Dov
+;SEA;Seattle/Tacoma International Apt
+;SEE;San Diego Gillespie Field
+;SEM;Selma Craig AFB
+;SEN;London Southend Apt
+;SES;Selma Selfield Apt
+;SFB;Orlando Sanford International Airport
+;SFF;Spokane Felts Field
+;SFO;San Francisco International Apt
+;SGD;Sonderborg Airport
+;SGI;Sargodha Apt
+;SGL;Manila Sangley NAS
+;SGR;Houston Sugar Land
+;SHA;Shanghai Hongqiao International Apt
+;SHV;Shreveport Regional Apt
+;SIA;Xi'an Xiguan Apt
+;SIG;San Juan F.L.Ribas Doiminicci
+;SIN;Singapore Changi Apt
+;SIY;Montague Siskiyou County Airport
+;SJC;San Jose Norman Y. Mineta Intl
+;SJO;San Jose Juan Santamaria Apt
+;SJT;San Angelo Mathis Field
+;SJU;San Juan Luis Munoz Marin Intl Apt
+;SKA;Spokane Fairchild AFB
+;SKF;San Antonio Kelly AFB
+;SKS;Vojens Skrydstrup
+;SLU;St Lucia George F.L. Charles Apt
+;SMD;Fort Wayne Smith Field
+;SMF;Sacramento International Apt
+;SNA;Santa Ana John Wayne Apt
+;SNI;Sinoe R E Murray Apt
+;SPS;Wichita Falls Sheppard AFB
+;SPX;Houston Spaceland Apt
+;SQW;Skive
+;SRF;San Rafael Hamilton Field
+;SRZ;Santa Cruz El Trompillo Apt
+;SSC;Sumter Shaw AFB
+;SSF;San Antonio Stinson Apt
+;SSI;Brunswick M B McKinnon Apt
+;SSM;Sault Ste Marie County Apt
+;SSN;Seoul Air Base
+;STC;St Cloud Municipal Apt
+;STL;St Louis Lambert Intl Apt
+;STN;London Stansted Apt
+;STP;Minneapolis Downtown Airport
+;STR;Stuttgart Airport
+;STT;St Thomas Cyril E King Apt
+;STX;St Croix Henry E. Rohlsen Apt
+;SUM;Sumter Municipal Apt
+;SUN;Sun Valley Friedman Memorial Apt
+;SUS;St Louis Spirit of St Louis Apt
+;SVN;Savannah Hunter AAF
+;SVO;Moscow Sheremetyevo International Apt
+;SWP;Swakopmund Airport
+;SWZ;Sydney West Airport
+;SXC;Catalina Island Avalon Vor Apt
+;SXF;Berlin Schoenefeld Apt
+;SYD;Sydney Kingsford Smith Apt
+;SYQ;San Jose Tobias Bolanos Apt
+;SZB;Kuala Lumpur Sultan Abdul Aziz Shah Apt
+;SZG;Salzburg W A Mozart
+;SZN;Santa Barbara Santa Cruz Island Apt
+;TAF;Oran Tafaraoui Apt
+;TCM;Tacoma McChord AFB
+;TDW;Amarillo Tradewind Apt
+;TDZ;Toledo Apt
+;TFN;Tenerife Norte
+;TFS;Tenerife Sur Apt
+;THA;Tullahoma Northern Apt
+;THR;Tehran Mehrabad International Airport
+;TIK;Oklahoma City Tinker AFB
+;TIW;Tacoma Industrial Apt
+;TLC;Mexico City Toluca-A.Lopez Mateos
+;TLV;Tel Aviv-Yafo Ben Gurion International
+;TMB;Miami New Tamiami Apt
+;TNT;Miami Dade Collier Apt
+;TOJ;Madrid Torrejon
+;TOL;Toledo Express Apt
+;TOP;Topeka Phillip Billard Apt
+;TPA;Tampa International Apt
+;TPE;Taipei Taiwan Taoyuan International Apt
+;TPF;Tampa Peter O'Knight Apt
+;TPH;Tonopah Apt
+;TRD;Trondheim Vaernes Airport
+;TRF;Oslo Sandefjord-Torp Arpt
+;TRN;Turin Caselle Airport
+;TSA;Taipei Songshan
+;TSF;Venice Treviso/Sant'Angelo Apt
+;TSO;Isles of Scilly Tresco Heliport
+;TSS;New York East 34th Street H/P
+;TTN;Philadelphia Trenton-Mercer Apt
+;TUF;Tours Val de Loire Airport
+;TUH;Tullahoma Arnold AFS
+;TUL;Tulsa International Apt
+;TUS;Tucson International Apt
+;TWH;Catalina Island Two Harbors Apt
+;TWZ;Mount Cook Pukaki/Twizel Apt
+;TXL;Berlin Tegel Apt
+;TZA;Belize City Municipal Apt
+;UAM;Guam Andersen AFB
+;UBS;Columbus Lowndes County Apt
+;UDD;Palm Springs Bermuda Dunes Apt
+;UGB;Pilot Point Ugashik Bay Apt
+;UKB;Osaka Kobe Airport
+;UTC;Utrecht Soesterberg Apt
+;UVF;Hewanorra Intl
+;VAD;Valdosta Moody AFB
+;VBG;Lompoc Vandenberg AFB
+;VBS;Verona Brescia/Montichiari Airport
+;VCE;Venice Marco Polo Apt
+;VCP;Sao Paulo Viracopos Apt
+;VDU;Refugio Tom O'Conner Apt
+;VEJ;Vejle Airport
+;VGT;Las Vegas North Air Terminal
+;VIE;Vienna International
+;VIR;Durban Virginia Airport
+;VKO;Moscow Vnukovo International Apt
+;VLD;Valdosta Regional Apt
+;VNY;Los Angeles Van Nuys Apt
+;VOD;Prague Vodochody
+;VPS;Valparaiso Fort Walton Beach Apt
+;VQQ;Jacksonville Cecil NAS
+;VRA;Juan G Gomez Intl
+;VRN;Verona Villafranca Airport
+;VRO;Varadero Kawama Apt
+;VST;Stockholm Vasteras Apt
+;VVI;Santa Cruz Viru Viru International Apt
+;WBI;Boulder Broker Inn Apt
+;WBU;Boulder Municipal Apt
+;WBW;Wilkes-Barre Wyoming Valley Apt
+;WDG;Enid Woodring Municipal Apt
+;WDH;Windhoek Hosea Kutako International
+;WDY;Kodiak Fss
+;WHH;Boulder Hiltons Harvest House Apt
+;WHP;Los Angeles Whiteman Apt
+;WHR;Vail Avon Stolport Apt
+;WIL;Nairobi Wilson Apt
+;WJF;Lancaster William J Fox Apt
+;WRB;Macon Robins AFB
+;XCR;Paris Chalons-Vatry Airport
+;XFW;Hamburg Finkenwerder
+;XIY;Xi'an Xianyang Apt
+;XNA;Fayetteville Northwest Arkansas Reg Apt
+;XSA;Sinoe African Food Corporation Apt
+;XSD;Tonopah Test Range Apt
+;XSP;Singapore Seletar Apt
+;YAO;Yaounde-Ville Apt
+;YAW;Halifax Shearwater Apt
+;YAZ;Tofino
+;YBL;Campbell River Municipal Apt
+;YCD;Nanaimo Cassidy Apt
+;YDT;Vancouver Boundary Bay Apt
+;YED;CFB Namao Heliport
+;YEG;Edmonton International Apt
+;YGK;Kingston Norman Rogers Apt
+;YGP;Gaspe
+;YHM;Toronto John C Munro Hamilton
+;YHU;Montreal St Hubert Apt
+;YHZ;Halifax Stanfield International Apt
+;YIP;Detroit Willow Run Apt
+;YKF;Toronto Region of Waterloo Int
+;YKM;Yakima Air Terminal
+;YKZ;Buttonville Municipal
+;YMX;Montreal Mirabel Intl Apt
+;YND;Ottawa Gatineau Airport
+;YOW;McDonald -  Cartier Intl Apt
+;YPR;Prince Rupert Digby Island Apt
+;YQB;Quebec International Airport
+;YQG;Windsor Apt
+;YQM;Greater Moncton International Airport
+;YRO;Ottawa Rockcliffe Stolport
+;YTZ;Bishop Billy City A/P
+;YUL;Montreal Pierre Elliott Trudeau Int Apt
+;YUM;Yuma International Apt
+;YVA;Moroni Iconi Apt
+;YVR;Vancouver International Apt
+;YWF;Halifax Downtown Waterfront H/P
+;YWH;Victoria Inner Harbour Apt
+;YXD;Edmonton City Centre Airport
+;YXU;London International
+;YYJ;Victoria International Apt
+;YYQ;Churchill Airport
+;YYZ;Lester B Pearson Intl
+;YZR;Sarnia Chris Hadfield Apt
+;ZQW;Zweibruecken Airport
+;ZRH;Zurich Airport
+;ZSW;Prince Rupert Seal Cove Apt
+;ZXT;Baku Zabrat Airport
+;DEL;Indira Gandhi Airport
+;IXL;Leh Kushok Bakula Rimpochee
+;BOM;Chhatrapati Shivaji International Airport

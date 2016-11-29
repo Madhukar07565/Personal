@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="eclipsebin/classes" path="src"/>
+	<classpathentry kind="src" output="eclipsebin/web/classes" path="web/src"/>
+	<classpathentry kind="src" output="eclipsebin/classes" path="testsrc"/>
+	<classpathentry kind="src" output="eclipsebin/classes" path="gensrc"/>
+	<classpathentry kind="src" path="/platform"/>
+	<classpathentry kind="lib" path="resources"/>
+	<classpathentry kind="lib" path="lib/opentravel.jar" sourcepath="/opentravel/src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/commerceservices"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/b2bacceleratorservices"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/intgcommons"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/sapintegrations"/>
+	<classpathentry kind="output" path="eclipsebin/notused"/>
+</classpath>

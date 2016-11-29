@@ -1,0 +1,26 @@
+
+Activity_FreeOfCost_SeatsOrTickets;BASE_FARE ;TOTAL_REVENUE ;12 ;12;1;1
+
+Activity_SupplierAdvance_Definition;;;BASE_FARE  ;DAYS   
+
+Activity_Supplier_AdvanceDefinition;;BASE_FARE                                                                                                                                      
+                                                                                                                     
+Activity_CompanyAdvance_Definition; ;true                           
+
+Activity_WithinCompany_InventoryDistribution;E000 ;E000 ;IND ;Website ;Out Bound ; AAB ;      
+
+Activity_Penalty_Charges;HOURS  ;  ;12:00      ;234  ;TOTAL_NUMBER_OF_SEAT  ;  ;         
+
+Activity_ClientInventory_Distribution;B2B ; ;
+
+Activity_CompanyPenalty_Charges;DAYS ; ;12:00  ;234 ;TOTAL_NUMBER_OF_SEAT ;
+
+Activity_CutoffAnd_Charges;12 ;12.00 ;12;US ;AMOUNT ;ABOVE
+
+Activity_OtherCompany_InventoryDistribution;$distributionToCompany
+
+Activity_Inventory_Definition;AAA;IN ;123; ;01-05-2016   ;reason;123  ;BASE_FARE ;true;1234 
+
+Activity_Inventory_Detail;3001 ; 12;  12 ;2123  ;EVENING ;02:00;Bel's auditorium  ;AC ;Good  ;true  ;true ;123A  ; warehouse_s  
+			                             
+	

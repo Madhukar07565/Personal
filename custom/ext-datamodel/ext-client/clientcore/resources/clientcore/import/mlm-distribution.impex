@@ -1,0 +1,6 @@
+$catalogVersion=catalogVersion(catalog(id),version)
+$productCategorySubType=productCategorySubType(code,$catalogVersion)
+
+INSERT_UPDATE MLMDistribution;productCategory(code,$catalogVersion)[unique=true];productCategorySubType(code,$catalogVersion)[unique=true];effectiveFrom[dateformat=dd-MM-yyyy];parentDistribution;childDistribution;client(uid)[unique=true]
+;C001:EZ-IN:Staged;C001ST001:EZ-IN:Staged;04-10-1990;20;80;CnkB2BUnit1
+;C002:EZ-IN:Staged;C002ST004:EZ-IN:Staged;04-10-1990;20;80;CnkB2BUnit1

@@ -1,0 +1,53 @@
+<AirInterfaceRS xmlns="http://www.coxandkings.com/integ/suppl/airinterface" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+   <ResponseHeader xmlns="http://www.coxandkings.com/integ/suppl/air">
+      <Status xmlns="http://www.coxandkings.com/integ/suppl/common">SUCCESS</Status>
+      <UserID xmlns="http://www.coxandkings.com/integ/suppl/common">Venkatesh</UserID>
+      <SessionID xmlns="http://www.coxandkings.com/integ/suppl/common">1700</SessionID>
+      <TransactionID xmlns="http://www.coxandkings.com/integ/suppl/common">1700</TransactionID>
+   </ResponseHeader>
+   <ResponseBody>
+      <OTA_AirPriceRSWrapper xmlns="http://www.coxandkings.com/integ/suppl/air">
+         <SupplierID>SABRE</SupplierID>
+         <Sequence>1</Sequence>
+         <ns9:OTA_AirPriceRS xmlns:ns9="http://www.opentravel.org/OTA/2003/05">
+            <ns9:Success/>
+            <ns9:Warnings/>
+            <ns9:PricedItineraries>
+               <ns9:PricedItinerary>
+                  <ns9:AirItinerary>
+                     <ns9:OriginDestinationOptions>
+                        <ns9:OriginDestinationOption RPH="1">
+                           <ns9:FlightSegment DepartureDateTime="08-10T06:05">
+                              <ns9:DepartureAirport LocationCode=""/>
+                              <ns9:BookingClassAvails>
+                                 <ns9:BookingClassAvail RPH="1" ResBookDesigCode="C" ResBookDesigQuantity="7"/>
+                                 <ns9:BookingClassAvail RPH="2" ResBookDesigCode="J" ResBookDesigQuantity="3"/>
+                                 <ns9:BookingClassAvail RPH="3" ResBookDesigCode="Z" ResBookDesigQuantity="1"/>
+                                 <ns9:BookingClassAvail RPH="4" ResBookDesigCode="I" ResBookDesigQuantity="0"/>
+                                 <ns9:BookingClassAvail RPH="5" ResBookDesigCode="P" ResBookDesigQuantity="0"/>
+                                 <ns9:BookingClassAvail RPH="6" ResBookDesigCode="Y" ResBookDesigQuantity="7"/>
+                                 <ns9:BookingClassAvail RPH="7" ResBookDesigCode="M" ResBookDesigQuantity="7"/>
+                                 <ns9:BookingClassAvail RPH="8" ResBookDesigCode="T" ResBookDesigQuantity="7"/>
+                                 <ns9:BookingClassAvail RPH="9" ResBookDesigCode="U" ResBookDesigQuantity="7"/>
+                                 <ns9:BookingClassAvail RPH="10" ResBookDesigCode="N" ResBookDesigQuantity="7"/>
+                                 <ns9:BookingClassAvail RPH="11" ResBookDesigCode="L" ResBookDesigQuantity="7"/>
+                                 <ns9:BookingClassAvail RPH="12" ResBookDesigCode="Q" ResBookDesigQuantity="7"/>
+                                 <ns9:BookingClassAvail RPH="13" ResBookDesigCode="S" ResBookDesigQuantity="7"/>
+                                 <ns9:BookingClassAvail RPH="14" ResBookDesigCode="K" ResBookDesigQuantity="7"/>
+                                 <ns9:BookingClassAvail RPH="15" ResBookDesigCode="H" ResBookDesigQuantity="7"/>
+                                 <ns9:BookingClassAvail RPH="16" ResBookDesigCode="V" ResBookDesigQuantity="7"/>
+                                 <ns9:BookingClassAvail RPH="17" ResBookDesigCode="O" ResBookDesigQuantity="7"/>
+                                 <ns9:BookingClassAvail RPH="18" ResBookDesigCode="W" ResBookDesigQuantity="7"/>
+                                 <ns9:BookingClassAvail RPH="19" ResBookDesigCode="B" ResBookDesigQuantity="0"/>
+                              </ns9:BookingClassAvails>
+                           </ns9:FlightSegment>
+                        </ns9:OriginDestinationOption>
+                     </ns9:OriginDestinationOptions>
+                  </ns9:AirItinerary>
+               </ns9:PricedItinerary>
+            </ns9:PricedItineraries>
+            <ns9:Errors/>
+         </ns9:OTA_AirPriceRS>
+      </OTA_AirPriceRSWrapper>
+   </ResponseBody>
+</AirInterfaceRS>

@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2015 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+
+	<context:annotation-config />
+	<bean id="baseDirectoryTravelogixAccoInventoryDefinition" class="java.lang.String">
+		<constructor-arg
+			value="#{baseDirectory}/${tenantId}/travelogix/inventoryDefinition/acco" />
+	</bean>
+
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter
+		id="batchFilesTravelogixAccoInventoryDefinition" directory="#{baseDirectoryTravelogixAccoInventoryDefinition}"
+		filename-regex="acco_inventory_definition-(\d+)\.csv" comparator="fileOrderComparator">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogixAccoInventoryDefinition"
+		reply-channel="travelogixAccoInventoryDefinitionBatchFilesProc"
+		directory="#{baseDirectoryTravelogixAccoInventoryDefinition}/processing"
+		delete-source-files="true" />
+
+	<int:service-activator
+		input-channel="travelogixAccoInventoryDefinitionBatchFilesProc"
+		output-channel="travelogixAccoInventoryDefinitionBatchFilesHeaderInit"
+		ref="travelogixAccoInventoryDefinitionHeaderSetupTask" method="execute" />
+
+	<bean id="travelogixAccoInventoryDefinitionHeaderSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory"
+			ref="baseDirectoryTravelogixAccoInventoryDefinition" />
+	</bean>
+
+	<!-- 2) move the file to processing and setup header, partly site dependent -->
+	<int:service-activator
+		input-channel="travelogixAccoInventoryDefinitionBatchFilesHeaderInit"
+		output-channel="travelogixAccoInventoryDefinitionBatchFilesHeader"
+		ref="headerInitTask" method="execute" />
+
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator
+		input-channel="travelogixAccoInventoryDefinitionBatchFilesHeader"
+		output-channel="batchFilesTran" ref="travelogixAccoInventoryDefinitionBatchTransformerTask"
+		method="execute" />
+
+	<bean id="travelogixAccoInventoryDefinitionBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+
+	<!-- Transformer converters mappings -->
+	
+	<bean id="batchAccoClientInventoryDistributionMapping"
+	class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="acco_inventory_definition" p:converter-ref="batchAccoClientInventoryDistributionConverter" />
+	
+	
+	<bean id="batchAccoWithinCompanyInventoryDistributionMapping"
+	class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="acco_inventory_definition" p:converter-ref="batchAccoWithinCompanyInventoryDistributionConverter" />
+	
+	
+	<bean id="batchAccoSupplierAdvanceDefinitionMapping"
+	class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="acco_inventory_definition" p:converter-ref="batchAccoSupplierAdvanceDefinitionConverter" />
+	
+	
+	<bean id="batchAccoCompanyAdvanceDefinitionMapping"
+	class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="acco_inventory_definition" p:converter-ref="batchAccoCompanyAdvanceDefinitionConverter" />
+	
+	<bean id="batchAccoPenaltyChargesMapping"
+	class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="acco_inventory_definition" p:converter-ref="batchAccoPenaltyChargesConverter" />
+	
+	<bean id="batchAccoCutoffAndChargesMapping"
+	class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="acco_inventory_definition" p:converter-ref="batchAccoCutoffAndChargesConverter" />
+	
+	
+	<bean id="batchAccoCompanyPenaltyChargesMapping"
+	class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="acco_inventory_definition" p:converter-ref="batchAccoCompanyPenaltyChargesConverter" />
+
+	
+	<bean id="batchAccoInventoryDefinitionMapping"
+	class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="acco_inventory_definition" p:converter-ref="batchAccoInventoryDefinitionConverter" />
+
+
+	<bean id="batchAccoClientInventoryDistributionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE AccoClientInventoryDistribution;clientType(ClientType.code)[unique=true];clientName;clientGroup(ClientGroup.uid);productCode[unique=true];city(isocode);daysOfWeek(code);warehouse(Warehouse.code);travelChain(AccommodationChain.code);hotelCategory(code);currency(Currency.isocode);priceRangeFrom;priceRangeTo;nearestLocation(Location.isocode);remark
+			
+		   </value>
+		</property>
+		
+		<property name="impexRow">
+		<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Acco_ClientInventory_Distribution'" />
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<bean id="batchAccoWithinCompanyInventoryDistributionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE AccoWithinCompanyInventoryDistribution;sbu(Company.uid)[unique=true];bu(Company.uid);market(Market.uid);distributionChannel;division(Division.uid);salesOfficeLocation(Location.isocode);salesOffice(SalesOffice.uid);settleWith(code);productCode[unique=true];city(isocode);daysOfWeek(code);warehouse(Warehouse.code);travelChain(AccommodationChain.code);hotelCategory(code);currency(Currency.isocode);priceRangeFrom;priceRangeTo;nearestLocation(Location.isocode);remark
+	
+		   </value>
+		</property>
+		
+		<property name="impexRow">
+		<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18};{19}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Acco_WithinCompany_InventoryDistribution'" />
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<bean id="batchAccoSupplierAdvanceDefinitionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE AccoSupplierAdvanceDefinition;blockoutDates;minNoOfNights[unique=true];macNoOfNights;cutOfForFreeSale(CutOffForFreeSale.definedBy(code))
+
+		   </value>
+		</property>
+		
+		<property name="impexRow">
+		<value>;{1};{2};{3};{4}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Acco_Supplier_AdvanceDefinition'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchAccoCompanyAdvanceDefinitionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE  AccoCompanyAdvanceDefinition;blockOutDates;overBookingAllowed[unique=true];minimumNumberOfNights;maximumNumberOfNights
+
+		   </value>
+		</property>
+		
+		<property name="impexRow">
+		<value>;{1};{2};{3};{4}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Acco_Company_AdvanceDefinition'" />
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<bean id="batchAccoPenaltyChargesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			$dateformat=dd-MM-yyyy
+			INSERT_UPDATE AccoPenaltyCharges;roomCategory(RoomCategory.code)[unique=true];roomType(RoomType.code);mealType(MealType.code);definedBy(DefinedBy.code);specificDates[dateformat=$dateformat];dateRange;appliedOn(AppliedOn.code)
+
+		   </value>
+		</property>
+		
+		<property name="impexRow">
+		<value>;{1};{2};{3};{4};{5};{6};{7}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Acco_Penalty_Charges'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchAccoCutoffAndChargesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE AccoCutoffAndCharges;minUtilizationThreshold[unique=true];
+		   </value>
+		</property>
+		
+		<property name="impexRow">
+		<value>;{1}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Acco_Cutoff_And_Charges'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchAccoCompanyPenaltyChargesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			$dateformat=dd-MM-yyyy
+			INSERT_UPDATE AccoCompanyPenaltyCharges;roomCategory(RoomCategory.code)[unique=true];roomType(RoomType.code);mealType(MealType.code);definedBy(DefinedBy.code);specificDates[dateformat=$dateformat];dateRange;appliedOn(AppliedOn.code)
+
+		   </value>
+		</property>
+		
+		<property name="impexRow">
+		<value>;{1};{2};{3};{4};{5};{6};{7}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Acco_Company_Penalty_Charges'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchAccoInventoryDefinitionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			$dateformat=dd-MM-yyyy
+			INSERT_UPDATE AccoInventoryDefinition;country(Country.isocode)[unique=true];inventoryID;supplierAdvanceDefinition(AccoSupplierAdvanceDefinition.minNoOfNights);companyAdvanceDefinition(AccoCompanyAdvanceDefinition.overBookingAllowed);minimumThreshold;thresholdCutoffDays;blockedQuantity;cutOffDaysForBlockedQuantity;settleWithCompany;supplier(Supplier.code);productCategorySubtype(ProductCategorySubtype.code);inventoryType(InventoryType.code)
+
+		   </value>
+		</property>
+		
+		<property name="impexRow">
+		<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12}</value>
+		</property>
+			<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Acco_Inventory_Definition'" />
+			</bean>
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</beans>

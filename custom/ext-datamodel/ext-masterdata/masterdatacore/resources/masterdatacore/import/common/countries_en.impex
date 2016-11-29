@@ -1,0 +1,236 @@
+$lang=en
+UPDATE Country;isocode[unique=true];name[lang=$lang]
+;PF;French Polynesia
+;AU;Australia
+;EG;Egypt
+;DZ;Algeria
+;US;USA
+;BR;Brazil
+;DE;Germany
+;SR;Suriname
+;KI;Kiribati
+;DK;Denmark
+;ZA;South Africa
+;AE;United Arab Emirates
+;VE;Venezuela
+;RU;Russian Federation
+;ID;Indonesia
+;CN;China
+;WS;Samoa
+;PH;Philippines
+;YE;Yemen
+;GT;Guatemala
+;NG;Nigeria
+;ES;Spain
+;IR;Iran Islamic Republic of
+;CI;Cote d'Ivoire
+;ET;Ethiopia
+;PG;Papua New Guinea
+;SA;Saudi Arabia
+;GB;United Kingdom
+;MX;Mexico
+;GH;Ghana
+;CO;Colombia
+;CH;Switzerland
+;LK;Sri Lanka
+;PA;Panama
+;TR;Turkey
+;NA;Namibia
+;SD;Sudan
+;SS;South Sudan
+;TD;Chad
+;MR;Mauritania
+;NO;Norway
+;IS;Iceland
+;AR;Argentina
+;UZ;Uzbekistan
+;SB;Solomon Islands
+;MA;Morocco
+;FR;France
+;SE;Sweden
+;JP;Japan
+;GL;Greenland
+;GR;Greece
+;IN;India
+;PY;Paraguay
+;GY;Guyana
+;IT;Italy
+;HN;Honduras
+;OM;Oman
+;MG;Madagascar
+;MH;Marshall Islands
+;CF;Central African Republic
+;DJ;Djibouti
+;CK;Cook Islands
+;KM;Comoros
+;NE;Niger
+;GA;Gabon
+;LY;Libya
+;NZ;New Zealand
+;CY;Cyprus
+;CA;Canada
+;KZ;Kazakhstan
+;MM;Myanmar
+;PE;Peru
+;SY;Syrian Arab Republic
+;SO;Somalia
+;AD;Andorra
+;MZ;Mozambique
+;JO;Jordan
+;NL;Netherlands
+;CL;Chile
+;CG;Congo
+;AO;Angola
+;BE;Belgium
+;AT;Austria
+;AG;Antigua and Barbuda, Leeward Islands
+;MY;Malaysia
+;LA;Lao People's Democratic Republic
+;BO;Bolivia
+;FJ;Fiji
+;PR;Puerto Rico
+;TZ;Tanzania United Republic of
+;BF;Burkina Faso
+;RO;Romania
+;ER;Eritrea
+;TM;Turkmenistan
+;BS;Bahamas
+;SH;Saint Helena
+;KE;Kenya
+;EC;Ecuador
+;PK;Pakistan
+;UY;Uruguay
+;AW;Aruba
+;TL;Timor-Leste
+;VU;Vanuatu
+;CU;Cuba
+;MN;Mongolia
+;UM;United States Minor Outlying Islands
+;AI;Anguilla, Leeward Islands
+;MO;Macao (SAR) China
+;DO;Dominican Republic
+;BH;Bahrain
+;CR;Costa Rica
+;AZ;Azerbaijan
+;CD;Congo Democratic Republic of
+;BW;Botswana
+;KH;Cambodia
+;GP;Guadeloupe
+;ZM;Zambia
+;BZ;Belize
+;BM;Bermuda
+;SC;Seychelles
+;NP;Nepal
+;NI;Nicaragua
+;RS;Serbia
+;IL;Israel
+;LB;Lebanon
+;ZW;Zimbabwe
+;TH;Thailand
+;CM;Cameroon
+;PT;Portugal
+;BB;Barbados
+;IQ;Iraq
+;AF;Afghanistan
+;GM;Gambia
+;BI;Burundi
+;GN;Guinea
+;ML;Mali
+;IE;Ireland Republic of
+;MW;Malawi
+;VN;Viet Nam
+;NC;New Caledonia
+;BA;Bosnia and Herzegovina
+;BG;Bulgaria
+;BQ;Bonaire, Saint Eustatius and Saba
+;GW;Guinea-Bissau
+;BY;Belarus
+;VC;St Vincent and the Grenadines
+;CZ;Czech Republic
+;GQ;Equatorial Guinea
+;SL;Sierra Leone
+;RW;Rwanda
+;SK;Slovakia
+;HU;Hungary
+;GE;Georgia
+;BT;Bhutan
+;CV;Cape Verde
+;HR;Croatia
+;BN;Brunei Darussalam
+;SN;Senegal
+;PL;Poland
+;LR;Liberia
+;BD;Bangladesh
+;MD;Moldova Republic of
+;HT;Haiti
+;GF;French Guiana
+;MF;Saint Martin
+;CC;Cocos (Keeling) Islands
+;EE;Estonia
+;KR;Korea Republic of
+;UA;Ukraine
+;TW;Chinese Taipei
+;BJ;Benin
+;GD;Grenada, Windward Islands
+;CW;Curacao
+;KY;Cayman Islands
+;LV;Latvia
+;TN;Tunisia
+;QA;Qatar
+;DM;Dominica
+;MV;Maldives
+;KP;Korea Democratic People's Republic of
+;TJ;Tajikistan
+;YT;Mayotte
+;UG;Uganda
+;VG;Virgin Islands, British
+;FI;Finland
+;TO;Tonga
+;AM;Armenia
+;FO;Faroe Islands
+;MQ;Martinique
+;KG;Kyrgyzstan
+;PM;Saint Pierre and Miquelon
+;AS;American Samoa
+;TV;Tuvalu
+;WF;Wallis and Futuna Islands
+;TC;Turks and Caicos Islands
+;GI;Gibraltar
+;GU;Guam
+;MT;Malta
+;HK;Hong Kong (SAR) China
+;ME;Montenegro
+;NR;Nauru
+;NU;Niue
+;JM;Jamaica
+;FM;Micronesia Federated States of
+;LT;Lithuania
+;KW;Kuwait
+;LS;Lesotho
+;TG;Togo
+;SI;Slovenia
+;LU;Luxembourg
+;MC;Monaco
+;MS;Montserrat, Leeward Islands
+;FK;Falkland Islands
+;MU;Mauritius
+;SZ;Swaziland
+;KN;Saint Kitts and Nevis, Leeward Island
+;NF;Norfolk Island
+;MK;Macedonia Former Yugoslav Republic of
+;ST;Sao Tome and Principe
+;TT;Trinidad and Tobago
+;SG;Singapore
+;LI;Liechtenstein
+;MP;Northern Mariana Islands (except Guam
+;PW;Palau
+;RE;Reunion
+;SM;San Marino
+;SV;El Salvador
+;BL;Saint Barthelemy
+;VI;Virgin Islands, US
+;LC;Saint Lucia
+;SX;St Maarten (Dutch Part)
+;AL;Albania
+;AQ;Antarctica
+;CX;Christmas Island, Indian Ocean

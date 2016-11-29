@@ -1,0 +1,94 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=source(code, $catalogVersion)[unique=true]
+$categories=supercategories(code, $catalogVersion)[default=C001ST001:$catalogVersion]
+$dateformat=dd.MM.yyyy
+$timeformat=HH:MM
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+
+INSERT_UPDATE Employee;name;uid[unique=true]
+;Rodelf Watson;rodalf@taj.com
+
+INSERT_UPDATE Accommodation;$catalogVersion;code[unique=true];name[lang=en]
+;;'Villa Mille Etoiles';Villa Mille Etoiles
+;;'22234';Copthorne Hotel Effingham Gatwick
+;;'96746';Menzies Strathmore
+
+INSERT_UPDATE Category;$catalogVersion;code[unique=true];name[lang=en]
+;;Hotels;Hotels
+;;Hotel;Hotel
+
+###########################  Address ##########################
+INSERT_UPDATE Address;&Address;owner(Employee.uid);postalcode;town[unique=true];country(isocode);city(isocode)[unique=true]
+;Address01;rodalf@taj.com;12201;Gurgaon;IN;AMD
+;Address02;rodalf@taj.com;12301;Delhi;IN;BEK
+
+INSERT_UPDATE Supplier;$catalogVersion;code[unique=true];name;commonUid;supplierType(code);enablerCategories(code);lobs(code);address(&Address);companySupplierId
+;;Taj Hotel;Taj Hotel;2131;ENABLER;DIRECT_CONNECT;FIT;Address01;CompanySupplier
+;;Mason Travel;Mason Travel;2131;ENABLER;DIRECT_CONNECT;FIT;Address02;CompanySupplier
+
+INSERT_UPDATE SupplierMarket;$catalogVersion;code[unique=true];name
+;;IND;India
+;;Africa;Africa
+;;Asia;Asia
+;;Australia;Australia
+;;Israel;Israel
+;;Japan;Japan
+;;Middle East
+;;North America
+;;South Africa 
+;;South America
+
+########  RateType ########
+INSERT_UPDATE RateType;code[unique=true];name[lang=en]
+;18561002;Published Rates
+;18561003;Contracted Rates
+;18561004;Display Rates
+
+INSERT_UPDATE SupplierAncillaryRate;&SupplierAncillaryRate;active;approvalStatus(code);$catalogVersion[unique=true];code[unique=true];activeDateRange[dateformat=$dateformat];lockedBy(uid);reason;remarks
+# &SupplierAncillaryRate;active;approvalStatus;catalogVersion;code;activeDateRange;lockedBy;reason;remarks
+;SupplierAncillaryRate0;false;check;;9872;28.03.2016,29.03.2016;rodalf@taj.com;sample reason;sample remark
+;SupplierAncillaryRate0;false;check;;9872;28.03.2016,29.03.2016;rodalf@taj.com;sample reason;sample remark
+;SupplierAncillaryRate1;false;check;;9873;28.03.2016,29.03.2016;rodalf@taj.com;sample reason;sample remark
+;SupplierAncillaryRate2;false;check;;9874;28.03.2016,29.03.2016;rodalf@taj.com;sample reason;sample remark
+;SupplierAncillaryRate3;false;check;;9875;28.03.2016,29.03.2016;rodalf@taj.com;sample reason;sample remark
+
+INSERT_UPDATE AccommodationSupplierRate;&AccommodationSupplierRate;active;ancillary(code,$catalogVersion);approvalStatus(code)[allownull=true];$catalogVersion;code[unique=true];currency(isocode);activeDateRange[dateformat=$dateformat];lockedBy(uid);product($catalogVersion,code)[unique=true];productSubCategory(ProductCategorySubType.code,$catalogVersion)[unique=true];reason;remarks;supplier($catalogVersion,code);market($catalogVersion,code)[unique=true];validity[dateformat=$dateformat]
+# &AccommodationSupplierRate;active;ancillary;approvalStatus;catalogversion;code;currency;activeDateRange;lockedBy;product;productSubCategory;reason;remarks;supplier;supplierMarket;validityPeriod
+;AccommodationSupplierRate0;false;9872;approved;;1856;INR;26.05.2016,27.05.2016;rodalf@taj.com;'Villa Mille Etoiles';C001ST001;This is sample reason;This is sample Remarks;Taj Hotel;IND;28.03.2016,29.03.2016
+;AccommodationSupplierRate1;false;9873;approved;;1859;INR;26.05.2016,27.05.2016;rodalf@taj.com;'22234';C001ST001;This is sample reason;This is sample Remarks;Mason Travel;Africa;28.03.2016,29.03.2016
+;AccommodationSupplierRate2;false;9874;approved;;1843;INR;26.05.2016,27.05.2016;rodalf@taj.com;'96746';C001ST001;This is sample reason;This is sample Remarks;Taj Hotel;IND;25.05.2016,27.05.2016
+;AccommodationSupplierRate3;false;9875;approved;;1850;INR;26.05.2016,27.05.2016;rodalf@taj.com;'Villa Mille Etoiles';C001ST001;This is sample reason;This is sample Remarks;Mason Travel;Africa;23.05.2016,28.05.2016
+
+INSERT_UPDATE RateCode;code[unique=true];name[lang=en]
+;76589;Rate Code 1
+;76590;Rate Code 2
+;76591;Rate Code 3
+
+INSERT_UPDATE AccommodationRateDefinition;absSupplierRate(code,AccommodationSupplierRate.product(code,$catalogVersion),AccommodationSupplierRate.productSubCategory(code,$catalogVersion),AccommodationSupplierRate.market(code,$catalogVersion));clientType(code)[unique=true];net;commissionThreshold(code);commissionValue;companyRateCode(code);companyType(code);comparator(code);noOfRooms[unique=true];priceApplicability(code)[unique=true];priceComponent(code);rateTypeApplicableFor(code)[unique=true];seasonality(code)[unique=true];supplierRateCode(code)[unique=true];supplierRateType(code)[unique=true];travelDate[dateformat=dd.MM.yyyy hh:mm:ss]
+;1856:'Villa Mille Etoiles':EZ-IN:Staged:C001ST001:EZ-IN:Staged:IND:EZ-IN:Staged;B2B;true;AMOUNT;23;127;18561002;;4;PER_ROOM;;STANDALONE;LOW_SEASON;127;18561002;26.05.2016 12:00:00,27.05.2016 12:00:00
+;1859:'22234':EZ-IN:Staged:C001ST001:EZ-IN:Staged:Africa:EZ-IN:Staged;B2C;true;AMOUNT;266;127;18561002;;4;PER_ROOM;;STANDALONE;HIGH_SEASON;127;18561002;16.05.2016 12:00:00,29.05.2016 12:00:00
+
+INSERT_UPDATE AgeDetail;fromAge[unique=true];toAge[unique=true]
+;6;10
+;10;15
+
+INSERT_UPDATE ChildAgeDetail;ageDetail(AgeDetail.fromAge,AgeDetail.toAge)[unique=true];childBedType(code)[unique=true]
+;6:10;CHILD_NO_BED
+;10:15;CHILD_WITH_EXTRA_BED
+
+INSERT_UPDATE ChildAgeRateDetail;childAgeDetail(ChildAgeDetail.ageDetail(AgeDetail.fromAge,AgeDetail.toAge),ChildAgeDetail.childBedType(code))[unique=true];rate[unique=true]
+;6:10:CHILD_NO_BED;1200
+;10:15:CHILD_WITH_EXTRA_BED;1500
+
+INSERT_UPDATE CompanyRateInvRestriction;supplierRate(code,AccommodationSupplierRate.product(code,$catalogVersion),AccommodationSupplierRate.productSubCategory(code,$catalogVersion),AccommodationSupplierRate.market(code,$catalogVersion));company(uid)[unique=true];activeDateRange[dateformat=dd.MM.yyyy hh:mm:ss][unique=true];active;sbu(uid);bu(uid);reason
+;1856:'Villa Mille Etoiles':EZ-IN:Staged:C001ST001:EZ-IN:Staged:IND:EZ-IN:Staged;E000;26.05.2016 12:00:00,27.05.2016 12:00:00;true;SBU - Out Bound;BU - FIT;Some reason
+
+INSERT_UPDATE RoomTypeRate;roomType(code)[unique=true];rate[unique=true];payOnArrival;
+;DOUBLE_ROOM;1200;true
+;SINGLE_ROOM;800;true
+
+INSERT_UPDATE AccoRateDetailDefinition;accoRateDef(AccommodationRateDefinition.clientType(code),AccommodationRateDefinition.noOfRooms,AccommodationRateDefinition.priceApplicability(code),AccommodationRateDefinition.rateTypeApplicableFor(code),AccommodationRateDefinition.seasonality(code),AccommodationRateDefinition.supplierRateCode(code),AccommodationRateDefinition.supplierRateType(code));rateFor(code)[unique=true];rateDefinedFor(code)[unique=true];checkInTime[timeformat=$timeformat];checkOutTime[timeformat=$timeformat];roomCategory(code)[unique=true];minNights;dayOfWeek(code)[unique=true];mealPlan(code);roomTypeRates(RoomTypeRate.roomType(code),RoomTypeRate.rate);childRate(ChildAgeRateDetail.childAgeDetail(ChildAgeDetail.ageDetail(AgeDetail.fromAge,AgeDetail.toAge),ChildAgeDetail.childBedType(code)),ChildAgeRateDetail.rate);commissionExcluded(code);stayDuration;proRata;payOnArrival
+;B2B:4:PER_ROOM:STANDALONE:LOW_SEASON:127:18561002;HOTEL;DAY_USE;12:30;21:00;STANDARD;;MONDAY;AI;DOUBLE_ROOM:1200;6:10:CHILD_NO_BED:1200;DOUBLE_ROOM;;true;true
+;B2C:4:PER_ROOM:STANDALONE:HIGH_SEASON:127:18561002;HOTEL_PACKAGE;PER_NIGHT;08:30;18:00;SUPERIOR;2;SATURDAY,SUNDAY;AP;SINGLE_ROOM:800;10:15:CHILD_WITH_EXTRA_BED:1500;SUPERIOR;2;true;false

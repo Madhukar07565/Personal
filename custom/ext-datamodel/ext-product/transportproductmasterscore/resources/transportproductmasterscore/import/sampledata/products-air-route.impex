@@ -1,0 +1,19 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$approved=approvalstatus(code)[default='approved']
+$siteResource=jar:com.cnk.travelogix.product.transport.masters.core.setup.TransportProductSetup&\transportproductmasterscore\import\sampledata\images\96Wx96H
+
+
+INSERT_UPDATE RouteConnection;active;onlineDate[dateformat=$dateformat][unique=true];offlineDate[dateformat=$dateformat][unique=true];sectors(Sector.fromCity(Airport.code),Sector.toCity(Airport.code))[unique=true];&ref
+;true;01-01-2015;01-01-2020;AAL:AAR,AAR:ABI,ABI:AAP;routeConnection1
+
+INSERT_UPDATE Sector;fromCountry(isocode);fromCity(code)[unique=true];toCountry(isocode);toCity(code)[unique=true];airlineProducts(name[lang=en],$catalogVersion);sameAirlineorSameTerminal;sameAirlineorDifferentTerminal;differentAirlineorSameTerminal;differentAirlineorDifferentTerminal;&ref
+;US;AAL;US;AAR;Jet Airways;;;;;sector1
+;US;AAR;US;ABI;Jet Airways;1h 20m;1h 20m;1h 20m;1h 20m;sector2
+;US;ABI;US;AAP;Jet Airways;1h 20m;1h 20m;1h 20m;1h 20m;sector3
+
+INSERT_UPDATE AirRoute;code;$catalogVersion[unique=true];fromCountry(isocode);routeFromCity(code)[unique=true];toCountry(isocode);routeToCity(code)[unique=true];remarks;approvalStatus(code);onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];sectors(routeConnection.onlineDate[dateformat=$dateformat],routeConnection.offlineDate[dateformat=$dateformat])
+;001;;US;AAL;US;AAP;;approved;01-01-2015;01-01-2020;01-01-2015:01-01-2020

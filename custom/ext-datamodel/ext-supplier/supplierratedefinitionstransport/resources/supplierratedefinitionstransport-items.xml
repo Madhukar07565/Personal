@@ -1,0 +1,808 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2013 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+
+  
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+    <enumtypes>
+         <enumtype code="SurchargeSubType" autocreate="true" generate="true" dynamic="true">
+			<value code="DRIVER_ALLOWANCE" />
+			<value code="NIGHT_CHARGE" />
+			<value code="FAX_TYPE" />
+			<value code="PEAK_HOUR" />
+			<value code="VEHICLE" />
+			<value code="PASSENGER_TYPE" />
+			<value code="DRIVER_AGE" />
+		</enumtype>
+		<enumtype code="DestinationPointType" autocreate="true" generate="true" dynamic="true">
+			<value code="AIRPORT" />
+			<value code="HOTEL" />
+			<value code="CITY_CENTRE" />
+			<value code="RESTAURANT" />
+			<value code="STATION" />
+			<value code="PORT" />
+		</enumtype>
+		<enumtype code="RateCalculationCriteria" autocreate="true" generate="true" dynamic="true">
+			<value code="TOTAL_COST" />
+			<value code="PER_KILOMETER" />
+			<value code="PER_MILE" />
+			<value code="PER_PASSENGER" />
+			<value code="PER_HOUR" />
+			<value code="PER_DAY" />
+		</enumtype>
+		<enumtype code="VehicleCategoryType" autocreate="true" generate="true" dynamic="true">
+			<value code="MINI" />
+			<value code="ECONOMY" />
+			<value code="COMPACT" />
+			<value code="INTERMEDIATE" />
+			<value code="STANDARD" />
+			<value code="FULL_SIZE" />
+			<value code="PREMIUM" />
+			<value code="LUXURY" />
+			<value code="SPECIAL" />
+			<value code="OVERSIZE" />
+		</enumtype>
+		<enumtype code="FeesDeductionType" autocreate="true" generate="true" dynamic="true">
+			<value code="PRE_RENTAL" />
+			<value code="POST_RENTAL" />
+		</enumtype>
+		<enumtype code="OfferAvailableOnType" autocreate="true" generate="true" dynamic="true">
+			<value code="WEEKEND" />
+			<value code="WEEKDAY" />
+		</enumtype>
+		<enumtype code="CardSubType" autocreate="true" generate="true" dynamic="true">
+			<value code="PLATINUM" />
+			<value code="GOLD" />
+		</enumtype>
+		<enumtype code="TimeSlotFor" autocreate="true" generate="true" dynamic="true">
+			<value code="DAYS_HOURS" />
+			<value code="NIGHT_HOURS" />
+			<value code="DRIVER_ALLOWANCE" />
+			<value code="CLEANER_ALLOWANCE" />
+		</enumtype>
+		</enumtypes>
+	    <relations>
+            <relation code="TranspSurchSuppDet2DropOffchargDetRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="TransportationSurchargeSuppDetail" cardinality="one" qualifier="transportsurchrgedetail" />
+			<targetElement type="DropOffChargesDetail" cardinality="many" qualifier="dropOffChargesDetails" >
+			<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+		<relation code="PaxApplicability2ChildAgeDetRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="PaxApplicability" cardinality="one" qualifier="paxapplicability" />
+			<targetElement type="ChildAgeDetail" cardinality="many" qualifier="childAgeDetails" >
+			<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+			
+		<relation code="TransportRateDef2TaxRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="TransportationRateDefinition" cardinality="one" qualifier="transportationRateDefinition" />
+			<targetElement type="Tax" cardinality="many" qualifier="taxes" >
+			<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+		<relation code="TransportRateDet2TaxRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="TransportationRateDetail" cardinality="one" qualifier="transportationRateDetail" />
+			<targetElement type="Tax" cardinality="many" qualifier="taxes" >
+			<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+	
+		<relation code="TransportRateDef2TransportRateDetRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="TransportationRateDefinition" cardinality="one" qualifier="transportationRateDefinition" />
+			<targetElement type="TransportationRateDetail" cardinality="many" qualifier="transportationRateDetails" collectiontype="set" >
+			<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+		<relation code="TransportRateDet2TravelogixpolicyRelation" autocreate="true" generate="false" localized="false">
+			<deployment table="tptratedefpolicy" typecode="22170" />
+			<sourceElement type="TransportationRateDetail" cardinality="many" qualifier="transportratedetail" />
+			<targetElement type="TravelogixPolicy" cardinality="many" qualifier="travelogixPolicies" collectiontype="set" >
+			</targetElement>
+		</relation>
+		<relation code="CityTransportationRateRestriction2CityRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="CityTransporationRateRestriction" cardinality="one" qualifier="cityTransporationRateRestriction" />
+			<targetElement type="City" cardinality="many" qualifier="cities" collectiontype="set">
+			</targetElement>
+		</relation>
+			<relation code="CityTransportationOfferRestriction2CityRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="CityTransporationOfferRestriction" cardinality="one" qualifier="cityTransporationRateRestriction" />
+			<targetElement type="City" cardinality="many" qualifier="cities" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation code="VehicleTransporationRateRestriction2VehicleRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="VehicleTransporationRateRestriction" cardinality="one" qualifier="vehicleTransporationRateRestriction" />
+			<targetElement type="Vehicle" cardinality="many" qualifier="vehicles" collectiontype="set" >
+			</targetElement>
+		</relation>
+		<relation code="VehicleTransporationRateRestriction2SIPPCodeRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="VehicleTransporationRateRestriction" cardinality="one" qualifier="vehicleTransporationRateRestriction" />
+			<targetElement type="SippCode" cardinality="many" qualifier="sippCodes" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation code="VehicleTransporationRateRestriction2CarGroupRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="VehicleTransporationRateRestriction" cardinality="one" qualifier="vehicleTransporationRateRestriction" />
+			<targetElement type="CarGroup" cardinality="many" qualifier="carGroup" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation code="VehicleTransporationOfferRestriction2VehicleRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="VehicleTransporationOfferRestriction" cardinality="one" qualifier="vehicleTransporationOfferRestriction" />
+			<targetElement type="Vehicle" cardinality="many" qualifier="vehicles" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation code="VehicleTransporationOfferRestriction2SIPPCodeRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="VehicleTransporationOfferRestriction" cardinality="one" qualifier="vehicleTransporationOfferRestriction" />
+			<targetElement type="SippCode" cardinality="many" qualifier="sippCodes" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation code="VehicleTransporationOfferRestriction2CarGroupRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="VehicleTransporationOfferRestriction" cardinality="one" qualifier="vehicleTransporationOfferRestriction" />
+			<targetElement type="CarGroup" cardinality="many" qualifier="carGroup" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation code="TransportRateDetail2TravelogixSupplierOfferRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="TransportationRateDetail" cardinality="one" qualifier="transportationRateDetail" />
+			<targetElement type="AbstractTravelogixSupplierOffer" cardinality="many" qualifier="travelogixSupplierOffers" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation code="TransportationOffer2CarGroupUpgradeRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="TransportationOffers" cardinality="one" qualifier="transportationOffers" />
+			<targetElement type="CarGroupUpgrade" cardinality="many" qualifier="carGroupUpgrades" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation code="TransportationOffers2SIPPCodeUpgradeRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="TransportationOffers" cardinality="one" qualifier="transportationOffers" />
+			<targetElement type="SIPPCodeUpgrade" cardinality="many" qualifier="sIPPCodeUpgrades" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation code="TransportationOffers2VehicleUpgradeRel" autocreate="true" generate="false" localized="false">
+			<sourceElement type="TransportationOffers" cardinality="one" qualifier="transportationOffers" />
+			<targetElement type="VehicleUpgrade" cardinality="many" qualifier="vehicleUpgrades" collectiontype="set" >
+			</targetElement>
+		</relation>
+		<relation code="TransportationOffers2VehicleUpgradeRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="TransportationOffers" cardinality="one" qualifier="transportationOffers" />
+			<targetElement type="DriverInformation" cardinality="many" qualifier="driverInformations" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation code="TransportAdvDefinition2TimeSlotRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="TransportationRateAdvDefinition" cardinality="one" qualifier="transportationOffers" />
+			<targetElement type="TimeSlot" cardinality="many" qualifier="timeSlots" collectiontype="set">
+			</targetElement>
+		</relation>
+		<relation code="TransportAdvDefinition2PeakHoursRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="TransportationRateAdvDefinition" cardinality="one" qualifier="transportationOffers" />
+			<targetElement type="PeakHours" cardinality="many" qualifier="peakHours" collectiontype="set" >
+			</targetElement>
+		</relation>
+		<relation code="TransportationOffers2PickupLocationRelation" autocreate="true" generate="false" localized="false">
+			<sourceElement type="TransportationOffers" cardinality="one" qualifier="transportationOffers" />
+			<targetElement type="PickupLocation" cardinality="many" qualifier="pickUpLocation" collectiontype="set">
+			</targetElement>
+		</relation> 
+		</relations>
+        <itemtypes>
+          <typegroup name="TransportationRateAdvDefinition">
+          	<itemtype code="TimeSlot" autocreate="true" generate="true"
+          	jaloclass="com.cnk.travelogix.datamodel.supplier.rates.transportationratedefinition.jalo.TimeSlot">
+          	<description>Time Slot Definition </description>
+				<deployment table="timeslot" typecode="22075" />
+				<attributes>
+					<attribute type="TimeSlotFor" qualifier="timeSlotFor">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="timeFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="timeTo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="hours">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="hourlyBasis">
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+          	</itemtype>
+          	
+          	<itemtype code="PeakHours" autocreate="true" generate="true"
+          	jaloclass="com.cnk.travelogix.datamodel.supplier.rates.transportationratedefinition.jalo.PeakHours">
+          	<description>Peak Hours Definition </description>
+				<deployment table="peakhours" typecode="22076" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="timeFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="timeTo">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+          	</itemtype>
+          
+			<itemtype code="TransportationRateAdvDefinition" autocreate="true" generate="true" extends="AbstractRateAdvDefinition"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.transportationratedefinition.jalo.TransportationRateAdvDefinition">
+				<description>Transport Rate  Advance Definition </description>
+				<deployment table="trprtrateaddeftab" typecode="22051" />
+				<attributes>
+					<attribute type="Vehicle" qualifier="vehicleForOffer">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="maxVehicleForOffer">
+						<persistence type="property" />
+					</attribute>
+					
+				</attributes>
+			</itemtype>
+			</typegroup>
+			<typegroup name="TransportationSurchargeSuppDetail">
+			<itemtype code="TransportationSurchargeSuppDetail" autocreate="true" generate="true" extends="AbstractSurchargeSuppDetail"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.transportationsurchargedetail.jalo.TransportationSurchargeSuppDetail">
+				<description>Transport Surcharge Supplier Detail </description>
+				<deployment table="trprtsrchrgdettab" typecode="22052" />
+				<attributes>
+					<attribute type="SurchargeSubType" qualifier="subType">
+					<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="charge">
+					<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ThresholdType" qualifier="stdCommissionType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="stdCommissionValue">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DriverAllowanceCharge" qualifier="driverAllowanceCharge">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="VehicleCharge" qualifier="vehicleCharge">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			</typegroup>
+			<typegroup name="DropOffChargesDetail">
+			<itemtype code="DropOffChargesDetail" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.dropoffchargesdetail.jalo.DropOffChargesDetail">
+				<description>Drop Off Charges Detail </description>
+				<deployment table="dropoffchrgdettab" typecode="22053" />
+				<attributes>
+					<attribute type="City" qualifier="city">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DestinationPointType" qualifier="dropOffPointType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="dropOffPointName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="dropOffFees">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="appliedOn">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.Integer" qualifier="daysFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.Integer" qualifier="daysTo">
+						<persistence type="property" />
+						</attribute>
+						<attribute type="ThresholdType" qualifier="stdCommissionType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="stdCommissionValue">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			</typegroup>
+			
+			<typegroup name="AbstractPriceApplicability">
+			<itemtype code="AbstractPriceApplicability" autocreate="true" generate="true" abstract="true"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.abstractpriceapplicability.jalo.AbstractPriceApplicability">
+				<description>Abstract Price Applicability </description>
+			</itemtype>
+			</typegroup>
+			<typegroup name="PerVehicleApplicability">
+				<itemtype code="PerVehicleApplicability" autocreate="true" generate="true" extends="AbstractPriceApplicability"
+					jaloclass="com.cnk.travelogix.datamodel.supplier.rates.pervehicleapplicability.jalo.PerVehicleApplicability">
+					<description>Per Vehicle Applicability </description>
+					<deployment table="prvhclaplcbltytab" typecode="22057" />
+					<attributes>
+						<attribute type="java.lang.Double" qualifier="rate">
+							<persistence type="property" />
+						</attribute>
+						</attributes>
+				</itemtype>
+			</typegroup>
+			<typegroup name="PerPersonApplicability">
+				<itemtype code="PerPersonApplicability" autocreate="true" generate="true" extends="AbstractPriceApplicability"
+					jaloclass="com.cnk.travelogix.datamodel.supplier.rates.perpersonapplicability.jalo.PerPersonApplicability">
+					<description>Per Person Applicability </description>
+					<deployment table="perpersonapptab" typecode="22074" />
+					<attributes>
+						<attribute type="java.lang.Double" qualifier="rate">
+							<persistence type="property" />
+						</attribute>
+					</attributes>
+				</itemtype>
+			</typegroup>
+			<typegroup name="PaxApplicability">
+				<itemtype code="PaxApplicability" autocreate="true" generate="true" extends="AbstractPriceApplicability"
+					jaloclass="com.cnk.travelogix.datamodel.supplier.rates.paxapplicability.jalo.PaxApplicability">
+					<description>Pax Applicability </description>
+					<deployment table="paxaplcbltytab" typecode="22058" />
+				</itemtype>
+			</typegroup>
+			<typegroup name="TransportationRateDefinition">
+			<itemtype code="TransportationRateDefinition" autocreate="true" generate="true" extends="AbstractRateDefinition"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.transportationratedefinition.jalo.TransportationRateDefinition">
+				<description>Transport Rate definition </description>
+				<deployment table="trprtratedfntntab" typecode="22059" />
+				<attributes>
+					<attribute type="Country" qualifier="country">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="freeSaleUnlimited">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			</typegroup>
+			<typegroup name="TransportationSupplierRate">
+			<itemtype code="TransportationSupplierRate" autocreate="true" generate="true" extends="AbstractSupplierRate"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.transportationsupplierrate.jalo.TransportationSupplierRate">
+				<description>Transport Supplier Rate </description>
+				<deployment table="trprtsplrratetab" typecode="22060" />
+			</itemtype>
+			</typegroup>
+			<typegroup name="TransportationRateDetail">
+			<itemtype code="TransportationRateDetail" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.transportationratedetail.jalo.TransportationRateDetail">
+				<description>Transport Rate Detail </description>
+				<deployment table="trprtratedettab" typecode="22061" />
+				<attributes>
+					<attribute type="City" qualifier="city">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CityTierType" qualifier="cityTier">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="withChauffer">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="CarGroup" qualifier="carGroup">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SippCode" qualifier="sippCode">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="VehicleDetails" qualifier="vehicle">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="airCondition">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="WeekDayCollection" qualifier="daysOfWeek">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TransportCategory" qualifier="category">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RatesDefinedForType" qualifier="ratesDefinedFor">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TransferType" qualifier="transferType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RateCalculationCriteria" qualifier="rateCalculationCriteria">
+						<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DestinationPointType" qualifier="pickUpPointType">
+						<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Address" qualifier="pickUpPoints">
+						<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DestinationPointType" qualifier="dropOffPoint">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Address" qualifier="dropOffPoints">
+					    <modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DestinationPointType" qualifier="viaPointType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Address" qualifier="viaPointName">
+					<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="routing">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="JourneyType" qualifier="journeyType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="minimumDaysfrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="minimumDaysTo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="minimumHoursFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DistanceUnit" qualifier="unit">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="minimumDistance">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AbstractPriceApplicability" qualifier="priceApplicability">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AbstractRateAdvDefinition" qualifier="advanceDefinition">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="payOnArrival">
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			</typegroup>
+			<typegroup name="DriverAllowanceCharge">
+			<itemtype code="DriverAllowanceCharge" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.driverallowancecharge.jalo.DriverAllowanceCharge">
+				<description>Driver Allowance Charge </description>
+				<deployment table="driverallchrgtab" typecode="22062" />
+				<attributes>
+					<attribute type="RateCalculationCriteria" qualifier="driverAllowanceCalculatedOn">
+					<modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			</typegroup>
+			<typegroup name="VehicleCharge">
+			<itemtype code="VehicleCharge" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.vehiclecharge.jalo.VehicleCharge">
+				<description>Vehicle Charge </description>
+				<deployment table="vehiclechrgtab" typecode="22063" />
+				<attributes>
+				<attribute type="Vehicle" qualifier="vehicle">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="driveAgeFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="driveAgeTo">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			</typegroup>
+			
+			<typegroup name="TransportationAncillaryRate">
+			<itemtype code="TransportationAncillaryRate" autocreate="true" generate="true" extends="AbstractAncillaryRateDetail"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.ancillaryratedefinition.jalo.TransportationAncillaryRate">
+				<description>Transport Ancillary Rate </description>
+				<deployment table="trprtancratetab" typecode="22069" />
+				<attributes>
+				<attribute type="AncillaryCategory" qualifier="ancillaryCategory">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.Integer" qualifier="minimumDaysFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.Integer" qualifier="minimumDaysTo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="minimumHoursFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="RateCalculationCriteria" qualifier="rateCalculationCriteria">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="extraDayPrice">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.Integer" qualifier="customerLiabilities">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.Integer" qualifier="waivedCustomerLiabilities">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			</typegroup>
+			<typegroup name="TransportationOfferAncillaryAdvDefinition">
+			<itemtype code="TransportationOfferAncillaryAdvDefinition" autocreate="true" generate="true" extends="AbstractRateAdvDefinition"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.transportationofferancillaryAdvdefinition.jalo.TransportationOfferAncillaryAdvDefinition">
+				<description>Transport Rate Ancillary Adv Definition </description>
+				<deployment table="trprtrtancadvdeftab" typecode="22070" />
+				<attributes>
+					<attribute type="AbstractTransportationRateRestriction" qualifier="inclusionexclusion">
+					<modifiers partof="true"/>
+							<persistence type="property" />
+					</attribute>
+					<!-- <attribute type="TransportationOfferAdvDefinition" qualifier="transportationOfferAdvDefinition">
+						<persistence type="property" />
+					</attribute> -->
+				</attributes>	
+			</itemtype>
+			</typegroup>
+			<typegroup name="AbstractTransportationRateRestriction">
+			<itemtype code="AbstractTransportationRateRestriction" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.ancillaryratedefinition.jalo.AbstractAncillaryRateDeviations">
+				<description>Abstract Ancillary Rate Restriction </description>
+				<deployment table="abttrnsprtrtdevtab" typecode="22071" />
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="included">
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="CityTransporationRateRestriction" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.ancillaryratedefinition.jalo.CityTransporationRateRestriction">
+				<description>City Ancillary Rate Restriction </description>		
+				<deployment table="citytransportrest" typecode="22077" />		
+			</itemtype>
+			<itemtype code="VehicleTransporationRateRestriction" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.ancillaryratedefinition.jalo.VehicleTransporationRateRestriction">
+				<description>City Ancillary Rate Restriction </description>	
+				<deployment table="vehicletransportrest" typecode="22078" />			
+			</itemtype>
+			</typegroup>
+			
+			<typegroup name="TransportationOfferRestriction">			
+			<itemtype code="CityTransporationOfferRestriction" autocreate="true" generate="true" extends="AbstractPromotionRestriction"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.transportationoffers.jalo.CityTransporationOfferRestriction">
+				<description>City Offer Restriction </description>		
+				<deployment table="citytranspofferrest" typecode="22079" />	
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="included">
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>	
+			</itemtype>
+			<itemtype code="VehicleTransporationOfferRestriction" autocreate="true" generate="true" extends="AbstractPromotionRestriction"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.transportationoffers.jalo.VehicleTransporationOfferRestriction">
+				<description>Vehicle Offer Restriction </description>	
+				<deployment table="vehicletransofferrest" typecode="22080" />	
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="included">
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>		
+			</itemtype>
+			<itemtype code="OfferBookingValidityRestriction" autocreate="true" generate="true" extends="AbstractPromotionRestriction"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.transportationoffers.jalo.OfferBookingValidityRestriction">
+				<description>Vehicle Offer Restriction </description>	
+				<deployment table="offerbookingrest" typecode="22081" />	
+				<attributes>
+					<attribute type="de.hybris.platform.util.StandardDateRange" qualifier="bookingValidity">
+						<persistence type="property" />
+					</attribute>
+				</attributes>		
+			</itemtype>
+		</typegroup>
+		<typegroup name="TransportationOffers">
+			<itemtype code="TransportationOffers" autocreate="true" generate="true" extends="AbstractTravelogixSupplierOffer"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.transportationoffers.jalo.TransportationOffers">
+				<description>Transport Offers</description>
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="rentalPeriodFrom">
+					    <modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="rentalPeriodTo">
+					    <modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="rentalPeriodHours">
+					    <modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="FeesDeductionType" qualifier="feesDeduction">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PaxType" qualifier="passengerType">
+					    <modifiers  optional="false" />
+						<persistence type="property" />
+					</attribute>					
+					<attribute type="DiscountCalculatedOnType" qualifier="discountCalculatedOn">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="appliedOnAll">
+					    <modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="complimentaryDetails">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="freeDaysCount">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TransportationSurchargeSuppDetail" qualifier="surcharge">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="driverLicense">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="licensePossessionPeriod">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="allowOfferClubbing">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="promotionCode">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="OfferAvailableOnType" qualifier="offerAvailableOn">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="WeekDayCollection" qualifier="dayOfWeek">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="WeekDayCollection" qualifier="mustDay">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="offerTime">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+			<itemtype code="PickupLocation"  autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.pickuplocation.jalo.PickupLocation">
+				<description>Pick up Location</description>
+				<deployment table="pickuplocation" typecode="22182" />
+				<attributes>
+					<attribute type="City" qualifier="city">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Station" qualifier="station">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CarGroup" qualifier="carGroup">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SIPPCode" qualifier="sippCode">
+						<persistence type="property" />
+					</attribute>	
+					<attribute type="VehicleCategoryType" qualifier="vehicleCategory">
+						<persistence type="property" />
+					</attribute>			
+				</attributes>				
+			</itemtype>
+			</typegroup>
+	
+			<typegroup name="CarGroupUpgrade">
+			<itemtype code="CarGroupUpgrade" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.carGroupupgrade.jalo.CarGroupUpgrade">
+				<description>Car Group Upgrade</description>
+				<deployment table="cargrpupgrdtab" typecode="22163" />
+				<attributes>
+					<attribute type="CarGroup" qualifier="upgradeFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CarGroup" qualifier="upgradeTo">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			</typegroup>
+			<typegroup name="SIPPCodeUpgrade">
+			<itemtype code="SIPPCodeUpgrade" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.sIPPcodeupgrade.jalo.SIPPCodeUpgrade">
+				<description>SIPP Code Upgrade</description>
+				<deployment table="sippcodeupgrdtab" typecode="22164" />
+				<attributes>
+					<attribute type="SIPPCode" qualifier="upgradeFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SIPPCode" qualifier="upgradeTo">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			</typegroup>
+			<typegroup name="VehicleUpgrade">
+			<itemtype code="VehicleUpgrade" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.vehicleupgrade.jalo.VehicleUpgrade">
+				<description>Vehicle Upgrade</description>
+				<deployment table="vehicleupgrdtab" typecode="22165" />
+				<attributes>
+					<attribute type="Vehicle" qualifier="upgradeFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Vehicle" qualifier="upgradeTo">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			</typegroup>
+			<typegroup name="DriverInformation">
+			<itemtype code="DriverInformation" autocreate="true" generate="true" 
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.driverinformation.jalo.DriverInformation">
+				<description>Driver Information</description>
+				<deployment table="driverinfotab" typecode="22166" />
+				<attributes>
+					<attribute type="CountryCollection" qualifier="country">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="driverAgeFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="driverAgeTo">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			</typegroup>
+			<typegroup name="CardTypeRestriction">
+			<itemtype code="CardTypeRestriction" autocreate="true" generate="true" extends="AbstractPromotionRestriction"
+				jaloclass="com.cnk.travelogix.datamodel.supplier.rates.cardtyperestriction.jalo.CardTypeRestriction">
+				<description>Offer Card Details</description>
+				<deployment table="ofrcarddtlstab" typecode="22167" />
+				<attributes>
+					<attribute type="CreditCardType" qualifier="creditCardType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CardSubType" qualifier="cardSubType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CardType" qualifier="cardType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Bank" qualifier="bank">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="included">
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			</typegroup>
+			</itemtypes>
+</items>

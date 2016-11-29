@@ -1,0 +1,168 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Media Information;Media Code;Media file name;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Media;resorts;resorts.png;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;sampleMedia2;sampleMedia2.png;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Activity Product;Company Product ID;commonProductId;Product Name;Display Name;affiliation;modeOfTransport;attachedPolicies;chain;brand;parkMap;logo;Interest;Highlights;category sub type;financeControlId;country;city;copiedFrom;active;history;yearBuilt;yearRenovated;stories;aboutUs;celebrityComments;awardReceived;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ActivityProduct;AP1001;COMPROD1001;Theme Park1;Theme Park 1;1201;ROAD;PR001;160;ACTIVITY_BR_01;sampleMedia2;sampleMedia2;INT001;highlights123;C003ST009;12345;IN;BOM;Ezeego1;TRUE;Historical;1756;1867;four;Best team;Awsome activity;best Activity;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ActivityProduct;AP1002;COMPROD1002;Sailing1;Sailing1;1201;ROAD;PR001;160;ACTIVITY_BR_01;resorts;resorts;INT001;highlights123;C003ST002;12888;IN;BOM;Ezeego1;TRUE;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ActivityProduct;AP1003;COMPROD1003;Shows1;Shows1;1201;ROAD;PR001;160;ACTIVITY_BR_01;resorts;resorts;INT001;highlights123;C003ST008;12800;IN;BOM;Ezeego1;TRUE;HistoricalActivity;1655;1869;five;One team;Awsome activity;Top Activity;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Park Map Name;Media Code;Park Map Name;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Media1;sampleMedia2;Theme Park Map;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Shopping Info;nameOfShop;typeOfMerchandise;nameOfItem;description;location;whereAbout;paymentDetails;reservation;contactNumber;reservationInfo;notesOnOpeningTime;notesOnClosingTime;Activity Name;Activity Country;Activity City;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ShoppingInfo;Gift Shop;Gifts;Pen;Black Pen;Alibag;100km south to Panvel;Cash Only;true;1234554444;only till 5 PM;Morning 7 AM;Evening 7 PM;Theme Park1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Days of Operation;daysOfWeek;From Date;To Date;Time From;Time to;nameOfShop;typeOfMerchandise;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+DayOfOperation;SUNDAY,MONDAY;01-01-2003;05-05-2015;07:00;19:00;Gift Shop;Gifts;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Events and Tour Info;Name;type;duration;description;whereAbouts;location;reservation;contactNumber;interest;guestPolicies;unit;guestHeight;ageRangeFromYear;ageRangeFromMonth;ageRangeToYear;ageRangeToMonth;thrillLevels;accessibility;knowBeforeYouGo;remark;media;Activity Name;Activity Country;Activity Name;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+EventsAndTourInfo;Mumbai Tours;SHOW;3 Hours;Tour Group;Mumbai;Mumbai;true;1233234543;INT001;guestPolicies123;MILES;12m;2010;JAN;1970;JUL;easy;accessible;Basic idea about location;once in a week;resorts;Theme Park1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Days of operation;daysOfWeek;from date;to date;Time from;Time To;Event & Tour Info Name;Event & Tour Info Type;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+DayOfOperation2;MONDAY,WEDNESDAY;01-01-2003;05-06-2015;07:00;19:00;Mumbai Tours;SHOW;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Monthly Weather;month;destinationWeather;minTemp;maxTemp;Activity Name;Activity Country;Activity City;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+MonthlyWeather;JUL;Rainy;5;25;Theme Park1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Suggested Accommodation;Country;City;Accommodation Product code;Description;Activity Name;Activity Country;Activity City;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+SuggestedAccommodation;IN;BOM;87762;Suggested Accommodation;Theme Park1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+SuggestedAccommodation;IN;BOM;15740;Suggested Accommodation;Sailing1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+SuggestedAccommodation;IN;BOM;68641;Suggested Accommodation;Shows1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Miscellaneous Info;Activity Name;Activity Country;Activity City;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+MiscellaneousInfo;Theme Park1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+MiscellaneousInfo;Sailing1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+MiscellaneousInfo;Shows1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Miscellaneous Restriction;description / Restriction;allow;note;Activity Name;Activity Country;Activity City;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+MiscellaneousRestriction;Pets Policy;true;Pets allowed or not;Theme Park1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+MiscellaneousRestriction;Alcohol Policy;false;Alcohol Policy;Sailing1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+MiscellaneousRestriction;Pets Policy;false;Pets Policy;Shows1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Miscellaneous General Info;name;description;Activity Name;Activity Country;Activity City;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+GeneralDescriptionInfo;General miscellaneous;miscellaneous description;Theme Park1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+GeneralDescriptionInfo;General Sail;Sail description;Sailing1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+GeneralDescriptionInfo;General Shows;Show description;Shows1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Activity Product Miscellaneous Info;Activity Name;Activity Country;Activity City;Activity Name;Activity Country;Activity City;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ActivityProduct2;Theme Park1;IN;BOM;Theme Park1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ActivityProduct2;Shows1;IN;BOM;Shows1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Activity Product General Description;name;description;Activity Name;Activity Country;Activity City;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+GeneralDescriptionInfo2;General;General description;Theme Park1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+GeneralDescriptionInfo2;GeneralSailing1;Sailing;Sailing1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+GeneralDescriptionInfo2;GeneralShows1;Shows;Shows1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Pre Arrival Info;name;month;description;monthDescription;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+PreArrivalInfo;PreArrival 1;JAN;Pre arrival information;JAN Special;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+PreArrivalInfo;PreArrival Sail;FEB;Pre arrival information for sailing1;FEB Special;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+PreArrivalInfo;PreArrival Shows;MAR;Pre arrival information for shows1;MAR Special;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Dining Tips;diningTipsId;reservation;characterDining;casualDining;signatureDining;specialAndUniqueDining;quickServicesDining;barsAndLounges;disneyDiningPlan;Pre Arrival Name;Pre Arrival Month;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+DiningTips;DINE102;Reservation 123;CharacterDining 123;Casual Dine;Signature Dine;Special and unique;Quick Dine;Bars;Disney Plan;PreArrival 1;JAN;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Activity Product - Pre Arrival Info;Activity Name;Activity Country;Activity City;Pre Arrival Name;Pre Arrival Month;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ActivityProduct3;Theme Park1;IN;BOM;PreArrival 1;JAN;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ActivityProduct3;Sailing1;IN;BOM;PreArrival Sail;FEB;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ActivityProduct3;Shows1;IN;BOM;PreArrival Shows;MAR;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Other Activity Info;name;description;typeOfInfo;Activity Name;Activity Country;Activity City;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+AdditionalActivityInfo;Other ThemePark;Other Theme PArk Info;Smoking Policy;Theme Park1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+AdditionalActivityInfo;Other Sailing;Other Sailing Info;Smoking Policy;Sailing1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+AdditionalActivityInfo;Other Shows;Other Show Info;Smoking Policy;Shows1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Activity Product Facility;facilityName;description;facilityCategory;facilityType;From Date;To Date;Activity Name;Activity Country;Activity City;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Facility;Facility1;New Theme Facility;ACTIVITIES;SWIMMING_POOL;01-01-2003;05-05-2015;Theme Park1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Facility;Facility2;Sail Facility;ACTIVITIES;SWIMMING_POOL;01-01-2003;05-05-2015;Sailing1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Facility;Shows Facility 1;Shows Facility;ACTIVITIES;SWIMMING_POOL;01-01-2003;05-05-2015;Shows1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Activity Description / Overview;From Date;To Date;shortDescription;longDescription;Activity Name;Activity Country;Activity City;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ActivityDescription;26-04-2015;26-04-2016;Short desc for Theme Park1;Long desc for Theme park;Theme Park1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ActivityDescription;27-04-2015;27-04-2016;Short desc for Sailing;Long desc for Sailing;Sailing1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ActivityDescription;28-04-2015;28-04-2016;Short desc for Shows;Long desc for Shows;Shows1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Supplier Updates;From Date;To Date;source;description;Activity Name;Activity Country;Activity City;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+DescriptionDetails;26-04-2015;26-04-2016;Supplier1;Supplier Updates;Theme Park1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+DescriptionDetails;27-04-2015;27-04-2016;Supplier2;Sailing Updates;Sailing1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+DescriptionDetails;28-04-2015;28-04-2016;Supplier3;Shows Updates;Shows1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Associated Product;Associated Accommodation Product Code;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+AssociatedProperty;87762;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+AssociatedProperty;68641;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Activity product - Product Association;Activity Name;Activity Country;Activity City;Associated Accommodation Product Code;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ActivityProduct4;Theme Park1;IN;BOM;87762;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ActivityProduct4;Shows1;IN;BOM;68641;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Deactive Product Name by Market;Company Market;Status;Reason;Effectivr From;Effective to ;Activity Name;Activity Country;Activity City;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+DeactivationConfig;IND;FALSE;Unavailable now;30-02-2016;31-12-2028;Theme Park1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+DeactivationConfig;IND;TRUE;Available now;30-02-2016;31-12-2028;Sailing1;IN;BOM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Dining Information;Restaurant Name;description;whereAbouts;location;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+DiningInfo;Mariott;Mariott Andheri;Andheri;Chakala;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+DiningInfo;Hayat;Hayat Kurla;Kurla;Kurla;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Seating Information;Restaurant Name;seatType;seatingArrangments;roomName;purpose;seatingCapacity;From Date;To Date;media;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+SeatingInfo;Mariott;INDOOR;CAFETERIA;Seat1;COCKTAIL;200;26-04-2016;26-04-2016;resorts;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Restaurant Timings;eventType;mealType;openingTime;closingTime;Valid From;Valid To;daysOfWeek;notesOnOpeningTime;notesOnClosingTime;lastOrderTime;remark;Restaurant Name;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Timing;REGULAR;NON_VEGETARIAN;07:00;18:00;26-04-2016;26-04-2016;SUNDAY,FRIDAY;Opening Time;Closing Time;19:00;No order after 19:00;Mariott;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Restaurant Other Information;typeOfDining;seatingCapacity;theme;airCondition;smokingAllowed;notesOnSmoking;alcoholServed;petsAllowed;notesOnPets;childrenAllowed;notesOnChildren;drinkOffpremisesAllow;corkageApplicable;ambience;cuisineSpeciality;barAndLoungeAvailable;noteOnTips;validAdimissionAllowed;style;typeOfService;mealType;cuisineType;menuType;foodType;Restaurant name;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+OtherInfo;UNIQUE;500;GOURMET;false;false;No smoking;false;false;Not Allowed;true;allowed;false;true;cool;CONTINENTAL;false;Not allowed;false;BUFFET;TABLE;NO_PREFERENCE;CONTINENTAL;STARTERS;NON_VEG;Mariott;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Meal Information;mealType;menuName;menuItemName;description;menu Valid from;valid to;spiceLevel;unit;timeFrom;timeTo;daysOfWeek;media;Restairant name;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+MealInfo;NON_VEGETARIAN;SPECIALS;Rice;meal info;26-04-2016;26-04-2016;MILD;PER_GLASS;02:30;03:40;MONDAY,TUESDAY;resorts;Mariott;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Restaurant Contact Details;telephone;fax;websiteUrl;email;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ContactDetails;1111111;22345678;www.test.com;test@test.com;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Restaurant Reservation Contact Details;telephone;fax;websiteUrl;email;acceptWalkIn;reservationRequired;notesOnReservations;reservationFor;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ContactDetails2;2222222;33876543;www.testreservation.com;testmail@test.com;TRUE;TRUE;Reservation available;CORPORATE;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Restaurant other details;Restaurant Name for other info;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+DiningInfo2;Mariott;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Staff Information;title;firstName;middleName;lastName;department;designation;role;responsibilities;gender;birthDate;anniversaryDate;internalText;timeZone;medias;addresses;availabilityTimeFrom;availabilityTimeTo;Activity Name;Activity Country;Activity City;uid;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+StaffInformation;mr;Umesh;Vaman;Patil;IT;software engineer;admin;admin;MALE;26-08-1992;28-08-1992;;;;;MON->mon;MON->mon;Theme Park1;IN;BOM;121;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+StaffInformation;mrs;Neha;Singh;Verma;IT;Senior software engineer;admin;admin;FEMALE;19-08-1992;28-08-1992;;;;;MON->mon;MON->mon;Shows1;IN;BOM;122;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Activity Product;Activity Name;Activity Country;Activity City;Restaurant Names;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ActivityProduct5;Theme Park1;IN;BOM;Mariott;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ActivityProduct5;Shows1;IN;BOM;Mariott;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30;31;32;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;55;56;57;58;59;60;61;62;63

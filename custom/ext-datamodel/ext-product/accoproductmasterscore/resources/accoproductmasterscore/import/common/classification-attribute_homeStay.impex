@@ -1,0 +1,47 @@
+$productCatalog=EZ-IN
+$classificationCatalog=travelogixClassificationCatalog
+$lang=en
+$classSystemVersion=systemVersion(catalog(id[default='EZ-IN-CS']),version[default='1.0'])[unique=true]
+$classCatalogVersion=catalogversion(catalog(id[default='EZ-IN-CS']),version[default='1.0'])[unique=true,default='EZ-IN-CS:1.0']
+$class=classificationClass(ClassificationClass.code,$classCatalogVersion)[unique=true]
+$attribute=classificationAttribute(code,$classSystemVersion)[unique=true]
+$unit=unit(code,$classSystemVersion)
+
+
+
+INSERT_UPDATE ClassificationAttribute;code[unique=true];$classSystemVersion;name[lang=$lang]
+;NameOfLanguage-HomeStay-HostFamilyDetails;;Languages Spoken
+;NameOfInterests-HomeStay-HostFamilyDetails;;Name Of Interests
+;Childerns-HomeStay-HostFamilyDetails;;Is Children
+;NumberOFChilderns-HomeStay-HostFamilyDetails;;Number OF Childerns
+;Pets-HomeStay-HostFamilyDetails;;Is Pets
+;NumberOFPets-HomeStay-HostFamilyDetails;;Number OF Pets
+;PetTypes-HomeStay-HostFamilyDetails;;Pet Types
+;NonSmokingHouseHold-HomeStay-HostFamilyDetails;;Non Smoking HouseHold
+;CertifiedHostId-HomeStay-CertificationDetails;;Certified HostId
+;UserCertificationDescription-HomeStay-CertificationDetails;;User Certification Description
+;CriminalRecordCertificationDescription-HomeStay-CertificationDetails;;Criminal Record Certification Description
+;Neighbourhood Description-HomeStay-LocationDetails;;Neighbourhood Description
+;DistanceFromCenter-HomeStay-LocationDetails;;Distance From Center
+;DistanceToPublicTransportation-HomeStay-LocationDetails;;Distance To Public Transportation
+
+INSERT_UPDATE ClassificationClass;$classCatalogVersion;code[unique=true];allowedPrincipals(uid)[default='customergroup'];;;;;
+;;HostFamilyDetails-HomeStay;;;;;;
+;;CertificationDetails-HomeStay;;;;;;
+;;LocationDetails-HomeStay;;;;;;
+
+INSERT_UPDATE ClassAttributeAssignment;$class;$attribute;position;attributeType(code[default=string]);$unit;multiValued[default=false];range[default=false];localized[default=true]
+;HostFamilyDetails-HomeStay;NameOfLanguage-HomeStay-HostFamilyDetails;8;;;;;
+;HostFamilyDetails-HomeStay;NameOfInterests-HomeStay-HostFamilyDetails;10;;;;;
+;HostFamilyDetails-HomeStay;Childerns-HomeStay-HostFamilyDetails;11;;;;;
+;HostFamilyDetails-HomeStay;NumberOFChilderns-HomeStay-HostFamilyDetails;12;;;;;
+;HostFamilyDetails-HomeStay;Pets-HomeStay-HostFamilyDetails;13;;;;;
+;HostFamilyDetails-HomeStay;NumberOFPets-HomeStay-HostFamilyDetails;14;;;;;
+;HostFamilyDetails-HomeStay;PetTypes-HomeStay-HostFamilyDetails;15;;;;;
+;HostFamilyDetails-HomeStay;NonSmokingHouseHold-HomeStay-HostFamilyDetails;16;;;;;
+;CertificationDetails-HomeStay;CertifiedHostId-HomeStay-CertificationDetails;17;;;;;
+;CertificationDetails-HomeStay;UserCertificationDescription-HomeStay-CertificationDetails;18;;;;;
+;CertificationDetails-HomeStay;CriminalRecordCertificationDescription-HomeStay-CertificationDetails;19;;;;;
+;LocationDetails-HomeStay;Neighbourhood Description-HomeStay-LocationDetails;20;;;;;
+;LocationDetails-HomeStay;DistanceFromCenter-HomeStay-LocationDetails;21;number;;;;
+;LocationDetails-HomeStay;DistanceToPublicTransportation-HomeStay-LocationDetails;22;number;;;;

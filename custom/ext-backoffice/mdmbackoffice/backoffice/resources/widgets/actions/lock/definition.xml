@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<action-definition id="com.cnk.travelogix.mdmbackoffice.actions.lock"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/action-definition.xsd">
+
+	<name>Lock.Action</name>
+	<description>Lock Action</description>
+	<author>hybris</author>
+	<version>0.1</version>
+	
+	<sockets>
+		<input id="selecedObjectforLock" type="java.lang.Object"/>
+		<output id="selecedObjectafterLock" type="java.lang.Object" />
+	</sockets>
+	
+	<actionClassName>com.cnk.travelogix.mdmbackoffice.actions.LockedByAction</actionClassName>
+	<customRendererClassName>com.cnk.travelogix.mdmbackoffice.renderer.CustomActionRenderer</customRendererClassName>
+	<inputType>java.lang.Object</inputType>
+    <outputType>java.lang.Object</outputType>
+ 
+	<iconUri>icons/lockbutton-default.png</iconUri>
+    <iconDisabledUri>icons/lockbutton-disabled.png</iconDisabledUri>
+    <iconHoverUri>icons/lockbutton-active.png</iconHoverUri>
+</action-definition>

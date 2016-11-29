@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+	<context:annotation-config />
+	<bean id="baseDirectoryTravelogixProductsHoliday" class="java.lang.String">
+		<constructor-arg
+			value="#{baseDirectory}/${tenantId}/travelogix/product/holiday" />
+	</bean>
+
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesTravelogixProductsHoliday"
+		directory="#{baseDirectoryTravelogixProductsHoliday}" filename-regex="products_holiday-(\d+)\.csv"
+		comparator="fileOrderComparator">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogixProductsHoliday"
+		reply-channel="travelogixProductsHolidayBatchFilesProc" directory="#{baseDirectoryTravelogixProductsHoliday}/processing"
+		delete-source-files="true" />
+
+	<int:service-activator input-channel="travelogixProductsHolidayBatchFilesProc"
+		output-channel="travelogixProductsHolidayBatchFilesHeaderInit" ref="travelogixProductsHolidayHeaderSetupTask"
+		method="execute" />
+
+	<bean id="travelogixProductsHolidayHeaderSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogixProductsHoliday" />
+	</bean>
+
+	<int:service-activator input-channel="travelogixProductsHolidayBatchFilesHeaderInit"
+		output-channel="travelogixProductsHolidayBatchFilesHeader" ref="headerInitTask"
+		method="execute" />
+
+<!-- 	<bean id="headerInitTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderInitTask">
+		<property name="sequenceIdParser" ref="batchSequenceIdParser" />
+		<property name="languageParser" ref="batchLanguageParser" />
+		<property name="fallbackLanguage" value="en" />
+	</bean>
+
+	<bean id="batchSequenceIdParser"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.util.SequenceIdParser">
+		<property name="parser">
+			<bean class="de.hybris.platform.acceleratorservices.util.RegexParser">
+				<property name="regex" value="-(\d+)\.csv" />
+			</bean>
+		</property>
+	</bean> -->
+
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="travelogixProductsHolidayBatchFilesHeader"
+		output-channel="batchFilesTran" ref="travelogixaBatchTransformerTask"
+		method="execute" />
+
+	<bean id="travelogixaBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+
+	<!-- Transformer converters mappings -->
+
+	<bean id="batchHolidayProductConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="products_holiday" p:converter-ref="batchHolidayProductConverter" />
+
+ 	<bean id="batchHolidayProductBrandsConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="products_holiday" p:converter-ref="batchHolidayProductBrandsConverter" /> 
+
+	<bean id="batchHolidayDestinationConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="products_holiday" p:converter-ref="batchHolidayDestinationConverter" />
+
+
+	<bean id="batchHolidayProductConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				$productCatalog=EZ-IN
+				$productCatalogName=ezeego1-IN
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+				$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+				$approved=approvalstatus(code)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.ArticleStatusDataDecorator]
+			INSERT_UPDATE HolidayProduct;$catalogVersion;code[unique=true];variantType(code);name[lang=en,unique=true];commonProductId;financeControlId[unique=true];$approved;remarks;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];supercategories(code,catalogVersion(catalog(id),version))[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator];numberOfNight;numberOfDays
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11}:{1};{12};{13}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Holiday_Product'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchHolidayProductBrandsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			UPDATE HolidayProduct;code[unique=true];brands(code);brochures(code);markets(Market.uid)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{2};{14};{15};{16}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Holiday_Product'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchHolidayDestinationConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE HolidayDestination;uid[unique=true];destinationName(isocode);country(isocode);city(isocode);product(code,catalogVersion(catalog(id),version))[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}:{6}
+			</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Holiday_Destination'" />
+			</bean>
+		</property>
+	</bean>
+
+</beans>

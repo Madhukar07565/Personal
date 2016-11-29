@@ -1,0 +1,72 @@
+# Sample data of AccInventoryDetails Modal.
+$lang=en
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+	
+INSERT_UPDATE InventoryRoomInfo;roomCategory(code)[unique=true];roomType(code)[unique=true];noOfRoomRequested;supplierReferenceNumber;rateCode;rateType(code);inventoryAssociation(inventoryFor(code));requestedQuantity;distributedQuantity;availableQuantity;reservedQuantity;stopSales[default=false];liabilityOnUtilization;distressSalesUtilizationThreshhold;distressSalesThreshholdCutOffDays;daysOfWeek(code);
+;STANDARD;SINGLE_ROOM;10;;;;COMBINATION;10;;10;;;;1;5;MONDAY,SUNDAY
+;STANDARD;DOUBLE_ROOM;10;;;;COMBINATION;10;;20;;;;1;5;MONDAY,SUNDAY
+
+INSERT_UPDATE AccoInventoryDetail;code[unique=true];$catalogVersion[unique=true];city(isocode);travelChain(code);hotelCategory(code);currency(isocode);remark;products(code,$catalogVersion);departureDate[dateformat=$dateformat];arrivalDate[dateformat=$dateformat];inventoryRoomInfos(roomCategory(code),roomType(code));priceRangeFrom;priceRangeTo
+;0009;;BDQ;161;FOUR;INR;;87762;14-02-2015;20-02-2015;STANDARD:SINGLE_ROOM,STANDARD:DOUBLE_ROOM
+
+INSERT_UPDATE AccoInventoryGrid;gridId[unique=true];inventoryDetails(code,$catalogVersion)
+;1;0009
+
+INSERT_UPDATE AssociatedCompanies;$catalogVersion[unique=true];sbu(uid)[unique=true];bu(uid)[unique=true];&ref2
+;;SBU - Non-Air;BU - Non Air;associatedCompany1
+
+INSERT_UPDATE AccoInventoryDefinition;code[unique=true];$catalogVersion[unique=true];productCategorySubType(code,$catalogVersion);inventoryDetails(gridId);inventoryRequest(code,$catalogVersion);supplier(code,$catalogVersion);inventoryType(code);approvalStatus(code);distressSaleMinimumThreshold;distressSaleThresholdCutoffDays;blockedQuantity;cutOffDaysForBlockedQuantity;settleWithCompany;associations(AccoAssociateInventory.inventoryFor(code));companies(&ref2)
+;14569;;C002ST001;1;14667;Pegasus;PREPAID;approved;10;5;10;5;;COMBINATION;associatedCompany1;
+
+INSERT_UPDATE CutOffForFreeSale;definedBy(code)[unique=true];releaseDayOrHrs[unique=true];appliedOn(code)[unique=true]
+;DAYS;24;Prior_To_Travel
+
+INSERT_UPDATE AccoSupplierAdvanceDefinition;blockoutDates;minNoOfNights[unique=true];maxNoOfNights[unique=true];&ref1
+;May 25\\\, 2016 12:00:00 AM\,May 27\\\, 2016 12:00:00 AM;3;5;accoSupplierAdvanceDefinition
+
+INSERT_UPDATE OverBookingLimit;limit[unique=true];accoSupplierAdvanceDefinition(&ref)[unique=true]
+;1;;accoSupplierAdvanceDefinition
+
+INSERT_UPDATE RoomingListCutOffs;definedBy(code)[unique=true];typeOfList(code)[unique=true];appliedOn(code)[unique=true];supplierCutOffDays;bufferDays;noOfNTBAS;releaseTime;AccoSupplierAdvanceDefinition(&ref1)
+;DAYS;PRELIMINARY;Prior_To_Travel;10;5;;;accoSupplierAdvanceDefinition
+;DAYS;FINAL;Prior_To_Travel;7;2;;;accoSupplierAdvanceDefinition
+
+INSERT_UPDATE AccoPenaltyChargesForAmendments;fareChargesAppliedToInventoryUtilization;definedBy(code);penaltyChangesFor(code)[unique=true];accoSupplierAdvanceDefinition(&ref1)
+;true;DAYS;NAME_CHANGE;accoSupplierAdvanceDefinition
+;true;DAYS;DATE_CHANGE;accoSupplierAdvanceDefinition
+
+INSERT_UPDATE ChangeRequestCutOffsAndCharges;priceComponent(code);cutOffFromDay[unique=true];cutOffToDay[unique=true];actualAmount;currency(isocode);percentageAmount;range(code);changeRequestPenaltyCharges(AccoPenaltyChargesForAmendments.penaltyChangesFor(code))[unique=true]
+;;365;30;0;INR;;BETWEEN;NAME_CHANGE
+;;30;15;2500;INR;;BETWEEN;NAME_CHANGE
+;;14;0;5000;INR;;BETWEEN;NAME_CHANGE
+
+;;365;30;0;INR;;BETWEEN;DATE_CHANGE
+;;30;15;2500;INR;;BETWEEN;DATE_CHANGE
+;;14;0;5000;INR;;BETWEEN;DATE_CHANGE
+
+INSERT_UPDATE AccoCutoffAndCharges;cutOffFromDay[unique=true];cutOffToDay[unique=true];actualAmount;currency(isocode);percentageAmount;range(code);&ref7
+;365;30;0;INR;;BETWEEN;cutoff1
+;30;15;2500;INR;;BETWEEN;cutoff2
+;14;0;5000;INR;;BETWEEN;cutoff3
+;360;29;0;INR;;BETWEEN;cutoff4
+;29;14;2500;INR;;BETWEEN;cutoff5
+;13;0;5000;INR;;BETWEEN;cutoff6
+
+INSERT_UPDATE AccoPenaltyChargesRelease;roomCategory(code)[unique=true];roomType(code);mealType;definedBy(code)[unique=true];specificDates;dateRange[dateformat=$dateformat];appliedOn(code);releaseTime;charges(&ref7)[unique=true]
+;STANDARD;DOUBLE_ROOM;;DAYS;;01-05-2015,15-05-2016;Prior_To_Travel_Date;;cutoff1,cutoff2,cutoff3
+
+INSERT_UPDATE AccoCompanyAdvanceDefinition;blockOutDates;overBookingAllowed[unique=true];minimumNumberOfNights[unique=true];maximumNumberOfNights[unique=true]
+;May 25\\\, 2016 12:00:00 AM\,May 27\\\, 2016 12:00:00 AM;false;14;12
+
+INSERT_UPDATE AccoWithinCompanyInventoryDistribution;code[unique=true];$catalogVersion[unique=true];city(isocode);travelChain(code);hotelCategory(code);currency(isocode);remark;products(code,$catalogVersion);departureDate[dateformat=$dateformat];arrivalDate[dateformat=$dateformat];inventoryRoomInfos(roomCategory(code),roomType(code));priceRangeFrom;priceRangeTo;;sbu(uid)[unique=true];bu(uid)[unique=true];market(uid);distributionChannel(uid);division(uid);salesOffice(uid);settleWith
+;0010;;BDQ;161;FOUR;INR;;87762;14-02-2015;20-02-2015;STANDARD:SINGLE_ROOM,STANDARD:DOUBLE_ROOM
+
+INSERT_UPDATE PaymentSchedule;paymentType(code)[unique=true];percentageAmount;currency(isocode);remark;paymentDueDate[dateformat=$dateformat];paymentStatus;actualAmount;balance;paymentAdviceNumber;daysBeforeTravel;abstractInventoryDefinition(code,$catalogVersion)[unique=true]
+;ADVANCE;10;USD;;15-03-2016;;5000;;;14;14569
+;BALANCE;10;USD;;31-03-2016;;15000;;;14;14569
+
+
+

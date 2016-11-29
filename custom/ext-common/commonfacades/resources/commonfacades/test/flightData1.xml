@@ -1,0 +1,72 @@
+<!--Layover 22H45M-->
+<com.cnk.travelogix.common.facades.product.data.flight.FlightData>
+  <id>flight1</id>
+  <flightNumber>A380</flightNumber>
+  <cabinClass>Economy</cabinClass>
+  <airlineIATA>
+    <airlineName>IndiGo</airlineName>
+    <accountingCode>6E</accountingCode>
+    <airlinePrefix>198</airlinePrefix>
+  </airlineIATA>
+  <departureTime>2016-09-17 06:45:00.00 UTC</departureTime>
+  <arrivalTime>2016-09-18 07:40:00.00 UTC</arrivalTime>
+  <duration>24:55:00.00 UTC</duration>
+  <fromSection>
+    <city>Mumbai</city>
+    <airport>Mumbai International Airport</airport>
+    <terminal>1B</terminal>
+  </fromSection>
+  <toSection>
+    <city>Delhi</city>
+    <airport>Delhi International Airport</airport>
+    <terminal>3A</terminal>
+  </toSection>
+  <fareSummary>
+    <listPrice>4680</listPrice>
+    <webPrice>4380</webPrice>
+    <currency>currency</currency>
+    <pointEarn>20</pointEarn>
+  </fareSummary>
+  <fareDetail>
+    <currency>currency</currency>
+    <baseFare>2230</baseFare>
+    <fuelSurcharge>1950</fuelSurcharge>
+    <jnTax>150</jnTax>
+    <psgrSvcFee>250</psgrSvcFee>
+    <serviceTax>250</serviceTax>
+  </fareDetail>
+  <flightDetails>
+    <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+      <cabinClass>Economy</cabinClass>
+      <fromSection>
+        <city>Mumbai</city>
+        <airport>Mumbai International Airport</airport>
+        <terminal>1B</terminal>
+      </fromSection>
+      <toSection>
+        <city>Ahmedabad</city>
+        <airport>Ahmedabad International Airport</airport>
+        <terminal>2A</terminal><!--Ahilya Bai Holkar-->
+      </toSection>
+      <departureTime>2016-09-17 06:45:00.00 UTC</departureTime>
+      <arrivalTime>2016-09-17 07:50:00.00 UTC</arrivalTime>
+      <duration>01:05:00.00 UTC</duration>
+    </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+    <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+      <cabinClass>Economy</cabinClass>
+      <fromSection>
+        <city>Ahmedabad</city>
+        <airport>Ahmedabad International Airport</airport>
+        <terminal>2A</terminal><!--Ahilya Bai Holkar-->
+      </fromSection>
+      <toSection>
+        <city>Delhi</city>
+        <airport>Delhi International Airport</airport>
+        <terminal>3A</terminal>
+      </toSection>
+      <departureTime>2016-09-18 06:35:00.00 UTC</departureTime>
+      <arrivalTime>2016-09-18 07:50:00.00 UTC</arrivalTime>
+      <duration>01:05:00.00 UTC</duration>
+    </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+  </flightDetails>
+<com.cnk.travelogix.common.facades.product.data.flight.FlightData>

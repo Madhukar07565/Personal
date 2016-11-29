@@ -1,0 +1,82 @@
+<air:AirBusinessServiceRQ xmlns:air="http://www.coxandkings.com/integ/suppl/air" xmlns:com="http://www.coxandkings.com/integ/suppl/common" xmlns:ns="http://www.opentravel.org/OTA/2003/05">
+   <air:RequestHeader>
+      <!--Optional:-->
+      <com:UserID>1</com:UserID>
+      <com:SessionID>2</com:SessionID>
+      <com:TransactionID>3</com:TransactionID>
+      <!--Optional:-->
+      <com:ReplyTo>string</com:ReplyTo>
+      <!--Optional:-->
+      <com:SupplierCredentialsList>
+         <!--1 or more repetitions:-->
+         <com:SupplierCredentials>
+            <com:SupplierID>GOAIR</com:SupplierID>
+            <com:Credentials>
+               <!--1 to 5 repetitions:-->
+               <com:Credential name="CarrierCode">G8</com:Credential>
+               <com:Credential name="LogonID">GoAir_Test</com:Credential>
+               <com:Credential name="Password">confirm</com:Credential>
+               <com:Credential name="IATACode">RXAPITST</com:Credential>
+               <com:Credential name="UserName">ezygo1</com:Credential>
+               <com:Credential name="Password1">Goair@123</com:Credential>
+			    <com:Credential name="LFID">2147483648</com:Credential>
+            </com:Credentials>
+         </com:SupplierCredentials>
+      </com:SupplierCredentialsList>
+   </air:RequestHeader>
+   <air:RequestBody>
+      <ns:OTA_AirBookModifyRQ Version="1" Target="Test">
+	<ns:POS>
+            <ns:Source/>
+         </ns:POS>
+		  <!-- 9=AddPassengerToReservation
+			 10=AddFlightToReservation
+			 11=RemovePassengerFromReservation
+			 12=RemoveFlightFromReservation
+			 13=AddSpecialServiceToReservation -->
+		
+		 <ns:AirBookModifyRQ ModificationType="13">
+           
+			<ns:AirItinerary>
+				<ns:OriginDestinationOptions>
+					<ns:OriginDestinationOption >
+						<ns:FlightSegment DepartureDateTime="2016-07-15T00:00:00" FareBasisCode="1" >
+						 <ns:TPA_Extensions>
+                        <air:ExtendedRPH>42742</air:ExtendedRPH>
+						<air:QuoteID>42742:7/15/2016 6:00:00 AM</air:QuoteID>
+						<air:SSRs>
+						<air:SSR>
+							<ns:Code>VGML</ns:Code>
+							<ns:Name>0</ns:Name>
+							<ns:CategoryCode>8</ns:CategoryCode>
+							<ns:FlightRef>42742</ns:FlightRef>
+							<ns:Amount>200.0</ns:Amount>
+							<ns:currencyCode>INR</ns:currencyCode>
+							<ns:Description>NO comment</ns:Description>
+							
+						</air:SSR>
+					</air:SSRs>
+                     </ns:TPA_Extensions>
+					 </ns:FlightSegment>
+					</ns:OriginDestinationOption>
+				</ns:OriginDestinationOptions>
+			</ns:AirItinerary>
+			<ns:TravelerInfo>
+			<ns:AirTraveler>
+				
+			<ns:ProfileRef>
+			 	<ns:UniqueID  Type="1"	ID="41764726"/>
+			</ns:ProfileRef>
+			<ns:Comment>addssr</ns:Comment>
+			</ns:AirTraveler>	
+			
+			</ns:TravelerInfo>
+			 <ns:BookingReferenceID Type="299" ID="70"/>
+         </ns:AirBookModifyRQ>
+       
+      
+		
+      </ns:OTA_AirBookModifyRQ>
+   </air:RequestBody>
+</air:AirBusinessServiceRQ>
+

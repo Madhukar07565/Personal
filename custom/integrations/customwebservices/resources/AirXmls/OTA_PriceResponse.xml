@@ -1,0 +1,114 @@
+<AirInterfaceRS xmlns="http://www.coxandkings.com/integ/suppl/airinterface" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:n2="http://www.coxandkings.com/integ/suppl/air" xmlns:ns6="http://www.coxandkings.com/integ/suppl/air/AirBusinessSyncService">
+   <ResponseHeader xmlns="http://www.coxandkings.com/integ/suppl/air">
+      <Status xmlns="http://www.coxandkings.com/integ/suppl/common">SUCCESS</Status>
+      <UserID xmlns="http://www.coxandkings.com/integ/suppl/common">Test</UserID>
+      <SessionID xmlns="http://www.coxandkings.com/integ/suppl/common">123</SessionID>
+      <TransactionID xmlns="http://www.coxandkings.com/integ/suppl/common">10</TransactionID>
+   </ResponseHeader>
+   <ResponseBody>
+   <OTA_AirPriceRSWrapper xmlns="http://www.coxandkings.com/integ/suppl/air">
+         <SupplierID>INDIGO</SupplierID>
+         <Sequence>3</Sequence>
+         <tns:OTA_AirPriceRS xmlns:tns="http://www.opentravel.org/OTA/2003/05">
+         <tns:PricedItineraries>
+            <tns:PricedItinerary>
+               <tns:AirItinerary>
+                  <tns:OriginDestinationOptions>
+                     <tns:OriginDestinationOption>
+                        <tns:FlightSegment DepartureDateTime="2016-06-16T17:30:00" ArrivalDateTime="2016-06-16T18:35:00" Status="NNKK">
+                           <tns:DepartureAirport LocationCode="BLR"/>
+                           <tns:ArrivalAirport LocationCode="HYD"/>
+                           <tns:OperatingAirline Code="6E" FlightNumber="152"/>
+                           <tns:TPA_Extensions>
+                              <n2:ExtendedRPH>6E~ 152~ ~~BLR~06/16/2016 17:30~HYD~06/16/2016 18:35~</n2:ExtendedRPH>
+                           </tns:TPA_Extensions>
+                        </tns:FlightSegment>
+                     </tns:OriginDestinationOption>
+                  </tns:OriginDestinationOptions>
+               </tns:AirItinerary>
+               <tns:AirItineraryPricingInfo QuoteID="0~O~~OSIPRT~1061~~2~X">
+                  <tns:PTC_FareBreakdowns>
+                     <tns:PTC_FareBreakdown>
+                        <tns:PassengerTypeQuantity Code="ADT"/>
+                        <tns:PassengerFare>
+                           <tns:BaseFare FareAmountType="FarePrice" CurrencyCode="INR" Amount="1551.0"/>
+                           <tns:Taxes>
+                              <tns:Tax TaxCode="TTF" Amount="75.00" CurrencyCode="INR" TaxTransactionType="SellerChargeable" TaxName="SellerChargeable"/>
+                              <tns:Tax TaxCode="KKCT" Amount="3.00" CurrencyCode="INR" TaxTransactionType="SellerChargeable" TaxName="SellerChargeable"/>
+                              <tns:Tax TaxCode="SBCT" Amount="3.00" CurrencyCode="INR" TaxTransactionType="SellerChargeable" TaxName="SellerChargeable"/>
+                              <tns:Tax TaxCode="SVCT" Amount="97.00" CurrencyCode="INR" TaxTransactionType="SellerChargeable" TaxName="SellerChargeable"/>
+                           </tns:Taxes>
+                           <tns:Fees>
+                              <tns:Fee FeeCode="YQ" Amount="100.0" CurrencyCode="INR" FeeTransactionType="YQ"/>
+                              <tns:Fee FeeCode="PSF" Amount="147.00" CurrencyCode="INR" FeeTransactionType="PSF"/>
+                              <tns:Fee FeeCode="UDF" Amount="344.00" CurrencyCode="INR" FeeTransactionType="UDF"/>
+                           </tns:Fees>
+                        </tns:PassengerFare>
+                     </tns:PTC_FareBreakdown>
+                     <tns:PTC_FareBreakdown>
+                        <tns:PassengerTypeQuantity Code="CHD"/>
+                        <tns:PassengerFare>
+                           <tns:BaseFare FareAmountType="FarePrice" CurrencyCode="INR" Amount="1551.0"/>
+                           <tns:Taxes>
+                              <tns:Tax TaxCode="TTF" Amount="75.00" CurrencyCode="INR" TaxTransactionType="SellerChargeable" TaxName="SellerChargeable"/>
+                              <tns:Tax TaxCode="KKCT" Amount="3.00" CurrencyCode="INR" TaxTransactionType="SellerChargeable" TaxName="SellerChargeable"/>
+                              <tns:Tax TaxCode="SBCT" Amount="3.00" CurrencyCode="INR" TaxTransactionType="SellerChargeable" TaxName="SellerChargeable"/>
+                              <tns:Tax TaxCode="SVCT" Amount="97.00" CurrencyCode="INR" TaxTransactionType="SellerChargeable" TaxName="SellerChargeable"/>
+                           </tns:Taxes>
+                           <tns:Fees>
+                              <tns:Fee FeeCode="YQ" Amount="100.0" CurrencyCode="INR" FeeTransactionType="YQ"/>
+                              <tns:Fee FeeCode="PSF" Amount="147.00" CurrencyCode="INR" FeeTransactionType="PSF"/>
+                              <tns:Fee FeeCode="UDF" Amount="344.00" CurrencyCode="INR" FeeTransactionType="UDF"/>
+                           </tns:Fees>
+                        </tns:PassengerFare>
+                     </tns:PTC_FareBreakdown>
+                     <tns:PTC_FareBreakdown>
+                        <tns:PassengerTypeQuantity Code="ADT"/>
+                        <tns:PassengerFare>
+                           <tns:BaseFare FareAmountType="FarePrice" CurrencyCode="INR" Amount="1551.0"/>
+                           <tns:Taxes>
+                              <tns:Tax TaxCode="TTF" Amount="75.00" CurrencyCode="INR" TaxTransactionType="SellerChargeable" TaxName="SellerChargeable"/>
+                              <tns:Tax TaxCode="KKCT" Amount="4.00" CurrencyCode="INR" TaxTransactionType="SellerChargeable" TaxName="SellerChargeable"/>
+                              <tns:Tax TaxCode="SBCT" Amount="4.00" CurrencyCode="INR" TaxTransactionType="SellerChargeable" TaxName="SellerChargeable"/>
+                              <tns:Tax TaxCode="SVCT" Amount="99.00" CurrencyCode="INR" TaxTransactionType="SellerChargeable" TaxName="SellerChargeable"/>
+                           </tns:Taxes>
+                           <tns:Fees>
+                              <tns:Fee FeeCode="YQ" Amount="100.0" CurrencyCode="INR" FeeTransactionType="YQ"/>
+                              <tns:Fee FeeCode="PHF" Amount="50.0" CurrencyCode="INR" FeeTransactionType="PHF"/>
+                              <tns:Fee FeeCode="PSF" Amount="147.00" CurrencyCode="INR" FeeTransactionType="PSF"/>
+                           </tns:Fees>
+                        </tns:PassengerFare>
+                     </tns:PTC_FareBreakdown>
+                     <tns:PTC_FareBreakdown>
+                        <tns:PassengerTypeQuantity Code="CHD"/>
+                        <tns:PassengerFare>
+                           <tns:BaseFare FareAmountType="FarePrice" CurrencyCode="INR" Amount="1551.0"/>
+                           <tns:Taxes>
+                              <tns:Tax TaxCode="TTF" Amount="75.00" CurrencyCode="INR" TaxTransactionType="SellerChargeable" TaxName="SellerChargeable"/>
+                              <tns:Tax TaxCode="KKCT" Amount="4.00" CurrencyCode="INR" TaxTransactionType="SellerChargeable" TaxName="SellerChargeable"/>
+                              <tns:Tax TaxCode="SBCT" Amount="4.00" CurrencyCode="INR" TaxTransactionType="SellerChargeable" TaxName="SellerChargeable"/>
+                              <tns:Tax TaxCode="SVCT" Amount="99.00" CurrencyCode="INR" TaxTransactionType="SellerChargeable" TaxName="SellerChargeable"/>
+                           </tns:Taxes>
+                           <tns:Fees>
+                              <tns:Fee FeeCode="YQ" Amount="100.0" CurrencyCode="INR" FeeTransactionType="YQ"/>
+                              <tns:Fee FeeCode="PHF" Amount="50.0" CurrencyCode="INR" FeeTransactionType="PHF"/>
+                              <tns:Fee FeeCode="PSF" Amount="147.00" CurrencyCode="INR" FeeTransactionType="PSF"/>
+                           </tns:Fees>
+                        </tns:PassengerFare>
+                     </tns:PTC_FareBreakdown>
+                  </tns:PTC_FareBreakdowns>
+               </tns:AirItineraryPricingInfo>
+            </tns:PricedItinerary>
+           
+            </tns:PricedItineraries>
+            <tns:BookingReferenceID ID="4-160701063731-01-1628196-6307|_4-160701063731-01-1628348-5821"/>
+            <tns:PricingOverview Type="OUTBOUND_TermsURL">
+               <tns:Notes>http://testv80.elsyarres.net/terms.aspx?tid=Y/TER/68640/2&amp;cid=Y/CAR/72350/2&amp;lang=EN</tns:Notes>
+            </tns:PricingOverview>
+            <tns:PricingOverview Type="INBOUND_TermsURL">
+               <tns:Notes>http://testv80.elsyarres.net/terms.aspx?tid=Y/TER/68640/2&amp;cid=Y/CAR/72350/2&amp;lang=EN</tns:Notes>
+            </tns:PricingOverview>
+         </tns:OTA_AirPriceRS>
+      </OTA_AirPriceRSWrapper>
+   </ResponseBody>
+</AirInterfaceRS>

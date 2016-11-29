@@ -1,0 +1,140 @@
+$lang=en
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$productCategorySubType=productCategorySubType(code,$catalogVersion)
+$dateformat=dd-MM-yyyy
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.presales.masters.core.setup.PresalesSystemSetup&\presalescore\import\sampledata\images
+
+###############Dependency Header ############
+INSERT_UPDATE ContactNumberInfo;contactType(code);medium(code);contactNumber[unique=true]
+;BUSINESS;MOBILE;0091022224567
+
+INSERT_UPDATE Department;code[unique=true];name[lang=$lang];costCentreCode(code)
+;IT;IT;OPERATIONS_AIR
+
+INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier);&mediaRef
+;Lobby;$siteResource\Lobby.pdf;;;images;LobbyRef
+
+INSERT_UPDATE AffiliationInformation;registrationNo[unique=true];affiliationName(code)
+;IATA008;IATA
+;IATA009;IATA
+
+
+INSERT_UPDATE KycInformation;pan[unique=true];&kycId;vatNo;tdsNo
+;IAssss2TB;IAssss2TB;VAT1234;TDS345
+;IAssss3TB;IAssss3TB;VAT1234;TDS345
+
+INSERT_UPDATE Role;code[unique=true];name[lang=$lang]
+;R001;PRODUCT CREATOR
+;R002;PRODUCT APPROVER
+;R003;CALL CENTRE AGENT
+
+########################################
+
+INSERT_UPDATE Prospect;id[unique=true];uid[unique=true, allownull=true];name;locName[lang=en];language(isocode);clientCategory(code);clientSubCategory(code);companyType(code);telephone;modeOfRegistration(code);affiliationInformation(AffiliationInformation.registrationNo);approvalStatus(code);currency(Currency.isocode);taxHeads(key(code),value);kycInformation(KycInformation.pan)
+;PP001;CnkB2BUnit;Global Tours;Global Tours;en;ALLIANCE_PARTNERS;BANKS;PUBLIC;9987654321;DIRECT;IATA008;approved;INR;PAN_NO->687567;IAssss2TB
+
+INSERT_UPDATE Prospect;id[unique=true];corporateType(code);clientCategory(code);clientType(code);numberOfBranches;servicingLocations(code)
+;PP001;MNC;CORPORATE;B2B;3;GOBAL,REGIONAL
+
+INSERT_UPDATE BusinessInformation;owner(Prospect.id)[unique=true];industry(code);sector(code);product(code)
+;PP001;PHARMA;MEDICINE;BULK_PHARMA
+
+INSERT_UPDATE PresalesAddress;addressType(code);owner(Company.uid)[unique=true];appartment;line1;line2;street3;street4;street5;postalCode;country(isocode);region;location(isocode);city;phone1;email;fax;phone2;cellPhone;webSiteUrl[unique=true];officialEmailId;servingLocation(code)
+;CORPORATE;E000;12;Anna Salai;12;;;;400050;IN;;;;009122224567;raji@test.com;009120778899;009132884567;00919897097645;www.tcs.com;test@gmai.com;GOBAL
+
+INSERT_UPDATE CompanyAdditionalDetails;registrationNumber[unique=true];establishedIn[dateformat=$dateformat];hasOwnGuestHouse;ownGuestHouseRemarks;dealsWithSupplier;dealsWithSupplierRemarks;ownsCar;companyAnnualTurnOverAmount;currency(isocode);employeeStrength
+;TM123456;01-01-2010;true;;true;;true;300000000;INR;10000
+
+INSERT_UPDATE LeadStatus;code[unique=true];leadStatus(code)[unique=true];leadReason(code);remarks
+;LS001;ACTIVE;HOTEL_IS_SHUT_DOWN;;
+
+####################This header has dependency for Depatment Import masterdatacore essential data  ##################
+INSERT_UPDATE StaffInformation;uid[unique=true];title(code);firstName;middleName;lastName;department(code);designation;role;responsibilities;contactPersonType(code)
+;PS001;mr;Tesram;Kumar;Thakur;IT;Operations Manager;Call Centre Agent;Test ABC;INFLUENCER,DECISION_MAKER
+
+INSERT_UPDATE ApprovalWorkFlow;level[unique=true];role(code);name
+;01;R001;M A Sharma
+
+################ for checklist association ################
+#INSERT_UPDATE Checklist;title(QuestionTitle.code);implementationChecklistId[unique=true];onlineDate[dateformat=$dateformat]
+#;TRACK_RECORD;IC11;18-07-2020
+
+
+INSERT_UPDATE Lead;id[unique=true];uid[unique=true, allownull=true];name;locName[lang=en];language(isocode);clientCategory(code);clientSubCategory(code);companyType(code);telephone;modeOfRegistration(code);affiliationInformation(AffiliationInformation.registrationNo);approvalStatus(code);currency(Currency.isocode);taxHeads(key(code),value);kycInformation(KycInformation.pan)
+;PL001;CnkB2BUnit;Global Tours;Global Tours;en;ALLIANCE_PARTNERS;BANKS;PUBLIC;9987654321;DIRECT;IATA009;approved;INR;PAN_NO->687567;IAssss3TB
+
+INSERT_UPDATE ProfitAndLoss;owner(Lead.id)[unique=true];currency(isocode);totalTravelExpectedSales;totalTravelExpectedIncome;&profitLoss
+;PL001;INR;100000;10000;profitLoss1
+
+INSERT_UPDATE Lead;id[unique=true];staffDetails(uid);ServicingLocation(code);companyDetails(CompanyAdditionalDetails.registrationNumber);leadStatus(code);approvalWorkFlow(ApprovalWorkFlow.level);profitAndLoss(&profitLoss)
+;PL001;PS001;GOBAL;TM123456;LS001;01;profitLoss1
+
+INSERT_UPDATE Question;id[unique=true];que[lang=$lang]
+;Q1;How long have they been with the Company?
+
+INSERT_UPDATE QuestionInformation;owner(Lead.id)[unique=true];title(code)[unique=true];description[lang=$lang];question(Question.id)
+;PL001;TRACK_RECORD;Associated with company for 10 years;Q1
+
+INSERT_UPDATE Competitor;code[unique=true];name[lang=$lang]
+;C001;Thomas Cook
+
+#Before importing this header please import Continent header 
+INSERT_UPDATE AdvanceParameter;continent(isocode)[unique=true];country(isocode)[unique=true];include;exclude
+;AF;IN;true;false
+
+INSERT_UPDATE AssuredBusinessTargetProductVolume;productCategory(Category.code,$catalogVersion)[unique=true];$productCategorySubType[unique=true];product;expectedSales
+;C001;C001ST001;;1000000;10000
+
+#Before importing import Market
+INSERT_UPDATE AssuredBusiness;assuredBusinessId[unique=true];currency(isocode);totalTravelExpectedSales;clientName;noOfLevels;hierarchy;pointOfSale(code);targetProductWiseSales;targetTotalSales;targetSalesforAllProducts;targetSales;targetProductvolumes(AssuredBusinessTargetProductVolume.productCategory(Category.code,$catalogVersion));advanceParameter(AdvanceParameter.continent(isocode),AdvanceParameter.country(isocode))
+;ASB001;INR;100000;ABC Travels;2;5;WEBSITE;true;false;100000;;C001;AF:IN
+
+INSERT_UPDATE LeadMedia;documentUid[unique=true];documentType(code);documentCategory(code);documentDescription;documentSignedOn[dateformat=$dateformat]
+;LM001;HANDOVER_DOCUMENTS;RFP;Management and upload of documents;01-03-2013
+
+INSERT_UPDATE Partner;currentServiceProvider(code)[unique=true];contractSince[dateformat=$dateformat][unique=true];contractValidityDate[dateformat=$dateformat][unique=true];terminateReason
+;AKBAR_TRAVEL;01-01-2010;31-12-2013;;
+
+INSERT_UPDATE ContractDocuments;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier);contractFrom[dateformat=$dateformat];contractTo[dateformat=$dateformat];&mediaRef
+;presalesmoudoc;$siteResource\Exterior.pdf;;;images;01-01-2010;31-12-2013;presalesmoudoc 
+
+INSERT_UPDATE CommercialTerms;productCategory(Category.code,$catalogVersion)[unique=true];$productCategorySubType[unique=true];product;commercialHead(code)[unique=true];commercialType(code)[unique=true];commercialValue
+;C001;C001ST001;;STANDARD_COMMISSION;RECEIVABLE;;
+
+INSERT_UPDATE PandLTragetProductVolume;productCategory(Category.code,$catalogVersion)[unique=true];$productCategorySubType[unique=true];product;expectedSales;expectedIncome;versionId
+;C001;C001ST001;;1000000;10000;1
+
+
+UPDATE Prospect;id[unique=true];prospectAddress(PresalesAddress.webSiteUrl);prospectBuisnessInfo(BusinessInformation.owner(Prospect.id));prospectLeads(Lead.id)
+;PP001;www.tcs.com;PP001;PL001
+
+#############################    Dependency for ContactNumberInfo impert masterdata core essetial dat ########################################################
+UPDATE Lead;id[unique=true];leadinfoQuestions(QuestionInformation.owner(Lead.id));leadCompetitors(Competitor.code)
+;PL001;PL001;C001;
+
+UPDATE Lead;id[unique=true];leadUploads(LeadMedia.documentUid)
+;PL001;LM001
+
+UPDATE LeadMedia;documentUid[unique=true];documentUploads(Media.code)
+;LM001;Lobby
+
+UPDATE Lead;id[unique=true];currentPartners(Partner.currentServiceProvider(code),Partner.contractSince[dateformat=$dateformat],Partner.contractValidityDate[dateformat=$dateformat])
+;PL001;AKBAR_TRAVEL:01-01-2010:31-12-2013
+
+UPDATE Competitor;code[unique=true];commertialTerms(CommercialTerms.productCategory(Category.code),CommercialTerms.commercialHead(code),CommercialTerms.commercialType(code))
+;C001;C001:STANDARD_COMMISSION:RECEIVABLE
+
+UPDATE AssuredBusiness;assuredBusinessId[unique=true];targetProductvolumes(AssuredBusinessTargetProductVolume.productCategory(Category.code,$catalogVersion))
+;ASB001;C001
+
+UPDATE Partner;currentServiceProvider(code)[unique=true];contractSince[dateformat=$dateformat][unique=true];contractValidityDate[dateformat=$dateformat][unique=true];uploadContracts(ContractDocuments.code);commertialTerms(CommercialTerms.productCategory(Category.code))
+;AKBAR_TRAVEL;01-01-2010;31-12-2013;presalesmoudoc;C001
+
+UPDATE ProfitAndLoss;owner(Lead.id)[unique=true];uploads(Media.code);targetProductVolumes(PandLTragetProductVolume.productCategory(Category.code,$catalogVersion))
+;PL001;Lobby;C001
+
+UPDATE Lead;id[unique=true];checklist(implementationChecklistId);assuredBusiness(assuredBusinessId)
+;PL001;IC11;ASB001

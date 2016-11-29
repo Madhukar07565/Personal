@@ -1,0 +1,3 @@
+CompanyCruiseDestinationID;DestinationName;CruiseDestinationCommonId;Description;Reason;CopiedFrom;Country;onlineDate;offlineDate;continent;approvalStatus;Medianame;Company
+987654_CruiseDest;Northern Europe;123456;;;;US;3-4-2013;2-9-2015;NE1001;approved;resorts.png;Ezeego1
+987656_CruiseDest;Northern Europe;123457;;;;US;3-4-2014;2-9-2016;NE1002;approved;tents.png;Ezeego1

@@ -1,0 +1,10 @@
+Header Name;Company;CruisePortCode;Cruise_PortCommonId;Cruise_PortAlias;Cruise_PortShortName;CruiseDescription;OnlineDate;OfflineDate;Reason;CopiedFrom;Country;PortOfCall;City;PortType;LocalLanguage;Currency;StreetName;StreetNumber;PostalCode;Duplicate;Town;location;Medianame;mine;
+CruisePort;Ezeego1;3100;202;New Port;SevPort;Best Indian destination for cruise;01-01-2015;01-01-2016;reason;;US;Flesland;AAA;MAJOR_PORT;en;INR;Crystal Drive;1480;18551;TRUE;Safegard;AAB;appartment.png;image\jpg
+;CruisePortCode;DistanceFromProperty;Route_ApproximateDuration;Route_Description;Rout_DrivingDirection;Route_ValidFrom;Route_ValidTo;DistanceUnit;AccommodationProduct;Route_From;NameOfPlace;ModeOfTransport;TransportType
+Route;;;;Distance from the Airport 3.5 miles;;20-01-2015 12:00:00;20-01-2016 12:00:00;km;;AAA;AND;ROAD;;3100
+;CruisePortCode;Port_InformationType;PortInfo_Description
+PortInfo;3100;BOARDING;The Port Info Description
+PortInfo;3100;DISEMBARKATION;The Port Info Description
+;CruisePortCode;MediaName;PlaceName;Distance;Description
+CruisePlaceDescription;3100;appartment.png;Museum;4 MI;Washington Convention Center
+

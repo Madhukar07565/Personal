@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2015 hybris AG ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of hybris ~ ("Confidential Information"). You shall not disclose such Confidential 
+	~ Information and shall use it only in accordance with the terms of the ~ 
+	license agreement you entered into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="mdmbackofficeService"
+		class="com.cnk.travelogix.mdmbackoffice.services.MdmbackofficeService" />
+
+	<bean id="mdmbackofficeLabelLocator" class="com.hybris.cockpitng.util.labels.ResourcesLabelLocator"
+		scope="singleton" init-method="init" lazy-init="false">
+		<property name="location" value="/mdmbackoffice-backoffice-labels/" />
+		<property name="name" value="labels" />
+	</bean>
+
+	<bean id="travelPreviewListCellRenderer"
+		class="com.cnk.travelogix.mdmbackoffice.renderer.TravelPreviewListCellRenderer"
+		parent="defaultPreviewListCellRenderer" />
+
+	<alias name="travelogixLockUnlockService" alias="lockUnlockService"/>
+	<bean id="travelogixLockUnlockService"
+		class="com.cnk.travelogix.mdmbackoffice.services.impl.TravelogixLockUnlockService" />
+
+    <alias name="travelogixExceptionTranslationService" alias="exceptionTranslationService" />
+  	<bean id="travelogixExceptionTranslationService" class="com.cnk.travelogix.mdmbackoffice.services.impl.TravelogixExceptionTranslationService" parent="defaultExceptionTranslationService"/>
+       
+    <alias name="travelogixAdvancedSearchRenderer" alias="advancedSearchRenderer"/>
+    <bean id="travelogixAdvancedSearchRenderer"
+          class="com.cnk.travelogix.mdmbackoffice.renderer.TravelogixAdvancedSearchRenderer" scope="prototype" parent="defaultAdvancedSearchRenderer">
+    </bean> 
+    
+    <bean id="copyActionMap" class="java.util.HashMap">
+		<constructor-arg>
+			<map key-type="java.lang.String" value-type="com.cnk.travelogix.mdmbackoffice.services.CopyActionStratergy">
+				<entry key="FlightProduct" value-ref="flightCopyActionStratergy" />
+				<entry key="Accommodation" value-ref="accoCopyActionStratergy" />
+				<entry key="Supplier" value-ref="supplierCopyActionStratergy" />
+				<entry key="TicketCappingIndent" value-ref="indentCopyActionStratergy" />
+				<entry key="PaymentAdviceForOtherFee" value-ref="paymentAdviceCopyActionStratergy" />
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="flightCopyActionStratergy"
+		class="com.cnk.travelogix.mdmbackoffice.services.impl.FlightProductCopyActionStratergy">
+	</bean>
+	
+	<bean id="accoCopyActionStratergy"
+		class="com.cnk.travelogix.mdmbackoffice.services.impl.AccommodationCopyActionStratergy">
+	</bean>
+	
+	<bean id="supplierCopyActionStratergy"
+		class="com.cnk.travelogix.mdmbackoffice.services.impl.SupplierCopyActionStratergy">
+	</bean>
+	
+	<bean id="indentCopyActionStratergy"
+		class="com.cnk.travelogix.mdmbackoffice.services.impl.TicketCappingIndentCopyActionStrategy">
+	</bean>
+		
+	<bean id="paymentAdviceCopyActionStratergy"
+		class="com.cnk.travelogix.mdmbackoffice.services.impl.PaymentAdviceForOtherFeeCopyActionStrategy">
+	</bean>
+	
+	<bean id="creditDepositIndentCopyActionStrategy"
+		class="com.cnk.travelogix.mdmbackoffice.services.impl.CreditDepositIndentCopyActionStrategy">
+	</bean>
+	<bean id="compositeSupplierSettlementEnablerCellRenderer"
+		class="com.cnk.travelogix.mdmbackoffice.renderer.CompositeSupplierSettlementEnablerCellRenderer"
+		parent="defaultListCellRenderer" />
+		
+    <bean id="compositeSupplierConnectivityEnablerCellRenderer"
+		class="com.cnk.travelogix.mdmbackoffice.renderer.CompositeSupplierConnectivityEnablerCellRenderer"
+		parent="defaultListCellRenderer" />	
+		
+ 	<bean id="compositeSupplierCellRenderer"      
+		class="com.cnk.travelogix.mdmbackoffice.renderer.CompositeSupplierCellRenderer"
+		parent="travelPreviewListCellRenderer" />	
+</beans>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<widget-definition id="com.cnk.travelogix.mdmbackoffice.advsearch" extends="com.hybris.cockpitng.advancedsearch"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://www.hybris.com/schema/cockpitng/widget-definition.xsd">
+    <name>Extended Advanced Search widget</name>
+    <defaultTitle>Extended Advanced Search widget</defaultTitle>	
+    <controller class="com.cnk.travelogix.mdmbackoffice.widgets.advancedsearch.MdmAdvancedSearchController"/>
+</widget-definition>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ [y] hybris Platform
+  ~ 
+  ~ Copyright (c) 2000-2016 SAP SE
+  ~ All rights reserved.
+  ~ 
+  ~ This software is the confidential and proprietary information of SAP 
+  ~ Hybris ("Confidential Information"). You shall not disclose such 
+  ~ Confidential Information and shall use it only in accordance with the 
+  ~ terms of the license agreement you entered into with SAP Hybris.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	
+	<bean id="defaultPropertiesDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.common.PropertiesFormDecorator">
+		<property name="configurationService" ref="configurationService" />	 
+	</bean>
+	<bean id="paytmCheckSumHashDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.paytm.PaytmCheckSumHashDecorator"/>
+	
+	<bean id="defaultSiteURLDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.common.SiteURLDecorator">
+		<property name="baseSiteService" ref="baseSiteService" />
+		<property name="siteBaseUrlResolutionService" ref="siteBaseUrlResolutionService" />	
+		<property name="configurationService" ref="configurationService" /> 
+	</bean>
+	
+	<bean id="icici_SHA256_HashDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.icici.ICICI_SHA256_HashDecorator"/>
+	
+	<bean id="defaultCustomerNameDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.common.CustomerNameDecorator"/>
+	
+	<bean id="defaultCustomerPhoneNumberDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.common.CustomerPhoneNumberDecorator"/>
+	
+	<bean id="defaultCustomerEmailDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.common.CustomerEmailDecorator"/>
+	
+	<bean id="defaultCustomerOrderIDDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.common.CustomerOrderIDDecorator"/>
+	
+	<bean id="iciciCurrentTimeDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.icici.ICICICurrentTimeDecorator"/>
+	
+	<bean id="billDeskCheckSumMsgDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.billdesk.BillDeskCheckSumMsgDecorator"/>
+	
+	<bean id="amexSecureHashDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.amex.AmexSecureHashDecorator"/>
+	
+	<bean id="defaltCCAvenueEncReqDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.ccavenue.CCAvenueEncReqDecorator"/>
+	
+	<bean id="hdfcRedirectURLDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.hdfc.HDFCRedirectURLDecorator"/>
+	
+	<bean id="defaultCustomerCurrentTimeDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.common.CustomerCurrentTimeDecorator"/>
+	
+	<bean id="nabFingerPrintGeneratorDecocator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.nab.NABFingerPrintGeneratorDecocator"/>
+	
+	<bean id="nabGMTCurrentTimeDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.nab.NABGMTCurrentTimeDecorator"/>
+	
+	<bean id="firstDataTimeStampDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.firstdata.FirstDataTimeStampDecorator"/>
+	
+	<bean id="firstDataRandomSequenceNumberDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.firstdata.FirstDataRandomSequenceNumberDecorator"/>
+	
+	<bean id="firstDataHashGeneratorDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.firstdata.FirstDataHashGeneratorDecorator"/>
+	
+	<bean id="mashreqSecureHashDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.mashreq.MashreqSecureHashDecorator"/>
+	
+	<bean id="asiapaySecureHashDecorator" class="com.cnk.travelogix.services.paymentgateways.request.decorators.impl.asiapay.AsiapaySecureHashDecorator"/>
+			
+</beans>

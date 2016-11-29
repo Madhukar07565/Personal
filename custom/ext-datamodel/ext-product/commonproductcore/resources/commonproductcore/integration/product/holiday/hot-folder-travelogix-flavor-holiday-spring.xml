@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+	<context:annotation-config />
+	<bean id="baseDirectoryTravelogixHolidayProduct" class="java.lang.String">
+		<constructor-arg
+			value="#{baseDirectory}/${tenantId}/travelogix/product/holiday" />
+	</bean>
+
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesTravelogixHolidayProduct"
+		directory="#{baseDirectoryTravelogixHolidayProduct}" filename-regex="holiday_flavor_product-(\d+)\.csv"
+		comparator="fileOrderComparator">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogixHolidayProduct"
+		reply-channel="travelogixHolidayProductBatchFilesProc" directory="#{baseDirectoryTravelogixHolidayProduct}/processing"
+		delete-source-files="true" />
+
+	<int:service-activator input-channel="travelogixHolidayProductBatchFilesProc"
+		output-channel="travelogixHolidayProductBatchFilesHeaderInit" ref="travelogixHolidayProductHeaderSetupTask"
+		method="execute" />
+
+	<bean id="travelogixHolidayProductHeaderSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogixHolidayProduct" />
+	</bean>
+
+	<int:service-activator input-channel="travelogixHolidayProductBatchFilesHeaderInit"
+		output-channel="travelogixHolidayProductBatchFilesHeader" ref="headerInitTask"
+		method="execute" />
+		
+			<bean id="headerInitTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderInitTask">
+		<property name="sequenceIdParser" ref="batchSequenceIdParser" />
+		<property name="languageParser" ref="batchLanguageParser" />
+		<property name="fallbackLanguage" value="en" />
+	</bean>
+
+	<bean id="batchSequenceIdParser"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.util.SequenceIdParser">
+		<property name="parser">
+			<bean class="de.hybris.platform.acceleratorservices.util.RegexParser">
+				<property name="regex" value="-(\d+)\.csv" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="travelogixHolidayProductBatchFilesHeader"
+		output-channel="batchFilesTran" ref="travelogixHolidayProductBatchTransformerTask"
+		method="execute" />
+
+	<bean id="travelogixHolidayProductBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+
+	<!-- Transformer converters mappings -->
+
+	<bean id="batchActualPricesConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchActualPricesConverter" />
+		
+	<bean id="batchPricesConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchPricesConverter" />
+
+	<bean id="batchOfflineVisaDetailsConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchOfflineVisaDetailsConverter" />
+		
+	<bean id="batchOnlineVisaDetailsConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchOnlineVisaDetailsConverter" />
+
+	<bean id="batchBlackOutDatesConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchBlackOutDatesConverter" />
+
+	<bean id="batchHolidayBrandConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchHolidayBrandConverter" />
+
+	<!-- <bean id="batchBrochureConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping" 
+		p:mapping="holiday_flavor_product" p:converter-ref="batchBrochureConverter" 
+		/> -->
+
+	<!-- <bean id="batchProductCategorySubTypeConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchProductCategorySubTypeConverter" /> -->
+
+	<bean id="batchHolidayItineraryDetailsConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchHolidayItineraryDetailsConverter" />
+
+	<bean id="batchDayWiseItineraryConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchDayWiseItineraryConverter" />
+
+	<bean id="batchHolidayHubConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchHolidayHubConverter" />
+
+	<bean id="batchHolidayFlavorConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchHolidayFlavorConverter" />
+
+
+	<bean id="batchOtherDayWiseItineraryConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchOtherDayWiseItineraryConverter" />
+
+	 <bean id="batchAccoDayWiseItineraryConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchAccoDayWiseItineraryConverter" />
+
+	<bean id="batchActivityDayWiseItineraryConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchActivityDayWiseItineraryConverter" />
+
+	<bean id="batchFlightTransferDayWiseItineraryConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchFlightTransferDayWiseItineraryConverter" />
+
+	<bean id="batchTransferProductDayWiseItineraryConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchTransferProductDayWiseItineraryConverter" />
+
+	<bean id="batchFeederConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchFeederConverter" />
+
+	<bean id="batchRentalTransferDayWiseItineraryConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchRentalTransferDayWiseItineraryConverter" />
+		
+	<bean id="batchCarPackageConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchCarPackageConverter" />
+		
+	<bean id="batchRailTransferDayWiseItineraryConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchRailTransferDayWiseItineraryConverter" />
+
+	<bean id="batchRailPassTransferDayWiseItineraryConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchRailPassTransferDayWiseItineraryConverter" />
+
+	<bean id="batchRailTicketTransferDayWiseItineraryConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="holiday_flavor_product" p:converter-ref="batchRailTicketTransferDayWiseItineraryConverter" />
+
+	<bean id="batchActualPricesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value> 
+			$dateformat=dd-MM-yyyy
+			INSERT_UPDATE ActualPrices;supplier[unique=true](code);onlineFrom[unique=true][dateformat=$dateformat];offlineFrom[unique=true][dateformat=$dateformat]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Actual_Prices'" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="batchPricesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			$dateformat=dd-MM-yyyy
+			 INSERT_UPDATE Prices;owner(ActualPrices.supplier(code),ActualPrices.onlineFrom[dateformat=$dateformat],ActualPrices.offlineFrom[dateformat=$dateformat])[unique=true];companyPackageCategory(code);currency(isocode);perItem;adult;child;infant
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1}:{2}:{3};{4};{5};{6};{7};{8};{9}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Prices'" />
+			</bean>
+		</property>
+	</bean>
+
+<bean id="batchOfflineVisaDetailsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				INSERT_UPDATE OfflineVisaDetails;productCategory(Category.code,$catalogVersion);productCategorySubType(code)[unique=true];country(isocode)[unique=true];duration;entryType(code);purposeOfTravel(code);passportIssuedIn(isocode);whereAreYouLocated(isocode);citizenship(isocode);basicDocuments;documentsRequired;notes;processingTime;paymentMode;prices(Prices.owner(ActualPrices.supplier(code),ActualPrices.onlineFrom[dateformat=$dateformat],ActualPrices.offlineFrom[dateformat=$dateformat]))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Offline_Visa_Details'" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="batchOnlineVisaDetailsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				INSERT_UPDATE OnlineVisaDetails;productCategory(Category.code,$catalogVersion);productCategorySubType(code)[unique=true];country(isocode)[unique=true];duration;entryType(code);purposeOfTravel(code);passportIssuedIn(isocode);whereAreYouLocated(isocode);citizenship(isocode)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Online_Visa_Details'" />
+			</bean>
+		</property>
+	</bean>
+
+
+	<bean id="batchBlackOutDatesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE BlackOutDates;daysOfWeek(code)[unique=true];blackOutDates
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Black_Out_Dates'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchHolidayBrandConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE HolidayBrand;code[unique=true];
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Holiday_Brand'" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- <bean id="batchBrochureConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter"> 
+		<property name="header"> <value> INSERT_UPDATE Brochure;name;media </value> 
+		</property> <property name="impexRow"> <value>;{2};{3}</value> </property> 
+		<property name="rowFilter"> <bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter"> 
+		<property name="expression" value="row[1] == 'Brochure'" /> </bean> </property> 
+		</bean> -->
+
+	<!-- <bean id="batchProductCategorySubTypeConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$lang=en
+			INSERT_UPDATE ProductCategorySubType;code[unique=true];$catalogVersion[unique=true];name[lang=$lang]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Product_Category_Sub_Type'" />
+			</bean>
+		</property>
+	</bean> -->
+
+	<bean id="batchHolidayItineraryDetailsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE HolidayItineraryDetails;itineraryInBrief[unique=true];itineraryDetails[unique=true];packageCategories(code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Holiday_Itinerary_Details'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchDayWiseItineraryConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE DayWiseItinerary;city[unique=true](isocode);sequenceNumber[unique=true];day;standardPrice;deluxePrice;superiorPrice;service(Category.code);timeFrom;timeTo;lunchIncluded;dinnerIncluded;breakfastIncluded;sessionName[unique=true](code);itineraryDetails(HolidayItineraryDetails.itineraryInBrief,HolidayItineraryDetails.itineraryDetails)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14}:{15}
+			</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Day_Wise_Itinerary'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchHolidayHubConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE HolidayHub;productCategory[unique=true](Category.code);productCategorySubType[unique=true](code);hub(isocode);sectors;feeders(Feeder.flavor(HolidayFlavor.code),transfer(TransferProductDayWiseItinerary.category(code),TransferProductDayWiseItinerary.journeyType(code)) )
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Holiday_Hub'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchHolidayFlavorConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE HolidayFlavor;code[unique=true];$catalogVersion;baseProduct(Product.code);companyMarket(Market.uid);companyTourCode;flavorType(code);packageType(code);productType(code);brandName(HolidayBrand.code);itineraryWise;comfortLevel;companyRating(code);rating(code);recommended;flightDay1Itinerary;brochures;interests;salesValidities;combinedCruise;combinedFlavor;companyPackageCategories(PackageCategory.code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>{1};;{2}{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18};{19}:{20}:{21}
+			</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Holiday_Flavor'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchOtherDayWiseItineraryConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE OtherDayWiseItinerary;service(code)[unique=true];availDays;quantity;valueAdded;numberOfItems;description;prices
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Other_Day_Wise_Itinerary'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchAccoDayWiseItineraryConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value> INSERT_UPDATE AccoDayWiseItinerary;productName(Accommodation.code)[unique=true];location[unique=true](Location.isocode);area[unique=true];extensionNights;availDays
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Acco_Day_Wise_Itinerary'" />
+			</bean>
+		</property>
+	</bean> 
+
+	<bean id="batchActivityDayWiseItineraryConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE ActivityDayWiseItinerary;pickUpPointType[unique=true](code);pickUpPointName;sessionName[unique=true](code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Activity_Day_Wise_Itinerary'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchFlightTransferDayWiseItineraryConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE FlightTransferDayWiseItinerary;fromCity[unique=true](code);toCity[unique=true](code);availDays;returnDay;returnSequence
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression"
+					value="row[0] == 'Flight_Transfer_Day_Wise_Itinerary'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchTransferProductDayWiseItineraryConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE TransferProductDayWiseItinerary;category(code)[unique=true];journeyType(code)[unique=true];rateDefinedFor(code);transferType(code);pickUpPointType(code);pickUpPointName;dropOffPointType(code);dropOffPointName;pickUpTime;dropOffTime;sessionName(code);meetAndGreet;returnDay;returnSequence;fromCity(isocode);toCity(isocode);enRouteCity(isocode);overnight
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18}
+			</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression"
+					value="row[0] == 'Transfer_Product_Day_Wise_Itinerary'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchFeederConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE Feeder;preTour;postTour;flavor(HolidayFlavor.code);transfer[unique=true](TransferProductDayWiseItinerary.category(code),TransferProductDayWiseItinerary.journeyType(code))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}:{5}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Feeder'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchRentalTransferDayWiseItineraryConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>INSERT_UPDATE RentalTransferDayWiseItinerary;vehicleCategory[unique=true](code);vehicleName[unique=true](code);airCondition;withChuffer
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression"
+					value="row[0] == 'Rental_Transfer_Day_Wise_Itinerary'" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="batchCarPackageConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value> INSERT_UPDATE CarPackage;owner(RentalTransferDayWiseItinerary.vehicleCategory(code),RentalTransferDayWiseItinerary.vehicleName(code))[unique=true];cities(isocode)
+			 </value>
+		</property>
+		<property name="impexRow">
+			<value>;{1}:{2};{3}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression" value="row[0] == 'Car_Package'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchRailTransferDayWiseItineraryConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE RailTransferDayWiseItinerary;journeyType[unique=true](code);journeyByPass[unique=true];availdays[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression"
+					value="row[0] == 'Rail_Transfer_Day_Wise_Itinerary'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchRailPassTransferDayWiseItineraryConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE RailPassTransferDayWiseItinerary;owner[unique=true](RailTransferDayWiseItinerary.journeyType(code),RailTransferDayWiseItinerary.journeyByPass,RailTransferDayWiseItinerary.availdays);countries(isocode);numberOfDays
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1}:{2}:{3};{4};{5}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression"
+					value="row[0] == 'Rail_Pass_Transfer_Day_Wise_Itinerary'" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="batchRailTicketTransferDayWiseItineraryConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+			INSERT_UPDATE RailTicketTransferDayWiseItinerary;owner[unique=true](RailTransferDayWiseItinerary.journeyType(code),RailTransferDayWiseItinerary.journeyByPass,RailTransferDayWiseItinerary.availdays);fromCity(isocode);toCity(isocode);reservationRequired;overNight;returnDay;returnSequence
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1}:{2}:{3};{4};{5};{6};{7};{8};{9}</value>
+		</property>
+		<property name="rowFilter">
+			<bean
+				class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+				<property name="expression"
+					value="row[0] == 'Rail_Ticket_Transfer_Day_Wise_Itinerary'" />
+			</bean>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<alias name="travelogixCmsComponentsServiceImpl" alias="travelogixCmsComponentsService" />
+	<bean id="travelogixCmsComponentsServiceImpl"
+		class="com.cnk.travelogix.operations.services.cms.impl.TravelogixCmsComponentsServiceImpl" />
+
+	<alias name="defaultToDoTaskService" alias="toDoTaskService" />
+	<bean id="defaultToDoTaskService"
+		class="com.cnk.travelogix.operations.services.impl.DefaultToDoTaskService">
+		<property name="workflowService" ref="newestWorkflowService" />
+		<property name="workflowTemplateService" ref="workflowTemplateService" />
+		<property name="workflowProcessingService" ref="workflowProcessingService" />
+		<property name="toDoTaskDao" ref="toDoTaskDao"></property>
+		<property name="userService" ref="userService"></property>
+		<property name="modelService" ref="modelService"></property>
+		<property name="productService" ref="productService"></property>
+		<property name="operationOrderService" ref="operationOrderService"></property>
+	</bean>
+
+	<alias name="defaultToDoLockUnlockService" alias="todoLockUnlockService" />
+	<bean id="defaultToDoLockUnlockService"
+		class="com.cnk.travelogix.operations.services.impl.DefaultToDoLockUnlockService">
+		<property name="toDoTaskDao" ref="toDoTaskDao"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+
+	<bean name="companyGenericDao" class="de.hybris.platform.servicelayer.internal.dao.DefaultGenericDao" >
+		<constructor-arg value="Company" />
+	</bean>
+	
+	<bean name="marketGenericDao" class="de.hybris.platform.servicelayer.internal.dao.DefaultGenericDao" >
+		<constructor-arg value="Market" />
+	</bean>
+	
+	<alias name="defaultToDoTaskDao" alias="toDoTaskDao" />
+	<bean id="defaultToDoTaskDao"
+		class="com.cnk.travelogix.operations.doas.impl.DefaultToDoTaskDao">
+		<property name="pagedFlexibleSearchService" ref="pagedFlexibleSearchService" />
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+		<property name="userService" ref="userService"></property>
+		<property name="modelService" ref="modelService"/>
+		<property name="companyGenericDao" ref="companyGenericDao"/>
+		<property name="marketGenericDao" ref="marketGenericDao"/>
+		<property name="productService" ref="productService"/>
+		
+	</bean>
+
+	<alias name="defaultOperationOrderService" alias="operationOrderService" />
+	<bean id="defaultOperationOrderService"
+		class="com.cnk.travelogix.operations.services.impl.DefaultOperationOrderService">
+		<property name="operationOrderDao" ref="operationOrderDao" />
+	</bean>
+
+	<alias name="defaultOperationOrderDao" alias="operationOrderDao" />
+	<bean id="defaultOperationOrderDao"
+		class="com.cnk.travelogix.operations.doas.impl.DefaultOperationOrderDao">
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+	</bean>
+
+	<alias name="travelogixReconfirmationConfigServiceImpl" alias="reconfirmationConfigService" />
+	<bean id="travelogixReconfirmationConfigServiceImpl"
+		class="com.cnk.travelogix.operations.services.impl.TravelogixReconfirmationConfigServiceImpl">
+	</bean>
+
+	<alias name="travelogixCategoryServiceImpl" alias="travelogixCategoryService" />
+	<bean id="travelogixCategoryServiceImpl"
+		class="com.cnk.travelogix.operations.services.category.impl.TravelogixCategoryServiceImpl"
+		parent="defaultCategoryService" />
+
+	<alias name="defaultcommonSupplierService" alias="commonSupplierService" />
+	<bean id="defaultcommonSupplierService"
+		class="com.cnk.travelogix.operations.services.impl.DefaultSupplierService" />
+
+	<alias name="defaultCityService" alias="cityService" />
+	<bean id="defaultCityService"
+		class="com.cnk.travelogix.operations.services.impl.DefaultCityService" />
+		
+	<alias name="defaultCountryService" alias="countryService" />
+	<bean id="defaultCountryService"
+		class="com.cnk.travelogix.operations.services.impl.DefaultCountryService" />
+
+	<alias name="defaultContinentService" alias="continentService" />
+	<bean id="defaultContinentService"
+		class="com.cnk.travelogix.operations.services.impl.DefaultContinentService" />
+
+	<alias name="defaultClientService" alias="clientService" />
+	<bean id="defaultClientService"
+		class="com.cnk.travelogix.operations.services.impl.DefaultClientService" />
+
+	<alias name="travelogixLockUnlockService" alias="lockUnlockService" />
+	<bean id="travelogixLockUnlockService"
+		class="com.cnk.travelogix.operations.services.impl.TravelogixLockUnlockService" />
+
+
+	<!-- Service Order START -->
+	<alias name="defaultServiceOrderDao" alias="serviceOrderDao"/>
+	<bean id="defaultServiceOrderDao" class="com.cnk.travelogix.operations.daos.impl.DefaultServiceOrderDao">
+		<property name="flexibleSearchService" ref="flexibleSearchService"></property>
+		<property name="pagedFlexibleSearchService" ref="pagedFlexibleSearchService"></property>
+		<property name="enumerationService" ref="enumerationService"></property>
+	</bean>
+	<!-- Service Order END -->
+
+
+	<!-- time limit booking -->
+	<alias name="defaultTimeLimitBookingService" alias="timeLimitBookingService" />
+	<bean id="defaultTimeLimitBookingService"
+		class="com.cnk.travelogix.operations.services.impl.DefaultTimeLimitBookingService" >
+		<property name="timeLimitBookingDAO" ref="timeLimitBookingDAO" />
+	</bean>
+
+	<alias name="defaultTimeLimitBookingDAO" alias="timeLimitBookingDAO" />
+	<bean id="defaultTimeLimitBookingDAO"
+		class="com.cnk.travelogix.operations.doas.impl.DefaultTimeLimitBookingDAO" >		
+	<property name="flexibleSearchService" ref="flexibleSearchService" />
+	</bean>
+
+	<!-- First Booking Check Service -->
+	<alias name="defaultFirstBookingCheckService" alias="firstBookingCheckService" />
+	<bean id="defaultFirstBookingCheckService"
+		class="com.cnk.travelogix.operations.services.impl.DefaultFirstBookingCheckService">
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<bean id="bookingDocumentDAO" class="com.cnk.travelogix.operations.services.doas.impl.DefaultBookingDocumentDAO">
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>	
+	
+	<bean id="bookingDocumentService" class="com.cnk.travelogix.operations.services.impl.DefaultBookingDocumentService">
+        <property name="bookingDocumentDAO" ref="bookingDocumentDAO"/>
+    </bean>	
+
+    
+    <alias name="travelogixOperationsDao" alias="travelogixOperationsDao" />
+    <alias name="travelogixOperationsDao" alias="travelogixOperationsDao" />
+    <bean id="travelogixOperationsDao" class="com.cnk.travelogix.operations.doas.impl.TravelogixOperationsDaoImpl"/>
+    
+	<alias name="defaultOperationUserService" alias="operationUserService"/>
+	<bean id="defaultOperationUserService" class="com.cnk.travelogix.operations.services.impl.DefaultOperationUserService" parent="userService">
+        <property name="operationUserDao" ref="operationUserDao"/>
+    </bean>	
+	
+	<alias name="defaultOperationUserDao" alias="operationUserDao"/>
+	<bean id="defaultOperationUserDao" class="com.cnk.travelogix.operations.daos.impl.DefaultOperationUserDao" parent="userDao">
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+
+    </bean>	
+    
+    <!--Added for Saved queries -->
+    <alias alias="travelogixOrderService" name="defaultTravelogixOrderService"/>
+    <bean id="defaultTravelogixOrderService" class="com.cnk.travelogix.operations.services.impl.DefaultTravelogixOrderService"/>
+	
+	<alias alias="travelogixOrderDao" name="defaultTravelogixOrderDao"/>
+	<bean id="defaultTravelogixOrderDao" class="com.cnk.travelogix.operations.doas.impl.DefaultTravelogixOrderDao"/>
+
+	
+	
+	<alias name="defaultTravelogixPaymentReceiptDao" alias="travelogixPaymentReceiptDao"/>
+	<bean id="defaultTravelogixPaymentReceiptDao" class="com.cnk.travelogix.operations.services.doas.impl.DefaultTravelogixPaymentReceiptDao">
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>	
+	
+	<alias name="defaultTravelogixPaymentReceiptService" alias="travelogixPaymentReceiptService"/>
+	<bean id="defaultTravelogixPaymentReceiptService" class="com.cnk.travelogix.operations.services.receipts.impl.DefaultTravelogixPaymentReceiptService">
+        <property name="travelogixPaymentReceiptDao" ref="travelogixPaymentReceiptDao"/>
+    </bean>
+
+<alias name="travelogixAuthoriseUserServiceImpl" alias="travelogixAuthoriseUserService"/> 
+<bean id="travelogixAuthoriseUserServiceImpl" class="com.cnk.travelogix.operations.common.services.impl.TravelogixAuthoriseUserServiceImpl"></bean>   	
+
+	 <alias name="defaultServiceOrderService" alias="serviceOrderService"/>	
+	<bean id="defaultServiceOrderService" class="com.cnk.travelogix.operations.services.impl.DefaultServiceOrderService" parent="abstractBusinessService">
+		<property name="keyGenerator" ref="serviceOrderCodeGenerator"/>
+		<property name="cloneCreator" ref="itemModelCloneCreator"/>
+		<property name="flexibleSearchService" ref="flexibleSearchService" />	
+		<property name="serviceOrderDao" ref="serviceOrderDao"/>
+	</bean>	
+	
+	<bean id="serviceOrderCodeGenerator" class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator">
+		<property name="key" value="${keygen.supplier.liability.code.name}"/>
+		<property name="digits" value="${keygen.supplier.liability.code.digits}"/>
+		<property name="start" value="${keygen.supplier.liability.code.start}"/>
+        <property name="type" value="${keygen.supplier.liability.code.type}"/>
+		<property name="template" value="${keygen.supplier.liability.code.template}"/>
+	</bean>	
+
+</beans>

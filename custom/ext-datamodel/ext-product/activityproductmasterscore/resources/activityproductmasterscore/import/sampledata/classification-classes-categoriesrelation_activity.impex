@@ -1,0 +1,61 @@
+$classificationCatalog=EZ-IN-CS
+
+$classCatalogVersion=catalogversion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true,default='$classificationCatalog:1.0']
+$classSystemVersion=systemVersion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true]
+
+$lang=en
+
+
+$productCatalog=EZ-IN
+$productCatalogName=Travelogix Product Catalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+$supercategories=source(code, $classCatalogVersion)[unique=true]
+$categories=target(code,$catalogVersion)[unique=true]
+
+# Create Categories
+INSERT_UPDATE Category;code[unique=true];name;$catalogVersion;allowedPrincipals(uid)[default='customergroup']
+;Sailing;Sailing;
+;Water-Sports;Water Sports;
+;FoodWine-And-NightLife;FoodWine And NightLife;
+;Nature-And-Wildlife;Nature And Wildlife;
+;Events;Events;
+;Theatre;Theatre;
+;Shows;Shows;
+;Theme-Parks;Theme Parks;
+;Spa-And-Wellness;Spa And Wellness;
+;Sightseeing-Tickets-And-Passes;Sightseeing Tickets And Passes;
+;Tour-And-Sightseeing-Hopon-Hopoff;Tour And Sightseeing Hopon Hopoff;
+;ActivityTours;ActivityTours;
+
+# Links ClassificationClasses to Categories
+INSERT_UPDATE CategoryCategoryRelation;$supercategories;$categories
+;Attraction-Inclusion;Theme-Parks
+;Attraction-Inclusion;Sightseeing-Tickets-And-Passes
+;Attraction-Inclusion;Tour-And-Sightseeing-Hopon-Hopoff
+;Attraction-Inclusion;ActivityTours
+;Seating-Inclusion;Events
+;Seating-Inclusion;Theatre
+;Seating-Inclusion;Shows
+;Tour-Activity;Sailing
+;Tour-Activity;Water-Sports
+;Tour-Activity;Nature-And-Wildlife
+;Tour-Activity;Events
+;Tour-Activity;Theatre
+;Tour-Activity;Shows
+;Tour-Activity;Theme-Parks
+;Tour-Activity;Spa-And-Wellness
+;Tour-Activity;Sightseeing-Tickets-And-Passes
+;Tour-Activity;Tour-And-Sightseeing-Hopon-Hopoff
+;Tour-Activity;ActivityTours
+;Spa-Information;Spa-And-Wellness
+;Participants-Information;Events
+;TeamMembers-Information;Events
+;Performer-Information;Events
+;Nominee-Information;Events
+;Show-Information;Theatre
+;Show-Information;Shows
+;CastAndCrew-Information;Theatre
+;CastAndCrew-Information;Shows
+;SeatingArrangement-Activity;FoodWine-And-NightLife
+

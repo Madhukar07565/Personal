@@ -1,0 +1,67 @@
+$catalogVersion=catalogVersion(catalog(id),version)[default=EZ-IN:Staged]
+$lang=en
+INSERT_UPDATE Category;code[unique=true];$catalogVersion[unique=true];name[lang=$lang]
+;C001;EZ-IN:Staged;Transportation
+;C002;EZ-IN:Staged;Accommodation
+;C003;EZ-IN:Staged;Activities
+;C004;EZ-IN:Staged;Holidays
+;C005;EZ-IN:Staged;Others
+;C006;EZ-IN:Staged;Combination
+
+INSERT_UPDATE ProductCategorySubType;code[unique=true];$catalogVersion[unique=true];name[lang=$lang]
+;C001ST001;EZ-IN:Staged;Flights
+;C001ST002;EZ-IN:Staged;Cruise
+;C001ST003;EZ-IN:Staged;Cars 
+;C001ST004;EZ-IN:Staged;Bus
+;C001ST005;EZ-IN:Staged;Rail Tickets
+;C001ST006;EZ-IN:Staged;Rail Pass
+;C001ST007;EZ-IN:Staged;Caravan
+;C001ST008;EZ-IN:Staged;RV
+;C001ST009;EZ-IN:Staged;Bike
+;C001ST010;EZ-IN:Staged;Train
+;C001ST011;EZ-IN:Staged;Yatch
+
+;C002ST001;EZ-IN:Staged;Hotels
+;C002ST002;EZ-IN:Staged;Motels
+;C002ST003;EZ-IN:Staged;Resorts
+;C002ST004;EZ-IN:Staged;Hostels
+;C002ST005;EZ-IN:Staged;Lodge
+;C002ST006;EZ-IN:Staged;Guest House
+;C002ST007;EZ-IN:Staged;House Boats
+;C002ST008;EZ-IN:Staged;Apartments
+;C002ST009;EZ-IN:Staged;Bungalows
+;C002ST010;EZ-IN:Staged;Cottages
+;C002ST011;EZ-IN:Staged;Chalets
+;C002ST012;EZ-IN:Staged;Villa
+;C002ST013;EZ-IN:Staged;Holiday or Mobile Home
+;C002ST014;EZ-IN:Staged;Tents
+;C002ST015;EZ-IN:Staged;Castles and Palaces
+;C002ST016;EZ-IN:Staged;Homestays
+
+;C003ST001;EZ-IN:Staged;Cruise
+;C003ST002;EZ-IN:Staged;Sailing
+;C003ST003;EZ-IN:Staged;Water Sports
+;C003ST004;EZ-IN:Staged;Food Wine, & Night Life
+;C003ST005;EZ-IN:Staged;Nature & Wildlife
+;C003ST006;EZ-IN:Staged;Events
+;C003ST007;EZ-IN:Staged;Theatre
+;C003ST008;EZ-IN:Staged;Shows
+;C003ST009;EZ-IN:Staged;Theme Parks
+;C003ST010;EZ-IN:Staged;Spa & Wellness
+;C003ST011;EZ-IN:Staged;Sightseeing Tickets & Passes
+;C003ST012;EZ-IN:Staged;Walking & Biking Tours
+;C003ST013;EZ-IN:Staged;Segway Tours
+;C003ST014;EZ-IN:Staged;Tours & Sightseeing
+;C003ST015;EZ-IN:Staged;Air, Helicopter & Balloon Tours
+;C003ST016;EZ-IN:Staged;Cultural Tours
+;C003ST017;EZ-IN:Staged;Day Trips & Excursions
+;C003ST018;EZ-IN:Staged;Sightseeing Packages
+;C003ST019;EZ-IN:Staged;Adventure Activities
+
+;C004ST001;EZ-IN:Staged;Holidays
+
+;C005ST001;EZ-IN:Staged;Visa
+;C005ST002;EZ-IN:Staged;Insurance
+;C005ST003;EZ-IN:Staged;Services
+
+;C006ST001;EZ-IN:Staged;Flights+Hotels

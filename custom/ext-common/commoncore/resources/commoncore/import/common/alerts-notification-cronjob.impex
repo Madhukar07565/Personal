@@ -1,0 +1,7 @@
+INSERT_UPDATE CronJob; code[unique=true];job(code)		;singleExecutable;sessionLanguage(isocode)
+					 ;sendAlertNotificationCronJob;sendAlertNotificationJob ;false;en
+					 
+INSERT_UPDATE Trigger;cronJob(code)[unique=true];second;minute;hour;day;month;year;relative;active;maxAcceptableDelay
+					 ;sendAlertNotificationCronJob;00		;00		;00	    ;-1		;-1		;-1		;true		;true	;-1
+					 
+					 

@@ -1,0 +1,17 @@
+<acc:AccommodationRQ xmlns:acc="http://www.coxandkings.com/suppl/accointerface" xmlns:acco="http://www.coxandkings.com/suppl/acco" xmlns:com="http://www.coxandkings.com/suppl/common" xmlns:ns="http://www.opentravel.org/OTA/2003/05">
+   <acco:RequestHeader>
+      <!--Optional:-->
+      <com:UserID>1</com:UserID>
+      <com:SessionID>2</com:SessionID>
+      <com:TransactionID>3</com:TransactionID>
+   </acco:RequestHeader>
+   <acc:RequestBody>
+      <acco:OTA_ReadRQWrapper>
+         <acco:SupplierID>ATI</acco:SupplierID>
+         <acco:Sequence>1</acco:Sequence>
+         <ns:OTA_ReadRQ Version="1.0">
+            <ns:UniqueID Type="14" ID="5145317"/>
+         </ns:OTA_ReadRQ>
+      </acco:OTA_ReadRQWrapper>
+   </acc:RequestBody>
+</acc:AccommodationRQ>

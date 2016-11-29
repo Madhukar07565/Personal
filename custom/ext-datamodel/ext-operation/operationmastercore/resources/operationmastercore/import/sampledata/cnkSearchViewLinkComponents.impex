@@ -1,0 +1,22 @@
+$contentCatalog=operationsContentCatalog
+$contentCatalogName=operations Content Catalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default='Staged'])[default=$contentCatalog:Staged]
+$picture=media(code, $contentCV);
+$image=image(code, $contentCV);
+$media=media(code, $contentCV);
+$page=page(uid, $contentCV);
+$contentPage=contentPage(uid, $contentCV);
+$lang=en
+
+# CMS Link Components
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true]	;name				;url ;&linkRef		  ;&componentRef   ;linkName[lang=$lang];target(code)[default='sameWindow']
+							  ;						  ;SearchViewLink1	;SearchView Link1	;"#" ;SearchViewLink1 ;SearchViewLink1 ;"link 1";;
+							  ;						  ;SearchViewLink2	;SearchView Link2	;"#" ;SearchViewLink2 ;SearchViewLink2 ;"link 2";;
+							  ;						  ;SearchViewLink3	;SearchView Link3	;"#" ;SearchViewLink3 ;SearchViewLink3 ;"link 3";;
+							  
+							  
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true]				;name							  ;active	;cmsComponents(&componentRef)
+						 ;						 ;Section2ASlot-SearchViewPage	;Section2A Slot for SearchViewPage;true;SearchViewLink1,SearchViewLink2,SearchViewLink3
+						 
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true]		       			 ;position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+								;						;Section2A-SearchViewPage                ;Section2A		      ;cnkSearchViewFilterBookingPage	;Section2ASlot-SearchViewPage

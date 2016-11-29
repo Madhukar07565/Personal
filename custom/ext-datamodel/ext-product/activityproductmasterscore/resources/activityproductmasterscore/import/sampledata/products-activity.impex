@@ -1,0 +1,248 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$timeformat = hh:mm
+$lang=en
+$approved=approvalstatus(code)[default='approved']
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.product.activity.masters.core.setup.ActivityProductMastersCoreSystemSetup&\activityproductmasterscore\import\sampledata\images\96Wx96H 
+
+$clAttrModifiers=system='EZ-IN-CS',version='1.0',translator=de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator,lang=en
+
+$history=@History-General-Activity[$clAttrModifiers]
+$yearBuilt=@YearBuilt-General-Activity[$clAttrModifiers]
+$yearRenovated=@YearRenovated-General-Activity[$clAttrModifiers]
+$stories=@Stories-General-Activity[$clAttrModifiers]
+$aboutUs=@AboutUs-General-Activity[$clAttrModifiers]
+$celebrityComments=@CelebrityComments-General-Activity[$clAttrModifiers]
+$awardReceived=@AwardsReceived-General-Activity[$clAttrModifiers]
+
+###################### DEPENDENT DATA STARTS ###################################
+INSERT_UPDATE Interest;code[unique=true];name
+					  ;INT001           ;Activity Interest
+					  
+###################### Policies ################################################
+INSERT_UPDATE TravelogixPolicy;code[unique=true];$catalogVersion;policyType(code);policyCategory(code);name            ;productCategorySubType(code,$catalogVersion)
+							  ;PR001            ;               ;SCOM            ;TERMS_AND_CONDITIONS;Product Policy 1;C003ST002                                   
+							  ;PR002            ;               ;SFAR            ;CANCELLATION_CHARGES;Product Policy 2;C003ST009  
+
+					  						
+###################### DEPENDENT DATA ENDS ####################################
+
+INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier)
+;resorts;$siteResource\resorts.png;;;images
+;sampleMedia2;$siteResource\sampleMedia2.png;;;images
+
+###################################### Activity Product #################################################################################################################################
+INSERT_UPDATE ActivityProduct;code  ;$catalogVersion;commonProductId ;name[lang=$lang][unique=true];displayName   ;affiliation(code);modeOfTransport(code);attachedPolicies(code);chain(code);brand(code)   ;parkMap(code);logo(media.code);interest(code);highlights   ;supercategories(code,$catalogVersion);financeControlId;country(isocode)[unique=true];city(isocode)[unique=true];copiedFrom;active;$history  ;$yearBuilt;$yearRenovated;$stories;$aboutUs ;$celebrityComments;$awardReceived
+							 ;AP1001;               ;COMPROD1001     ;Theme Park1                  ;Theme Park 1  ;1201             ;ROAD                 ;PR001                 ;160        ;ACTIVITY_BR_01;sampleMedia2 ;resorts         ;INT001        ;highlights123;C003ST009                            ;12345           ;IN                           ;BOM                       ;Ezeego1   ;TRUE  ;Historical;1756      ;1867          ;four    ;Best team;Awsome activity   ;best Activity
+							 ;AP1002;               ;COMPROD1002     ;Sailing1                     ;Sailing1      ;1201             ;ROAD                 ;PR001                 ;160        ;ACTIVITY_BR_01;resorts      ;resorts         ;INT001        ;highlights123;C003ST002                            ;12888           ;IN                           ;BOM                       ;Ezeego1   ;TRUE  ;          ;          ;              ;        ;         ;                  ;
+							 ;AP1003;               ;COMPROD1003     ;Shows1                       ;Shows1        ;1201             ;ROAD                 ;PR001                 ;160        ;ACTIVITY_BR_01;resorts      ;resorts         ;INT001        ;highlights123;C003ST008                            ;12800           ;IN                           ;BOM                       ;Ezeego1   ;TRUE  ;Historical;1756      ;1867          ;Five    ;One team ;Awsome activity   ;Top Activity
+							 ;AP1004;               ;COMPROD1004     ;Spa and Wellness1            ;Spa & Wellness;1201             ;ROAD                 ;PR001                 ;160        ;ACTIVITY_BR_01;resorts      ;resorts         ;INT001        ;highlights123;C003ST010                            ;12801           ;IN                           ;DEL                       ;Ezeego1   ;TRUE  ;Historical;1700      ;1877          ;Three   ;One team ;Awsome activity   ;Most challenging activity
+							 ;AP1005;               ;COMPROD1005     ;Water Sport1                 ;Water Sport   ;1201             ;ROAD                 ;PR001                 ;160        ;ACTIVITY_BR_01;resorts      ;resorts         ;INT001        ;highlights123;C003ST003                            ;12802           ;IN                           ;DEL                       ;Ezeego1   ;TRUE  ;          ;          ;              ;        ;         ;                  ;
+
+##################################### Name of Park Map #########################
+INSERT_UPDATE Media;code[unique=true];name[lang=$lang];$catalogVersion
+			       ;sampleMedia2     ;Theme Park Map  ;
+				   
+###################################### Shopping Info ###########################   
+INSERT_UPDATE ShoppingInfo;nameOfShop[lang=$lang][unique=true];typeOfMerchandise[unique=true];nameOfItem;description;location;whereAbout           ;paymentDetails;reservation;contactNumber;reservationInfo;notesOnOpeningTime;notesOnClosingTime;activityProduct(name[lang=$lang],country(isocode),city(isocode))
+                          ;Gift Shop                          ;Gifts                         ;Pen       ;Black Pen  ;Alibag  ;100km south to Panvel;Cash Only     ;true       ;1234554444   ;only till 5 PM ;Morning 7 AM      ;Evening 7 PM      ;Theme Park1:IN:BOM
+					 
+
+###################################### Days Of Operation for Shopping Info ###########################
+INSERT_UPDATE DayOfOperation;daysOfWeek(code);dateRange[dateformat=$dateformat][unique=true];timeFrom[unique=true];timeTo[unique=true];shoppingInfo(nameOfShop[lang=$lang],typeOfMerchandise)[unique=true]
+							;SUNDAY,MONDAY   ;01-01-2003,05-05-2015                         ;07:00                ;19:00              ;Gift Shop:Gifts
+							
+###################################### Events & Tour Info ###########################					  
+INSERT_UPDATE EventsAndTourInfo;name[lang=$lang][unique=true];type(code)[unique=true];duration;description;whereAbouts;location;reservation;contactNumber;interest(code);guestPolicies   ;unit(code);guestHeight;ageRangeFromYear;ageRangeFromMonth(code);ageRangeToYear;ageRangeToMonth(code);thrillLevels;accessibility;knowBeforeYouGo          ;remark        ;media(code);activityProduct(name[lang=$lang],country(isocode),city(isocode))
+                               ;Mumbai Tours                 ;SHOW                   ;3 Hours ;Tour Group ;Mumbai     ;Mumbai  ;true       ;1233234543   ;INT001        ;guestPolicies123;MILES     ;12m        ;2010            ;JAN                    ;1970          ;JUL                  ;easy        ;accessible   ;Basic idea about location;once in a week;resorts    ;Theme Park1:IN:BOM         
+
+###################################### Days Of Operation for Shopping Info ###########################
+INSERT_UPDATE DayOfOperation;daysOfWeek(code) ;dateRange[dateformat=$dateformat][unique=true];timeFrom[unique=true];timeTo[unique=true];eventsAndTourInfo(name[lang=$lang],type(code))[unique=true]
+							;TUESDAY,WEDNESDAY;15-01-2003,15-05-2015                         ;08:00                ;20:00              ;Mumbai Tours:SHOW
+
+							
+###################################### Monthly Weather ###########################
+INSERT_UPDATE MonthlyWeather;month(code)[unique=true];destinationWeather;minTemp;maxTemp;activityProduct(name[lang=$lang],country(isocode),city(isocode))[unique=true]
+							;JUL                     ;Rainy             ;5      ;25     ;Theme Park1:IN:BOM
+
+###################################### Suggested Accommodation ###########################
+INSERT_UPDATE SuggestedAccommodation;country(isocode)[unique=true];city(isocode)[unique=true];productName(code)[unique=true];description            ;activityProduct(name[lang=$lang],country(isocode),city(isocode))         
+                                    ;IN                           ;BOM                       ;87762                         ;Suggested Accommodation;Theme Park1:IN:BOM
+									;IN                           ;BOM                       ;15740                         ;Suggested Accommodation;Sailing1:IN:BOM
+									;IN                           ;BOM                       ;68641                         ;Suggested Accommodation;Shows1:IN:BOM
+									;IN                           ;DEL                       ;87762                         ;Suggested Accommodation;Spa and Wellness1:IN:DEL
+									;IN                           ;DEL                       ;2222                          ;Suggested Accommodation;Water Sport1:IN:DEL
+
+###################################### Miscellaneous Info ####################################
+INSERT_UPDATE MiscellaneousInfo;owner(ActivityProduct.name[lang=$lang],ActivityProduct.country(isocode),ActivityProduct.city(isocode))[unique=true];
+					           ;Theme Park1:IN:BOM 
+							   ;Sailing1:IN:BOM
+							   ;Shows1:IN:BOM
+							   ;Spa and Wellness1:IN:DEL
+							   ;Water Sport1:IN:DEL
+							   
+###################################### MiscellaneousRestriction ##################
+INSERT_UPDATE MiscellaneousRestriction;descriptionRestriction(code)[unique=true];allow[unique=true];note                                   ;miscellaneousInfo(owner(ActivityProduct.name[lang=$lang],ActivityProduct.country(isocode),ActivityProduct.city(isocode)))
+									  ;Pets Policy                              ;true              ;Pets allowed or not                    ;Theme Park1:IN:BOM
+									  ;Alcohol Policy                           ;false             ;Alcohol Policy                         ;Sailing1:IN:BOM
+									  ;Pets Policy                              ;false             ;Pets Policy                            ;Shows1:IN:BOM
+									  ;Alcohol Policy                           ;true              ;Alcohol Policy for Spa and Wellness    ;Spa and Wellness1:IN:DEL
+									  ;Age Requirement Policy                   ;true              ;Age Requirement Policy for water sports;Water Sport1:IN:DEL
+
+###################################### Miscellaneous Info : General ######################
+INSERT_UPDATE GeneralDescriptionInfo;name[lang=$lang][unique=true];description              ;miscellaneousInfo(owner(ActivityProduct.name[lang=$lang],ActivityProduct.country(isocode),ActivityProduct.city(isocode)))[unique=true]
+									;General miscellaneous        ;miscellaneous description;Theme Park1:IN:BOM
+									;General Sail                 ;Sail description         ;Sailing1:IN:BOM
+									;General Shows                ;Show description         ;Shows1:IN:BOM
+									;Spa and Wellness Misc        ;Spa and Wellness desc    ;Spa and Wellness1:IN:DEL
+									;Water Sports Misc            ;Water Sport              ;Water Sport1:IN:DEL
+
+
+###################################### Activity Product for Miscellaneous Info ####################
+INSERT_UPDATE ActivityProduct;name[lang=$lang][unique=true];country(isocode)[unique=true];city(isocode)[unique=true];miscellaneousInfo(MiscellaneousInfo.owner(ActivityProduct.name[lang=$lang],ActivityProduct.country(isocode),ActivityProduct.city(isocode)))
+							 ;Theme Park1                  ;IN                           ;BOM                       ;Theme Park1:IN:BOM
+							 ;Sailing1                     ;IN                           ;BOM                       ;Sailing1:IN:BOM 
+							 ;Shows1                       ;IN                           ;BOM                       ;Shows1:IN:BOM 
+							 ;Spa and Wellness1            ;IN                           ;DEL                       ;Spa and Wellness1:IN:DEL
+							 ;Water Sport1                 ;IN                           ;DEL                       ;Water Sport1:IN:DEL 
+
+###################################### Activity Product : General Description ######################
+INSERT_UPDATE GeneralDescriptionInfo;name[lang=$lang][unique=true]  ;description             ;activityProduct(name[lang=$lang],country(isocode),city(isocode))[unique=true]
+									;General                        ;General description     ;Theme Park1:IN:BOM
+									;GeneralSailing1                ;Sailing                 ;Sailing1:IN:BOM
+									;GeneralShows1                  ;Shows                   ;Shows1:IN:BOM
+									;GeneralSpa and Wellness        ;Spa and Wellness Desc   ;Spa and Wellness1:IN:DEL
+									
+							 
+###################################### Pre Arrival Info ############################
+INSERT_UPDATE PreArrivalInfo;name[lang=$lang][unique=true];month(code)[unique=true];description[lang=$lang];monthDescription;activityProduct(name[lang=$lang],country(isocode),city(isocode))
+                            ;PreArrival 1                 ;JAN                     ;Pre arrival information;JAN Special     ;Theme Park1:IN:BOM
+							;PreArrival Sail              ;FEB                     ;Pre arrival information;FEB Special     ;Sailing1:IN:BOM
+							;PreArrival Shows             ;MAR                     ;Pre arrival information;MAR Special     ;Shows1:IN:BOM
+							;PreArrival Spa and Wellness  ;APR                     ;Pre arrival information;APR Special     ;Spa and Wellness1:IN:DEL
+							;PreArrival Water Sport1      ;APR                     ;Pre arrival information;MAY Special     ;Water Sport1:IN:DEL
+
+							
+###################################### Dining Tips ###############################
+INSERT_UPDATE DiningTips;diningTipsId[unique=true];reservation      ;characterDining     ;casualDining    ;signatureDining     ;specialAndUniqueDining     ;quickServicesDining     ;barsAndLounges     ;disneyDiningPlan     ;preArrival(name[lang=$lang],month(code))
+                        ;DINE102                  ;test Reservation;test characterDining;test casualDining;test signatureDining;test specialAndUniqueDining;test quickServicesDining;test barsAndLounges;test disneyDiningPlan;PreArrival 1:JAN
+
+
+###################################### Other activity Info ######################
+INSERT_UPDATE AdditionalActivityInfo;name[lang=$lang][unique=true];description[lang=$lang]    ;typeOfInfo(code)[unique=true];activityProduct(name[lang=$lang],country(isocode),city(isocode))
+									;Other ThemePark              ;Other Theme PArk Info      ;Smoking Policy               ;Theme Park1:IN:BOM
+									;Other Sailing                ;Other Sailing Info         ;Smoking Policy               ;Sailing1:IN:BOM
+									;Other Shows                  ;Other Show Info            ;Smoking Policy               ;Shows1:IN:BOM
+									;Other Spa and Wellness       ;Other Spa and Wellness info;Smoking Policy               ;Spa and Wellness1:IN:DEL
+									;Water Sport                  ;Other Water Sport info     ;Age Requirement Policy       ;Water Sport1:IN:DEL
+									
+									
+###################################### Facility #################################
+INSERT_UPDATE Facility;facilityName[lang=$lang]  ;description               ;facilityCategory(code)[unique=true];facilityType(code)[unique=true];dateRange[dateformat=$dateformat][unique=true];activityProduct(name[lang=$lang],country(isocode),city(isocode))
+					  ;Theme Park Facility       ;New Facility              ;ACTIVITIES                         ;SWIMMING_POOL                  ;01-01-2003,05-05-2015                         ;Theme Park1:IN:BOM
+					  ;Facility Sail             ;Sail Facility             ;ACTIVITIES                         ;SWIMMING_POOL                  ;02-01-2003,05-05-2015                         ;Sailing1:IN:BOM
+					  ;Shows Facility 1          ;Shows Facility            ;ACTIVITIES                         ;SWIMMING_POOL                  ;03-01-2003,02-05-2015                         ;Shows1:IN:BOM
+					  ;Spa and Wellness Facility ;Spa and Wellness1 Facility;ACTIVITIES                         ;SWIMMING_POOL                  ;04-01-2003,04-05-2015                         ;Spa and Wellness1:IN:DEL
+
+					
+####################################### Activity Description / Overview #################################################
+INSERT_UPDATE ActivityDescription;fromToDate[dateformat=$dateformat][unique=true];shortDescription[lang=$lang]   ;longDescription[lang=$lang]   ;activityProduct(name[lang=$lang],country(isocode),city(isocode))
+								 ;26-04-2015,26-04-2016                          ;Short desc for Theme Park1     ;Long desc for Theme park      ;Theme Park1:IN:BOM
+								 ;27-04-2015,27-04-2016                          ;Short desc for Sailing         ;Long desc for Sailing         ;Sailing1:IN:BOM
+								 ;28-04-2015,28-04-2016                          ;Short desc for Shows           ;Long desc for Shows           ;Shows1:IN:BOM
+								 ;11-04-2015,11-04-2016                          ;Short desc for Spa and Wellness;Long desc for Spa and Wellness;Spa and Wellness1:IN:DEL
+								 ;12-04-2015,12-04-2016                          ;Short desc for water sports    ;Long desc for water sports    ;Water Sport1:IN:DEL
+
+
+###################################### Supplier Updates ################################
+INSERT_UPDATE DescriptionDetails;fromToDate[dateformat=$dateformat][unique=true];source[unique=true];description              ;activityProduct(name[lang=$lang],country(isocode),city(isocode))   
+								;26-04-2015,26-04-2016                          ;Supplier1          ;Supplier Updates         ;Theme Park1:IN:BOM
+								;27-04-2015,27-04-2016                          ;Supplier2          ;Sailing Updates          ;Sailing1:IN:BOM
+								;28-04-2015,28-04-2016                          ;Supplier3          ;Shows Updates            ;Shows1:IN:BOM
+								;21-04-2015,21-04-2016                          ;Supplier4          ;Spa and Wellness Updates ;Spa and Wellness1:IN:DEL
+								;22-04-2015,22-04-2016                          ;Supplier5          ;Water Sport              ;Water Sport1:IN:DEL
+
+###################################### Associate existing accommodation ################################								 
+INSERT_UPDATE AssociatedProperty;associatedAccoProduct(code)[unique=true]
+								;87762
+								;68641
+								;87762
+								;2222
+
+								 
+								
+#INSERT_UPDATE Address;owner(AssociatedProperty.owner(ActivityProduct.name[lang=$lang],ActivityProduct.country(isocode),ActivityProduct.city(isocode)))[unique=true];streetname[unique=true];streetnumber[unique=true];postalcode;duplicate;town    ;country(isocode);street3;street4;street5;suburbDowntown;area;location;latitude;longitude;addressType;branchName;city(isocode)
+#                     ;Theme Park1:IN:BOM                                                                                                                           ;Crystal Drive          ;1480                     ;18551     ;true     ;Safegard;US              ;       ;       ;       ;              ;    ;        ;        ;         ;           ;          ;  
+					 
+					 
+#INSERT_UPDATE Route;distanceFromProperty[unique=true];approximateDuration[unique=true];description                          ;drivingDirection;validFromTO[dateformat=$dateformat];distanceUnit(code);from;nameOfPlace;modeOfTransport(code);transportType;associatedProperty(owner(ActivityProduct.name[lang=$lang],ActivityProduct.country(isocode),ActivityProduct.city(isocode)))[unique=true]
+#                   ;11.0                             ;                                ;Cab Service available at extra charge;                ;                                   ;                  ;    ;           ;                     ;             ;Theme Park1:IN:BOM
+				   
+				   
+###################################### Contact Details #######################################
+#INSERT_UPDATE ContactDetails;telephone[unique=true];fax[unique=true]      ;websiteUrl[unique=true]     ;email[unique=true];associatedProperty(AssociatedProperty.owner(ActivityProduct.name[lang=$lang],ActivityProduct.country(isocode),ActivityProduct.city(isocode)))
+#						    ;1234567               ;7654321               ;www.test1.com               ;test1@test.com    ;Theme Park1:IN:BOM
+
+
+###################################### Associated Property ####################
+INSERT_UPDATE ActivityProduct;name[lang=$lang][unique=true];country(isocode)[unique=true];city(isocode)[unique=true];associatedProperty(AssociatedProperty.associatedAccoProduct(code))
+							 ;Theme Park1                  ;IN                           ;BOM                       ;87762 			                                                   
+							 ;Shows1                       ;IN                           ;BOM                       ;68641 			                                                   
+							 ;Spa and Wellness1            ;IN                           ;DEL                       ;87762
+							 ;Water Sport1                 ;IN                           ;DEL                       ;2222
+
+
+
+###################################### Deactivation Config ##################
+INSERT_UPDATE DeactivationConfig;companyMarket(Market.uid)[unique=true];status[unique=true];reason[unique=true];validityStartDate[dateformat=$dateformat][unique=true];validityEndDate[dateformat=$dateformat];activityProduct(name[lang=$lang],country(isocode),city(isocode))
+                                ;IND                                   ;FALSE              ;Unavailable now    ;30-02-2016                                            ;31-12-2028                             ;Theme Park1:IN:BOM                                                  
+								;IND                                   ;TRUE               ;Available now      ;30-02-2016                                            ;31-12-2028                             ;Sailing1:IN:BOM
+								;IND                                   ;TRUE               ;Available          ;18-02-2016                                            ;18-12-2028                             ;Water Sport1:IN:DEL
+
+
+###################################### DINING INFORMATION #######################################
+INSERT_UPDATE DiningInfo;restaurantName[lang=$lang][unique=true];description    ;whereAbouts;location
+						;Mariott                                ;Mariott Andheri;Andheri    ;Chakala 
+						;Hayat                                  ;Hayat Kurla    ;Kurla      ;Kurla   
+						
+###################################### Seating Info ##########################
+INSERT_UPDATE SeatingInfo;restaurant(restaurantName[lang=$lang]);seatType(code)[unique=true];seatingArrangments(code)[unique=true];roomName[lang=$lang][unique=true];purpose(code);seatingCapacity;dateRange[dateformat=$dateformat];media(code)                      
+                         ;Mariott					            ;INDOOR                     ;CAFETERIA                            ;Seat1                            ;COCKTAIL     ;200            ;26-04-2016,26-04-2016            ;resorts
+
+###################################### Timing ##########################
+INSERT_UPDATE Timing;eventType(code)[unique=true];mealType(code)[unique=true];openingTime[unique=true];closingTime[unique=true];validity[dateformat=$dateformat][unique=true];daysOfWeek(code);notesOnOpeningTime;notesOnClosingTime;lastOrderTime;remark              ;restaurant(restaurantName[lang=$lang])      
+                    ;REGULAR                     ;NON_VEGETARIAN             ;07:00                   ;18:00                   ;26-04-2016,26-04-2016                        ;SUNDAY,MONDAY   ;Opening Time      ;Closing Time      ;19:00        ;No order after 19:00;Mariott
+
+###################################### Other Info #######################################
+INSERT_UPDATE OtherInfo;typeOfDining(code);seatingCapacity[unique=true];theme(code)[unique=true];airCondition;smokingAllowed;notesOnSmoking;alcoholServed;petsAllowed;notesOnPets;childrenAllowed;notesOnChildren;drinkOffpremisesAllow;corkageApplicable;ambience;cuisineSpeciality(code)[unique=true];barAndLoungeAvailable;noteOnTips ;validAdimissionAllowed;style(code);typeOfService(code);mealType(code);cuisineType(code);menuType(code);foodType(code);owner(DiningInfo.restaurantName[lang=$lang])[unique=true]             
+                       ;UNIQUE            ;500                         ;GOURMET                 ;false       ;false         ;No smoking    ;false        ;false      ;Not Allowed;true           ;allowed        ;false                ;true             ;cool    ;CONTINENTAL                         ;false                ;Not allowed;false                 ;BUFFET     ;TABLE              ;NO_PREFERENCE ;CONTINENTAL      ;STARTERS      ;NON_VEG       ;Mariott
+					
+###################################### Meal Info #######################################
+INSERT_UPDATE MealInfo;mealType(code)[unique=true];menuName(code)[unique=true];menuItemName[lang=$lang][unique=true];description[lang=$lang];menuValidity[dateformat=$dateformat][unique=true];spiceLevel(code);unit(code);timeFrom;timeTo;daysOfWeek(code);media(code);restaurant(restaurantName[lang=$lang])  
+                      ;NON_VEGETARIAN             ;SPECIALS                   ;Rice                                 ;meal info              ;26-04-2016,26-04-2016                            ;MILD            ;PER_GLASS ;02:30   ;03:40 ;MONDAY,TUESDAY  ;resorts    ;Mariott
+
+###################################### Contact Details for Restaurant###################################################
+INSERT_UPDATE ContactDetails;telephone[unique=true];fax[unique=true]      ;websiteUrl[unique=true]     ;email[unique=true];restaurantContactDetail(restaurantName[lang=$lang])
+						    ;1111111               ;22345678              ;www.test.com                ;test@test.com     ;Mariott
+
+
+###################################### Reservation Contact Details for Restaurant#######################################						    
+INSERT_UPDATE ContactDetails;telephone[unique=true];fax[unique=true]      ;websiteUrl[unique=true]     ;email[unique=true];acceptWalkIn;reservationRequired;notesOnReservations  ;reservationFor(code);restaurant(restaurantName[lang=$lang])
+						    ;2222222               ;33333333              ;                            ;testmail@test.com ;TRUE        ;TRUE               ;Reservation available;CORPORATE           ;Mariott     
+
+							
+###################################### Restaurant #######################################
+INSERT_UPDATE DiningInfo;restaurantName[lang=$lang][unique=true];other(OtherInfo.owner(DiningInfo.restaurantName[lang=$lang]))
+                        ;Mariott                                ;Mariott
+
+
+INSERT_UPDATE StaffInformation;uid[unique=true];title(Title.code);firstName;middleName;lastName;department(Department.code);designation             ;role ;responsibilities;gender(code);birthDate[dateformat=$dateformat];anniversaryDate[dateformat=$dateformat];internalText;timeZone(TimeZone.value);medias(code);addresses(owner(StaffInformation.uid));availabilityTimeFrom(key(code),value);availabilityTimeTo(key(code),value);activityProduct(name[lang=$lang],country(isocode),city(isocode))
+                              ;124             ;mr               ;Umesh    ;Vaman     ;Patil   ;IT                         ;software engineer       ;admin;admin           ;MALE        ;26-08-1992                       ;28-08-1992                             ;            ;                        ;            ;                                      ;MON->mon                             ;MON->mon                           ;Theme Park1:IN:BOM
+                              ;125             ;mrs              ;Neha     ;Singh     ;Verma   ;IT                         ;Senior software engineer;admin;admin           ;FEMALE      ;18-08-1992                       ;28-08-1992                             ;            ;                        ;            ;                                      ;MON->mon                             ;MON->mon                           ;Shows1:IN:BOM
+
+INSERT_UPDATE ActivityProduct;name[lang=$lang][unique=true];country(isocode)[unique=true];city(isocode)[unique=true];restaurants(restaurantName[lang=$lang])
+							 ;Theme Park1                  ;IN                           ;BOM                       ;Mariott                                
+							 ;Shows1                       ;IN                           ;BOM                       ;Mariott                                

@@ -1,0 +1,101 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$timeformat = hh:mm
+
+
+INSERT_UPDATE TravelogixRuleType;code[unique=true];name;
+;Pets Policy;Pets Policy
+;Rules for Early Check in;Rules for Early Check in
+;Rules for Late Check out;Rules for Late Check out
+;Payment Policy;Payment Policy
+;Children Policy;Children Policy
+;Smoking Policy;Smoking Policy
+;Guarantee RulesDeposit Policy;Guarantee Rules/Deposit Policy
+;Exchange Rate;Exchange Rate
+;Cancellation Policy;Cancellation Policy
+;Alcohol Policy;Alcohol Policy
+;Age Requirement Policy;Age Requirement Policy
+;Check Cashing Policy;Check Cashing Policy
+;Hurricane Policy;Hurricane Policy
+;Occupancy Policy;Occupancy Policy
+;Special Event Policy;Special Event Policy
+;Credit Debit Card Policy;Credit/Debit Card Policy
+;Dry Cleaning Laundry Valet Shoe Shine;Dry Cleaning / Laundry / Valet / Shoe Shine
+;Kids Program;Kids Program
+;Parking;Parking
+;ADA POLICY;ADA POLICY
+;Age Requirement Policy;Age Requirement Policy
+;Check-In and Check-Out Policy;Check-In and Check-Out Policy
+;Travelers Check Cashing Policy;Travelers Check Cashing Policy
+;Hazardous Goods;Hazardous Goods
+;Facilities adapted for physically-handicapped guests;Facilities adapted for physically-handicapped guests
+;Dress code;Dress code
+;Non-registered guests;Non-registered guests
+;Bringing in of foods and drinks from out side;Bringing in of foods and drinks from out side
+;Valuables and items Deposited with the Hotel;Valuables and items Deposited with the Hotel
+;Accepted credit cards;Accepted credit cards
+;These are the Rule Type values;These are the Rule Type values
+
+
+
+INSERT_UPDATE FacilityType;code[unique=true];name
+;Continental Restaurant;Continental Restaurant
+;Indian Restaurant;Indian Restaurant
+;Batminton Court;Batminton Court
+;Game Zone;Game Zone
+;Swimming Pool;Swimming Pool
+;Batminton Court;Batminton Court
+;SPA INDULGENCE;SPA INDULGENCE
+;Taj Club Floor & Lounge;Taj Club Floor & Lounge
+;Business Centre;Business Centre
+;Fitness Centre Amenities;Fitness Centre Amenities
+;Children's club (free);Childrens club (free)
+;Arcade/game room;Arcade/game room
+;Barbecue grill(s);Barbecue grill(s)
+;Fitness facilities;Fitness facilities
+;Beach/pool umbrellas;Beach/pool umbrellas
+;Arcade/game room;Arcade/game room
+;Barbecue grill(s);Barbecue grill(s)
+;Bar / Lounge;Bar / Lounge
+;Business Centre;Business Centre
+;Parking Facilities;Parking Facilities
+;Gym / Fitness Facilities;Gym / Fitness Facilities
+;Faxing Facilities;Faxing Facilities
+;Parking Facilities;Parking Facilities
+;Gym / Fitness Facilities;Gym / Fitness Facilities
+;Faxing Facilities;Faxing Facilities
+;Parking Facilities;Parking Facilities
+;Gym / Fitness Facilities;Gym / Fitness Facilities
+;Faxing Facilities;Faxing Facilities
+
+
+
+####DUMMY###
+INSERT_UPDATE Department;code[unique=true];name
+;Products;Products
+;Operations;Operations
+;Accounts;Accounts
+;IT;IT
+;Marketing;Marketing
+
+##############SAMPLE VALUES################
+INSERT_UPDATE TimeZone;country(isocode);value[unique=true]
+;AU;GMT
+;US;PST
+
+
+##############SAMPLE Affiliation VALUES################
+INSERT_UPDATE Affiliation;code[unique=true];name
+;1201;FIICCO
+
+##############SAMPLE Suburb VALUES################
+INSERT_UPDATE Suburb;isocode[unique=true];name
+;AE;Andheri(East)
+
+
+Insert_Update ArticleApprovalStatus;code[unique=true];name[lang=en]
+;approved;Active
+;unapproved;In Active
+;check;Created

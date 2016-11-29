@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+		<collectiontype elementtype="localized:java.lang.String"
+			code="LocalizedStringCollection" />
+		<collectiontype elementtype="Category" code="ProductCategory" />
+	</collectiontypes>
+
+	<enumtypes>
+		<enumtype code="ModeOfUpload">
+			<value code="MANUAL_ENTRY" />
+			<value code="EXCEL_UPLOAD" />
+		</enumtype>
+
+		<enumtype code="ROEType">
+			<value code="DAILY_ROE" />
+			<value code="SUPPLIER_REMITTANCE_ROE" />
+			<value code="PRODUCT_ROE" />
+			<value code="INTERBANK_ROE" />
+			<value code="MONTHLY_ROE" />
+			<value code="GOVERNMENT_ROE" />
+		</enumtype>
+
+		<enumtype code="MonthWeek">
+			<description> Month Week</description>
+			<value code="FIRST"></value>
+			<value code="SECOND"></value>
+			<value code="THIRD"></value>
+			<value code="FOURTH"></value>
+			<value code="FIFTH"></value>
+		</enumtype>
+	</enumtypes>
+
+	<relations>
+
+		<relation code="Supplier2SupplierMarketRelation" localized="false">
+			<deployment table="suppliermarketrelation" typecode="20702" />
+			<sourceElement type="Supplier" cardinality="many"
+				qualifier="suppliersForMarket" collectiontype="set" />
+			<targetElement type="SupplierMarket" cardinality="many"
+				qualifier="supplierMarkets" collectiontype="set" />
+		</relation>
+		<relation code="Supplier2EmergencyContactRelation" localized="false">
+			<sourceElement type="Supplier" cardinality="one"
+				qualifier="supplier">
+			</sourceElement>
+			<targetElement type="SupplierEmergencyContact"
+				cardinality="many" qualifier="emergencyContacts" collectiontype="set">
+				<modifiers partof="true" search="true" />
+			</targetElement>
+		</relation>
+
+		<relation localized="false" code="EmergencyContact2ProdCatSubTyp">
+			<deployment table="emcont2prodcatsub" typecode="20598" />
+			<sourceElement type="SupplierEmergencyContact"
+				qualifier="supplierEmergencycontacts" cardinality="many"
+				collectiontype="set" />
+			<targetElement type="ProductCategorySubType" qualifier="productCatSubType"
+				cardinality="many" collectiontype="set" />
+		</relation>
+		<relation code="Supplier2ProductCategorySubType" localized="false">
+			<deployment table="suppliercatstrel" typecode="20703" />
+			<sourceElement type="Supplier" cardinality="many"
+				qualifier="suppliers" collectiontype="set" />
+			<targetElement type="ProductCategorySubType"
+				cardinality="many" qualifier="defaultSupplierFor" collectiontype="set" />
+		</relation>
+		<relation code="Supplier2MediaRelation" localized="false">
+			<sourceElement type="Supplier" cardinality="one"
+				qualifier="supplier" />
+			<targetElement type="Media" cardinality="many"
+				qualifier="medias" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation code="Supplier2SupplierEnablerCategory" localized="false">
+			<deployment table="supplierenablerrelation" typecode="20704" />
+			<sourceElement type="Supplier" cardinality="many"
+				qualifier="suppliersForEnablerCategory" collectiontype="set" />
+			<targetElement type="SupplierEnablerCategory"
+				cardinality="many" qualifier="enablerCategories" collectiontype="set">
+				<modifiers optional="false" />
+			</targetElement>
+		</relation>
+		<relation code="Supplier2SupliersLOB" localized="false">
+			<deployment table="supplierlobrelation" typecode="20705" />
+			<sourceElement type="Supplier" cardinality="many"
+				qualifier="suppliersForLOB" collectiontype="set" />
+			<targetElement type="SuppliersLOB" cardinality="many"
+				qualifier="lobs" collectiontype="set">
+				<modifiers optional="false" />
+			</targetElement>
+		</relation>
+		<relation localized="false" code="StaffInfo2ContNoInfo">
+			<sourceElement type="StaffInformation" qualifier="staffInformation"
+				cardinality="one" />
+			<targetElement type="ContactNumberInfo" qualifier="contacts"
+				cardinality="many" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation localized="false" code="StaffInformation2SocialContact">
+			<sourceElement type="StaffInformation" qualifier="staffInformation"
+				cardinality="one" />
+			<targetElement type="SocialContactInfo" qualifier="socialContacts"
+				cardinality="many" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation localized="false" code="StaffInformation2LanguageSkill">
+			<sourceElement type="StaffInformation" qualifier="staffInformation"
+				cardinality="one" />
+			<targetElement type="LanguageSkillInfo" qualifier="languageSkills"
+				cardinality="many" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation code="ROE2ROEDetailsRelation" autocreate="true"
+			generate="true" localized="false">
+			<sourceElement type="ROE" cardinality="one" qualifier="roeies" />
+			<targetElement type="ROEDetails" cardinality="many"
+				qualifier="roedetail">
+				<modifiers optional="false" />
+			</targetElement>
+		</relation>
+		<relation code="TravelogixROE2ROERelation" autocreate="true"
+			generate="true" localized="false">
+			<sourceElement type="TravelogixROE" cardinality="one"
+				qualifier="travelogixroe" />
+			<targetElement type="ROE" cardinality="many" qualifier="roeies">
+				<modifiers optional="false" />
+			</targetElement>
+		</relation>
+
+		<relation code="SupplierToSuppplierBrands" autocreate="true"
+			localized="false">
+			<deployment table="suppltobrands" typecode="21702" />
+			<sourceElement qualifier="supplier" type="Supplier"
+				cardinality="many">
+			</sourceElement>
+			<targetElement qualifier="supplierBrands" type="SupplierBrand"
+				cardinality="many">
+			</targetElement>
+		</relation>
+
+		<relation code="Supplier2ProductCategoryInfo" localized="false">
+			<deployment table="supplierprodinfo" typecode="20699" />
+			<sourceElement type="Supplier" cardinality="many"
+				qualifier="suppliers" />
+			<targetElement type="ProductCategoryInfo" cardinality="many"
+				qualifier="productCategoryInfo" />
+		</relation>
+	</relations>
+
+	<itemtypes>
+		<typegroup name="supplier">
+			<itemtype code="SupplierMarket" extends="AbstractTravelogixItem"
+				jaloclass="com.cnk.travelogix.supplier.core.market.jalo.SupplierMarket">
+				<deployment table="suppliermarkets" typecode="20700" />
+				<attributes>
+					<attribute type="localized:java.lang.String" qualifier="name">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Supplier" extends="AbstractTravelogixItem"
+				jaloclass="com.cnk.travelogix.supplier.core.supplier.jalo.Supplier">
+				<deployment table="supplier" typecode="20701" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="commonUid">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="companySupplierId">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="name">
+						<modifiers unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="shortName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="financeControlId">
+						<modifiers unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SupplierType" qualifier="supplierType">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="parentCompany">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SupplierBrand" qualifier="brands">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="copiedFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Address" qualifier="address">
+						<modifiers partof="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ClientCompanyType" qualifier="typeOfOrganization">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="lstNo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="cstNo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="exciseRegNo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="vatOrTinNo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="panNo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="stRegNo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="tanNo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="declarationReceived">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="Trigger" qualifier="supplierUpdatesTrigger">
+						<modifiers partof="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="apiSupplier">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="extranetAccess">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.util.Date" qualifier="onlineFrom">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="onlineTo">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Trigger" qualifier="transactionalReportingTrigger">
+						<modifiers partof="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ApprovalWorkFlowStatus" qualifier="workFlowStatus">
+						<description>Work Flow Status</description>
+						<defaultvalue>em().getEnumerationValue("WorkFlowStatus","DRAFT")
+						</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Supplier" qualifier="isDefaultSupplier">
+						<description>Is Default Supplier</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="isTransactionRequired">
+						<description>Is Transaction Required</description>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Trigger" qualifier="frequencies">
+						<description>Frequencies</description>
+						<modifiers partof="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="isNew">
+						<persistence type="property" />
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="subscriberAccountRef">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ProductCategory" qualifier="productCategory">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="TravelogixROE" extends="AbstractTravelogixItem"
+				jaloclass="com.cnk.travelogix.supplier.core.supplier.jalo.TravelogixROE">
+				<deployment table="travelogixroetab" typecode="22176" />
+				<attributes>
+					<attribute type="CatalogVersion" qualifier="catalogVersion"
+						redeclare="true">
+						<modifiers optional="true" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Supplier" qualifier="supplierName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Category" qualifier="productCategory">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="roeSource">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Category" qualifier="productCategorySubType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Product" qualifier="productName">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="effectiveFromDate">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="effectiveToDate">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ROEType" qualifier="roeType">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Market" qualifier="companyMarket">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Company" qualifier="company">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="roeTypeId">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ROE"
+				jaloclass="com.cnk.travelogix.supplier.core.supplier.jalo.ROE">
+				<deployment table="roetab" typecode="22177" />
+				<attributes>
+					<attribute type="ModeofUpload" qualifier="modeofUpload">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Media" qualifier="excelUpload">
+						<modifiers read="true" write="true" search="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="roundOffDigits">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ROEDetails"
+				jaloclass="com.cnk.travelogix.supplier.core.supplier.jalo.ROEDetails">
+				<deployment table="roedetailstab" typecode="22178" />
+				<attributes>
+					<attribute type="Currency" qualifier="fromCurrency">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Currency" qualifier="toCurrency">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="roe">
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="buyingROE">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="sellingROE">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="meanROE">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="SupplierBrand"
+				jaloclass="com.cnk.travelogix.supplier.core.supplier.jalo.SupplierBrand">
+				<deployment table="suppbrands" typecode="20720" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="code">
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="localized:java.lang.String" qualifier="name">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ProductCategoryInfo" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.supplier.core.supplier.jalo.ProductCategoryInfo">
+				<description>Product Category Info</description>
+				<deployment table="productcatinfo" typecode="20721" />
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="isDefautlSupplier">
+						<description>Is default supplier</description>
+						<modifiers unique="true" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="ProductCategorySubType" qualifier="productCategorySubType">
+						<modifiers unique="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="Trigger" autocreate="false" generate="false">
+				<description> Trigger for supplier</description>
+				<attributes>
+					<attribute type="Month" qualifier="months">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="day1">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="MonthWeek" qualifier="monthsWeek">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+		</typegroup>
+	</itemtypes>
+</items>

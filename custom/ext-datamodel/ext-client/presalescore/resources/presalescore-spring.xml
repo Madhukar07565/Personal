@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ [y] hybris Platform
+  ~ 
+  ~ Copyright (c) 2000-2016 SAP SE
+  ~ All rights reserved.
+  ~ 
+  ~ This software is the confidential and proprietary information of SAP 
+  ~ Hybris ("Confidential Information"). You shall not disclose such 
+  ~ Confidential Information and shall use it only in accordance with the 
+  ~ terms of the license agreement you entered into with SAP Hybris.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="presalesSystemSetup" class="com.cnk.travelogix.presales.masters.core.setup.PresalesSystemSetup"
+		parent="abstractCoreSystemSetup">
+	</bean>
+	
+	<bean id="assuredBusinessValidateInterceptor"
+		class="com.cnk.travelogix.presales.core.interceptors.AssuredBusinessValidateInterceptor">
+		<property name="assuredBusinessService" ref="assuredBusinessService" />
+	</bean>
+
+	<bean id="assuredBusinessValidateInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="assuredBusinessValidateInterceptor" />
+		<property name="typeCode" value="AssuredBusiness" />
+	</bean>
+	
+	<bean id="assuredBusinessPrepareInterceptor"
+		class="com.cnk.travelogix.presales.core.interceptors.AssuredBusinessPrepareInterceptor">
+		<property name="assuredBusinessService" ref="assuredBusinessService" />
+	</bean>
+	
+	<alias name="defaultAssuredBusinessService" alias="assuredBusinessService" />
+	<bean id="defaultAssuredBusinessService"
+		class="com.cnk.travelogix.presales.core.service.impl.DefaultAssuredBusinessService">
+		<property name="keyGenerator" ref="assuredBusinessIdKeyGenerator" />
+	</bean>
+
+	<bean id="assuredBusinessPrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="assuredBusinessPrepareInterceptor" />
+		<property name="typeCode" value="AssuredBusiness" />
+	</bean>
+	
+	<bean id="assuredBusinessIdKeyGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="assuredBusiness_Id" />
+		<property name="digits" value="8" />
+		<property name="start" value="00000001" />
+		<property name="numeric" value="true" />
+	</bean>
+	
+	<!-- bean definition for Checklist -->
+	<bean id="checklistPrepareInterceptor"
+		class="com.cnk.travelogix.presales.core.interceptors.ChecklistPrepareInterceptor">
+		<property name="ChecklistService" ref="checklistService" />
+	</bean>
+
+	<bean id="checklistPrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="checklistPrepareInterceptor" />
+		<property name="typeCode" value="Checklist" />
+	</bean>
+
+	<alias name="defaultChecklistService" alias="checklistService" />
+	<bean id="defaultChecklistService"
+		class="com.cnk.travelogix.presales.core.service.impl.DefaultChecklistService">
+		<property name="keyGenerator" ref="checklistKeyGenerator" />
+	</bean>
+
+	<bean id="checklistKeyGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="checklist_implementationChecklistId" />
+		<property name="digits" value="8" />
+		<property name="start" value="00000001" />
+		<property name="numeric" value="true" />
+	</bean>
+	
+	<!-- Bean Definition for Corporate:Lead -->
+	<bean id="leadPrepareInterceptor"
+		class="com.cnk.travelogix.presales.core.interceptors.LeadPrepareInterceptor">
+		<property name="leadService" ref="leadService" />
+	</bean>
+	
+	<alias name="defaultLeadService" alias="leadService" />
+	<bean id="defaultLeadService"
+		class="com.cnk.travelogix.presales.core.service.impl.DefaultLeadService">
+		<property name="keyGenerator" ref="leadIdKeyGenerator" />
+	</bean>
+
+	<bean id="leadPrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="leadPrepareInterceptor" />
+		<property name="typeCode" value="Lead" />
+	</bean>
+	
+	<bean id="leadIdKeyGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="lead_Id" />
+		<property name="digits" value="8" />
+		<property name="start" value="00000001" />
+		<property name="numeric" value="true" />
+	</bean>
+	
+	<!-- Bean Definition for Corporate:Prospect -->
+	<bean id="prospectPrepareInterceptor"
+		class="com.cnk.travelogix.presales.core.interceptors.ProspectPrepareInterceptor">
+		<property name="prospectService" ref="prospectService" />
+	</bean>
+	
+	<alias name="defaultProspectService" alias="prospectService" />
+	<bean id="defaultProspectService"
+		class="com.cnk.travelogix.presales.core.service.impl.DefaultProspectService">
+		<property name="keyGenerator" ref="prospectIdKeyGenerator" />
+	</bean>
+
+	<bean id="prospectPrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="prospectPrepareInterceptor" />
+		<property name="typeCode" value="Prospect" />
+	</bean>
+	
+	<bean id="prospectIdKeyGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="prospect_Id" />
+		<property name="digits" value="8" />
+		<property name="start" value="00000001" />
+		<property name="numeric" value="true" />
+	</bean>
+
+	<!-- Hot Folder Configuration for CNK-->
+	 	
+	<!--
+	The hybris platform provides one single Spring application context for beans located at the jalo layer.
+	Each extension can add beans to this context by specifying them at this configuration file.
+	 
+	You can use and/or redefine beans defined at configuration files of other extensions as well as
+	adding new one.
+		
+	If you want to locate this file at a different location or want to use several files for better,
+	structuring, please use the '<yourextension>.application-context' property at your project.properties file.
+	There you can specify a comma separated list of files where first is tried to find a file per classpath and
+	then per file system.
+
+	
+	If you want to configure beans for your web module please have a look at
+	your web/webroot/WEB-INF/<extname>-web-spring.xml.
+	-->
+	
+	<!--  Example how to override a manager -->
+	<!--
+	<bean id="core.productManager"   class="com.cnk.travelogix.presales.core.jalo.PresalescoreProductManager" 	init-method="init"	destroy-method="destroy" />
+	-->
+	
+	
+ 	<!--  Example how to configure the class to use for jalo session creation -->
+	<!--
+	<bean id="jalosession"   class="de.hybris.platform.jalo.JaloSessionFactory">
+		<property name="targetClassName" value="com.cnk.travelogix.presales.core.jalo.PresalescoreJaloSession"/>
+	</bean>
+	-->
+
+	
+	<!--  Example how to override an item  -->
+	<!-- 
+	<bean id="de.hybris.platform.jalo.product.Product" class="com.cnk.travelogix.presales.core.jalo.PresalescoreProduct" scope="prototype" />		
+ 	-->
+
+	<!--  
+	 Example how to register and use an AOP aspect 
+     Also see http://static.springframework.org/spring/docs/2.5.x/reference/aop.html	
+     -->
+	
+	<!-- 
+	<bean id="presalescoreProfBean" class="com.cnk.travelogix.presales.core.aop.PresalescoreProfilingAspect"/>
+	<aop:config proxy-target-class="true">
+  		<aop:aspect id="presalescoreProfAspect" ref="presalescoreProfBean" >
+    	  <aop:pointcut id="profiledMethods" 
+	      	expression="execution(* getModificationTime(..))" />  	            
+	   		<aop:around pointcut-ref="profiledMethods" method="profile" />
+  		</aop:aspect>
+	</aop:config>
+	 -->
+
+	
+	<!-- some other examples of a pointcut that matches everything:
+
+    	  <aop:pointcut id="profiledMethods" 
+	      	expression="bean(de.hybris.platform.jalo.user.Customer) &amp;&amp; 
+	      	            !execution(* getPK(..))" />  	            
+	       <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />	
+	  -->
+	
+			
+			
+</beans>

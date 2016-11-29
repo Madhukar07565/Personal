@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2015 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+
+	<context:annotation-config />
+	<bean id="baseDirectoryTravelogixActivityInventoryDefinition" class="java.lang.String">
+		<constructor-arg
+			value="#{baseDirectory}/${tenantId}/travelogix/inventoryDefinition/activity" />
+	</bean>
+
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesTravelogixActivityInventoryDefinition"
+		directory="#{baseDirectoryTravelogixActivityInventoryDefinition}"
+		filename-regex="activity_inventory_definition-(\d+)\.csv" comparator="fileOrderComparator">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogixActivityInventoryDefinition"
+		reply-channel="travelogixActivityInventoryDefinitionBatchFilesProc" directory="#{baseDirectoryTravelogixActivityInventoryDefinition}/processing"
+		delete-source-files="true" />
+
+	<int:service-activator input-channel="travelogixActivityInventoryDefinitionBatchFilesProc"
+		output-channel="travelogixActivityInventoryDefinitionBatchFilesHeaderInit" ref="travelogixActivityInventoryDefinitionHeaderSetupTask"
+		method="execute" />
+
+	<bean id="travelogixActivityInventoryDefinitionHeaderSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogixActivityInventoryDefinition" />
+	</bean>
+
+	<!-- 2) move the file to processing and setup header, partly site dependent -->
+	<int:service-activator
+		input-channel="travelogixActivityInventoryDefinitionBatchFilesHeaderInit"
+		output-channel="travelogixActivityInventoryDefinitionBatchFilesHeader" ref="headerInitTask"
+		method="execute" />
+
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="travelogixActivityInventoryDefinitionBatchFilesHeader"
+		output-channel="batchFilesTran" ref="travelogixActivityInventoryDefinitionBatchTransformerTask"
+		method="execute" />
+
+	<bean id="travelogixActivityInventoryDefinitionBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+
+	<!-- Transformer converters mappings -->
+	
+	<!-- <bean id="batchActivityFreeOfCostSeatsOrTicketsConverterMapping"
+	class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="activity_inventory_definition" p:converter-ref="batchActivityFreeOfCostSeatsOrTicketsConverter" />
+
+	<bean id="batchActivitySupplierAdvanceDefinitionConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_inventory_definition" p:converter-ref="batchActivitySupplierAdvanceDefinitionConverter" />
+		
+	<bean id="batchActivityCompanyAdvanceDefinitionConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_inventory_definition" p:converter-ref="batchActivityCompanyAdvanceDefinitionConverter" />
+		
+	<bean id="batchActivityWithinCompanyInventoryDistributionConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_inventory_definition" p:converter-ref="batchActivityWithinCompanyInventoryDistributionConverter" />
+		
+	<bean id="batchActivityPenaltyChargesConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_inventory_definition" p:converter-ref="batchActivityPenaltyChargesConverter" />
+		
+   	<bean id="batchActivityClientInventoryDistributionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_inventory_definition" p:converter-ref="batchActivityClientInventoryDistributionConverter" />
+		
+	<bean id="batchActivityCompanyPenaltyChargesMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_inventory_definition" p:converter-ref="batchActivityCompanyPenaltyChargesConverter" />
+		
+	<bean id="batchActivityCutoffAndChargesMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_inventory_definition" p:converter-ref="batchActivityCutoffAndChargesConverter" />
+		
+	<bean id="batchActivityOtherCompanyInventoryDistributionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_inventory_definition" p:converter-ref="batchActivityOtherCompanyInventoryDistributionConverter" />
+		
+	<bean id="batchActivityInventoryDefinitionMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_inventory_definition" p:converter-ref="batchActivityInventoryDefinitionConverter" />
+		
+    <bean id="batchActivityInventoryDetailMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activity_inventory_definition" p:converter-ref="batchActivityInventoryDetailConverter" />
+		
+	
+	<bean id="batchActivityFreeOfCostSeatsOrTicketsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+
+
+
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="batchActivitySupplierAdvanceDefinitionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+
+
+
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="batchActivityCompanyAdvanceDefinitionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+
+
+
+			</value>
+		</property>
+	</bean>
+	
+	
+	<bean id="batchActivityWithinCompanyInventoryDistributionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+
+
+
+			</value>
+		</property>
+	</bean>
+	
+	
+	<bean id="batchActivityPenaltyChargesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+
+
+
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="batchActivityClientInventoryDistributionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+
+
+
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="batchActivityCompanyPenaltyChargesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+
+
+
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="batchActivityCutoffAndChargesConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+
+
+
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="batchActivityOtherCompanyInventoryDistributionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+
+
+
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="batchActivityInventoryDefinitionConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+
+
+
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="batchActivityInventoryDetailConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+
+
+
+			</value>
+		</property>
+	</bean>
+	 -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+</beans>

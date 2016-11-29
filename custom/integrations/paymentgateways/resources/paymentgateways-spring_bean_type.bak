@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2016 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd">
+           
+    <context:annotation-config/> 
+
+	<bean id="paymentgatewaysCoreDataImportedEventListener" parent="abstractCoreDataImportedEventListener">
+		<property name="supportedChannels">
+			<list value-type="de.hybris.platform.commerceservices.enums.SiteChannel">
+				<value>B2C</value>
+				<!--
+								<value>B2B</value>
+				-->
+			</list>
+		</property>
+		<property name="addonExtensionMetadata">
+			<bean class="de.hybris.platform.addonsupport.data.AddonExtensionMetadata">
+				<property name="suffixChannel" value="false"/>
+				<property name="baseExtensionName" value="paymentgateways"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="paymentgatewaysSampleDataEventListener" parent="abstractGenericAddOnSampleDataEventListener"  >
+		<property name="extensionName" value="paymentgateways" />
+	</bean>
+	
+	<bean id="paymentFormGeneratorService" class="com.cnk.travelogix.services.paymentgateways.PaymentFormGeneratorService"/>
+	
+	<bean id="paytm-payment-form" class="org.apache.commons.io.IOUtils" factory-method="toString">
+      <constructor-arg value="classpath:paymentgateways/paytm/paytm-payment-form.xml" type="java.io.InputStream" />
+    </bean>
+    
+    <bean id="ccavenue-cc-payment-form" class="org.apache.commons.io.IOUtils" factory-method="toString">
+      <constructor-arg value="classpath:paymentgateways/ccavenue/ccavenue-cc-payment-form.xml" type="java.io.InputStream" />
+    </bean>
+    
+    <bean id="ccavenue-nb-payment-form" class="org.apache.commons.io.IOUtils" factory-method="toString">
+      <constructor-arg value="classpath:paymentgateways/ccavenue/ccavenue-nb-payment-form.xml" type="java.io.InputStream" />
+    </bean>
+    
+    <bean id="asiapay-payment-form" class="org.apache.commons.io.IOUtils" factory-method="toString">
+      <constructor-arg value="classpath:paymentgateways/asiapay/asiapay-payment-form.xml" type="java.io.InputStream" />
+    </bean>
+    
+    <bean id="amex-payment-form" class="org.apache.commons.io.IOUtils" factory-method="toString">
+      <constructor-arg value="classpath:paymentgateways/amex/amex-payment-form.xml" type="java.io.InputStream" />
+    </bean>
+    
+    <bean id="icici-payment-form" class="org.apache.commons.io.IOUtils" factory-method="toString">
+      <constructor-arg value="classpath:paymentgateways/icici/icici-payment-form.xml" type="java.io.InputStream" />
+    </bean>
+    
+    <bean id="hdfc-payment-form" class="org.apache.commons.io.IOUtils" factory-method="toString">
+      <constructor-arg value="classpath:paymentgateways/hdfc/hdfc-payment-form.xml" type="java.io.InputStream" />
+    </bean>
+    
+    <util:map id="paymentGatewayProviderTemplateMap">      
+      <entry key="paytm_payment_gateway" value-ref="paytm-payment-form" />
+      <entry key="ccavenue_cc_payment_gateway" value-ref="ccavenue-cc-payment-form" />
+      <entry key="ccavenue_nb_payment_gateway" value-ref="ccavenue-nb-payment-form" />
+      <entry key="asiapay_payment_gateway" value-ref="asiapay-payment-form" />
+      <entry key="amex_payment_gateway" value-ref="amex-payment-form" />
+      <entry key="icici_payment_gateway" value-ref="icici-payment-form" />
+      <entry key="hdfc_payment_gateway" value-ref="hdfc-payment-form" />
+           
+   </util:map>
+	
+	 <bean id="paymentGatewayProviderService" class="com.cnk.travelogix.services.paymentgateways.PaymentGatewayProviderService">
+	 	<property name="paymentFormGeneratorService" ref="paymentFormGeneratorService" />
+	 	<property name="paymentGatewayProviderTemplateMap" ref="paymentGatewayProviderTemplateMap"/>
+	 	
+	 </bean> 
+	 
+	<import resource="classpath:payment-decorators-config-spring.xml" />
+
+</beans>
+
+
+

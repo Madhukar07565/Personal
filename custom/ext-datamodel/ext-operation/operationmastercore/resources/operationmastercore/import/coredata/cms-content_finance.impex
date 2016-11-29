@@ -1,0 +1,60 @@
+#
+# Import the CMS content for the Electronics site
+#
+$contentCatalog=operationsContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default='Staged'])[default=$contentCatalog:Staged]
+
+# Import modulegen config properties into impex macros
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$jarResourceCms=$config-jarResourceCmsValue
+
+# Create PageTemplates
+# These define the layout for pages
+# "FrontendTemplateName" is used to define the JSP that should be used to render the page for pages with multiple possible layouts.
+# "RestrictedPageTypes" is used to restrict templates to page types
+
+INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true];name;frontendTemplateName;restrictedPageTypes(code);active[default=true];velocityTemplate[translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+;;FinancePageTemplate;Finance Page Template;layout/cnkReceiptLayoutPage;ContentPage;true;$jarResourceCms/structure-view/structure_financePageTemplate.vm
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='FinancePageTemplate'];validComponentTypes(code);compTypeGroup(code)
+;SiteLogo;;;logo
+;Header;;;wide
+;section1;;
+;Footer;;;footer
+
+# receipt component for receipt page
+INSERT_UPDATE JspIncludeComponent;$contentCV[unique=true];uid[unique=true];name;page;actions(uid,$contentCV);&componentRef
+;;SearchReceiptComponent;Receipt Display Component;receiptPage.jsp;;ReceiptComponent
+;;IssueReceiptComponent; Issue Receipt Display Component;issueReceiptPage.jsp;;IssueReceiptComponent
+
+
+# Create Content Slots
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active
+;;SiteLogoSlot;Default Site Logo Slot;true
+;;HeaderSlot; Header slot ; true
+;;Section1-SearchReceiptSlot;Section 1 SearchReceiptSlot;true
+;;Section1-IssueReceiptSlot;Section 1 IssueReceiptSlot;true
+;;FooterSlot;footer slot;true
+
+
+# Content Slots
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV)
+;;SiteLogoSlot;LogoComponent
+;;Section1-SearchReceiptSlot;SearchReceiptComponent
+;;Section1-IssueReceiptSlot;IssueReceiptComponent
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='FinancePageTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;HeaderSlot-receiptPage;Header;;HeaderSlot;true
+;;Footer-receiptPage;Footer;;FooterSlot;true
+;;SiteLogo-receiptPage;SiteLogo;;SiteLogoSlot;true
+
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true];contentSlot(uid,$contentCV)[unique=true]
+;;section1-receiptPage;section1;receipt;Section1-SearchReceiptSlot
+;;section1-issueReceiptPage;section1;issuereceipt;Section1-IssueReceiptSlot
+
+
+# Functional Content Pages
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];
+;;receipt;Receipt Page;FinancePageTemplate;receipt
+;;issuereceipt;Issue Receipt Page;FinancePageTemplate;issuereceipt

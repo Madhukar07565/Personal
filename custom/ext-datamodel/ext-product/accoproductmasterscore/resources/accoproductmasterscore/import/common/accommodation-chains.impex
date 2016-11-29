@@ -1,0 +1,312 @@
+INSERT_UPDATE AccommodationChain;code[unique=true];name;address;email;url
+;160;Outrigger Hospitality;;;
+;161;Quest Apartments;;;
+;162;Rezidor Group;;;
+;163;Rydges Hotels and Resorts;;;www.rydges.com
+;164;Shangri - La Hotels and Resorts;;;
+;165;Stamford Hotels and Resorts;;;www.stamford.com.au
+;166;Swissotel Hotels and Resorts;;;www.swissotel.com
+;167;Voyages Hotels and Resorts;;;
+;168;Jurys Inn;;;www.jurysinns.com
+;169;Whitbread;;;
+;170;Top City & Country Line;;;
+;171;Top City & Country Line;;;
+;172;Top City & Country Line;;;
+;173;Centara Hotels and Resorts;;;
+;174;Four Seasons Hotels and Resorts;;;
+;175;NH hotels;;;
+;176;Expo Hotels & Resorts;;;
+;177;Dusit International;;;
+;178;Dusit International;;;
+;179;Dusit International;;;
+;180;Dusit International;;;
+;181;Global Hotel Alliance;;;
+;182;WBTDC Hotels;;;
+;183;Royal Orchid-Bangalore;;asrm@royalorchidhotels.com;www.royalorchidhotels.com
+;184;VITS Hotels-Mumbai;;salesmumbai@vitshotels.com;www.vitshotels.com 
+;186;Mandarin Oriental Hotel Group;;;www.mandarinoriental.com
+;187;Parkland Hotels and Resorts;;;
+;189;Fairmont Hotels;;;www.fairmont.com
+;190;Montien Hotels;;;www.montien.com
+;191;Club Med;;;www.clubmed.co.in
+;192;Frasers Hospitality;"FRASERS HOSPITALITY PTE LTD
+491B River Valley Road
+#03-04 Valley Point
+Singapore 248373
+Central Reservations: +65 62 700 800
+Fax: +65 62 757 598";sales@frasershospitality.com;www.frasershospitality.com
+;193;Frasers Hospitality;"FRASERS HOSPITALITY PTE LTD
+491B River Valley Road
+#03-04 Valley Point
+Singapore 248373
+Central Reservations: +65 62 700 800
+Fax: +65 62 757 598";sales@frasershospitality.com;www.frasershospitality.com
+;194;Frasers Hospitality;"FRASERS HOSPITALITY PTE LTD
+491B River Valley Road
+#03-04 Valley Point
+Singapore 248373
+Central Reservations: +65 62 700 800
+Fax: +65 62 757 598";sales@frasershospitality.com;www.frasershospitality.com
+;195;Frasers Hospitality;"FRASERS HOSPITALITY PTE LTD
+491B River Valley Road
+#03-04 Valley Point
+Singapore 248373
+Central Reservations: +65 62 700 800
+Fax: +65 62 757 598";sales@frasershospitality.com;www.frasershospitality.com
+;196;Sterling Holiday Resorts;"Bhagirathi Smruti Bldg, 
+
+'A' Wing, Subhash Road,
+
+Vile Parle (E),
+
+Mumbai - 400 057";;www.sterlingholidays.in
+;197;Preferred Hotel Group;;;www.preferredhotelgroup.com
+;198;Meritus Hotels and Resorts;;;www.meritushotels.com
+;199;Oakwood Hotels;;;www.oakwood.com
+;200;The Leela Group;;;
+;201;Base;;info@stayatbase.com;www.stayatbase.com
+;202;Millennium & Copthorne Hotels;;;
+;203;Millennium & Copthorne Hotels;;;
+;204;Fiesta Americana;;;www.fiestamericana.com
+;205;Feel Good Apartments;;info@feelgoodapartments.com;www.feelgoodapartments.com
+;206;H10 Hotels;;;www.h10hotels.com
+;207;H10 Hotels;;;www.h10hotels.com
+;208;H10 Hotels;;;www.h10hotels.com
+;209;HCC Hotels;;;www.hcchotels.es
+;210;Hotel Attica 21;;;www.attica21hotels.com
+;211;Husa Hotels;;;www.husa.es
+;212;Eurostars hotels;;info@eurostarshotels.com;www.eurostarshotels.com
+;213;Moevenpick Hotels and Resorts;;;www.moevenpick-hotels.com
+;214;Macdonald Hotels & Resort;;;www.macdonaldhotels.co.uk
+;215;Rotana Hotels & Resorts;;;www.rotana.com
+;216;Armani Hotels & Resorts;;;www.armanihotels.com
+;217;Landmark Group;;;www.citymaxhotels.com
+;218;Ritz-Carlton;;;www.ritzcarlton.com
+;219;The Address Hotel & Resorts;;;www.theaddress.com
+;220;Rotana Hotels & Resorts;;;www.rotana.com
+;221;Rotana Hotels & Resorts;;;www.rotana.com
+;222;Rotana Hotels & Resorts;;;www.rotana.com
+;223;Winchest Hotels;;;www.winchest.com
+;224;Iberotel Hotels & Resorts;;;www.iberotel.com
+;225;Grand Midwest;;;www.grandmidwest.com
+;226;Vincci Hotels;;;www.vinccihoteles.com
+;227;Value Hotel;;;www.valuehotel.com.sg
+;228;Carlson Hospitality Worldwide;;;www.regenthotels.com
+;229;Resorts World at Sentosa;;;www.rwsentosa.com
+;230;Hotel 81;;;www.hotel81.com.sg
+;231;Arcotel Hotels;;;www.arcotelhotels.com
+;232;Marco Polo Hotels;;;www.marcopolohotels.com
+;233;Golden Tulip;;;www.goldentulip.com
+;234;Golden Tulip;;;www.goldentulip.com
+;235;Golden Tulip;;;www.goldentulip.com
+;236;Orient-Express Hotels;;;www.orient-express.com
+;237;Ramee Group of Hotels, Resorts & Apartments;;;www.rameehotels.com
+;238;Elite Hospitality;;;www.elitegroup4u.com
+;239;Harbour Plaza Hotels & Resorts;"Harbour Plaza Hotel Management
+8/F, 813 Two Harbour Front,
+22 Tak Fung Street,
+Hunghom, Kowloon,
+Hong Kong";sales@harbour-plaza.com;www.harbour-plaza.com
+;240;Layia Hospitality;"Layia Hospitality
+P.O.Box 282657
+Dubai - United Arab Emirates
+Tel: 00 971 4 437 78 77
+Fax: 00 971 4 437 78 78";welcome@layia.net;www.layia.net
+;241;Layia Hospitality;"Layia Hospitality
+P.O.Box 282657
+Dubai - United Arab Emirates
+Tel: 00 971 4 437 78 77
+Fax: 00 971 4 437 78 78";welcome@layia.net;www.layia.net
+;242;Athens Hotels Group;;;athenshotelsgroup.com
+;243;Citin Hotels;;;www.citinhotels.com
+;244;Louvre Hotels Group;;developpement@louvre-hotels.com;www.kyriad.com
+;245;Louvre Hotels Group;;developpement@louvre-hotels.com;www.kyriad.com
+;246;Keys Hotels & Resorts;;;www.keyshotels.com
+;247;Auris Hotels Hospitality;;;www.auris-hotels.com
+;248;Metropark Hotels;;;www.metroparkhotels.com
+;249;Okura Hotels and Resorts;;;www.okura.com
+;250;ONYX Hospitality Group;"847 Petchburi Road, Pratunam, Rajthevi
+Bangkok 10400, Thailand
+T +66 (0) 2255 3767, +66 (0) 2255 4588 (hunting line)
+F +66 (0) 2255 3718
+W www.onyx-hospitality.com";;www.amari.com
+;251;ONYX Hospitality Group;;;www.shama.com
+;252;ONYX Hospitality Group;;;www.saffronluxury.com
+;253;ONYX Hospitality Group;;;www.oamhotels.com
+;1;Starwood Hotels and Resorts;;;www.starwoodhotels.com/lemeridien
+;2;Starwood Hotels and Resorts;;;www.starwoodhotels.com/fourpoints
+;3;Starwood Hotels and Resorts;;;www.starwoodhotels.com/westin
+;4;Starwood Hotels and Resorts;;;www.starwoodhotels.com/alofthotels
+;5;Starwood Hotels and Resorts;;;www.starwoodhotels.com/sheraton
+;6;Starwood Hotels and Resorts;;;www.starwoodhotels.com/element
+;7;Starwood Hotels and Resorts;;;www.starwoodhotels.com/stregis
+;8;Starwood Hotels and Resorts;;;www.starwoodhotels.com/whotels
+;9;Choice Hotels;;;www.comfortinn.com
+;10;Accor;;;
+;11;Accor;;;www.pullman-hotels.com
+;12;Accor;;;
+;13;Accor;;;
+;14;Accor;;;
+;15;Accor;;;
+;16;Accor;;;
+;17;Accor;;;
+;18;Accor;;;
+;19;Accor;;;
+;20;Accor;;;
+;21;Accor;;;
+;22;Accor;;;
+;23;Accor;;;
+;24;AC Hotels;;;
+;25;Adam's Mark Hotels;;;
+;26;Affinia Hospitality;;;
+;27;AFM Hospitality;;;
+;28;Akzent Hotels;;;www.akzent.de
+;29;Intercontinental Hotel (IHG);;;www.ichotelsgroup.com/intercontinental/en/gb/home
+;30;Intercontinental Hotel (IHG);;;www.ichotelsgroup.com/h/d/cp/1/en/home
+;31;Intercontinental Hotel (IHG);;;www.ichotelsgroup.com/h/d/in/1/en/home
+;32;Intercontinental Hotel (IHG);;;www.holidayinn.com/hotels/us/en/reservation
+;33;Intercontinental Hotel (IHG);;;www.hiexpress.com/hotels/us/en/reservation
+;34;Intercontinental Hotel (IHG);;;www.ichotelsgroup.com/h/d/sb/1/en/home
+;35;Intercontinental Hotel (IHG);;;www.ichotelsgroup.com/h/d/cw/1/en/home
+;36;Wyndham World Wide;;;www.wyndhamworldwide.com
+;37;Wyndham World Wide;;;www.wyndham.com/locator/gardenhotels/main.wnt?cid=WYWYNWW
+;38;Marriott Group;;;
+;39;Marriott Group;;;www.marriott.com/corporateinfo/glance.mi
+;40;Marriott Group;;;
+;41;Marriott Group;;;
+;42;Marriott Group;;;
+;43;Marriott Group;;;
+;44;Marriott Group;;;
+;45;Marriott Group;;;
+;46;Marriott Group;;;
+;47;Marriott Group;;;
+;48;Marriott Group;;;
+;49;Marriott Group;;;
+;50;Marriott Group;;;
+;51;Marriott Group;;;
+;52;Hilton World Wide;;;www.waldorfastoria.com
+;53;Hilton World Wide;;;
+;54;Hilton World Wide;;;
+;55;Hilton World Wide;;;
+;56;Hilton World Wide;;;
+;57;Hilton World Wide;;;
+;58;Hilton World Wide;;;
+;59;Hilton World Wide;;;
+;60;Hilton World Wide;;;
+;61;Choice Hotels;;;www.choicehotels.com
+;62;Wyndham World Wide;;;
+;63;Wyndham World Wide;;;
+;64;Wyndham World Wide;;;
+;65;Wyndham World Wide;;;
+;66;Wyndham World Wide;;;
+;67;Wyndham World Wide;;;
+;68;Wyndham World Wide;;;
+;69;Wyndham World Wide;;;
+;70;Wyndham World Wide;;;
+;71;Wyndham World Wide;;;
+;72;TOGA Hospitality Group;;;
+;73;Ginger Hotels;;;
+;74;Taj Hotels Resorts and Palaces;;;
+;77;Wyndham World Wide;;;
+;78;Hyatt Hotels and Resorts;;;
+;79;Hyatt Hotels and Resorts;;;
+;80;Hyatt Hotels and Resorts;;;
+;81;Hyatt Hotels and Resorts;;;
+;82;Hyatt Hotels and Resorts;;;
+;83;Hyatt Hotels and Resorts;;;
+;84;Hyatt Hotels and Resorts;;;
+;85;Carlson Hospitality Worldwide;;;
+;86;Carlson Hospitality Worldwide;;;
+;88;Carlson Hospitality Worldwide;;;
+;89;Carlson Hospitality Worldwide;;;
+;90;Intercontinental Hotel (IHG);;;
+;91;Oberoi Hotels;;;
+;92;Global Hotel Alliance;;;
+;93;Design Hotels;;;
+;94;Trident Hotels;;;
+;95;Ramada;;;
+;96;Clarks Group of Hotels;;;
+;97;Sarovar Hotels and Resorts;;;
+;98;Leisure Hotels;;;
+;99;Mayfair Hotels and Resorts;;;
+;100;Abad Hotels and Resorts;;;
+;101;Usha Lexus Group;;;
+;102;Lemon Tree Hotels;;;
+;103;Lemon Tree Hotels;;;
+;104;Royal Orchid Hotels;;;
+;105;Royal Orchid Hotels;;;
+;106;The Pride Group;;;
+;107;The Pride Group;;;
+;108;CGH Earth;;;
+;109;Eternal Mewar;;;
+;110;Neemrana Hotels;;;
+;111;Elgin Hotels and Resorts;;;
+;112;Club Mahindra Holidays;;;
+;113;Country Inn Hotels and Resorts;;;
+;114;Aitken Spence Hotels;;;
+;115;Sinclairs Hotels and Resorts;;;
+;116;Peerless Hotels Limited;;;
+;117;Carnival Hotels;;;
+;118;Best Western International;;;www.bestwestern.com
+;119;Ashok Group;;;
+;120;Mansingh Group;;;
+;121;Jaypee Hotels;;;
+;122;Narangs International Hotels Pvt Ltd;;;
+;123;Asia Group of Hotels;;;
+;124;Marriott Group;;;
+;125;Vantage Hospitality;;;
+;126;Vantage Hospitality;;;
+;127;Vantage Hospitality;;;
+;128;Vantage Hospitality;;;
+;129;Choice Hotels;;;www.qualityinn.com
+;130;Choice Hotels;;;www.sleepinn.com
+;131;Choice Hotels;;;www.clarionhotel.com
+;132;Choice Hotels;;;www.cambriasuites.com
+;133;Choice Hotels;;;
+;134;Choice Hotels;;;
+;135;Choice Hotels;;;www.econolodge.com
+;136;Choice Hotels;;;www.rodewayinn.com
+;137;Choice Hotels;;;www.ascendcollection.com
+;138;Raffles Hotels and Resorts;;;
+;139;Global Hotel Alliance;;;www.panpacific.com
+;140;Global Hotel Alliance;;;www.parkroyalhotels.com
+;141;Global Hotel Alliance;;;
+;142;Global Hotel Alliance;;;
+;143;Global Hotel Alliance;;;
+;144;Royal Orchid Hotels;;;
+;145;Mantra Group;;;www.breakfree.com.au/
+;146;Mantra Group;;;www.peppers.com.au
+;147;Mantra Group;;;www.mantra.com.au
+;148;TOGA Hospitality Group;;;www.medina.com.au
+;149;TOGA Hospitality Group;;;www.vibehotels.com.au
+;150;TOGA Hospitality Group;;;www.adina.eu.com
+;151;Mirvac Hotels and Resorts;;;
+;152;Mirvac Hotels and Resorts;;;
+;153;Mirvac Hotels and Resorts;;;
+;154;Mirvac Hotels and Resorts;;;
+;155;Mirvac Hotels and Resorts;;;
+;156;Mirvac Hotels and Resorts;;;
+;157;Mirvac Hotels and Resorts;;;
+;158;Mirvac Hotels and Resorts;;;
+;159;Mirvac Hotels and Resorts;;;
+;254;Sawasdee and Woraburi Group;128/9 Sukhumvit Soi 4, Klongtoey, Bangkok 10110 Thailand;;www.woraburi.com
+;255;Sawasdee and Woraburi Group;;;www.sawasdee-hotels.com
+;256;The Sunway Group;;;www.sunwayhotels.com
+;257;Delta Hotels and Resorts;;;www.deltahotels.com
+;258;Rockford Hotels;;;www.rockfordhotels.com.au
+;260;Hyatt Hotels and Resorts;;;
+;261;Amsterdam Hospitality Group;;;www.amsterdamhospitality.com
+;262;La Loft Apartments;;;www.laloft.com.au
+;263;Nirwana Gardens;;;resort.nirwanagardens.com
+;264;Santa Grand Hotels;;;www.santagrandhotels.com
+;265;8 Hotels Collection;;;www.8hotels.com
+;266;Guoman Thistle Hotels;;;www.thistle.com
+;267;Neesa Leisure Limited;;;www.thecambay.com
+;268;Alcon Victor Group;;;www.alconvictorgroup.com
+;269;Apeejay Surrendra Group;;;www.theparkhotels.com
+;270;Assured Hospitality Services Pvt. Ltd;;;www.assuredhospitality.com
+;271;Geetanjali Hotels & Promoters Pvt. Ltd;;;maharani_delhi@yahoo.in
+;272;Breakout Management Services;;info@breakouthotels.com;www.breakouthotels.com
+;273;Chevron Group of Hotels;;sales@chevronhotels.com;www.chevronhotels.com
+;274;Vienna Group of Hotels;;;
+;276;ITC Group;;;http://www.itchotels.in/

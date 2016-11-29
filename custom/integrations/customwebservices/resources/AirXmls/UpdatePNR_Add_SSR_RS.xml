@@ -1,0 +1,38 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Header/>
+   <s:Body xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+      <tns:AirBusinessServiceRS xmlns:n1="http://www.opentravel.org/OTA/2003/05" xmlns:ns2="http://schemas.datacontract.org/2004/07/Radixx.ConnectPoint.Reservation.Request" xmlns:ns1="http://schemas.datacontract.org/2004/07/Radixx.ConnectPoint.Request" xmlns:ns4="http://schemas.datacontract.org/2004/07/Radixx.ConnectPoint.Reservation.Response" xmlns:ns3="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:fusion="http://www.coxandkings.com/integ/suppl/common" xmlns:ns5="http://schemas.datacontract.org/2004/07/Radixx.ConnectPoint.Exceptions" xmlns:tns="http://www.coxandkings.com/integ/suppl/air">
+         <tns:ResponseHeader>
+            <fusion:Status>SUCCESS</fusion:Status>
+            <fusion:UserID>1</fusion:UserID>
+            <fusion:SessionID>2</fusion:SessionID>
+            <fusion:TransactionID>3</fusion:TransactionID>
+         </tns:ResponseHeader>
+         <tns:ResponseBody>
+            <n1:OTA_AirBookRS>
+               <n1:AirReservation>
+                  <n1:PriceInfo>
+                     <n1:FareInfos>
+                        <n1:FareInfo>
+                           <n1:FareInfo>
+                              <n1:Fare TotalFare="200"/>
+                           </n1:FareInfo>
+                        </n1:FareInfo>
+                     </n1:FareInfos>
+                  </n1:PriceInfo>
+                  <n1:TravelerInfo>
+                     <n1:AirTraveler>
+                        <n1:PassengerTypeQuantity Quantity="3"/>
+                        <n1:FlightSegmentRPHs>
+                           <n1:FlightSegmentRPH>1</n1:FlightSegmentRPH>
+                        </n1:FlightSegmentRPHs>
+                     </n1:AirTraveler>
+                  </n1:TravelerInfo>
+                  <n1:BookingReferenceID ID="70"/>
+               </n1:AirReservation>
+               <n1:Errors/>
+            </n1:OTA_AirBookRS>
+         </tns:ResponseBody>
+      </tns:AirBusinessServiceRS>
+   </s:Body>
+</soapenv:Envelope>

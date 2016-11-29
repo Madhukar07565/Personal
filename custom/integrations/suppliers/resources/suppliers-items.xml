@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~ [y] hybris Platform
+  ~ 
+  ~ Copyright (c) 2000-2016 SAP SE
+  ~ All rights reserved.
+  ~ 
+  ~ This software is the confidential and proprietary information of SAP 
+  ~ Hybris ("Confidential Information"). You shall not disclose such 
+  ~ Confidential Information and shall use it only in accordance with the 
+  ~ terms of the license agreement you entered into with SAP Hybris.
+  -->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<itemtypes>
+<!--
+		<itemtype generate="true"
+		   code="MyProduct"
+		   jaloclass="com.cnk.travelogix.suppliers.jalo.MyProduct"
+		   extends="Product"
+		   autocreate="true"
+	   >
+			<attributes>
+				<attribute qualifier="myExampleInitialStringField" type="java.lang.String">
+					<description>My Example Initial String Value</description>
+					<modifiers initial="true"/>
+					<persistence type="property"/>
+				</attribute>
+
+				<attribute qualifier="myExampleBooleanField" type="java.lang.Boolean">
+					<description>Example Initial Boolean Field</description>
+               <persistence type="property"/>
+				</attribute>
+
+				<attribute qualifier="media" type="Media">
+					<persistence type="property"/>
+				</attribute>
+
+			</attributes>
+		</itemtype>
+-->
+		<itemtype autocreate="true" generate="true" code="CheckFileStatusCronJob"
+			extends="CronJob" jaloclass="com.cnk.travelogix.suppliers.jalo.CheckFileStatusCronJob">
+			<attributes>
+				<attribute type="java.util.Date" qualifier="lastRunTime">
+					<persistence type="property" />
+					<modifiers optional="true" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="SendFileStatusProcess"
+			jaloclass="com.cnk.travelogix.suppliers.jalo.SendFileStatusProcess" extends="StoreFrontCustomerProcess"
+			generate="true" autocreate="true">
+			<description>Business process for checking the file status.</description>
+			<attributes>
+				<attribute type="java.lang.String" qualifier="email">
+					<persistence type="property" />
+					<modifiers optional="true" />
+				</attribute>
+			</attributes>
+		</itemtype>
+	</itemtypes>
+</items>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/integration
+        http://www.springframework.org/schema/integration/spring-integration.xsd
+        http://www.springframework.org/schema/integration/file
+        http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+
+	<bean id="batchActivitiesSupplierRateConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activitiessupplierrate" p:converter-ref="batchActivitiesSupplierRateConverter" />
+
+	<bean id="batchActivitySupplierRateDefinitionConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activitysupplierratedefinition" p:converter-ref="batchActivitySupplierRateDefinitionConverter" />
+
+	<bean id="batchActivityRateDetailDefinitionConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activityratedetaildefinition" p:converter-ref="batchActivityRateDetailDefinitionConverter" />
+
+	<bean id="batchActivityRateAdvDefinitionConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="activityrateadvdefinition" p:converter-ref="batchActivityRateAdvDefinitionConverter" />
+
+	<bean id="defaultImpexProductHeader" class="java.lang.String">
+		<constructor-arg>
+			<value>
+				$contentCatalog=Default
+				$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+			</value>
+		</constructor-arg>
+	</bean>
+	<bean id="batchActivitiesSupplierRateConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+				insert_update ActivitiesSupplierRate;active;ancillary(code,$contentCV);approvalStatus(code);$contentCV;city(isocode)[unique=true];code[unique=true];currency(isocode);effectiveFrom[dateformat=dd.MM.yyyy	hh:mm:ss];lockedBy(uid);product(code,$contentCV)[unique=true];productSubCategory(code,$contentCV)[unique=true];productType(code,$contentCV);reason;remarks;supplier(code,$contentCV)[unique=true];supplierMarket(code,$contentCV)[unique=true];validityPeriod[dateformat=dd.MM.yyyy]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16}</value>
+		</property>
+	</bean>
+
+	<bean id="batchActivitySupplierRateDefinitionConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+				insert_update ActivitySupplierRateDefinition;absSupplierRate(code,$contentCV,product(code,$contentCV),supplier(code,$contentCV));clientType(code)[unique=true];commisionType(code);commissionThreshold(code);commissionValue;companyRateCode(code);companyType(code);freeSaleLimited;priceComponent(code);rateTypeApplicableFor(code)[unique=true];seasonality(code)[unique=true];supplierRateCode(code)[unique=true];supplierType(code)[unique=true];travelFrom[dateformat=dd.MM.yyyy	hh:mm:ss]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14}</value>
+		</property>
+	</bean>
+
+	<bean id="batchActivityRateDetailDefinitionConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+				insert_update ActivityRateDetailDefinition;activitySuppRateDef(rateTypeApplicableFor(code),supplierRateCode(code));maxPaxCount[unique=true];minPaxCount[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2}</value>
+		</property>
+	</bean>
+
+	<bean id="batchActivityRateAdvDefinitionConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+				insert ActivityRateAdvDefinition;blockOutDate;childPolicy[lang=en];externalDescription[lang=en];internalDescription[lang=en];maxPax;minPax;nationality(isocode);operatorDetails[lang=en];operatorName(code);overrideRate;priceExclusion[lang=en];salesDate;taxInformation[lang=en];voucherInformation[lang=en]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13}</value>
+		</property>
+	</bean>
+</beans>

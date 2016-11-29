@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<alias alias="travelogixCommonDataFacade" name="travelogixCommonDataFacadeImpl" />
+	<bean id="travelogixCommonDataFacadeImpl" class="com.cnk.travelogix.operations.facades.impl.TravelogixCommonDataFacadeImpl">
+	</bean>
+
+	<!-- Reconfirmation Configuration Master -->
+
+	<alias alias="reconfirmationConfigFacade" name="travelogixReconfirmationConfigFacadeImpl" />
+	<bean id="travelogixReconfirmationConfigFacadeImpl"
+		class="com.cnk.travelogix.operations.facades.impl.TravelogixReconfirmationConfigFacadeImpl">
+	<property name="lockUnlockService" ref="lockUnlockService"></property>
+	</bean>
+
+	<alias name="defaultReconfirmationIntervalPopulator" alias="reconfirmationIntervalPopulator" />
+	<bean id="defaultReconfirmationIntervalPopulator"
+		class="com.cnk.travelogix.operations.facades.populator.ReconfirmationIntervalPopulator">
+	</bean>
+	<alias name="defaultReconfirmationIntervalConverter" alias="reconfirmationIntervalConverter" />
+	<bean id="defaultReconfirmationIntervalConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.operations.data.ReconfirmationIntervalData" />
+		<property name="populators">
+			<list>
+				<ref bean="reconfirmationIntervalPopulator" />
+			</list>
+		</property>
+	</bean>
+
+
+	<alias name="defaultTravelogixB2BUnitPopulator" alias="travelogixB2BUnitPopulator" />
+	<bean id="defaultTravelogixB2BUnitPopulator"
+		class="com.cnk.travelogix.operations.facades.populator.TravelogixB2BUnitPopulator">
+	</bean>
+
+	<alias name="defaultTravelogixB2BUnitConverter" alias="travelogixB2BUnitConverter" />
+	<bean id="defaultTravelogixB2BUnitConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.operations.data.TravelogixB2BUnitData" />
+		<property name="populators">
+			<list>
+				<ref bean="travelogixB2BUnitPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultSupplierReconfirmationConfigPopulator" alias="supplierReconfirmationConfigPopulator" />
+	<bean id="defaultSupplierReconfirmationConfigPopulator"
+		class="com.cnk.travelogix.operations.facades.populator.SupplierReconfirmationConfigPopulator">
+		<property name="supplierConverter" ref="supplierConverter" />
+	<property name="reconfirmationIntervalConverter" ref="reconfirmationIntervalConverter" />
+	</bean>
+
+	<alias name="defaultSupplierReconfirmationConfigConverter" alias="supplierReconfirmationConfigConverter" />
+	<bean id="defaultSupplierReconfirmationConfigConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.operations.data.SupplierReconfirmationConfigData" />
+		<property name="populators">
+			<list>
+				<ref bean="supplierReconfirmationConfigPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultClientReconfirmationConfigPopulator" alias="clientReconfirmationConfigPopulator" />
+	<bean id="defaultClientReconfirmationConfigPopulator"
+		class="com.cnk.travelogix.operations.facades.populator.ClientReconfirmationConfigPopulator">
+		<property name="travelogixB2BUnitConverter" ref="travelogixB2BUnitConverter" />
+	<property name="reconfirmationIntervalConverter" ref="reconfirmationIntervalConverter" />
+	</bean>
+
+	<alias name="defaultClientReconfirmationConfigConverter" alias="clientReconfirmationConfigConverter" />
+	<bean id="defaultClientReconfirmationConfigConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.operations.data.ClientReconfirmationConfigData" />
+		<property name="populators">
+			<list>
+				<ref bean="clientReconfirmationConfigPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultReconfirmationConfigPopulator" alias="reconfirmationConfigPopulator" />
+	<bean id="defaultReconfirmationConfigPopulator"
+		class="com.cnk.travelogix.operations.facades.populator.ReconfirmationConfigPopulator">
+		<property name="employeeConverter" ref="employeeConverter" />
+		<property name="clientReconfirmationConfigConverter" ref="clientReconfirmationConfigConverter" />
+		<property name="supplierReconfirmationConfigConverter" ref="supplierReconfirmationConfigConverter" />
+		<property name="reconfirmationIntervalConverter" ref="reconfirmationIntervalConverter" />
+		<property name="productConverter" ref="productConverter" />
+		<property name="categoryConverter" ref="categoryConverter" />
+		<property name="productCategorySubTypeConverter" ref="productCategorySubTypeConverter" />
+	<property name="reconfirmationTravelDestinationConverter"
+			ref="reconfirmationTravelDestinationConverter" />
+	
+	</bean>
+	<alias name="defaultReconfirmationConfigConverter" alias="reconfirmationConfigConverter" />
+	<bean id="defaultReconfirmationConfigConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.operations.data.ReconfirmationConfigData" />
+		<property name="populators">
+			<list>
+				<ref bean="reconfirmationConfigPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Populator and Converter START -->
+	<!-- Populator -->
+	<alias name="defaultReconfirmationTravelDestinationConverter"
+		alias="reconfirmationTravelDestinationConverter" />
+	<bean id="defaultReconfirmationTravelDestinationConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.operations.data.ReconfirmationTravelDestinationData" />
+		<property name="populators">
+			<list>
+				<ref bean="reconfirmationTravelDestinationPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultReconfirmationTravelDestinationPopulator"
+		alias="reconfirmationTravelDestinationPopulator" />
+	<bean id="defaultReconfirmationTravelDestinationPopulator"
+		class="com.cnk.travelogix.operations.facades.populator.ReconfirmationTravelDestinationPopulator">
+	</bean>
+
+
+	<!-- Continent Populator -->
+	<alias name="defaultContinentConverter" alias="continentConverter" />
+	<bean id="defaultContinentConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.operations.data.ContinentData" />
+		<property name="populators">
+			<list>
+				<ref bean="continentPopulator" />
+			</list>
+		</property>
+	</bean>
+
+		<alias name="defaultContinentPopulator" alias="continentPopulator" />
+	<bean id="defaultContinentPopulator"
+		class="com.cnk.travelogix.operations.facades.populator.ContinentPopulator">
+		<property name="countryConverter" ref="countryConverter" />
+	</bean>
+
+<alias name="defaultProductCategorySubTypePopulator" alias="productCategorySubTypePopulator" />
+	<bean id="defaultProductCategorySubTypePopulator"
+		class="com.cnk.travelogix.operations.facades.populator.ProductCategorySubTypePopulator">
+		<property name="supplierConverter" ref="supplierConverter" />
+	</bean>
+
+	<alias name="defaultProductCategorySubTypeConverter" alias="productCategorySubTypeConverter" />
+	<bean id="defaultProductCategorySubTypeConverter" parent="defaultCategoryConverter">
+		<property name="targetClass" value="de.hybris.platform.commercefacades.product.data.ProductCategorySubTypeData" />
+		<property name="populators">
+			<list>
+				<ref bean="productCategorySubTypePopulator" />
+			</list>
+		</property>
+	</bean>
+
+
+
+	<!-- Populator and Converter END -->
+	<!-- Reverse Populator START -->
+	
+	<alias name="defaultReconfirmationTravelDestinationReverseConverter"
+		alias="reconfirmationTravelDestinationReverseConverter" />
+	<bean id="defaultReconfirmationTravelDestinationReverseConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.datamodel.operation.reconfirmationtraveldestination.model.ReconfirmationTravelDestinationModel" />
+		<property name="populators">
+			<list>
+				<ref bean="reconfirmationTravelDestinationReversePopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultReconfirmationTravelDestinationReversePopulator"
+		alias="reconfirmationTravelDestinationReversePopulator" />
+	<bean id="defaultReconfirmationTravelDestinationReversePopulator"
+		class="com.cnk.travelogix.operations.facades.populator.ReconfirmationTravelDestinationReversePopulator">
+	</bean>	
+
+<alias name="defaultReconfirmationIntervalReverseConverter"
+		alias="reconfirmationIntervalReverseConverter" />
+	<bean id="defaultReconfirmationIntervalReverseConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.datamodel.operation.reconfirmationinterval.model.ReconfirmationIntervalModel" />
+		<property name="populators">
+			<list>
+				<ref bean="reconfirmationIntervalReversePopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultReconfirmationIntervalReversePopulator"
+		alias="reconfirmationIntervalReversePopulator" />
+	<bean id="defaultReconfirmationIntervalReversePopulator"
+		class="com.cnk.travelogix.operations.facades.populator.ReconfirmationIntervalReversePopulator">
+	</bean>	
+
+<alias name="defaultSupplierReconfirmationConfigReverseConverter"
+		alias="supplierReconfirmationConfigReverseConverter" />
+	<bean id="defaultSupplierReconfirmationConfigReverseConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.datamodel.operation.supplierreconfirmationconfig.model.SupplierReconfirmationConfigModel" />
+		<property name="populators">
+			<list>
+				<ref bean="supplierReconfirmationConfigReversePopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultSupplierReconfirmationConfigReversePopulator"
+		alias="supplierReconfirmationConfigReversePopulator" />
+	<bean id="defaultSupplierReconfirmationConfigReversePopulator"
+		class="com.cnk.travelogix.operations.facades.populator.SupplierReconfirmationConfigReversePopulator">
+	</bean>	
+
+	<alias name="defaultClientReconfirmationConfigReverseConverter" alias="clientReconfirmationConfigReverseConverter" />
+	<bean id="defaultClientReconfirmationConfigReverseConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.operations.data.ClientReconfirmationConfigData" />
+		<property name="populators">
+			<list>
+				<ref bean="clientReconfirmationConfigReversePopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultClientReconfirmationConfigReversePopulator" alias="clientReconfirmationConfigReversePopulator" />
+	<bean id="defaultClientReconfirmationConfigReversePopulator"
+		class="com.cnk.travelogix.operations.facades.populator.ClientReconfirmationConfigReversePopulator">
+	</bean>
+	
+		<alias name="defaultReconfirmationConfigReverseConverter" alias="reconfirmationConfigReverseConverter" />
+	<bean id="defaultReconfirmationConfigReverseConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.datamodel.operation.reconfirmationconfig.model.ReconfirmationConfigModel" />
+		<property name="populators">
+			<list>
+				<ref bean="reconfirmationConfigReversePopulator" />
+			</list>
+		</property>
+	</bean>
+	
+		<alias name="defaultReconfirmationConfigReversePopulator" alias="reconfirmationConfigReversePopulator" />
+	<bean id="defaultReconfirmationConfigReversePopulator"
+		class="com.cnk.travelogix.operations.facades.populator.ReconfirmationConfigReversePopulator">
+	</bean>
+
+	
+	<!-- Reverse Populator END -->
+
+</beans>

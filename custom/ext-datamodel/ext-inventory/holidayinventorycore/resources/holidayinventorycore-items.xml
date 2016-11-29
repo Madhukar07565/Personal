@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<enumtypes>
+		<enumtype code="ValidForType">
+			<value code="ALL_TOUR_DATES" />
+			<value code="SPECIFIC_TOUR_DATES" />
+		</enumtype>
+		<enumtype code="InventoryRequestBy">
+			<value code="PAX"></value>
+			<value code="ROOMS"></value>
+		</enumtype>
+		<enumtype code="ThresholdApplicableOn">
+			<value code="TOUR_DATE"></value>
+			<value code="TOTAL_UTILIZATION"></value>
+		</enumtype>
+	</enumtypes>
+
+	<relations>
+		<relation code="HolidayInventoryDetailToHolidayRoomInfo"
+			autocreate="true" generate="true" localized="false">
+			<sourceElement qualifier="holidayInventoryDetail" type="HolidayInventoryDetail"
+				cardinality="one">
+				<modifiers read="true" write="true" search="true"
+					optional="true" />
+			</sourceElement>
+			<targetElement qualifier="holidayProductRoomInfo" type="HolidayRoomInfo"
+				cardinality="many" ordered="false">
+				<modifiers read="true" write="true" search="true"
+					optional="true" />
+			</targetElement>
+		</relation>
+
+		<relation localized="false"
+			code="HolidayInvSupplierAdvanceDefinition2HolidayPenaltyCharges">
+			<sourceElement type="HolidayInvSupplierAdvanceDefinition"
+				qualifier="HolidayInvSupplierAdvanceDefinition" cardinality="one" />
+			<targetElement type="HolidayPenaltyCharges" qualifier="penaltyCharges"
+				cardinality="many" />
+		</relation>
+
+		<relation localized="false"
+			code="HolidayInventoryDefinition2HolidayCompanySpecificInventory">
+			<sourceElement type="HolidayInventoryDefinition"
+				qualifier="holidayInventoryDefinition" cardinality="one" />
+			<targetElement type="HolidayCompanySpecificInventory"
+				qualifier="distributedInventories" cardinality="many" />
+		</relation>
+
+		<relation localized="false"
+			code="HolidayPenaltyCharges2HolidayCutOffAndCharges">
+			<sourceElement type="HolidayPenaltyCharges" qualifier="holidayPenaltyCharges"
+				cardinality="one" />
+			<targetElement type="HolidayCutOffAndCharges"
+				qualifier="charges" cardinality="many" />
+		</relation>
+
+		<!-- <relation localized="false"
+			code="HolidayInventoryDefinition2HolidayInventoryDetail">
+			<sourceElement type="HolidayInventoryDefinition"
+				qualifier="holidayInventoryDefinition" cardinality="one" />
+			<targetElement type="HolidayInventoryDetail" qualifier="inventoryDetails"
+				cardinality="many" />
+		</relation> -->
+	</relations>
+
+	<itemtypes>
+		<typegroup name="HolidayInventoryRequestGroup">
+			<itemtype code="HolidayInventoryRequest" extends="AbstractInventoryRequest"
+				autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.datamodel.holiday.inventory.jalo.HolidayInventoryRequest">
+				<description> Inventory request for Holiday </description>
+				<deployment table="holidayinvreq" typecode="21453" />
+				<attributes>
+					<attribute qualifier="product" type="HolidayProduct">
+						<description>Inventory holiday request product Name</description>
+						<modifiers read="true" write="true" search="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="productFlavour" type="HolidayFlavor">
+						<description>Inventory holiday request Product Flavour Name</description>
+						<modifiers read="true" write="true" search="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="priceRangeFrom" type="java.math.BigDecimal">
+						<description>Inventory Price Range From </description>
+						<modifiers read="true" write="true" search="true"
+							optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="priceRangeTo" type="java.math.BigDecimal">
+						<description>Inventory Price Range To </description>
+						<modifiers read="true" write="true" search="true"
+							optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="inventoryDefnitionCode" type="java.lang.String">
+						<description>Inventory Definition Code</description>
+						<modifiers read="true" write="true" search="true"
+							optional="true" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="isFlightIncluded" type="java.lang.Boolean">
+						<description>Inventory isFlightIncluded </description>
+						<modifiers read="true" write="true" search="true"
+							optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="packageCategory" type="PackageCategory">
+						<description>Inventory package Category </description>
+						<modifiers read="true" write="true" search="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AbstractHolidayInventoryDetail" autocreate="true"
+				abstract="true" extends="AbstractInventoryDetail"
+				jaloclass="com.cnk.travelogix.datamodel.holiday.inventory.jalo.AbstractHolidayInventoryDetail">
+				<description>Abstract Holiday Inventory Detail.</description>
+				<attributes>
+					<attribute qualifier="noOfPax" type="java.lang.Integer">
+						<description>no Of Pax</description>
+						<modifiers read="true" write="true" search="true"
+							optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="anyRooms" type="java.lang.Integer">
+						<description>Any Rooms</description>
+						<modifiers read="true" write="true" search="true"
+							optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="roomTypeSingle" type="java.lang.Integer">
+						<description>Room Type Single</description>
+						<modifiers read="true" write="true" search="true"
+							optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="roomTypeDouble" type="java.lang.Integer">
+						<description>Room Type Double</description>
+						<modifiers read="true" write="true" search="true"
+							optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="roomTypeTriple" type="java.lang.Integer">
+						<description>Room Type Triple</description>
+						<modifiers read="true" write="true" search="true"
+							optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="daysOfWeek" type="WeekDayCollection">
+						<description>days of week</description>
+						<modifiers read="true" write="true" search="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="time" type="java.lang.String">
+						<description>time</description>
+						<modifiers read="true" write="true" search="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="specificDates" type="DateCollection">
+						<description>specific date</description>
+						<modifiers read="true" write="true" search="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="travelDateRange"
+						type="de.hybris.platform.util.StandardDateRange">
+						<description>travel date range</description>
+						<modifiers read="true" write="true" search="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="HolidayInventoryDetail" autocreate="true"
+				generate="true" extends="AbstractHolidayInventoryDetail"
+				jaloclass="com.cnk.travelogix.datamodel.holiday.inventory.jalo.HolidayInventoryDetail">
+				<description>Holiday Inventory Details.</description>
+				<deployment table="holinvodetail" typecode="23075" />
+			</itemtype>
+
+			<itemtype code="PackageInclusionInfo" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.datamodel.holiday.inventory.jalo.PackageInclusionInfo">
+				<description>Package Inclusion Info</description>
+				<deployment table="packageincinfo" typecode="23018" />
+				<attributes>
+					<attribute qualifier="serviceBasedDayWiseItineraries"
+						type="AbstractDayWiseItinerary">
+						<description>Service Based Day Wise Itineraries</description>
+						<modifiers read="true" write="true" search="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="itineraryBasedDayWiseItineraries"
+						type="DayWiseItinerary">
+						<description>Itinerary Based Day Wise Itineraries</description>
+						<modifiers read="true" write="true" search="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="HolidayRoomInfo" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.datamodel.holiday.inventory.jalo.HolidayRoomInfo">
+				<description>Holiday Room Information Details.</description>
+				<deployment table="holidayroominfo" typecode="23022" />
+				<attributes>
+					<attribute qualifier="city" type="City">
+						<description>holiday Room Info City</description>
+						<modifiers read="true" write="true" search="true"
+							optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="checkInDate" type="java.util.Date">
+						<description>Room Check In Date</description>
+						<modifiers read="true" write="true" search="true"
+							optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="checkOutDate" type="java.util.Date">
+						<description>Room Check Out Date</description>
+						<modifiers read="true" write="true" search="true"
+							optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="accommodation" type="Accommodation">
+						<description>Inventory holiday request accommodation
+						</description>
+						<modifiers read="true" write="true" search="true"
+							optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="rating" type="Rating">
+						<description>Inventory holiday request rating</description>
+						<modifiers read="true" write="true" search="true"
+							optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="roomCategory" type="RoomCategory">
+						<description>Inventory holiday request Room Category</description>
+						<modifiers read="true" write="true" search="true"
+							optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="HolidayDetailedRoomInfo" autocreate="true"
+				generate="true" extends="HolidayRoomInfo"
+				jaloclass="com.cnk.travelogix.datamodel.holiday.inventory.jalo.HolidayDetailedRoomInfo">
+				<description>Holiday Detailed RoomInfo.</description>
+				<attributes>
+					<attribute qualifier="noOfNights" type="java.lang.Integer">
+						<description>No Of Nights</description>
+						<modifiers read="true" write="true" search="true"
+							optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="packageInclusion" type="PackageInclusionInfo">
+						<description>package Inclusion</description>
+						<modifiers read="true" write="true" search="true"
+							optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="HolidayRoomLevelInvDetail" abstract="true"
+				generate="true" extends="HolidayInventoryDetail"
+				jaloclass="com.cnk.travelogix.datamodel.holiday.inventory.jalo.HolidayRoomLevelInvDetail">
+				<description>Holiday Room Level InvDetail</description>
+			</itemtype>
+
+			<itemtype code="HolidayPaxRoomInvDetail" generate="true"
+				extends="HolidayRoomLevelInvDetail"
+				jaloclass="com.cnk.travelogix.datamodel.holiday.inventory.jalo.HolidayPaxRoomInvDetail">
+				<description>Holiday Pax Room InvDetail.</description>
+				<attributes>
+					<attribute qualifier="noOfRooms" type="java.lang.Integer">
+						<description>Inventory Holiday no Of Rooms</description>
+						<modifiers read="true" write="true" search="true"
+							optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="HolidayAnyRoomInvDetail" generate="true"
+				extends="HolidayRoomLevelInvDetail"
+				jaloclass="com.cnk.travelogix.datamodel.holiday.inventory.jalo.HolidayAnyRoomInvDetail">
+				<description>Holiday Any Room Inventory Detail.</description>
+			</itemtype>
+
+			<itemtype code="HolidayRoomTypeInvDetail" generate="true"
+				extends="HolidayRoomLevelInvDetail"
+				jaloclass="com.cnk.travelogix.datamodel.holiday.inventory.jalo.HolidayRoomTypeInvDetail">
+				<description>Holiday Room Type InvDetail.</description>
+			</itemtype>
+
+			<itemtype code="TravelRangeHolidayInvDetails" autocreate="true"
+				generate="true" extends="HolidayInventoryDetail"
+				jaloclass="com.cnk.travelogix.datamodel.holiday.inventory.jalo.TravelRangeHolidayInvDetails">
+				<description>TravelRange Holiday InvDetails</description>
+			</itemtype>
+
+			<itemtype code="SpecificTravelDatesHolidayInvDetails"
+				autocreate="true" generate="true" extends="HolidayInventoryDetail"
+				jaloclass="com.cnk.travelogix.datamodel.holiday.inventory.jalo.SpecificTravelDatesHolidayInvDetails">
+				<description>Specific Travel Dates Holiday InvDetails</description>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="HolidayInventoryDefinition">
+			<itemtype code="HolidayCutOffAndCharges"
+				jaloclass="com.cnk.travelogix.holiday.inventory.core.jalo.HolidayCutOffAndCharges"
+				generate="true" autocreate="true" extends="CutOffsAndCharges">
+				<attributes>
+					<attribute type="NonAirPriceComponentType" qualifier="priceComponent">
+						<description>Price 
+						component</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ThresholdApplicableOn" qualifier="applicableOn">
+						<description>Applicable on</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="HolidayInvSupplierAdvanceDefinition"
+				jaloclass="com.cnk.travelogix.holiday.inventory.core.jalo.HolidayInvSupplierAdvanceDefinition"
+				generate="true" autocreate="true" extends="GenericItem">
+				<description>HolidayInvSupplierAdvanceDefinition</description>
+				<deployment table="holidayinvsupadvdef" typecode="21464" />
+				<attributes>
+					<attribute type="CutOffForFreeSale" qualifier="cutOffForFreeSale">
+						<description>Cut off definition for inventory</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="StandardDateRangeSet" qualifier="blockOutDates">
+						<description>Cut off definition for inventory</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="HolidayInventoryDefinition"
+				jaloclass="com.cnk.travelogix.holiday.inventory.core.jalo.HolidayInventoryDefinition"
+				generate="true" autocreate="true" extends="AbstractInventoryDefinition">
+				<description>Inventory</description>
+				<deployment table="holidayinventorydef" typecode="21457" />
+				<attributes>
+					<attribute qualifier="overBookingLimit" type="java.lang.Long">
+						<description>Over booking limit</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="product" type="HolidayProduct">
+						<description>Holiday product</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="flavor" type="HolidayFlavor">
+						<description>Holiday flavor</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="packageCategory" type="PackageCategory">
+						<description>Package category</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="market" type="Market">
+						<description>Market</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="requestedBy" type="InventoryRequestBy">
+						<description>Inventory 
+						requested by</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="advanceDefinition"
+						type="HolidayInvSupplierAdvanceDefinition">
+						<description>Holiday supplier advance definition</description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="HolidayCompanySpecificInventory" generate="true"
+				autocreate="true"
+				jaloclass="com.cnk.travelogix.holiday.inventory.core.jalo.HolidayCompanySpecificInventory"
+				extends="HolidayInventoryDetail">
+				<description>Represents Holiday Company Specific Inventory</description>
+				<deployment table="holidaycompspecificinv" typecode="21454" />
+				<attributes>
+					<attribute type="StrategicBusinessUnit" qualifier="sbu">
+						<description>SBU</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="BusinessUnit" qualifier="bu">
+						<description>BU</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Market" qualifier="market">
+						<description>Market</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DistributionChannel" qualifier="distributionChannel">
+						<description>Distribution channel</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Division" qualifier="division">
+						<description>Division</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SalesOffice" qualifier="salesOffice">
+						<description>Sales office</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="stopSales" type="java.Lang.Boolean">
+						<description>Stop Sales</description>
+						<persistence type="property" />
+						<defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="liabilityOnUtilization" type="java.Lang.Double">
+						<description>Liability On Utilization</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="HolidayPenaltyCharges"
+				jaloclass="com.cnk.travelogix.holiday.inventory.core.jalo.HolidayPenaltyCharges"
+				generate="true" autocreate="true" extends="GenericItem">
+				<description>Holiday Penalty Charges</description>
+				<deployment table="holidaypenaltycharges" typecode="21458" />
+				<attributes>
+					<attribute type="ValidForType" qualifier="validateForType">
+						<persistence type="property" />
+						<description>Type of package</description>
+					</attribute>
+					<attribute type="DefinedBy" qualifier="definedBy">
+						<persistence type="property" />
+						<description>Holiday Defined By</description>
+					</attribute>
+					<attribute type="AppliedOn" qualifier="appliedOn">
+						<persistence type="property" />
+						<description>Applied on</description>
+					</attribute>
+					<attribute type="ThresholdApplicableOn" qualifier="thresholdAppliedOn">
+						<persistence type="property" />
+						<description>Threshold applicable on</description>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

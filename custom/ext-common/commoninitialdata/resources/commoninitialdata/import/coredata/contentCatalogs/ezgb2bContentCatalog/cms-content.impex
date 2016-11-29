@@ -1,0 +1,58 @@
+#
+# Import the CMS content for the site
+#
+$contentCatalog=ezgb2bContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+
+INSERT_UPDATE PageTemplate ; $contentCV[unique=true] ; uid[unique=true]    ; name                  ; frontendTemplateName         ; restrictedPageTypes(code) ; active[default=true]
+                           ;                         ; LandingPageTemplate ; Landing Page Template ; layout/LandingPageLayoutPage ; CategoryPage,ContentPage  
+
+INSERT_UPDATE ContentSlotName ; name[unique=true]  ; template(uid,$contentCV)[unique=true] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; EzgTopHeader       ; LandingPageTemplate                   ;                           ; wide
+                              ; CustomerDetails    ; LandingPageTemplate                   ;                           ; wide
+                              ; TopDealDetails     ; LandingPageTemplate                   ;                           ; wide
+                              ; PromotionDetails   ; LandingPageTemplate                   ;                           ; wide
+                              ; FlightAndHotelDeal ; LandingPageTemplate                   ;                           ; wide
+                              ; EzgFooterDetails   ; LandingPageTemplate                   ;                           ; footer
+                              ; EzgPanels          ; LandingPageTemplate                   ;                           ; wide
+
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]       ; name                       ; active ; cmsComponents(&componentRef)                                                                                       
+                          ;                         ; EzgTopHeaderSlot       ; EZG Top Header Slot        ; true   ; EzgTopHeaderComponent
+                          ;                         ; CustomerDetailsSlot    ; Customer Details Slot      ; true   ; CustomerDetailsComponent
+                          ;                         ; TopDealDetailsSlot     ; Top Deal Details Slot      ; true   ; TopDealDetailsComponent
+                          ;                         ; PromotionDetailsSlot   ; Promotion Details Slot     ; true   ; PromotionDetailsComponent
+                          ;                         ; FlightAndHotelDealSlot ; Flight And Hotel Deal Slot ; true   ; FlightAndHotelDealComponent
+                          ;                         ; EzgFooterDetailsSlot   ; EZG Footer Detail Slot     ; true   ; EzgFooterDetailsComponent
+                          ;                         ; EzgPanelsSlot          ; EZG Panels Slot            ; true   ; TopDealPanelComponent
+
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]                           ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
+                                     ;                         ; EzgTopHeaderSlot-LandingPageTemplate       ; EzgTopHeader          ; LandingPageTemplate                       ; EzgTopHeaderSlot                         ; true
+                                     ;                         ; CustomerDetailsSlot-LandingPageTemplate    ; CustomerDetails       ; LandingPageTemplate                       ; CustomerDetailsSlot                      ; true
+                                     ;                         ; TopDealDetailsSlot-LandingPageTemplate     ; TopDealDetails        ; LandingPageTemplate                       ; TopDealDetailsSlot                       ; true
+                                     ;                         ; PromotionDetailsSlot-LandingPageTemplate   ; PromotionDetails      ; LandingPageTemplate                       ; PromotionDetailsSlot                     ; true
+                                     ;                         ; FlightAndHotelDealSlot-LandingPageTemplate ; FlightAndHotelDeal    ; LandingPageTemplate                       ; FlightAndHotelDealSlot                   ; true
+                                     ;                         ; EzgFooterDetailsSlot-LandingPageTemplate   ; EzgFooterDetails      ; LandingPageTemplate                       ; EzgFooterDetailsSlot                     ; true
+                                     ;                         ; EzgPanelsSlot-LandingPageTemplate          ; EzgPanels             ; LandingPageTemplate                       ; EzgPanelsSlot                            ; true
+
+INSERT_UPDATE ContentPage ; $contentCV[unique=true] ; uid[unique=true]  ; name                ; masterTemplate(uid,$contentCV) ; label             ; defaultPage[default='true'] ; approvalStatus(code)[default='approved'] ; homepage[default='false']
+                          ;                         ; FlightLandingPage ; Flight Landing Page ; LandingPageTemplate            ; FlightLandingPage ; true                        ;                                          ; true
+
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                         ; position[unique=true] ; page(uid,$contentCV)[unique=true] ; contentSlot(uid,$contentCV)[unique=true]  
+                                 ;                         ; EzgTopHeaderSlot-FlightLandingPage       ; EzgTopHeader          ; FlightLandingPage                 ; EzgTopHeaderSlot
+                                 ;                         ; CustomerDetailsSlot-FlightLandingPage    ; CustomerDetails       ; FlightLandingPage                 ; CustomerDetailsSlot
+                                 ;                         ; TopDealDetailsSlot-FlightLandingPage     ; TopDealDetails        ; FlightLandingPage                 ; TopDealDetailsSlot
+                                 ;                         ; PromotionDetailsSlot-FlightLandingPage   ; PromotionDetails      ; FlightLandingPage                 ; PromotionDetailsSlot
+                                 ;                         ; FlightAndHotelDealSlot-FlightLandingPage ; FlightAndHotelDeal    ; FlightLandingPage                 ; FlightAndHotelDealSlot
+                                 ;                         ; EzgFooterDetailsSlot-FlightLandingPage   ; EzgFooterDetails      ; FlightLandingPage                 ; EzgFooterDetailsSlot
+                                 ;                         ; EzgPanelsSlot-FlightLandingPage          ; EzgPanels             ; FlightLandingPage                 ; EzgPanelsSlot
+
+INSERT_UPDATE JspIncludeComponent ; $contentCV[unique=true] ; uid[unique=true]            ; name                            ; page                                                                          ; actions(uid,$contentCV) ; &componentRef                               
+                                  ;                         ; EzgTopHeaderComponent       ; EZG Top Header Component        ; /WEB-INF/views/responsive/pages/ezg/header/header.jsp                         ;                         ; EzgTopHeaderComponent
+                                  ;                         ; CustomerDetailsComponent    ; Customer Details Component      ; /WEB-INF/views/responsive/pages/ezg/landingPage/customerDetails.jsp           ;                         ; CustomerDetailsComponent
+                                  ;                         ; TopDealDetailsComponent     ; Top Deal Details Component      ; /WEB-INF/views/responsive/pages/ezg/landingPage/topDealDetails.jsp            ;                         ; TopDealDetailsComponent
+                                  ;                         ; PromotionDetailsComponent   ; Promotion Details Component     ; /WEB-INF/views/responsive/pages/ezg/landingPage/promotionDetails.jsp          ;                         ; PromotionDetailsComponent
+                                  ;                         ; FlightAndHotelDealComponent ; Flight And Hotel Deal Component ; /WEB-INF/views/responsive/pages/ezg/landingPage/flightAndHotelDeal.jsp        ;                         ; FlightAndHotelDealComponent
+                                  ;                         ; EzgFooterDetailsComponent   ; EZG Footer Details Component    ; /WEB-INF/views/responsive/pages/ezg/footer/footer.jsp                         ;                         ; EzgFooterDetailsComponent
+                                  ;                         ; TopDealPanelComponent       ; Top Deal Panel Component        ; /WEB-INF/views/responsive/pages/ezg/landingPage/flight/topFlightDealPanel.jsp ;                         ; TopDealPanelComponent
+

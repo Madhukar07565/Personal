@@ -1,0 +1,5 @@
+
+
+INSERT Customer;originalUid[unique=true];uid[unique=true];@password[translator=de.hybris.platform.impex.jalo.translators.ConvertPlaintextToEncodedUserPasswordTranslator][default='md5:12341234'];name;groups(uid)[mode=append]
+;checkout_test@ezg.com;checkout_test@ezg.com;;Test1 Checkout;customergroup
+

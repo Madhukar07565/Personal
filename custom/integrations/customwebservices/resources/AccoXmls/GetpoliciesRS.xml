@@ -1,0 +1,61 @@
+<AccoInterfaceRS xmlns="http://www.coxandkings.com/integ/suppl/accointerface" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+   <ResponseHeader xmlns="http://www.coxandkings.com/integ/suppl/acco">
+      <Status xmlns="http://www.coxandkings.com/integ/suppl/common">SUCCESS</Status>
+      <UserID xmlns="http://www.coxandkings.com/integ/suppl/common">1</UserID>
+      <SessionID xmlns="http://www.coxandkings.com/integ/suppl/common">2</SessionID>
+      <TransactionID xmlns="http://www.coxandkings.com/integ/suppl/common">3</TransactionID>
+   </ResponseHeader>
+   <ResponseBody>
+      <OTA_HotelGetCancellationPolicyRSWrapper xmlns="http://www.coxandkings.com/integ/suppl/acco">
+         <SupplierID>JACOB</SupplierID>
+         <Sequence>2</Sequence>
+         <ns0:OTA_HotelGetCancellationPolicyRS xmlns:ns0="http://www.opentravel.org/OTA/2003/05">
+            <ns0:ResNo>99</ns0:ResNo>
+            <ns0:Policies>
+               <ns0:Policy>
+                  <ns0:ExCancelDays>4</ns0:ExCancelDays>
+                  <ns0:ChargeType>Number of nights</ns0:ChargeType>
+                  <ns0:ChargeRate>1.00</ns0:ChargeRate>
+                  <ns0:Description>4 day(s) prior to arrival. If cancelled less than 4 day(s) prior then 1 night will be charged. In the event of a no show or early checkout then a charge of up to 100% of the entire cost of the booking may be applied.</ns0:Description>
+                  <ns0:Currency>GBP</ns0:Currency>
+                  <ns0:Days>
+                     <ns0:Charge_Date>2016-07-</ns0:Charge_Date>
+                     <ns0:Charge>1.00</ns0:Charge>
+                  </ns0:Days>
+                  <ns0:Days>
+                     <ns0:Charge_Date>2016-06-30</ns0:Charge_Date>
+                     <ns0:Charge>1.00</ns0:Charge>
+                  </ns0:Days>
+                  <ns0:Days>
+                     <ns0:Charge_Date>2016-06-29</ns0:Charge_Date>
+                     <ns0:Charge>1.00</ns0:Charge>
+                  </ns0:Days>
+                  <ns0:Days>
+                     <ns0:Charge_Date>2016-06-28</ns0:Charge_Date>
+                     <ns0:Charge>1.00</ns0:Charge>
+                  </ns0:Days>
+               </ns0:Policy>
+            </ns0:Policies>
+         </ns0:OTA_HotelGetCancellationPolicyRS>
+      </OTA_HotelGetCancellationPolicyRSWrapper>
+      <OTA_HotelGetCancellationPolicyRSWrapper xmlns="http://www.coxandkings.com/integ/suppl/acco">
+         <SupplierID>TRAVELBULLZ</SupplierID>
+         <Sequence>1</Sequence>
+         <ns2:OTA_HotelGetCancellationPolicyRS xmlns:ns2="http://www.opentravel.org/OTA/2003/05">
+            <ns2:ReferenceService/>
+            <ns2:Version>IALib Version 4.3;
+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</ns2:Version>
+            <ns2:ServiceId>205112</ns2:ServiceId>
+            <ns2:IsPackageRate/>
+            <ns2:IsSendEmail/>
+            <ns2:PenaltyFee/>
+            <ns2:PenaltyCurrency/>
+            <ns2:CancelType>2</ns2:CancelType>
+            <ns2:CancelDate>2016-06-24T16:39:18.6405864+08:00</ns2:CancelDate>
+            <ns2:CancelPrice>0</ns2:CancelPrice>
+            <ns2:CurrencyCode>USD</ns2:CurrencyCode>
+            <ns2:ErrMsg/>
+         </ns2:OTA_HotelGetCancellationPolicyRS>
+      </OTA_HotelGetCancellationPolicyRSWrapper>
+   </ResponseBody>
+</AccoInterfaceRS>

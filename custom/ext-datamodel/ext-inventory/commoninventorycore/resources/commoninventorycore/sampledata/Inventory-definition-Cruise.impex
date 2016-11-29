@@ -1,0 +1,48 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+
+$distributionToCompany=distributionToCompany(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+
+######################################### CruiseInventoryDefinition ##########################
+
+INSERT_UPDATE CruiseInventoryDefinition;inventoryId[unique=true];cruiseCompany;cruiseBrand;active;effectiveFrom[dateformat=$dateformat];reason;supplierAdvanceDefinition;companyAdvanceDefinition;abstractInventoryRequest(AbstractInventoryRequest.id)
+;13;;;true;12-3-2016;New Reason;;;CIR-234
+
+
+INSERT_UPDATE CruiseCutOffsAndCharges;cutOffFromDay[unique=true];cutOffToDay[unique=true];amount[unique=true];currency(isocode);amountType(code);range(code)
+;6;5;700;INR;AMOUNT;ABOVE
+
+INSERT_UPDATE CruisePenaltyCharges;definedBy(CruiseDefinedBy.code)[unique=true];deck(Deck.deckLevel,Deck.deckName);cabin(Cabin.cabinType(code),Cabin.cabinCategory(code));minimumUtilizationThreshold;specificDates[dateformat=$dateformat];dateRange;charges(CruiseCutOffsAndCharges.cutOffFromDay,CruiseCutOffsAndCharges.cutOffToDay,CruiseCutOffsAndCharges.amount)
+;NIGHTS;2:Deck2;U_OUTSIDE_CABIN:GS_GRAND_SUITE;15;23-12-2015;;6:5:700
+
+INSERT_UPDATE CruiseSupplierAdvanceDefinition;blockOutDates;penaltyCharges(CruisePenaltyCharges.definedBy(CruiseDefinedBy.code))[unique=true]
+;;NIGHTS
+
+INSERT_UPDATE CruiseCompanyAdvanceDefinition;inventoryId[unique=true];blockOutDates;overBookingAllowed;abstractInventoryRequest(AbstractInventoryRequest.id);penaltyCharges(CruisePenaltyCharges.definedBy(CruiseDefinedBy.code))
+;14;;false;CIR-234;NIGHTS
+
+
+
+INSERT_UPDATE CruiseOtherCompanyInventoryDistribution;$distributionToCompany[unique=true]
+;;
+
+
+INSERT_UPDATE CruiseClientInventoryDistribution;clientType(code)[unique=true];clientName[unique=true];clientGroup
+;;;
+
+
+INSERT_UPDATE CruiseWithinCompanyInventoryDistribution;sbu;bu;market(Market.uid)[unique=true];distributionChannel[unique=true];division;salesOfficeLocation;salesOffice;settleWith
+;;;;;;;;
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,73 @@
+$productCatalog=EZ-IN
+$productCatalogName=Ezeego Product Catalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+
+INSERT_UPDATE ActivityInventoryRequest;id[unique=true]
+;10011
+
+########   ActivityInventoryDefinition ########
+INSERT_UPDATE ActivityInventoryDefinition;inventoryID[unique=true];abstractInventoryRequest(AbstractInventoryRequest.id);inventoryType(InventoryType.code);city(City.isocode);supplierRateType(RateType.code);effectiveFrom[dateformat=$dateformat];reason;noOfSeatsConfirmed;inventoryDefinitionGrid;inventoryAdvanceDefinition;activityInventories(ActivityStockLevel.productCode);paymentDetails(PaymentSchedule.uid);distributeInventories(DistributeInventory.uid)
+;1234;10011;FREESALE;AAC;1002;01-05-2016;reasonsss;50;false;;123A;10001;123B
+
+########   PaymentSchedule ########
+INSERT_UPDATE PaymentSchedule;uid[unique=true];amount;currency(isocode);paymentDueDate[dateformat=$dateformat];paymentType;daysPriorToTravelDate;percentage;dateOrDay;percentageOrAmount
+;10001;251;INR;01-01-2017;INITIAL_PAYMENT;12;80.12;true;true
+
+########   DistributeInventory ########
+INSERT_UPDATE DistributeInventory;uid[unique=true];$catalogVersion;clientType;clientGroup;clientName;dateFrom[dateformat=$dateformat];dateTo[dateformat=$dateformat];startDate[dateformat=$dateformat];endDate[dateformat=$dateformat];inventoryID;daysOfWeek(WeekDay.code);supplierReferenceNumber;totalInventoryConfirmed;blockedForLastMinuteSale;totalAvailableForDistribution;distributed;balanceAvailable;distribute;distributionDateOrRange
+;123B;;hello;PragitiClientGroup;PragitiClient;01-05-2016;11-05-2016;01-05-2016;11-05-2016;1234;MONDAY;2123;3123;41123;500;400;100;100;true
+
+########  ActivityStockLevel ########
+INSERT_UPDATE ActivityStockLevel;productCode[unique=true];warehouse(Warehouse.code);startDate[dateformat=$dateformat];releaseDate[dateformat=$dateformat];daysOfWeek(WeekDay.code);timeOfDay(TimeOfDay.code);timeFrom;timeTo;noOfInventoryRequested;noOfInventoryConfirmed;ticketOrSeat(TicketOrSeatType.code);seatingClass(RailSeatClass.code);row;seatNo;supplierReferenceNumber;blockForLastMinuteSale_NoOfSeats;blockForLastMinuteSale_CutOffDays;minimumUtilizationThreshold(MinimumUtilizationThreshold.uid)
+;123A;warehouse_s;01-08-2016;01-08-2020;SUNDAY,MONDAY;EVENING;02:00;05:00;25;20;SEATS;EXCLUSIVE;4;s123;1;8;1003
+
+########   ActivityInventoryAdvanceDefinition ########
+INSERT_UPDATE ActivityInventoryAdvanceDefinition;uid[unique=true];freeOfCostSeat(FreeOfCostSeat.uid);activityPenaltyChargesForNameChange(ActivityPenaltyCharge.uid);activityPenaltyCharges(ActivityPenaltyCharge.uid);cutOffNameLists(CutOffRoomingList.uid);blockOutDates(BlockOutDate.uid);medias(&mediaRef)
+;10002;A123;B234;B234;15009;10604;
+
+########  CutOffRoomingList ########
+INSERT_UPDATE CutOffRoomingList;uid[unique=true];definedBy(PolicyDefinedByType.code);typeOfList(TypeOfList.code);appliedOn(AppliedOn.code);supplierCutOffDays;bufferDays;totalCutOffDays;noOfNTBAs;releaseTime
+;15009;HOUR;FINAL;PRIOR_TO_TRAVEL_DATE;10;5;5;2;12
+
+########  BlockOutDate ########
+INSERT_UPDATE BlockOutDate;uid[unique=true];blockOutFromDate[dateformat=$dateformat];blockOutToDate[dateformat=$dateformat]
+;10604;01-08-2016;01-08-2020
+
+########   FreeOfCostSeat ########
+INSERT_UPDATE FreeOfCostSeat;uid[unique=true];slabOrRunning;slabType(CommercialSlabType.code);fromValue;fromValueInWords;toValue;toValueInWords;every;type;noOfFreeSeat;freeOfCostByValue;priceComponent(NonAirPriceComponentType.code)
+;A123;false;NO_OF_TICKETS;5000;FIVE THOUSAND;6000;SIX THOUSAND;Every;Unknown;100;1300.00;BASE_FARE
+
+########   ActivityPenaltyCharge ########
+INSERT_UPDATE ActivityPenaltyCharge;uid[unique=true];penaltyChargesFor;definedBy(PolicyDefinedByType.code);appliedOn;releaseTime[dateformat=$dateformat];minimumUtilizationThreshold;thresholdPercentageOrValue;cutOffCharges(CutOffCharge.uid)
+;B234;QWER;DAY;PROD;05-05-2016;10006;true;B566
+
+########   CutOffCharge ########
+INSERT_UPDATE CutOffCharge;uid[unique=true];priceComponent(NonAirPriceComponentType.code);from;to;percentageOrValue
+;B566;BASE_FARE;12;45;true
+
+# Vendor
+INSERT_UPDATE Vendor;code[unique=true];name
+;default;Default Vendor
+
+# Warehouse
+INSERT_UPDATE Warehouse;code[unique=true];name;vendor(code)[default=default];default[default=true]
+;default;Default Warehouse;
+;warehouse_s;Warehouse South;
+
+########  RateType ########
+INSERT_UPDATE RateType;code[unique=true]
+;1002
+
+########  MinimumUtilizationThreshold ########
+INSERT_UPDATE MinimumUtilizationThreshold;uid[unique=true];noOfRooms;cutOffDays
+;1003;5;3
+
+########   CutOffCharge ########
+#INSERT_UPDATE CutOffCharge;range(code);priceComponent(code);percentageOrValue
+
+########   ActivityPenaltyCharge ########
+#INSERT_UPDATE ActivityPenaltyCharge;uid[unique=true];penaltyChargesFor;definedBy(code);appliedOn;releaseTime[dateformat=$dateformat];minimumUtilizationThreshold;thresholdUtilizationOf(code);thresholdPercentageOrValue;cutOffCharges(CutOffCharge.uid)
+
+########   PaymentSchedule ########
+#INSERT_UPDATE PaymentSchedule;uid[unique=true];paymentType;daysPriorToTravelDate;percentage;dateOrDay;percentageOrAmount

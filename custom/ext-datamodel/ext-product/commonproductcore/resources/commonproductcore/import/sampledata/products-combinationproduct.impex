@@ -1,0 +1,41 @@
+$lang=en
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$timeformat = hh:mm
+#######################Import Company Header of A,Client Group impex#####################################################				                     
+INSERT_UPDATE Product;$catalogVersion;code[unique=true]
+					 ;               ;123A    
+############################################# Combination Product ##################################################			            
+INSERT_UPDATE CombinationProduct;code[unique=true,forceWrite=true];$catalogVersion;comboFailDueToSingleProduct;singleProductCancellation;commonProductID;companyMarket(Market.uid);entity(Principal.uid);supercategories(code,$catalogVersion)
+								;1001 ;				;true                       ;true                      ;123A                        ;IND                      ;                     ;C002,C002ST001   
+																
+############################################# Point of Sale #######################################################								                  				            					
+INSERT_UPDATE PointOfSale;owner(CombinationProduct.code)[unique=true];pointOfSale(code)
+						 ;1001                                         ;ALL
+############################################# ProductDefinition #######################################################
+								                  				            										 					 
+INSERT_UPDATE ProductDefinition;attachId[unique=true];category(code,$catalogVersion)[unique=true];attachedProducts(AttachedProduct.owner(ProductDefinition.attachId))
+							   ;FLIGHT001            ;C001ST001                                  ;FLIGHT001      
+
+############################################# Attached Products ###################################################
+
+INSERT_UPDATE AttachedProduct;owner(ProductDefinition.attachId);include;product(code,$catalogVersion)[unique=true]							   
+							 ;FLIGHT001                         ;true  ;123A
+							 
+############################################# Price Retention for individual products #############################							 
+INSERT_UPDATE Individual;owner(CombinationProduct.code)[unique=true];retentionFactor(code);value
+						;1001                                        ;PERCENTAGE           ;10	
+
+############################################# Price Retention for combo ###########################################
+INSERT_UPDATE Combo;owner(CombinationProduct.code)[unique=true];retentionFactor(code);value
+				   ;1001                                        ;PERCENTAGE           ;15
+				   
+############################################# PriceRetention ######################################################
+INSERT_UPDATE PriceRetention;owner(CombinationProduct.code)[unique=true];includeStandardCommission;isCombo;comboRetention(Combo.owner(CombinationProduct.code));individualRetentions(Individual.owner(CombinationProduct.code))
+							;1001                           ; true                    ;false  ;1001                                                             ;1001						                   
+
+UPDATE CombinationProduct;code[unique=true,forceWrite=true];productDefinitions(ProductDefinition.attachId);pointOfSale(PointOfSale.owner(CombinationProduct.code));priceRetention(PriceRetention.owner(CombinationProduct.code))
+;1001;FLIGHT001;1001;1001;
+

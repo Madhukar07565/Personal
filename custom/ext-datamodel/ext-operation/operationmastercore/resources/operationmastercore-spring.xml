@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ [y] hybris Platform
+  ~ 
+  ~ Copyright (c) 2000-2016 SAP SE
+  ~ All rights reserved.
+  ~ 
+  ~ This software is the confidential and proprietary information of SAP 
+  ~ Hybris ("Confidential Information"). You shall not disclose such 
+  ~ Confidential Information and shall use it only in accordance with the 
+  ~ terms of the license agreement you entered into with SAP Hybris.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!--
+	The hybris platform provides one single Spring application context for beans located at the jalo layer.
+	Each extension can add beans to this context by specifying them at this configuration file.
+	 
+	You can use and/or redefine beans defined at configuration files of other extensions as well as
+	adding new one.
+		
+	If you want to locate this file at a different location or want to use several files for better,
+	structuring, please use the '<yourextension>.application-context' property at your project.properties file.
+	There you can specify a comma separated list of files where first is tried to find a file per classpath and
+	then per file system.
+
+	
+	If you want to configure beans for your web module please have a look at
+	your web/webroot/WEB-INF/<extname>-web-spring.xml.
+	-->
+	
+	<!--  Example how to override a manager -->
+	<!--
+	<bean id="core.productManager"   class="com.cnk.travelogix.operation.jalo.OperationmastercoreProductManager" 	init-method="init"	destroy-method="destroy" />
+	-->
+	
+	
+ 	<!--  Example how to configure the class to use for jalo session creation -->
+	<!--
+	<bean id="jalosession"   class="de.hybris.platform.jalo.JaloSessionFactory">
+		<property name="targetClassName" value="com.cnk.travelogix.operation.jalo.OperationmastercoreJaloSession"/>
+	</bean>
+	-->
+
+	
+	<!--  Example how to override an item  -->
+	<!-- 
+	<bean id="de.hybris.platform.jalo.product.Product" class="com.cnk.travelogix.operation.jalo.OperationmastercoreProduct" scope="prototype" />		
+ 	-->
+
+	<!--  
+	 Example how to register and use an AOP aspect 
+     Also see http://static.springframework.org/spring/docs/2.5.x/reference/aop.html	
+     -->
+	
+	<!-- 
+	<bean id="operationmastercoreProfBean" class="com.cnk.travelogix.operation.aop.OperationmastercoreProfilingAspect"/>
+	<aop:config proxy-target-class="true">
+  		<aop:aspect id="operationmastercoreProfAspect" ref="operationmastercoreProfBean" >
+    	  <aop:pointcut id="profiledMethods" 
+	      	expression="execution(* getModificationTime(..))" />  	            
+	   		<aop:around pointcut-ref="profiledMethods" method="profile" />
+  		</aop:aspect>
+	</aop:config>
+	 -->
+
+	
+	<!-- some other examples of a pointcut that matches everything:
+
+    	  <aop:pointcut id="profiledMethods" 
+	      	expression="bean(de.hybris.platform.jalo.user.Customer) &amp;&amp; 
+	      	            !execution(* getPK(..))" />  	            
+	       <aop:pointcut id="profiledMethods" expression="execution(* *(..))" />	
+	  -->
+	<bean id="operationCoreSystemSetup"
+		class="com.cnk.travelogix.operations.core.setup.OperationsCoreSystemSetup"
+		parent="abstractCoreSystemSetup">
+	</bean>
+	<alias alias="travelogixCmsComponentsDao" name="travelogixCmsComponentsDaoImpl"/>
+	<bean id="travelogixCmsComponentsDaoImpl"	class="com.cnk.travelogix.operations.daos.cms.impl.TravelogixCmsComponentsDaoImpl"/>	
+
+	<!-- timeLimit process definition Resource -->
+	<bean id="timeLimitBookingEmailAlertProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource"
+			value="classpath:/operationmastercore/process/timeLimitBookingAlertEmailProcess.xml" />
+	</bean>
+		
+	<bean id="timeLimitBookingEmailCancelProcessDefinitionResource"
+		class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource"
+			value="classpath:/operationmastercore/process/timeLimitBookingCancelEmailProcess.xml" />		
+	</bean>	
+
+	<alias alias="createPaymentReceiptAction" name="createPaymentReceiptAction"/>
+	<bean id="createPaymentReceiptAction"	class="com.cnk.travelogix.datamodel.operation.mastercore.action.CreatePaymentReceiptAction" parent="abstractAction">
+		<property name="modelService" ref="modelService"/>
+	</bean>
+	
+	<alias alias="reconfirmationConfigDao" name="defaultTravelogixReconfirmationConfigDao"/>
+	<bean id="defaultTravelogixReconfirmationConfigDao" class="com.cnk.travelogix.operation.reconfirmation.dao.impl.TravelogixReconfirmationConfigDaoImpl">
+	</bean>
+
+	<alias name="travelogixCategoryDaoImpl" alias="travelogixCategoryDao"/>
+		<bean id="travelogixCategoryDaoImpl" class="com.cnk.travelogix.operations.daos.category.impl.TravelogixCategoryDaoImpl"
+		parent="categoryDao"/>
+	
+	<alias name="defaultSupplierDao" alias="supplierDao"/>
+		<bean id="defaultSupplierDao" class="com.cnk.travelogix.operation.daos.impl.DefaultSupplierDao"
+		parent="baseI18NDao"/>
+	
+	<alias name="defaultCityDao" alias="cityDao"/>
+		<bean id="defaultCityDao" class="com.cnk.travelogix.operation.daos.impl.DefaultCityDao"
+		parent="baseI18NDao"/>
+	
+	<alias name="defaultContinentDao" alias="continentDao"/>
+		<bean id="defaultContinentDao" class="com.cnk.travelogix.operation.daos.impl.DefaultContinentDao"
+		parent="baseI18NDao"/>
+
+	<alias name="defaultClientDao" alias="clientDao"/>
+		<bean id="defaultClientDao" class="com.cnk.travelogix.operation.daos.impl.DefaultClientDao"
+	parent="baseI18NDao"/>
+
+	<!-- reconfirmationconfig code generator -->
+		<!-- ValidateInterceptor for checking duplicate record of ReconfirmationConfig master -->
+	<bean id="duplicateValidateInterceptor"
+		class="com.cnk.travelogix.operation.interceptor.DuplicateValidateInterceptor">
+		<property name="reconfirmationConfigDuplicateChackStrategy" ref="reconfirmationConfigDuplicateChackStrategy"/>
+	
+	</bean>
+	<bean id="DuplicateValidateInterceptor"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="duplicateValidateInterceptor" />
+		<property name="typeCode" value="ReconfirmationConfig" />
+	</bean>
+	
+		<bean id="reconfirmationConfigDuplicateChackStrategy"
+		class="com.cnk.travelogix.operations.services.strategy.impl.ReconfirmationConfigDuplicateChackStrategyImpl">
+		<property name="reconfirmationConfigDao" ref="reconfirmationConfigDao"/>
+	</bean>
+	
+ 	<!-- reconfirmationconfig code generator -->
+
+	<bean id="reconfirmationConfigCodeGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator">
+		<property name="key" value="${keygen.reconfirmationconfig.code.name}" />
+		<property name="digits" value="${keygen.reconfirmationconfig.code.digits}" />
+		<property name="start" value="${keygen.reconfirmationconfig.code.start}" />
+		<property name="template" value="${keygen.reconfirmationconfig.code.template}" />
+		<property name="type" value="${keygen.reconfirmationconfig.code.type}" />
+	</bean>
+ 
+	<!-- client reconfirmationconfig code generator -->
+
+	<bean id="clientReconfirmationConfigCodeGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator">
+		<property name="key" value="${keygen.client.reconfirmationconfig.code.name}" />
+		<property name="digits" value="${keygen.client.reconfirmationconfig.code.digits}" />
+		<property name="start" value="${keygen.client.reconfirmationconfig.code.start}" />
+		<property name="template" value="${keygen.client.reconfirmationconfig.code.template}" />
+		<property name="type" value="${keygen.client.reconfirmationconfig.code.type}" />
+	</bean>
+		<!-- supplier reconfirmationconfig code generator -->
+
+	<bean id="supplierReconfirmationConfigCodeGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator">
+		<property name="key" value="${keygen.supplier.reconfirmationconfig.code.name}" />
+		<property name="digits" value="${keygen.supplier.reconfirmationconfig.code.digits}" />
+		<property name="start" value="${keygen.supplier.reconfirmationconfig.code.start}" />
+		<property name="template" value="${keygen.supplier.reconfirmationconfig.code.template}" />
+		<property name="type" value="${keygen.supplier.reconfirmationconfig.code.type}" />
+	</bean>
+	
+	<!-- PrepareInterceptor for generating reconfirmation config unique code -->
+	 <bean id="reconfirmationConfigPrepareInterceptor"
+		class="com.cnk.travelogix.operation.interceptor.ReconfirmationConfigPrepareInterceptor">
+		<property name="keyGenerator" ref="reconfirmationConfigCodeGenerator"/>
+	</bean>
+	
+	<bean class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="reconfirmationConfigPrepareInterceptor" />
+		<property name="typeCode" value="ReconfirmationConfig" />
+	</bean>
+
+	<!-- PrepareInterceptor for generating client reconfirmation config unique code -->
+	<bean id="clientReconfirmationConfigPrepareInterceptor"
+		class="com.cnk.travelogix.operation.interceptor.ClientReconfirmationConfigPrepareInterceptor">
+		<property name="keyGenerator" ref="clientReconfirmationConfigCodeGenerator" />
+	</bean>
+
+	<bean
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="clientReconfirmationConfigPrepareInterceptor" />
+		<property name="typeCode" value="ClientReconfirmationConfig" />
+	</bean>
+	<!-- PrepareInterceptor for generating supplier reconfirmation config unique code -->
+	<bean id="supplierReconfirmationConfigPrepareInterceptor"
+		class="com.cnk.travelogix.operation.interceptor.SupplierReconfirmationConfigPrepareInterceptor">
+		<property name="keyGenerator" ref="supplierReconfirmationConfigCodeGenerator" />
+	</bean>
+
+	<bean
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="supplierReconfirmationConfigPrepareInterceptor" />
+		<property name="typeCode" value="SupplierReconfirmationConfig" />
+	</bean>
+</beans>

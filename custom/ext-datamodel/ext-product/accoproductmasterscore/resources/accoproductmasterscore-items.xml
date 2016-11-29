@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2013 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+		<collectiontype elementtype="java.util.Date" code="DateCollection"
+			autocreate="true" />
+		<collectiontype elementtype="WeekDay" code="WeekDayCollection"
+			autocreate="true" />
+	</collectiontypes>
+
+	<enumtypes>
+		<enumtype code="SupplementSurchargeType" dynamic="true">
+			<value code="CNYGD" />
+			<value code="SCFE" />
+			<value code="MS" />
+			<value code="FNBS" />
+			<value code="LCU1800" />
+			<value code="LCA1800" />
+			<value code="SES" />
+			<value code="BFR" />
+			<value code="LBKC" />
+			<value code="RAB" />
+			<value code="CDIH" />
+			<value code="RS" />
+			<value code="BS" />
+			<value code="WS" />
+			<value code="HTLS" />
+			<value code="SFSPT" />
+			<value code="TSAT" />
+			<value code="CMSNS" />
+			<value code="CHSFSSPTA4D" />
+			<value code="HNYS" />
+			<value code="FBS" />
+			<value code="AIS" />
+			<value code="CES" />
+			<value code="EPTFT" />
+			<value code="AIMS" />
+			<value code="HS" />
+			<value code="VS" />
+			<value code="APMS" />
+			<value code="GHS" />
+			<value code="GTS" />
+			<value code="EAAS" />
+			<value code="FTB23T7MEMS" />
+			<value code="CHBS" />
+			<value code="CAIS" />
+			<value code="CAIGS" />
+		</enumtype>
+
+		<enumtype code="PlaceType" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="PORT" />
+			<value code="HIGHSEA" />
+			<value code="LAND" />
+		</enumtype>
+
+		<enumtype code="PickUpDropOffType" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="PICKUPPOINT" />
+			<value code="DROPOFFPOINT" />
+			<value code="SAMEPICKUPDROPOFFPOINT" />
+		</enumtype>
+
+		<enumtype code="PickUpDropOffFromTo" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="LOCATION" />
+			<value code="AREA" />
+			<value code="OTHERS" />
+			<value code="ACCOMMODATION" />
+		</enumtype>
+		<enumtype code="BedType" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="Twin_Beds" />
+			<value code="King_Size_Beds" />
+			<value code="Queen_Size_Beds" />
+		</enumtype>
+		<enumtype code="RecommondationType" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="GROUPS" />
+			<value code="FIT" />
+			<value code="MICE" />
+			<value code="INCENTIVES" />
+		</enumtype>
+	</enumtypes>
+
+	<relations>
+		<relation code="AccommodationToRoutes" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="accommodation" type="Accommodation"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="routes" type="Route"
+				cardinality="many">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="AccommodationToInAndArround" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="accommodation" type="Accommodation"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="inAndArround" type="PlaceDescription"
+				cardinality="many">
+				<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+
+		<relation code="AccommodationToFamilyDetail" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="accommodation" type="Accommodation"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="familyDetails" type="FamilyDetail"
+				cardinality="many">
+				<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+
+		<relation code="AccommodationToLandmarks" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="accommodation" type="Accommodation"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="landmarks" type="PlaceDescription"
+				cardinality="many">
+				<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+
+		<relation code="AccommodationToRuleInfos" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="accommodation" type="Accommodation"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="ruleInfos" type="RuleInfo"
+				cardinality="many">
+				<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+
+		<relation code="AccommodationToRoomInfos" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="accommodation" type="Accommodation"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="roomInfos" type="RoomInfo"
+				cardinality="many">
+				<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+
+		<relation code="RoomInfoToAmenityTypes" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="roomInfo" type="RoomInfo"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="amenityTypes" type="AmenityType"
+				cardinality="many">
+				<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+
+		<relation code="AccommodationToPaxOccupancies" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="accommodation" type="Accommodation"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="paxOccupancies" type="RoomPaxOccupancy"
+				cardinality="many">
+				<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+
+		<relation code="AccommodationToHealthAndSafeties" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="accommodation" type="Accommodation"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="healthAndSafeties" type="HealthAndSafety"
+				cardinality="many">
+				<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+
+		<relation code="AccommodationToContactDetails" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="accommodation" type="Accommodation"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="contactDetails" type="ContactDetails"
+				cardinality="many">
+				<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+
+		<relation code="AccommodationToFacilities" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="accommodation" type="Accommodation"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="facilities" type="Facility"
+				cardinality="many">
+				<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+
+		<relation code="AccommodationToStaffInfo" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="accommodation" type="Accommodation"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="staffInformation" type="StaffInformation"
+				cardinality="many">
+				<modifiers partof="true"/>
+			</targetElement>
+		</relation>
+	</relations>
+
+	<itemtypes>
+		<typegroup name="Accommodation">
+			<itemtype code="EmailAddress" autocreate="false" generate="false">
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="newsLetterRequired">
+						<description>News Letter</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<!-- this can be uncommented after EmailAddressTypes data is created -->
+					<attribute qualifier="emailAddressType" type="AddressType">
+						<description>Email Address Types</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="webpageAddress">
+						<description>web page Address</description>
+						<modifiers read="true" write="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="RoomInfo" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.accommodation.masters.core.jalo.RoomInfo">
+				<description>Represents RoomInfo</description>
+				<deployment table="roominfo" typecode="21011" />
+				<attributes>
+					<attribute qualifier="category" type="RoomCategory">
+						<persistence type="property" />
+						<description>Category</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="roomView" type="java.lang.String">
+						<persistence type="property" />
+						<description>RoomView</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="noOfRooms" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>no Of Rooms</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="roomName" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Room Name</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="noOfInterconnectingRooms" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>No Of Inter connecting Rooms</description>
+						<modifiers />
+					</attribute>
+					<!-- this can be uncommented after NoAndNameOfUnit master data is created -->
+					<!-- <attribute qualifier="numAndNameOfUnit" type="NoAndNameOfUnit"> 
+						<persistence type="property" /> <description>No And Name Of Unit</description> 
+						<modifiers /> </attribute> -->
+					<!-- this can be uncommented after FloorsNameAndNoOfUnit master data 
+						is created -->
+					<!-- <attribute qualifier="floorsNameAndNoOfUnit" type="FloorsNameAndNoOfUnit"> 
+						<persistence type="property" /> <description>Floors Name And No Of Unit</description> 
+						<modifiers /> </attribute> -->
+					<!-- this can be uncommented after NoAndNameOfRooms master data is created -->
+					<!-- <attribute qualifier="numAndNameOfRooms" type="NoAndNameOfRooms"> 
+						<persistence type="property" /> <description>No And Name Of Rooms</description> 
+						<modifiers /> </attribute> -->
+					<attribute qualifier="companyRoomCategory" type="RoomCategory">
+						<persistence type="property" />
+						<description>Company Room Category</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<persistence type="property" />
+						<description>Description</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="roomSize" type="java.lang.String">
+						<persistence type="property" />
+						<description>Room Size</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="bathroomType" type="BathType">
+						<persistence type="property" />
+						<description>Bathroom Type</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="bedType" type="BedType">
+						<persistence type="property" />
+						<description>Bed Type</description>
+						<modifiers />
+					</attribute>
+					<!-- this can be uncommented after BedTypeByUnit master data is created -->
+					<!-- <attribute qualifier="bedTypeByUnit" type="BedTypeByUnit"> <persistence 
+						type="property" /> <description>Bed Type By Unit</description> <modifiers 
+						/> </attribute> -->
+					<attribute qualifier="roomDecor" type="java.lang.String">
+						<persistence type="property" />
+						<description>Room Decor</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="smoking" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Smoking</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="floorName" type="java.lang.String">
+						<persistence type="property" />
+						<description>Floor Name</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="floorNumber" type="java.lang.String">
+						<persistence type="property" />
+						<description>Floor Number</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="mysteryRoom" type="java.lang.Boolean">
+						<persistence type="property" />
+						<description>Mystery Room</description>
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="roomId" type="java.lang.String">
+						<persistence type="property" />
+						<description>Room ID</description>
+						<modifiers unique="true" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="PaxOccupancy" autocreate="true" generate="true"
+				extends="GenericItem"
+				jaloclass="com.cnk.travelogix.product.accommodation.masters.core.jalo.PaxOccupancy">
+				<description>PaxOccupancy</description>
+				<deployment table="paxoccupancy" typecode="21016" />
+				<attributes>
+					<attribute qualifier="category" type="RoomCategory">
+						<persistence type="property" />
+						<description>Room Category</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="maxAdults" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>Maximum Adults</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="maxChild" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>Maximum Child</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="maxPax" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>Maximum Pax</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="roomId" type="java.lang.String">
+						<persistence type="property" />
+						<description>Room ID</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+			
+				<itemtype code="FamilyDetail" generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.acco.inventory.core.jalo.FamilyDetail"
+				extends="GenericItem">
+				<deployment table="familydetail" typecode="21178" />
+				<attributes>
+				<attribute qualifier="familyName" type="java.lang.String">
+						<persistence type="property" />
+						<description>Family Name</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="familyDescription" type="java.lang.String">
+						<persistence type="property" />
+						<description>Family Description</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="familyMember" type="java.lang.String">
+						<persistence type="property" />
+						<description>Family Member</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="age" type="java.lang.String">
+						<persistence type="property" />
+						<description>Age</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="gender" type="Gender">
+						<persistence type="property" />
+						<description>Gender</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="memberName" type="java.lang.String">
+						<persistence type="property" />
+						<description>Member Name</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute qualifier="familyMemberDescription" type="java.lang.String">
+						<persistence type="property" />
+						<description>family Member Description</description>
+						<modifiers read="true" write="true" optional="true" />
+					</attribute>
+				</attributes>
+				</itemtype>
+
+			<itemtype code="RoomPaxOccupancy" autocreate="true"
+				generate="true" extends="PaxOccupancy"
+				jaloclass="com.cnk.travelogix.product.accommodation.masters.core.jalo.RoomPaxOccupancy">
+				<attributes>
+					<attribute qualifier="roomType" type="RoomType">
+						<persistence type="property" />
+						<description>Room Type</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="fromAgeForExtraBed" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>From Age For Extra Bed</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="toAgeForExtraBed" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>to Age For Extra Bed</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="maxPaxWithExtraBed" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>Max Pax With Exta Bed</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="fromAgeForCNB" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>From Age For CNB</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="toAgeForCNB" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>To Age For CNB</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="maxCNB" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>Max CNB</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="fromAgeForCIOR" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>From Age For CIOR</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="toAgeForCIOR" type="java.lang.Integer">
+						<persistence type="property" />
+						<description>to Age For CIOR</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="Country" autocreate="false" generate="true">
+				<attributes>
+					<attribute qualifier="mysteryCountry" type="java.lang.Boolean">
+						<description>Mystery Country</description>
+						<persistence type="property" />
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="City" autocreate="false" generate="true">
+				<attributes>
+					<attribute qualifier="mysteryCity" type="java.lang.Boolean">
+						<description>Mystery City</description>
+						<persistence type="property" />
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="Location" autocreate="false" generate="true">
+				<attributes>
+					<attribute qualifier="mysteryLocation" type="java.lang.Boolean">
+						<description>Mystery Location</description>
+						<persistence type="property" />
+						<modifiers />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

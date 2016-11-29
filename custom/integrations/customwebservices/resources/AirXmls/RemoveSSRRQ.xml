@@ -1,0 +1,41 @@
+  <air1:AirInterfaceRQ  xmlns:air="http://www.coxandkings.com/integ/suppl/air"
+    xmlns:com="http://www.coxandkings.com/integ/suppl/common"
+    xmlns:air1="http://www.coxandkings.com/integ/suppl/airinterface"
+    xmlns:ns="http://www.opentravel.org/OTA/2003/05">
+         <air:RequestHeader xmlns:air2="http://www.coxandkings.com/integ/suppl/air">
+            <com:UserID>iii</com:UserID>
+        <com:SessionID>Pushkar1536</com:SessionID>
+        <com:TransactionID>Pushkar1536</com:TransactionID>
+            <com:SupplierCredentialsList>
+               <com:SupplierCredentials>
+                  <com:SupplierID>SABRE</com:SupplierID>
+                  <com:Credentials>
+                     <com:Credential name="Username">1000</com:Credential>
+                     <com:Credential name="Password">table55</com:Credential>
+                     <com:Credential name="Organization">L7H8</com:Credential>
+                     <com:Credential name="PseudoCityCode">L7H8</com:Credential>
+                     <com:Credential name="CompanyCode">TN</com:Credential>
+                  </com:Credentials>
+               </com:SupplierCredentials>
+            </com:SupplierCredentialsList>
+         </air:RequestHeader>
+         <air1:RequestBody>
+            <air:OTA_CancelRQWrapper xmlns:air2="http://www.coxandkings.com/integ/suppl/air">
+               <air:SupplierID>SABRE</air:SupplierID>
+               <air:Sequence>1</air:Sequence>
+               <!--You have a CHOICE of the next 17 items at this level-->
+               <ns:OTA_CancelRQ Version="1.0" CancelType="Cancel">
+                  <ns:UniqueID ID="EQFJGB" Type="24" ID_Context="ALL"/>
+                  <ns:Verification>
+                     <ns:TPA_Extensions>
+                        <air:SSR>
+                           <SpecialServiceRequests>
+                              <SpecialServiceRequest TravelerRefNumberRPHList="0" Number="2"></SpecialServiceRequest>
+                           </SpecialServiceRequests>
+                        </air:SSR>
+                     </ns:TPA_Extensions>
+                  </ns:Verification>
+               </ns:OTA_CancelRQ>
+            </air:OTA_CancelRQWrapper>
+         </air1:RequestBody>
+      </air1:AirInterfaceRQ>

@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/integration
+        http://www.springframework.org/schema/integration/spring-integration.xsd
+        http://www.springframework.org/schema/integration/file
+        http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+	<bean id="baseDirectoryTravelogixVehicle" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogix/vehicle" />
+	</bean>
+
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesVehicle"
+		directory="#{baseDirectoryTravelogixVehicle}" filename-regex="transport-vehicle-(\d+)\.csv"
+		comparator="fileOrderComparator">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+
+	<!-- 2) move the file to processing and setup header -->
+	<file:outbound-gateway request-channel="batchFilesVehicle"
+		reply-channel="batchFilesVehicleProc" directory="#{baseDirectoryTravelogixVehicle}/processing"
+		delete-source-files="true" />
+
+	<int:service-activator input-channel="batchFilesVehicleProc"
+		output-channel="travelogixVehicleProductBatchFilesHeaderInit" ref="travelogixVehiclesSetupTask"
+		method="execute" />
+		
+	<bean id="travelogixVehiclesSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogixVehicle" />
+	</bean>
+	
+	<int:service-activator input-channel="travelogixVehicleProductBatchFilesHeaderInit"
+		output-channel="travelogixVehicleProductBatchFilesHeader" ref="headerInitTask"
+		method="execute" />
+		
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="travelogixVehicleProductBatchFilesHeader"
+		output-channel="batchFilesTran" ref="travelogixVehicleProductBatchTransformerTask"
+		method="execute" />
+
+	<bean id="travelogixVehicleProductBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+	<!-- End Of Common Header -->
+
+	<bean id="batchCarVehicleConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="transport-vehicle" p:converter-ref="batchCarVehicleConverter" />
+		
+	<bean id="batchBusVehicleConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="transport-vehicle" p:converter-ref="batchBusVehicleConverter" />
+		
+	<bean id="batchBikeVehicleConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="transport-vehicle" p:converter-ref="batchBikeVehicleConverter" />
+		
+	<bean id="batchYatchVehicleConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="transport-vehicle" p:converter-ref="batchYatchVehicleConverter" />
+		
+	<bean id="batchTrainVehicleConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="transport-vehicle" p:converter-ref="batchTrainVehicleConverter" />
+
+	<bean id="batchRvCategoryRelationConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="vehicle" p:converter-ref="batchRvCategoryRelationConverter" />
+		
+	<bean id="batchCarVehicleConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+$approved=approvalstatus(code)[default='check']
+$catalogVersion=catalogversion(catalog(id),version)[unique=true,cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+$dateformat=dd-MM-yyyy
+$timeformat = hh:mm
+$categories=supercategories(code, catalogVersion(catalog(id),version))[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+$clAttrModifiers=system='EZ-IN-CS',version='1.0',translator=de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator,lang=en
+#$supercategories=source(code, $catalogVersion)[mode=append,cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]]
+##Classification for Car
+$bodytype=@Bodytype-Factors-Car[$clAttrModifiers]
+$segment=@Segment-Factors-Car[$clAttrModifiers]
+$engine=@Engine-Factors-Car[$clAttrModifiers]
+$desplacement=@Desplacement_Cc-Factors-Car[$clAttrModifiers]
+$fueltype=@Fueltype-Factors-Car[$clAttrModifiers]
+$transmission=@Transmission-Factors-Car[$clAttrModifiers]
+$numberOfgears=@No.Ofgears-Factors-Car[$clAttrModifiers]
+
+$peakpower=@Peakpower_Bhp_Rpm-Performance-Car[$clAttrModifiers]
+$Peaktorque=@Peaktorque_Nm_Rpm-Performance-Car[$clAttrModifiers]
+$mileage=@Mileage_City_Highwayinkmpl-Performance-Car[$clAttrModifiers]
+$length=@Length_Mm-Dimensions-Car[$clAttrModifiers]
+$width=@Width_Mm-Dimensions-Car[$clAttrModifiers]
+$height=@Height_Mm-Dimensions-Car[$clAttrModifiers]
+$Groundclearance_Mm=@Groundclearance_Mm-Dimensions-Car[$clAttrModifiers]
+$Wheelbase_Mm=@Wheelbase_Mm_-Dimensions-Car[$clAttrModifiers]
+$Kerbweight_Kg=@Kerbweight_Kg-Dimensions-Car[$clAttrModifiers]
+$Bootspace_L=@Bootspace_L-Dimensions-Car[$clAttrModifiers]
+$Turningradius_M=@Turningradius_M-Dimensions-Car[$clAttrModifiers]
+$Airconditioner=@Airconditioner-Features-Car[$clAttrModifiers]
+$Climatecontrol=@Climatecontrol-Features-Car[$clAttrModifiers]
+$Cdplayer=@Cdplayer-Features-Car[$clAttrModifiers]
+$Powersteering=@Powersteering-Features-Car[$clAttrModifiers]
+$Powerwindows=@Powerwindows-Features-Car[$clAttrModifiers]
+$Centrallocking=@Centrallocking-Features-Car[$clAttrModifiers]
+$Steeringadjustment_Rake_Reach=@Steeringadjustment_Rake_Reach-Features-Car[$clAttrModifiers]
+$Electricallyadjustabledriverseat=@Electricallyadjustabledriverseat-Features-Car[$clAttrModifiers]
+$Steeringmountedcontrols=@Steeringmountedcontrols-Features-Car[$clAttrModifiers]
+$Rearacvent=@Rearacvent-Features-Car[$clAttrModifiers]
+$Remotecontrolledboot=@Remotecontrolledboot-Features-Car[$clAttrModifiers]
+$Rearwiper=@Rearwiper-Features-Car[$clAttrModifiers]
+$Leatherseats=@Leatherseats-Features-Car[$clAttrModifiers]
+$Electricallyadjustablemirrors=@Electricallyadjustablemirrors-Features-Car[$clAttrModifiers]
+$Anti-Lockbrakingsystem_Abs=@Anti-Lockbrakingsystem_Abs-Safetyfeatures-Car[$clAttrModifiers]
+$Airbag=@Airbag-Safetyfeatures-Car[$clAttrModifiers]
+$Parkingsensors=@Parkingsensors-Safetyfeatures-Car[$clAttrModifiers]
+$Tractioncontrol=@Tractioncontrol-Safetyfeatures-Car[$clAttrModifiers]
+$Fuelcapacity_L=@Fuelcapacity_L-Capacities-Car[$clAttrModifiers]
+$Seatingcapacity=@Seatingcapacity-Capacities-Car[$clAttrModifiers]
+$Smallbags=@Smallbags-Capacity-Car[$clAttrModifiers]
+$Bigbags=@Bigbags-Capacity-Car[$clAttrModifiers]
+$Passengercapacity=@Passengercapacity-Capacity-Car[$clAttrModifiers]
+$Includesdriver=@Includesdriver-Capacity-Car[$clAttrModifiers]
+$Tyrespecesfront=@Tyrespecesfront-Wheelsandtyres-Car[$clAttrModifiers]
+$Tyrespecesrear=@Tyrespecesrear-Wheelsandtyres-Car[$clAttrModifiers]
+$Mileagehighway_Km_Liter=@Mileagehighway_Km_Liter-Fueleconomy-Car[$clAttrModifiers]
+$Mileagecity_Km_Liter=@Mileagecity_Km_Liter-Fueleconomy-Car[$clAttrModifiers]
+$Mileageoverall_Km_Liter=@Mileageoverall_Km_Liter-Fueleconomy-Car[$clAttrModifiers]
+$Enginetype_Model=@Enginetype_Model-Engine-Car[$clAttrModifiers]
+$Displacementcc=@Displacementcc-Engine-Car[$clAttrModifiers]
+$Power_Ps_Rpm=@Power_Ps_Rpm-Engine-Car[$clAttrModifiers]
+$Torque_Nm_Rpm=@Torque_Nm_Rpm-Engine-Car[$clAttrModifiers]
+$Valvamechanism=@Valvamechanism-Engine-Car[$clAttrModifiers]
+$Bore_Mm=@Bore_Mm-Engine-Car[$clAttrModifiers]
+$Stroke_Mm=@Stroke_Mm-Engine-Car[$clAttrModifiers]
+$Compressionratio=@Compressionratio-Engine-Car[$clAttrModifiers]
+$Noofcylinders_Cylinder=@Noofcylinders_Cylinder-Engine-Car[$clAttrModifiers]
+$Cylinderconfiguration=@Cylinderconfiguration-Engine-Car[$clAttrModifiers]
+$Valvespercylinder_Value=@Valvespercylinder_Value-Engine-Car[$clAttrModifiers]
+$Fueltype=@Fueltype-Engine-Car[$clAttrModifiers]
+$Fuelsystem=@Fuelsystem-Engine-Car[$clAttrModifiers]
+$Cupholders=@Cupholders-Interior-Car[$clAttrModifiers]
+$Foldingrear-Seat=@Foldingrear-Seat-Interior-Car[$clAttrModifiers]
+$Tachometer=@Tachometer-Interior-Car[$clAttrModifiers]
+$LeatherseatsInterior=@Leatherseats-Interior-Car[$clAttrModifiers]
+$Am_Fmradio=@Am_Fmradio-Interior-Car[$clAttrModifiers]
+$CdplayerInterior=@Cdplayer-Interior-Car[$clAttrModifiers]
+$AirconditionerComfort=@Airconditioner-Comfort_Convenience-Car[$clAttrModifiers]
+$PowerwindowsComfort=@Powerwindows-Comfort_Convenience-Car[$clAttrModifiers]
+$Powerdoorlocks=@Powerdoorlocks-Comfort_Convenience-Car[$clAttrModifiers]
+$PowersteeringComfort=@Powersteering-Comfort_Convenience-Car[$clAttrModifiers]
+$Powerseats=@Powerseats-Comfort_Convenience-Car[$clAttrModifiers]
+$Steeringadjusment=@Steeringadjusment-Comfort_Convenience-Car[$clAttrModifiers]
+$CentrallockingComfort=@Centrallocking-Comfort_Convenience-Car[$clAttrModifiers]
+$Defogger_Rear=@Defogger_Rear-Comfort_Convenience-Car[$clAttrModifiers]
+$Remoteboot_Fuel-Lid=@Remoteboot_Fuel-Lid-Comfort_Convenience-Car[$clAttrModifiers]
+$Alloywheels=@Alloywheels-Exterior-Car[$clAttrModifiers]
+$Tubelesstyres=@Tubelesstyres-Exterior-Car[$clAttrModifiers]
+$Sun-Roof=@Sun-Roof-Exterior-Car[$clAttrModifiers]
+$Frontfoglights=@Frontfoglights-Exterior-Car[$clAttrModifiers]
+$Rearwashwiper=@Rearwashwiper-Exterior-Car[$clAttrModifiers]
+$Anti-Lockbrakingsystem=@Anti-Lockbrakingsystem-Safety_Security-Car[$clAttrModifiers]
+$Driverair-Bags=@Driverair-Bags-Safety_Security-Car[$clAttrModifiers]
+$Passengerair-Bags=@Passengerair-Bags-Safety_Security-Car[$clAttrModifiers]
+$Immobilizer=@Immobilizer-Safety_Security-Car[$clAttrModifiers]
+$TractioncontrolSafety=@Tractioncontrol-Safety_Security-Car[$clAttrModifiers]
+$Childsafetylocks=@Childsafetylocks-Safety_Security-Car[$clAttrModifiers]
+INSERT_UPDATE Vehicle;code[unique=true];name;commonProductID;$categories;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];$catalogVersion;$approved;$bodytype;$segment;$engine;$fueltype;$transmission;$numberOfgears;$desplacement;$fueltype;$transmission;$numberOfgears;$peakpower;$Peaktorque;$mileage;$length;$width;$height;$Groundclearance_Mm;$Wheelbase_Mm;$Kerbweight_Kg;$Bootspace_L;$Turningradius_M;$Airconditioner;$Climatecontrol;$Cdplayer;$Powersteering;$Powerwindows;$Centrallocking;$Steeringadjustment_Rake_Reach;$Electricallyadjustabledriverseat;$Steeringmountedcontrols;$Rearacvent;$Remotecontrolledboot;$Rearwiper;$Leatherseats;$Electricallyadjustablemirrors;$Anti-Lockbrakingsystem_Abs;$Airbag;$Parkingsensors;$Tractioncontrol;$Fuelcapacity_L;$Seatingcapacity;$Smallbags;$Bigbags;$Passengercapacity;$Includesdriver;$Tyrespecesfront;$Tyrespecesrear;$Mileagehighway_Km_Liter;$Mileagecity_Km_Liter;$Mileageoverall_Km_Liter;$Enginetype_Model;$Displacementcc;$Power_Ps_Rpm;$Torque_Nm_Rpm;$Valvamechanism;$Bore_Mm;$Stroke_Mm;$Compressionratio;$Noofcylinders_Cylinder;$Cylinderconfiguration;$Valvespercylinder_Value;$Fueltype;$Fuelsystem;$Cupholders;$Foldingrear-Seat;$Tachometer;$LeatherseatsInterior;$Am_Fmradio;$CdplayerInterior;$AirconditionerComfort;$PowerwindowsComfort;$Powerdoorlocks;$PowersteeringComfort;$Powerseats;$Steeringadjusment;$CentrallockingComfort;$Defogger_Rear;$Remoteboot_Fuel-Lid;$Alloywheels;$Tubelesstyres;$Sun-Roof;$Frontfoglights;$Rearwashwiper;$Anti-Lockbrakingsystem;$Driverair-Bags;$Passengerair-Bags;$Immobilizer;$TractioncontrolSafety;$Childsafetylocks
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{3};{4};{2}:{7};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29};{30};{31};{32};{33};{34};{35};{36};{37};{38};{39};{40};{41};{42};{43};{44};{45};{46};{47};{48};{49};{50};{51};{52};{53};{54};{55};{56};{57};{58};{59};{60};{61};{62};{63};{64};{65};{66};{67};{68};{69};{70};{71};{72};{73};{74};{75};{76};{77};{78};{79};{80};{81};{82};{83};{84};{85};{86};{87};{88};{89};{90};{91};{92};{93};{94};{95};{96};{97} </value>
+		</property>
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'Car'"/>
+   			</bean>
+  		</property>
+	</bean>
+	
+	<bean id="batchBusVehicleConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+$approved=approvalstatus(code)[default='check']
+$catalogVersion=catalogversion(catalog(id),version)[unique=true,cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+$dateformat=dd-MM-yyyy
+$timeformat = hh:mm
+$categories=supercategories(code, catalogVersion(catalog(id),version))[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+$clAttrModifiers=system='EZ-IN-CS',version='1.0',translator=de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator,lang=en
+
+$Model-General-Bus=@Model-General-Bus[$clAttrModifiers];
+$Make-General-Bus=@Make-General-Bus[$clAttrModifiers];
+$Variations-General-Bus=@Variations-General-Bus[$clAttrModifiers];
+$100To0Sconds-Performance-Bus=@100To0Sconds-Performance-Bus[$clAttrModifiers];
+$Acceleration0_100Final-Performance-Bus=@Acceleration0_100Final-Performance-Bus[$clAttrModifiers];
+$Consumption_Annual_Average-Performance-Bus=@Consumption_Annual_Average-Performance-Bus[$clAttrModifiers];
+$Autotractioncontrol-Performance-Bus=@Autotractioncontrol-Performance-Bus[$clAttrModifiers];
+$FuelCapacity-Performance-Bus=@FuelCapacity-Performance-Bus[$clAttrModifiers];
+$FuelConsumption-Highway-Performance-Bus=@FuelConsumption-Highway-Performance-Bus[$clAttrModifiers];
+$FuelConsumption-Urban-Performance-Bus=@FuelConsumption-Urban-Performance-Bus[$clAttrModifiers];
+$FuelSupply-Performance-Bus=@FuelSupply-Performance-Bus[$clAttrModifiers];
+$FuelType-Performance-Bus=@FuelType-Performance-Bus[$clAttrModifiers];
+$LimitedSlipDiffNo-Performance-Bus=@LimitedSlipDiffNo-Performance-Bus[$clAttrModifiers];
+$PowerOutPut96kw@2800-Performance-Bus=@PowerOutPut96kw@2800-Performance-Bus[$clAttrModifiers];
+$QuarterMileSprint0-Performance-Bus=@QuarterMileSprint0-Performance-Bus[$clAttrModifiers];
+$TopSPeed-Final-Performance-Bus=@TopSPeed-Final-Performance-Bus[$clAttrModifiers];
+$Torque363nm@1800-Performance-Bus=@Torque363nm@1800-Performance-Bus[$clAttrModifiers];
+$TownCapacity-Performance-Bus=@TownCapacity_kg-Performance-Bus[$clAttrModifiers];
+$TurningCircle(meters)29-Performance-Bus=@TurningCircle_meters29-Performance-Bus[$clAttrModifiers];
+$TurnLockToLock0-Performance-Bus=@TurnLockToLock0-Performance-Bus[$clAttrModifiers];
+$2Ndfuelacceleration_0To100-Engineandgearbox-Bus=@2Ndfuelacceleration_0To100-Engineandgearbox-Bus[$clAttrModifiers];
+$2Ndfuelaverage-Engineandgearbox-Bus=@2Ndfuelaverage-Engineandgearbox-Bus[$clAttrModifiers];
+$2Ndfuelextraurban-Engineandgearbox-Bus=@2Ndfuelextraurban-Engineandgearbox-Bus[$clAttrModifiers];
+$2NdfuelpowerOutput-Engineandgearbox-Bus=@2NdfuelpowerOutput-Engineandgearbox-Bus[$clAttrModifiers];
+$2NdfueltopSpeed-Engineandgearbox-Bus=@2NdfueltopSpeed-Engineandgearbox-Bus[$clAttrModifiers];
+$2Ndfueltorque-Engineandgearbox-Bus=@2Ndfueltorque-Engineandgearbox-Bus[$clAttrModifiers];
+$2NdfuelUrban-Engineandgearbox-Bus=@2NdfuelUrban-Engineandgearbox-Bus[$clAttrModifiers];
+$AsprirationNatural-Engineandgearbox-Bus=@AsprirationNatural-Engineandgearbox-Bus[$clAttrModifiers];
+$BoreStroke-Engineandgearbox-Bus=@BoreStroke-Engineandgearbox-Bus[$clAttrModifiers];
+$Capacity5675-Engineandgearbox-Bus=@Capacity5675-Engineandgearbox-Bus[$clAttrModifiers];
+$Co22ndFuel-Engineandgearbox-Bus=@Co22ndFuel-Engineandgearbox-Bus[$clAttrModifiers];
+$Co22Emission-Engineandgearbox-Bus=@Co22Emission-Engineandgearbox-Bus[$clAttrModifiers];
+$CommonRailYes-Engineandgearbox-Bus=@CommonRailYes-Engineandgearbox-Bus[$clAttrModifiers];
+$CompressionRatio17-Engineandgearbox-Bus=@CompressionRatio17-Engineandgearbox-Bus[$clAttrModifiers];
+$Cylinder6-Engineandgearbox-Bus=@Cylinder6-Engineandgearbox-Bus[$clAttrModifiers];
+$EmissionStandardX-Engineandgearbox-Bus=@EmissionStandardX-Engineandgearbox-Bus[$clAttrModifiers];
+$EngineLayoutTransferInline-Engineandgearbox-Bus=@EngineLayoutTransferInline-Engineandgearbox-Bus[$clAttrModifiers];
+$FuelEnjectionYes-Engineandgearbox-Bus=@FuelEnjectionYes-Engineandgearbox-Bus[$clAttrModifiers];
+$GearBoxDetails5speed-Engineandgearbox-Bus=@GearBoxDetails5speed-Engineandgearbox-Bus[$clAttrModifiers];
+$HybrisClutchesNo-Engineandgearbox-Bus=@HybrisClutchesNo-Engineandgearbox-Bus[$clAttrModifiers];
+$IgnitionType-Engineandgearbox-Bus=@IgnitionType-Engineandgearbox-Bus[$clAttrModifiers];
+$ManualAutomaticManual-Engineandgearbox-Bus=@ManualAutomaticManual-Engineandgearbox-Bus[$clAttrModifiers];
+$NoOfGears5-Engineandgearbox-Bus=@NoOfGears5-Engineandgearbox-Bus[$clAttrModifiers];
+$SeconadaryFuelType-Engineandgearbox-Bus=@SeconadaryFuelType-Engineandgearbox-Bus[$clAttrModifiers];
+$Valves-Engineandgearbox-Bus=@Valves-Engineandgearbox-Bus[$clAttrModifiers];
+$Bootcapacity-Dimensionandweights-Bus=@Bootcapacity-Dimensionandweights-Bus[$clAttrModifiers];
+$Grossladenmass-Dimensionandweights-Bus=@Grossladenmass-Dimensionandweights-Bus[$clAttrModifiers];
+$Height-Dimensionandweights-Bus=@Height-Dimensionandweights-Bus[$clAttrModifiers];
+$Length-Dimensionandweights-Bus=@Length-Dimensionandweights-Bus[$clAttrModifiers];
+$LicencingMass-Dimensionandweights-Bus=@LicencingMass-Dimensionandweights-Bus[$clAttrModifiers];
+$LoadLdv=@kg-Dimensionandweights-Bus[$clAttrModifiers];
+$Width2160-Dimensionandweights-Bus=@Width2160-Dimensionandweights-Bus[$clAttrModifiers];
+$Bodycolouredbumpers-Stylingandlook-Bus=@Bodycolouredbumpers-Stylingandlook-Bus[$clAttrModifiers];
+$Bodycolouredmirrors-Stylingandlook-Bus=@Bodycolouredmirrors-Stylingandlook-Bus[$clAttrModifiers];
+$Bodystyle-Stylingandlook-Bus=@Bodystyle-Stylingandlook-Bus[$clAttrModifiers];
+$Bodystyle-ClassLarge-Bus=@Bodystyle-ClassLarge-Bus[$clAttrModifiers];
+$Door2-ClassLarge-Bus=@Door2-ClassLarge-Bus[$clAttrModifiers];
+$LeatherNo-ClassLarge-Bus=@LeatherNo-ClassLarge-Bus[$clAttrModifiers];
+$MetallicNo-ClassLarge-Bus=@MetallicNo-ClassLarge-Bus[$clAttrModifiers];
+$MetallicNo-ClassLarge-Bus=@MetallicNo-ClassLarge-Bus[$clAttrModifiers];
+$RearSpoiler-ClassLarge-Bus=@RearSpoiler-ClassLarge-Bus[$clAttrModifiers];
+$Fronttrack-Wheelsandtyres-Bus=@Fronttrack-Wheelsandtyres-Bus[$clAttrModifiers];
+$Reartrack-Wheelsandtyres-Bus=@Reartrack-Wheelsandtyres-Bus[$clAttrModifiers];
+$Rimsize_Front-Wheelsandtyres-Bus=@Rimsize_Front-Wheelsandtyres-Bus[$clAttrModifiers];
+$AllowWheels-Wheelsandtyres-Bus=@AllowWheels-Wheelsandtyres-Bus[$clAttrModifiers];
+$DriveWheel-Wheelsandtyres-Bus=@DriveWheel-Wheelsandtyres-Bus[$clAttrModifiers];
+$FullTimeNo-Wheelsandtyres-Bus=@FullTimeNo-Wheelsandtyres-Bus[$clAttrModifiers];
+$NoOfWheels-Wheelsandtyres-Bus=@NoOfWheels-Wheelsandtyres-Bus[$clAttrModifiers];
+$Rimsize_Rear-Wheelsandtyres-Bus=@Rimsize_Rear-Wheelsandtyres-Bus[$clAttrModifiers];
+$Run_FlatTypeNo-Wheelsandtyres-Bus=@Run_FlatTypeNo-Wheelsandtyres-Bus[$clAttrModifiers];
+$SpareWheelType-Wheelsandtyres-Bus=@SpareWheelType-Wheelsandtyres-Bus[$clAttrModifiers];
+$Abs-Breaks-Bus=@Abs-Breaks-Bus[$clAttrModifiers];
+$Brakehydrolics-Breaks-Bus=@Brakehydrolics-Breaks-Bus[$clAttrModifiers];
+$Brakefront-Breaks-Bus=@Brakefront-Breaks-Bus[$clAttrModifiers];
+$Suspensionfront-Suspension-Bus=@Suspensionfront-Suspension-Bus[$clAttrModifiers];
+$Suspensionrear-Suspension-Bus=@Suspensionrear-Suspension-Bus[$clAttrModifiers];
+$Steeringtype-Steering-Bus=@Steeringtype-Steering-Bus[$clAttrModifiers];
+$Steeringwheelelectric-Steering-Bus=@Steeringwheelelectric-Steering-Bus[$clAttrModifiers];
+$Steeringwheelmemory-Steering-Bus=@Steeringwheelmemory-Steering-Bus[$clAttrModifiers];
+$Automaticairconditioner-Aircondition-Bus=@Automaticairconditioner-Aircondition-Bus[$clAttrModifiers];
+$Airconditioner-Aircondition-Bus=@Airconditioner-Aircondition-Bus[$clAttrModifiers];
+$Climatecontrol-Aircondition-Bus=@Climatecontrol-Aircondition-Bus[$clAttrModifiers];
+$Automaticdipmirrors-Mirrors-Bus=@Automaticdipmirrors-Mirrors-Bus[$clAttrModifiers];
+$Electricfoldingmirrors-Mirrors-Bus=@Electricfoldingmirrors-Mirrors-Bus[$clAttrModifiers];
+$Electricheatedmirrors-Mirrors-Bus=@Electricheatedmirrors-Mirrors-Bus[$clAttrModifiers];
+$RemoteSideMirrorElectric-Mirrors-Bus=@RemoteSideMirrorElectric-Mirrors-Bus[$clAttrModifiers];
+$RemoteElectricMirror-Mirrors-Bus=@RemoteElectricMirror-Mirrors-Bus[$clAttrModifiers];
+$RemoteSideMirror-Mirrors-Bus=@RemoteSideMirror-Mirrors-Bus[$clAttrModifiers];
+$2Ndrowremovable-Seats-Bus=@2Ndrowremovable-Seats-Bus[$clAttrModifiers];
+$2Ndrowtumble-Seats-Bus=@2Ndrowtumble-Seats-Bus[$clAttrModifiers];
+$3Rdrowremovable-Seats-Bus=@3Rdrowremovable-Seats-Bus[$clAttrModifiers];
+$3Rdrowtumble-Seats-Bus=@3Rdrowtumble-Seats-Bus[$clAttrModifiers];
+$ElectronicSeatAdjDetailNo-Seats-Bus=@ElectronicSeatAdjDetailNo-Seats-Bus[$clAttrModifiers];
+$ElectronicSeatAdjustmentNo-Seats-Bus=@ElectronicSeatAdjustmentNo-Seats-Bus[$clAttrModifiers];
+$ElectronicSeatMemory-Seats-Bus=@ElectronicSeatMemory-Seats-Bus[$clAttrModifiers];
+$HeadRestsFront-Seats-Bus=@HeadRestsFront-Seats-Bus[$clAttrModifiers];
+$HeadRestsRear-Seats-Bus=@HeadRestsRear-Seats-Bus[$clAttrModifiers];
+$HeatedSeatNo-Seats-Bus=@HeatedSeatNo-Seats-Bus[$clAttrModifiers];
+$IsoFixChildSeatAttachmentNo-Seats-Bus=@IsoFixChildSeatAttachmentNo-Seats-Bus[$clAttrModifiers];
+$RearSeatSplit-Seats-Bus=@RearSeatSplit-Seats-Bus[$clAttrModifiers];
+$Seats19-Seats-Bus=@Seats19-Seats-Bus[$clAttrModifiers];
+$Automaticheadlamps-Lights-Bus=@Automaticheadlamps-Lights-Bus[$clAttrModifiers];
+$Breake_hazard-Lights-Bus=@Breake_hazard-Lights-Bus[$clAttrModifiers];
+$Exterior_Autodim-Lights-Bus=@Exterior_Autodim-Lights-Bus[$clAttrModifiers];
+$Fog_Lamps_frontNo-Lights-Bus=@Fog_Lamps_frontNo-Lights-Bus[$clAttrModifiers];
+$Fog_Lamps_rearNo-Lights-Bus=@Fog_Lamps_rearNo-Lights-Bus[$clAttrModifiers];
+$HeadlightHeightCOntrolNo-Lights-Bus=@HeadlightHeightCOntrolNo-Lights-Bus[$clAttrModifiers];
+$HiLevelBrakeLightNo-Lights-Bus=@HiLevelBrakeLightNo-Lights-Bus[$clAttrModifiers];
+$InteriorAutodimNo-Lights-Bus=@InteriorAutodimNo-Lights-Bus[$clAttrModifiers];
+$Light_cornering-Lights-Bus=@Light_cornering-Lights-Bus[$clAttrModifiers];
+$Light_dayTimerunningNo-Lights-Bus=@Light_dayTimerunningNo-Lights-Bus[$clAttrModifiers];
+$Type_minibus-Lights-Bus=@Type_minibus-Lights-Bus[$clAttrModifiers];
+$XenonHeadLampsNo-Lights-Bus=@XenonHeadLampsNo-Lights-Bus[$clAttrModifiers];
+$Sunroof-Window-Bus=@Sunroof-Window-Bus[$clAttrModifiers];
+$Electricwindow-Window-Bus=@Electricwindow-Window-Bus[$clAttrModifiers];
+$Rearwindowwiper-Window-Bus=@Rearwindowwiper-Window-Bus[$clAttrModifiers];
+$AutomiaticWindScreenWipersNo-Window-Bus=@AutomiaticWindScreenWipersNo-Window-Bus[$clAttrModifiers];
+$Electricwindow_Details-Window-Bus=@Electricwindow_Details-Window-Bus[$clAttrModifiers];
+$Electricwindow_OneTouch-Window-Bus=@Electricwindow_OneTouch-Window-Bus[$clAttrModifiers];
+$Electricwindow_R2-Window-Bus=@Electricwindow_R2-Window-Bus[$clAttrModifiers];
+$NumberOfSlidingRoofs-Window-Bus=@NumberOfSlidingRoofs-Window-Bus[$clAttrModifiers];
+$OpeningTailgateWindowNo-Window-Bus=@OpeningTailgateWindowNo-Window-Bus[$clAttrModifiers];
+$PanaromicRoofNo-Window-Bus=@PanaromicRoofNo-Window-Bus[$clAttrModifiers];
+$RearWindowdemister-Window-Bus=@RearWindowdemister-Window-Bus[$clAttrModifiers];
+$RearWindowWiper-Window-Bus=@RearWindowWiper-Window-Bus[$clAttrModifiers];
+$SidingRearWindowLDVno-Window-Bus=@SidingRearWindowLDVno-Window-Bus[$clAttrModifiers];
+$SidingRoofNo-Window-Bus=@SidingRoofNo-Window-Bus[$clAttrModifiers];
+$SpeedsensativeWipers-Window-Bus=@SpeedsensativeWipers-Window-Bus[$clAttrModifiers];
+$TintedSIdeWindow-Window-Bus=@TintedSIdeWindow-Window-Bus[$clAttrModifiers];
+$WindowScreen-Window-Bus=@WindowScreen-Window-Bus[$clAttrModifiers];
+$Cdplayer-Soundsystem-Accessories-Bus=@Cdplayer-Soundsystem-Accessories-Bus[$clAttrModifiers];
+$Dvd-Window-Soundsystem-Accessories-Bus=@Dvd-Window-Soundsystem-Accessories-Bus[$clAttrModifiers];
+$Radio-Soundsystem-Accessories-Bus=@Radio-Soundsystem-Accessories-Bus[$clAttrModifiers];
+$CdShuttle-Soundsystem-Accessories-Bus=@CdShuttle-Soundsystem-Accessories-Bus[$clAttrModifiers];
+$ICeAuxInput-Soundsystem-Accessories-Bus=@ICeAuxInput-Soundsystem-Accessories-Bus[$clAttrModifiers];
+$Ipod-Soundsystem-Accessories-Bus=@Ipod-Soundsystem-Accessories-Bus[$clAttrModifiers];
+$Mp3-Soundsystem-Accessories-Bus=@Mp3-Soundsystem-Accessories-Bus[$clAttrModifiers];
+$RadioAndOrTape-Soundsystem-Accessories-Bus=@RadioAndOrTape-Soundsystem-Accessories-Bus[$clAttrModifiers];
+$RearEntertainment-Soundsystem-Accessories-Bus=@RearEntertainment-Soundsystem-Accessories-Bus[$clAttrModifiers];
+$TapeNa-Soundsystem-Accessories-Bus=@TapeNa-Soundsystem-Accessories-Bus[$clAttrModifiers];
+$Altimeter-4X4_Offroad_Specific-Bus=@Altimeter-4X4_Offroad_Specific-Bus[$clAttrModifiers];
+$Compass-4X4_Offroad_Specific-Bus=@Compass-4X4_Offroad_Specific-Bus[$clAttrModifiers];
+$Difflock-4X4_Offroad_Specific-Bus=@Difflock-4X4_Offroad_Specific-Bus[$clAttrModifiers];
+$ApproachAngle0-4X4_Offroad_Specific-Bus=@ApproachAngle0-4X4_Offroad_Specific-Bus[$clAttrModifiers];
+$CompassDetail-4X4_Offroad_Specific-Bus=@CompassDetail-4X4_Offroad_Specific-Bus[$clAttrModifiers];
+$DecentCOntrol-4X4_Offroad_Specific-Bus=@DecentCOntrol-4X4_Offroad_Specific-Bus[$clAttrModifiers];
+$DepartureAngle-4X4_Offroad_Specific-Bus=@DepartureAngle-4X4_Offroad_Specific-Bus[$clAttrModifiers];
+$DifflockPosition-4X4_Offroad_Specific-Bus=@DifflockPosition-4X4_Offroad_Specific-Bus[$clAttrModifiers];
+$GradientIncline-4X4_Offroad_Specific-Bus=@GradientIncline-4X4_Offroad_Specific-Bus[$clAttrModifiers];
+$LowRange-4X4_Offroad_Specific-Bus=@LowRange-4X4_Offroad_Specific-Bus[$clAttrModifiers];
+$RampAngle-4X4_Offroad_Specific-Bus=@RampAngle-4X4_Offroad_Specific-Bus[$clAttrModifiers];
+$RideHeightControl-4X4_Offroad_Specific-Bus=@RideHeightControl-4X4_Offroad_Specific-Bus[$clAttrModifiers];
+$RolleroverAngleSlant-4X4_Offroad_Specific-Bus=@RolleroverAngleSlant-4X4_Offroad_Specific-Bus[$clAttrModifiers];
+$SelfLevelingSuspension-4X4_Offroad_Specific-Bus=@SelfLevelingSuspension-4X4_Offroad_Specific-Bus[$clAttrModifiers];
+$Stability-4X4_Offroad_Specific-Bus=@Stability-4X4_Offroad_Specific-Bus[$clAttrModifiers];
+$WadingDepth-4X4_Offroad_Specific-Bus=@WadingDepth-4X4_Offroad_Specific-Bus[$clAttrModifiers];
+$Autolockdoors-Otherperipherals-Bus=@Autolockdoors-Otherperipherals-Bus[$clAttrModifiers];
+$Bluetooth-Otherperipherals-Bus=@Bluetooth-Otherperipherals-Bus[$clAttrModifiers];
+$Centrallocking-Otherperipherals-Bus=@Centrallocking-Otherperipherals-Bus[$clAttrModifiers];
+$BlindSpotWarning-Otherperipherals-Bus=@BlindSpotWarning-Otherperipherals-Bus[$clAttrModifiers];
+$CodeStartKeylessStart-Otherperipherals-Bus=@CodeStartKeylessStart-Otherperipherals-Bus[$clAttrModifiers];
+$CollisionWarningSystemNo-Otherperipherals-Bus=@CollisionWarningSystemNo-Otherperipherals-Bus[$clAttrModifiers];
+$CruiseControlNo-Otherperipherals-Bus=@CruiseControlNo-Otherperipherals-Bus[$clAttrModifiers];
+$CruiseControlDistanceSensor-Otherperipherals-Bus=@CruiseControlDistanceSensor-Otherperipherals-Bus[$clAttrModifiers];
+$CupHolders-Otherperipherals-Bus=@CupHolders-Otherperipherals-Bus[$clAttrModifiers];
+$HandsFreePhoneNo-Otherperipherals-Bus=@HandsFreePhoneNo-Otherperipherals-Bus[$clAttrModifiers];
+$HandsFreePhonePreWired-Otherperipherals-Bus=@HandsFreePhonePreWired-Otherperipherals-Bus [$clAttrModifiers];
+$KeylessEntryNo-Otherperipherals-Bus=@KeylessEntryNo-Otherperipherals-Bus[$clAttrModifiers];
+$LaneAssistNo-Otherperipherals-Bus=@LaneAssistNo-Otherperipherals-Bus[$clAttrModifiers];
+$LaneChangeWarningNo-Otherperipherals-Bus=@LaneChangeWarningNo-Otherperipherals-Bus[$clAttrModifiers];
+$MaintenanceCPK0-Otherperipherals-Bus=@MaintenanceCPK0-Otherperipherals-Bus[$clAttrModifiers];
+$OnBoardComputer-Otherperipherals-Bus=@OnBoardComputer-Otherperipherals-Bus[$clAttrModifiers];
+$ParkDistanceControl_Back-Otherperipherals-Bus=@ParkDistanceControl_Back-Otherperipherals-Bus[$clAttrModifiers];
+$ParkDistanceControl_Front-Otherperipherals-Bus=@ParkDistanceControl_Front-Otherperipherals-Bus[$clAttrModifiers];
+$RemoteBootOpenerNo-Otherperipherals-Bus=@RemoteBootOpenerNo-Otherperipherals-Bus[$clAttrModifiers];
+$RemoteFuelCapReleaseNo-Otherperipherals-Bus=@RemoteFuelCapReleaseNo-Otherperipherals-Bus[$clAttrModifiers];
+$RevCounterNo-Otherperipherals-Bus=@RevCounterNo-Otherperipherals-Bus[$clAttrModifiers];
+$SateliteNavigationNo-Otherperipherals-Bus=@SateliteNavigationNo-Otherperipherals-Bus[$clAttrModifiers];
+$Air_Bag_Side-Airbag-Bus=@Air_Bag_Side-Airbag-Bus[$clAttrModifiers];
+$Air_Bag_Number-Airbag-Bus=@Air_Bag_Number-Airbag-Bus[$clAttrModifiers];
+$Air_Bag_Driver-Airbag-Bus=@Air_Bag_Driver-Airbag-Bus[$clAttrModifiers];
+$Air_Bag-Passenger-Bus=@Air_Bag-Passenger-Bus[$clAttrModifiers];
+$Air_Bag_Side_Front-Airbag-Bus=@Air_Bag_Side_Front-Airbag-Bus[$clAttrModifiers];
+$Air_Bag_Side_Rear-Airbag-Bus=@Air_Bag_Side_Rear-Airbag-Bus[$clAttrModifiers];
+$Air_Bag_Curtain-Airbag-Bus=@Air_Bag_Curtain-Airbag-Bus[$clAttrModifiers];
+$Air_Bag_Details-Airbag-Bus=@Air_Bag_Details-Airbag-Bus[$clAttrModifiers];
+$Air_Bag_Kneebag-Airbag-Bus=@Air_Bag_Kneebag-Airbag-Bus[$clAttrModifiers];
+$Alarm-Security-Bus=@Alarm-Security-Bus[$clAttrModifiers];
+$Gearlock-Security-Bus=@Gearlock-Security-Bus[$clAttrModifiers];
+$Powersteering-Security-Bus=@Powersteering-Security-Bus[$clAttrModifiers];
+$ImmobiliserNo-Security-Bus=@ImmobiliserNo-Security-Bus[$clAttrModifiers];
+$ImpactTensioningSeatsBelts-Security-Bus=@ImpactTensioningSeatsBelts-Security-Bus[$clAttrModifiers];
+$InclineMeterNo-Security-Bus=@InclineMeterNo-Security-Bus[$clAttrModifiers];
+$PowerSteeringYes-Security-Bus=@PowerSteeringYes-Security-Bus[$clAttrModifiers];
+$RoadSideAssistanceTime-Security-Bus=@RoadSideAssistanceTime-Security-Bus[$clAttrModifiers];
+$SecuritySystemNo-Security-Bus=@SecuritySystemNo-Security-Bus[$clAttrModifiers];
+$SideImpactProtectionYes-Security-Bus=@SideImpactProtectionYes-Security-Bus[$clAttrModifiers];
+
+INSERT_UPDATE Vehicle;code[unique=true];name;commonProductID;$categories;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];$catalogVersion;$approved;$Model-General-Bus;$Make-General-Bus;$Variations-General-Bus;$100To0Sconds-Performance-Bus;$Acceleration0_100Final-Performance-Bus;$Consumption_Annual_Average-Performance-Bus;$Autotractioncontrol-Performance-Bus;$LoadLdv;$Width2160-Dimensionandweights-Bus;$Bodycolouredbumpers-Stylingandlook-Bus;$Bodycolouredmirrors-Stylingandlook-Bus;$Bodystyle-Stylingandlook-Bus;$Bodystyle-ClassLarge-Bus;$Door2-ClassLarge-Bus;$LeatherNo-ClassLarge-Bus;$MetallicNo-ClassLarge-Bus;$MetallicNo-ClassLarge-Bus;$RearSpoiler-ClassLarge-Bus;$Fronttrack-Wheelsandtyres-Bus;$Reartrack-Wheelsandtyres-Bus;$Rimsize_Front-Wheelsandtyres-Bus;$AllowWheels-Wheelsandtyres-Bus;$DriveWheel-Wheelsandtyres-Bus;$FullTimeNo-Wheelsandtyres-Bus;$NoOfWheels-Wheelsandtyres-Bus;$Rimsize_Rear-Wheelsandtyres-Bus;$Run_FlatTypeNo-Wheelsandtyres-Bus;$SpareWheelType-Wheelsandtyres-Bus;$Abs-Breaks-Bus;$Brakehydrolics-Breaks-Bus;$Brakefront-Breaks-Bus;$Suspensionfront-Suspension-Bus;$Suspensionrear-Suspension-Bus;$Steeringtype-Steering-Bus;$Steeringwheelelectric-Steering-Bus;$Steeringwheelmemory-Steering-Bus;$Automaticairconditioner-Aircondition-Bus;$Airconditioner-Aircondition-Bus;$Climatecontrol-Aircondition-Bus;$Automaticdipmirrors-Mirrors-Bus;$Electricfoldingmirrors-Mirrors-Bus;$Electricheatedmirrors-Mirrors-Bus;$RemoteSideMirrorElectric-Mirrors-Bus;$RemoteElectricMirror-Mirrors-Bus;$RemoteSideMirror-Mirrors-Bus;$2Ndrowremovable-Seats-Bus;$2Ndrowtumble-Seats-Bus;$3Rdrowremovable-Seats-Bus;$3Rdrowtumble-Seats-Bus;$ElectronicSeatAdjDetailNo-Seats-Bus;$ElectronicSeatAdjustmentNo-Seats-Bus;$ElectronicSeatMemory-Seats-Bus;$HeadRestsFront-Seats-Bus;$HeadRestsRear-Seats-Bus;$HeatedSeatNo-Seats-Bus;$IsoFixChildSeatAttachmentNo-Seats-Bus;$RearSeatSplit-Seats-Bus;$Seats19-Seats-Bus;$Automaticheadlamps-Lights-Bus;$Breake_hazard-Lights-Bus;$Exterior_Autodim-Lights-Bus;$Fog_Lamps_frontNo-Lights-Bus;$Fog_Lamps_rearNo-Lights-Bus;$HeadlightHeightCOntrolNo-Lights-Bus;$HiLevelBrakeLightNo-Lights-Bus;$InteriorAutodimNo-Lights-Bus;$Light_cornering-Lights-Bus;$Light_dayTimerunningNo-Lights-Bus;$Type_minibus-Lights-Bus;$XenonHeadLampsNo-Lights-Bus;$Sunroof-Window-Bus;$Electricwindow-Window-Bus;$Rearwindowwiper-Window-Bus;$AutomiaticWindScreenWipersNo-Window-Bus;$Electricwindow_Details-Window-Bus;$Electricwindow_OneTouch-Window-Bus;$Electricwindow_R2-Window-Bus;$NumberOfSlidingRoofs-Window-Bus;$OpeningTailgateWindowNo-Window-Bus;$PanaromicRoofNo-Window-Bus;$RearWindowdemister-Window-Bus;$RearWindowWiper-Window-Bus;$SidingRearWindowLDVno-Window-Bus;$SidingRoofNo-Window-Bus;$SpeedsensativeWipers-Window-Bus;$TintedSIdeWindow-Window-Bus;$WindowScreen-Window-Bus;$Cdplayer-Soundsystem-Accessories-Bus;$Dvd-Window-Soundsystem-Accessories-Bus;$Radio-Soundsystem-Accessories-Bus;$CdShuttle-Soundsystem-Accessories-Bus;$ICeAuxInput-Soundsystem-Accessories-Bus;$Ipod-Soundsystem-Accessories-Bus;$Mp3-Soundsystem-Accessories-Bus;$RadioAndOrTape-Soundsystem-Accessories-Bus;$RearEntertainment-Soundsystem-Accessories-Bus;$TapeNa-Soundsystem-Accessories-Bus;$Altimeter-4X4_Offroad_Specific-Bus;$Compass-4X4_Offroad_Specific-Bus;$Difflock-4X4_Offroad_Specific-Bus;$ApproachAngle0-4X4_Offroad_Specific-Bus;$CompassDetail-4X4_Offroad_Specific-Bus;$DecentCOntrol-4X4_Offroad_Specific-Bus;$DepartureAngle-4X4_Offroad_Specific-Bus;$DifflockPosition-4X4_Offroad_Specific-Bus;$GradientIncline-4X4_Offroad_Specific-Bus;$LowRange-4X4_Offroad_Specific-Bus;$RampAngle-4X4_Offroad_Specific-Bus;$RideHeightControl-4X4_Offroad_Specific-Bus;$RolleroverAngleSlant-4X4_Offroad_Specific-Bus;$SelfLevelingSuspension-4X4_Offroad_Specific-Bus;$Stability-4X4_Offroad_Specific-Bus;$WadingDepth-4X4_Offroad_Specific-Bus;$Autolockdoors-Otherperipherals-Bus;$Bluetooth-Otherperipherals-Bus;$Centrallocking-Otherperipherals-Bus;$BlindSpotWarning-Otherperipherals-Bus;$CodeStartKeylessStart-Otherperipherals-Bus;$CollisionWarningSystemNo-Otherperipherals-Bus;$CruiseControlNo-Otherperipherals-Bus;$CruiseControlDistanceSensor-Otherperipherals-Bus;$CupHolders-Otherperipherals-Bus;$HandsFreePhoneNo-Otherperipherals-Bus;$HandsFreePhonePreWired-Otherperipherals-Bus;$KeylessEntryNo-Otherperipherals-Bus;$LaneAssistNo-Otherperipherals-Bus;$LaneChangeWarningNo-Otherperipherals-Bus;$MaintenanceCPK0-Otherperipherals-Bus;$OnBoardComputer-Otherperipherals-Bus;$ParkDistanceControl_Back-Otherperipherals-Bus;$ParkDistanceControl_Front-Otherperipherals-Bus;$RemoteBootOpenerNo-Otherperipherals-Bus;$RemoteFuelCapReleaseNo-Otherperipherals-Bus;$RevCounterNo-Otherperipherals-Bus;$SateliteNavigationNo-Otherperipherals-Bus;$Air_Bag_Side-Airbag-Bus;$Air_Bag_Number-Airbag-Bus;$Air_Bag_Driver-Airbag-Bus;$Air_Bag-Passenger-Bus;$Air_Bag_Side_Front-Airbag-Bus	;$Air_Bag_Side_Rear-Airbag-Bus;$Air_Bag_Curtain-Airbag-Bus;$Air_Bag_Details-Airbag-Bus;$Air_Bag_Kneebag-Airbag-Bus;$Alarm-Security-Bus;$Gearlock-Security-Bus;$Powersteering-Security-Bus;$ImmobiliserNo-Security-Bus;$ImpactTensioningSeatsBelts-Security-Bus;$InclineMeterNo-Security-Bus	;$PowerSteeringYes-Security-Bus;$RoadSideAssistanceTime-Security-Bus;$SecuritySystemNo-Security-Bus;$SideImpactProtectionYes-Security-Bus;$FuelCapacity-Performance-Bus;$FuelConsumption-Highway-Performance-Bus;$FuelConsumption-Urban-Performance-Bus;$FuelSupply-Performance-Bus;$FuelType-Performance-Bus;$LimitedSlipDiffNo-Performance-Bus;$PowerOutPut96kw@2800-Performance-Bus;$QuarterMileSprint0-Performance-Bus;$TopSPeed-Final-Performance-Bus;$Torque363nm@1800-Performance-Bus;$TownCapacity-Performance-Bus;$TurningCircle(meters)29-Performance-Bus;$TurnLockToLock0-Performance-Bus;$2Ndfuelacceleration_0To100-Engineandgearbox-Bus;$2Ndfuelaverage-Engineandgearbox-Bus;$2Ndfuelextraurban-Engineandgearbox-Bus;$2NdfuelpowerOutput-Engineandgearbox-Bus;$2NdfueltopSpeed-Engineandgearbox-Bus;$2Ndfueltorque-Engineandgearbox-Bus;$2NdfuelUrban-Engineandgearbox-Bus;$AsprirationNatural-Engineandgearbox-Bus;$BoreStroke-Engineandgearbox-Bus;$Capacity5675-Engineandgearbox-Bus;$Co22ndFuel-Engineandgearbox-Bus;$Co22Emission-Engineandgearbox-Bus;$CommonRailYes-Engineandgearbox-Bus;$CompressionRatio17-Engineandgearbox-Bus;$Cylinder6-Engineandgearbox-Bus;$EmissionStandardX-Engineandgearbox-Bus;$EngineLayoutTransferInline-Engineandgearbox-Bus;$FuelEnjectionYes-Engineandgearbox-Bus;$GearBoxDetails5speed-Engineandgearbox-Bus;$HybrisClutchesNo-Engineandgearbox-Bus;$IgnitionType-Engineandgearbox-Bus;$ManualAutomaticManual-Engineandgearbox-Bus;$NoOfGears5-Engineandgearbox-Bus;$SeconadaryFuelType-Engineandgearbox-Bus;$Valves-Engineandgearbox-Bus;$Bootcapacity-Dimensionandweights-Bus;$Grossladenmass-Dimensionandweights-Bus;$Height-Dimensionandweights-Bus;$Length-Dimensionandweights-Bus;$LicencingMass-Dimensionandweights-Bus;$LoadLdv                          
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{3};{4};{2}:{7};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29};{30};{31};{32};{33};{34};{35};{36};{37};{38};{39};{40};{41};{42};{43};{44};{45};{46};{47};{48};{49};{50};{51};{52};{53};{54};{55};{56};{57};{58};{59};{60};{61};{62};{63};{64};{65};{66};{67};{68};{69};{70};{71};{72};{73};{74};{75};{76};{77};{78};{79};{80};{81};{82};{83};{84};{85};{86};{87};{88};{89};{90};{91};{92};{93};{94};{95};{96};{97};{98};{99};{100};{101};{102};{103};{104};{105};{106};{107};{108};{109};{110};{111};{112};{113};{114};{115};{116};{117};{118};{119};{120};{121};{122};{123};{124};{125};{126};{127};{128};{129};{130};{131};{132};{133};{134};{135};{135};{136};{137};{138};{139};{140};{141};{142};{143};{144};{145};{146};{147};{148};{149};{150};{151};{152};{153};{153};{154};{155};{156};{157};{158};{159};{160};{161};{162};{163};{164};{165};{166};{167};{168};{169};{170};{171};{172};{173};{174};{175};{176};{177};{178};{179};{180};{181};{182};{183};{184};{185};{186};{187};{188};{189};{190};{191};{192};{193};{194};{195};{196};{197};{198};{199};{200};{201};{202};{203};{204};{205};{206} </value>
+		</property>
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'Bus'"/>
+   			</bean>
+  		</property>
+	</bean>
+	
+	
+	
+	<bean id="batchYatchVehicleConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+$approved=approvalstatus(code)[default='check']
+$catalogVersion=catalogversion(catalog(id),version)[unique=true,cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+$dateformat=dd-MM-yyyy
+$timeformat = hh:mm
+$categories=supercategories(code, catalogVersion(catalog(id),version))[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+$clAttrModifiers=system='EZ-IN-CS',version='1.0',translator=de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator,lang=en
+
+$Name=@Name-Overview-Yatch[$clAttrModifiers]
+$Type=@Type-Overview-Yatch[$clAttrModifiers]
+$Model=@Model-Overview-Yatch[$clAttrModifiers]
+$SubType=@SubType-Overview-Yatch[$clAttrModifiers]
+$Builder=@Builder-Overview-Yatch[$clAttrModifiers]
+$NavalArchitect=@NavalArchitect-Overview-Yatch[$clAttrModifiers]
+$ExteriorDesigner=@ExteriorDesigner-Overview-Yatch[$clAttrModifiers]
+$InteriorDesigner=@InteriorDesigner-Overview-Yatch[$clAttrModifiers]
+$year=@year-Overview-Yatch[$clAttrModifiers]
+$Refitted=@Refitted-Overview-Yatch[$clAttrModifiers]
+$Flag=@Flag-Overview-Yatch[$clAttrModifiers]
+$Mca=@Mca-Overview-Yatch[$clAttrModifiers]
+$class=@class-Overview-Yatch[$clAttrModifiers]
+$HullNB=@HullNB-Overview-Yatch[$clAttrModifiers]
+$HullColour=@HullColour-Overview-Yatch[$clAttrModifiers]
+$Hullconfiguration=@Hullconfiguration-Construction-Yatch[$clAttrModifiers]
+$Hullmaterial=@Hullmaterial-Construction-Yatch[$clAttrModifiers]
+$Superstructure=@Superstructure-Construction-Yatch[$clAttrModifiers]
+$DeckMaterial=@DeckMaterial-Construction-Yatch[$clAttrModifiers]
+$DecksNB=@DecksNB-Construction-Yatch[$clAttrModifiers]
+$Quanity=@Quanity-Engines-Yatch[$clAttrModifiers]
+$Fueltype=@Fueltype-Engines-Yatch[$clAttrModifiers]
+$Manufacturer=@Manufacturer-Engines-Yatch[$clAttrModifiers]
+$EngineModel=@EngineModel-Engines-Yatch[$clAttrModifiers]
+$EnginePower=@EnginePower-Engines-Yatch[$clAttrModifiers]
+$TotalPower=@TotalPower-Engines-Yatch[$clAttrModifiers]
+$Propulsion=@Propulsion-Engines-Yatch[$clAttrModifiers]
+$Lengthoverall=@Lengthoverall-Dimension-Yatch[$clAttrModifiers]
+$Lengthatwaterline=@Lengthatwaterline-Dimension-Yatch[$clAttrModifiers]
+$Beam=@Beam-Dimension-Yatch[$clAttrModifiers]
+$minDraft=@minDraft-Dimension-Yatch[$clAttrModifiers]
+$maxDraft=@maxDraft-Dimension-Yatch[$clAttrModifiers]
+$GrossTonnage=@GrossTonnage-Dimension-Yatch[$clAttrModifiers]
+$Maxspeed=@Maxspeed-Performanceandcapabilities-Yatch[$clAttrModifiers]
+$Cruisingspeed=@Cruisingspeed-Performanceandcapabilities-Yatch[$clAttrModifiers]
+$Range=@Range-Performanceandcapabilities-Yatch[$clAttrModifiers]
+$FuelCapacity=@FuelCapacity-Performanceandcapabilities-Yatch[$clAttrModifiers]
+$WaterCapacity=@WaterCapacity-Performanceandcapabilities-Yatch[$clAttrModifiers]
+$Guests=@Guests-Accommodations-Yatch[$clAttrModifiers]
+$Cabinstotal=@Cabinstotal-Accommodations-Yatch[$clAttrModifiers]
+$Cabins=@Cabins-Accommodations-Yatch[$clAttrModifiers]
+$Crew=@Crew-Accommodations-Yatch[$clAttrModifiers]
+$Generator=@Generator-Equipment-Yatch[$clAttrModifiers]
+$Stabilizers=@Stabilizers-Equipment-Yatch[$clAttrModifiers]
+$Thrusters=@Thrusters-Equipment-Yatch[$clAttrModifiers]
+$Amenities=@Amenities-Equipment-Yatch[$clAttrModifiers]
+$Amenities=@Amenities-Equipment-Yatch[$clAttrModifiers]
+
+INSERT_UPDATE Vehicle;code[unique=true];name;commonProductID;$categories;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];$catalogVersion;$approved;$Name	;$Type	;$Model	;$SubType	;$Builder	;$NavalArchitect	;$ExteriorDesigner	;$InteriorDesigner	;$year	;$Refitted	;$Flag	;$Mca	;$class	;$HullNB	;$HullColour	;$Hullconfiguration	;$Hullmaterial	;$Superstructure	;$DeckMaterial	;$DecksNB	;$Quanity	;$Fueltype	;$Manufacturer	;$EngineModel	;$EnginePower	;$TotalPower	;$Propulsion	;$Lengthoverall	;$Lengthatwaterline	;$Beam	;$minDraft	;$maxDraft	;$GrossTonnage	;$Maxspeed	;$Cruisingspeed	;$Range	;$FuelCapacity	;$WaterCapacity	;$Guests	;$Cabinstotal	;$Cabins	;$Crew	;$Generator	;$Stabilizers	;$Thrusters	;$Amenities	;$Amenities
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{3};{4};{2}:{7};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29};{30};{31};{32};{33};{34};{35};{36};{37};{38};{39};{40};{41};{42};{43};{44};{45};{46};{47};{48};{49};{50};{51};{52};{53};{54};{55} </value>
+		</property>
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'Yatch'"/>
+   			</bean>
+  		</property>
+	</bean>
+	
+	
+	<bean id="batchBikeVehicleConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+$approved=approvalstatus(code)[default='check']
+$catalogVersion=catalogversion(catalog(id),version)[unique=true,cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+$dateformat=dd-MM-yyyy
+$timeformat = hh:mm
+$categories=supercategories(code, catalogVersion(catalog(id),version))[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+$clAttrModifiers=system='EZ-IN-CS',version='1.0',translator=de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator,lang=en
+
+
+$Kerbweights=@Kerbweights-Weights-Bike[$clAttrModifiers]
+$Maxpayload=@Maxpayload-Weights-Bike[$clAttrModifiers]
+$Front=@Front-Breaks-Bike[$clAttrModifiers]
+$Rear=@Rear-Breaks-Bike[$clAttrModifiers]
+$Breakfluid=@Breakfluid-Breaks-Bike[$clAttrModifiers]
+$Frontrimsize=@Frontrimsize-Wheelsandtyers-Bike[$clAttrModifiers]
+$Rearrimsize=@Rearrimsize-Wheelsandtyers-Bike[$clAttrModifiers]
+$Fronttyersize=@Fronttyersize-Wheelsandtyers-Bike[$clAttrModifiers]
+
+$reartyersize=@reartyersize-Wheelsandtyers-Bike[$clAttrModifiers]
+
+$Type=@Type-Engine-Bike[$clAttrModifiers]
+$Displacement=@Displacement-Engine-Bike[$clAttrModifiers]
+
+$cylinderArrangeMent=@CylinderArrangeMent-Engine-Bike[$clAttrModifiers]
+
+$Maximumpower=@Maximumpower-Engine-Bike[$clAttrModifiers]
+$MaximumTorque=@MaximumTorque-Engine-Bike[$clAttrModifiers]
+$BoreStroke=@BoreStroke-Engine-Bike[$clAttrModifiers]
+$CompressionRation=@CompressionRation-Engine-Bike[$clAttrModifiers]
+$Carburetor=@Carburetor-Engine-Bike[$clAttrModifiers]
+$Starting=@Starting-Engine-Bike[$clAttrModifiers]
+$CompressionRationValve=@CompressionRationValve-Engine-Bike[$clAttrModifiers]
+$IdealSpeed=@IdealSpeed-Engine-Bike[$clAttrModifiers]
+$StartingMode=@StartingMode-Engine-Bike[$clAttrModifiers]
+$PowerToWaightRatio=@PowerToWaightRatio-Engine-Bike[$clAttrModifiers]
+
+$Maxspeed(Kmph)=@Maxspeed_Kmph-Acceleration-Bike[$clAttrModifiers]
+$TypeChassis=@Type-Chassis-Bike[$clAttrModifiers]
+$FrontFrontSuspension=@Front-Suspension-Bike[$clAttrModifiers]
+$RearSuspension=@Rear-Suspension-Bike[$clAttrModifiers]
+$Clutch=@Clutch-Transmission-Bike[$clAttrModifiers]
+$Primaryreduction=@Primaryreduction-Transmission-Bike[$clAttrModifiers]
+$Finalreduction=@Finalreduction-Transmission-Bike[$clAttrModifiers]
+$Length=@Length-Dimensions-Bike[$clAttrModifiers]
+$Height=@Height-Dimensions-Bike[$clAttrModifiers]
+$Width=@Width-Dimensions-Bike[$clAttrModifiers]
+
+$Wheelbase_Bike=@Wheelbase_Bike-Dimensions-Bike[$clAttrModifiers]
+$Groundclearance_Mm_Bike=@Groundclearance_Mm_Bike-Dimensions-Bike[$clAttrModifiers]
+
+
+INSERT_UPDATE Vehicle;code[unique=true];name;commonProductID;$categories;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];$catalogVersion;$approved;$Kerbweights;$Maxpayload;$Front;$Rear;$Breakfluid;$Frontrimsize;$Rearrimsize;$Fronttyersize;$Type;$Displacement;$Maximumpower;$Maxspeed(Kmph);$TypeChassis;$FrontFrontSuspension;$RearSuspension;$Clutch;$Primaryreduction;$Finalreduction;$Length;$Height;$Width;$cylinderArrangeMent;$MaximumTorque;$BoreStroke;$CompressionRation;$Carburetor;$Starting;$CompressionRationValve;$IdealSpeed;$StartingMode;$PowerToWaightRatio;$Wheelbase_Bike;$Groundclearance_Mm_Bike
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{3};{4};{2}:{7};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29};{30};{31};{32};{33};{34};{35};{36};{37};{38};{39};{40};{41} </value>
+		</property>
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'Bike'"/>
+   			</bean>
+  		</property>
+	</bean>
+	
+	
+	
+		<bean id="batchTrainVehicleConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+$approved=approvalstatus(code)[default='check']
+$catalogVersion=catalogversion(catalog(id),version)[unique=true,cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+$dateformat=dd-MM-yyyy
+$timeformat = hh:mm
+$categories=supercategories(code, catalogVersion(catalog(id),version))[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+$clAttrModifiers=system='EZ-IN-CS',version='1.0',translator=de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator,lang=en
+
+
+$Trainname=@Trainname-General-Train[$clAttrModifiers]
+$Description=@Description-General-Train[$clAttrModifiers]
+$Coaches=@Coaches-General-Train[$clAttrModifiers]
+$Saloons=@Saloons-General-Train[$clAttrModifiers]
+$Restaurants=@Restaurants-General-Train[$clAttrModifiers]
+$Bar=@Bar-General-Train[$clAttrModifiers]
+$Spa=@Spa-General-Train[$clAttrModifiers]
+$GymCoach=@GymCoach-General-Train[$clAttrModifiers]
+$ConferenceCoach=@ConferenceCoach-General-Train[$clAttrModifiers]
+$Crew=@Crew-General-Train[$clAttrModifiers]
+$Transport=@Transport-General-Train[$clAttrModifiers]
+$Cabinarea =@Cabinarea-Presidentialsuitedimensions-Train[$clAttrModifiers]
+$Cabinlength=@Cabinlength-Presidentialsuitedimensions-Train[$clAttrModifiers]
+$Cabinwidth=@Cabinwidth-Presidentialsuitedimensions-Train[$clAttrModifiers]
+$BedWidthSingle=@BedWidthSingle-Presidentialsuitedimensions-Train[$clAttrModifiers]
+$Double=@Double-Presidentialsuitedimensions-Train[$clAttrModifiers]
+$BedLength=@BedLength-Presidentialsuitedimensions-Train[$clAttrModifiers]
+$CabinsPerCar=@CabinsPerCar-Presidentialsuitedimensions-Train[$clAttrModifiers]
+$Cabinarea_Deluxcabindimensions=@Cabinarea-Deluxcabindimensions-Train[$clAttrModifiers]
+$Cabinlength_Deluxcabindimensions=@Cabinlength-Deluxcabindimensions-Train[$clAttrModifiers]
+$Cabinwidth_Deluxcabindimensions=@Cabinwidth-Deluxcabindimensions-Train[$clAttrModifiers]
+$BedWidthSingle_Deluxcabindimensions=@BedWidthSingle-Deluxcabindimensions-Train[$clAttrModifiers]
+$Double_Deluxcabindimensions=@Double-Deluxcabindimensions-Train[$clAttrModifiers]
+$BedLength_Deluxcabindimensions=@BedLength-Deluxcabindimensions-Train[$clAttrModifiers]
+$CabinsPerCar_Deluxcabindimensions=@CabinsPerCar-Deluxcabindimensions-Train[$clAttrModifiers]
+$Library =@Library-Facilities-Train[$clAttrModifiers]
+$Bar_Facilities=@Bar-Facilities-Train[$clAttrModifiers]
+$Channelmusic=@Channelmusic-Facilities-Train[$clAttrModifiers]
+$AyurvedicMassageCentre=@AyurvedicMassageCentre-Facilities-Train[$clAttrModifiers]
+$SteamBath=@SteamBath-Facilities-Train[$clAttrModifiers]
+$Gymnasium=@Gymnasium-Facilities-Train[$clAttrModifiers]
+$BeautyParlour=@BeautyParlour-Facilities-Train[$clAttrModifiers]
+$BusinessCentre=@BusinessCentre-Facilities-Train[$clAttrModifiers]
+$SpecailSuitForPhysicallyChallenged=@SpecailSuitForPhysicallyChallenged-Facilities-Train[$clAttrModifiers]
+$FullyLoadedMiniPantryinCoach=@FullyLoadedMiniPantryinCoach-Facilities-Train[$clAttrModifiers]
+$TelephoneInEachSaloon=@TelephoneInEachSaloon-Facilities-Train[$clAttrModifiers]
+$TelevisoinInEachSaloon=@TelevisoinInEachSaloon-Facilities-Train[$clAttrModifiers]
+$PlasmaTvInLoungeCar=@PlasmaTvInLoungeCar-Facilities-Train[$clAttrModifiers]
+$PASystem_6ChannelMusicSystem=@PASystem_6ChannelMusicSystem-Facilities-Train[$clAttrModifiers]
+$LoungeInEachPassangerCar=@LoungeInEachPassangerCar-Facilities-Train[$clAttrModifiers]
+
+
+
+
+INSERT_UPDATE Vehicle;code[unique=true];name;commonProductID;$categories;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];$catalogVersion;$approved;$Trainname;$Description;$Coaches;$Saloons;$Restaurants;$Bar;$Spa;$GymCoach;$ConferenceCoach;$Crew;$Transport;$Cabinarea;$Cabinlength;$Cabinwidth;$BedWidthSingle;$Double;$BedLength;$CabinsPerCar;$Cabinarea_Deluxcabindimensions;$Cabinlength_Deluxcabindimensions;$Cabinwidth_Deluxcabindimensions;$BedWidthSingle_Deluxcabindimensions;$Double_Deluxcabindimensions;$BedLength_Deluxcabindimensions;$CabinsPerCar_Deluxcabindimensions;$Library;$Bar_Facilities;$Channelmusic;$AyurvedicMassageCentre;$SteamBath;$Gymnasium;$BeautyParlour;$BusinessCentre;$SpecailSuitForPhysicallyChallenged;$FullyLoadedMiniPantryinCoach;$TelephoneInEachSaloon;$TelevisoinInEachSaloon;$PlasmaTvInLoungeCar;$PASystem_6ChannelMusicSystem;$LoungeInEachPassangerCar
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{3};{4};{2}:{7};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29};{30};{31};{32};{33};{34};{35};{36};{37};{38};{39};{40};{41};{42};{43};{44};{45};{46};{47};{48} </value>
+		</property>
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'Train'"/>
+   			</bean>
+  		</property>
+	</bean>
+	
+	
+			<bean id="batchRvCategoryRelationConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+$approved=approvalstatus(code)[default='check']
+$catalogVersion=catalogversion(catalog(id),version)[unique=true,cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+$dateformat=dd-MM-yyyy
+$timeformat = hh:mm
+$categories=supercategories(code, catalogVersion(catalog(id),version))[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+$clAttrModifiers=system='EZ-IN-CS',version='1.0',translator=de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator,lang=en
+
+$People=@People-General-Rv[$clAttrModifiers]
+$MakeAge=@MakeAge-General-Rv[$clAttrModifiers]
+$Engine=@Engine-General-Rv[$clAttrModifiers]
+$Transmission=@Transmission-General-Rv[$clAttrModifiers]
+$Adults=@Adults-Features-Rv[$clAttrModifiers]
+$Children=@Children-Features-Rv[$clAttrModifiers]
+$ToiletAndShower=@ToiletAndShower-Features-Rv[$clAttrModifiers]
+$Ac_MainCabin=@Ac_MainCabin-Features-Rv[$clAttrModifiers]
+$HeatingMainCabin=@HeatingMainCabin-Features-Rv[$clAttrModifiers]
+$ChildSeat=@ChildSeat-Features-Rv[$clAttrModifiers]
+$WaterTank=@WaterTank-Features-Rv[$clAttrModifiers]
+$WasteWaterTank=@WasteWaterTank-Features-Rv[$clAttrModifiers]
+$Sink=@Sink-Features-Rv[$clAttrModifiers]
+$HotAndColdWater=@HotAndColdWater-Features-Rv[$clAttrModifiers]
+$InternalAccess=@InternalAccess-Features-Rv[$clAttrModifiers]
+$FireExtinguisher=@FireExtinguisher-Features-Rv[$clAttrModifiers]
+$SeatBelt=@SeatBelt-Features-Rv[$clAttrModifiers]
+$Kitchen=@Kitchen-Features-Rv[$clAttrModifiers]
+$Entertainment=@Entertainment-Features-Rv[$clAttrModifiers]
+$Storage=@Storage-Features-Rv[$clAttrModifiers]
+$Generator=@Generator-Features-Rv[$clAttrModifiers]
+$Side_Out=@Side_Out-Features-Rv[$clAttrModifiers]
+$RearVisionCamera=@RearVisionCamera-Features-Rv[$clAttrModifiers]
+$SideAwining=@SideAwining-Features-Rv[$clAttrModifiers]
+$TvAndDvdPlayer=@TvAndDvdPlayer-Features-Rv[$clAttrModifiers]
+$Microwave=@Microwave-Features-Rv[$clAttrModifiers]
+$GasOven=@GasOven-Features-Rv[$clAttrModifiers]
+$GasStove=@GasStove-Features-Rv[$clAttrModifiers]
+$Fridge_Freezer=@Fridge_Freezer-Features-Rv[$clAttrModifiers]
+$RadioAndCDPlayer=@RadioAndCDPlayer-Features-Rv[$clAttrModifiers]
+$HeatingDriverCabin=@HeatingDriverCabin-Features-Rv[$clAttrModifiers]
+$AC_DriverCabin=@AC_DriverCabin-Features-Rv[$clAttrModifiers]
+$SuggestedOccupancy=@SuggestedOccupancy-Sleepingconfiguration-Rv[$clAttrModifiers]
+$Couch=@Couch-Sleepingconfiguration-Rv[$clAttrModifiers]
+$Bunkbeds=@Bunkbeds-Sleepingconfiguration-Rv[$clAttrModifiers]
+$Dinette=@Dinette-Sleepingconfiguration-Rv[$clAttrModifiers]
+$PermenentRearBed=@PermenentRearBed-Sleepingconfiguration-Rv[$clAttrModifiers]
+$Remark=@Remark-Sleepingconfiguration-Rv[$clAttrModifiers]
+$Transmission=@Transmission-Vehiclespecifications-Rv[$clAttrModifiers]
+$Fuelcapacity=@Fuelcapacity-Vehiclespecifications-Rv[$clAttrModifiers]
+$Powersteering=@Powersteering-Vehiclespecifications-Rv[$clAttrModifiers]
+$Engine_Fuel=@Engine_Fuel-Vehiclespecifications-Rv[$clAttrModifiers]
+$FuelConsumption_Approx=@FuelConsumption_Approx-Vehiclespecifications-Rv[$clAttrModifiers]
+$PowerSupply=@PowerSupply-Vehiclespecifications-Rv[$clAttrModifiers]
+$Exteriorlength=@Exteriorlength-Vehicledimensions-Rv[$clAttrModifiers]
+$Exteriorwidth=@Exteriorwidth-Vehicledimensions-Rv[$clAttrModifiers]
+$Exteriorheight=@Exteriorheight-Vehicledimensions-Rv[$clAttrModifiers]
+$Day=@Day-Layout-Rv[$clAttrModifiers]
+$Night=@Night-Layout-Rv[$clAttrModifiers]
+$Cookingutensils=@Cookingutensils-Kitchenkit-Rv[$clAttrModifiers]
+$CrockeryAndCutery=@CrockeryAndCutery-Kitchenkit-Rv[$clAttrModifiers]
+
+
+INSERT_UPDATE Vehicle;code[unique=true];name;commonProductID;$categories;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];$catalogVersion;$approved;;$People;$MakeAge;$Engine;$Transmission;$Adults;$Children;$ToiletAndShower;$Ac_MainCabin;$HeatingMainCabin;$ChildSeat;$WaterTank;$WasteWaterTank;$Sink;$HotAndColdWater;$InternalAccess;$FireExtinguisher;$SeatBelt;$Kitchen;$Entertainment;$Storage;$Generator;$Side_Out;$RearVisionCamera;$SideAwining;$TvAndDvdPlayer;$Microwave;$GasOven;$GasStove;$Fridge_Freezer;$RadioAndCDPlayer;$HeatingDriverCabin;$AC_DriverCabin;$SuggestedOccupancy;$Couch;$Bunkbeds;$Dinette;$PermenentRearBed;$Remark;$Transmission;$Fuelcapacity;$Powersteering;$Engine_Fuel;$FuelConsumption_Approx;$PowerSupply;$Exteriorlength;$Exteriorwidth;$Exteriorheight;$Day;$Night;$Cookingutensils
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{3};{4};{2}:{7};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29};{30};{31};{32};{33};{34};{35};{36};{37};{38};{39};{40};{41};{42};{43};{44};{45};{46};{47};{48};{50};{51}{52};{53};{54};{55};{56};{57} </value>
+		</property>
+		<property name="rowFilter">
+   			<bean class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexRowFilter">
+    			<property name="expression" value="row[0] == 'Rv'"/>
+   			</bean>
+  		</property>
+	</bean>
+</beans>
+	
+	
+	
+	
+	
+	
+	
+
+
+
+

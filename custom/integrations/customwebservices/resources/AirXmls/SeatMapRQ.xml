@@ -1,0 +1,44 @@
+<air:AirBusinessServiceRQ xmlns:air="http://www.coxandkings.com/integ/suppl/air" xmlns:com="http://www.coxandkings.com/integ/suppl/common" xmlns:ns="http://www.opentravel.org/OTA/2003/05" xmlns:ns1="http://www.isaaviation.com/thinair/webservices/OTA/Extensions/2003/05">
+   <air:RequestHeader>
+      <com:UserID>Saber</com:UserID>
+      <com:SessionID>4242</com:SessionID>
+      <com:TransactionID>1234</com:TransactionID>
+      <com:SupplierCredentialsList>
+         <com:SupplierCredentials>
+            <com:SupplierID>SABRE</com:SupplierID>
+            <com:Credentials>
+               <com:Credential name="Username">1000</com:Credential>
+               <com:Credential name="Password">table55</com:Credential>
+               <com:Credential name="Organization">L7H8</com:Credential>
+               <com:Credential name="PseudoCityCode">L7H8</com:Credential>
+            </com:Credentials>
+         </com:SupplierCredentials>
+      </com:SupplierCredentialsList>
+   </air:RequestHeader>
+   <air:RequestBody>
+      <ns:OTA_AirSeatMapRQ EchoToken="Shared/IDL:IceSess\/SessMgr:1\.0.IDL/Common/!ICESMS\/CERTG!ICESMSLB\/CRT.LB!-3384392079495262302!1284110!0" Version="1.0">
+         <ns:POS>
+            <ns:Source/>
+         </ns:POS>
+         <ns:SeatMapRequests>
+            <ns:SeatMapRequest>
+               <ns:FlightSegmentInfo DepartureDateTime="2016-08-01T16:30:00" ArrivalDateTime="2016-08-01T18:35:00" FlightNumber="357">
+                  <ns:DepartureAirport LocationCode="BOM"/>
+                  <ns:ArrivalAirport LocationCode="DEL"/>
+                  <ns:OperatingAirline Code="9W"/>
+                  <ns:MarketingAirline Code="9W"/>
+               </ns:FlightSegmentInfo>
+               <ns:SeatDetails>
+                  <ns:CabinClass CabinType="Economy"/>
+                  <ns:ResBookDesignations>
+                     <ns:ResBookDesignation ResBookDesigCode="W"/>
+                  </ns:ResBookDesignations>
+               </ns:SeatDetails>
+            </ns:SeatMapRequest>
+         </ns:SeatMapRequests>
+         <ns:AirTravelers>
+            <ns:AirTraveler CurrencyCode="INR"/>
+         </ns:AirTravelers>
+      </ns:OTA_AirSeatMapRQ>
+   </air:RequestBody>
+</air:AirBusinessServiceRQ>

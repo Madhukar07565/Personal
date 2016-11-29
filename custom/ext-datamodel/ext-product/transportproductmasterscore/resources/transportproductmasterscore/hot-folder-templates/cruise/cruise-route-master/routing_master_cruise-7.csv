@@ -1,0 +1,8 @@
+Header Name;CompanyName;RoutingCommonId;Code;NumberOfNights;RoutingName;CruiseDestinationName;ApprovalStatus;OnlineDate;OfflineDate;Reason;CopiedFrom
+CruiseRoute;Ezeego1;23456718_CruiseRoute;987654_CruiseRoute;11;Bergen-Kirkenes-Bergen;987654_CruiseDest;approved;01-01-2015;10-01-2015;;;
+CruiseRoute;Ezeego1;2345679_CruiseRoute;987655_CruiseRoute;5;Bangkok-Pataya;987656_CruiseDest;approved;01-01-2015;02-01-2015;;;
+CruiseRoute;Ezeego1;2345680_CruiseRoute;987656_CruiseRoute;7;Mumbai-Malaysia-Bergen;987658_CruiseDest;approved;01-01-2015;03-01-2015;;;
+;Day;Country;City;PortName;PlaceType;CruiseRoute
+RouteDetail;11;IN;AAA;202;PORT;987654_CruiseRoute
+RouteDetail;5;AU;AAB;202;HIGHSEA;987654_CruiseRoute
+RouteDetail;7;EG;AAC;202;LAND;987654_CruiseRoute

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ [y] hybris Platform
+  ~ 
+  ~ Copyright (c) 2000-2016 SAP SE
+  ~ All rights reserved.
+  ~ 
+  ~ This software is the confidential and proprietary information of SAP 
+  ~ Hybris ("Confidential Information"). You shall not disclose such 
+  ~ Confidential Information and shall use it only in accordance with the 
+  ~ terms of the license agreement you entered into with SAP Hybris.
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<alias name="b2cCartFacade" alias="cartFacade"/>
+	<bean id="b2cCartFacade" class="com.cnk.travelogix.b2c.facades.order.B2cCartFacade"
+			parent="defaultCartFacade">
+		<property name="modelService" ref="modelService"/>
+		
+		<property name="roomReversePopulator" ref="roomReversePopulator"/>
+		<property name="hotelTravelerReversePopulator" ref="hotelTravelerReversePopulator"/>
+		<property name="flightTravelerReversePopulator" ref="orderFlightTravelerReversePopulator"/>
+		<property name="groupOrderEntryConverter" ref="ezgGroupOrderEntryConverter"></property>
+	</bean>
+	
+	<bean id="b2cOrderFacade" class="com.cnk.travelogix.b2c.facades.order.B2cOrderFacade" parent="cnkDefaultOrderFacade">
+		<property name="orderConverter" ref="orderConverter" />
+		<property name="groupOrderEntryConverter" ref="ezgGroupOrderEntryConverter" />
+		<property name="paymentPlanForOrderConverter" ref="paymentPlanForOrderConverter" />
+		<property name="modelService" ref="modelService" />
+	</bean>
+	
+
+	<alias name="b2cCustomerFacade" alias="customerFacade"/>
+	<bean id="b2cCustomerFacade" class="com.cnk.travelogix.b2c.facades.customer.impl.ExtB2cCustomerFacade"
+			parent="defaultCustomerFacade">
+	</bean>	
+	
+	<alias name="b2cUploadFileFacade" alias="uploadFileFacade"/>
+	<bean id="b2cUploadFileFacade" class="com.cnk.travelogix.b2c.facades.upload.UploadFileFacade">
+	</bean>	
+	
+
+	<bean id="b2cCustomerReversePopulator" class="com.cnk.travelogix.b2c.facades.customer.converters.populator.B2cCustomerReversePopulator" parent="customerReversePopulator">
+	</bean>	
+	
+	<alias name="b2cCountryPopulator" alias="countryPopulator"/>
+	<bean id="b2cCountryPopulator" class="com.cnk.travelogix.b2c.facades.customer.converters.populator.B2cCountryPopulator" parent="defaultCountryPopulator">
+	</bean>
+	
+	<!-- added by aizijie start -->
+	<bean id="defaultSolrCitySearchFacade" class=" com.cnk.travelogix.b2c.facades.audoSuggestion.impl.DefaultSolrCitySearchFacade">
+		<property name="autocompleteService" ref="citySearchAutocompleteService"/>
+		<property name="autocompleteSuggestionConverter" ref="autocompleteSuggestionConverter"/>
+		<property name="threadContextService" ref="threadContextService"/>
+	</bean>
+	
+	<bean id="homePageFacade" class="com.cnk.travelogix.b2c.facades.homepage.impl.DefaultHomePageFacade"/>
+	
+	<!-- added by aizijie end -->
+
+    <bean id="creditCardFacade" class="com.cnk.travelogix.b2c.facades.wallet.impl.ExtB2cCreditCardFacade">
+    </bean>
+    
+    <bean id="creditCardPopulator"
+			class="com.cnk.travelogix.b2c.facades.wallet.converters.populator.B2cCreditCardPopulator">
+	</bean>
+
+	<bean id="creditCardReversePopulator"
+			class="com.cnk.travelogix.b2c.facades.wallet.converters.populator.B2cCreditCardReversePopulator">
+	</bean>
+	
+	<!-- add by Alex for TRAV-130 start -->
+		<bean id="profilePopulator" class="com.cnk.travelogix.b2c.facades.customer.converters.populator.ProfilePopulator"/>
+		<bean id="profileReversePopulator" class="com.cnk.travelogix.b2c.facades.customer.converters.populator.ProfileReversePopulator"/>
+	<!-- add by Alex for TRAV-130 end -->
+	
+	<!-- update by Rick Zhang for TRAV-384 start
+	<alias name="b2cCustomerPopulator" alias="customerPopulator"/> -->
+    <bean id="b2cCustomerPopulator" 
+        class="com.cnk.travelogix.b2c.facades.customer.converters.populator.B2cCustomerPopulator"
+        parent="defaultCustomerPopulator" />
+        
+	<bean id="b2cCustomerConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="de.hybris.platform.commercefacades.user.data.CustomerData"/>
+		<property name="populators">
+			<list>
+				<ref bean="b2cCustomerPopulator"/>
+			</list>
+		</property>
+	</bean>
+	<!-- update by Rick Zhang for TRAV-384 end -->
+	
+</beans>

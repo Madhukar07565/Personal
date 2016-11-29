@@ -1,0 +1,508 @@
+<AirInterfaceRS xmlns="http://www.coxandkings.com/integ/suppl/airinterface" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+   <ResponseHeader xmlns="http://www.coxandkings.com/integ/suppl/air">
+      <Status xmlns="http://www.coxandkings.com/integ/suppl/common">SUCCESS</Status>
+      <UserID xmlns="http://www.coxandkings.com/integ/suppl/common">Venkatesh</UserID>
+      <SessionID xmlns="http://www.coxandkings.com/integ/suppl/common">20160717T1347</SessionID>
+      <TransactionID xmlns="http://www.coxandkings.com/integ/suppl/common">1347</TransactionID>
+   </ResponseHeader>
+   <ResponseBody>
+      <NOT_FOUND xmlns="http://www.coxandkings.com/integ/suppl/air">
+         <SupplierID>SABRE</SupplierID>
+         <Sequence>1</Sequence>
+         <ns7:OTA_AirAvailRS Version="1.10.1" EchoToken="String" TimeStamp="2016-07-18T10:25:23" Target="Production" SequenceNmbr="1" PrimaryLangID="en-us" AltLangID="en-us" xmlns:ns7="http://www.opentravel.org/OTA/2003/05">
+            <ns7:Success/>
+            <ns7:Warnings>
+               <ns7:Warning ShortText="RU TRANSIT VISA REQD IN CASE OF DIFFERENT COUNTRIESRU TRANSIT VISA REQD IN CASE OF DIFFERENT COUNTRIESRU TRANSIT VISA REQD IN CASE OF DIFFERENT COUNTRIESRU TRANSIT VISA REQD IN CASE OF DIFFERENT COUNTRIES"/>
+            </ns7:Warnings>
+            <ns7:OriginDestinationInformation>
+               <ns7:OriginDestinationOptions>
+                  <ns7:OriginDestinationOption>
+                     <ns7:FlightSegment DepartureDateTime="2016-07-18T16:00:00" ArrivalDateTime="2016-07-18T18:15:00" StopQuantity="0" RPH="1" FlightNumber="687" Ticket="E" SmokingAllowed="false">
+                        <ns7:DepartureAirport LocationCode="BOM"/>
+                        <ns7:ArrivalAirport LocationCode="DEL"/>
+                        <ns7:OperatingAirline Code="AI"/>
+                        <ns7:Equipment AirEquipType="321"/>
+                        <ns7:TPA_Extensions>
+                           <OriginCityTimeZoneCode Code="Z5.5"/>
+                           <TimeZoneDifference Code="Â0"/>
+                           <Data>
+                              <Text>RU TRANSIT VISA REQD IN CASE OF DIFFERENT COUNTRIES</Text>
+                           </Data>
+                           <DaysOfOperation>
+                              <OperationTimes Mon="true" Tue="true" Wed="true" Thu="true" Fri="true" Sat="true" Sun="true"/>
+                           </DaysOfOperation>
+                        </ns7:TPA_Extensions>
+                        <ns7:MarketingAirline Code="AI"/>
+                        <ns7:MarketingCabin>
+                           <ns7:Meal MealCode="S"/>
+                        </ns7:MarketingCabin>
+                        <ns7:BookingClassAvail RPH="1" ResBookDesigCode="C" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="2" ResBookDesigCode="D" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="3" ResBookDesigCode="J" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="4" ResBookDesigCode="Z" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="5" ResBookDesigCode="Y" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="6" ResBookDesigCode="B" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="7" ResBookDesigCode="M" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="8" ResBookDesigCode="H" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="9" ResBookDesigCode="K" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="10" ResBookDesigCode="Q" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="11" ResBookDesigCode="V" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="12" ResBookDesigCode="W" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="13" ResBookDesigCode="G" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="14" ResBookDesigCode="L" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="15" ResBookDesigCode="U" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="16" ResBookDesigCode="T" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="17" ResBookDesigCode="E" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="18" ResBookDesigCode="N" ResBookDesigQuantity="0"/>
+                     </ns7:FlightSegment>
+                  </ns7:OriginDestinationOption>
+                  <ns7:OriginDestinationOption>
+                     <ns7:FlightSegment DepartureDateTime="2016-07-18T16:30:00" ArrivalDateTime="2016-07-18T18:35:00" StopQuantity="0" RPH="2" FlightNumber="357" Ticket="E" SmokingAllowed="false">
+                        <ns7:DepartureAirport LocationCode="BOM"/>
+                        <ns7:ArrivalAirport LocationCode="DEL"/>
+                        <ns7:OperatingAirline Code="9W"/>
+                        <ns7:Equipment AirEquipType="739"/>
+                        <ns7:TPA_Extensions>
+                           <OriginCityTimeZoneCode Code="Z5.5"/>
+                           <TimeZoneDifference Code="Â0"/>
+                           <Data>
+                              <Text>RU TRANSIT VISA REQD IN CASE OF DIFFERENT COUNTRIES</Text>
+                           </Data>
+                           <DaysOfOperation>
+                              <OperationTimes Mon="true" Tue="true" Wed="true" Thu="true" Fri="true" Sat="true" Sun="true"/>
+                           </DaysOfOperation>
+                        </ns7:TPA_Extensions>
+                        <ns7:MarketingAirline Code="9W"/>
+                        <ns7:MarketingCabin>
+                           <ns7:Meal MealCode="S"/>
+                        </ns7:MarketingCabin>
+                        <ns7:BookingClassAvail RPH="1" ResBookDesigCode="C" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="2" ResBookDesigCode="J" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="3" ResBookDesigCode="Z" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="4" ResBookDesigCode="I" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="5" ResBookDesigCode="P" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="6" ResBookDesigCode="Y" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="7" ResBookDesigCode="M" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="8" ResBookDesigCode="T" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="9" ResBookDesigCode="U" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="10" ResBookDesigCode="N" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="11" ResBookDesigCode="L" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="12" ResBookDesigCode="Q" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="13" ResBookDesigCode="S" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="14" ResBookDesigCode="K" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="15" ResBookDesigCode="H" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="16" ResBookDesigCode="V" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="17" ResBookDesigCode="O" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="18" ResBookDesigCode="W" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="19" ResBookDesigCode="B" ResBookDesigQuantity="0"/>
+                     </ns7:FlightSegment>
+                  </ns7:OriginDestinationOption>
+                  <ns7:OriginDestinationOption>
+                     <ns7:FlightSegment DepartureDateTime="2016-07-18T16:30:00" ArrivalDateTime="2016-07-18T18:35:00" StopQuantity="0" RPH="3" FlightNumber="8786" Ticket="E" SmokingAllowed="false">
+                        <ns7:DepartureAirport LocationCode="BOM"/>
+                        <ns7:ArrivalAirport LocationCode="DEL"/>
+                        <ns7:OperatingAirline Code="9W"/>
+                        <ns7:Equipment AirEquipType="739"/>
+                        <ns7:TPA_Extensions>
+                           <OriginCityTimeZoneCode Code="Z5.5"/>
+                           <TimeZoneDifference Code="Â0"/>
+                           <Data>
+                              <Text>RU TRANSIT VISA REQD IN CASE OF DIFFERENT COUNTRIES</Text>
+                           </Data>
+                           <DaysOfOperation>
+                              <OperationTimes Mon="true" Tue="true" Wed="true" Thu="true" Fri="true" Sat="true" Sun="true"/>
+                           </DaysOfOperation>
+                        </ns7:TPA_Extensions>
+                        <ns7:MarketingAirline Code="EY"/>
+                        <ns7:MarketingCabin>
+                           <ns7:Meal MealCode="S"/>
+                        </ns7:MarketingCabin>
+                        <ns7:BookingClassAvail RPH="1" ResBookDesigCode="J" ResBookDesigQuantity="2"/>
+                        <ns7:BookingClassAvail RPH="2" ResBookDesigCode="C" ResBookDesigQuantity="2"/>
+                        <ns7:BookingClassAvail RPH="3" ResBookDesigCode="D" ResBookDesigQuantity="2"/>
+                        <ns7:BookingClassAvail RPH="4" ResBookDesigCode="W" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="5" ResBookDesigCode="Z" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="6" ResBookDesigCode="Y" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="7" ResBookDesigCode="B" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="8" ResBookDesigCode="H" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="9" ResBookDesigCode="K" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="10" ResBookDesigCode="M" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="11" ResBookDesigCode="Q" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="12" ResBookDesigCode="L" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="13" ResBookDesigCode="V" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="14" ResBookDesigCode="U" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="15" ResBookDesigCode="E" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="16" ResBookDesigCode="T" ResBookDesigQuantity="0"/>
+                     </ns7:FlightSegment>
+                  </ns7:OriginDestinationOption>
+                  <ns7:OriginDestinationOption>
+                     <ns7:FlightSegment DepartureDateTime="2016-07-18T17:00:00" ArrivalDateTime="2016-07-18T19:05:00" StopQuantity="0" RPH="4" FlightNumber="353" Ticket="E" SmokingAllowed="false">
+                        <ns7:DepartureAirport LocationCode="BOM"/>
+                        <ns7:ArrivalAirport LocationCode="DEL"/>
+                        <ns7:OperatingAirline Code="9W"/>
+                        <ns7:Equipment AirEquipType="739"/>
+                        <ns7:TPA_Extensions>
+                           <OriginCityTimeZoneCode Code="Z5.5"/>
+                           <TimeZoneDifference Code="Â0"/>
+                           <Data>
+                              <Text>RU TRANSIT VISA REQD IN CASE OF DIFFERENT COUNTRIES</Text>
+                           </Data>
+                           <DaysOfOperation>
+                              <OperationTimes Mon="true" Tue="true" Wed="true" Thu="true" Fri="true" Sat="true" Sun="true"/>
+                           </DaysOfOperation>
+                        </ns7:TPA_Extensions>
+                        <ns7:MarketingAirline Code="9W"/>
+                        <ns7:MarketingCabin>
+                           <ns7:Meal MealCode="S"/>
+                        </ns7:MarketingCabin>
+                        <ns7:BookingClassAvail RPH="1" ResBookDesigCode="C" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="2" ResBookDesigCode="J" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="3" ResBookDesigCode="Z" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="4" ResBookDesigCode="I" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="5" ResBookDesigCode="P" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="6" ResBookDesigCode="Y" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="7" ResBookDesigCode="M" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="8" ResBookDesigCode="T" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="9" ResBookDesigCode="U" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="10" ResBookDesigCode="N" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="11" ResBookDesigCode="L" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="12" ResBookDesigCode="Q" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="13" ResBookDesigCode="S" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="14" ResBookDesigCode="K" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="15" ResBookDesigCode="H" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="16" ResBookDesigCode="V" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="17" ResBookDesigCode="O" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="18" ResBookDesigCode="W" ResBookDesigQuantity="6"/>
+                        <ns7:BookingClassAvail RPH="19" ResBookDesigCode="B" ResBookDesigQuantity="7"/>
+                     </ns7:FlightSegment>
+                  </ns7:OriginDestinationOption>
+                  <ns7:OriginDestinationOption>
+                     <ns7:FlightSegment DepartureDateTime="2016-07-18T17:00:00" ArrivalDateTime="2016-07-18T19:05:00" StopQuantity="0" RPH="5" FlightNumber="8782" Ticket="E" SmokingAllowed="false">
+                        <ns7:DepartureAirport LocationCode="BOM"/>
+                        <ns7:ArrivalAirport LocationCode="DEL"/>
+                        <ns7:OperatingAirline Code="9W"/>
+                        <ns7:Equipment AirEquipType="739"/>
+                        <ns7:TPA_Extensions>
+                           <OriginCityTimeZoneCode Code="Z5.5"/>
+                           <TimeZoneDifference Code="Â0"/>
+                           <Data>
+                              <Text>RU TRANSIT VISA REQD IN CASE OF DIFFERENT COUNTRIES</Text>
+                           </Data>
+                           <DaysOfOperation>
+                              <OperationTimes Mon="true" Tue="true" Wed="true" Thu="true" Fri="true" Sat="true" Sun="true"/>
+                           </DaysOfOperation>
+                        </ns7:TPA_Extensions>
+                        <ns7:MarketingAirline Code="EY"/>
+                        <ns7:MarketingCabin>
+                           <ns7:Meal MealCode="S"/>
+                        </ns7:MarketingCabin>
+                        <ns7:BookingClassAvail RPH="1" ResBookDesigCode="J" ResBookDesigQuantity="2"/>
+                        <ns7:BookingClassAvail RPH="2" ResBookDesigCode="C" ResBookDesigQuantity="2"/>
+                        <ns7:BookingClassAvail RPH="3" ResBookDesigCode="D" ResBookDesigQuantity="2"/>
+                        <ns7:BookingClassAvail RPH="4" ResBookDesigCode="W" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="5" ResBookDesigCode="Z" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="6" ResBookDesigCode="Y" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="7" ResBookDesigCode="B" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="8" ResBookDesigCode="H" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="9" ResBookDesigCode="K" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="10" ResBookDesigCode="M" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="11" ResBookDesigCode="Q" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="12" ResBookDesigCode="L" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="13" ResBookDesigCode="V" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="14" ResBookDesigCode="U" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="15" ResBookDesigCode="E" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="16" ResBookDesigCode="T" ResBookDesigQuantity="0"/>
+                     </ns7:FlightSegment>
+                  </ns7:OriginDestinationOption>
+                  <ns7:OriginDestinationOption>
+                     <ns7:FlightSegment DepartureDateTime="2016-07-18T17:00:00" ArrivalDateTime="2016-07-18T19:15:00" StopQuantity="0" RPH="6" FlightNumber="660" Ticket="E" SmokingAllowed="false">
+                        <ns7:DepartureAirport LocationCode="BOM"/>
+                        <ns7:ArrivalAirport LocationCode="DEL"/>
+                        <ns7:OperatingAirline Code="AI"/>
+                        <ns7:Equipment AirEquipType="321"/>
+                        <ns7:TPA_Extensions>
+                           <OriginCityTimeZoneCode Code="Z5.5"/>
+                           <TimeZoneDifference Code="Â0"/>
+                           <Data>
+                              <Text>RU TRANSIT VISA REQD IN CASE OF DIFFERENT COUNTRIES</Text>
+                           </Data>
+                           <DaysOfOperation>
+                              <OperationTimes Mon="true" Tue="true" Wed="true" Thu="true" Fri="true" Sat="true" Sun="true"/>
+                           </DaysOfOperation>
+                        </ns7:TPA_Extensions>
+                        <ns7:MarketingAirline Code="AI"/>
+                        <ns7:MarketingCabin>
+                           <ns7:Meal MealCode="S"/>
+                        </ns7:MarketingCabin>
+                        <ns7:BookingClassAvail RPH="1" ResBookDesigCode="C" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="2" ResBookDesigCode="D" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="3" ResBookDesigCode="J" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="4" ResBookDesigCode="Z" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="5" ResBookDesigCode="Y" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="6" ResBookDesigCode="B" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="7" ResBookDesigCode="M" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="8" ResBookDesigCode="H" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="9" ResBookDesigCode="K" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="10" ResBookDesigCode="Q" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="11" ResBookDesigCode="V" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="12" ResBookDesigCode="W" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="13" ResBookDesigCode="G" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="14" ResBookDesigCode="L" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="15" ResBookDesigCode="U" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="16" ResBookDesigCode="T" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="17" ResBookDesigCode="E" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="18" ResBookDesigCode="N" ResBookDesigQuantity="0"/>
+                     </ns7:FlightSegment>
+                  </ns7:OriginDestinationOption>
+                  <ns7:OriginDestinationOption>
+                     <ns7:FlightSegment DepartureDateTime="2016-07-18T18:00:00" ArrivalDateTime="2016-07-18T20:10:00" StopQuantity="0" RPH="7" FlightNumber="311" Ticket="E" SmokingAllowed="false">
+                        <ns7:DepartureAirport LocationCode="BOM"/>
+                        <ns7:ArrivalAirport LocationCode="DEL"/>
+                        <ns7:OperatingAirline Code="9W"/>
+                        <ns7:Equipment AirEquipType="738"/>
+                        <ns7:TPA_Extensions>
+                           <OriginCityTimeZoneCode Code="Z5.5"/>
+                           <TimeZoneDifference Code="Â0"/>
+                           <Data>
+                              <Text>RU TRANSIT VISA REQD IN CASE OF DIFFERENT COUNTRIES</Text>
+                           </Data>
+                           <DaysOfOperation>
+                              <OperationTimes Mon="true" Tue="true" Wed="true" Thu="true" Fri="true" Sat="true" Sun="true"/>
+                           </DaysOfOperation>
+                        </ns7:TPA_Extensions>
+                        <ns7:MarketingAirline Code="9W"/>
+                        <ns7:MarketingCabin>
+                           <ns7:Meal MealCode="S"/>
+                        </ns7:MarketingCabin>
+                        <ns7:BookingClassAvail RPH="1" ResBookDesigCode="C" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="2" ResBookDesigCode="J" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="3" ResBookDesigCode="Z" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="4" ResBookDesigCode="I" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="5" ResBookDesigCode="P" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="6" ResBookDesigCode="Y" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="7" ResBookDesigCode="M" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="8" ResBookDesigCode="T" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="9" ResBookDesigCode="U" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="10" ResBookDesigCode="N" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="11" ResBookDesigCode="L" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="12" ResBookDesigCode="Q" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="13" ResBookDesigCode="S" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="14" ResBookDesigCode="K" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="15" ResBookDesigCode="H" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="16" ResBookDesigCode="V" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="17" ResBookDesigCode="O" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="18" ResBookDesigCode="W" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="19" ResBookDesigCode="B" ResBookDesigQuantity="7"/>
+                     </ns7:FlightSegment>
+                  </ns7:OriginDestinationOption>
+                  <ns7:OriginDestinationOption>
+                     <ns7:FlightSegment DepartureDateTime="2016-07-18T18:00:00" ArrivalDateTime="2016-07-18T20:10:00" StopQuantity="0" RPH="8" FlightNumber="8758" Ticket="E" SmokingAllowed="false">
+                        <ns7:DepartureAirport LocationCode="BOM"/>
+                        <ns7:ArrivalAirport LocationCode="DEL"/>
+                        <ns7:OperatingAirline Code="9W"/>
+                        <ns7:Equipment AirEquipType="738"/>
+                        <ns7:TPA_Extensions>
+                           <OriginCityTimeZoneCode Code="Z5.5"/>
+                           <TimeZoneDifference Code="Â0"/>
+                           <Data>
+                              <Text>RU TRANSIT VISA REQD IN CASE OF DIFFERENT COUNTRIES</Text>
+                           </Data>
+                           <DaysOfOperation>
+                              <OperationTimes Mon="true" Tue="true" Wed="true" Thu="true" Fri="true" Sat="true" Sun="true"/>
+                           </DaysOfOperation>
+                        </ns7:TPA_Extensions>
+                        <ns7:MarketingAirline Code="EY"/>
+                        <ns7:MarketingCabin>
+                           <ns7:Meal MealCode="S"/>
+                        </ns7:MarketingCabin>
+                        <ns7:BookingClassAvail RPH="1" ResBookDesigCode="J" ResBookDesigQuantity="2"/>
+                        <ns7:BookingClassAvail RPH="2" ResBookDesigCode="C" ResBookDesigQuantity="2"/>
+                        <ns7:BookingClassAvail RPH="3" ResBookDesigCode="D" ResBookDesigQuantity="2"/>
+                        <ns7:BookingClassAvail RPH="4" ResBookDesigCode="W" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="5" ResBookDesigCode="Z" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="6" ResBookDesigCode="Y" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="7" ResBookDesigCode="B" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="8" ResBookDesigCode="H" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="9" ResBookDesigCode="K" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="10" ResBookDesigCode="M" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="11" ResBookDesigCode="Q" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="12" ResBookDesigCode="L" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="13" ResBookDesigCode="V" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="14" ResBookDesigCode="U" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="15" ResBookDesigCode="E" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="16" ResBookDesigCode="T" ResBookDesigQuantity="0"/>
+                     </ns7:FlightSegment>
+                  </ns7:OriginDestinationOption>
+                  <ns7:OriginDestinationOption>
+                     <ns7:FlightSegment DepartureDateTime="2016-07-18T18:00:00" ArrivalDateTime="2016-07-18T20:15:00" StopQuantity="0" RPH="9" FlightNumber="658" Ticket="E" SmokingAllowed="false">
+                        <ns7:DepartureAirport LocationCode="BOM"/>
+                        <ns7:ArrivalAirport LocationCode="DEL"/>
+                        <ns7:OperatingAirline Code="AI"/>
+                        <ns7:Equipment AirEquipType="321"/>
+                        <ns7:TPA_Extensions>
+                           <OriginCityTimeZoneCode Code="Z5.5"/>
+                           <TimeZoneDifference Code="Â0"/>
+                           <Data>
+                              <Text>RU TRANSIT VISA REQD IN CASE OF DIFFERENT COUNTRIES</Text>
+                           </Data>
+                           <DaysOfOperation>
+                              <OperationTimes Mon="true" Tue="true" Wed="true" Thu="true" Fri="true" Sat="true" Sun="true"/>
+                           </DaysOfOperation>
+                        </ns7:TPA_Extensions>
+                        <ns7:MarketingAirline Code="AI"/>
+                        <ns7:MarketingCabin>
+                           <ns7:Meal MealCode="S"/>
+                        </ns7:MarketingCabin>
+                        <ns7:BookingClassAvail RPH="1" ResBookDesigCode="C" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="2" ResBookDesigCode="D" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="3" ResBookDesigCode="J" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="4" ResBookDesigCode="Z" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="5" ResBookDesigCode="Y" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="6" ResBookDesigCode="B" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="7" ResBookDesigCode="M" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="8" ResBookDesigCode="H" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="9" ResBookDesigCode="K" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="10" ResBookDesigCode="Q" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="11" ResBookDesigCode="V" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="12" ResBookDesigCode="W" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="13" ResBookDesigCode="G" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="14" ResBookDesigCode="L" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="15" ResBookDesigCode="U" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="16" ResBookDesigCode="T" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="17" ResBookDesigCode="E" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="18" ResBookDesigCode="N" ResBookDesigQuantity="0"/>
+                     </ns7:FlightSegment>
+                  </ns7:OriginDestinationOption>
+                  <ns7:OriginDestinationOption>
+                     <ns7:FlightSegment DepartureDateTime="2016-07-18T18:30:00" ArrivalDateTime="2016-07-18T20:35:00" StopQuantity="0" RPH="10" FlightNumber="996" Ticket="E" SmokingAllowed="false">
+                        <ns7:DepartureAirport LocationCode="BOM"/>
+                        <ns7:ArrivalAirport LocationCode="DEL"/>
+                        <ns7:OperatingAirline Code="UK"/>
+                        <ns7:Equipment AirEquipType="320"/>
+                        <ns7:TPA_Extensions>
+                           <OriginCityTimeZoneCode Code="Z5.5"/>
+                           <TimeZoneDifference Code="Â0"/>
+                           <Data>
+                              <Text>RU TRANSIT VISA REQD IN CASE OF DIFFERENT COUNTRIES</Text>
+                           </Data>
+                           <DaysOfOperation>
+                              <OperationTimes Mon="true" Tue="true" Wed="true" Thu="true" Fri="true" Sat="true" Sun="true"/>
+                           </DaysOfOperation>
+                        </ns7:TPA_Extensions>
+                        <ns7:MarketingAirline Code="UK"/>
+                        <ns7:MarketingCabin>
+                           <ns7:Meal MealCode="M"/>
+                        </ns7:MarketingCabin>
+                        <ns7:BookingClassAvail RPH="1" ResBookDesigCode="C" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="2" ResBookDesigCode="J" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="3" ResBookDesigCode="D" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="4" ResBookDesigCode="Z" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="5" ResBookDesigCode="I" ResBookDesigQuantity="2"/>
+                        <ns7:BookingClassAvail RPH="6" ResBookDesigCode="S" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="7" ResBookDesigCode="R" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="8" ResBookDesigCode="T" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="9" ResBookDesigCode="P" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="10" ResBookDesigCode="U" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="11" ResBookDesigCode="Y" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="12" ResBookDesigCode="B" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="13" ResBookDesigCode="M" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="14" ResBookDesigCode="A" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="15" ResBookDesigCode="H" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="16" ResBookDesigCode="N" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="17" ResBookDesigCode="L" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="18" ResBookDesigCode="K" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="19" ResBookDesigCode="W" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="20" ResBookDesigCode="Q" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="21" ResBookDesigCode="V" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="22" ResBookDesigCode="E" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="23" ResBookDesigCode="X" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="24" ResBookDesigCode="O" ResBookDesigQuantity="0"/>
+                     </ns7:FlightSegment>
+                  </ns7:OriginDestinationOption>
+                  <ns7:OriginDestinationOption>
+                     <ns7:FlightSegment DepartureDateTime="2016-07-18T19:00:00" ArrivalDateTime="2016-07-18T21:10:00" StopQuantity="0" RPH="11" FlightNumber="888" Ticket="E" SmokingAllowed="false">
+                        <ns7:DepartureAirport LocationCode="BOM"/>
+                        <ns7:ArrivalAirport LocationCode="DEL"/>
+                        <ns7:OperatingAirline Code="AI"/>
+                        <ns7:Equipment AirEquipType="319"/>
+                        <ns7:TPA_Extensions>
+                           <OriginCityTimeZoneCode Code="Z5.5"/>
+                           <TimeZoneDifference Code="Â0"/>
+                           <Data>
+                              <Text>RU TRANSIT VISA REQD IN CASE OF DIFFERENT COUNTRIES</Text>
+                           </Data>
+                           <DaysOfOperation>
+                              <OperationTimes Mon="true" Tue="true" Wed="true" Thu="true" Fri="true" Sat="true" Sun="true"/>
+                           </DaysOfOperation>
+                        </ns7:TPA_Extensions>
+                        <ns7:MarketingAirline Code="AI"/>
+                        <ns7:MarketingCabin>
+                           <ns7:Meal MealCode="D"/>
+                        </ns7:MarketingCabin>
+                        <ns7:BookingClassAvail RPH="1" ResBookDesigCode="C" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="2" ResBookDesigCode="D" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="3" ResBookDesigCode="J" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="4" ResBookDesigCode="Z" ResBookDesigQuantity="4"/>
+                        <ns7:BookingClassAvail RPH="5" ResBookDesigCode="Y" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="6" ResBookDesigCode="B" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="7" ResBookDesigCode="M" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="8" ResBookDesigCode="H" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="9" ResBookDesigCode="K" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="10" ResBookDesigCode="Q" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="11" ResBookDesigCode="V" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="12" ResBookDesigCode="W" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="13" ResBookDesigCode="G" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="14" ResBookDesigCode="L" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="15" ResBookDesigCode="U" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="16" ResBookDesigCode="T" ResBookDesigQuantity="9"/>
+                        <ns7:BookingClassAvail RPH="17" ResBookDesigCode="E" ResBookDesigQuantity="0"/>
+                        <ns7:BookingClassAvail RPH="18" ResBookDesigCode="N" ResBookDesigQuantity="0"/>
+                     </ns7:FlightSegment>
+                  </ns7:OriginDestinationOption>
+                  <ns7:OriginDestinationOption>
+                     <ns7:FlightSegment DepartureDateTime="2016-07-18T19:30:00" ArrivalDateTime="2016-07-18T21:35:00" StopQuantity="0" RPH="12" FlightNumber="309" Ticket="E" SmokingAllowed="false">
+                        <ns7:DepartureAirport LocationCode="BOM"/>
+                        <ns7:ArrivalAirport LocationCode="DEL"/>
+                        <ns7:OperatingAirline Code="9W"/>
+                        <ns7:Equipment AirEquipType="73H"/>
+                        <ns7:TPA_Extensions>
+                           <OriginCityTimeZoneCode Code="Z5.5"/>
+                           <TimeZoneDifference Code="Â0"/>
+                           <Data>
+                              <Text>RU TRANSIT VISA REQD IN CASE OF DIFFERENT COUNTRIES</Text>
+                           </Data>
+                           <DaysOfOperation>
+                              <OperationTimes Mon="true" Tue="true" Wed="true" Thu="true" Fri="true" Sat="true" Sun="true"/>
+                           </DaysOfOperation>
+                        </ns7:TPA_Extensions>
+                        <ns7:MarketingAirline Code="9W"/>
+                        <ns7:MarketingCabin>
+                           <ns7:Meal MealCode="D"/>
+                        </ns7:MarketingCabin>
+                        <ns7:BookingClassAvail RPH="1" ResBookDesigCode="C" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="2" ResBookDesigCode="J" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="3" ResBookDesigCode="Z" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="4" ResBookDesigCode="I" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="5" ResBookDesigCode="P" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="6" ResBookDesigCode="Y" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="7" ResBookDesigCode="M" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="8" ResBookDesigCode="T" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="9" ResBookDesigCode="U" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="10" ResBookDesigCode="N" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="11" ResBookDesigCode="L" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="12" ResBookDesigCode="Q" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="13" ResBookDesigCode="S" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="14" ResBookDesigCode="K" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="15" ResBookDesigCode="H" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="16" ResBookDesigCode="V" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="17" ResBookDesigCode="O" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="18" ResBookDesigCode="W" ResBookDesigQuantity="7"/>
+                        <ns7:BookingClassAvail RPH="19" ResBookDesigCode="B" ResBookDesigQuantity="0"/>
+                     </ns7:FlightSegment>
+                  </ns7:OriginDestinationOption>
+               </ns7:OriginDestinationOptions>
+            </ns7:OriginDestinationInformation>
+         </ns7:OTA_AirAvailRS>
+      </NOT_FOUND>
+   </ResponseBody>
+</AirInterfaceRS>

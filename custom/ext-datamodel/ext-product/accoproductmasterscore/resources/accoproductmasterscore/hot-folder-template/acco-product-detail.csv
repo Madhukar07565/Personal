@@ -1,0 +1,285 @@
+#Header Name;Company Name;Media Name;Media Type;RoomCategory;Valid From;Valid TO;File Name
+Media;Ezeego1;hotel.jpg;image/jpg;STANDARD;23-04-2016 12:00:00;27-04-2016 12:00:00;Exterior view
+Media;Ezeego1;motel.jpg;image/jpg;DELUXE;23-04-2016 12:00:00;27-04-2016 12:00:00;Lobby view
+Media;Ezeego1;resorts.jpg;image/jpg;SUPERIOR;23-04-2016 12:00:00;27-04-2016 12:00:00;Pool view
+Media;Ezeego1;appartment.jpg;image/jpg;SUITE;23-04-2016 12:00:00;27-04-2016 12:00:00;Restaurant
+Media;Ezeego1;guestHouse.jpg;image/jpg;DELUXE;23-04-2016 12:00:00;27-04-2016 12:00:00;Health club
+Media;Ezeego1;lodge.jpg;image/jpg;DELUXE;23-04-2016 12:00:00;27-04-2016 12:00:00;
+StaffInfoMedia;Ezeego1;umeshpatil.jpg;image/jpg;;23-04-2016 12:00:00;27-04-2016 12:00:00
+#;Company Name;Company Hotel ID;Common Hotel ID;Finance Control Id;Online Date;Offline Date;Hotel Name;Super Categories Name;Rating Date;Total Floors;Total Rooms;Check In Time;Check Out Time;Internal Remarks;Company Recommended;Is Mystery Product;Display Name;Hotel Rating;Company Rating;Recommended For;Hash Tag;Resort Type;Media Name;Chain;Brand;Affiliation;Reason;Remarks;Carbon Foot Print;Year Renovated;Year Built;Award Received;Is Active;Approval Status
+Accommodation;Ezeego1;87762;10012;;13-06-2015;13-06-2017;Crowne Plaza;Hotels;25-05-2016;;;14:00;12:00;;;TRUE;;THREE;ONE;GROUPS;SHOPPER;;Exterior view;160;ACCO_BR_01;;;;Heating & Cooling;2007;2002;2012;TRUE;Active
+Accommodation;Ezeego1;15740;10012;;13-06-2015;13-06-2017;Atlantis The Palm;Motels;23-05-2016;;;15:00;11:00;;;FALSE;;FIVE;FIVE;FIT;SHOPPER;;Lobby view;161;ACCO_BR_02;;;;Heating & Cooling;2016;2002;2012;TRUE;Active
+Accommodation;Ezeego1;12121;10012;;13-06-2015;13-06-2017;Hyatt Regency;Resorts;22-05-2016;;233;14:00;12:00;;;FALSE;;FIVE;;MICE;SHOPPER;;Pool view;162;ACCO_BR_03;;;;ENERGY STAR Products;2013;2002;2011;TRUE;Active
+Accommodation;Ezeego1;68641;10032;;13-05-2016;13-06-2017;Taj Palace;Hostels;25-05-2016;;462;14:00;12:00;;;FALSE;;FIVE;FOUR;GROUPS;SHOPPER;;Lobby view;163;ACCO_BR_04;;;;ENERGY STAR Products;2013;2002;2011;TRUE;Active
+Accommodation;Ezeego1;1111;10032;;15-05-2016;13-06-2017;Waterfront Apartments;Lodge;25-05-2016;;;16:00;10:30;;;FALSE;;FOUR;SIX;FIT;SHOPPER;;Restaurant;164;ACCO_BR_05;;;;ENERGY STAR Products;2013;2002;2011;TRUE;Active
+Accommodation;Ezeego1;2222;10032;;15-05-2016;13-06-2017;8 Ludgate Square Apartments;Guest House;25-05-2016;;;15:00;11:00;;;FALSE;;FIVE;TWO;MICE;SHOPPER;;Health club;165;ACCO_BR_06;;;;ENERGY STAR Products;2013;2002;2011;TRUE;Active
+Accommodation;Ezeego1;1303;10032;;16-05-2016;13-06-2017;Hilton London Kensington hotel;House Boats;25-05-2016;;;14:00;12:00;;;FALSE;;THREE;THREE;GROUPS;SHOPPER;;;166;ACCO_BR_07;;;;ENERGY STAR Products;2013;2002;2011;TRUE;Active
+Accommodation;Ezeego1;3177;10034;;17-05-2016;13-06-2017;Copthorne Hotel Effingham Gatwick;Apartments;25-05-2016;;;14:00;12:00;;;FALSE;;FOUR;;FIT;SHOPPER;;Exterior view;167;ACCO_BR_08;;;;ENERGY STAR Products;2013;2002;2011;TRUE;Active
+Accommodation;Ezeego1;6163;10034;;18-05-2016;13-06-2017;Menzies Strathmore;Bungalows;25-05-2016;;;14:00;12:00;;;FALSE;;THREE;;MICE;SHOPPER;;Lobby view;168;ACCO_BR_09;;;;ENERGY STAR Products;2013;2002;2011;TRUE;Active
+Accommodation;Ezeego1;12125;10034;;19-05-2016;13-06-2017;Hyatt Regency;Cottages;25-05-2016;;233;14:00;12:00;;;FALSE;;FIVE;;GROUPS;SHOPPER;;Pool view;169;ACCO_BR_10;;;;ENERGY STAR Products;2013;2002;2011;TRUE;Active
+Accommodation;Ezeego1;68645;10034;;20-05-2016;13-06-2017;Taj Palace;Chalets;25-05-2016;;462;14:00;12:00;;;FALSE;;FIVE;;FIT;SHOPPER;;Lobby view;170;ACCO_BR_11;;;;ENERGY STAR Products;2013;2002;2011;TRUE;Active
+Accommodation;Ezeego1;11561;10034;;30-05-2016;13-06-2017;Waterfront Apartments;Villa;27-05-2016;;;16:00;10:30;;;FALSE;;FIVE;;MICE;SHOPPER;;;171;ACCO_BR_12;;;;ENERGY STAR Products;2013;2002;2011;TRUE;Active
+Accommodation;Ezeego1;22252;10039;;21-05-2016;13-06-2017;8 Ludgate Square Apartments;Holiday or Mobile Home;23-05-2016;;;15:00;11:00;;;FALSE;;FIVE;;GROUPS;SHOPPER;;Restaurant;172;ACCO_BR_13;;;;ENERGY STAR Products;2013;2002;2011;TRUE;Active
+Accommodation;Ezeego1;13073;10039;;22-05-2016;13-06-2017;Hilton London Kensington hotel;Tents;23-05-2016;;;14:00;12:00;;;FALSE;;FOUR;;FIT;SHOPPER;;Health club;173;ACCO_BR_14;;;;ENERGY STAR Products;2013;2002;2011;TRUE;Active
+Accommodation;Ezeego1;31677;10039;;23-05-2016;13-06-2017;Copthorne Hotel Effingham Gatwick;Castles and Palaces;24-05-2016;;;14:00;12:00;;;FALSE;;THREE;;MICE;SHOPPER;;Exterior view;174;ACCO_BR_15;;;;ENERGY STAR Products;2013;2002;2011;TRUE;Active
+Accommodation;Ezeego1;61633;10039;;24-05-2016;13-06-2017;Menzies Strathmore;Homestays;27-05-2016;;;14:00;12:00;;;FALSE;;FIVE;FIVE;GROUPS;SHOPPER;;Lobby view;175;ACCO_BR_16;;;;ENERGY STAR Products;2013;2002;2011;TRUE;Active
+Accommodation;Ezeego1;11191;10039;;25-05-2016;13-06-2017;Waterfront Apartments;Hotels;26-05-2016;;;16:00;10:30;;;FALSE;;FOUR;;FIT;SHOPPER;;Pool view;176;ACCO_BR_17;;;;ENERGY STAR Products;2013;2002;2011;TRUE;Active
+#;Company Name;Company Hotel ID;Name Of Language;Name Of Interests;Childerns;Number OF Childerns;Pets;Number OF Pets;Pet Types;Non Smoking HouseHold;Certified HostId;User Certification Description;CriminalRecordCertificationDescription;Neighbourhood Description;DistanceFromCenter;DistanceToPublicTransportation
+Accommodation  HomeStay;Ezeego1;61633;Gujrati,English;Cricket;Grammy;2;true;2;Dog;yes;123456;Host of the world 2015;clear;Heliping nature;2 Neighbourhood;3;
+#;Company Hotel ID;Street Name;Street Number;Postal Code;Town;Country;Street 3;Street 4;Street 5;Suburb Downtown;Area;Location;Latitude;Longitude;Address Type;Branch Name;City;Company Name
+Address;15740;Crescent Drive21;;211222;;AE;;;;;;;55.117211;25.130487;;;DXB;Ezeego1
+Address;12121;Salt Lake 31;;700098;;IN;;;;;;;88.405196;22.570499;;;CCU;Ezeego1
+Address;68641;Crystal Drive Road 14;1590;22202;;US;;;;;;;-77.049748;38.860777;;;JLH;Ezeego1
+Address;1111;Crescent Avenue Drive15;;211222;;AE;;;;;;;55.117211;25.130487;;;DXB;Ezeego1
+Address;2222;Salt Lake16;;700098;;IN;;;;;;;88.405196;22.570499;;;CCU;Ezeego1
+Address;1303;Crystal Drive Road 17;1590;22202;;US;;;;;;;-77.049748;38.860777;;;JLH;Ezeego1
+Address;3177;Crescent Avenue Drive18;;211222;;AE;;;;;;;55.117211;25.130487;;;DXB;Ezeego1
+Address;6163;Salt Lake19;;700098;;IN;;;;;;;88.405196;22.570499;;;CCU;Ezeego1
+Address;12125;Crystal Drive Road110 ;1590;22202;;US;;;;;;;-77.049748;38.860777;;;JLH;Ezeego1
+Address;68645;Crescent Avenue Drive111;;211222;;AE;;;;;;;55.117211;25.130487;;;DXB;Ezeego1
+Address;11561;Salt Lake112;;700098;;IN;;;;;;;88.405196;22.570499;;;CCU;Ezeego1
+Address;22252;Crystal Drive Road113 ;1590;22202;;US;;;;;;;-77.049748;38.860777;;;JLH;Ezeego1
+Address;13073;Crescent Avenue Drive114;;211222;;AE;;;;;;;55.117211;25.130487;;;DXB;Ezeego1
+Address;31677;Salt Lake115;;700098;;IN;;;;;;;88.405196;22.570499;;;CCU;Ezeego1
+Address;61633;Crystal Drive Road 116;1590;22202;;US;;;;;;;-77.049748;38.860777;;;JLH;Ezeego1
+Address;11191;Crescent Avenue Drive117;;211222;;AE;;;;;;;55.117211;25.130487;;;DXB;Ezeego1
+#;Company Hotel ID;Update Type;Description Type;Description;Send To Customer;Show On Voucher;Mode Of Communication;From Date;To Date;Company Name
+Product Update;87762;Renovation;Internal;Pool is under Renovation, so it will be closed for usage;TRUE;TRUE;MOBILE;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+Product Update;15740;Renovation;External;Few Hotel Rooms are under Renovation, there will be noise due to that;TRUE;TRUE;FAX;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+Product Update;12121;Renovation;Internal;Pool is under Renovation, so it will be closed for usage;TRUE;TRUE;MOBILE;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+Product Update;68641;Renovation;External;Few Hotel Rooms are under Renovation, there will be noise due to that;TRUE;TRUE;FAX;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+Product Update;1111;Renovation;Internal;Pool is under Renovation, so it will be closed for usage;TRUE;TRUE;MOBILE;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+Product Update;2222;Renovation;External;Few Hotel Rooms are under Renovation, there will be noise due to that;TRUE;TRUE;FAX;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+Product Update;1303;Renovation;Internal;Pool is under Renovation, so it will be closed for usage;TRUE;TRUE;MOBILE;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+Product Update;3177;Renovation;External;Few Hotel Rooms are under Renovation, there will be noise due to that;TRUE;TRUE;FAX;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+Product Update;6163;Renovation;Internal;Pool is under Renovation, so it will be closed for usage;TRUE;TRUE;MOBILE;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+Product Update;12125;Renovation;External;Few Hotel Rooms are under Renovation, there will be noise due to that;TRUE;TRUE;FAX;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+Product Update;68645;Renovation;Internal;Pool is under Renovation, so it will be closed for usage;TRUE;TRUE;MOBILE;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+Product Update;11561;Renovation;External;Few Hotel Rooms are under Renovation, there will be noise due to that;TRUE;TRUE;FAX;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+Product Update;22252;Renovation;Internal;Pool is under Renovation, so it will be closed for usage;TRUE;TRUE;MOBILE;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+Product Update;13073;Renovation;External;Few Hotel Rooms are under Renovation, there will be noise due to that;TRUE;TRUE;FAX;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+Product Update;31677;Renovation;Internal;Pool is under Renovation, so it will be closed for usage;TRUE;TRUE;MOBILE;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+Product Update;61633;Renovation;External;Few Hotel Rooms are under Renovation, there will be noise due to that;TRUE;TRUE;FAX;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+Product Update;11191;Renovation;Internal;Pool is under Renovation, so it will be closed for usage;TRUE;TRUE;MOBILE;11-05-2016 12:00:00;27-05-2016 12:00:00;Ezeego1
+#;Company Hotel ID;Facility Category;Facility Type;Facility Name;Description
+Facility;87762;ACTIVITIES;SWIMMING_POOL;Continental Restaurant
+Facility;15740;ACTIVITIES;SWIMMING_POOL;Indian Restaurant
+Facility;12121;ACTIVITIES;SWIMMING_POOL;Arcade/game room
+Facility;68641;ACTIVITIES;SWIMMING_POOL;Beach/pool umbrellas
+Facility;1111;ACTIVITIES;SWIMMING_POOL;Batminton Court
+Facility;2222;ACTIVITIES;SWIMMING_POOL;Game Zone
+Facility;1303;ACTIVITIES;SWIMMING_POOL;Fitness Centre Amenities
+Facility;3177;ACTIVITIES;SWIMMING_POOL;Barbecue grill(s)
+Facility;6163;ACTIVITIES;SWIMMING_POOL;Bar / Lounge
+Facility;12125;ACTIVITIES;SWIMMING_POOL;Parking Facilities
+Facility;68645;ACTIVITIES;SWIMMING_POOL;Gym / Fitness Facilities
+Facility;11561;ACTIVITIES;SWIMMING_POOL;Batminton Court
+Facility;22252;ACTIVITIES;SWIMMING_POOL;Beach/pool umbrellas
+Facility;13073;ACTIVITIES;SWIMMING_POOL;Indian Restaurant
+Facility;31677;ACTIVITIES;SWIMMING_POOL;Continental Restaurant
+Facility;61633;ACTIVITIES;SWIMMING_POOL;Arcade/game room
+Facility;11191;ACTIVITIES;SWIMMING_POOL;Bar / Lounge
+#;Company Hotel ID;Description;From Date;To Date;Source
+ShortDescription;87762;Pool is under Renovation, so it will be closed for usage;23-04-2016 12:00:00;27-04-2016 12:00:00;Hotel
+ShortDescription;87762;Pool is under Renovation, so it will be closed for usage;20-04-2016 12:00:00;22-04-2016 12:00:00;Supplier1
+ShortDescription;87762;foot balll court is under Renovation, so it will be closed for usage;22-04-2016 12:00:00;24-04-2016 12:00:00;Supplier2
+ShortDescription;15740;Few Hotel Rooms are under Renovation, there will be noise due to that;25-04-2016 12:00:00;29-04-2016 12:00:00;Supplier5
+LongDescription;15740;Game is under Renovation, so it will be closed for usage;23-04-2016 12:00:00;25-04-2016 12:00:00;Supplier3
+LongDescription;15740;cricket ground is under Renovation, so it will be closed for usage;24-04-2016 12:00:00;26-04-2016 12:00:00;Supplier4
+LongDescription;12121;Pool is under Renovation, so it will be closed for usage;26-04-2016 12:00:00;27-04-2016 12:00:00;Supplier6
+#;Company Hotel ID;Telephone;Fax;Website URL;Email
+Contact Details;87762;22584552;22584555;www.test.com;test@test.com
+Contact Details;15740;22584552;22584555;www.test.com;test@test.com
+Contact Details;12121;22584552;22584555;www.test.com;test@test.com
+Contact Details;68641;22584552;22584555;www.test.com;test@test.com
+Contact Details;1111;22584552;22584555;www.test.com;test@test.com
+Contact Details;2222;22584552;22584555;www.test.com;test@test.com
+Contact Details;1303;22584552;22584555;www.test.com;test@test.com
+Contact Details;3177;22584552;22584555;www.test.com;test@test.com
+Contact Details;6163;22584552;22584555;www.test.com;test@test.com
+Contact Details;12125;22584552;22584555;www.test.com;test@test.com
+Contact Details;68645;22584552;22584555;www.test.com;test@test.com
+Contact Details;11561;22584552;22584555;www.test.com;test@test.com
+Contact Details;22252;22584552;22584555;www.test.com;test@test.com
+Contact Details;13073;22584552;22584555;www.test.com;test@test.com
+Contact Details;31677;22584552;22584555;www.test.com;test@test.com
+Contact Details;61633;22584552;22584555;www.test.com;test@test.com
+Contact Details;11191;22584552;22584555;www.test.com;test@test.com
+#;Company Hotel ID;Distance From Property;Approximate Duration;Description;Driving Direction;Valid From;Valid TO;Distance Unit;From Place;Name Of Place;Mode Of Transport;Transport Type;Company Name
+Route;87762;;;Distance from the Airport 3.5 miles;;;;;;;ROAD;;Ezeego1
+Route;15740;;;Distance from airport is about 35 minutes drive;;;;;;;ROAD;;Ezeego1
+Route;12121;;;Distance from the Airport 3.5 miles;;;;;;;ROAD;;Ezeego1
+Route;68641;;;Distance from airport is about 35 minutes drive;;;;;;;AIR;;Ezeego1
+Route;1111;;;Distance from the Airport 3.5 miles;;;;;;;AIR;;Ezeego1
+Route;2222;;;Distance from airport is about 35 minutes drive;;;;;;;AIR;;Ezeego1
+Route;1303;;;Distance from the Airport 3.5 miles;;;;;;;AIR;;Ezeego1
+Route;3177;;;Distance from airport is about 35 minutes drive;;;;;;;WATER;;Ezeego1
+Route;6163;;;Distance from the Airport 3.5 miles;;;;;;;WATER;;Ezeego1
+Route;12125;;;Distance from airport is about 35 minutes drive;;;;;;;WATER;;Ezeego1
+Route;68645;;;Distance from the Airport 3.5 miles;;;;;;;WATER;;Ezeego1
+Route;11561;;;Distance from airport is about 35 minutes drive;;;;;;;;;Ezeego1
+Route;22252;;;Distance from the Airport 3.5 miles;;;;;;;;;Ezeego1
+Route;13073;;;Distance from airport is about 35 minutes drive;;;;;;;;;Ezeego1
+Route;31677;;;Distance from the Airport 3.5 miles;;;;;;;;;Ezeego1
+Route;61633;;;Distance from airport is about 35 minutes drive;;;;;;;WATER;;Ezeego1
+Route;11191;;;Distance from the Airport 3.5 miles;;;;;;;;;Ezeego1
+#;Company Hotel ID;Place Name;Distance From Property;Description;Place Of Category;Distance Unit;Company Name
+LandMark;87762;Washington Convention Center;4 MI;;;;Ezeego1
+LandMark;15740;Smithsonian Museums;2 MI;;;;Ezeego1
+LandMark;12121;Washington Convention Center;6 MI;;;;Ezeego1
+LandMark;68641;Washington Convention Center;4 MI;;;;Ezeego1
+LandMark;1111;Smithsonian Museums;2 MI;;;;Ezeego1
+LandMark;2222;Smithsonian Museums;4 MI;;;;Ezeego1
+LandMark;1303;Washington Convention Center;3 MI;;;;Ezeego1
+LandMark;3177;Smithsonian Museums;4 MI;;;;Ezeego1
+LandMark;6163;Smithsonian Museums;2 MI;;;;Ezeego1
+In and Around;12125;Washington Convention Center;6 MI;;;;Ezeego1
+In and Around;68645;Smithsonian Museums;8 MI;;;;Ezeego1
+In and Around;11561;Washington Convention Center;4 MI;;;;Ezeego1
+In and Around;22252;Smithsonian Museums;4 MI;;;;Ezeego1
+In and Around;13073;Washington Convention Center;4 MI;;;;Ezeego1
+In and Around;31677;Smithsonian Museums;3 MI;;;;Ezeego1
+In and Around;61633;Washington Convention Center;4 MI;;;;Ezeego1
+In and Around;11191;Smithsonian Museums;7 MI;;;;Ezeego1
+#;Company Hotel ID;Health and Safety Name;Health and Safety Category;Value;Remarks;Last Update
+HealthAndSafety;87762
+HealthAndSafety;15740
+HealthAndSafety;12121
+HealthAndSafety;68641
+HealthAndSafety;1111
+HealthAndSafety;2222
+HealthAndSafety;1303
+HealthAndSafety;3177
+HealthAndSafety;6163
+HealthAndSafety;12125
+HealthAndSafety;68645
+HealthAndSafety;11561
+HealthAndSafety;22252
+HealthAndSafety;13073
+HealthAndSafety;31677
+HealthAndSafety;61633
+HealthAndSafety;11191
+#;Company Name;Ancillary Code;Ancillary Name;Approval Status;Online Date;Offline Date;Description;Ancillary Type
+Ancillary;Ezeego1;ANC111;Hotel Parking;Active;11-05-2016;13-06-2017;Hotel Parking Facility;PARKING
+Ancillary;Ezeego1;ANC222;Wi Fi;Active;12-05-2016;14-06-2017;Wi Fi facility;INTERNET
+Ancillary;Ezeego1;ANC333;Atlantis Chauffeur Services;Active;13-05-2016;15-06-2017;Atlantis Chauffeur Services;INSURANCE
+Ancillary;Ezeego1;ANC444;Nanny and Babysitting Service;Active;14-05-2016;16-06-2017;Nanny and Babysitting Service;ENTERTAINMENT
+Ancillary;Ezeego1;ANC555;Yoga Classes;Active;15-05-2016;17-06-2017;Yoga Classes facility;CAMPING_ITEM
+Ancillary;Ezeego1;ANC666;Golf Hyat;Active;16-05-2016;18-06-2017;Golf Hyat facilty;CYCLING_PACKAGE
+#;Company Name;Company Hotel ID;Ancillary Code;Reference Type;Active
+AccommodationAncillaries;Ezeego1;87762;ANC111;PAID;true
+AccommodationAncillaries;Ezeego1;87762;ANC222;COMPLEMENTARY;true
+AccommodationAncillaries;Ezeego1;15740;ANC333;PAID;true
+AccommodationAncillaries;Ezeego1;15740;ANC444;COMPLEMENTARY;true
+AccommodationAncillaries;Ezeego1;12121;ANC555;PAID;true
+AccommodationAncillaries;Ezeego1;12121;ANC666;COMPLEMENTARY;true
+AccommodationAncillaries;Ezeego1;68641;ANC111;PAID;true
+AccommodationAncillaries;Ezeego1;68641;ANC222;COMPLEMENTARY;true
+AccommodationAncillaries;Ezeego1;1111;ANC333;PAID;true
+AccommodationAncillaries;Ezeego1;1111;ANC444;COMPLEMENTARY;true
+AccommodationAncillaries;Ezeego1;2222;ANC555;PAID;true
+AccommodationAncillaries;Ezeego1;2222;ANC666;COMPLEMENTARY;true
+AccommodationAncillaries;Ezeego1;1303;ANC111;PAID;true
+AccommodationAncillaries;Ezeego1;1303;ANC222;COMPLEMENTARY;true
+#;Company Name;Company Hotel ID;Family Name;Family Description;Family Member;Age;Gender;Member Name;Family Member Description
+FamilyDetail;Ezeego1;87762;Shah Family;shah's;6;25;MALE;Rajeev Shah;Joly in nature
+FamilyDetail;Ezeego1;15740;Kumar Family;kumar's;10;35;MALE;Rohan Kumar;Funny in nature
+FamilyDetail;Ezeego1;12121;Gupta Family;gupta's;6;20;MALE;Vikram Gupta;Joly in nature
+FamilyDetail;Ezeego1;68641;Singh Family;sing,s;5;30;FEMALE;Sakshi Singh;Funny in nature
+FamilyDetail;Ezeego1;1111;Saini Family;saini's;10;16;MALE;Pratik Saini;Joly in nature
+FamilyDetail;Ezeego1;2222;Sharma Family;sharma's;15;40;MALE;Harsh Sharma;Funny in nature
+FamilyDetail;Ezeego1;1303;Takur Family;takur's;10;35;FEMALE;Sakshi Takur;Joly in nature
+FamilyDetail;Ezeego1;3177;Lobo Family;lobo's;6;25;MALE;Jason Lobo;Joly in nature
+FamilyDetail;Ezeego1;6163;Dsouza Family;dsouza's;7;26;MALE;Neel Dsouza;Funny in nature
+FamilyDetail;Ezeego1;12125;Cardoza Family;cardoza's;8;27;FEMALE;Joyline Cardoza;Joly in nature
+FamilyDetail;Ezeego1;68645;GTR Family;gtr's;4;25;FEMALE;Deepa GTR;Joly in nature
+FamilyDetail;Ezeego1;11561;Alwa Family;alwa's;5;25;FEMALE;Neethi Alwa;Funny in nature
+FamilyDetail;Ezeego1;22252;Patel Family;patel's;4;28;MALE;Upen Patel;Joly in nature
+FamilyDetail;Ezeego1;13073;Rawat Family;rawat's;10;45;MALE;Rohit Rawat;Funny in nature
+FamilyDetail;Ezeego1;31677;Raman Family;raman's;15;50;MALE;Sundar Raman;Funny in nature
+FamilyDetail;Ezeego1;61633;Pinto Family;pinto's;20;60;MALE;Diraj Pinto;Joly in nature
+FamilyDetail;Ezeego1;11191;Cutinha Family;cutinhs's;17;25;FEMALE;Smitha Cutinha;Joly in nature
+#;Company Hotel ID;Room Id;Max Adults;Max Pax With Extra Bed;Max CNB;Max Child;Max Pax;Room Type;From Age For Extra Bed;To Age For Extra Bed;From Age For CNB;To Age For CNB;From Age For CIOR;To Age For CIOR;Category;Company Name
+RoomPaxOccupancy;87762;5555;1;2;0;1;1;;;;;;;;;Ezeego1
+RoomPaxOccupancy;15740;6666;0;0;0;1;1;;;;;;;;;Ezeego1
+RoomPaxOccupancy;12121;1111;1;0;1;2;1;;;;;;;;;Ezeego1
+RoomPaxOccupancy;68641;2222;2;0;0;1;1;;;;;;;;;Ezeego1
+RoomPaxOccupancy;1111;3333;1;2;0;1;1;;;;;;;;;Ezeego1
+RoomPaxOccupancy;2222;4444;1;1;0;1;1;;;;;;;;;Ezeego1
+RoomPaxOccupancy;1303;7777;0;0;0;1;1;;;;;;;;;Ezeego1
+RoomPaxOccupancy;3177;8888;0;0;0;1;1;;;;;;;;;Ezeego1
+RoomPaxOccupancy;6163;9999;2;2;0;1;1;;;;;;;;;Ezeego1
+RoomPaxOccupancy;12125;1112;1;2;1;1;1;;;;;;;;;Ezeego1
+RoomPaxOccupancy;68645;1113;1;1;1;1;1;;;;;;;;;Ezeego1
+RoomPaxOccupancy;11561;1114;2;2;2;1;1;;;;;;;;;Ezeego1
+RoomPaxOccupancy;22252;1115;2;2;2;1;1;;;;;;;;;Ezeego1
+RoomPaxOccupancy;13073;1116;1;1;0;1;1;;;;;;;;;Ezeego1
+RoomPaxOccupancy;31677;1117;2;0;3;2;1;;;;;;;;;Ezeego1
+RoomPaxOccupancy;61633;1118;1;1;0;1;1;;;;;;;;;Ezeego1
+RoomPaxOccupancy;11191;1119;2;0;1;1;1;;;;;;;;;Ezeego1
+#;Company Hotel ID;Rule Type;Description
+RuleInfo;87762;Pets Policy;Pets not allowed1
+RuleInfo;15740;Smoking Policy;Smoking allowed only in designated places2
+RuleInfo;12121;Pets Policy;Pets allowed3
+RuleInfo;68641;Pets Policy;Pets not allowed11
+RuleInfo;1111;Smoking Policy;Smoking allowed only in designated places12
+RuleInfo;2222;Smoking Policy;Smoking allowed only in designated places22
+RuleInfo;1303;Smoking Policy;Smoking allowed only in designated places33
+RuleInfo;3177;Smoking Policy;Smoking allowed only in designated places44
+RuleInfo;6163;Pets Policy;Pets not allowed5
+RuleInfo;12125;Pets Policy;Pets not allowed6
+RuleInfo;68645;Pets Policy;Pets not allowed7
+RuleInfo;11561;Payment Policy;Pets not allowed8
+RuleInfo;22252;Cancellation Policy;Pets not allowed9
+RuleInfo;13073;Cancellation Policy;Pets not allowed111
+RuleInfo;31677;Payment Policy;Pets not allowed112
+RuleInfo;61633;Cancellation Policy;Pets not allowed113
+RuleInfo;11191;Payment Policy;Pets not allowed114
+#;Company Hotel ID;Room Id;Room View;No Of Rooms;Room Name;No Of Interconnecting Rooms;Description;Room Size;Room Decor;Smoking;Floor Name;Floor Number;Mystery Room;Bathroom Type;Bed Type;Company Room Category;Category;Company Name;Amenity
+RoomInfo;87762;5555;;150;;;;;;;;;true;1;Twin_Beds;STANDARD;STANDARD;Ezeego1;"40,80"
+RoomInfo;15740;6666;;120;;;;;;;;;false;2;Twin_Beds;DELUXE;DELUXE;Ezeego1;"41,81"
+RoomInfo;12121;1111;;150;;;;;;;;;true;3;King_Size_Beds;STANDARD;STANDARD;Ezeego1;42
+RoomInfo;68641;2222;;120;;;;;;;;;false;4;King_Size_Beds;DELUXE;DELUXE;Ezeego1;43
+RoomInfo;1111;3333;;150;;;;;;;;;true;5;King_Size_Beds;STANDARD;STANDARD;Ezeego1;44
+RoomInfo;2222;4444;;120;;;;;;;;;false;6;King_Size_Beds;DELUXE;DELUXE;Ezeego1;45
+RoomInfo;1303;7777;;150;;;;;;;;;true;;;STANDARD;STANDARD;Ezeego1;46
+RoomInfo;3177;8888;;120;;;;;;;;;false;;;DELUXE;DELUXE;Ezeego1;47
+RoomInfo;6163;9999;;150;;;;;;;;;true;;;STANDARD;STANDARD;Ezeego1;48
+RoomInfo;12125;1112;;120;;;;;;;;;false;;;STANDARD;STANDARD;Ezeego1;49
+RoomInfo;68645;1113;;150;;;;;;;;;true;;;DELUXE;DELUXE;Ezeego1;70
+RoomInfo;11561;1114;;120;;;;;;;;;false;;;DELUXE;DELUXE;Ezeego1;71
+RoomInfo;22252;1115;;150;;;;;;;;;true;;;;;Ezeego1;72
+RoomInfo;13073;1116;;120;;;;;;;;;false;;;;;Ezeego1;73
+RoomInfo;31677;1117;;150;;;;;;;;;true;;;;;Ezeego1;74
+RoomInfo;61633;1118;;120;;;;;;;;;false;10;King_Size_Beds;DELUXE;DELUXE;Ezeego1;75
+RoomInfo;11191;1119;;120;;;;;;;;;false;11;King_Size_Beds;DELUXE;DELUXE;Ezeego1;76
+#;Contact Type;Medium;Contact Number;Staff ID
+ContactNumberInfo;BUSINESS;PHONE;0222517118;125
+#;Language;Read;Write;Speak;Staff ID
+LanguageSkillInfo;en;true;true;false;125
+#;Email Type;Email Address;Website;Newsletter Required;Staff ID
+EContactInfo;PERSONAL;umesh@gmail.com;www.google.com;false;125
+#;Social Network;ID Or Login Or Handle Or Address;Staff ID
+SocialContactInfo;facebook;umesh@gmail.com;125
+#;Company Hotel ID;Staff Id;Title;First Name;Middle Name;Last Name;Department;Designation;Role;Responsibilities;Gender;Birth Date;Anniversary Date;Internal Text;Time Zone;Medias Name;Availability Time From;Availability Time To;Mime Type;Company Name
+StaffInformation;87762;125;mr;Umesh;Vaman;Patil;IT;software engineer;admin;admin;MALE;28-08-1992;28-08-1992;;GMT;umeshpatil.jpg;MON->mon;MON->mon;;Ezeego1
+#;Staff Id;Address Type;Street Name;Street 3;Street 4;Street 5;Town;Postal Code;Country;Region;City;Area;Location;Landmark
+Staff Address;125;HEADQUARTER;Crystal;;;;Sagard;18551;US;US-FL;FMU;
+#;Company Name;Company Hotel ID;Validity Start Date;Validity End Date;Company Market Id;Reason
+DeactivationConfig;Ezeego1;87762;30-02-2016;14-10-2016;IND;
+DeactivationConfig;Ezeego1;15740;30-02-2016;14-10-2016;ALL;
+DeactivationConfig;Ezeego1;12121;30-02-2016;14-10-2016;IND;
+DeactivationConfig;Ezeego1;68641;30-02-2016;13-10-2016;ALL;
+DeactivationConfig;Ezeego1;1111;30-02-2016;14-10-2016;IND;
+DeactivationConfig;Ezeego1;2222;30-02-2016;15-10-2016;ALL;
+DeactivationConfig;Ezeego1;1303;30-02-2016;16-10-2016;IND;
+DeactivationConfig;Ezeego1;3177;30-02-2016;17-10-2016;ALL;
+DeactivationConfig;Ezeego1;6163;30-02-2016;18-10-2016;IND;
+DeactivationConfig;Ezeego1;12125;30-02-2016;19-10-2016;ALL;
+DeactivationConfig;Ezeego1;68645;30-02-2016;20-10-2016;IND;
+DeactivationConfig;Ezeego1;11561;30-02-2016;21-10-2016;ALL;
+DeactivationConfig;Ezeego1;22252;30-02-2016;22-10-2016;IND;
+DeactivationConfig;Ezeego1;13073;30-02-2016;23-10-2016;ALL;
+DeactivationConfig;Ezeego1;31677;30-02-2016;24-10-2016;IND;
+DeactivationConfig;Ezeego1;61633;30-02-2016;25-10-2016;ALL;
+DeactivationConfig;Ezeego1;11191;30-02-2016;26-10-2016;ALL;

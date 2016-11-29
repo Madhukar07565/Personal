@@ -1,0 +1,13 @@
+$languages=languages(isocode)[default=en]
+INSERT_UPDATE Catalog;id[unique=true];company(uid)
+;EZ-IN;E000
+
+INSERT_UPDATE CatalogVersion;catalog(id)[unique=true];version[unique=true];active;$languages
+;EZ-IN;Staged;false
+;EZ-IN;Online;true
+
+INSERT_UPDATE ClassificationSystem;id[unique=true];company(uid)
+;EZ-IN-CS;E000
+
+INSERT_UPDATE ClassificationSystemVersion;catalog(id)[unique=true];version;active;$languages
+;EZ-IN-CS;1.0;true

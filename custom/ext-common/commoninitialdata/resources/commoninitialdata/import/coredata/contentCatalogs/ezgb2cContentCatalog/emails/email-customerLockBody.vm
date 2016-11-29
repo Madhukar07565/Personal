@@ -1,0 +1,19 @@
+## messageSource=classpath:/commoninitialdata/import/coredata/contentCatalogs/ezgb2cContentCatalog/emails/email-customerLock_$lang.properties
+#macro(genHtmlLinkStartTag $url)
+<a href="$url"><font color="#666666">
+#end
+#macro(genHtmlLinkEndTag)
+</font></a>
+#end
+#macro(genHtmlLink $url $textColor $bodyContent)
+<a href="$url"><font color="$textColor">$bodyContent</font></a>
+#end
+
+<html>
+<head>
+</head>
+<body>
+<p>Dear,</p>
+<p>Your account has been locked due to invalid attempts.</p>
+</body>
+</html>

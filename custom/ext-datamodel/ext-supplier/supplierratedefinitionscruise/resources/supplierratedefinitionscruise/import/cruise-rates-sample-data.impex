@@ -1,0 +1,32 @@
+
+#######    INSERTING OCCUPANCY DETAIL    #######
+INSERT_UPDATE OccupancyDetail;ageFrom[lang=en];ageTo[lang=en];commissionApplicable;extraPassenger[allownull=true,lang=en];occupancyType(code)[allownull=true];passengerType(code)[unique=true][allownull=true];payOnArrival;percentageCalculatedOn(code)[allownull=true];pricePercentage[allownull=true];price[allownull=true,lang=en];cruiseratedetail(cabin(uid),deck(uid))
+;10;20;true;3;DOUBLE_CABIN;ADULT;true;DOUBLE_CABIN;100;2,260;10004:10005
+
+#######     INSERTING RATE TYPE      #######
+INSERT_UPDATE RateType;&rateId;code[unique=true,allownull=true];name[lang=en]
+;rate01;707;Rate1
+
+#######     INSERTING CRUISE ITINERARY     #########
+INSERT_UPDATE CruiseItinerary;cruiseDate(uid);cruiseItinerary;cruisePackage(catalogVersion(catalog(id),version),code,financeControlId);cruiseRoute(catalogVersion(catalog(id),version),code);dayDescriptionRemark;itineraryId[unique=true];itineraryName;localArrivalTime;localDepartureTime;shoreExcursion(uid)
+;;;;;;704;The Classic Round Voyage: Bergen - Kirkenes - Bergen - 1;;;
+
+#######      INSERTING CRUISE RATE DEFINITION     ########
+INSERT_UPDATE CruiseRateDefinition;cabins[allownull=true];clientType(code)[unique=true,allownull=true];commisionType(code)[allownull=true];commissionThreshold(code);commissionValue;companyRateCode(code);companyType(code)[allownull=true];comparator(code);itinerary(itineraryId)[allownull=true];priceApplicability(code)[allownull=true];priceComponent(code);rateTypeApplicableFor(code)[unique=true,allownull=true];seasonality(code)[unique=true,allownull=true];supplierRateCode(code)[unique=true];supplierType(code)[unique=true];travelFrom[allownull=true,dateformat=dd.MM.yyyy hh:mm:ss]
+;10;B2B;NET;AMOUNT;500;;707;;704;PER_PERSON;;BOTH;HIGH_SEASON;;;25.05.2016 12:00:00,28.05.2016 12:00:00
+
+######     INSERTING DECK     ######
+INSERT_UPDATE Deck;uid[unique=true]
+;10005
+
+######    INSERTING CABIN     #######
+INSERT_UPDATE Cabin;cabinSize;deck(uid);description;numberOfCabin;uid[unique=true];unit(code)
+;;10005;I-Inside Cabin;13;10004;pieces
+
+#######    INSERTING CRUISE RATE DETAIL     #######
+INSERT_UPDATE CruiseRateDetail;cabin(uid)[unique=true,allownull=true];code[allownull=true];deck(uid)[unique=true,allownull=true]
+;10004;1,234;10005
+
+#######     INSERTING CRUISE RATE ADV DEFINITION      #######
+INSERT_UPDATE CruiseRateAdvDefinition;blockOutDate;childPolicy[lang=en];diningCreditApplicableFor(code)[unique=true];diningCreditPerCabin[lang=en];externalDescription[lang=en];internalDescription[lang=en];maxPax;minPax;nationality(isocode);overrideRate;priceExclusion[lang=en];priceInclusion[lang=en];rateType(code);salesDate;taxInformation[lang=en]
+;;;DINNER;U-Outside Cabin;External Description;Internal Description;20;10;;false;Travel Insurance.  Luggage Handling.  International Flights except where included in the Air Package Holiday Price.  Optional Excursions.  Gratuities. ;Accommodation onboard as per the cabin booked.  All meals onboard at the Designated Restaurants. ;;;

@@ -1,0 +1,24 @@
+"INSERT_UPDATE WorkflowTemplate";"code[unique=true]";"name[lang=de]";"name[lang=en]";"owner(uid)";"description[lang=de]";"description[lang=en]";"activationscript";"visibleForPrincipals(uid)";;;
+;"toDoTaskWorkflowTemplate";"To Do Task Workflow";"To Do Task  Workflow";"admin";;;;"wfl_business_admin";;;
+;;;;;;;;;;;
+
+INSERT_UPDATE WorkflowActionTemplate;code[unique=true];name[lang=en];name[lang=de];principalAssigned(User.uid);owner(User.uid);workflow(WorkflowTemplate.code);actionType(code)
+#;TD Complete	      ;To Do Approve;To Do Approve;admin			          ;admin 		  ;toDoTaskWorkflowTemplate  ;start
+
+"INSERT_UPDATE WorkflowActionTemplate";"code[unique=true]";"name[lang=de]";"name[lang=en]";"description[lang=de]";"description[lang=en]";"principalAssigned(uid)";"workflow(code)[unique=true]";"sendEmail";"emailAddress";"rendererTemplate(code)";"actionType(code)"
+;"TD_Approve";"";"To Do Approve";;;"wfl_business_admin";"toDoTaskWorkflowTemplate";"false";;;"start"
+;;;;;;;;;;;
+;;;;;;;;;;;
+
+"INSERT_UPDATE WorkflowDecisionTemplate";"code[unique=true]";"name[lang=de]";"name[lang=en]";"actionTemplate(code)";"description[allownull=true]";;;;;;
+;"TD001";"";"TD_Approve";"TD_Approve";;;;;;;
+;"TD002";"";"TD_Reject";"TD_Approve";;;;;;;
+
+"insert_update WorkflowActionTemplateLinkTemplateRelation";"source(code)[unique=true]";"target(code)[unique=true]";"andConnectionTemplate";"qualifier";;;;;;;
+#;"TD002";"TD_Approve";"false";"WorkflowActionTemplateLinkTemplateRelation";;;;;;;
+
+INSERT_UPDATE CronJob;code[unique=true];job(code);singleExecutable;sessionLanguage(isocode)
+;toDoTaskCronJob;toDoTaskJob;false;en
+					 
+INSERT_UPDATE Trigger;cronJob(code)[unique=true];second;minute;hour;day;month;year;relative;active;maxAcceptableDelay
+;toDoTaskCronJob;00;00;00;-1;-1;-1;true;true;-1

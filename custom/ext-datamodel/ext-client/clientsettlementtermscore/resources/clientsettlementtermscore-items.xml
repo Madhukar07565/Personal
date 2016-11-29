@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+	</collectiontypes>
+
+	<enumtypes>
+
+		<enumtype code="OtherCommercialPayableType" autocreate="true"
+			generate="true">
+			<value code="OVERRIDING_COMMISSION" />
+			<value code="PLB" />
+			<value code="DISCOUNT" />
+			<value code="SECTOR_WISE_INCENTIVE" />
+			<value code="DESTINATION_INCENTIVE" />
+			<value code="SEGMEENT_FEE" />
+			<value code="INCENTIVE_ON_TOP_UP" />
+			<value code="SIGN_UP_BONUS" />
+		</enumtype>
+
+		<enumtype code="OtherCommercialReceivableType" autocreate="true"
+			generate="true">
+			<value code="SERVICE_CHARGE" />
+			<value code="LOOK_TO_BOOK" />
+			<value code="MANAGEMENT_FEE" />
+			<value code="PENALTY_FEE" />
+			<value code="TERMINATION_FEE" />
+			<value code="SIGN_UP_FEE" />
+			<value code="MAINTENANCE_FEE" />
+			<value code="INTEGRATION_FEE" />
+			<value code="LICENSE_FEE" />
+			<value code="WEB_SERVICE_FEE" />
+			<value code="LOYALTY_BONUS" />
+			<value code="PREFERENCE_BENEFIT" />
+			<value code="SECURITY_DEPOSIT" />
+		</enumtype>
+
+	</enumtypes>
+
+	<maptypes>
+	</maptypes>
+
+	<relations>
+		<relation code="AbstractClientCommercialProductDetails"
+			localized="false">
+			<sourceElement type="AbstractClientCommercial"
+				cardinality="one" qualifier="abstractClientCommercial" />
+			<targetElement type="Product" cardinality="many"
+				qualifier="products" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation code="CommercialPayableServiceTax" localized="false">
+			<sourceElement type="CommercialPayable" cardinality="one"
+				qualifier="commercialPayable" />
+			<targetElement type="ServiceTax" cardinality="many"
+				qualifier="serviceTax" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation code="CommercialPayableBalanceDetails" localized="false">
+			<sourceElement type="CommercialPayable" cardinality="one"
+				qualifier="commercialPayable" />
+			<targetElement type="BalanceDetails" cardinality="many"
+				qualifier="balanceDetails" collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		<relation code="PrincipalToClientSettlement" 
+			localized="false">
+			<sourceElement type="Principal" cardinality="one"
+				qualifier="client">
+			</sourceElement>
+			<targetElement type="ClientSettlement" cardinality="many"
+				qualifier="clientSettlementTerms">
+			</targetElement>
+		</relation>
+	</relations>
+	<itemtypes>
+		<typegroup name="settlementterm">
+			<itemtype code="AbstractClientSettlement" extends="AbstractTravelogixItem"
+				jaloclass="com.cnk.travelogix.clientsettlementterms.jalo.AbstractClientSettlement">
+				<description>Client settlement details</description>
+				<deployment table="clientsetterms" typecode="21409" />
+				<attributes>
+					<attribute type="Trigger" qualifier="clientSettlementPeriodicity">
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="interestApplicable">
+						<modifiers optional="false" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.Double" qualifier="interestPercentage">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ScheduleType" qualifier="interestPercentageBasis">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="ClientSettlement" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.clientsettlementterms.jalo.ClientSettlement"
+				extends="AbstractClientSettlement">
+				<description> Represents Settlement</description>
+				<deployment table="settlementtable" typecode="21400" />
+				<attributes>
+					<attribute type="AbstractClientCommercial" qualifier="commercial">
+						<description>Abstract Client Commercial</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Market" qualifier="companyMarket">
+						<description>Company Market</description>
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<!-- <attribute type="Entity" qualifier="entityType"> <description>Entity 
+						Type</description> <modifiers /> <persistence type="property" /> </attribute> 
+						<attribute type="Entity" qualifier="entityName"> <description>Entity Name</description> 
+						<modifiers /> <persistence type="property" /> </attribute> -->
+					<attribute type="commercialType" qualifier="CommercialType">
+						<description>Commercial Type</description>
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="settlementtermId">
+						<description>Settlement Term Id</description>
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="AbstractClientCommercial" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.clientsettlementterms.jalo.AbstractClientCommercial"
+				extends="GenericItem">
+				<description> Abstract Client Commercial</description>
+				<deployment table="absclientcommercial" typecode="21401" />
+				<attributes>
+					<attribute type="java.lang.Boolean" qualifier="standardCommercial">
+						<description>Standard Commercial</description>
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="otherCommercial">
+						<description>Other Commercial</description>
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="OtherCommercialHead" qualifier="otherCommercialHead">
+						<description>Other Commercial Head</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="SettlementSchedule" qualifier="settlementSchedule">
+						<description>Settlement Schedule</description>
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="OtherCommercialHead" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.clientsettlementterms.jalo.OtherCommercialHead"
+				extends="GenericItem">
+				<description> Other Commercial Head</description>
+				<deployment table="othercommercialhead" typecode="21403" />
+				<attributes>
+					<attribute type="OtherCommercialPayableType" qualifier="otherCommercialPayableType">
+						<description>Other Commercial Type</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="OtherCommercialReceivableType"
+						qualifier="otherCommercialReceivableType">
+						<description>Other Commercial Type</description>
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+
+			</itemtype>
+			<itemtype code="CommercialReceivable" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.clientsettlementterms.jalo.CommercialReceivable"
+				extends="AbstractClientCommercial">
+				<description> Commercial Receivable</description>
+				<deployment table="commercialreceivable" typecode="21404" />
+				<attributes>
+					<attribute type="java.util.Date" qualifier="statusValidFrom">
+						<description>Status Valid From</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="statusValidTo">
+						<description>Status Valid To</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="InvoiceGeneration" qualifier="InvoiceGeneration">
+						<description>Invoice Generation</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Status" qualifier="status">
+						<description>Status</description>
+						<modifiers />
+						<persistence type="property" />
+					</attribute>
+
+				</attributes>
+			</itemtype>
+			<itemtype code="CommercialPayable" autocreate="true"
+				generate="true"
+				jaloclass="com.cnk.travelogix.clientsettlementterms.jalo.CommercialPayable"
+				extends="AbstractClientCommercial">
+				<description> Commercial Payable</description>
+				<deployment table="commercialpayable" typecode="21405" />
+				<attributes>
+					<attribute type="CommercialSettlementType" qualifier="commercialSettlementType">
+						<description>Commercial Settlement Type</description>
+						<modifiers optional="false" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<!-- <attribute type="PaymentType" qualifier="paymentType"> <description>Payment 
+						Type</description> <modifiers /> <persistence type="property"></persistence> 
+						</attribute> -->
+					<attribute type="java.lang.Integer" qualifier="initialAmountPercentage">
+						<description>Initial Amount</description>
+						<modifiers />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="StandardCommercialType" qualifier="standardCommercialType">
+						<description>Settlement Commercial Type</description>
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+			<itemtype code="ServiceTax" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.clientsettlementterms.jalo.ServiceTax"
+				extends="GenericItem">
+				<description>Service Tax</description>
+				<deployment table="servicetax" typecode="21406" />
+				<attributes>
+					<attribute type="java.util.Date" qualifier="fromDate">
+						<description>Service From Date</description>
+						<modifiers />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="java.util.Date" qualifier="toDate">
+						<description>Service To Date</description>
+						<modifiers />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="java.math.BigDecimal" qualifier="percentage">
+						<description>Percentage</description>
+						<modifiers />
+						<persistence type="property"></persistence>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="BalanceDetails" autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.clientsettlementterms.jalo.ProductDetails"
+				extends="GenericItem">
+				<description>Product Details</description>
+				<deployment table="baldetails" typecode="21408" />
+
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="balanceAmountPercentage">
+						<description>Balance Amount</description>
+						<modifiers optional="false" />
+						<persistence type="property"></persistence>
+					</attribute>
+
+					<attribute type="java.lang.Integer" qualifier="payInDays">
+						<description>Pay In Days</description>
+						<modifiers optional="false" />
+						<persistence type="property"></persistence>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

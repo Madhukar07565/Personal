@@ -1,0 +1,82 @@
+$contentCatalog=operationsContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$jarResourceCms=$config-jarResourceCmsValue
+
+# Create PageTemplates
+# These define the layout for pages
+# "FrontendTemplateName" is used to define the JSP that should be used to render the page for pages with multiple possible layouts.
+# "RestrictedPageTypes" is used to restrict templates to page types
+
+INSERT_UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true]			;name						;frontendTemplateName;restrictedPageTypes(code);active[default=true]
+;						  ;CNKOrderListPageTemplate	;CNK Order List PageTemplate;layout/cnkOrderListContentLayoutPage;ContentPage
+						  
+UPDATE PageTemplate;$contentCV[unique=true];uid[unique=true]		  ;velocityTemplate[translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+;					   ;CNKOrderListPageTemplate  ;$jarResourceCms/structure-view/structure_cnkOrderListcontentPageTemplate.vm
+				   
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='CNKOrderListPageTemplate'];validComponentTypes(code);compTypeGroup(code)
+;SiteLogo;;;logo
+;HeaderLinks;;;headerlinks
+;SearchBox;;;searchbox
+;MiniCart;;;minicart
+;NavigationBar;;;navigation
+;Section1;;;wide
+;Section2A;;;narrow
+;Section2B;;;wide
+;Section3;;;wide
+;Footer;;;footer
+;TopHeaderSlot;;;wide
+;BottomHeaderSlot;;;wide
+;PlaceholderContentSlot;;;
+
+# Create Content Slots
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active
+;;SiteLogoSlot;Default Site Logo Slot;true
+;;HomepageNavLinkSlot;Default Homepage Link;true
+;;MiniCartSlot;Mini Cart;true
+;;NavigationBarSlot;Navigation Bar;true
+#;;TabsSlot;Tabs;true
+#;;WideContentSlot;Wide Content;true
+#;;TopContentSlot;Top Content;true
+#;;MiddleContentSlot;Middle Content;true
+#;;BottomContentSlot;Bottom Content;true
+#;;SideContentSlot;Side Content;true
+#;;FeatureContentSlot;Feature Content;true
+;;FooterSlot;Footer;true
+;;HeaderLinksSlot;Header links;true
+;;SearchBoxSlot;Search Box;true
+#;;VariantSelectorSlot;Variant Selector;true
+#;;AddToCartSlot;Add To Cart;true
+#;;UpSellingSlot;Up Selling;true
+#;;CrossSellingSlot;Cross Selling;true
+;;TopHeaderSlot;Top Header;true
+;;BottomHeaderSlot;Bottom Header;true
+#;;ProductLeftRefinements;Refinements;true
+#;;ProductListSlot;Product List;true
+#;;ProductGridSlot;Product Grid;true
+#;;SearchResultsListSlot;Search Result List;true
+#;;SearchResultsGridSlot;Search Result Grid;true
+#;;LeftContentSlot;Left Content Slot;true
+#;;RightContentSlot;Right Content Slot;true
+#;;CenterContentSlot;Center Content Slot;true
+#;;CenterLeftContentSlot;Center Left Content Slot;true
+#;;CenterRightContentSlot;Center Right Content Slot;true
+#;;EmptyCartMiddleContent;Empty Cart Middle Content;true
+;;PlaceholderContentSlot;Placeholder for Addon tag files;true
+
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='CNKOrderListPageTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteLogo-OrderListContentPage;SiteLogo;;SiteLogoSlot;true
+;;HomepageLink-OrderListContentPage;HomepageNavLink;;HomepageNavLinkSlot;true
+;;NavigationBar-OrderListContentPage;NavigationBar;;NavigationBarSlot;true
+;;MiniCart-OrderListContentPage;MiniCart;;MiniCartSlot;true
+;;Footer-OrderListContentPage;Footer;;FooterSlot;true
+;;HeaderLinks-OrderListContentPage;HeaderLinks;;HeaderLinksSlot;true
+;;SearchBox-OrderListContentPage;SearchBox;;SearchBoxSlot;true
+;;TopHeaderSlot-OrderListContentPage;TopHeaderSlot;;TopHeaderSlot;true
+;;BottomHeaderSlot-OrderListContentPage;BottomHeaderSlot;;BottomHeaderSlot;true
+;;PlaceholderContentSlot-OrderListContentPage;PlaceholderContentSlot;;PlaceholderContentSlot;true
+				   
+						  
+						  

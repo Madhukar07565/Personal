@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2016 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+           
+    <context:annotation-config/> 
+
+
+	<!-- Expose /acceleratoraddon/web/webroot/WEB-INF/messages/base.js.properties  resource bundle as javascript variables -->
+	 <context:component-scan base-package="com.cnk.travelogix.addon.controllers" scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver"/>
+	 
+	 
+	     
+    <!-- <alias name="PAYMENT_GATEWAYS_LIST_PAGE" alias="REDIRECT_TO_PAYMENT_GATEWAYS"/>
+      <bean id="PAYMENT_GATEWAYS_LIST_PAGE" class="java.lang.String">
+		  <constructor-arg value="redirect:/paymentgateways/homepage"/>
+	  </bean> -->
+	  
+	  	
+	<bean id="defaultPaymentgatewaysJavaScriptMessageResourceAccessor" parent="abstractJavaScriptMessageResourceAccessor">
+		<property name="addOnName" value="paymentgateways"/>
+	</bean>
+
+	<bean id="defaultPaymentgatewaysBeforeViewJsPropsHandlerAdaptee" parent="abstractBeforeViewJsPropsHandlerAdaptee" class="de.hybris.platform.addonsupport.interceptors.ExportJsPropertiesBeforeViewHandler">
+		<property name="messageSource" ref="defaultPaymentgatewaysJavaScriptMessageResourceAccessor"/>
+	</bean>
+
+	<bean id="getPaymentgatewaysBeforeViewHandler" parent="beforeViewHandlerAdapter">
+		<property name="adaptee">
+			<ref bean="defaultPaymentgatewaysBeforeViewJsPropsHandlerAdaptee"/>
+		</property>
+	</bean>
+	<bean id="PaymentgatewaysBeforeViewHandlerListMergeDirective" depends-on="beforeViewHandlersList" parent="listMergeDirective">
+		<property name="add" ref="getPaymentgatewaysBeforeViewHandler"/>
+	</bean>
+	
+	<util:map id="paymentGatewaysPageMap" key-type="java.lang.String" value-type="java.lang.String">
+		<entry key="viewName" value="/pages/search/searchAdvancedEmptyPage" />
+	</util:map>
+	
+	
+</beans>

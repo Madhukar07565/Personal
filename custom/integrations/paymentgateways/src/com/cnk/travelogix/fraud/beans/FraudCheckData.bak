@@ -1,0 +1,282 @@
+/**
+ *
+ */
+package com.cnk.travelogix.fraud.beans;
+
+/**
+ * Fraud Check request bean
+ *
+ * @author I077988
+ *
+ */
+public class FraudCheckData
+{
+
+	private String merchantID;//Mandatory Your MerchantID provided by RMS
+	private String key;//Mandatory Your Licence key provided by RMS
+	private String templateID;
+	private String customerID;
+	private String cardNumber;
+	private String userMD5;
+	private String passMD5;
+	private String site;//Mandatory The ID of the site or merchant for which the transaction placed for
+	private String amount;//Mandatory TxnAmount
+	private String referenceNo;//Mandatory OrderID
+	private String custEmail;//Mandatory
+	private String custPhone;//Mandatory
+	private String country;//Mandatory The billing country for the order.
+	private String dateTime;//Mandatory The date & time of the transaction [YYYY-MM-DD HH:MM:SS]
+
+	/**
+	 * @return the merchantID
+	 */
+	public String getMerchantID()
+	{
+		return merchantID;
+	}
+
+	/**
+	 * @param merchantID
+	 *           the merchantID to set
+	 */
+	public void setMerchantID(final String merchantID)
+	{
+		this.merchantID = merchantID;
+	}
+
+	/**
+	 * @return the key
+	 */
+	public String getKey()
+	{
+		return key;
+	}
+
+	/**
+	 * @param key
+	 *           the key to set
+	 */
+	public void setKey(final String key)
+	{
+		this.key = key;
+	}
+
+	/**
+	 * @return the templateID
+	 */
+	public String getTemplateID()
+	{
+		return templateID;
+	}
+
+	/**
+	 * @param templateID
+	 *           the templateID to set
+	 */
+	public void setTemplateID(final String templateID)
+	{
+		this.templateID = templateID;
+	}
+
+	/**
+	 * @return the customerID
+	 */
+	public String getCustomerID()
+	{
+		return customerID;
+	}
+
+	/**
+	 * @param customerID
+	 *           the customerID to set
+	 */
+	public void setCustomerID(final String customerID)
+	{
+		this.customerID = customerID;
+	}
+
+	/**
+	 * @return the cardNumber
+	 */
+	public String getCardNumber()
+	{
+		return cardNumber;
+	}
+
+	/**
+	 * @param cardNumber
+	 *           the cardNumber to set
+	 */
+	public void setCardNumber(final String cardNumber)
+	{
+		this.cardNumber = cardNumber;
+	}
+
+	/**
+	 * @return the userMD5
+	 */
+	public String getUserMD5()
+	{
+		return userMD5;
+	}
+
+	/**
+	 * @param userMD5
+	 *           the userMD5 to set
+	 */
+	public void setUserMD5(final String userMD5)
+	{
+		this.userMD5 = userMD5;
+	}
+
+	/**
+	 * @return the passMD5
+	 */
+	public String getPassMD5()
+	{
+		return passMD5;
+	}
+
+	/**
+	 * @param passMD5
+	 *           the passMD5 to set
+	 */
+	public void setPassMD5(final String passMD5)
+	{
+		this.passMD5 = passMD5;
+	}
+
+	/**
+	 * @return the site
+	 */
+	public String getSite()
+	{
+		return site;
+	}
+
+	/**
+	 * @param site
+	 *           the site to set
+	 */
+	public void setSite(final String site)
+	{
+		this.site = site;
+	}
+
+	/**
+	 * @return the amount
+	 */
+	public String getAmount()
+	{
+		return amount;
+	}
+
+	/**
+	 * @param amount
+	 *           the amount to set
+	 */
+	public void setAmount(final String amount)
+	{
+		this.amount = amount;
+	}
+
+	/**
+	 * @return the referenceNo
+	 */
+	public String getReferenceNo()
+	{
+		return referenceNo;
+	}
+
+	/**
+	 * @param referenceNo
+	 *           the referenceNo to set
+	 */
+	public void setReferenceNo(final String referenceNo)
+	{
+		this.referenceNo = referenceNo;
+	}
+
+	/**
+	 * @return the custEmail
+	 */
+	public String getCustEmail()
+	{
+		return custEmail;
+	}
+
+	/**
+	 * @param custEmail
+	 *           the custEmail to set
+	 */
+	public void setCustEmail(final String custEmail)
+	{
+		this.custEmail = custEmail;
+	}
+
+	/**
+	 * @return the custPhone
+	 */
+	public String getCustPhone()
+	{
+		return custPhone;
+	}
+
+	/**
+	 * @param custPhone
+	 *           the custPhone to set
+	 */
+	public void setCustPhone(final String custPhone)
+	{
+		this.custPhone = custPhone;
+	}
+
+	/**
+	 * @return the country
+	 */
+	public String getCountry()
+	{
+		return country;
+	}
+
+	/**
+	 * @param country
+	 *           the country to set
+	 */
+	public void setCountry(final String country)
+	{
+		this.country = country;
+	}
+
+	/**
+	 * @return the dateTime
+	 */
+	public String getDateTime()
+	{
+		return dateTime;
+	}
+
+	/**
+	 * @param dateTime
+	 *           the dateTime to set
+	 */
+	public void setDateTime(final String dateTime)
+	{
+		this.dateTime = dateTime;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString()
+	{
+		return "RMSFraudCheckBean [merchantID=" + merchantID + ", key=" + key + ", templateID=" + templateID + ", customerID="
+				+ customerID + ", cardNumber=" + cardNumber + ", userMD5=" + userMD5 + ", passMD5=" + passMD5 + ", site=" + site
+				+ ", amount=" + amount + ", referenceNo=" + referenceNo + ", custEmail=" + custEmail + ", custPhone=" + custPhone
+				+ ", country=" + country + "]";
+	}
+
+}

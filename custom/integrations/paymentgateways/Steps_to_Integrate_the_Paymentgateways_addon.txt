@@ -1,0 +1,37 @@
+Reference URL - https://wiki.hybris.com/display/chnaccdoc/CNACC+-+Installing+AddOn+for+China+Storefront
+
+0)hybris Server down
+1)place the addon package in the custom folder or the respective folder structure.
+----------------------------------------------------------------------------------
+
+2)add the <extension name="paymentgateways"/> in config localextensions.xml.
+----------------------------------------------------------------------------------
+
+3) add this jsp include tag in the jsp where you want to display the payment gateways to user
+
+example : <jsp:include page="/my-account/paymentgateways" /> 
+
+page="/{map the controller mapping which is serving your jsp here }/paymentgateways"
+------------------------------------------------------------------------------------
+
+4) In the PaymentGatewaysController -> /paymentgateways/acceleratoraddon/web/src/com/cnk/travelogix/addon/controllers/pages/PaymentGatewaysController.java
+
+update the controller mapping according to the include jsp page.
+
+example : @RequestMapping(value = "/my-account/paymentgateways")
+-------------------------------------------------------------------------------------
+
+5)In the PaymentGatewaysResponseController -> /paymentgateways/acceleratoraddon/web/src/com/cnk/travelogix/addon/controllers/pages/PaymentGatewaysResponseController.java
+
+update the controller mapping according to the include jsp page.
+
+example : @RequestMapping(value = "/my-account/payment-provider-response")
+----------------------------------------------------------------------------------------
+
+6)run this command in console --> ant addoninstall -Daddonnames="paymentgateways" - addonStorefront.yacceleratorstorefront="B2CStorefront" <--
+
+this is installing the addon to the B2CStorefront. replace the "B2CStorefront" with your storefrontname.
+-----------------------------------------------------------------------------------------
+7)build the system and server up. Navigate to the page where you added the jsp include tag and see the paymentgateways displayed over there.
+
+

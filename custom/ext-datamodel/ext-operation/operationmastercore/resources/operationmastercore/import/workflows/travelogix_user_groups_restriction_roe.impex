@@ -1,0 +1,74 @@
+# Users
+$passwordEncoding=md5
+$defaultPassword=123456
+$setPassword=@password[translator=de.hybris.platform.impex.jalo.translators.ConvertPlaintextToEncodedUserPasswordTranslator][default='$passwordEncoding:$defaultPassword']
+$writableCatalogVersions=writableCatalogVersions(catalog(id),version);
+$readableCatalogVersions=readableCatalogVersions(catalog(id),version);
+
+
+
+#
+### Import Travelogix User groups
+#
+
+
+######### Create Groups ###################
+INSERT_UPDATE Usergroup;uid[unique=true];groups(uid)[mode=append];locname[lang=en]
+
+;TravelogixROEGroup;;"TravelogixROE Group"
+
+## Sub-groups of TravelogixROEGroup
+;ROEAPPROVER;TravelogixROEGroup;"ROEAPPROVER Group"
+;ROECREATOR;TravelogixROEGroup;"ROECREATOR Group"
+
+
+#
+## Restriction On ROECREATOR 
+#
+
+$START_USERRIGHTS
+Type;UID;MemberOfGroups;Password;Target;read;change;create;delete;change_perm 
+UserGroup;ROECREATOR;employeegroup;
+;;;;TravelogixROE;+;+;+;-;		
+;;;;ROE;+;+;+;-;			
+;;;;ROEDetails;+;+;+;-;
+;;;;Supplier;+;-;-;-;
+;;;;Product;+;-;-;-;
+;;;;Category;+;-;-;-;
+
+
+
+;;;;TravelogixROE.roeTypeId;+;-;;;
+;;;;TravelogixROE.roeType;+;-;;;
+;;;;TravelogixROE.roeSource;+;-;;;
+;;;;TravelogixROE.supplierName;+;-;;;
+;;;;TravelogixROE.effectiveFromDate;+;-;;;
+;;;;TravelogixROE.effectiveToDate;+;-;;;
+;;;;TravelogixROE.approvalStatus;+;-;;;
+
+$END_USERRIGHTS
+
+#
+## Restriction On ROEAPPROVER 
+#
+
+$START_USERRIGHTS
+Type;UID;MemberOfGroups;Password;Target;read;change;create;delete;change_perm 
+UserGroup;ROEAPPROVER;employeegroup;
+;;;;TravelogixROE;+;+;-;-;		
+;;;;ROE;+;-;-;-;			
+;;;;ROEDetails;+;-;-;-;
+
+
+$END_USERRIGHTS
+
+
+### Create user for creating and approving the Accommodation product.
+
+#INSERT_UPDATE Employee;UID[unique=true];groups(uid)[mode=append];sessionLanguage(isocode);$setPassword;name;$writableCatalogVersions;$readableCatalogVersions;backOfficeLoginDisabled
+#;s3411;ROECREATOR;en;;creator1;EZ-IN:Staged,EZ-IN:Online;EZ-IN:Staged,EZ-IN:Online;false
+#;rudolf32m;ROEAPPROVER;en;;approver1;EZ-IN:Staged,EZ-IN:Online;EZ-IN:Staged,EZ-IN:Online;false
+
+INSERT_UPDATE Employee;UID[unique=true]	;firstName		;middleName		;lastName		;contactEmail			;mobileNumber;designation	;functionalRole(code);reportingManager(uid);isManager[default=false];secondaryUser(uid);roles(code)	;groups(uid)[mode=append]		;sessionLanguage(isocode);name				;$writableCatalogVersions	;$readableCatalogVersions		;backOfficeLoginDisabled
+					 ;s3411		        ;subhash		;chandra		;sekhar			;subhash@gmail.com		;1234567890	 ;User Manager	;           		 ;						;true					;					;			;ROECREATOR				        ;en						 ;creator1		    ;EZ-IN:Staged,EZ-IN:Online	;EZ-IN:Staged,EZ-IN:Online		;false
+					 ;rudolf32m		    ;gorav			;kumar			;sekhar			;gorav@gmail.com		;1234567890	 ;User Approver	;           		 ;						;true					;					;			;ROECREATOR				        ;en						 ;approver1		    ;EZ-IN:Staged,EZ-IN:Online	;EZ-IN:Staged,EZ-IN:Online		;false

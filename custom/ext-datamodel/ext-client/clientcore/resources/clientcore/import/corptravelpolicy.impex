@@ -1,0 +1,21 @@
+# Sample data of client account.
+$lang=en
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd/MM/yyyy
+$timeformat = hh:mm
+$contentCatalog=Default
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+#Product Configuration
+INSERT_UPDATE Product;$catalogVersion;code[unique=true];&product
+;;123APP;123APP
+;;123ACC;123ACC
+
+INSERT_UPDATE VersionDetail; version[unique=true]; versionDate[dateFormat=dd-MM-yyyy]
+#;12323232;01-04-2016
+
+#CorporateTravelPolicy
+INSERT_UPDATE CorporateTravelPolicy;policyName[unique=true];policyParameterName(code)[unique=true];operator(code)[unique=true];currency(isocode);effectiveFrom[dateFormat=dd-MM-yyyy];effectiveTo[dateFormat=dd-MM-yyyy];valueTo;value;policyProduct(Product.code)
+;Travellers Policy12;NUMBER_OF_RESULTS_TO_BE_SHOWN;EQUAL_TO;INR;21-04-2016;20-04-2017;10000;20000;;

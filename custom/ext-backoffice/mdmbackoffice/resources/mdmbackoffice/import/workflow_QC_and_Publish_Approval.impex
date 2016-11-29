@@ -1,0 +1,76 @@
+INSERT_UPDATE WorkflowTemplate;code[unique=true];name[lang=de];name[lang=en];owner(uid);description[lang=de];description[lang=en];activationscript;visibleForPrincipals(uid);;;
+;QC_Approval_Workflow;;QC Approval Workflow;qcapprover;;;;qcapprovergroup;;;
+#
+;Publish_Approval_Workflow;;Publish Approval Workflow;mainapprover;;;;mainapprovergroup;;;
+#
+;Supervisor_Approval_Workflow;;Supervisor Approval Workflow;supervisor_approver;;;;supervisorapprovergroup;;;
+#
+;Finance_Approval_Workflow;;Finance Approval Workflow;finance_approver;;;;financeapprovergroup;;;
+
+INSERT_UPDATE WorkflowActionTemplate;code[unique=true];name[lang=de];name[lang=en];description[lang=de];description[lang=en];principalAssigned(uid);workflow(code)[unique=true];sendEmail;emailAddress;rendererTemplate(code);actionType(code)
+;QCAW_QC_Approval;;QC Approval;;;qcapprovergroup;QC_Approval_Workflow;false;;;start
+;QCAW_QC_End;;QC Approval End;;;admingroup;QC_Approval_Workflow;false;;;end
+#
+;PAW_Publish_Approval;;Publish Approval;;;mainapprovergroup;Publish_Approval_Workflow;false;;;start
+;PAW_Publish_End;;Publish Approval End;;;admingroup;Publish_Approval_Workflow;false;;;end
+#
+;FAW_Finance_Approval;;Finance Approval;;;financeapprovergroup;Finance_Approval_Workflow;false;;;start
+;FAW_Finance_End;;Finance Approval End;;;admingroup;Finance_Approval_Workflow;false;;;end
+#
+;SAW_Supervisor_Approval;;Supervisor Approval;;;supervisorapprovergroup;Supervisor_Approval_Workflow;false;;;start
+;SAW_Supervisor_End;;Supervisor Approval End;;;admingroup;Supervisor_Approval_Workflow;false;;;end
+
+INSERT_UPDATE AutomatedWorkflowActionTemplate;code[unique=true];name[lang=de];name[lang=en];description[lang=de];description[lang=en];principalAssigned(uid);workflow(code)[unique=true];sendEmail;emailAddress;rendererTemplate(code);actionType(code);jobHandler
+;QCAW_Auto_QC_Approved;;QC Approval Task Completed;;;admingroup;QC_Approval_Workflow;false;;;normal;workflowQCApprovedActionJob
+;QCAW_Auto_QC_Rejected;;QC Reject Task Completed;;;admingroup;QC_Approval_Workflow;false;;;normal;workflowRejectActionJob
+#
+;PAW_Auto_Publish_Approved;;Publish Approval Auto Task Completed;;;admingroup;Publish_Approval_Workflow;false;;;normal;workflowPublishApprovedActionJob
+;PAW_Auto_Publish_Rejected;;Publish Reject Auto Task Completed;;;admingroup;Publish_Approval_Workflow;false;;;normal;workflowRejectActionJob
+#
+;FAW_Finance_Auto_Approved;;Finance Approval Task Completed;;;admingroup;Finance_Approval_Workflow;false;;;normal;workflowFinanceApprovedActionJob
+;FAW_Finance_Auto_Rejected;;Finance Reject Task Completed;;;admingroup;Finance_Approval_Workflow;false;;;normal;workflowRejectActionJob
+#
+;SAW_Supervisor_Auto_Approved;;Supervisor Approval Task Completed;;;admingroup;Supervisor_Approval_Workflow;false;;;normal;workflowSupervisorApprovedActionJob
+;SAW_Supervisor_Auto_Rejected;;Supervisor Reject Task Completed;;;admingroup;Supervisor_Approval_Workflow;false;;;normal;workflowRejectActionJob
+
+INSERT_UPDATE WorkflowDecisionTemplate;code[unique=true];name[lang=de];name[lang=en];actionTemplate(code);description[allownull=true];;;;;;
+;QCAW01;;QC Approve;QCAW_QC_Approval;;;;;;;
+;QCAW02;;QC Reject;QCAW_QC_Approval;;;;;;;
+;QCAW03;;QC Approved;QCAW_Auto_QC_Approved;;;;;;;
+;QCAW04;;QC Rejected;QCAW_Auto_QC_Rejected;;;;;;;
+#
+;PAW01;;Publish Approve;PAW_Publish_Approval;;;;;;;
+;PAW02;;Publish Reject;PAW_Publish_Approval;;;;;;;
+;PAW03;;Publish Approved;PAW_Auto_Publish_Approved;;;;;;;
+;PAW04;;Publish Rejected;PAW_Auto_Publish_Rejected;;;;;;;
+#
+;FAW01;;Finance Approve;FAW_Finance_Approval;;;;;;;
+;FAW02;;Finance Reject;FAW_Finance_Approval;;;;;;;
+;FAW03;;Finance Approved;FAW_Finance_Auto_Approved;;;;;;;
+;FAW04;;Finance Rejected;FAW_Finance_Auto_Rejected;;;;;;;
+#
+;SAW01;;Supervisor Approve;SAW_Supervisor_Approval;;;;;;;
+;SAW02;;Supervisor Reject;SAW_Supervisor_Approval;;;;;;;
+;SAW03;;Supervisor Approved;SAW_Supervisor_Auto_Approved;;;;;;;
+;SAW04;;Supervisor Rejected;SAW_Supervisor_Auto_Rejected;;;;;;;
+
+INSERT_UPDATE WorkflowActionTemplateLinkTemplateRelation;source(code)[unique=true];target(code)[unique=true];andConnectionTemplate;qualifier;;;;;;;
+;QCAW01;QCAW_Auto_QC_Approved;false;WorkflowActionTemplateLinkTemplateRelation;;;;;;;
+;QCAW02;QCAW_Auto_QC_Rejected;false;WorkflowActionTemplateLinkTemplateRelation;;;;;;;
+;QCAW03;QCAW_QC_End;false;WorkflowActionTemplateLinkTemplateRelation;;;;;;;
+;QCAW04;QCAW_QC_End;false;WorkflowActionTemplateLinkTemplateRelation;;;;;;;
+#
+;PAW01;PAW_Auto_Publish_Approved;false;WorkflowActionTemplateLinkTemplateRelation;;;;;;;
+;PAW02;PAW_Auto_Publish_Rejected;false;WorkflowActionTemplateLinkTemplateRelation;;;;;;;
+;PAW03;PAW_Publish_End;false;WorkflowActionTemplateLinkTemplateRelation;;;;;;;
+;PAW04;PAW_Publish_End;false;WorkflowActionTemplateLinkTemplateRelation;;;;;;;
+#
+;FAW01;FAW_Finance_Auto_Approved;false;WorkflowActionTemplateLinkTemplateRelation;;;;;;;
+;FAW02;FAW_Finance_Auto_Rejected;false;WorkflowActionTemplateLinkTemplateRelation;;;;;;;
+;FAW03;FAW_Finance_End;false;WorkflowActionTemplateLinkTemplateRelation;;;;;;;
+;FAW04;FAW_Finance_End;false;WorkflowActionTemplateLinkTemplateRelation;;;;;;;
+#
+;SAW01;SAW_Supervisor_Auto_Approved;false;WorkflowActionTemplateLinkTemplateRelation;;;;;;;
+;SAW02;SAW_Supervisor_Auto_Rejected;false;WorkflowActionTemplateLinkTemplateRelation;;;;;;;
+;SAW03;SAW_Supervisor_End;false;WorkflowActionTemplateLinkTemplateRelation;;;;;;;
+;SAW04;SAW_Supervisor_End;false;WorkflowActionTemplateLinkTemplateRelation;;;;;;;

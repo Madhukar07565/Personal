@@ -1,0 +1,1855 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 hybris AG ~ All rights reserved. ~ ~ This software is the confidential and proprietary information 
+	of hybris ~ ("Confidential Information"). You shall not disclose such Confidential ~ Information and shall use it only in accordance with the terms of 
+	the ~ license agreement you entered into with hybris. -->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	<enum class="com.cnk.travelogix.populator.options.PaymentInfoOption">
+		<value>BASIC</value>
+		<value>BILLING_ADDRESS</value>
+	</enum>
+
+	<!--auth response -->
+	<bean class="com.cnk.travelogix.auth.data.LogoutResponse">
+		<property name="success" type="boolean" />
+	</bean>
+
+	<!-- storesession data -->
+
+	<bean class="com.cnk.travelogix.storesession.data.LanguageDataList">
+		<property name="languages" type="java.util.Collection&lt;de.hybris.platform.commercefacades.storesession.data.LanguageData>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.storesession.data.CurrencyDataList">
+		<property name="currencies" type="java.util.Collection&lt;de.hybris.platform.commercefacades.storesession.data.CurrencyData>" />
+	</bean>
+
+	<!-- order data -->
+
+	<bean class="com.cnk.travelogix.order.data.CartDataList">
+		<property name="carts" type="java.util.List&lt;de.hybris.platform.commercefacades.order.data.CartData>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.order.data.OrderEntryDataList">
+		<property name="orderEntries" type="java.util.List&lt;de.hybris.platform.commercefacades.order.data.OrderEntryData>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.order.data.CardTypeDataList">
+		<property name="cardTypes" type="java.util.List&lt;de.hybris.platform.commercefacades.order.data.CardTypeData>" />
+	</bean>
+
+	<bean class="de.hybris.platform.commercefacades.order.data.CartModificationDataList">
+		<property name="cartModificationList" type="java.util.List&lt;de.hybris.platform.commercefacades.order.data.CartModificationData>" />
+	</bean>
+
+	<!-- product data -->
+
+	<bean class="com.cnk.travelogix.product.data.ProductDataList">
+		<property name="products" type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.ProductData>" />
+		<property name="catalog" type="String" />
+		<property name="version" type="String" />
+		<property name="totalProductCount" type="int" />
+		<property name="totalPageCount" type="int" />
+		<property name="currentPage" type="int" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.product.data.PromotionDataList">
+		<property name="promotions" type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.PromotionData>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.product.data.PromotionResultDataList">
+		<property name="promotions" type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.PromotionResultData>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.product.data.ReviewDataList">
+		<property name="reviews" type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.ReviewData>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.product.data.SuggestionDataList">
+		<property name="suggestions" type="java.util.List&lt;de.hybris.platform.commercefacades.product.data.SuggestionData>" />
+	</bean>
+
+	<!-- user data -->
+
+	<bean class="com.cnk.travelogix.user.data.TitleDataList">
+		<property name="titles" type="java.util.List&lt;de.hybris.platform.commercefacades.user.data.TitleData>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.user.data.CountryDataList">
+		<property name="countries" type="java.util.List&lt;de.hybris.platform.commercefacades.user.data.CountryData>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.user.data.AddressDataList">
+		<property name="addresses" type="java.util.List&lt;de.hybris.platform.commercefacades.user.data.AddressData>" />
+	</bean>
+
+	<!-- voucher data -->
+	<bean class="com.cnk.travelogix.voucher.data.VoucherDataList">
+		<property name="vouchers" type="java.util.List&lt;de.hybris.platform.commercefacades.voucher.data.VoucherData>" />
+	</bean>
+
+	<!-- validation data -->
+	<bean class="com.cnk.travelogix.validation.data.AddressValidationData">
+		<property name="errors" type="de.hybris.platform.webservicescommons.dto.error.ErrorListWsDTO" />
+		<property name="decision" type="String" />
+		<property name="suggestedAddressesList" type="com.cnk.travelogix.user.data.AddressDataList" />
+	</bean>
+
+	<!-- Additional title property for CustomerData -->
+	<bean class="de.hybris.platform.commercefacades.user.data.CustomerData" extends="de.hybris.platform.commercefacades.user.data.PrincipalData">
+		<property name="title" type="String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.user.data.LoginChangeResponse">
+		<property name="success" type="boolean" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.user.data.PasswordRestoreResponse">
+		<property name="success" type="boolean" />
+	</bean>
+
+	<!-- update queues -->
+
+	<bean class="com.cnk.travelogix.queues.data.ProductExpressUpdateElementData">
+		<property name="code" type="String" />
+		<property name="catalogId" type="String" />
+		<property name="catalogVersion" type="String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.queues.data.ProductExpressUpdateElementDataList">
+		<property name="productExpressUpdateElements" type="java.util.List&lt;com.cnk.travelogix.queues.data.ProductExpressUpdateElementData>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.queues.data.OrderStatusUpdateElementData">
+		<property name="code" type="String" />
+		<property name="status" type="String" />
+		<property name="baseSiteId" type="String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.queues.data.OrderStatusUpdateElementDataList">
+		<property name="orderStatusUpdateElements" type="java.util.List&lt;com.cnk.travelogix.queues.data.OrderStatusUpdateElementData>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.supplier.credentials.data.CredentialsData">
+		<property name="name" type="String" />
+		<property name="value" type="String" />
+		<property name="operationURL" type="String" />
+		<property name="isEncrypted" type="Boolean" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.supplier.credentials.data.SupplierCredentialsData">
+		<property name="supplierID" type="String" />
+		<property name="credentials" type="com.cnk.travelogix.supplier.credentials.data.CredentialsData" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.supplier.credentials.data.SupplierCredentialsDataList">
+		<property name="supplierCredentials" type="java.util.List&lt;com.cnk.travelogix.supplier.credentials.data.SupplierCredentialsData>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.supplier.credentials.dto.CredentialsWsDTO">
+		<property name="name" type="String" />
+		<property name="value" type="String" />
+		<property name="operationURL" type="String" />
+		<property name="isEncrypted" type="Boolean" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.supplier.credentials.dto.SupplierCredentialsWsDTO">
+		<property name="supplierID" type="String" />
+		<property name="credentials" type="com.cnk.travelogix.supplier.credentials.dto.CredentialsWsDTO" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.supplier.credentials.dto.SupplierCredentialsListWsDTO">
+		<property name="supplierCredentials" type="java.util.List&lt;com.cnk.travelogix.supplier.credentials.dto.SupplierCredentialsWsDTO>" />
+	</bean>
+	
+
+<!--
+	<bean class="com.cnk.travelogix.supplier.mapping.data.CityData">
+		<property name="isocode" type="String" />
+		<property name="name" type="String" />
+		<property name="country" type="de.hybris.platform.commercefacades.user.data.CountryData" />
+	</bean>
+-->
+
+	<bean class="com.cnk.travelogix.supplier.mapping.dto.CityWsDTO">
+		<property name="isocode" type="String" />
+		<property name="name" type="String" />
+		<property name="country" type="com.cnk.travelogix.supplier.mapping.dto.CountryWsDto" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.supplier.mapping.dto.CountryWsDto">
+		<property name="isocode" type="String" />
+		<property name="name" type="String" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.supplier.mapping.data.CityData">
+		<property name="cityIsoCode" type="String" />
+		<property name="cityName" type="String" />
+		<property name="country" type="de.hybris.platform.commercefacades.user.data.CountryData" />
+		<property name="countryIsoCode" type="String" />
+		<property name="countryName" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.supplier.inventory.data.FlightSearchData">
+		<property name="fromTerminal" type="java.lang.String" />
+		<property name="toTerminal" type="java.lang.String" />
+		<property name="fromCity" type="java.lang.String" />
+		<property name="toCity" type="java.lang.String" />
+		<property name="departureDate" type="java.util.Date" />
+		<property name="arrivalDate" type="java.util.Date" />
+		<property name="numberOfAdult" type="java.lang.Integer" />
+		<property name="numberOfChild" type="java.lang.Integer" />
+		<property name="numberOfInfant" type="java.lang.Integer" />
+		<property name="nearByAirPortDistance" type="java.lang.Double" />
+		<property name="corporateFareCode" type="java.lang.Integer" />
+		<property name="accountCode" type="java.lang.Integer" />
+		<property name="dealCode" type="java.lang.Integer" />
+		<property name="multiCitySearch" type="java.lang.String" />
+		<property name="openJaw" type="java.lang.String" />
+		<property name="flexibleDates" type="java.lang.Integer" />
+		<property name="airportWithInDistance" type="java.lang.Double" />
+		<property name="airlineClass" type="java.lang.String" />
+		<property name="airLineName" type="java.lang.String" />
+		<property name="timeWindow" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.supplier.inventory.dto.FlightSearchWsDTO">
+		<property name="fromTerminal" type="java.lang.String" />
+		<property name="toTerminal" type="java.lang.String" />
+		<property name="fromCity" type="java.lang.String" />
+		<property name="toCity" type="java.lang.String" />
+		<property name="departureDate" type="java.util.Date" />
+		<property name="arrivalDate" type="java.util.Date" />
+		<property name="numberOfAdult" type="java.lang.Integer" />
+		<property name="numberOfChild" type="java.lang.Integer" />
+		<property name="numberOfInfant" type="java.lang.Integer" />
+		<property name="nearByAirPortDistance" type="java.lang.Double" />
+		<property name="corporateFareCode" type="java.lang.Integer" />
+		<property name="accountCode" type="java.lang.Integer" />
+		<property name="dealCode" type="java.lang.Integer" />
+		<property name="multiCitySearch" type="java.lang.String" />
+		<property name="openJaw" type="java.lang.String" />
+		<property name="flexibleDates" type="java.lang.Integer" />
+		<property name="airportWithInDistance" type="java.lang.Double" />
+		<property name="airlineClass" type="java.lang.String" />
+		<property name="airLineName" type="java.lang.String" />
+		<property name="timeWindow" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.supplier.inventory.data.HotelSearchData">
+		<property name="city" type="java.lang.String" />
+		<property name="checkInDate" type="java.lang.String" />
+		<property name="checkOutDate" type="java.lang.String" />
+		<property name="noOfRooms" type="java.lang.String" />
+		<property name="adultNo" type="java.lang.Integer" />
+		<property name="childNo" type="java.lang.Integer" />
+		<property name="childAge" type="java.lang.Integer" />
+		<property name="paxCountRoonmWise" type="java.lang.String" />
+		<property name="starRating" type="java.lang.Integer" />
+		<property name="hotelName" type="java.lang.String" />
+		<property name="geoCodes" type="java.lang.String" />
+		<property name="locactionCode" type="java.lang.String" />
+		<property name="poi" type="java.lang.String" />
+		<property name="landMark" type="java.lang.String" />
+		<property name="roomType" type="java.lang.String" />
+		<property name="extraBeds" type="java.lang.String" />
+		<property name="cots" type="java.lang.String" />
+		<property name="nationality" type="java.lang.String" />
+		<property name="priceRangeFrom" type="java.math.BigDecimal" />
+		<property name="priceRangeTo" type="java.math.BigDecimal" />
+		<property name="roomCategory" type="java.lang.String" />
+		<property name="roomCode" type="java.lang.String" />
+		<property name="mealPlan" type="java.lang.String" />
+		<property name="ratePlan" type="java.lang.String" />
+		<property name="supplierInfo" type="java.lang.String" />
+		<property name="onlyAvailableHotels" type="boolean" />
+		<property name="dealCode" type="java.lang.String" />
+		<property name="promoCode" type="java.lang.String" />
+		<property name="accountCode" type="java.lang.String" />
+		<property name="accessCredentials" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.supplier.inventory.dto.HotelSearchWsDTO">
+		<property name="city" type="java.lang.String" />
+		<property name="checkInDate" type="java.lang.String" />
+		<property name="checkOutDate" type="java.lang.String" />
+		<property name="noOfRooms" type="java.lang.String" />
+		<property name="adultNo" type="java.lang.Integer" />
+		<property name="childNo" type="java.lang.Integer" />
+		<property name="childAge" type="java.lang.Integer" />
+		<property name="paxCountRoonmWise" type="java.lang.String" />
+		<property name="starRating" type="java.lang.Integer" />
+		<property name="hotelName" type="java.lang.String" />
+		<property name="geoCodes" type="java.lang.String" />
+		<property name="locactionCode" type="java.lang.String" />
+		<property name="poi" type="java.lang.String" />
+		<property name="landMark" type="java.lang.String" />
+		<property name="roomType" type="java.lang.String" />
+		<property name="extraBeds" type="java.lang.String" />
+		<property name="cots" type="java.lang.String" />
+		<property name="nationality" type="java.lang.String" />
+		<property name="priceRangeFrom" type="java.math.BigDecimal" />
+		<property name="priceRangeTo" type="java.math.BigDecimal" />
+		<property name="roomCategory" type="java.lang.String" />
+		<property name="roomCode" type="java.lang.String" />
+		<property name="mealPlan" type="java.lang.String" />
+		<property name="ratePlan" type="java.lang.String" />
+		<property name="supplierInfo" type="java.lang.String" />
+		<property name="onlyAvailableHotels" type="boolean" />
+		<property name="dealCode" type="java.lang.String" />
+		<property name="promoCode" type="java.lang.String" />
+		<property name="accountCode" type="java.lang.String" />
+		<property name="accessCredentials" type="java.lang.String" />
+	</bean>
+	
+	
+	<bean class="com.cnk.travelogix.supplier.inventory.data.SupplierInventoryData">
+		<property name="supplierID" type="String" />
+		<property name="hotelCode" type="Integer" />
+		<property name="availabiltyStatus" type="String" />
+		<property name="totalPrice" type="java.math.BigDecimal" />
+		<property name="currency" type="String" />
+		<property name="city" type="String" />
+		<property name="checkInDate" type="java.util.Date" />
+		<property name="checkOutDate" type="java.util.Date" />
+		<property name="pricePerNight" type="java.math.BigDecimal" />
+		<property name="starRating" type="String" />
+		<property name="offers" type="String" />
+		<property name="policies" type="String" />
+		<property name="contractDetails" type="String" />
+		<property name="supplierInfo" type="String" />
+		<property name="inclusion" type="String" />
+		<property name="exclusions" type="String" />
+		<property name="formOfPayments" type="String" />
+		<property name="ancillaries" type="String" />
+		<property name="mealPlan" type="String" />
+		<property name="taxes" type="java.math.BigDecimal" />
+		<property name="ratePlan" type="String" />
+		<property name="rateType" type="String" />
+		<property name="rateCategory" type="String" />
+		<property name="commissionable" type="String" />
+		<property name="net" type="String" />
+		<property name="restrictions" type="String" />
+		<property name="similarHotels" type="String" />
+		<property name="distanceOfAirport" type="java.lang.Double" />
+		<property name="distanceFromCityCenter" type="java.lang.Double" />
+		<property name="roomWiseOccupancy" type="java.lang.Integer" />
+		<property name="blackOutDates" type="java.util.List&lt;java.util.Date>" />
+		<property name="transferFacilities" type="String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.supplier.inventory.data.SupplierInventoryDataList">
+		<property name="supplierInventory" type="java.util.List&lt;com.cnk.travelogix.supplier.inventory.data.SupplierInventoryData>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.supplier.inventory.dto.SupplierInventoryWsDTOList">
+		<property name="supplierInventory" type="java.util.List&lt;com.cnk.travelogix.supplier.inventory.dto.SupplierInventoryWsDTO>" />
+	</bean>
+	<bean class="com.cnk.travelogix.supplier.inventory.dto.SupplierInventoryWsDTO">
+		<property name="supplierID" type="String" />
+		<property name="hotelCode" type="Integer" />
+		<property name="availabiltyStatus" type="String" />
+		<property name="totalPrice" type="java.math.BigDecimal" />
+		<property name="currency" type="String" />
+		<property name="city" type="String" />
+		<property name="checkInDate" type="java.util.Date" />
+		<property name="checkOutDate" type="java.util.Date" />
+		<property name="pricePerNight" type="java.math.BigDecimal" />
+		<property name="starRating" type="String" />
+		<property name="offers" type="String" />
+		<property name="policies" type="String" />
+		<property name="contractDetails" type="String" />
+		<property name="supplierInfo" type="String" />
+		<property name="inclusion" type="String" />
+		<property name="exclusions" type="String" />
+		<property name="formOfPayments" type="String" />
+		<property name="ancillaries" type="String" />
+		<property name="mealPlan" type="String" />
+		<property name="taxes" type="java.math.BigDecimal" />
+		<property name="ratePlan" type="String" />
+		<property name="rateType" type="String" />
+		<property name="rateCategory" type="String" />
+		<property name="commissionable" type="String" />
+		<property name="net" type="String" />
+		<property name="restrictions" type="String" />
+		<property name="similarHotels" type="String" />
+		<property name="distanceOfAirport" type="java.lang.Double" />
+		<property name="distanceFromCityCenter" type="java.lang.Double" />
+		<property name="roomWiseOccupancy" type="java.lang.Integer" />
+		<property name="blackOutDates" type="java.util.List&lt;java.util.Date>" />
+		<property name="transferFacilities" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.supplier.inventory.data.flight.FlightDetailData">
+		<property name="supplierID" type="String" />
+		<property name="flightNumber" type="java.lang.String" />
+		<property name="availability" type="java.lang.String" />
+		
+		<property name="fromSection" type ="com.cnk.travelogix.supplier.inventory.data.flight.AirportData"/>
+		<property name="toSection" type ="com.cnk.travelogix.supplier.inventory.data.flight.AirportData"/>
+		
+		<property name="departureTime" type="java.util.Date" />
+		<property name="arrivalTime" type="java.util.Date" />
+		<property name="duration" type="java.util.Date" />	
+		
+		<property name="fareDetail" type="com.cnk.travelogix.supplier.inventory.data.flight.FareDetailData" />
+		<property name="fareBreakup" type="com.cnk.travelogix.supplier.inventory.data.flight.FareBreakUp" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.supplier.inventory.data.flight.FlightDetailDataList">
+		<property name="supplierAirInventory" type="java.util.List&lt;com.cnk.travelogix.supplier.inventory.data.flight.FlightDetailData>" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.supplier.inventory.dto.flight.FlightDetailWsDTO">
+		<property name="supplierID" type="String" />
+		<property name="flightNumber" type="java.lang.String" />
+		<property name="availability" type="java.lang.String" />
+		
+		<property name="fromSection" type ="com.cnk.travelogix.supplier.inventory.dto.flight.AirportDataWsDTO"/>
+		<property name="toSection" type ="com.cnk.travelogix.supplier.inventory.dto.flight.AirportDataWsDTO"/>
+		
+		<property name="departureTime" type="java.util.Date" />
+		<property name="arrivalTime" type="java.util.Date" />
+		<property name="duration" type="java.util.Date" />	
+		
+		<property name="fareDetail" type="com.cnk.travelogix.supplier.inventory.dto.flight.FareDetailDataWsDTO" />
+		<property name="fareBreakup" type="com.cnk.travelogix.supplier.inventory.dto.flight.FareBreakUpWsDTO" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.supplier.inventory.dto.flight.FlightDetailWsDTOList">
+		<property name="supplierAirInventory" type="java.util.List&lt;com.cnk.travelogix.supplier.inventory.dto.flight.FlightDetailWsDTO>" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.supplier.inventory.data.flight.FareDetailData">
+		<property name="currency" type="java.lang.String" />
+		<property name="baseFare" type="java.math.BigDecimal" />
+		<property name="privateFare" type="java.math.BigDecimal" />
+		<property name="publishedFare" type="java.math.BigDecimal" />
+		<property name="netFare" type="java.math.BigDecimal" />
+		<property name="tourFare" type="java.math.BigDecimal" />
+		<property name="fareClass" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.supplier.inventory.dto.flight.FareDetailDataWsDTO">
+		<property name="currency" type="java.lang.String" />
+		<property name="baseFare" type="java.math.BigDecimal" />
+		<property name="privateFare" type="java.math.BigDecimal" />
+		<property name="publishedFare" type="java.math.BigDecimal" />
+		<property name="netFare" type="java.math.BigDecimal" />
+		<property name="tourFare" type="java.math.BigDecimal" />
+		<property name="fareClass" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.supplier.inventory.data.flight.FareBreakUp">
+		<property name="baseFare" type="java.math.BigDecimal" />
+		<property name="allTaxes" type="java.math.BigDecimal" />
+		<property name="fareRules" type="java.lang.String" />
+		<property name="refundInd" type="boolean" />
+		<property name="noOfSeatsInEachRBD" type="java.lang.String" />
+		<property name="mixedRBD" type="boolean" />
+		<property name="cabinClass" type="java.lang.String" />
+		<property name="pointEarning" type="java.lang.Integer" />
+		<property name="ticketTimeLimit" type="java.lang.String" />
+		<property name="baggageAllowance" type="java.lang.String" />
+		<property name="baggageAmount" type="java.lang.String" />
+		<property name="searSpecificPrice" type="java.math.BigDecimal" />
+		<property name="mealPrice" type="java.math.BigDecimal" />
+		<property name="lastMinuteDealInd" type="boolean" />
+		<property name="nettImpact" type="java.lang.String" />
+		<property name="noOfSeatsLeft" type="java.lang.String" />
+		<property name="airCraftType" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.supplier.inventory.dto.flight.FareBreakUpWsDTO">
+		<property name="baseFare" type="java.math.BigDecimal" />
+		<property name="allTaxes" type="java.math.BigDecimal" />
+		<property name="fareRules" type="java.lang.String" />
+		<property name="refundInd" type="boolean" />
+		<property name="noOfSeatsInEachRBD" type="java.lang.String" />
+		<property name="mixedRBD" type="boolean" />
+		<property name="cabinClass" type="java.lang.String" />
+		<property name="pointEarning" type="java.lang.Integer" />
+		<property name="ticketTimeLimit" type="java.lang.String" />
+		<property name="baggageAllowance" type="java.lang.String" />
+		<property name="baggageAmount" type="java.lang.String" />
+		<property name="searSpecificPrice" type="java.math.BigDecimal" />
+		<property name="mealPrice" type="java.math.BigDecimal" />
+		<property name="lastMinuteDealInd" type="boolean" />
+		<property name="nettImpact" type="java.lang.String" />
+		<property name="noOfSeatsLeft" type="java.lang.String" />
+		<property name="airCraftType" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.supplier.inventory.data.flight.AirportData">
+		<property name="city" type="java.lang.String" />
+		<property name="terminal" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.supplier.inventory.dto.flight.AirportDataWsDTO">
+		<property name="city" type="java.lang.String" />
+		<property name="terminal" type="java.lang.String" />
+	</bean>
+	
+	<!-- Flight View Notification Data beans -->
+
+	<bean class="com.cnk.travelogix.flightview.mapping.data.FlightViewNotificationRequest">
+		<property name="flightIdentifier" type="com.cnk.travelogix.flightview.mapping.data.FlightIdentifier" />
+		<property name="alert" type="com.cnk.travelogix.flightview.mapping.data.Alert" />
+		<property name="flightData" type="com.cnk.travelogix.flightview.mapping.data.FlightData" />
+		<property name="flightChangeData" type="com.cnk.travelogix.flightview.mapping.data.FlightChangeData" />
+		<property name="alertIdentifier" type="String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.flightview.mapping.data.FlightViewNotificationResponse">
+		<property name="alertIdentifier" type="String" />
+		<property name="responseText" type="String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.flightview.mapping.data.FlightIdentifier">
+		<property name="airlineCode" type="String" />
+		<property name="flightNumber" type="String" />
+		<property name="departureAirportCode" type="String" />
+		<property name="arrivalAirportCode" type="String" />
+		<property name="schedDepartureLocal" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.flightview.mapping.data.Alert">
+		<property name="type" type="String" />
+		<property name="subType" type="String" />
+		<property name="text" type="String" />
+		<property name="reinstatement" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.flightview.mapping.data.FlightData">
+		<property name="fvFlightId" type="String" />
+		<property name="processingTimeUtc" type="String" />
+		<property name="airlineCode" type="String" />
+		<property name="flightNumber" type="String" />
+		<property name="schedDepartureAirportCode" type="String" />
+		<property name="schedArrivalAirportCode" type="String" />
+		<property name="status" type="String" />
+		<property name="scheduleStatus" type="String" />
+		<property name="diversionStatus" type="String" />
+		<property name="operatingAirlineCode" type="String" />
+		<property name="operatingFlightNumber" type="String" />
+		<property name="schedDepartureLocal" type="String" />
+		<property name="schedArrivalLocal" type="String" />
+		<property name="schedDepartureUtc" type="String" />
+		<property name="schedArrivalUtc" type="String" />
+		<property name="latestDeparture" type="com.cnk.travelogix.flightview.mapping.data.LatestDeparture" />
+		<property name="latestArrival" type="com.cnk.travelogix.flightview.mapping.data.LatestArrival" />
+		<property name="departureTerminal" type="String" />
+		<property name="departureGate" type="String" />
+		<property name="arrivalTerminal" type="String" />
+		<property name="arrivalGate" type="String" />
+		<property name="baggage" type="String" />
+		<property name="serviceType" type="String" />
+		<property name="aircraftType" type="String" />
+		<property name="optionalEquipment" type="String" />
+		<property name="weightClass" type="String" />
+		<property name="alternateDepartureAirportCode" type="String" />
+		<property name="alternateArrivalAirportCode" type="String" />
+		<property name="depAirportCountryId" type="String" />
+		<property name="arrAirportCountryId" type="String" />
+		<property name="legSequenceNumber" type="String" />
+		<property name="recoveryExists" type="String" />
+		<property name="tailNumber" type="String" />
+		<property name="unscheduled" type="String" />
+		<property name="recoveryFlight" type="String" />		
+	</bean>
+	
+	<bean class="com.cnk.travelogix.flightview.mapping.data.LatestDeparture">
+		<property name="accuracy" type="String" />
+		<property name="dateTimeUtc" type="String" />
+		<property name="dateTimeLocal" type="String" />
+		<property name="dateTimeType" type="String" />
+		<property name="sourceType" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.flightview.mapping.data.LatestArrival">
+		<property name="accuracy" type="String" />
+		<property name="dateTimeUtc" type="String" />
+		<property name="dateTimeLocal" type="String" />
+		<property name="dateTimeType" type="String" />
+		<property name="sourceType" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.flightview.mapping.data.FlightChangeData">		
+		<property name="hasAnyChanges" type="String" />
+		<property name="statusChanged" type="String" />
+		<property name="previousStatus" type="String" />
+		<property name="departureTimeChanged" type="String" />
+		<property name="previousDepartureTimeLocal" type="String" />
+		<property name="previousDepartureTimeUtc" type="String" />
+		<property name="arrivalTimeChanged" type="String" />
+		<property name="previousArrivalTimeLocal" type="String" />
+		<property name="previousArrivalTimeUtc" type="String" />
+		<property name="departureTerminalChanged" type="String" />
+		<property name="previousDepartureTerminal" type="String" />
+		<property name="departureGateChanged" type="String" />
+		<property name="previousDepartureGate" type="String" />
+		<property name="arrivalTerminalChanged" type="String" />
+		<property name="previousArrivalTerminal" type="String" />
+		<property name="arrivalGateChanged" type="String" />
+		<property name="previousArrivalGate" type="String" />
+		<property name="baggageChanged" type="String" />
+		<property name="previousBaggage" type="String" />
+		<property name="isNewToFlightWindow" type="String" />
+		<property name="otherChanged" type="String" />
+		<property name="diversionStatusChanged" type="String" />
+		<property name="previousDiversionStatus" type="String" />
+	</bean>
+	<!-- Flight View Notification Data beans End-->
+
+	<!-- Flight View Notification WS beans  Start-->
+
+	<bean class="com.cnk.travelogix.flightview.mapping.dto.FlightViewNotificationWSRequest">
+		<property name="FlightIdentifier" type="com.cnk.travelogix.flightview.mapping.dto.FlightIdentifier" />
+		<property name="Alert" type="com.cnk.travelogix.flightview.mapping.dto.Alert" />
+		<property name="FlightData" type="com.cnk.travelogix.flightview.mapping.dto.FlightData" />
+		<property name="FlightChangeData" type="com.cnk.travelogix.flightview.mapping.dto.FlightChangeData" />
+		<property name="AlertIdentifier" type="String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.flightview.mapping.dto.FlightViewNotificationWSResponse">
+		<property name="AlertIdentifier" type="String" />
+		<property name="ResponseText" type="String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.flightview.mapping.dto.FlightIdentifier">
+		<property name="AirlineCode" type="String" />
+		<property name="FlightNumber" type="String" />
+		<property name="DepartureAirportCode" type="String" />
+		<property name="ArrivalAirportCode" type="String" />
+		<property name="SchedDepartureLocal" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.flightview.mapping.dto.Alert">
+		<property name="Type" type="String" />
+		<property name="SubType" type="String" />
+		<property name="Text" type="String" />
+		<property name="Reinstatement" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.flightview.mapping.dto.FlightData">
+		<property name="FvFlightId" type="String" />
+		<property name="ProcessingTimeUtc" type="String" />
+		<property name="AirlineCode" type="String" />
+		<property name="FlightNumber" type="String" />
+		<property name="SchedDepartureAirportCode" type="String" />
+		<property name="SchedArrivalAirportCode" type="String" />
+		<property name="Status" type="String" />
+		<property name="ScheduleStatus" type="String" />
+		<property name="DiversionStatus" type="String" />
+		<property name="OperatingAirlineCode" type="String" />
+		<property name="OperatingFlightNumber" type="String" />
+		<property name="SchedDepartureLocal" type="String" />
+		<property name="SchedArrivalLocal" type="String" />
+		<property name="SchedDepartureUtc" type="String" />
+		<property name="SchedArrivalUtc" type="String" />
+		<property name="LatestDeparture" type="com.cnk.travelogix.flightview.mapping.dto.LatestDeparture" />
+		<property name="LatestArrival" type="com.cnk.travelogix.flightview.mapping.dto.LatestArrival" />
+		<property name="DepartureTerminal" type="String" />
+		<property name="DepartureGate" type="String" />
+		<property name="ArrivalTerminal" type="String" />
+		<property name="ArrivalGate" type="String" />
+		<property name="Baggage" type="String" />
+		<property name="ServiceType" type="String" />
+		<property name="AircraftType" type="String" />
+		<property name="OptionalEquipment" type="String" />
+		<property name="WeightClass" type="String" />
+		<property name="AlternateDepartureAirportCode" type="String" />
+		<property name="AlternateArrivalAirportCode" type="String" />
+		<property name="DepAirportCountryId" type="String" />
+		<property name="ArrAirportCountryId" type="String" />
+		<property name="LegSequenceNumber" type="String" />
+		<property name="RecoveryExists" type="String" />
+		<property name="TailNumber" type="String" />
+		<property name="Unscheduled" type="String" />
+		<property name="RecoveryFlight" type="String" />		
+	</bean>
+	
+	<bean class="com.cnk.travelogix.flightview.mapping.dto.LatestDeparture">
+		<property name="Accuracy" type="String" />
+		<property name="DateTimeUtc" type="String" />
+		<property name="DateTimeLocal" type="String" />
+		<property name="DateTimeType" type="String" />
+		<property name="SourceType" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.flightview.mapping.dto.LatestArrival">
+		<property name="Accuracy" type="String" />
+		<property name="DateTimeUtc" type="String" />
+		<property name="DateTimeLocal" type="String" />
+		<property name="DateTimeType" type="String" />
+		<property name="SourceType" type="String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.flightview.mapping.dto.FlightChangeData">		
+		<property name="HasAnyChanges" type="String" />
+		<property name="StatusChanged" type="String" />
+		<property name="PreviousStatus" type="String" />
+		<property name="DepartureTimeChanged" type="String" />
+		<property name="PreviousDepartureTimeLocal" type="String" />
+		<property name="PreviousDepartureTimeUtc" type="String" />
+		<property name="ArrivalTimeChanged" type="String" />
+		<property name="PreviousArrivalTimeLocal" type="String" />
+		<property name="PreviousArrivalTimeUtc" type="String" />
+		<property name="DepartureTerminalChanged" type="String" />
+		<property name="PreviousDepartureTerminal" type="String" />
+		<property name="DepartureGateChanged" type="String" />
+		<property name="PreviousDepartureGate" type="String" />
+		<property name="ArrivalTerminalChanged" type="String" />
+		<property name="PreviousArrivalTerminal" type="String" />
+		<property name="ArrivalGateChanged" type="String" />
+		<property name="PreviousArrivalGate" type="String" />
+		<property name="BaggageChanged" type="String" />
+		<property name="PreviousBaggage" type="String" />
+		<property name="IsNewToFlightWindow" type="String" />
+		<property name="OtherChanged" type="String" />
+		<property name="DiversionStatusChanged" type="String" />
+		<property name="PreviousDiversionStatus" type="String" />
+	</bean>
+	<!-- Flight View Notification WS beans  End-->
+	
+	<bean class="com.cnk.travelogix.rate.acco.data.OfferCombinationRuleData">
+		<property name="offerName"
+			type="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData" />
+		<property name="combinedOffer"
+			type="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData" />
+		<property name="combinationAllowed" type="java.lang.Boolean" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.dto.OfferCombinationRuleWsDTO">
+		<property name="offerName"
+			type="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData" />
+		<property name="combinedOffer"
+			type="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData" />
+		<property name="combinationAllowed" type="java.lang.Boolean" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.data.DateRangeRestrictionData">
+		<property name="standardDateRange" type="de.hybris.platform.util.StandardDateRange" />
+	</bean>
+	<bean class="com.cnk.travelogix.rate.acco.dto.DateRangeRestrictionWsDTO">
+		<property name="standardDateRange" type="de.hybris.platform.util.StandardDateRange" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.rate.acco.data.RateVoucherNoteData">
+		<property name="offerName"
+			type="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData" />
+		<property name="voucherNotes" type="java.lang.String" />
+	</bean>
+	<bean class="com.cnk.travelogix.rate.acco.dto.RateVoucherNoteWsDTO">
+		<property name="offerName"
+			type="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData" />
+		<property name="voucherNotes" type="java.lang.String" />
+	</bean>
+
+	<!-- <bean class="com.cnk.travelogix.rate.acco.data.AbstractRatePaymentDetailData"> 
+		<property name="paymentOnArrival" type="com.cnk.travelogix.datamodel.supplier.rates.travelogixsupplieroffer.model.AbstractTravelogixSupplierOffer" 
+		/> <property name="prepayment" type="java.lang.String" /> </bean> <bean class="com.cnk.travelogix.rate.acco.dto.AbstractWsDTO"> 
+		<property name="paymentOnArrival" type="com.cnk.travelogix.datamodel.supplier.rates.travelogixsupplieroffer.model.AbstractTravelogixSupplierOffer" 
+		/> <property name="prepayment" type="java.lang.String" /> </bean> -->
+
+
+	<bean class="com.cnk.travelogix.rate.acco.data.RatePaymentDetailData">
+		<property name="payablePercentage" type="java.lang.Double" />
+		<property name="settlementSchedule"
+			type="java.lang.String" />
+		<property name="guaranteeRequired" type="java.lang.Boolean" />
+		<property name="remarks" type="java.lang.String" />
+	</bean>
+	<bean class="com.cnk.travelogix.rate.acco.dto.RatePaymentDetailWsDTO">
+		<property name="payablePercentage" type="java.lang.Double" />
+		<property name="settlementSchedule"
+			type="java.lang.String" />
+		<property name="guaranteeRequired" type="java.lang.Boolean" />
+		<property name="remarks" type="java.lang.String" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.rate.acco.data.FullPrePaymentData">
+		<property name="ratePaymentDetail"
+			type="com.cnk.travelogix.rate.acco.data.RatePaymentDetailData" />
+
+	</bean>
+	<bean class="com.cnk.travelogix.rate.acco.dto.FullPrePaymentWsDTO">
+		<property name="ratePaymentDetail"
+			type="com.cnk.travelogix.rate.acco.dto.RatePaymentDetailWsDTO" />
+
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.rate.acco.data.PartPrePaymentData">
+		<property name="ratePaymentDetails"
+			type="java.util.List&lt;com.cnk.travelogix.rate.acco.data.RatePaymentDetailData>" />
+
+	</bean>
+	<bean class="com.cnk.travelogix.rate.acco.dto.PartPrePaymentWsDTO">
+		<property name="ratePaymentDetails"
+			type="java.util.List&lt;com.cnk.travelogix.rate.acco.dto.RatePaymentDetailWsDTO>" />
+
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.rate.acco.data.DiscountPerAgeData" extends="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData">
+		<property name="minPaxOrNight" type="java.lang.Integer" />
+		<property name="passengerType"
+			type="java.lang.String" />
+		<property name="arrivalDayofWeek"
+			type="java.lang.String" />
+		<property name="discountValue"
+			type="java.lang.Double" />
+			<property name="code"
+			type="java.lang.String" />
+
+	</bean>
+	<bean class="com.cnk.travelogix.rate.acco.dto.DiscountPerAgeWsDTO">
+		<property name="minPaxOrNight" type="java.lang.Integer" />
+		<property name="passengerType"
+			type="java.lang.String" />
+		<property name="arrivalDayofWeek"
+			type="java.lang.String" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.data.DiscountOnRateData" extends="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData">
+		<property name="minPaxOrNight" type="java.lang.Integer" />
+		<property name="maximumNight" type="java.lang.Integer" />
+		<property name="passengerType"
+			type="java.lang.String" />
+		<property name="discountCalculatedOn"
+			type="java.lang.String" />
+		<property name="appliedOnAll" type="java.lang.Boolean" />
+		<property name="arrivalDayofWeek"
+			type="java.lang.String" />
+		<property name="daysOfweek"
+			type="java.util.Collection&lt;de.hybris.platform.basecommerce.enums.WeekDay>" />
+		<property name="discountValue"
+			type="java.lang.Double" />
+			<property name="code"
+			type="java.lang.String" />
+		<property name="supplier" type="com.cnk.travelogix.rate.acco.data.SupplierData" />
+			
+			
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.dto.DiscountOnRateWsDTO">
+		<property name="minPaxOrNight" type="java.lang.Integer" />
+		<property name="maximumNight" type="java.lang.Integer" />
+		<property name="passengerType"
+			type="java.lang.String" />
+		<property name="discountCalculatedOn"
+			type="java.lang.String" />
+		<property name="appliedOnAll" type="java.lang.Boolean" />
+		<property name="arrivalDayofWeek"
+			type="java.lang.String" />
+		<property name="daysOfweek"
+			type="java.util.Collection&lt;de.hybris.platform.basecommerce.enums.WeekDay>" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.rate.acco.data.DiscountOnNightData" extends="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData">
+		<property name="noOfDiscountedNights" type="java.lang.Integer" />
+		<property name="mealPlanDiscountedNights"
+			type="java.lang.String" />
+		<property name="minimumNights" type="java.lang.Integer" />
+		<property name="passengerType"
+			type="java.lang.String" />
+		<property name="discountCalculatedOn"
+			type="java.lang.String" />
+		<property name="arrivalDayofWeek"
+			type="java.lang.String" />
+		<property name="daysOfweek"
+			type="java.util.Collection&lt;de.hybris.platform.basecommerce.enums.WeekDay>" />
+			<property name="discountValue"
+			type="java.lang.Double" />
+			<property name="code"
+			type="java.lang.String" />
+    <property name="supplier" type="com.cnk.travelogix.rate.acco.data.SupplierData" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.dto.DiscountOnNightWsDTO">
+		<property name="noOfDiscountedNights" type="java.lang.Integer" />
+		<property name="mealPlanDiscountedNights"
+			type="java.lang.String" />
+		<property name="minimumNights" type="java.lang.Integer" />
+		<property name="passengerType"
+			type="java.lang.String" />
+		<property name="discountCalculatedOn"
+			type="java.lang.String" />
+		<property name="arrivalDayofWeek"
+			type="java.lang.String" />
+		<property name="daysOfweek"
+			type="java.util.Collection&lt;de.hybris.platform.basecommerce.enums.WeekDay>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.data.DiscountOnFreeNightData" extends="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData">
+		<property name="minFreeNight" type="java.lang.Integer" />
+		<property name="freeNightCalculatedOn"
+			type="java.lang.String" />
+		<property name="mealPlanforFreeNight"
+			type="java.lang.Integer" />
+		<property name="noOfNights" type="java.lang.Integer" />
+		<property name="arrivalDaysOfWeek"
+			type="java.lang.Integer" />
+		<property name="daysOfweek"
+			type="java.util.Collection&lt;de.hybris.platform.basecommerce.enums.WeekDay>" />
+		<property name="appliedOnAll" type="java.lang.Boolean" />
+		<property name="discountValue"
+			type="java.lang.Double" />
+			<property name="code" type="java.lang.String" />
+			<property name="noOfFreeNights" type="java.lang.Integer" />
+			<property name="supplier" type="com.cnk.travelogix.rate.acco.data.SupplierData" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.rate.acco.dto.DiscountOnFreeNightWsDTO">
+		<property name="minFreeNight" type="java.lang.Integer" />
+		<property name="freeNightCalculatedOn"
+			type="java.lang.Integer" />
+		<property name="mealPlanforFreeNight"
+			type="java.lang.Integer" />
+		<property name="noOfNights" type="java.lang.Integer" />
+		<property name="arrivalDaysOfWeek"
+			type="java.lang.String" />
+		<property name="daysOfweek"
+			type="java.util.Collection&lt;de.hybris.platform.basecommerce.enums.WeekDay>" />
+		<property name="appliedOnAll" type="java.lang.Boolean" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.data.DiscountLongStayData" extends="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData">
+		<property name="stayDuration" type="java.lang.Integer" />
+		<property name="passengerType"
+			type="java.lang.String" />
+		<property name="arrivalDaysOfWeek"
+			type="java.lang.String" />
+
+		<property name="daysOfweek"
+			type="java.util.Collection&lt;de.hybris.platform.basecommerce.enums.WeekDay>" />
+			<property name="discountValue"
+			type="java.lang.Double" />
+			<property name="code"
+			type="java.lang.String" />
+      <property name="supplier" type="com.cnk.travelogix.rate.acco.data.SupplierData" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.dto.DiscountLongStayWsDTO">
+		<property name="stayDuration" type="java.lang.Integer" />
+		<property name="passengerType"
+			type="java.lang.String" />
+		<property name="arrivalDaysOfWeek"
+			type="com.cnk.travelogix.supplier.rates.enums.StayDaysOfWeekType" />
+		<property name="daysOfweek"
+			type="java.util.Collection&lt;de.hybris.platform.basecommerce.enums.WeekDay>" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.data.DiscountOnRoomOrCabinData" extends="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData">
+		<property name="noOfNights" type="java.lang.Integer" />
+		<property name="bookedRoomsCount" type="java.lang.Integer" />
+		<property name="appliedOnAll" type="java.lang.Boolean" />
+		<property name="arrivalDaysOfWeek"
+			type="java.lang.String" />
+		<property name="daysOfweek"
+			type="java.util.Collection&lt;de.hybris.platform.basecommerce.enums.WeekDay>" />
+			<property name="discountValue"
+			type="java.lang.Double" />
+			<property name="code"
+			type="java.lang.String" />
+       <property name="supplier" type="com.cnk.travelogix.rate.acco.data.SupplierData" />
+       <property name="discountedRoomsCount" type="java.lang.Integer"
+        />
+       
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.dto.DiscountOnRoomOrCabinWsDTO">
+		<property name="noOfNights" type="java.lang.Integer" />
+		<property name="bookedRoomsCount" type="java.lang.Integer" />
+		<property name="appliedOnAll" type="java.lang.Boolean" />
+		<property name="arrivalDaysOfWeek"
+			type="java.lang.String" />
+		<property name="daysOfweek"
+			type="java.util.Collection&lt;de.hybris.platform.basecommerce.enums.WeekDay>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.data.ComplimentaryData" extends="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData">
+		<property name="minPaxOrNight" type="java.lang.Integer" />
+		<property name="passengerType"
+			type="java.lang.String" />
+		<property name="applicableDays"
+			type="java.util.Collection&lt;de.hybris.platform.basecommerce.enums.WeekDay>" />
+		<property name="discountValue"
+			type="java.lang.Double" />
+			<property name="code"
+			type="java.lang.String" />
+        <property name="supplier" type="com.cnk.travelogix.rate.acco.data.SupplierData" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.dto.ComplimentaryWsDTO">
+		<property name="minPaxOrNight" type="java.lang.Integer" />
+		<property name="passengerType"
+			type="java.lang.String" />
+		<property name="applicableDays"
+			type="java.util.Collection&lt;de.hybris.platform.basecommerce.enums.WeekDay>" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.data.DiscountOnPaxData" extends="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData">
+		<property name="minPaxOrNight" type="java.lang.Integer" />
+		<property name="passengerType"
+			type="java.lang.String" />
+		<property name="paxBookedCount" type="java.lang.Integer" />
+		<property name="discountedPaxCount" type="java.lang.Integer" />
+		<property name="appliedOnAll" type="java.lang.Boolean" />
+
+		<property name="arrivalDayofWeek"
+			type="java.lang.String" />
+
+		<property name="daysOfweek"
+			type="java.util.Collection&lt;de.hybris.platform.basecommerce.enums.WeekDay>" />
+			<property name="discountValue"
+			type="java.lang.Double" />
+			<property name="code"
+			type="java.lang.String" />
+         <property name="supplier" type="com.cnk.travelogix.rate.acco.data.SupplierData" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.dto.DiscountOnPaxWsDTO">
+		<property name="minPaxOrNight" type="java.lang.Integer" />
+		<property name="passengerType"
+			type="java.lang.String" />
+		<property name="paxBookedCount" type="java.lang.Integer" />
+		<property name="discountedPaxCount" type="java.lang.Integer" />
+		<property name="appliedOnAll" type="java.lang.Boolean" />
+
+		<property name="arrivalDayofWeek"
+			type="java.lang.String" />
+
+		<property name="daysOfweek"
+			type="java.util.Collection&lt;de.hybris.platform.basecommerce.enums.WeekDay>" />
+   <property name="code"
+			type="java.lang.String" />
+   
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.data.FOCOfferData"  extends="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData">
+		<property name="minPaxOrNight" type="java.lang.Integer" />
+		<property name="maxPaxOrNight" type="java.lang.Integer" />
+		<property name="focAppliedOnSuppliement" type="java.lang.Boolean" />
+		<property name="passengerType"
+			type="java.lang.String" />
+		<property name="noOfChildren" type="java.lang.Integer" />
+		<property name="supplement"
+			type="java.lang.String" />
+
+		<property name="supplementMandatory" type="java.lang.Boolean" />
+
+        <property name="discountValue"
+			type="java.lang.Double" />
+		<property name="code"
+			type="java.lang.String" />
+  <property name="supplier" type="com.cnk.travelogix.rate.acco.data.SupplierData" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.dto.FOCOfferWsDTO">
+		<property name="minPaxOrNight" type="java.lang.Integer" />
+		<property name="maxPaxOrNight" type="java.lang.Integer" />
+		<property name="focAppliedOnSuppliement" type="java.lang.Boolean" />
+		<property name="passengerType"
+			type="java.lang.String" />
+		<property name="noOfChildren" type="java.lang.Integer" />
+		<property name="supplement"
+			type="java.lang.String" />
+
+		<property name="supplementMandatory" type="java.lang.Boolean" />
+
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.data.RoomOrCabinUpgradeData" extends="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData">
+		<property name="minPaxOrNight" type="java.lang.Integer" />
+		<property name="roomCategory"
+			type="java.lang.String" />
+		<property name="roomType"
+			type="java.lang.String" />
+		<property name="upgrade"
+			type="java.lang.String" />
+		<property name="upgradeRoomCategoryTo"
+			type="java.lang.String" />
+		<property name="upgradeRoomType"
+			type="java.lang.String" />
+
+		<property name="upgradeMealPlanType"
+			type="java.lang.String" />
+		<property name="offerInclusion" type="java.lang.String" />
+
+          <property name="discountValue"
+			type="java.lang.Double" />
+			<property name="code"
+			type="java.lang.String" />
+      <property name="supplier" type="com.cnk.travelogix.rate.acco.data.SupplierData" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.dto.RoomOrCabinUpgradeWsDTO">
+		<property name="minPaxOrNight" type="java.lang.Integer" />
+		<property name="roomCategory"
+			type="java.lang.String" />
+		<property name="roomType"
+			type="java.lang.String" />
+		<property name="upgrade"
+			type="java.lang.String" />
+		<property name="upgradeRoomCategoryTo"
+			type="java.lang.String" />
+		<property name="upgradeRoomType"
+			type="java.lang.String" />
+
+		<property name="upgradeMealPlanType"
+			type="java.lang.String" />
+		<property name="offerInclusion" type="java.lang.String" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.data.AncillaryFOCData" extends="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData">
+		<property name="noOfChildren" type="java.lang.Integer" />
+		<property name="discountValue"
+			type="java.lang.Double" />
+			<property name="code"
+			type="java.lang.String" />
+	   <property name="supplier" type="com.cnk.travelogix.rate.acco.data.SupplierData" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.dto.AncillaryFOCWsDTO">
+		<property name="noOfChildren" type="java.lang.Integer" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.rate.acco.data.AncillaryDiscountData" extends="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData">
+		<property name="bookingCount" type="java.lang.Integer" />
+		<property name="discountedBooking" type="java.lang.Integer" />
+		<!-- <property name="thresholdType" type="java.lang.Integer" /> -->
+		<property name="discountValue" type="java.lang.Double" />
+		<property name="appliedOnAll" type="java.lang.Boolean" />
+		<property name="ancillaryComponentType"
+			type="com.cnk.travelogix.supplier.masters.core.enums.NonAirPriceComponentType" />
+			<property name="code"
+			type="java.lang.String" />
+		<property name="supplier" type="com.cnk.travelogix.rate.acco.data.SupplierData" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.rate.acco.dto.AncillaryDiscountWsDTO">
+		<property name="bookingCount" type="java.lang.Integer" />
+		<property name="discountedBooking" type="java.lang.Integer" />
+		<!-- <property name="thresholdType" type="java.lang.Integer" /> -->
+		<property name="discountValue" type="java.lang.Double" />
+		<property name="appliedOnAll" type="java.lang.Boolean" />
+		<property name="ancillaryComponentType"
+			type="com.cnk.travelogix.supplier.masters.core.enums.NonAirPriceComponentType" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.data.AncillaryData">
+		<property name="ancillaryType"
+			type="com.cnk.travelogix.supplier.masters.core.enums.AncillaryType" />
+			<property name="code"
+			type="java.lang.String" />
+		<property name="supplier" type="com.cnk.travelogix.rate.acco.data.SupplierData" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.dto.AncillaryWsDTO">
+		<property name="ancillaryType"
+			type="com.cnk.travelogix.supplier.masters.core.enums.AncillaryType" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.rate.acco.data.OfferRateProductData" extends="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData">
+		<property name="discountType"
+			type="java.lang.String" />
+		<property name="discountValue" type="java.lang.Double" />
+		<property name="advanceBookingFromDays" type="java.lang.Integer" />
+		<property name="advanceBookingToDays" type="java.lang.Integer" />
+		<property name="code"
+			type="java.lang.String" />
+		<property name="supplier" type="com.cnk.travelogix.rate.acco.data.SupplierData" />
+	</bean>
+	<bean class="com.cnk.travelogix.rate.acco.dto.OfferRateProductWsDTO">
+		<property name="discountType"
+			type="java.lang.String" />
+		<property name="discountValue" type="java.lang.Double" />
+		<property name="advanceBookingFromDays" type="java.lang.Integer" />
+		<property name="advanceBookingToDays" type="java.lang.Integer" />
+	</bean>
+
+	<bean
+		class="com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData">
+		<property name="offerSubType"
+			type="java.lang.String" />
+		<property name="discountType"
+			type="java.lang.String" />
+		<property name="approvalStatus"
+			type="java.lang.String" />
+		<property name="reason" type="java.lang.String" />
+
+		<property name="advanceBookingFromDays" type="java.lang.Integer" />
+		<property name="advanceBookingToDays" type="java.lang.Integer" />
+		<property name="thresholdType"
+			type="java.lang.String" />
+		<property name="discountValue" type="java.lang.Double" />
+		<property name="rateApplicabilityType"
+			type="java.lang.String" />
+
+		<property name="nationality"
+			type="java.util.Collection&lt;com.cnk.travelogix.rate.acco.data.CountryData>" />
+		<property name="offerInclusion" type="java.lang.String" />
+		<property name="offerExclusion" type="java.lang.String" />
+		<property name="remarks" type="java.lang.String" />
+		<property name="dateRangeRestriction"
+			type="java.util.List&lt;com.cnk.travelogix.rate.acco.data.DateRangeRestrictionData>" />
+      <property name="supplier" type="com.cnk.travelogix.rate.acco.data.SupplierData" />
+	</bean>
+	<bean
+		class="com.cnk.travelogix.rate.acco.dto.AbstractTravelogixSupplierOfferWsDTO">
+		<!-- <property name="offerSubType"
+			type="com.cnk.travelogix.supplier.rates.enums.OfferSubType" /> -->
+			<property name="offerSubType"
+			type="java.lang.String" />
+		<property name="discountType"
+			type="java.lang.String" />
+		<property name="approvalStatus"
+			type="java.lang.String" />
+		<property name="reason" type="java.lang.String" />
+
+		<property name="advanceBookingFromDays" type="java.lang.Integer" />
+		<property name="advanceBookingToDays" type="java.lang.Integer" />
+		<property name="thresholdType"
+			type="java.lang.String" />
+		<property name="discountValue" type="java.lang.Double" />
+		<property name="rateApplicabilityType"
+			type="java.lang.String" />
+
+		<property name="nationality"
+			type="java.util.Collection&lt;com.cnk.travelogix.rate.acco.dto.CountryWsDTO>" />
+		<property name="offerInclusion" type="java.lang.String" />
+		<property name="offerExclusion" type="java.lang.String" />
+		<property name="remarks" type="java.lang.String" />
+		<property name="dateRangeRestriction"
+			type="java.util.List&lt;com.cnk.travelogix.rate.acco.dto.DateRangeRestrictionWsDTO>" />
+
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.rate.acco.data.CountryData">
+		<property name="name" type="java.lang.String" />
+		<property name="isocode" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.dto.CountryWsDTO">
+		<property name="name" type="java.lang.String" />
+		<property name="isocode" type="java.lang.String" />
+	</bean>
+
+
+
+	<bean class="com.cnk.travelogix.rate.acco.data.SupplierAncillaryRateData">
+		<property name="activeDateRange" type="de.hybris.platform.util.StandardDateRange" />
+		<property name="seasonality"
+			type="java.util.Collection&lt;com.cnk.travelogix.rate.acco.data.SeasonDetailData>" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.dto.SupplierAncillaryRateWsDTO">
+		<property name="activeDateRange" type="de.hybris.platform.util.StandardDateRange" />
+		<property name="seasonality"
+			type="java.util.Collection&lt;com.cnk.travelogix.rate.acco.dto.SeasonDetailWsDTO>" />
+
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.data.SeasonDetailData">
+		<property name="seasonality"
+			type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.rate.acco.dto.SeasonDetailWsDTO">
+		<property name="seasonality"
+			type="java.lang.String" />
+	</bean>
+
+   <bean class="com.cnk.travelogix.rate.acco.data.TaxData">
+		<property name="code" type="java.lang.String" />
+		<property name="name" type="java.lang.String" />
+		<property name="value" type="java.lang.Double" />	
+	</bean>
+	
+	<bean class="com.cnk.travelogix.rate.acco.dto.TaxWsDTO">
+		<property name="code" type="java.lang.String" />
+		<property name="name" type="java.lang.String" />
+	</bean>
+	
+	
+	
+	
+<bean class="com.cnk.travelogix.rate.acco.data.AccomodationSupplierRateData">
+		<property name="product" type="java.lang.String" />
+		<property name="supplier" type="java.lang.String" />
+		<property name="market" type="java.lang.String" />
+		<property name="company" type="java.lang.String" />
+		<property name="productSubCategory" type="java.lang.String" />
+		<property name="tax" type="com.cnk.travelogix.rate.acco.data.TaxData" />
+		<property name="validity" type="de.hybris.platform.util.StandardDateRange" />
+		<property name="currency" type="java.lang.String" />
+		<property name="activeDateRange" type="de.hybris.platform.util.StandardDateRange" />
+		<property name="accomodationRateDefinition" type="java.util.List&lt;com.cnk.travelogix.rate.acco.data.AccommodationRateDefinitionData>" />
+		<property name="seasonDetails" type="java.util.List&lt;com.cnk.travelogix.rate.acco.data.SeasonDetailData>" />
+		<property name="active" type="java.lang.Boolean" />
+	</bean>
+	
+	
+	
+	<bean class="com.cnk.travelogix.rate.acco.dto.AccomodationSupplierRateWsDTO">
+		<property name="product" type="java.lang.String" />
+		<property name="supplier" type="java.lang.String" />
+		<property name="market" type="java.lang.String" />
+		<property name="company" type="java.lang.String" />
+		<property name="productSubCategory" type="java.lang.String" />
+		<property name="tax" type="com.cnk.travelogix.rate.acco.dto.TaxWsDTO" />
+		<property name="validity" type="de.hybris.platform.util.StandardDateRange" />
+		<property name="currency" type="java.lang.String" />
+		<property name="activeDateRange" type="de.hybris.platform.util.StandardDateRange" />
+		<property name="accomodationRateDefinition" type="java.util.List&lt;com.cnk.travelogix.rate.acco.dto.AccommodationRateDefinitionWsDto>" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.rate.acco.data.AccommodationRateDefinitionData">
+		<property name="priceApplicability" type="java.lang.String" />
+		<property name="noOfRooms" type="java.lang.Integer" />
+		<property name="comparator" type="java.lang.String" />
+		<property name="supplierRateType" type="com.cnk.travelogix.rate.acco.data.RateCodeData" />
+		<property name="supplierRateCode" type="com.cnk.travelogix.rate.acco.data.RateCodeData" />
+		<property name="companyRateType" type="com.cnk.travelogix.rate.acco.data.RateCodeData" />
+		<property name="companyRateCode" type="com.cnk.travelogix.rate.acco.data.RateCodeData" />
+		<property name="rateTypeApplicableFor" type="java.lang.String" />
+		<property name="clientType" type="java.lang.String" />
+		<property name="clientGroup" type="java.lang.String" />
+		<property name="client" type="java.lang.String" />
+		<property name="seasonality" type="com.cnk.travelogix.supplier.masters.core.enums.SeasonType" />
+		<property name="travelFrom" type="de.hybris.platform.util.StandardDateRange" />
+		<property name="net" type="java.lang.Boolean" />
+		<property name="commisionValue" type="java.lang.Double" />
+		<property name="commisionThreshold" type="com.cnk.travelogix.supplier.settlementterms.core.enums.ThresholdType" />
+		<property name="commissionType" type="com.cnk.travelogix.supplier.rates.enums.CommissionType" />
+		<property name="accoRateDetailDefs" type="java.util.List&lt;com.cnk.travelogix.rate.acco.data.AccoRateDetailDefinitionData>" />
+		<!-- <property name="ratePaymentDetail" type="java.util.List&lt;com.cnk.travelogix.rate.acco.data.AbstractRatePaymentDetailData>" /> -->
+	 <property name="surcharge" type="java.util.Collection&lt;com.cnk.travelogix.rate.acco.data.AccoSurchargeSuppDetailData>" />
+	
+	 <property name="partPrePayment" type="java.util.Collection&lt;com.cnk.travelogix.rate.acco.data.PartPrePaymentData>" /> 
+	 <property name="fullPrePayment" type="java.util.Collection&lt;com.cnk.travelogix.rate.acco.data.FullPrePaymentData>" /> 
+	</bean>
+	
+	<bean class="com.cnk.travelogix.rate.acco.dto.AccommodationRateDefinitionWsDto">
+		<property name="priceApplicability" type="java.lang.String" />
+		<property name="noOfRooms" type="java.lang.Integer" />
+		<property name="comparator" type="java.lang.String" />
+		<property name="supplierRateType" type="com.cnk.travelogix.rate.acco.dto.RateCodeWsDto" />
+		<property name="supplierRateCode" type="com.cnk.travelogix.rate.acco.dto.RateCodeWsDto" />
+		<property name="companyRateType" type="com.cnk.travelogix.rate.acco.dto.RateCodeWsDto" />
+		<property name="companyRateCode" type="com.cnk.travelogix.rate.acco.dto.RateCodeWsDto" />
+		<property name="rateTypeApplicableFor" type="java.lang.String" />
+		<property name="clientType" type="java.lang.String" />
+		<property name="clientGroup" type="java.lang.String" />
+		<property name="client" type="java.lang.String" />
+		<property name="seasonality" type="com.cnk.travelogix.supplier.masters.core.enums.SeasonType" />
+		<property name="travelFrom" type="de.hybris.platform.util.StandardDateRange" />
+		<property name="net" type="java.lang.Boolean" />
+		<property name="commisionValue" type="java.lang.Double" />
+		<property name="commisionThreshold" type="com.cnk.travelogix.supplier.settlementterms.core.enums.ThresholdType" />
+		<property name="commissionType" type="com.cnk.travelogix.supplier.rates.enums.CommissionType" />
+		<property name="accoRateDetailDefs" type="java.util.List&lt;com.cnk.travelogix.rate.acco.dto.AccoRateDetailDefinitionWsDto>" />
+		<!-- <property name="ratePaymentDetail" type="java.util.List&lt;com.cnk.travelogix.rate.acco.dto.AbstractRatePaymentDetailWsDto>" /> -->
+		 <property name="surcharge" type="java.util.Collection&lt;com.cnk.travelogix.rate.acco.dto.AccoSurchargeSuppDetailWsDto>" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.rate.acco.data.RateCodeData">
+		<property name="code" type="java.lang.String" />
+		<property name="name" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.rate.acco.dto.RateCodeWsDto">
+		<property name="code" type="java.lang.String" />
+		<property name="name" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.rate.acco.data.AccoSurchargeSuppDetailData">
+		<property name="surchargeID" type="java.lang.String" />
+		<property name="surchageName" type="java.lang.String" />
+		<property name="type" type="java.lang.String" />
+		<property name="supplement" type="java.lang.String" />
+		<property name="priceInclusion" type="java.lang.String" />
+		<property name="priceExclusion" type="java.lang.String" />
+		<property name="internalDescription" type="java.lang.String" />
+		<property name="externalDescription" type="java.lang.String" />
+		<property name="payOnArrival" type="java.lang.Boolean" />
+		<property name="subType" type="java.lang.String" />
+		<property name="roomCategories" type="java.util.Set&lt;com.cnk.travelogix.masterdata.core.enums.RoomCategory>" />
+		<property name="roomTypes" type="java.util.Set&lt;com.cnk.travelogix.masterdata.core.enums.RoomType>" />
+		<property name="mealPlan" type="java.util.Set&lt;com.cnk.travelogix.supplier.rates.enums.MealPlanType>" />
+		<property name="stdCommissionValue" type="java.lang.Double" />
+		<property name="stdCommissionType" type="java.lang.String" />
+		<property name="amount" type="java.lang.Double" />
+		<property name="passengerLevelSurchargeDetails" type="java.util.List&lt;com.cnk.travelogix.rate.acco.data.PassengerLevelSurchargeDetailData>" />
+		<property name="dateRangeRestrictions" type="java.util.List&lt;com.cnk.travelogix.rate.acco.data.DateRangeRestrictionData>" />
+	</bean>
+	
+	
+	
+	<bean class="com.cnk.travelogix.rate.acco.dto.AccoSurchargeSuppDetailWsDto">
+		<property name="surchargeID" type="java.lang.String" />
+		<property name="surchageName" type="java.lang.String" />
+		<property name="type" type="java.lang.String" />
+		<property name="supplement" type="java.lang.String" />
+		<property name="priceInclusion" type="java.lang.String" />
+		<property name="priceExclusion" type="java.lang.String" />
+		<property name="internalDescription" type="java.lang.String" />
+		<property name="externalDescription" type="java.lang.String" />
+		<property name="payOnArrival" type="java.lang.Boolean" />
+		<property name="subType" type="java.lang.String" />
+		<property name="roomCategories" type="java.util.Set&lt;com.cnk.travelogix.masterdata.core.enums.RoomCategory>" />
+		<property name="roomTypes" type="java.util.Set&lt;com.cnk.travelogix.masterdata.core.enums.RoomType>" />
+		<property name="mealPlan" type="java.util.Set&lt;com.cnk.travelogix.supplier.rates.enums.MealPlanType>" />
+		<property name="stdCommissionValue" type="java.lang.Double" />
+		<property name="stdCommissionType" type="java.lang.String" />
+		<property name="amount" type="java.lang.Double" />
+		<property name="passengerLevelSurchargeDetails" type="java.util.List&lt;com.cnk.travelogix.rate.acco.dto.PassengerLevelSurchargeDetailWsDto>" />
+		<property name="dateRangeRestrictions" type="java.util.List&lt;com.cnk.travelogix.rate.acco.dto.DateRangeRestrictionWsDTO>" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.rate.acco.data.PassengerLevelSurchargeDetailData">
+		<property name="amount" type="java.lang.Double" />
+		<property name="passengerType" type="java.lang.String" />
+		<property name="stdCommissionValue" type="java.lang.Double"/>
+		<property name="stdCommissionType" type="java.lang.String"/>
+	</bean>
+	<bean class="com.cnk.travelogix.rate.acco.dto.PassengerLevelSurchargeDetailWsDto">
+		<property name="amount" type="java.lang.Double" />
+		<property name="passengerType" type="java.lang.String" />
+		<property name="stdCommissionValue" type="java.lang.Double"/>
+		<property name="stdCommissionType" type="java.lang.String"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.rate.acco.data.AbstractRateAdvDefinitionData">
+		<property name="maxPax" type="java.lang.Integer" />
+		<property name="minPax" type="java.lang.Integer" />
+		<property name="priceExclusion" type="java.lang.String"/>
+		<property name="taxInformation" type="java.lang.String"/>
+		<property name="internalDescription" type="java.lang.String"/>
+		<property name="priceInclusion" type="java.lang.String"/>
+		<property name="externalDescription" type="java.lang.String"/>
+		<property name="overrideRate" type="java.lang.Boolean"/>
+		<property name="childPolicy" type="java.lang.String"/>
+		<property name="maxNights" type="java.lang.Integer"/>
+		<property name="offerCombinationRule" type="java.util.Set&lt;com.cnk.travelogix.rate.acco.data.OfferCombinationRuleData>"/>
+	</bean>
+	<bean class="com.cnk.travelogix.rate.acco.dto.AbstractRateAdvDefinitionWsDto">
+		<property name="maxPax" type="java.lang.Integer" />
+		<property name="minPax" type="java.lang.Integer" />
+		<property name="priceExclusion" type="java.lang.String"/>
+		<property name="taxInformation" type="java.lang.String"/>
+		<property name="internalDescription" type="java.lang.String"/>
+		<property name="priceInclusion" type="java.lang.String"/>
+		<property name="externalDescription" type="java.lang.String"/>
+		<property name="overrideRate" type="java.lang.Boolean"/>
+		<property name="childPolicy" type="java.lang.String"/>
+		<property name="maxNights" type="java.lang.Integer"/>
+		<property name="offerCombinationRule" type="java.util.Set&lt;com.cnk.travelogix.rate.acco.dto.OfferCombinationRuleWsDTO>"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.rate.acco.data.AgeDetailData">
+		<property name="fromAge" type="java.lang.Integer" />
+		<property name="toAge" type="java.lang.Integer" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.rate.acco.dto.AgeDetailWsDto">
+		<property name="fromAge" type="java.lang.Integer" />
+		<property name="toAge" type="java.lang.Integer" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.rate.acco.data.AccoRateDetailDefinitionData">
+		<property name="minNight" type="java.lang.Integer" />
+		<property name="dayOfWeek" type="java.lang.String" />
+		<property name="rateDefinedFor" type="java.lang.String" />
+		<property name="roomCategory" type="java.lang.String" />
+		<property name="proRata" type="java.lang.Boolean" />
+		<property name="staryDuration" type="java.lang.Integer" />
+		<property name="mealPlan" type="java.lang.String" />
+		<property name="checkInTime" type="java.lang.String" />
+		<property name="checkoutTime" type="java.lang.String" />
+		<property name="commissionExcluded" type="java.lang.String" />
+		<property name="rateFor" type="java.lang.String" />
+		<property name="childAge" type="com.cnk.travelogix.rate.acco.data.AgeDetailData" />
+		<property name="noOfAdult" type="java.lang.Integer" />
+		<property name="rate" type="java.lang.Double" />
+		<property name="adultAge" type="com.cnk.travelogix.rate.acco.data.AgeDetailData" />
+		<property name="minPaxOccupancy" type="java.lang.Integer" />
+		<property name="maxPaxOccupancy" type="java.lang.Integer" />
+		<property name="noOfChild" type="java.lang.Integer" />
+		<property name="payOnArrival" type="java.lang.Boolean" />
+		<property name="travelogixSupplierOffer" type="java.util.List&lt;com.cnk.travelogix.rate.acco.data.AbstractTravelogixSupplierOfferData>" />
+		<!-- <property name="rateAdvanceDef" type="com.cnk.travelogix.rate.acco.data.AbstractRateAdvanceDefData" />
+		<property name="ancillary" type="com.cnk.travelogix.rate.acco.data.SupplierAncillaryRateData" /> -->
+	</bean>
+	
+	
+	<bean class="com.cnk.travelogix.rate.acco.dto.AccoRateDetailDefinitionWsDto">
+		<property name="minNight" type="java.lang.Integer" />
+		<property name="dayOfWeek" type="java.lang.String" />
+		<property name="rateDefinedFor" type="java.lang.String" />
+		<property name="roomCategory" type="java.lang.String" />
+		<property name="proRata" type="java.lang.Boolean" />
+		<property name="staryDuration" type="java.lang.Integer" />
+		<property name="mealPlan" type="java.lang.String" />
+		<property name="checkInTime" type="java.lang.String" />
+		<property name="checkoutTime" type="java.lang.String" />
+		<property name="commissionExcluded" type="java.lang.String" />
+		<property name="rateFor" type="java.lang.String" />
+		<property name="childAge" type="com.cnk.travelogix.rate.acco.dto.AgeDetailWsDto" />
+		<property name="noOfAdult" type="java.lang.Integer" />
+		<property name="rate" type="java.lang.Double" />
+		<property name="adultAge" type="com.cnk.travelogix.rate.acco.dto.AgeDetailWsDto" />
+		<property name="minPaxOccupancy" type="java.lang.Integer" />
+		<property name="maxPaxOccupancy" type="java.lang.Integer" />
+		<property name="noOfChild" type="java.lang.Integer" />
+		<property name="payOnArrival" type="java.lang.Boolean" />
+		<property name="travelogixSupplierOffer" type="java.util.List&lt;com.cnk.travelogix.rate.acco.dto.AbstractTravelogixSupplierOfferWsDTO>" />
+		<!-- <property name="rateAdvanceDef" type="com.cnk.travelogix.rate.acco.dto.AbstractRateAdvanceDefWsDto" />
+		<property name="ancillary" type="com.cnk.travelogix.rate.acco.dto.SupplierAncillaryRateWsDto" /> -->
+	</bean>
+	
+	<bean class="com.cnk.travelogix.rate.acco.data.UpdateRateResponseData">
+		<property name="responseCode" type="java.lang.Integer" />
+		<property name="responseDesc" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.rate.acco.dto.UpdateRateResponseWsDto">
+		<property name="responseCode" type="java.lang.Integer" />
+		<property name="responseDesc" type="java.lang.String" />
+	</bean>
+
+<!--  beans for update inventory starts -->
+
+	<bean class="com.cnk.travelogix.inventory.data.AccoInventoryDefinitionData">
+		<property name="supplierID" type="java.lang.String" />
+		<property name="distressSaleMinimumThreshold" type="java.lang.Integer" />
+		<property name="distressSaleThresholdCutoffDays" type="java.lang.Integer" />
+		<property name="blockedQuantity" type="java.lang.Integer" />
+		<property name="cutOffDaysForBlockedQuantity" type="java.lang.Integer" />
+		<property name="settleWithCompany" type="boolean" />
+		<property name="supplierAdvanceDefinition" type="com.cnk.travelogix.inventory.data.AccoSupplierAdvanceDefinitionData" />
+		<property name="companyAdvanceDefinition" type="java.lang.String" />
+		<property name="inventoryDetails" type="java.lang.String" />
+		<property name="inventoryType" type="com.cnk.travelogix.common.inventory.core.enums.InventoryType" />
+		<property name="productCategorySubType" type="java.lang.String" />
+		<property name="associations" type="java.util.List&lt;com.cnk.travelogix.inventory.data.AccoAssociateInventoryData>" />
+		<property name="code" type="java.lang.String" />
+		<property name="isDelete" type="java.lang.Boolean" />
+		<property name="active" type="java.lang.Boolean" />
+	   	</bean>
+	
+	<bean class="com.cnk.travelogix.inventory.dto.AccoInventoryDefinitionWsDTO">
+		<property name="supplierID" type="java.lang.String" />
+		<property name="distressSaleMinimumThreshold" type="java.lang.Integer" />
+		<property name="distressSaleThresholdCutoffDays" type="java.lang.Integer" />
+		<property name="blockedQuantity" type="java.lang.Integer" />
+		<property name="cutOffDaysForBlockedQuantity" type="java.lang.Integer" />
+		<property name="settleWithCompany" type="boolean" />
+		<property name="supplierAdvanceDefinition" type="java.lang.String" />
+		<property name="companyAdvanceDefinition" type="java.lang.String" />
+		<property name="inventoryDetails" type="java.lang.String" />
+		<property name="inventoryType" type="com.cnk.travelogix.common.inventory.core.enums.InventoryType" />
+		<property name="productCategorySubType" type="java.lang.String" />
+		<property name="associations" type="java.util.List&lt;com.cnk.travelogix.inventory.dto.AccoAssociateInventoryWsDTO>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.inventory.data.AccoAssociateInventoryData">
+		<property name="inventoryFor"
+			type="com.cnk.travelogix.common.inventory.core.enums.InventoryAvailFor" />
+		<property name="productCategories" type="java.util.List&lt;java.lang.String>" />
+		<property name="productCategorySubtype" type="java.util.List&lt;java.lang.String>" />
+		<property name="products" type="java.util.List&lt;java.lang.String>" />
+		<property name="variants" type="java.util.List&lt;java.lang.String>" />
+		<property name="numberOfDistributedInventory" type="java.lang.Long" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.inventory.dto.AccoAssociateInventoryWsDTO">
+		<property name="inventoryFor"
+			type="com.cnk.travelogix.common.inventory.core.enums.InventoryAvailFor" />
+		<property name="productCategories" type="java.util.List&lt;java.lang.String>" />
+		<property name="productCategorySubtype" type="java.util.List&lt;java.lang.String>" />
+		<property name="products" type="java.util.List&lt;java.lang.String>" />
+		<property name="variants" type="java.util.List&lt;java.lang.String>" />
+		<property name="numberOfDistributedInventory" type="java.lang.Long" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.inventory.data.AccoSupplierAdvanceDefinitionData">
+		<property name="blockoutDates"
+			type="java.util.Set&lt;de.hybris.platform.util.StandardDateRange>" />
+		<property name="minNoOfNights" type="java.lang.Integer" />
+		<property name="maxNoOfNights" type="java.lang.Integer" />
+		<property name="cutOfForFreeSale" type="com.cnk.travelogix.inventory.data.CutOffForFreeSaleData" />
+		<property name="penaltyCharges" type="java.util.List&lt;com.cnk.travelogix.inventory.data.AccoPenaltyChargesReleaseData>" />
+		<property name="overbookinglimits" type="java.util.List&lt;java.lang.Integer>" />
+		<property name="roomingListCutOff" type="java.util.List&lt;com.cnk.travelogix.inventory.data.RoomingListCutOffData>" />
+		<property name="roomCategory" type="com.cnk.travelogix.masterdata.core.enums.RoomCategory" />
+		<property name="roomType" type="com.cnk.travelogix.masterdata.core.enums.RoomType" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.inventory.dto.AccoSupplierAdvanceDefinitionWsDTO">
+		<property name="blockoutDates"
+			type="java.util.Set&lt;de.hybris.platform.util.StandardDateRange>" />
+		<property name="minNoOfNights" type="java.lang.Integer" />
+		<property name="maxNoOfNights" type="java.lang.Integer" />
+		<property name="cutOfForFreeSale" type="com.cnk.travelogix.inventory.dto.CutOffForFreeSaleWsDTO" />
+		<property name="penaltyCharges" type="java.util.List&lt;com.cnk.travelogix.inventory.dto.AccoPenaltyChargesReleaseWsDTO>" />
+		<property name="overbookinglimits" type="java.util.List&lt;java.lang.Integer>" />
+		<property name="roomingListCutOff" type="java.util.List&lt;com.cnk.travelogix.inventory.dto.RoomingListCutOffWsDTO>" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.inventory.data.AccoCompanyAdvanceDefinitionData">
+		<property name="blockoutDates"
+			type="java.util.Set&lt;de.hybris.platform.util.StandardDateRange>" />
+		<property name="minNoOfNights" type="java.lang.Integer" />
+		<property name="maxNoOfNights" type="java.lang.Integer" />
+		<property name="penaltyCharges" type="java.util.List&lt;com.cnk.travelogix.inventory.data.AccoCompanyPenaltyChargesData>" />
+		<property name="overBookingAllowed" type="boolean" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.inventory.dto.AccoCompanyAdvanceDefinitionwsDTO">
+		<property name="blockoutDates"
+			type="java.util.Set&lt;de.hybris.platform.util.StandardDateRange>" />
+		<property name="minNoOfNights" type="java.lang.Integer" />
+		<property name="maxNoOfNights" type="java.lang.Integer" />
+		<property name="penaltyCharges" type="java.util.List&lt;com.cnk.travelogix.inventory.dto.AccoCompanyPenaltyChargesWsDTO>" />
+		<property name="overBookingAllowed" type="boolean" />
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.inventory.data.AccoInventoryGridData">
+		<property name="inventoryDetails" type="java.util.List&lt;com.cnk.travelogix.inventory.data.AbstractAccoInventoryDetailData>" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.inventory.dto.AccoInventoryGridWsDTO">
+		<property name="inventoryDetails" type="java.util.List&lt;com.cnk.travelogix.inventory.dto.AbstractAccoInventoryDetailWsDTO>" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.inventory.data.AbstractAccoInventoryDetailData">
+		<property name="city" type="java.lang.String" />
+		<property name="travelChain" type="java.lang.String" />
+		<property name="hotelCategory" type="java.util.List&lt;com.cnk.travelogix.product.common.core.enums.Rating>" />
+		<property name="departureDate" type="java.util.Date" />
+		<property name="arrivalDate" type="java.util.Date" />
+		<property name="inventoryType" type="com.cnk.travelogix.common.inventory.core.enums.InventoryType" /> 
+		<!-- <property name="inventoryType" type="java.lang.String" />  -->
+		<property name="reservedCutOffDays" type="java.lang.Long" />
+		<property name="releasedDate" type="java.util.Date" />
+		<property name="createdDate" type="java.util.Date" />
+		<property name="currency" type="java.lang.String" />
+		<property name="remark" type="java.lang.String" />
+		<property name="priceRangeFrom" type="java.math.BigDecimal" />
+		<property name="priceRangeTo" type="java.math.BigDecimal" />
+		<property name="product" type="java.lang.String" />
+		<property name="products" type="java.util.List&lt;java.lang.String>" />
+		<property name="inventoryRoomInfos" type="com.cnk.travelogix.inventory.data.InventoryRoomInfoData" />
+		<property name="code" type="java.lang.String"/>
+		<property name="active" type="java.lang.Boolean"/>
+		<property name="isDelete" type="java.lang.Boolean" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.inventory.dto.AbstractAccoInventoryDetailWsDTO">
+		<property name="city" type="java.lang.String" />
+		<property name="travelChain" type="java.lang.String" />
+		<property name="hotelCategory" type="java.util.List&lt;com.cnk.travelogix.product.common.core.enums.Rating>" />
+		<property name="departureDate" type="java.util.Date" />
+		<property name="arrivalDate" type="java.util.Date" />
+		<property name="inventoryType" type="com.cnk.travelogix.common.inventory.core.enums.InventoryType" />
+		<property name="reservedCutOffDays" type="java.lang.Long" />
+		<property name="releasedDate" type="java.util.Date" />
+		<property name="createdDate" type="java.util.Date" />
+		<property name="currency" type="java.lang.String" />
+		<property name="remark" type="java.lang.String" />
+		<property name="priceRangeFrom" type="java.math.BigDecimal" />
+		<property name="priceRangeTo" type="java.math.BigDecimal" />
+		<property name="product" type="java.lang.String" />
+		<property name="products" type="java.util.List&lt;java.lang.String>" />
+		<property name="inventoryRoomInfos" type="com.cnk.travelogix.inventory.dto.InventoryRoomInfoWsDTO" />
+	</bean>
+	
+
+	<bean class="com.cnk.travelogix.inventory.data.InventoryRoomInfoData">
+		<property name="roomCategory"
+			type="com.cnk.travelogix.masterdata.core.enums.RoomCategory" />
+		<property name="roomType"
+			type="com.cnk.travelogix.masterdata.core.enums.RoomType" />
+		<property name="noOfRoomRequested" type="java.lang.Integer" />
+		<property name="supplierReferenceNumber" type="java.lang.String" />
+		<property name="rateCode" type="java.lang.String" />
+		<property name="rateType" type="java.lang.String" />
+		<property name="inventoryAssociation" type="com.cnk.travelogix.inventory.data.AccoAssociateInventoryData" />
+		<property name="daysOfWeek" type="java.util.List&lt;de.hybris.platform.basecommerce.enums.WeekDay>" />
+		<property name="distressSalesUtilizationThreshhold" type="java.lang.Long" />
+		<property name="distressSalesThreshholdCutOffDays" type="java.lang.Long" />
+		<property name="requestedQuantity" type="java.lang.Long" />
+		<property name="distributedQuantity" type="java.lang.Long" />
+		<property name="availableQuantity" type="java.lang.Long" />
+		<property name="reservedQuantity" type="java.lang.Long" />
+		<property name="stopSales" type="boolean" />
+		<property name="liabilityOnUtilization" type="java.lang.Double" />		
+	</bean>
+
+	<bean class="com.cnk.travelogix.inventory.dto.InventoryRoomInfoWsDTO">
+		<property name="roomCategory"
+			type="com.cnk.travelogix.masterdata.core.enums.RoomCategory" />
+		<property name="roomType"
+			type="com.cnk.travelogix.masterdata.core.enums.RoomType" />
+		<property name="noOfRoomRequested" type="java.lang.Integer" />
+		<property name="supplierReferenceNumber" type="java.lang.String" />
+		<property name="rateCode" type="java.lang.String" />
+		<property name="rateType" type="java.lang.String" />
+		<property name="inventoryAssociation" type="com.cnk.travelogix.inventory.dto.AccoAssociateInventoryWsDTO" />
+		<property name="daysOfWeek" type="java.util.List&lt;de.hybris.platform.basecommerce.enums.WeekDay>" />
+		<property name="distressSalesUtilizationThreshhold" type="java.lang.Long" />
+		<property name="distressSalesThreshholdCutOffDays" type="java.lang.Long" />
+		<property name="requestedQuantity" type="java.lang.Long" />
+		<property name="distributedQuantity" type="java.lang.Long" />
+		<property name="availableQuantity" type="java.lang.Long" />
+		<property name="reservedQuantity" type="java.lang.Long" />
+		<property name="stopSales" type="boolean" />
+		<property name="liabilityOnUtilization" type="java.lang.Double" />		
+	</bean>
+
+
+	<bean class="com.cnk.travelogix.inventory.data.AccoCompanyPenaltyChargesData" extends="com.cnk.travelogix.inventory.data.AccoPenaltyChargesReleaseData"/>
+	
+	
+	<bean class="com.cnk.travelogix.inventory.data.AccoPenaltyChargesReleaseData">
+		<property name="roomCategory"
+			type="com.cnk.travelogix.masterdata.core.enums.RoomCategory" />
+		<property name="roomType"
+			type="com.cnk.travelogix.masterdata.core.enums.RoomType" /> 
+			
+		<property name="mealPlan"
+			type="com.cnk.travelogix.supplier.rates.enums.MealPlanType" />
+		<property name="definedBy"
+			type="com.cnk.travelogix.common.inventory.core.enums.DefinedBy" />
+		<property name="specificDates" type="java.util.List&lt;java.util.Date>" />
+		<property name="dateRange" type="de.hybris.platform.util.StandardDateRange" />
+		<property name="appliedOn" type="com.cnk.travelogix.common.inventory.core.enums.AppliedOn" />
+		<property name="charges" type="com.cnk.travelogix.inventory.data.AccoCutoffAndChargesData" />
+		<property name="releaseTime" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.inventory.dto.AccoPenaltyChargesReleaseWsDTO">
+		<property name="roomCategory"
+			type="com.cnk.travelogix.masterdata.core.enums.RoomCategory" />
+		<property name="roomType"
+			type="com.cnk.travelogix.masterdata.core.enums.RoomType" />
+		<property name="mealPlan"
+			type="com.cnk.travelogix.supplier.rates.enums.MealPlanType" />
+		<property name="definedBy"
+			type="com.cnk.travelogix.common.inventory.core.enums.DefinedBy" />
+		<property name="specificDates" type="java.util.List&lt;java.util.Date>" />
+		<property name="dateRange" type="de.hybris.platform.util.StandardDateRange" />
+		<property name="appliedOn" type="com.cnk.travelogix.common.inventory.core.enums.AppliedOn" />
+		<property name="charges" type="com.cnk.travelogix.inventory.dto.AccoCutoffAndChargesWsDTO" />
+		<property name="releaseTime" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.inventory.data.AccoCutoffAndChargesData" extends="com.cnk.travelogix.common.data.CutOffsAndChargesData">
+		<property name="minUtilizationThreshold" type="java.lang.Long" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.inventory.dto.AccoCutoffAndChargesWsDTO" extends="com.cnk.travelogix.common.dto.CutOffsAndChargesWsDTO">
+		<property name="minUtilizationThreshold" type="java.lang.Long" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.inventory.data.RoomingListCutOffData">
+		<property name="definedBy"
+			type="com.cnk.travelogix.common.inventory.core.enums.DefinedBy" />
+		<property name="appliedOn" type="com.cnk.travelogix.common.inventory.core.enums.AppliedOn" />
+		<property name="typeOfList" type="com.cnk.travelogix.common.inventory.core.enums.TypeOfList" />
+		<property name="supplierCutOffDays" type="java.lang.Integer" />
+		<property name="bufferDays" type="java.lang.Integer" />
+		<property name="noOfNTBAS" type="java.lang.Integer" />
+		<property name="releaseTime" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.inventory.dto.RoomingListCutOffWsDTO">
+		<property name="definedBy"
+			type="com.cnk.travelogix.common.inventory.core.enums.DefinedBy" />
+		<property name="appliedOn" type="com.cnk.travelogix.common.inventory.core.enums.AppliedOn" />
+		<property name="typeOfList" type="com.cnk.travelogix.common.inventory.core.enums.TypeOfList" />
+		<property name="supplierCutOffDays" type="java.lang.Integer" />
+		<property name="bufferDays" type="java.lang.Integer" />
+		<property name="noOfNTBAS" type="java.lang.Integer" />
+		<property name="releaseTime" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.inventory.data.CutOffForFreeSaleData">
+		<property name="definedBy"
+			type="com.cnk.travelogix.common.inventory.core.enums.DefinedBy" />
+		<property name="appliedOn" type="com.cnk.travelogix.common.inventory.core.enums.AppliedOn" />
+		<property name="releaseDayOrHrs" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.inventory.dto.CutOffForFreeSaleWsDTO">
+		<property name="definedBy"
+			type="com.cnk.travelogix.common.inventory.core.enums.DefinedBy" />
+		<property name="appliedOn" type="com.cnk.travelogix.common.inventory.core.enums.AppliedOn" />
+		<property name="releaseDayOrHrs" type="java.lang.String" />
+	</bean>
+
+	<bean class="com.cnk.travelogix.common.data.CutOffsAndChargesData">
+		<property name="cutOffFromDay" type="java.lang.Long" />
+		<property name="cutOffToDay" type="java.lang.Long" />
+		<property name="actualAmount" type="java.lang.Double" />
+		<property name="currency" type="java.lang.String" />
+		<property name="percentageAmount" type="java.lang.Double" />
+		<property name="range" type="com.cnk.travelogix.common.inventory.core.enums.Range" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.common.dto.CutOffsAndChargesWsDTO">
+		<property name="cutOffFromDay" type="java.lang.Long" />
+		<property name="cutOffToDay" type="java.lang.Long" />
+		<property name="actualAmount" type="java.lang.Double" />
+		<property name="currency" type="java.lang.String" />
+		<property name="percentageAmount" type="java.lang.Double" />
+		<property name="range" type="com.cnk.travelogix.common.inventory.core.enums.Range" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.inventory.acco.data.UpdateInventoryResponseData">
+		<property name="responseCode" type="java.lang.Integer" />
+		<property name="responseDesc" type="java.lang.String" />
+	</bean>
+	
+	<bean class="com.cnk.travelogix.inventory.acco.dto.UpdateInventoryResponseWsDto">
+		<property name="responseCode" type="java.lang.Integer" />
+		<property name="responseDesc" type="java.lang.String" />
+	</bean>
+
+<!--  beans for update inventory ends  -->
+
+	<bean
+		class="com.cnk.travelogix.rate.acco.data.SupplierData">
+		<property name="code" type="String" />
+		
+	</bean>
+	
+	<bean class="com.cnk.travelogix.inventory.data.UpdateInventortyData">
+		<property name="inventoryDefinition" type="java.util.List"/>
+		<property name="inventoryGrid" type="com.cnk.travelogix.inventory.data.AccoInventoryGridData"/>
+	</bean>
+
+	<bean class="com.cnk.travelogix.inventory.dto.AccoCompanyPenaltyChargesWsDTO" extends="com.cnk.travelogix.inventory.dto.AccoPenaltyChargesReleaseWsDTO"/>
+
+</beans>

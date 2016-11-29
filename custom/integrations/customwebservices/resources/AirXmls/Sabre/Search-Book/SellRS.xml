@@ -1,0 +1,204 @@
+<AirInterfaceRS xmlns="http://www.coxandkings.com/integ/suppl/airinterface" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+   <ResponseHeader xmlns="http://www.coxandkings.com/integ/suppl/air">
+      <Status xmlns="http://www.coxandkings.com/integ/suppl/common">SUCCESS</Status>
+      <UserID xmlns="http://www.coxandkings.com/integ/suppl/common">Venkatesh</UserID>
+      <SessionID xmlns="http://www.coxandkings.com/integ/suppl/common">1717</SessionID>
+      <TransactionID xmlns="http://www.coxandkings.com/integ/suppl/common">1717</TransactionID>
+   </ResponseHeader>
+   <ResponseBody>
+      <OTA_AirPriceRSWrapper xmlns="http://www.coxandkings.com/integ/suppl/air">
+         <SupplierID>SABRE</SupplierID>
+         <Sequence>1</Sequence>
+         <ns8:OTA_AirPriceRS Version="2.7.0" TransactionStatusCode="Complete" xmlns:ns8="http://www.opentravel.org/OTA/2003/05">
+            <ns8:Success/>
+            <ns8:Warnings/>
+            <ns8:PricedItineraries>
+               <ns8:PricedItinerary>
+                  <ns8:AirItineraryPricingInfo>
+                     <ns8:PTC_FareBreakdowns>
+                        <ns8:PTC_FareBreakdown>
+                           <ns8:PassengerTypeQuantity Quantity="1" Code="ADT"/>
+                           <ns8:FareBasisCodes>
+                              <ns8:FareBasisCode>B2SALE</ns8:FareBasisCode>
+                           </ns8:FareBasisCodes>
+                           <ns8:PassengerFare>
+                              <ns8:BaseFare Amount="1100" CurrencyCode="INR"/>
+                              <ns8:EquivFare/>
+                              <ns8:Taxes Amount="1626">
+                                 <ns8:Tax TaxCode="YQF" TaxName="SERVICE FEE - FUEL" Amount="400"/>
+                                 <ns8:Tax TaxCode="YRF" TaxName="SERVICE FEE - FUEL" Amount="50"/>
+                                 <ns8:Tax TaxCode="WO" TaxName="PASSENGER SERVICE CHARGE" Amount="150"/>
+                                 <ns8:Tax TaxCode="JN" TaxName="SERVICE TAX" Amount="87"/>
+                                 <ns8:Tax TaxCode="F2" TaxName="TAX ON SERVICES" Amount="4"/>
+                                 <ns8:Tax TaxCode="G1" TaxName="KRISHI KALYAN CESS" Amount="4"/>
+                                 <ns8:Tax TaxCode="IN" TaxName="USER DEVELOPMENT FEE EXCEPT AI" Amount="316"/>
+                                 <ns8:Tax TaxCode="IN3" TaxName="UDF - DOMESTIC ARR/DPT DEL" Amount="477"/>
+                                 <ns8:Tax TaxCode="YM" TaxName="DEVELOPMENT FEE" Amount="138"/>
+                              </ns8:Taxes>
+                              <ns8:TotalFare Amount="2726" CurrencyCode="INR"/>
+                              <ns8:Remark>VALIDATING CARRIER SPECIFIED - 9W</ns8:Remark>
+                              <ns8:Remark>BAG ALLOWANCE     -BOMDEL-15KG/9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON ALLOWANCE</ns8:Remark>
+                              <ns8:Remark>BOMDEL-01P/9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON CHARGES</ns8:Remark>
+                              <ns8:Remark>BOMDEL-9W-CARRY ON FEES UNKNOWN-CONTACT CARRIER</ns8:Remark>
+                              <ns8:Remark>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY DEPENDING ON</ns8:Remark>
+                              <ns8:Remark>FLYER-SPECIFIC FACTORS /E.G. FREQUENT FLYER STATUS/MILITARY/</ns8:Remark>
+                              <ns8:Remark>CREDIT CARD FORM OF PAYMENT/EARLY PURCHASE OVER INTERNET,ETC./</ns8:Remark>
+                              <ns8:Remark>EACH CNN REQUIRES ACCOMPANYING SAME CABIN ADT</ns8:Remark>
+                              <ns8:Remark>VALIDATING CARRIER SPECIFIED - 9W</ns8:Remark>
+                              <ns8:Remark>BAG ALLOWANCE     -BOMDEL-15KG/9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON ALLOWANCE</ns8:Remark>
+                              <ns8:Remark>BOMDEL-01P/9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON CHARGES</ns8:Remark>
+                              <ns8:Remark>BOMDEL-9W-CARRY ON FEES UNKNOWN-CONTACT CARRIER</ns8:Remark>
+                              <ns8:Remark>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY DEPENDING ON</ns8:Remark>
+                              <ns8:Remark>FLYER-SPECIFIC FACTORS /E.G. FREQUENT FLYER STATUS/MILITARY/</ns8:Remark>
+                              <ns8:Remark>CREDIT CARD FORM OF PAYMENT/EARLY PURCHASE OVER INTERNET,ETC./</ns8:Remark>
+                              <ns8:Remark>REQUIRES ACCOMPANYING ADT PASSENGER</ns8:Remark>
+                              <ns8:Remark>EACH INF REQUIRES ACCOMPANYING ADT PASSENGER</ns8:Remark>
+                              <ns8:Remark>VALIDATING CARRIER SPECIFIED - 9W</ns8:Remark>
+                              <ns8:Remark>BAG ALLOWANCE     -BOMDEL-NIL/9W</ns8:Remark>
+                              <ns8:Remark>1STCHECKED BAG FEE-BOMDEL-*/9W</ns8:Remark>
+                              <ns8:Remark>*BAGGAGE ALLOWANCES/FEES UNKNOWN - CONTACT 9W</ns8:Remark>
+                              <ns8:Remark>2NDCHECKED BAG FEE-BOMDEL-*/9W</ns8:Remark>
+                              <ns8:Remark>*BAGGAGE ALLOWANCES/FEES UNKNOWN - CONTACT 9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON ALLOWANCE</ns8:Remark>
+                              <ns8:Remark>BOMDEL-NIL/9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON CHARGES</ns8:Remark>
+                              <ns8:Remark>BOMDEL-9W-CARRY ON FEES UNKNOWN-CONTACT CARRIER</ns8:Remark>
+                              <ns8:Remark>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY DEPENDING ON</ns8:Remark>
+                              <ns8:Remark>FLYER-SPECIFIC FACTORS /E.G. FREQUENT FLYER STATUS/MILITARY/</ns8:Remark>
+                              <ns8:Remark>CREDIT CARD FORM OF PAYMENT/EARLY PURCHASE OVER INTERNET,ETC./</ns8:Remark>
+                              <ns8:Remark>ELECTRONIC TICKETING NOT VALID FOR INFANTS</ns8:Remark>
+                              <ns8:Remark>10AUG DEPARTURE DATE ----- LAST DAY TO PURCHASE  8JUL</ns8:Remark>
+                           </ns8:PassengerFare>
+                        </ns8:PTC_FareBreakdown>
+                     </ns8:PTC_FareBreakdowns>
+                  </ns8:AirItineraryPricingInfo>
+                  <ns8:AirItineraryPricingInfo>
+                     <ns8:PTC_FareBreakdowns>
+                        <ns8:PTC_FareBreakdown>
+                           <ns8:PassengerTypeQuantity Quantity="1" Code="CHD"/>
+                           <ns8:FareBasisCodes>
+                              <ns8:FareBasisCode>B2SALE</ns8:FareBasisCode>
+                           </ns8:FareBasisCodes>
+                           <ns8:PassengerFare>
+                              <ns8:BaseFare Amount="1100" CurrencyCode="INR"/>
+                              <ns8:EquivFare/>
+                              <ns8:Taxes Amount="1626">
+                                 <ns8:Tax TaxCode="YQF" TaxName="SERVICE FEE - FUEL" Amount="400"/>
+                                 <ns8:Tax TaxCode="YRF" TaxName="SERVICE FEE - FUEL" Amount="50"/>
+                                 <ns8:Tax TaxCode="WO" TaxName="PASSENGER SERVICE CHARGE" Amount="150"/>
+                                 <ns8:Tax TaxCode="JN" TaxName="SERVICE TAX" Amount="87"/>
+                                 <ns8:Tax TaxCode="F2" TaxName="TAX ON SERVICES" Amount="4"/>
+                                 <ns8:Tax TaxCode="G1" TaxName="KRISHI KALYAN CESS" Amount="4"/>
+                                 <ns8:Tax TaxCode="IN" TaxName="USER DEVELOPMENT FEE EXCEPT AI" Amount="316"/>
+                                 <ns8:Tax TaxCode="IN3" TaxName="UDF - DOMESTIC ARR/DPT DEL" Amount="477"/>
+                                 <ns8:Tax TaxCode="YM" TaxName="DEVELOPMENT FEE" Amount="138"/>
+                              </ns8:Taxes>
+                              <ns8:TotalFare Amount="2726" CurrencyCode="INR"/>
+                              <ns8:Remark>VALIDATING CARRIER SPECIFIED - 9W</ns8:Remark>
+                              <ns8:Remark>BAG ALLOWANCE     -BOMDEL-15KG/9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON ALLOWANCE</ns8:Remark>
+                              <ns8:Remark>BOMDEL-01P/9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON CHARGES</ns8:Remark>
+                              <ns8:Remark>BOMDEL-9W-CARRY ON FEES UNKNOWN-CONTACT CARRIER</ns8:Remark>
+                              <ns8:Remark>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY DEPENDING ON</ns8:Remark>
+                              <ns8:Remark>FLYER-SPECIFIC FACTORS /E.G. FREQUENT FLYER STATUS/MILITARY/</ns8:Remark>
+                              <ns8:Remark>CREDIT CARD FORM OF PAYMENT/EARLY PURCHASE OVER INTERNET,ETC./</ns8:Remark>
+                              <ns8:Remark>EACH CNN REQUIRES ACCOMPANYING SAME CABIN ADT</ns8:Remark>
+                              <ns8:Remark>VALIDATING CARRIER SPECIFIED - 9W</ns8:Remark>
+                              <ns8:Remark>BAG ALLOWANCE     -BOMDEL-15KG/9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON ALLOWANCE</ns8:Remark>
+                              <ns8:Remark>BOMDEL-01P/9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON CHARGES</ns8:Remark>
+                              <ns8:Remark>BOMDEL-9W-CARRY ON FEES UNKNOWN-CONTACT CARRIER</ns8:Remark>
+                              <ns8:Remark>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY DEPENDING ON</ns8:Remark>
+                              <ns8:Remark>FLYER-SPECIFIC FACTORS /E.G. FREQUENT FLYER STATUS/MILITARY/</ns8:Remark>
+                              <ns8:Remark>CREDIT CARD FORM OF PAYMENT/EARLY PURCHASE OVER INTERNET,ETC./</ns8:Remark>
+                              <ns8:Remark>REQUIRES ACCOMPANYING ADT PASSENGER</ns8:Remark>
+                              <ns8:Remark>EACH INF REQUIRES ACCOMPANYING ADT PASSENGER</ns8:Remark>
+                              <ns8:Remark>VALIDATING CARRIER SPECIFIED - 9W</ns8:Remark>
+                              <ns8:Remark>BAG ALLOWANCE     -BOMDEL-NIL/9W</ns8:Remark>
+                              <ns8:Remark>1STCHECKED BAG FEE-BOMDEL-*/9W</ns8:Remark>
+                              <ns8:Remark>*BAGGAGE ALLOWANCES/FEES UNKNOWN - CONTACT 9W</ns8:Remark>
+                              <ns8:Remark>2NDCHECKED BAG FEE-BOMDEL-*/9W</ns8:Remark>
+                              <ns8:Remark>*BAGGAGE ALLOWANCES/FEES UNKNOWN - CONTACT 9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON ALLOWANCE</ns8:Remark>
+                              <ns8:Remark>BOMDEL-NIL/9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON CHARGES</ns8:Remark>
+                              <ns8:Remark>BOMDEL-9W-CARRY ON FEES UNKNOWN-CONTACT CARRIER</ns8:Remark>
+                              <ns8:Remark>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY DEPENDING ON</ns8:Remark>
+                              <ns8:Remark>FLYER-SPECIFIC FACTORS /E.G. FREQUENT FLYER STATUS/MILITARY/</ns8:Remark>
+                              <ns8:Remark>CREDIT CARD FORM OF PAYMENT/EARLY PURCHASE OVER INTERNET,ETC./</ns8:Remark>
+                              <ns8:Remark>ELECTRONIC TICKETING NOT VALID FOR INFANTS</ns8:Remark>
+                              <ns8:Remark>10AUG DEPARTURE DATE ----- LAST DAY TO PURCHASE  8JUL</ns8:Remark>
+                           </ns8:PassengerFare>
+                        </ns8:PTC_FareBreakdown>
+                     </ns8:PTC_FareBreakdowns>
+                  </ns8:AirItineraryPricingInfo>
+                  <ns8:AirItineraryPricingInfo>
+                     <ns8:PTC_FareBreakdowns>
+                        <ns8:PTC_FareBreakdown>
+                           <ns8:PassengerTypeQuantity Quantity="1" Code="INF"/>
+                           <ns8:FareBasisCodes>
+                              <ns8:FareBasisCode>B2SALE</ns8:FareBasisCode>
+                           </ns8:FareBasisCodes>
+                           <ns8:PassengerFare>
+                              <ns8:BaseFare Amount="1280" CurrencyCode="INR"/>
+                              <ns8:EquivFare/>
+                              <ns8:Taxes Amount="131">
+                                 <ns8:Tax TaxCode="YRF" TaxName="SERVICE FEE - FUEL" Amount="50"/>
+                                 <ns8:Tax TaxCode="JN" TaxName="SERVICE TAX" Amount="75"/>
+                                 <ns8:Tax TaxCode="F2" TaxName="TAX ON SERVICES" Amount="3"/>
+                                 <ns8:Tax TaxCode="G1" TaxName="KRISHI KALYAN CESS" Amount="3"/>
+                              </ns8:Taxes>
+                              <ns8:TotalFare Amount="1411" CurrencyCode="INR"/>
+                              <ns8:Remark>VALIDATING CARRIER SPECIFIED - 9W</ns8:Remark>
+                              <ns8:Remark>BAG ALLOWANCE     -BOMDEL-15KG/9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON ALLOWANCE</ns8:Remark>
+                              <ns8:Remark>BOMDEL-01P/9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON CHARGES</ns8:Remark>
+                              <ns8:Remark>BOMDEL-9W-CARRY ON FEES UNKNOWN-CONTACT CARRIER</ns8:Remark>
+                              <ns8:Remark>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY DEPENDING ON</ns8:Remark>
+                              <ns8:Remark>FLYER-SPECIFIC FACTORS /E.G. FREQUENT FLYER STATUS/MILITARY/</ns8:Remark>
+                              <ns8:Remark>CREDIT CARD FORM OF PAYMENT/EARLY PURCHASE OVER INTERNET,ETC./</ns8:Remark>
+                              <ns8:Remark>EACH CNN REQUIRES ACCOMPANYING SAME CABIN ADT</ns8:Remark>
+                              <ns8:Remark>VALIDATING CARRIER SPECIFIED - 9W</ns8:Remark>
+                              <ns8:Remark>BAG ALLOWANCE     -BOMDEL-15KG/9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON ALLOWANCE</ns8:Remark>
+                              <ns8:Remark>BOMDEL-01P/9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON CHARGES</ns8:Remark>
+                              <ns8:Remark>BOMDEL-9W-CARRY ON FEES UNKNOWN-CONTACT CARRIER</ns8:Remark>
+                              <ns8:Remark>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY DEPENDING ON</ns8:Remark>
+                              <ns8:Remark>FLYER-SPECIFIC FACTORS /E.G. FREQUENT FLYER STATUS/MILITARY/</ns8:Remark>
+                              <ns8:Remark>CREDIT CARD FORM OF PAYMENT/EARLY PURCHASE OVER INTERNET,ETC./</ns8:Remark>
+                              <ns8:Remark>REQUIRES ACCOMPANYING ADT PASSENGER</ns8:Remark>
+                              <ns8:Remark>EACH INF REQUIRES ACCOMPANYING ADT PASSENGER</ns8:Remark>
+                              <ns8:Remark>VALIDATING CARRIER SPECIFIED - 9W</ns8:Remark>
+                              <ns8:Remark>BAG ALLOWANCE     -BOMDEL-NIL/9W</ns8:Remark>
+                              <ns8:Remark>1STCHECKED BAG FEE-BOMDEL-*/9W</ns8:Remark>
+                              <ns8:Remark>*BAGGAGE ALLOWANCES/FEES UNKNOWN - CONTACT 9W</ns8:Remark>
+                              <ns8:Remark>2NDCHECKED BAG FEE-BOMDEL-*/9W</ns8:Remark>
+                              <ns8:Remark>*BAGGAGE ALLOWANCES/FEES UNKNOWN - CONTACT 9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON ALLOWANCE</ns8:Remark>
+                              <ns8:Remark>BOMDEL-NIL/9W</ns8:Remark>
+                              <ns8:Remark>CARRY ON CHARGES</ns8:Remark>
+                              <ns8:Remark>BOMDEL-9W-CARRY ON FEES UNKNOWN-CONTACT CARRIER</ns8:Remark>
+                              <ns8:Remark>ADDITIONAL ALLOWANCES AND/OR DISCOUNTS MAY APPLY DEPENDING ON</ns8:Remark>
+                              <ns8:Remark>FLYER-SPECIFIC FACTORS /E.G. FREQUENT FLYER STATUS/MILITARY/</ns8:Remark>
+                              <ns8:Remark>CREDIT CARD FORM OF PAYMENT/EARLY PURCHASE OVER INTERNET,ETC./</ns8:Remark>
+                              <ns8:Remark>ELECTRONIC TICKETING NOT VALID FOR INFANTS</ns8:Remark>
+                              <ns8:Remark>10AUG DEPARTURE DATE ----- LAST DAY TO PURCHASE  8JUL</ns8:Remark>
+                           </ns8:PassengerFare>
+                        </ns8:PTC_FareBreakdown>
+                     </ns8:PTC_FareBreakdowns>
+                  </ns8:AirItineraryPricingInfo>
+               </ns8:PricedItinerary>
+            </ns8:PricedItineraries>
+            <ns8:Errors/>
+         </ns8:OTA_AirPriceRS>
+      </OTA_AirPriceRSWrapper>
+   </ResponseBody>
+</AirInterfaceRS>

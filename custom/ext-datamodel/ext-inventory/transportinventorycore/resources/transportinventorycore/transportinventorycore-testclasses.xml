@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testclasses><transportinventorycore><testclass>com.cnk.travelogix.transport.inventory.core.jalo.TransportinventorycoreTest</testclass><testclass>com.cnk.travelogix.transport.inventory.core.test.AirlineInventoryRequestPrepareInterceptorTest</testclass></transportinventorycore></testclasses>

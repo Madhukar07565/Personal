@@ -1,0 +1,24 @@
+#
+# Import the Electronics Content Catalog
+#
+$contentCatalog=operationsContentCatalog
+$languages=ja,en,de,zh
+
+# Language
+$lang=en
+
+# Content catalog for CMS contents
+INSERT_UPDATE ContentCatalog;id[unique=true]
+;$contentCatalog
+
+# Catalog versions for content catalogs
+INSERT_UPDATE CatalogVersion;catalog(id)[unique=true];version[unique=true];active;languages(isoCode)
+;$contentCatalog;Staged;false;$languages
+;$contentCatalog;Online;true;$languages
+
+
+
+
+# Create Content Catalog
+UPDATE ContentCatalog;id[unique=true];name[lang=$lang]
+ ;operationsContentCatalog;"Operations Content Catalog"

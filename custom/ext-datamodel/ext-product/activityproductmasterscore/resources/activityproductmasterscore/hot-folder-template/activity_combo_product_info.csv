@@ -1,0 +1,7 @@
+
+Media Information;Media Code;Media file name;;;;;;;;;;;;;;;;;;;;;;;;;;
+Media;123;sampleMedia2.png;;;;;;;;;;;;;;;;;;;;;;;;;;
+;124;sampleMedia2.png;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+ActivityComboProduct;Company;version           ;id;name;combo Product Type;Combo Company Product Name Id;Product Name Finance ControlId;Combo Display Name;Combo Common Product Name SubType Id;Combo Company Product Name SubType Id;Combo Product Name SubType;Product Name SubType Finance ControlId;Pickup Point;DropOff Point;Remark; Unique Selling Points;Selling Tips;Copied From Company Product Name Id;Copied From Company Product Name SubType Id;Interest;Highlights;Activity Combo Media;Attached Policies;Deactivation From Market;Activity Combo Products;LongDescription(Product);ShortDescription(Product);Updates(Product)
+ComboActivityProduct;;ActivityComboV1000;ACT001;Madame Tussads+LondonEye+SeaLife;Show+Museum+Aquarium;LONCB001;;Three Iconic Attraction;LONCBPNST001;LONCBPNST001;Madame Tussads+LondonEye+SeaLife;;;;Enjoy these three iconic attractions and save 30%;Enjoy these three iconic attractions and save 30%;30% saving;;;INT001;;123,124;PR001;;3001;;;

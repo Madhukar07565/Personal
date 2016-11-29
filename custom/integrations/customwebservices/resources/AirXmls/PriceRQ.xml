@@ -1,0 +1,113 @@
+<air1:AirInterfaceRQ xmlns:air="http://www.coxandkings.com/integ/suppl/air" xmlns:com="http://www.coxandkings.com/integ/suppl/common" xmlns:air1="http://www.coxandkings.com/integ/suppl/airinterface" xmlns:ns="http://www.opentravel.org/OTA/2003/05">
+   <air:RequestHeader>
+            <com:UserID>Venkatesh</com:UserID>
+            <com:SessionID>1700</com:SessionID>
+            <com:TransactionID>1700</com:TransactionID>
+            <com:SupplierCredentialsList>
+               <com:SupplierCredentials>
+               <com:SupplierID>SABRE</com:SupplierID>
+               <com:Credentials>
+                     <com:Credential name="Username">1000</com:Credential>
+                     <com:Credential name="Password">table55</com:Credential>
+                     <com:Credential name="Organization">L7H8</com:Credential>
+                     <com:Credential name="PseudoCityCode">L7H8</com:Credential>
+                     <com:Credential name="CompanyCode">TN</com:Credential>
+                  </com:Credentials>
+                </com:SupplierCredentials>
+            </com:SupplierCredentialsList>
+         </air:RequestHeader>
+    <air1:RequestBody>
+	<air:OTA_AirPriceRQWrapper>
+            <air:SupplierID>SABRE</air:SupplierID>
+            <air:Sequence>1</air:Sequence>
+        <ns:OTA_AirPriceRQ Version="1" Target="Test">
+            <ns:POS>
+                <ns:Source/>
+            </ns:POS>
+            <ns:AirItinerary>
+                <ns:OriginDestinationOptions>
+                    <ns:OriginDestinationOption>
+                        <ns:FlightSegment Status="NN" ConnectionType="OTH" ResBookDesigCode="B" FlightNumber="390" DepartureDateTime="2016-08-10T06:05:00" ArrivalDateTime="2016-08-10T08:10:00">
+                            <ns:DepartureAirport LocationCode="BOM"/>
+                            <ns:ArrivalAirport LocationCode="DEL"/>
+                            <ns:OperatingAirline Code="9W" FlightNumber="390"/>
+                            <ns:MarketingAirline Code="9W"/>
+                        </ns:FlightSegment>
+                    </ns:OriginDestinationOption>
+                    <!-- <ns:OriginDestinationOption><ns:FlightSegment NumberInParty="2" Status="NN" ConnectionType="OTH" ResBookDesigCode="B" FlightNumber="304" DepartureDateTime="2016-08-18T22:50:00" ArrivalDateTime="2016-08-19T00:50:00"><ns:DepartureAirport LocationCode="DEL"/><ns:ArrivalAirport LocationCode="BOM"/><ns:OperatingAirline Code="9W" FlightNumber="304"/><ns:MarketingAirline Code="9W"/></ns:FlightSegment></ns:OriginDestinationOption> -->
+                </ns:OriginDestinationOptions>
+            </ns:AirItinerary>
+            <ns:TravelerInfoSummary>
+                <ns:AirTravelerAvail>
+                    <ns:PassengerTypeQuantity Code="ADT" Quantity="1" Age="35"/>
+                    <ns:AirTraveler BirthDate="1984-01-01">
+                        <ns:PersonName>
+                            <ns:GivenName>Ravindra Mr</ns:GivenName>
+                            <ns:Surname>Jadhav</ns:Surname>
+                        </ns:PersonName>
+                        <ns:Telephone LocationCode="BOM" PhoneNumber="911234567890" PhoneUseType="B"/>
+                        <ns:Email>Ravindra@gmail.com</ns:Email>
+                        <ns:Address>
+                            <ns:StreetNmbr>Mumnbai tech park</ns:StreetNmbr>
+                            <ns:AddressLine>Urmi estate</ns:AddressLine>
+                            <ns:CityName>Mumbai</ns:CityName>
+                            <ns:PostalCode>560045</ns:PostalCode>
+                            <ns:CountryName Code="IN"/>
+                        </ns:Address>
+                        <ns:TravelerRefNumber RPH="0"/>
+                    </ns:AirTraveler>
+                </ns:AirTravelerAvail>
+                  <ns:AirTravelerAvail>
+                    <ns:PassengerTypeQuantity Code="CHD" Quantity="1" Age="8"/>
+                    <ns:AirTraveler BirthDate="2008-01-01">
+                        <ns:PersonName>
+                            <ns:GivenName>Ravi Mr</ns:GivenName>
+                            <ns:Surname>Jadhav</ns:Surname>
+                        </ns:PersonName>
+                        <ns:Telephone LocationCode="BOM" PhoneNumber="911234567891" PhoneUseType="B"/>
+                        <ns:Email>Ravi@gmail.com</ns:Email>
+                        <ns:Address>
+                            <ns:StreetNmbr>Mumnbai tech park</ns:StreetNmbr>
+                            <ns:AddressLine>Urmi estate</ns:AddressLine>
+                            <ns:CityName>Mumbai</ns:CityName>
+                            <ns:PostalCode>560045</ns:PostalCode>
+                            <ns:CountryName Code="IN"/>
+                        </ns:Address>
+                        <ns:TravelerRefNumber RPH="0"/>
+                    </ns:AirTraveler>
+                </ns:AirTravelerAvail>
+                 <ns:AirTravelerAvail>
+                    <ns:PassengerTypeQuantity Code="INF" Quantity="1"/>
+                    <ns:AirTraveler BirthDate="2016-01-01">
+                    <ns:ProfileRef>
+						<ns:UniqueID ID="0" Type="16"/>
+					</ns:ProfileRef>
+                        <ns:PersonName>
+                            <ns:GivenName>Chintu Mr</ns:GivenName>
+                            <ns:Surname>Jadhav</ns:Surname>
+                        </ns:PersonName>
+                        <ns:Telephone LocationCode="BOM" PhoneNumber="911234567892" PhoneUseType="B"/>
+                        <ns:Email>Chintu@gmail.com</ns:Email>
+                        <ns:Address>
+                            <ns:StreetNmbr>Mumnbai tech park</ns:StreetNmbr>
+                            <ns:AddressLine>Urmi estate</ns:AddressLine>
+                            <ns:CityName>Mumbai</ns:CityName>
+                            <ns:PostalCode>560045</ns:PostalCode>
+                            <ns:CountryName Code="IN"/>
+                        </ns:Address>
+                        <ns:TravelerRefNumber RPH="0"/>
+                    </ns:AirTraveler>
+                </ns:AirTravelerAvail>
+         <ns:PriceRequestInformation CurrencyCode="INR">
+                    <ns:TPA_Extensions/>
+                </ns:PriceRequestInformation>
+                <ns:TPA_Extensions>
+                    <air:TripType>OneWay</air:TripType>
+                    <air:NearbyDepartures>false</air:NearbyDepartures>
+                    <air:NearbyDestinations>false</air:NearbyDestinations>
+                </ns:TPA_Extensions>
+            </ns:TravelerInfoSummary>
+        </ns:OTA_AirPriceRQ>
+			</air:OTA_AirPriceRQWrapper>
+</air1:RequestBody>
+</air1:AirInterfaceRQ>

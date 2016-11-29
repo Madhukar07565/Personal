@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2016 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:security="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/security
+		   http://www.springframework.org/schema/security/spring-security.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+           
+    <context:annotation-config/> 
+
+
+	<!-- Expose /acceleratoraddon/web/webroot/WEB-INF/messages/base.js.properties  resource bundle as javascript variables -->
+	<bean id="defaultGoogleaddonJavaScriptMessageResourceAccessor" parent="abstractJavaScriptMessageResourceAccessor">
+		<property name="addOnName" value="googleaddon"/>
+	</bean>
+
+	<bean id="defaultGoogleaddonBeforeViewJsPropsHandlerAdaptee" parent="abstractBeforeViewJsPropsHandlerAdaptee" class="de.hybris.platform.addonsupport.interceptors.ExportJsPropertiesBeforeViewHandler">
+		<property name="messageSource" ref="defaultGoogleaddonJavaScriptMessageResourceAccessor"/>
+	</bean>
+
+	<bean id="getGoogleaddonBeforeViewHandler" parent="beforeViewHandlerAdapter">
+		<property name="adaptee">
+			<ref bean="defaultGoogleaddonBeforeViewJsPropsHandlerAdaptee"/>
+		</property>
+	</bean>
+	<bean id="GoogleaddonBeforeViewHandlerListMergeDirective" depends-on="beforeViewHandlersList" parent="listMergeDirective">
+		<property name="add" ref="getGoogleaddonBeforeViewHandler"/>
+	</bean>
+
+
+	<security:authentication-manager id="googleAuthenticationManager">
+		<security:authentication-provider ref="googleAuthenticationProvider" />
+	</security:authentication-manager>
+
+	<!-- Login Failure Handlers -->
+	<bean id="googleBruteForceAttackCounter" class="com.cnk.travelogix.security.DefaultBruteForceAttackCounter">
+		<constructor-arg name="maxFailedLogins" value="5" />
+		<constructor-arg name="cacheExpiration" value="60" />
+		<constructor-arg name="cacheSizeLimit" value="1000" />
+	</bean>
+	
+	<bean id="googleAuthenticationProvider" class="com.cnk.travelogix.security.GoogleAuthenticationProvider" >
+		<property name="googleUserService" ref="googleUserService" />
+		<property name="bruteForceAttackCounter" ref="googleBruteForceAttackCounter" />
+		<property name="modelService" ref="modelService" />
+		<property name="googleAuthTemplate" ref="googleAuthTemplate" />
+		<property name="userDetailsService" ref="originalidUserDetailsService" />
+	</bean>
+
+
+	<bean id="googleAutoLoginStrategy" class="com.cnk.travelogix.security.GoogleAutoLoginStrategy">
+		<property name="authenticationManager" ref="googleAuthenticationManager" />
+		<property name="guidCookieStrategy" ref="guidCookieStrategy" />
+		<property name="rememberMeServices" ref="rememberMeServices" />
+		<property name="customerFacade" ref="customerFacade" />
+	</bean>
+
+</beans>

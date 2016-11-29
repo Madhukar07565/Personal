@@ -1,0 +1,120 @@
+<AccommodationRS xmlns="http://www.coxandkings.com/suppl/accointerface" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+   <ResponseHeader xmlns="http://www.coxandkings.com/suppl/acco">
+      <Status xmlns="http://www.coxandkings.com/suppl/common">SUCCESS</Status>
+      <UserID xmlns="http://www.coxandkings.com/suppl/common">1</UserID>
+      <SessionID xmlns="http://www.coxandkings.com/suppl/common">2</SessionID>
+      <TransactionID xmlns="http://www.coxandkings.com/suppl/common">3</TransactionID>
+   </ResponseHeader>
+   <ResponseBody>
+      <OTA_ReadRSWrapper xmlns="http://www.coxandkings.com/suppl/acco">
+         <SupplierID>ATI</SupplierID>
+         <Sequence>1</Sequence>
+         <ns0:OTA_ResRetrieveRS TimeStamp="2016-07-01T00:39:48-07:00" xmlns:ns0="http://www.opentravel.org/OTA/2003/05">
+            <ns0:ReservationsList>
+               <ns0:HotelReservation ResStatus="CONFIRMED">
+                  <ns0:UniqueID Type="14" ID="5145317"/>
+                  <ns0:RoomStays>
+                     <ns0:RoomStay IndexNumber="28003364" RoomStayStatus="BOOKED">
+                        <ns0:RoomTypes>
+                           <ns0:RoomType RoomTypeCode="HNLAQP-BPR"/>
+                        </ns0:RoomTypes>
+                        <ns0:RoomRates>
+                           <ns0:RoomRate>
+                              <ns0:Rates>
+                                 <ns0:Rate EffectiveDate="2016-07-15">
+                                    <ns0:Base AmountAfterTax="237" CurrencyCode="USD">
+                                       <ns0:Taxes/>
+                                    </ns0:Base>
+                                    <ns0:AdditionalGuestAmounts/>
+                                    <ns0:Fees>
+                                       <ns0:Fee Code="PARKING" Amount="1500" ChargeFrequency="DAILY"/>
+                                    </ns0:Fees>
+                                 </ns0:Rate>
+                                 <ns0:Rate EffectiveDate="2016-07-16">
+                                    <ns0:Base AmountAfterTax="237" CurrencyCode="USD">
+                                       <ns0:Taxes/>
+                                    </ns0:Base>
+                                    <ns0:AdditionalGuestAmounts/>
+                                    <ns0:Fees>
+                                       <ns0:Fee Code="PARKING" Amount="1500" ChargeFrequency="DAILY"/>
+                                    </ns0:Fees>
+                                 </ns0:Rate>
+                                 <ns0:Rate EffectiveDate="2016-07-17">
+                                    <ns0:Base AmountAfterTax="237" CurrencyCode="USD">
+                                       <ns0:Taxes/>
+                                    </ns0:Base>
+                                    <ns0:AdditionalGuestAmounts/>
+                                    <ns0:Fees>
+                                       <ns0:Fee Code="PARKING" Amount="1500" ChargeFrequency="DAILY"/>
+                                    </ns0:Fees>
+                                 </ns0:Rate>
+                                 <ns0:Rate EffectiveDate="2016-07-18">
+                                    <ns0:Base AmountAfterTax="237" CurrencyCode="USD">
+                                       <ns0:Taxes/>
+                                    </ns0:Base>
+                                    <ns0:AdditionalGuestAmounts/>
+                                    <ns0:Fees>
+                                       <ns0:Fee Code="PARKING" Amount="1500" ChargeFrequency="DAILY"/>
+                                    </ns0:Fees>
+                                 </ns0:Rate>
+                              </ns0:Rates>
+                           </ns0:RoomRate>
+                        </ns0:RoomRates>
+                        <ns0:GuestCounts IsPerRoom="false">
+                           <ns0:GuestCount ResGuestRPH="13020636"/>
+                           <ns0:GuestCount AgeQualifyingCode="8" Age="3" ResGuestRPH="13020637"/>
+                        </ns0:GuestCounts>
+                        <ns0:TimeSpan End="2016-07-19" Start="2016-07-15"/>
+                        <ns0:CancelPenalties>
+                           <ns0:CancelPenalty>
+                              <ns0:Deadline AbsoluteDeadline="2016-07-12T00:00:00-07:00"/>
+                           </ns0:CancelPenalty>
+                        </ns0:CancelPenalties>
+                        <ns0:BasicPropertyInfo HotelName="Aqua Palms Waikiki"/>
+                     </ns0:RoomStay>
+                  </ns0:RoomStays>
+                  <ns0:ResGuests>
+                     <ns0:ResGuest ResGuestRPH="13020636">
+                        <ns0:Profiles>
+                           <ns0:ProfileInfo>
+                              <ns0:Profile RPH="13020636">
+                                 <ns0:Customer>
+                                    <ns0:PersonName>
+                                       <ns0:NamePrefix>Mr</ns0:NamePrefix>
+                                       <ns0:GivenName>AAA</ns0:GivenName>
+                                       <ns0:Surname>Doe</ns0:Surname>
+                                    </ns0:PersonName>
+                                 </ns0:Customer>
+                              </ns0:Profile>
+                           </ns0:ProfileInfo>
+                        </ns0:Profiles>
+                     </ns0:ResGuest>
+                     <ns0:ResGuest ResGuestRPH="13020637">
+                        <ns0:Profiles>
+                           <ns0:ProfileInfo>
+                              <ns0:Profile RPH="13020637">
+                                 <ns0:Customer>
+                                    <ns0:PersonName>
+                                       <ns0:NamePrefix>Mr</ns0:NamePrefix>
+                                       <ns0:GivenName>BB</ns0:GivenName>
+                                       <ns0:Surname>Doe</ns0:Surname>
+                                    </ns0:PersonName>
+                                 </ns0:Customer>
+                              </ns0:Profile>
+                           </ns0:ProfileInfo>
+                        </ns0:Profiles>
+                     </ns0:ResGuest>
+                  </ns0:ResGuests>
+                  <ns0:ResGlobalInfo>
+                     <ns0:Total CurrencyCode="USD" AmountAfterTax="948"/>
+                     <ns0:HotelReservationIDs>
+                        <ns0:HotelReservationID ResID_Value="5145317"/>
+                     </ns0:HotelReservationIDs>
+                  </ns0:ResGlobalInfo>
+               </ns0:HotelReservation>
+            </ns0:ReservationsList>
+            <ns0:Errors/>
+         </ns0:OTA_ResRetrieveRS>
+      </OTA_ReadRSWrapper>
+   </ResponseBody>
+</AccommodationRS>

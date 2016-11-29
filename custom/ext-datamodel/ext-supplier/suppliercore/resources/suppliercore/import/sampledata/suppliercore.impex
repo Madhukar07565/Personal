@@ -1,0 +1,32 @@
+ $productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=source(code, $catalogVersion)[unique=true]
+$categories=supercategories(code, $catalogVersion)[default=C001ST001:$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$approved=approvalstatus(code)[default='approved']
+$siteResource=jar:com.cnk.travelogix.product.transport.masters.core.setup.TransportProductSetup&\transportproductmasterscore\import\sampledata\images
+$dateformat=dd-MM-yyyy
+$timeformat = hh:mm
+
+
+
+
+
+#####################insert a supplier impex ########################
+INSERT_UPDATE Supplier;$catalogVersion;code[unique=true];commonUid;supplierType(code);enablerCategories(code);lobs(code);name(lang=en);companySupplierId[allowNull=true];financeControlId
+;;Jet Airways;2131;ENABLER;DIRECT_CONNECT;FIT;Jet Airways;123
+;;GTA;11111;BOTH;DIRECT_CONNECT;;GTA;
+;;Pegasus;11112;ENABLER;SWITCH;;Pegasus;
+;;Mason;11113;SOURCE;;;Maison de Voyage Pvt Ltd;
+;;Desiya;11114;BOTH;DIRECT_CONNECT;;;Desiya;
+;;Gal;11115;ENABLER;GDS;;Galileo;
+;;Taj Group;11116;SOURCE;;;The Indian Hotels Company Ltd;
+;;Hilton;11117;SOURCE;;;Hilton;
+;;Ibis;11118;SOURCE;;;Ibis;
+;;Rate Tiger;11119;ENABLER;SWITCH;;Rate Tiger;
+;;Vnett;11120;ENABLER;SETTLEMENT;;Vnett;
+;;AOT;11121;BOTH;DIRECT_CONNECT;;AOT;
+;;Tourico;11122;BOTH;DIRECT_CONNECT;;Tourico;
+;;Travelbullz;11123;SOURCE;;;Travelbullz;

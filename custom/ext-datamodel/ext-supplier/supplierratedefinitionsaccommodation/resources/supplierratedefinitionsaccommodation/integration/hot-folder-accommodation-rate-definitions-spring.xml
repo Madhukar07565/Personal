@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/integration
+        http://www.springframework.org/schema/integration/spring-integration.xsd
+        http://www.springframework.org/schema/integration/file
+        http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+	<bean id="baseDirectoryTravelogix" class="java.lang.String">
+		<constructor-arg value="#{baseDirectory}/${tenantId}/travelogix/accoom" />
+	</bean>
+
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesTravelogix" directory="#{baseDirectoryTravelogix}" filename-regex="^(.*)-(\d+)\.csv"
+		comparator="fileOrderComparator">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+
+	<!-- 2) move the file to processing and setup header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogix" reply-channel="batchFilesTravelogixProc" directory="#{baseDirectoryTravelogix}/processing"
+		delete-source-files="true" />
+
+	<bean id="travelogixHeaderSetupTask" class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="Default" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogix" />
+	</bean>
+
+	<int:service-activator input-channel="batchFilesTravelogixProc" output-channel="batchFilesHeaderInit" ref="travelogixHeaderSetupTask"
+		method="execute" />
+
+	<bean id="batchaccommodationsupplierrateConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="accommodationsupplierrate" p:converter-ref="batchaccommodationsupplierrateConverter" />
+
+	<bean id="batchCompanyRateConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="companyrate" p:converter-ref="batchCompanyRateConverter" />
+
+	<bean id="batchRateDefOnOccupancyConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="ratedefonoccupancy" p:converter-ref="batchRateDefOnOccupancyConverter" />
+
+	<bean id="batchSeasonDetailConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="seasondetail" p:converter-ref="batchSeasonDetailConverter" />
+
+	<bean id="batchChildAgeDetailConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="childagedetail" p:converter-ref="batchChildAgeDetailConverter" />
+
+	<bean id="batchAncillaryRateDetailConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="ancillaryratedetail" p:converter-ref="batchAncillaryRateDetailConverter" />
+	
+	<bean id="batchAccommodationRateDefinitionConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="AccommodationRateDefinition" p:converter-ref="batchAccommodationRateDefinitionConverter" />
+	
+	<bean id="batchAccoDynamicPolicyConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="AccoDynamicPolicy" p:converter-ref="batchAccoDynamicPolicyConverter" />
+	
+	<bean id="batchAccoSurchargeSuppDetailConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="AccoSurchargeSuppDetail" p:converter-ref="batchAccoSurchargeSuppDetailConverter" />
+	
+	<bean id="batchCommonRateAdvDefinitionConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="CommonRateAdvDefinition" p:converter-ref="batchCommonRateAdvDefinitionConverter" />
+	
+	<bean id="batchAgeDetailConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="AgeDetail" p:converter-ref="batchAgeDetailConverter" />
+	
+	<bean id="batchSupplierRoomOfferConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="SupplierRoomOffer" p:converter-ref="batchSupplierRoomOfferConverter" />
+	
+	<bean id="batchSupplierAncillaryRateConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="SupplierAncillaryRate" p:converter-ref="batchSupplierAncillaryRateConverter" />
+	
+	<bean id="batchAncillaryRateDefinitionConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="AncillaryRateDefinition" p:converter-ref="batchAncillaryRateDefinitionConverter" />
+
+    <bean id="batchDateRangeRestrictionConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="DateRangeRestriction" p:converter-ref="batchDateRangeRestrictionConverter" />
+	
+	 <bean id="batchDiscountPerAgeConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="DiscountPerAge" p:converter-ref="batchDiscountPerAgeConverter" />
+	
+	 <bean id="batchDiscountLongStayConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="DiscountLongStay" p:converter-ref="batchDiscountLongStayConverter" />
+	
+	 <bean id="batchComplimentaryConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="ancillaryratedetail" p:converter-ref="batchComplimentaryConverter" />
+	
+	 <bean id="batchFOCOfferConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="FOCOffer" p:converter-ref="batchFOCOfferConverter" />
+	
+	 <bean id="batchAncillaryDiscountConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="AncillaryDiscount" p:converter-ref="batchAncillaryDiscountConverter" />
+	
+		 <bean id="batchDiscountOnRateConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="DiscountOnRate" p:converter-ref="batchDiscountOnRateConverter" />
+	
+	 <bean id="batchDiscountOnNightConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="DiscountOnNight" p:converter-ref="batchDiscountOnNightConverter" />
+	
+		 <bean id="batchDiscountOnFreeNightConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="DiscountOnFreeNight" p:converter-ref="batchDiscountOnFreeNightConverter" />
+	
+	 <bean id="batchDiscountOnRoomOrCabinConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="DiscountOnRoomOrCabin" p:converter-ref="batchDiscountOnRoomOrCabinConverter" />
+	
+	 <bean id="batchDiscountOnPaxConverterMapping" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+	p:mapping="DiscountOnPax" p:converter-ref="batchDiscountOnPaxConverter" />
+
+	<bean id="defaultImpexProductHeader" class="java.lang.String">
+		<constructor-arg>
+			<value>
+				$contentCatalog=Default
+				$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+			</value>
+		</constructor-arg>
+	</bean>
+		<bean id="batchaccommodationsupplierrateConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+                    insert_update AccommodationSupplierRate;activeDateRange[allownull=true,dateformat=dd.MM.yyyy hh:mm:ss];active;ancillary(code);approvalStatus(code);catalogVersion(catalog(id),version)[unique=true,allownull=true];code[unique=true];currency(isocode);lockedBy(uid);product(code)[unique=true];productSubCategory(code)[unique=true];reason;remarks;supplier(code)[unique=true];validity[unique=true,dateformat=dd.MM.yyyy hh:mm:ss]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13}</value>
+		</property>
+		
+	</bean>
+
+	<bean id="batchCompanyRateConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+				insert_update CompanyRateInvRestriction;active;activeDateRange[allownull=true,dateformat=dd.MM.yyyy hh:mm:ss];bu(uid);company(uid)[unique=true];companyMarket(uid);reason;sbu(uid);supplierRate(catalogVersion(catalog(id),version),code,market(catalogVersion(catalog(id),version),code),product(catalogVersion(catalog(id),version),code,financeControlId),productSubCategory(catalogVersion(catalog(id),version),code),supplier(catalogVersion(catalog(id),version),code))
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2};{3};{4}</value>
+		</property>
+	</bean>
+
+	<bean id="batchRateDefOnOccupancyConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+                    INSERT_UPDATE AccoRateDetailDefinition;adultAge(fromAge,toAge)[unique=true];checkInTime;checkOutTime;childAge(fromAge,toAge)[unique=true];commissionExcluded(code,itemtype(code));dayOfWeek(code,itemtype(code));maxPaxOccupancy;mealPlan(code,itemtype(code))[allownull=true];minNights;minPaxOccupancy;noOfAdults;noOfChild;payOnArrival;proRata;rate;rateDefinedFor(code,itemtype(code))[allownull=true];rateFor(code,itemtype(code))[allownull=true];roomCategory(code,itemtype(code));stayDuration
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13};{14};{15};{16};{17};{18}</value>
+		</property>
+	</bean>
+
+	<bean id="batchSeasonDetailConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+				insert_update SeasonDetail;itinerary(itineraryId);seasonality(code)[unique=true];supplierRate(catalogVersion(catalog(id),version),code,market(catalogVersion(catalog(id),version),code),product(catalogVersion(catalog(id),version),code,financeControlId),productSubCategory(catalogVersion(catalog(id),version),code),supplier(catalogVersion(catalog(id),version),code));supplierAncillaryRate(catalogVersion(catalog(id),version),code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2};{3}</value>
+		</property>
+	</bean>
+
+	<bean id="batchChildAgeDetailConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+			insert ChildAgeDetail;ageDetail(fromAge,toAge);childBedType(code);rate	
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchAncillaryRateDetailConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+		insert CommonAncillaryRateDetail;ancillary(catalogVersion(catalog(id),version),code,financeControlId)[unique=true];ancillaryDetails;ancillaryRateDefinition(client(uid),clientGroup(uid),seasonality(code,itemtype(code)));childAge(fromAge,toAge);commissionThreshold(code,itemtype(code));commissionValue;costApplicability(code,itemtype(code));cost[allownull=true];daysOfWeek(code,itemtype(code))[allownull=true];durationType(code);durationValue;net;paxType(code);payOnArrival;portName(catalogVersion(catalog(id),version),code);seatingType;startTime[dateformat=dd.MM.yyyy hh:mm:ss];taxPercentage;vehicleType(code)
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13];{14};{15};{16};{17};{18}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchAccommodationRateDefinitionConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+             INSERT_UPDATE AccommodationRateDefinition;clientGroup(uid)[allownull=true][unique=true];clientType(code)[allownull=true];commissionThreshold(code);commissionValue;companyRateCode(code);companyType(code)[allownull=true];comparator(code);net[allownull=true];noOfRooms;priceApplicability(code)[allownull=true];rateTypeApplicableFor(code)[allownull=true];seasonality(code);supplierRateCode(code);supplierRateType(code);travelDate[dateformat=dd.MM.yyyy hh:mm:ss]
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13];{14};{15}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchAccoDynamicPolicyConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+                     INSERT_UPDATE AccoDynamicPolicy;chargeNight;chargesAmount[allownull=true];chargesInPercentage;currency(isocode);definedBy(code)[allownull=true][unique=true];from[allownull=true];perPerson[allownull=true];perRoom[allownull=true];policy(code);to[allownull=true]
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2};{3};{4};{5};{6};{7};{8};{9}</value>
+		</property>
+		
+	</bean>
+	
+	<bean id="batchAccoSurchargeSuppDetailConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+
+                  INSERT_UPDATE AccoSurchargeSuppDetail;amount;externalDescription[lang=en];internalDescription[lang=en];mealPlan(code);payOnArrival;priceExclusion[lang=en];priceInclusion[lang=en];roomCategories(code);roomTypes(code);stdCommissionType(code);stdCommissionValue;subType(code);supplement(code);surchargeId[forceWrite=true,unique=true,allownull=true];surchargeName[lang=en];type(code)
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12};{13];{14};{15}</value>
+		</property>
+	</bean>
+	
+		<bean id="batchCommonRateAdvDefinitionConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+
+
+              INSERT_UPDATE CommonRateAdvDefinition;childPolicy[lang=en];externalDescription[lang=en];internalDescription[lang=en];maxNights;maxPax;minPax;nationality(isocode);overrideRate;packageName;priceExclusion[lang=en];priceInclusion[lang=en];rateApplicabilityType(code)[unique=true];taxInformation[lang=en]
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10};{11};{12}</value>
+		</property>
+	</bean>
+	
+		<bean id="batchAgeDetailConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+
+                  INSERT_UPDATE AgeDetail;fromAge;toAge[unique=true]
+
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1}</value>
+		</property>
+	</bean>
+	
+		<bean id="batchSupplierRoomOfferConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+                   INSERT_UPDATE SupplierRoomOffer;maxNoOfRooms;roomCategory(code)[allownull=true];roomType(code)[unique=true]
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchSupplierAncillaryRateConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+                     INSERT_UPDATE SupplierAncillaryRate;activeDateRange[dateformat=dd.MM.yyyy hh:mm:ss];active[allownull=true];approvalStatus(code)[allownull=true];catalogVersion(catalog(id),version)[unique=true,allownull=true];code[unique=true,allownull=true];reason;remarks
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2};{3};{4};{5};{6}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchAncillaryRateDefinitionConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+              INSERT_UPDATE AncillaryRateDefinition;client(uid)[unique=true];clientGroup(uid)[unique=true];clientType(code)[allownull=true];currency(isocode)[allownull=true];seasonality(code)[unique=true];supplierAncillaryRate(code);supplierMarket(code)[allownull=true];travelPeriod[dateformat=dd.MM.yyyy hh:mm:ss]
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{2};{3};{4};{5};{6};{7}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchDateRangeRestrictionConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+                 INSERT_UPDATE DateRangeRestriction;absSurchargeSuppDetail(surchargeId)[unique=true];standardDateRange[dateformat=dd.MM.yyyy hh:mm:ss]
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchDiscountPerAgeConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+                    INSERT_UPDATE DiscountPerAge;PromotionGroup(Identifier);advanceBookingFromDays;advanceBookingToDays;approvalStatus(code);arrivalDaysOfWeek(code);code[allownull=true][unique=true];daysOfWeek(code);description;detailsURL;discountType(code);discountValue[allownull=true];enabled[allownull=true];endDate[dateformat=dd.MM.yyyy hh:mm:ss];externalDescription;immutableKey;immutableKeyHash;internalDescription;minPaxOrNight;name[lang=en];nationality(isocode);offerExclusion;offerInclusion;offerSubType(code);passengerType(code)[allownull=true];priority;productBanner(catalogVersion(catalog(id),version),code);rateApplicabilityType(code);reason;remarks;startDate[dateformat=dd.MM.yyyy hh:mm:ss];supplier(catalogVersion(catalog(id),version),code)[allownull=true];supplierRateCode(code);supplierRateType(code);thresholdType(code);title
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9}:{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29};{20};{31};{32}{33};{34}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchDiscountLongStayConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+                  INSERT_UPDATE DiscountLongStay;PromotionGroup(Identifier);advanceBookingFromDays;advanceBookingToDays;approvalStatus(code);arrivalDaysOfWeek(code);code[allownull=true][unique=true];daysOfWeek(code);description;detailsURL;discountCalculatedOn(code)[allownull=true];discountType(code);discountValue[allownull=true];enabled[allownull=true];endDate[dateformat=dd.MM.yyyy hh:mm:ss];externalDescription;immutableKey;immutableKeyHash;internalDescription;name[lang=en];nationality(isocode);offerExclusion;offerInclusion;offerSubType(code);passengerType(code)[allownull=true];priority;productBanner(catalogVersion(catalog(id),version),code);rateApplicabilityType(code);reason;remarks;startDate[dateformat=dd.MM.yyyy hh:mm:ss];stayDuration;supplier(catalogVersion(catalog(id),version),code)[allownull=true];supplierRateCode(code);supplierRateType(code);thresholdType(code);title
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9}:{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29};{20};{31};{32}{33};{34};{35}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchComplimentaryConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+                     INSERT_UPDATE Complimentary;PromotionGroup(Identifier);advanceBookingFromDays;advanceBookingToDays;applicableDays(code);approvalStatus(code);code[allownull=true][unique=true];description;detailsURL;discountType(code);enabled[allownull=true];endDate[dateformat=dd.MM.yyyy hh:mm:ss];externalDescription;immutableKey;immutableKeyHash;internalDescription;minPaxOrNight;name[lang=en];nationality(isocode);offerExclusion;offerInclusion;offerSubType(code);passengerType(code)[allownull=true];priority;productBanner(code);rateApplicabilityType(code);reason;remarks;startDate[dateformat=dd.MM.yyyy hh:mm:ss];supplier(catalogVersion(catalog(id),version),code)[allownull=true];supplierRateCode(code);supplierRateType(code);title
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9}:{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29};{20};{31};{32}{33};{34};{35}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchFOCOfferConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+                        INSERT_UPDATE FOCOffer;PromotionGroup(Identifier);advanceBookingFromDays;advanceBookingToDays;approvalStatus(code);code[allownull=true][unique=true];description;detailsURL;discountType(code);discountValue[allownull=true];enabled[allownull=true];endDate[dateformat=dd.MM.yyyy hh:mm:ss];externalDescription;focAppliedOnSupplement[allownull=true];immutableKey;immutableKeyHash;internalDescription;maxPaxOrNights;minPaxOrNight;name[lang=en];nationality(isocode);noOfChildren;offerExclusion;offerInclusion;offerSubType(code);passengerType(code)[allownull=true];priority;productBanner(catalogVersion(catalog(id),version),code);rateApplicabilityType(code);reason;remarks;startDate[dateformat=dd.MM.yyyy hh:mm:ss];supplement(code);supplementMandatory;supplier(catalogVersion(catalog(id),version),code)[allownull=true];supplierRateCode(code);supplierRateType(code);thresholdType(code);title
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9}:{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29};{20};{31};{32}{33};{34};{35};{36};{37}</value>
+		</property>
+	</bean>
+	
+		<bean id="batchAncillaryDiscountConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+                        INSERT_UPDATE AncillaryDiscount;PromotionGroup(Identifier);advanceBookingFromDays;advanceBookingToDays;ancillaryComponentType(code)[allownull=true];appliedOnAll[allownull=true];approvalStatus(code);bookingCount[allownull=true];code[allownull=true][unique=true];description;detailsURL;discountType(code);discountedBooking[allownull=true];enabled[allownull=true];endDate[dateformat=dd.MM.yyyy hh:mm:ss];externalDescription;immutableKey;immutableKeyHash;internalDescription;name[lang=en];nationality(isocode);offerExclusion;offerInclusion;offerSubType(code);priority;productBanner(catalogVersion(catalog(id),version),code);rateApplicabilityType(code);reason;remarks;startDate[dateformat=dd.MM.yyyy hh:mm:ss];supplier(catalogVersion(catalog(id),version),code)[allownull=true];supplierRateCode(code);supplierRateType(code);title
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9}:{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29};{20};{31}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchDiscountOnRateConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+                       INSERT_UPDATE DiscountOnRate;PromotionGroup(Identifier);advanceBookingFromDays;advanceBookingToDays;appliedOnAll[allownull=true];approvalStatus(code);arrivalDaysOfWeek(code);code[allownull=true][unique=true];daysOfWeek(code);description;detailsURL;discountCalculatedOn(code)[allownull=true];discountType(code);discountValue[allownull=true];enabled[allownull=true];endDate[dateformat=dd.MM.yyyy hh:mm:ss];externalDescription;immutableKey;immutableKeyHash;internalDescription;maximumNights;minPaxOrNight;name[lang=en];nationality(isocode);offerExclusion;offerInclusion;offerSubType(code);passengerType(code)[allownull=true];priority;productBanner(catalogVersion(catalog(id),version),code);rateApplicabilityType(code);reason;remarks;startDate[dateformat=dd.MM.yyyy hh:mm:ss];supplier(catalogVersion(catalog(id),version),code)[allownull=true];supplierRateCode(code);supplierRateType(code);thresholdType(code);title
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9}:{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29};{20};{31};{32}{33};{34};{35};{36};{37}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchDiscountOnNightConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+                       INSERT_UPDATE DiscountOnRate;PromotionGroup(Identifier);advanceBookingFromDays;advanceBookingToDays;appliedOnAll[allownull=true];approvalStatus(code);arrivalDaysOfWeek(code);code[allownull=true][unique=true];daysOfWeek(code);description;detailsURL;discountCalculatedOn(code)[allownull=true];discountType(code);discountValue[allownull=true];enabled[allownull=true];endDate[dateformat=dd.MM.yyyy hh:mm:ss];externalDescription;immutableKey;immutableKeyHash;internalDescription;maximumNights;minPaxOrNight;name[lang=en];nationality(isocode);offerExclusion;offerInclusion;offerSubType(code);passengerType(code)[allownull=true];priority;productBanner(catalogVersion(catalog(id),version),code);rateApplicabilityType(code);reason;remarks;startDate[dateformat=dd.MM.yyyy hh:mm:ss];supplier(catalogVersion(catalog(id),version),code)[allownull=true];supplierRateCode(code);supplierRateType(code);thresholdType(code);title
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9}:{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29};{20};{31};{32}{33};{34};{35}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchDiscountOnFreeNightConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+       INSERT_UPDATE DiscountOnFreeNight;PromotionGroup(Identifier);advanceBookingFromDays;advanceBookingToDays;appliedOnAll[allownull=true];approvalStatus(code);arrivalDaysOfWeek(code);code[allownull=true][unique=true];daysOfWeek(code);description;detailsURL;discountType(code);enabled[allownull=true];endDate[dateformat=dd.MM.yyyy hh:mm:ss];externalDescription;freeNightCalculatedOn(code)[allownull=true];immutableKey;immutableKeyHash;internalDescription;mealPlansForFreeNight(code)[allownull=true];name[lang=en];nationality(isocode);noOfFreeNight[allownull=true];noOfNights;offerExclusion;offerInclusion;offerSubType(code);priority;productBanner(catalogVersion(catalog(id),version),code);rateApplicabilityType(code);reason;remarks;startDate[dateformat=dd.MM.yyyy hh:mm:ss];supplier(catalogVersion(catalog(id),version),code)[allownull=true];supplierRateCode(code);supplierRateType(code);title
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9}:{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29};{20};{31};{32}{33};{34};{35}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchDiscountOnRoomOrCabinConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+                    INSERT_UPDATE DiscountOnRoomOrCabin;PromotionGroup(Identifier);advanceBookingFromDays;advanceBookingToDays;appliedOnAll[allownull=true];approvalStatus(code);arrivalDaysOfWeek(code);bookedRoomsCount[allownull=true];code[allownull=true][unique=true];daysOfWeek(code);description;detailsURL;discountType(code);discountValue[allownull=true];discountedRoomsCount[allownull=true];enabled[allownull=true];endDate[dateformat=dd.MM.yyyy hh:mm:ss];externalDescription;immutableKey;immutableKeyHash;internalDescription;name[lang=en];nationality(isocode);noOfNights;offerExclusion;offerInclusion;offerSubType(code);priority;productBanner(catalogVersion(catalog(id),version),code);rateApplicabilityType(code);reason;remarks;startDate[dateformat=dd.MM.yyyy hh:mm:ss];supplier(catalogVersion(catalog(id),version),code)[allownull=true];supplierRateCode(code);supplierRateType(code);thresholdType(code);title
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9}:{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29};{20};{31};{32}{33};{34};{35}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchDiscountOnPaxConverter" class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				#{defaultImpexProductHeader}
+
+                INSERT_UPDATE DiscountOnPax;PromotionGroup(Identifier);advanceBookingFromDays;advanceBookingToDays;appliedOnAll[allownull=true];approvalStatus(code);arrivalDaysOfWeek(code);code[allownull=true][unique=true];daysOfWeek(code);description;detailsURL;discountType(code);discountValue[allownull=true];discountedPaxCount[allownull=true];enabled[allownull=true];endDate[dateformat=dd.MM.yyyy hh:mm:ss];externalDescription;immutableKey;immutableKeyHash;internalDescription;minPaxOrNight;name[lang=en];nationality(isocode);offerExclusion;offerInclusion;offerSubType(code);passengerType(code)[allownull=true];paxBookedCount[allownull=true];priority;productBanner(catalogVersion(catalog(id),version),code);rateApplicabilityType(code);reason;remarks;startDate[dateformat=dd.MM.yyyy hh:mm:ss];supplier(catalogVersion(catalog(id),version),code)[allownull=true];supplierRateCode(code);supplierRateType(code);thresholdType(code);title
+
+		</value>
+		</property>
+		<property name="impexRow">
+			<value>;{1};{2};{3};{4};{5};{6};{7};{8};{9}:{10};{11};{12};{13};{14};{15};{16};{17};{18};{19};{20};{21};{22};{23};{24};{25};{26};{27};{28};{29};{20};{31};{32}{33};{34};{35};{36};{37}</value>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,31 @@
+$contentCatalog=Default
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+insert_update ActivitiesSupplierRate;active;ancillary(code,$contentCV);approvalStatus(code);$contentCV;city(isocode)[unique=true];code[unique=true];currency(isocode);effectiveFrom[dateformat=dd.MM.yyyy hh:mm:ss];lockedBy(uid);product(code,$contentCV)[unique=true];productSubCategory(code,$contentCV)[unique=true];productType(code,$contentCV);reason;remarks;supplier(code,$contentCV)[unique=true];supplierMarket(code,$contentCV)[unique=true];validityPeriod[unique=true,dateformat=dd.MM.yyyy hh:mm:ss]
+# active;ancillary;approvalStatus;catalogVersion;city;code;currency;effectiveFrom;lockedBy;product;productSubCategory;productType;reason;remarks;supplier;supplierMarket;validityPeriod
+;true;;approved;;AAJ;9745;EUR;04.05.2016 12:00:00;;;C001:EZ-IN:Staged;;;;Taj Hotel;North America;02.05.2016 12:00:00,10.05.2016 12:00:00
+
+insert_update ActivitySupplierRateDefinition;absSupplierRate(code,$contentCV,product(code,$contentCV),supplier(code,$contentCV));clientType(code)[unique=true];commisionType(code);commissionThreshold(code);commissionValue;companyRateCode(code);companyType(code);freeSaleLimited;inventory(&Item);priceComponent(code);rateTypeApplicableFor(code)[unique=true];seasonality(code)[unique=true];supplierRateCode(code)[unique=true];supplierType(code)[unique=true];travelFrom[dateformat=dd.MM.yyyy hh:mm:ss]
+# absSupplierRate;clientType;commisionType;commissionThreshold;commissionValue;companyRateCode;companyType;freeSaleLimited;inventory;priceComponent;rateTypeApplicableFor;seasonality;supplierRateCode;supplierType;travelFrom
+;1856:Default:Staged:'Villa Mille Etoiles':Default:Staged:Mason Travel:Default:Staged;B2B;NET;AMOUNT;23;76589;1853;false;;;STANDALONE;LOW_SEASON;76589;1853;02.05.2016 12:00:00,19.05.2016 12:00:00
+
+insert_update ActivityRateDetailDefinition;activitySuppRateDef(rateTypeApplicableFor(code),supplierRateCode(code));maxPaxCount[unique=true];minPaxCount[unique=true]
+# activitySuppRateDef;maxPaxCount;minPaxCount
+;STANDALONE:76589;45;4
+
+insert ActivityRateAdvDefinition;blockOutDate;childPolicy[lang=en];externalDescription[lang=en];internalDescription[lang=en];maxPax;minPax;nationality(isocode);offerSpecificVoucherNotes(&Item);operatorDetails[lang=en];operatorName(code);overrideRate;priceExclusion[lang=en];salesDate;taxInformation[lang=en];voucherInformation[lang=en]
+# ;blockOutDate;childPolicy_en;externalDescription_en;internalDescription_en;maxPax;minPax;nationality;offerSpecificVoucherNotes;operatorDetails_en;operatorName;overrideRate;priceExclusion_en;salesDate;taxInformation_en;voucherInformation_en
+;;;External Sample;internal Sample;23;2;;;XYZ;ABC;true;;;Tax infos;Voucher infos
+
+insert MealSupplementDetail;mealType(code);menuItemName(code);menuName(code)
+# mealType;menuItemName;menuName
+;VEGETARIAN;DAL;SPECIALS
+
+insert GuideSurchargeDetail;language(isocode);slabFrom;slabTo;specialSkills(code)
+# language;slabFrom;slabTo;specialSkills
+;en;25;78;BIRD_WATCHING
+
+insert_update ActivityRates;ageDetail(fromAge,toAge)[unique=true];costPerType(code)[unique=true];paxType(code)[unique=true];payOnArrival;price[unique=true];supplierRateDef(maxPaxCount,minPaxCount);ticketType(code)[unique=true]
+# ageDetail;costPerType;paxType;payOnArrival;price;supplierRateDef;ticketType
+;5:15;PAX_TYPE;ADULT;false;23;45:4;AC
+;5:15;PAX_TYPE;ADULT;true;21;45:4;NON_AC

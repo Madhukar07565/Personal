@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2015 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/integration/file
+		http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
+
+	<context:annotation-config />
+
+	<bean id="baseDirectoryTravelogixFlightProduct" class="java.lang.String">
+		<constructor-arg
+			value="#{baseDirectory}/${tenantId}/travelogix/product/flight" />
+	</bean>
+
+	<!-- 1) Scan for files -->
+	<file:inbound-channel-adapter id="batchFilesTravelogixFlight"
+		directory="#{baseDirectoryTravelogixFlightProduct}" filename-regex="flight_product-(\d+)\.csv"
+		comparator="fileOrderComparator">
+		<int:poller fixed-rate="1000" />
+	</file:inbound-channel-adapter>
+
+
+	<!-- 2) move the file to processing and create header -->
+	<file:outbound-gateway request-channel="batchFilesTravelogixFlight"
+		reply-channel="travelogixFlightProductBatchFilesProc" directory="#{baseDirectoryTravelogixFlightProduct}/processing"
+		delete-source-files="true" />
+
+	<int:service-activator input-channel="travelogixFlightProductBatchFilesProc"
+		output-channel="travelogixFlightProductBatchFilesHeaderInit" ref="travelogixFlightProductHeaderSetupTask"
+		method="execute" />
+
+	<bean id="travelogixFlightProductHeaderSetupTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.HeaderSetupTask">
+		<property name="catalog" value="EZ-IN" />
+		<property name="net" value="false" />
+		<property name="storeBaseDirectory" ref="baseDirectoryTravelogixFlightProduct" />
+	</bean>
+
+	<int:service-activator input-channel="travelogixFlightProductBatchFilesHeaderInit"
+		output-channel="travelogixFlightProductBatchFilesHeader" ref="headerInitTask"
+		method="execute" />
+
+	<!-- 3) transform csv to impex file -->
+	<int:service-activator input-channel="travelogixFlightProductBatchFilesHeader"
+		output-channel="batchFilesTran" ref="travelogixFlightProductBatchTransformerTask"
+		method="execute" />
+
+	<bean id="travelogixFlightProductBatchTransformerTask"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.task.ImpexTransformerTask"
+		init-method="initConvertersMap">
+		<property name="fieldSeparator" value="&#59;" />
+		<property name="encoding" value="UTF-8" />
+		<property name="linesToSkip" value="1" />
+		<property name="cleanupHelper" ref="cleanupHelper" />
+	</bean>
+
+	<!-- End Of Common Header -->
+	<!-- Transformer converters mappings -->
+
+	<bean id="batchFlightProductConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="flight_product" p:converter-ref="batchFlightProductConverter" />
+
+	<bean id="batchSubsidaryAirlineConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="flight_product" p:converter-ref="batchSubsidaryAirlineConverter" />
+		
+	<bean id="batchAirlineDetailsConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="flight_product" p:converter-ref="batchAirlineDetailsConverter" />	
+
+	<bean id="batchAirlineDisplayNameConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="flight_product" p:converter-ref="batchAirlineDisplayNameConverter" />
+	
+	<bean id="batchMarketDeactivationConfigConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="flight_product" p:converter-ref="batchMarketDeactivationConfigConverter" />
+	
+	<bean id="batchMarketSpecificURLConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="flight_product" p:converter-ref="batchMarketSpecificURLConverter" />
+		
+	<bean id="batchMarketSpecificLogoMediaConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="flight_product" p:converter-ref="batchMarketSpecificLogoMediaConverter" />
+		
+	<bean id="batchMarketSpecificLogoConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="flight_product" p:converter-ref="batchMarketSpecificLogoConverter" />
+		
+	<bean id="batchFlightMediaConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="flight_product" p:converter-ref="batchFlightMediaConverter" />	
+	
+	<bean id="batchFlightLogoConverterMapping"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.mapping.impl.DefaultConverterMapping"
+		p:mapping="flight_product" p:converter-ref="batchFlightLogoConverter" />	
+		
+	<bean id="batchFlightProductConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK flight Products
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+				$categories=supercategories(code, catalogVersion(catalog(id),version))[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$approved=approvalstatus(code)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.ArticleStatusDataDecorator]
+				INSERT_UPDATE FlightProduct;$catalogVersion[unique=true];code;name[lang=en,unique=true];airlineIATA(code)[unique=true];airlineType(code);commonProductId;financeControlId[unique=true];$approved;remarks;onlineDate[dateformat=$dateformat];offlineDate[dateformat=$dateformat];ticketDesignator;$categories;travellerPrograms(code)[mode=append]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{1};{3};{2};{10};{1};{5};{7};{9};{8};;{6};C001ST001:{0};{19}</value>
+		</property>
+	</bean>
+
+	<bean id="batchSubsidaryAirlineConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK flight Products
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				UPDATE FlightProduct;$catalogVersion[unique=true];name[lang=en,unique=true];mainAirlineProduct(name[lang=en],catalogVersion(catalog(id),version))[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{3};{11}:{0}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchAirlineDetailsConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK flight Products
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+				INSERT_UPDATE AirlineDetails;flightProduct(name[lang=en],catalogVersion(catalog(id),version))[unique=true,cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator];airlineType(code)[unique=true];flightNumberfrom[unique=true];flightNumberTo;rbds[mode=append];cabinClass(code);sectorFrom(code);sectorTo(code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{3}:{0};{12};{15};{16};{18};{17};{13};{14};</value>
+		</property>
+	</bean>
+	
+	<bean id="batchAirlineDisplayNameConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK flight Products
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+				INSERT_UPDATE AirMarketDisplayName;flightProduct(name[lang=en],catalogVersion(catalog(id),version))[unique=true,cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator];market(uid)[unique=true];displayName
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{3}:{0};{22};{23}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchMarketSpecificURLConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK flight Products
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+				INSERT_UPDATE MarketSpecificURL;flightProduct(name[lang=en],catalogVersion(catalog(id),version))[unique=true,cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator];market(uid)[unique=true];url;urlType(code)[unique=true]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{3}:{0};{24};{26};{25};</value>
+		</property>
+	</bean>
+	
+	<bean id="batchMarketDeactivationConfigConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK flight Products
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$dateformat=dd-MM-yyyy
+				INSERT_UPDATE DeactivationConfig;product(name[lang=en],catalogVersion(catalog(id),version))[unique=true,cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator];validityStartDate[dateformat=$dateformat];validityEndDate[dateformat=$dateformat];companyMarket(Market.uid)[unique=true];reason
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{3}:{0};{28};{29};{27};{30}</value>
+		</property>
+	</bean>
+	
+	<bean id="batchMarketSpecificLogoMediaConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK flight Products
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+				$importFolder=file:$BASE_SOURCE_DIR$
+				INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier)[default=images];realfilename
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{3}_{33}_{31};$importFolder/{33};{32};{0};;{33};</value>
+		</property>
+	</bean>
+	
+	<bean id="batchMarketSpecificLogoConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK flight Products
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				INSERT_UPDATE MarketSpecificLogo;flightProduct(name[lang=en],catalogVersion(catalog(id),version))[unique=true,cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator];market(uid)[unique=true];logo(code,$catalogVersion)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator];cabinClass(code);sectorFrom(code);sectorTo(code)
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{3}:{0};{31};{3}_{33}_{31}:{0};{17};{13};{14}</value>
+		</property>
+	</bean>
+
+	<bean id="batchFlightMediaConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK flight Products
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+				$importFolder=file:$BASE_SOURCE_DIR$
+				INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier)[default=images];realfilename
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{3}_{21};$importFolder/{21};{20};{0};;{21};</value>
+		</property>
+	</bean>
+	
+	<bean id="batchFlightLogoConverter"
+		class="de.hybris.platform.acceleratorservices.dataimport.batch.converter.impl.DefaultImpexConverter">
+		<property name="header">
+			<value>
+				# Insert CNK flight Products
+				$catalogVersion=catalogVersion(catalog(id),version)[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+				UPDATE FlightProduct;$catalogVersion[unique=true];name[lang=en,unique=true];logo(code,catalogVersion(catalog(id),version))[cellDecorator=com.cnk.travelogix.product.common.core.impex.decorator.CatalogDataDecorator]
+			</value>
+		</property>
+		<property name="impexRow">
+			<value>;{0};{3};{3}_{21}:{0}</value>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,18 @@
+<tns:AirBusinessServiceRS xmlns:ns2="http://services.sabre.com/STL/v01" xmlns:ns1="http://www.w3.org/2000/09/xmldsig#" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:sws="https://webservices.sabre.com/websvc" xmlns:ns4="http://www.w3.org/1999/xlink" xmlns:ns3="http://services.sabre.com/STL_Header/v120" xmlns:ns6="http://www.coxandkings.com/integ/suppl/air/AirBusinessSyncService" xmlns:ns5="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns8="http://www.opentravel.org/OTA/2003/05" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns7="http://www.coxandkings.com/integ/suppl/common" xmlns:ns9="https://sws-crt.cert.sabre.com/" xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/12/secext" xmlns:eb="http://www.ebxml.org/namespaces/messageHeader" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.coxandkings.com/integ/suppl/air">
+   <tns:ResponseHeader>
+      <ns7:Status>SUCCESS</ns7:Status>
+      <ns7:UserID>Venkatesh</ns7:UserID>
+      <ns7:SessionID>2053</ns7:SessionID>
+      <ns7:TransactionID>2053</ns7:TransactionID>
+   </tns:ResponseHeader>
+   <tns:ResponseBody>
+      <ns8:OTA_CancelRS Status="Complete">
+         <ns8:Success/>
+         <ns8:Warnings/>
+         <ns8:Comment>
+            <ns8:Text>CNLD</ns8:Text>
+         </ns8:Comment>
+         <ns8:Errors/>
+      </ns8:OTA_CancelRS>
+   </tns:ResponseBody>
+</tns:AirBusinessServiceRS>

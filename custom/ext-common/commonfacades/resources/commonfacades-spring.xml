@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2016 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+		
+	<context:annotation-config/> 
+	
+	<import resource="commonfacades-product-cache.xml"/>
+	<import resource="commonfacades-product-spring.xml"/>
+	<import resource="commonfacades-order-spring.xml"/>
+
+
+	<alias alias="simpleSuggestionFacade" name="defaultSimpleSuggestionFacade"/>
+	<bean id="defaultSimpleSuggestionFacade" class="com.cnk.travelogix.common.facades.suggestion.impl.DefaultSimpleSuggestionFacade" >
+		<property name="simpleSuggestionService" ref="simpleSuggestionService"/>
+		<property name="userService" ref="userService"/>
+		<property name="categoryService" ref="categoryService"/>
+		<property name="productService" ref="productService"/>
+		<property name="productConverter" ref="carouselProductConverter"/>
+		<property name="cartService" ref="cartService"/>
+	</bean>
+	
+	<bean id="carouselProductConverter" parent="defaultProductConverter">
+		<property name="populators">
+			<list merge="true">
+				<ref bean="productPricePopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="acceleratorVariantOptionDataConverter" alias="variantOptionDataConverter"/> 
+	<bean id="acceleratorVariantOptionDataConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="variantOptionData"/>
+		<property name="populators">
+			<list>
+				<ref bean="acceleratorVariantOptionDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultAcceleratorVariantOptionDataPopulator" alias="acceleratorVariantOptionDataPopulator"/>
+	<bean id="defaultAcceleratorVariantOptionDataPopulator"  class="com.cnk.travelogix.common.facades.populators.AcceleratorVariantOptionDataPopulator"
+	      parent="variantOptionDataPopulator" >
+		<property name="mediaService" ref="mediaService"/>
+		<property name="mediaContainerService" ref="mediaContainerService"/>
+		<property name="typeService" ref="typeService"/>
+		<property name="imageFormatMapping" ref="imageFormatMapping"/>
+		<property name="variantAttributeMapping">
+			<map>
+				<entry key="ApparelStyleVariantProduct.style" value="styleSwatch"/>
+			</map>
+		</property>
+	</bean>
+
+
+
+
+
+
+	<!-- Add the apparelProductPopulator to the productConverter -->
+<!-- 
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="productConverter"/>
+		<property name="add" ref="apparelProductPopulator"/>
+	</bean>
+ -->
+	<!-- accelerator Image Format Mappings -->
+	<alias name="acceleratorImageFormatMapping" alias="imageFormatMapping"/>
+	<bean id="acceleratorImageFormatMapping" parent="defaultImageFormatMapping">
+		<property name="mapping">
+			<map>
+				<entry key="superZoom" value="1200Wx1200H"/>
+				<entry key="zoom" value="515Wx515H"/>
+				<entry key="store" value="365Wx246H"/>
+				<entry key="product" value="300Wx300H"/>
+				<entry key="thumbnail" value="96Wx96H"/>
+				<entry key="cartIcon" value="65Wx65H"/>
+				<entry key="styleSwatch" value="30Wx30H"/>
+			</map>
+		</property>
+	</bean>
+
+	<alias name="acceleratorProductPrimaryImagePopulator" alias="productPrimaryImagePopulator" />
+	<bean id="acceleratorProductPrimaryImagePopulator" parent="defaultProductPrimaryImagePopulator">
+		<property name="imageFormats">
+			<list>
+				<value>zoom</value>
+				<value>product</value>
+				<value>thumbnail</value>
+				<value>cartIcon</value>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="acceleratorProductGalleryImagesPopulator" alias="productGalleryImagesPopulator" />
+	<bean id="acceleratorProductGalleryImagesPopulator" parent="defaultProductGalleryImagesPopulator">
+		<property name="imageFormats">
+			<list>
+				<value>superZoom</value>
+				<value>zoom</value>
+				<value>product</value>
+				<value>thumbnail</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="customerEmailContext" class="com.cnk.travelogix.common.facades.process.email.context.CustomerEmailContext" parent="abstractEmailContext" scope="prototype" >
+		<property name="customerConverter" ref="customerConverter"/>
+		<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<bean id="forgottenPasswordEmailContext" class="com.cnk.travelogix.common.facades.process.email.context.ForgottenPasswordEmailContext" parent="customerEmailContext" scope="prototype" >
+		<property name="customerConverter" ref="customerConverter"/>
+	</bean>
+	
+	<bean id="orderNotificationEmailContext" class="com.cnk.travelogix.common.facades.process.email.context.OrderNotificationEmailContext" parent="abstractEmailContext" scope="prototype" >
+		<property name="orderConverter" ref="orderConverter"/>
+	</bean>
+	
+	<bean id="deliverySentEmailContext" class="com.cnk.travelogix.common.facades.process.email.context.DeliverySentEmailContext" parent="abstractEmailContext" scope="prototype" >
+		<property name="consignmentConverter" ref="consignmentConverter"/>
+	</bean>
+	
+	<bean id="readyForPickupEmailContext" class="com.cnk.travelogix.common.facades.process.email.context.ReadyForPickupEmailContext" parent="abstractEmailContext" scope="prototype" >
+		<property name="consignmentConverter" ref="consignmentConverter"/>
+	</bean>
+	
+	<bean id="orderCancelledEmailContext" class="com.cnk.travelogix.common.facades.process.email.context.OrderCancelledEmailContext" parent="abstractEmailContext" scope="prototype" >
+		<property name="orderConverter" ref="orderConverter"/>
+	</bean>
+	
+	<bean id="orderRefundEmailContext" class="com.cnk.travelogix.common.facades.process.email.context.OrderRefundEmailContext" parent="abstractEmailContext" scope="prototype" >
+		<property name="orderConverter" ref="orderConverter"/>
+	</bean>
+	<bean id="consignmentCollectionReminderEmailContext" class="com.cnk.travelogix.common.facades.process.email.context.ConsignmentCollectionReminderEmailContext" parent="abstractEmailContext" scope="prototype">
+        <property name="consignmentConverter" ref="consignmentConverter"/>
+        <property name="formatFactory" ref="formatFactory"/>
+        <property name="customerServiceUncollectedConsignmentStrategy" ref="customerServiceUncollectedConsignmentStrategy" />
+        <property name="orderConverter" ref="orderConverter"/>
+    </bean>
+
+	<bean id="orderPartiallyModifiedEmailContext" class="com.cnk.travelogix.common.facades.process.email.context.OrderPartiallyModifiedEmailContext" parent="abstractEmailContext" scope="prototype" >
+		<property name="orderConverter" ref="orderConverter"/>
+		<property name="orderEntryConverter" ref="orderEntryConverter"/>
+		<property name="priceDataFactory" ref="priceDataFactory"/>		
+	</bean>
+
+	<bean id="orderPartiallyCanceledEmailContext" class="com.cnk.travelogix.common.facades.process.email.context.OrderPartiallyCanceledEmailContext" parent="orderPartiallyModifiedEmailContext" scope="prototype" >
+	</bean>
+
+	<bean id="orderPartiallyRefundedEmailContext" class="com.cnk.travelogix.common.facades.process.email.context.OrderPartiallyRefundedEmailContext" parent="orderPartiallyModifiedEmailContext" scope="prototype" >
+	</bean>
+
+	<bean id="notPickedUpConsignmentCanceledEmailContext" class="com.cnk.travelogix.common.facades.process.email.context.NotPickedUpConsignmentCanceledEmailContext" parent="abstractEmailContext" scope="prototype" >
+		<property name="consignmentConverter" ref="consignmentConverter"/>
+		<property name="priceDataFactory" ref="priceDataFactory"/>
+	</bean>
+
+	<alias name="yacceleratorSearchPagePointOfServiceDistancePopulator" alias="searchPagePointOfServiceDistancePopulator" />
+	<bean id="yacceleratorSearchPagePointOfServiceDistancePopulator" class="com.cnk.travelogix.common.facades.storefinder.populators.SearchPagePointOfServiceDistancePopulator" >
+		<property name="pointOfServiceDistanceConverter" ref="pointOfServiceDistanceConverter"/>
+	</bean>
+
+	<!-- payment section start -->
+	<!-- <alias name="cnkPaymentFacade" alias="paymentFacade"/> -->
+	<bean id="cnkPaymentFacade" class="com.cnk.travelogix.common.facades.payment.impl.CustomCnkPaymentFacade">
+		<property name="baseSiteService" ref="baseSiteService"/>
+		<property name="baseStoreService" ref="baseStoreService"/>
+		<property name="paymentSubscriptionResultDataConverter" ref="paymentSubscriptionResultDataConverter"/>
+		<property name="siteConfigService" ref="siteConfigService"/>
+		<property name="paymentService" ref="cnkPaymentService"/>
+		<property name="siteBaseUrlResolutionService" ref="siteBaseUrlResolutionService"/>
+		<property name="userService" ref="userService"/>
+		<property name="cartService" ref="cartService"/>
+		<property name="sessionService" ref="sessionService"/>
+		<property name="checkoutCustomerStrategy" ref="checkoutCustomerStrategy"/>
+		<property name="paymentModeSettingPopulator" ref="paymentModeSettingPopulator"/>
+		<property name="checkoutFacade" ref="acceleratorCheckoutFacade"/>
+	</bean>
+
+	<!-- payment section end -->
+
+	<bean id="visaInfoPopulator"
+		class="com.cnk.travelogix.b2c.facades.customer.converters.populator.VisaInfoPopulator" />
+	<!-- update by Rick Zhang for TRAV-384 start -->
+	<bean id="b2cTravellerPopulator"
+		class="com.cnk.travelogix.b2c.facades.customer.converters.populator.TravellerPopulator" />
+	<!-- update by Rick Zhang for TRAV-384 end -->
+
+	<bean id="visaInfoConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.VisaInfoData" />
+		<property name="populators">
+			<list>
+				<ref bean="visaInfoPopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- update by Rick Zhang for TRAV-384 start -->
+	<bean id="b2cTravellerConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.TravellerData" />
+		<property name="populators">
+			<list>
+				<ref bean="b2cTravellerPopulator" />
+			</list>
+		</property>
+	</bean>
+	<!-- update by Rick Zhang for TRAV-384 end -->
+
+	<bean id="visaInfoReversePopulator"
+		class="com.cnk.travelogix.b2c.facades.customer.converters.populator.VisaInfoReversePopulator" />
+	<bean id="travellerReversePopulator"
+		class="com.cnk.travelogix.b2c.facades.customer.converters.populator.TravellerReversePopulator" />
+
+	<bean id="visaInfoReverseConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.model.VisaInfoModel" />
+		<property name="populators">
+			<list>
+				<ref bean="visaInfoReversePopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="travellerReverseConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.model.TravellerModel" />
+		<property name="populators">
+			<list>
+				<ref bean="travellerReversePopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="cityPopulator"
+		class="com.cnk.travelogix.common.facades.populators.CityPopulator" />
+
+<alias name="cityConverter" alias="cityConverter"/>
+	<bean id="cityConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="com.cnk.travelogix.common.core.cart.data.CityData" />
+		<property name="populators">
+			<list>
+				<ref bean="cityPopulator" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="cityReversePopulator"
+        class="com.cnk.travelogix.common.facades.populators.CityReversePopulator" />
+	
+    <bean id="cityReverseConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass"
+            value="com.cnk.travelogix.masterdata.core.c2l.model.CityModel" />
+        <property name="populators">
+            <list>
+                <ref bean="cityReversePopulator" />
+            </list>
+        </property>
+    </bean>
+
+	<alias name="extI18NFacade" alias="i18NFacade" />
+	<bean id="extI18NFacade"
+		class="com.cnk.travelogix.common.facades.i18n.impl.ExtI18NFacade"
+		parent="defaultI18NFacade" />
+    
+    <bean id="travAddressConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass"
+            value="de.hybris.platform.commercefacades.user.data.AddressData" />
+        <property name="populators">
+            <list>
+                <ref bean="travAddressPopulator" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="travAddressPopulator"
+        class="com.cnk.travelogix.b2c.facades.customer.converters.populator.TravAddressPopulator" 
+        parent="defaultAddressPopulator"/>
+
+    <bean id="travAddressReverseConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass"
+            value="de.hybris.platform.core.model.user.AddressModel" />
+        <property name="populators">
+            <list>
+                <ref bean="travAddressReversePopulator" />
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="travAddressReversePopulator"
+        class="com.cnk.travelogix.b2c.facades.customer.converters.populator.TravAddressReversePopulator" 
+        parent="defaultAddressReversePopulator"/>
+     
+	<bean id="photoPopulator"
+		class="com.cnk.travelogix.b2c.facades.customer.converters.populator.PhotoPopulator" />
+    
+    <bean id="defaultAutoSuggestionFacade" class="com.cnk.travelogix.common.facades.autoSuggestion.impl.DefaultAutoSuggestionFacade">
+     </bean>
+     
+     <bean id="defaultHotelCompareFacade" class="com.cnk.travelogix.common.facades.product.impl.DefaultHotelCompareFacade"></bean>
+     
+    <bean id="cnKAccountFacade" class="com.cnk.travelogix.common.facades.account.impl.ExtCnKAccountFacade">
+	</bean>
+
+	
+	<bean id="cnkDefaultOrderFacade" class="com.cnk.travelogix.common.facades.order.impl.CNKDefaultOrderFacade"
+			parent="defaultOrderFacade">
+			<property name="customerAccountService" ref="cnkDefaultCustomerAccountService"/>
+			
+			</bean>
+			
+	<!--Start for alerts & notifications -->
+     <bean id="jobMonitoringLogHelper" class="com.cnk.travelogix.common.facades.alerts.helper.JobMonitoringLogHelper" />
+     
+     <alias alias="alertNotificationService" name="defaultAlertNotificationService" />
+     <bean id="defaultAlertNotificationService" class="com.cnk.travelogix.common.facades.alert.service.impl.DefaultAlertNotificationService"/>
+     
+     <bean id="sendAlertNotificationAction" class="com.cnk.travelogix.common.facades.alerts.process.SendAlertNotificationAction" parent="abstractAction"/>
+     
+     <alias alias="triggerService" name="alertTriggerService" />
+     <bean id="alertTriggerService" class="com.cnk.travelogix.common.facades.service.workflow.impl.AlertTriggerService" parent="defaultTriggerService"/>
+     
+     <bean id="sendAlertNotificationJob" class="com.cnk.travelogix.common.facades.job.SendAlertNotificationJob"/>
+     <bean id="sendAlertNotificationProcessJob" class="com.cnk.travelogix.common.facades.job.SendAlertNotificationProcessJob"/>
+     <!--End for alerts & notifications -->
+
+     <!-- populator -->
+     <alias name="hotelDataConverter" alias="defaultHotelDataConverter" />
+	<bean id="hotelDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.cnk.travelogix.common.facades.product.data.hotel.HotelData" />
+		<property name="populators">
+			<list>
+				<ref bean="defaultHotelGeneralPopilator" />
+				<ref bean="defaultHotelBookingPolicyListPopulator" />
+				<ref bean="defaultHotelFacilityListPopulator" />
+				<ref bean="defaultHotelInAndAroundListPopulator" />
+				<ref bean="defaultHotelLandmarkListPopulator" />
+				<ref bean="defaultHotelOfferListPopulator" />
+				<ref bean="defaultHotelRoomListPopulator" />
+				<ref bean="defaultHotelTripAdvisorPopulator" />
+			</list>
+		</property>
+	</bean>
+	<alias name="hotelGeneralPopulator" alias="defaultHotelGeneralPopilator" />
+	<bean id="hotelGeneralPopulator"
+		class="com.cnk.travelogix.common.facades.populators.hotelDataPopulator.HotelGeneralInfoPopulator"></bean>
+	<alias name="hotelBookingPolicyListPopulator" alias="defaultHotelBookingPolicyListPopulator" />
+	<bean id="hotelBookingPolicyListPopulator"
+		class="com.cnk.travelogix.common.facades.populators.hotelDataPopulator.HotelBookingPolicyListPopulator"></bean>
+    <alias name="hotelFacilityListPopulator" alias="defaultHotelFacilityListPopulator" />
+	<bean id="hotelFacilityListPopulator"
+		class="com.cnk.travelogix.common.facades.populators.hotelDataPopulator.HotelFacilityListPopulator"></bean>
+    <alias name="hotelInAndAroundListPopulator" alias="defaultHotelInAndAroundListPopulator" />
+	<bean id="hotelInAndAroundListPopulator"
+		class="com.cnk.travelogix.common.facades.populators.hotelDataPopulator.HotelInAndAroundListPopulator"></bean>
+	<alias name="hotelLandmarkListPopulator" alias="defaultHotelLandmarkListPopulator" />
+	<bean id="hotelLandmarkListPopulator"
+		class="com.cnk.travelogix.common.facades.populators.hotelDataPopulator.HotelLandmarkListPopulator"></bean>
+	<alias name="hotelOfferListPopulator" alias="defaultHotelOfferListPopulator" />
+	<bean id="hotelOfferListPopulator"
+		class="com.cnk.travelogix.common.facades.populators.hotelDataPopulator.HotelOfferListPopulator"></bean>
+    <alias name="hotelRoomListPopulator" alias="defaultHotelRoomListPopulator" />
+	<bean id="hotelRoomListPopulator"
+		class="com.cnk.travelogix.common.facades.populators.hotelDataPopulator.HotelRoomListPopulator">
+		<property name="hotelSingleRoomPopulator" ref="defaultHotelSingleRoomPopulator"></property>	
+	</bean>
+	<alias name="hotelSingleRoomPopulator" alias="defaultHotelSingleRoomPopulator"/>
+	<bean id="hotelSingleRoomPopulator" 
+		class="com.cnk.travelogix.common.facades.populators.hotelDataPopulator.HotelSingleRoomPopulator"/>
+	<alias name="hotelTripAdvisorPopulator" alias="defaultHotelTripAdvisorPopulator" />
+	<bean id="hotelTripAdvisorPopulator"
+		class="com.cnk.travelogix.common.facades.populators.hotelDataPopulator.HotelTripAdvisorPopulator"></bean>
+	<!--
+	<bean id="flightHotelSearchDataConverter" class="com.cnk.travelogix.common.core.si.converters.FlightHotelSearchDataConverter">
+		<property name="targetClass" value="com.cnk.travelogix.common.core.storefront.svcint.dto.air.SvcIntFlightGetAvailabilityAndFareRequest" />
+	</bean>
+	<bean id="svcIntFlightGetAvailabilityAndFareResponseConverter" class="com.cnk.travelogix.common.core.si.converters.SvcIntFlightGetAvailabilityAndFareResponseConverter">
+		<property name="targetClass" value="com.cnk.travelogix.common.facades.product.data.FlightHotelSearchData" />
+	</bean>
+	-->
+</beans>

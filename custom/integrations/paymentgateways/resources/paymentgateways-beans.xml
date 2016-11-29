@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2000-2016 hybris AG
+ All rights reserved.
+
+ This software is the confidential and proprietary information of hybris
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with hybris.
+-->
+
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+<bean class="com.cnk.travelogix.integrations.payment.request.beans.KeyValueMapData">
+		<property name="paymentGatewayName" type="java.lang.String"/>
+		<property name="key" type="java.lang.String"/>
+		<property name="value" type="java.lang.String"/>				
+</bean>
+
+<bean class="com.cnk.travelogix.integrations.payment.request.beans.PaymentGatewayDetailData">
+		<property name="paymentMode" type="java.util.List&lt;com.cnk.travelogix.integrations.payment.request.beans.KeyValueMapData>"/>
+		<property name="currency" type="java.util.List&lt;com.cnk.travelogix.integrations.payment.request.beans.KeyValueMapData>"/>
+		<property name="cardType" type="java.util.List&lt;com.cnk.travelogix.integrations.payment.request.beans.KeyValueMapData>"/>
+					
+</bean>
+
+<bean class="com.cnk.travelogix.integrations.payment.request.beans.PaymentGatewayMappingData">
+		<property name="paymentGatewayName" type="java.lang.String"/>
+		<property name="paymentGatewayRequestXMLTemplateID" type="java.lang.String"/>
+		<property name="paymentGatewayResponseXMLTemplateID" type="java.lang.String"/>
+		<property name="paymentGatewayDetailList" type="java.util.List&lt;com.cnk.travelogix.integrations.payment.request.beans.PaymentGatewayDetailData>"/>
+</bean>
+
+<bean class="com.cnk.travelogix.integrations.payment.request.beans.PaymentUserSelectedData">
+		<property name="paymentGatewayId" type="java.lang.String"/>
+		<property name="paymentMode" type="java.lang.String"/>
+		<property name="cardType" type="java.lang.String"/>
+		<property name="amount" type="java.lang.String"/>
+		<property name="currency" type="java.lang.String"/>
+		<property name="orderId" type="java.lang.String"/>
+		<property name="currentBaseSiteURL" type="java.lang.String"/>			
+</bean>
+
+<bean class="com.cnk.travelogix.integrations.payment.response.beans.PaymentServiceResponseData">
+		<property name="success" type="java.lang.boolean"/>
+		<property name="message" type="java.lang.String"/>
+		<property name="gatewayId" type="java.lang.String"/>
+		<property name="paymentMode" type="java.lang.String"/>
+		<property name="cardType" type="java.lang.String"/>
+		<property name="amount" type="java.lang.String"/>
+		<property name="currency" type="java.lang.String"/>
+		<property name="receiptNo" type="java.lang.String"/>
+		<property name="decision" type="java.lang.String"/>	
+		<property name="cardNumber" type="java.lang.String"/>
+		<property name="cardHolder" type="java.lang.String"/>
+		<property name="cardExpiryMonth" type="java.lang.String"/>
+		<property name="cardExpiryYear" type="java.lang.String"/>
+		<property name="orderCode" type="java.lang.String"/>		 	
+</bean>
+	
+	<bean class="com.cnk.travelogix.integrations.payment.request.beans.FormAttribute">
+		<property name="value" type="java.lang.String"/>
+		<property name="valueReady" type="java.lang.boolean"/>
+		<property name="defaultValue" type="java.lang.String"/>
+		<property name="defaultValueFlag" type="java.lang.boolean"/>
+		<property name="decoratorName" type="java.lang.String"/>
+		<property name="decoratorRequired" type="java.lang.boolean"/>
+		<property name="requiredToADDToHTMLForm" type="java.lang.boolean"/>
+		<property name="mappedToUserSelectedValue" type="java.lang.String"/>
+		<property name="addToSubmitForm" type="java.lang.String"/>
+	</bean>
+	
+	<bean class="com.cnk.travelogix.integrations.payment.response.beans.ResponseAttribute">
+		<property name="responseAttributeName" type="java.lang.String"/>
+		<property name="defaultValue" type="java.lang.String"/>
+		<property name="defaultValueFlag" type="java.lang.boolean"/>
+		<property name="value" type="java.lang.String"/>
+		<property name="valueReady" type="java.lang.boolean"/>
+		<property name="decoratorName" type="java.lang.String"/>
+		<property name="decoratorRequired" type="java.lang.boolean"/>
+		<property name="requiredValidationAttributes" type="java.lang.String"/>
+		<property name="requiredMapping" type="java.lang.boolean"/>
+		<property name="mappedTo" type="java.lang.String"/>
+	</bean>
+	
+	<!-- FMS / Fraud Check Beans section -->
+	
+	<bean class="com.cnk.travelogix.integrations.payment.fraud.beans.FraudCheckData"> 
+		<property name="merchantID" type="java.lang.String"/> <!-- Mandatory Your MerchantID provided by RMS -->
+		<property name="key" type="java.lang.String"/> <!-- Mandatory Your Licence key provided by RMS -->
+		<property name="templateID" type="java.lang.String"/>
+		<property name="customerID" type="java.lang.String"/>
+		<property name="cardNumber" type="java.lang.String"/>
+		<property name="userMD5" type="java.lang.String"/>
+		<property name="passMD5" type="java.lang.String"/>
+		<property name="site" type="java.lang.String"/> <!-- Mandatory The ID of the site or merchant for which the transaction placed for -->
+		<property name="amount" type="java.lang.String"/> <!-- Mandatory TxnAmount -->
+		<property name="referenceNo" type="java.lang.String"/> <!-- Mandatory OrderID -->
+		<property name="custEmail" type="java.lang.String"/> <!-- Mandatory-->
+		<property name="custPhone" type="java.lang.String"/> <!--Mandatory -->
+		<property name="country" type="java.lang.String"/> <!-- Mandatory The billing country for the order -->
+		<property name="dateTime" type="java.lang.String"/> <!--  Mandatory The date & time of the transaction [YYYY-MM-DD HH:MM:SS]-->
+	</bean>
+	
+	
+	<bean class="com.cnk.travelogix.integrations.payment.fraud.beans.FraudCheckResponseUpdateData"> 
+		<property name="merchantID" type="java.lang.String"/> <!-- Mandatory Your MerchantID provided by RMS -->
+		<property name="key" type="java.lang.String"/> <!-- Mandatory Your Licence key provided by RMS -->
+		<property name="txnLogID" type="java.lang.String"/> <!-- Mandatory OrderID -->
+		<property name="status" type="java.lang.String"/> <!--Mandatory -->
+		<property name="reasonCode" type="java.lang.String"/>
+	</bean>
+	
+		
+	<!-- End of FMS / Fraud Check Beans section -->	
+
+</beans>

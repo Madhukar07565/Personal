@@ -1,0 +1,28 @@
+
+
+"INSERT_UPDATE WorkflowTemplate";"code[unique=true]"				;"name[lang=de]"         ;"name[lang=en]"         ;"owner(uid)";"description[lang=de]";"description[lang=en]";"activationscript";"visibleForPrincipals(uid)";;;
+								;"TravelogixROEWorkflowTemplate"	;"TravelogixROE Workflow";"TravelogixROE Workflow";"admin"     ;                      ;                      ;                  ;"admingroup"                 ;;;
+
+
+"INSERT_UPDATE WorkflowActionTemplate";"code[unique=true]";"name[lang=de]";"name[lang=en]"        ;"description[lang=de]";"description[lang=en]";"principalAssigned(uid)"       ;"workflow(code)[unique=true]"  ;"sendEmail";"emailAddress";"rendererTemplate(code)";"actionType(code)"
+                                      ;"TR_Confirm"       ;"Bestätigung"  ;"Confirmation by admin";                      ;                      ;"admingroup"                     ;"TravelogixROEWorkflowTemplate";"false"    ;              ;                        ;"start"
+                                      ;"TR_End"           ;"Ende"         ;"End"                  ;                       ;                      ;"admingroup"            ;"TravelogixROEWorkflowTemplate";"false"                        ;           ;              ;"end"
+
+
+"INSERT_UPDATE AutomatedWorkflowActionTemplate";"code[unique=true]"  ;"name[lang=de]"           ;"name[lang=en]"     ;"description[lang=de]";"description[lang=en]";"principalAssigned(uid)";"workflow(code)[unique=true]"  ;"sendEmail";"emailAddress";"rendererTemplate(code)";"actionType(code)";jobHandler
+                                               ;"TR_Confirm_Positive";"Template bestätigt"      ;"Template confirmed";                      ;                      ;"admingroup"            ;"TravelogixROEWorkflowTemplate";"false"    ;              ;                        ;"normal"          ;templateConfirmationActionTRJob
+                                               ;"TR_Confirm_Negative";"Template nicht bestätigt";"Template declined" ;                      ;                      ;"admingroup"            ;"TravelogixROEWorkflowTemplate";"false"    ;              ;                        ;"normal"          ;templateDeclineActionTRJob
+
+"INSERT_UPDATE WorkflowDecisionTemplate";"code[unique=true]";"name[lang=de]"           ;"name[lang=en]"   ;"actionTemplate(code)";"description[allownull=true]";;;;;;
+                                        ;"TR001"            ;"Spieler bestätigen"      ;"Approved"        ;"TR_Confirm"          ;;;;;;;
+                                        ;"TR002"            ;"Spieler nicht bestätigen";"UNApporved"      ;"TR_Confirm"          ;;;;;;;
+                                        ;"TR003"            ;"Ende"                    ;"End"             ;"TR_Confirm_Positive" ;;;;;;;
+                                        ;"TR004"            ;"Ende"                    ;"End"             ;"TR_Confirm_Negative" ;;;;;;;
+
+
+"# new Workflow Model";;;;;;;;;;;
+"insert_update WorkflowActionTemplateLinkTemplateRelation";"source(code)[unique=true]";"target(code)[unique=true]";"andConnectionTemplate";"qualifier"                                 ;;;;;;;
+                                                          ;"TR001"                    ;"TR_Confirm_Positive"      ;"false"                ;"WorkflowActionTemplateLinkTemplateRelation";;;;;;;
+                                                          ;"TR002"                    ;"TR_Confirm_Negative"      ;"false"                ;"WorkflowActionTemplateLinkTemplateRelation";;;;;;;
+                                                          ;"TR003"                    ;"TR_End"                   ;"false"                ;"WorkflowActionTemplateLinkTemplateRelation";;;;;;;
+                                                          ;"TR004"                    ;"TR_End"                   ;"false"                ;"WorkflowActionTemplateLinkTemplateRelation";;;;;;;

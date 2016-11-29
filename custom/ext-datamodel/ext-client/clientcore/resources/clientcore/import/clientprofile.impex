@@ -1,0 +1,78 @@
+# Sample data of client type.
+$lang=en
+
+INSERT_UPDATE Market;uid[unique=true];locName[lang=$lang]
+;IND;India
+;AU;Australia
+
+INSERT_UPDATE Language;isocode[unique=true];name[lang=$lang]
+;en;English
+;ja;Japanese
+;hi;Hindi
+;mr;Marathi
+;gu;Gujarati
+;nl;Dutch 
+
+INSERT_UPDATE DistributionChannel;uid[unique=true];locName[lang=$lang]
+;Website;Website
+;Whitelabel;White Label
+;XML;XML
+;ASP;ASP
+;Call Centre;Call Centre
+;Branch;Branch
+;Mobile;Mobile
+
+INSERT_UPDATE Currency;isocode[unique=true];name[lang=$lang];active[default=true]
+;INR;Indian Rupee;true
+
+INSERT_UPDATE B2BUnit;uid[unique=true];&B2BUnit;telephone;groupCompany(uid);taxHeads(key(code),value);locName
+;CnKB2BIndEng;CnKB2BIndEng;1234522222;E001;VAT_REG_NO->6877851;CnkB2BUnitlocation
+
+INSERT_UPDATE TravelogixClientType;uid[unique=true];language(isocode);clientType(code);&clientType;companyMarkets(Market.uid);settlement[default=false];clientCommercials[default=false];transactional[default=false];transactionalCurrency(Currency.isocode);pointOfSale(DistributionChannel.uid);reason[unique=true, lang=$lang];remarks[lang=$lang]
+;12B2b121;en;B2B;12B2b121;IND;true;true;true;INR;XML,ASP;Others;Others
+
+INSERT_UPDATE GroupOfCompanies;uid[unique=true];name;approvalStatus(code);active[default=true];activeFrom[dateFormat=dd-MM-yyyy];activeTo[dateFormat=dd-MM-yyyy]
+;C001;Cox & kings Group of Companies;approved;true;01-04-2016;31-12-9999
+
+INSERT_UPDATE GroupCompany;uid[unique=true];name;groupOfCompanies(uid);approvalStatus(code);active[default=true];activeFrom[dateFormat=dd-MM-yyyy];activeTo[dateFormat=dd-MM-yyyy]
+;E001;Ezeego One Group;C001;approved;true;01-04-2016;31-12-9999
+
+INSERT_UPDATE Address;owner(Company.uid)[unique=true];&addressId;streetnumber; streetname;branchName(code);email;addressType(code)[unique=true];streetname[unique=true];street3;street4;street5;town;postalcode;country(isocode);region(isocode);city(isocode);area;location;landmark;
+#;E000;E000;asasas;sdsdds; ANDHERI;cnksupport@cnk.com;HEADQUARTER;TATA House;;;;Fort Road;18551;US;US-FL;FMU;
+
+INSERT_UPDATE Company;uid[unique=true];name;groupCompany(uid);taxHeads(key(code),value);currency(isocode);telephone;contactAddress(&addressId);approvalStatus(code);active[default=true];activeFrom[dateFormat=dd-MM-yyyy];activeTo[dateFormat=dd-MM-yyyy]
+;E000;CNK India;E001;VAT_REG_NO->687785;INR;+912241440000;;approved;true;01-04-2016;31-12-9999
+
+INSERT_UPDATE Address;owner(Company.uid)[unique=true];&addressId;streetname[unique=true];streetnumber[unique=true];postalcode;duplicate;town;country(isocode);city(isocode);region(isocode);street3;street4;street5;suburbDowntown;area;location;latitude;longitude;addressType;branchName
+;E000;E000;Crystal Drive;1480;18551;true;Safegard;US;AAF;US-AK
+
+INSERT_UPDATE AffiliationInformation;registrationNo[unique=true];affiliationName(code)
+;IATA0011;IATA
+
+INSERT_UPDATE KYCReqDocument;kycDocId[unique=true];&pan
+;PAN1234;PAN1234
+
+INSERT_UPDATE KYCReqDocument;kycDocId[unique=true];&vatNo
+;VAT1234;VAT1234
+
+INSERT_UPDATE KYCReqDocument;kycDocId[unique=true];&tdsNo
+;TDS1234;TDS1234
+
+INSERT_UPDATE KycInformation;reqDocument(KYCReqDocument.kycDocId)[unique=true];&panNum;kycDocumentType(code)
+#;PAN1234;PAN1234;PAN
+
+INSERT_UPDATE SalesOffice;uid[unique=true];locName[lang=$lang]
+;VMN01;Vaman Center
+
+INSERT_UPDATE Bank;code[unique=true];&bankId;name[lang=$lang]
+;BANK1212;BANK1212;HDFC Bank;
+
+INSERT_UPDATE BankAccountDetail;bankAccountId[unique=true]; acquirerAccCode[unique=true]; intermediaryBranchCode[unique=true];&bankIFSCcode;bank(&bankId);address;accountNumber;branchCode;currency(isocode);travelogixB2BUnit(TravelogixB2BUnit.uid); bsrCode; micrCode;branchCode;bankAddress(&addressId)
+#;BANK56467;ACCR56467;IFC56467;IFC56467;BANK1212;Link Rd Branch;AC88991234;TBTS345;INR;;bsrc121;micr1212;br1212;VMN01;E000
+
+INSERT_UPDATE TravelogixB2BUnit;uid[unique=true, allownull=true];name;locName[lang=$lang];trvlClientType(code);language(isocode);companyMarket(Market.uid);clientCategory(code);clientSubCategory(code);companyType(code);telephone;modeOfRegistration(code);affiliationInformation(AffiliationInformation.registrationNo);approvalStatus(code);autoEmailInvoice[default=false]; settlement[default=false]; clientCommercials[default=false]; transactional[default=false];currency(Currency.isocode);taxHeads(key(code),value);reason[lang=$lang];remarks[lang=$lang];reportingSaleOffice(SalesOffice.uid);typeOfAssociation(code);clientGroupCompany(code);groups(PrincipalGroup.uid);backendType(code)
+;CnkB2BUnit1;Global Tours;Global Tours;B2B;en;IND;ALLIANCE_PARTNERS;BANKS;PUBLIC;9987654321;DIRECT;IATA0011;approved;;;;;INR;PAN_NO->687567;Other;Other;VMN01;MASTER_AGENT;TATA_GROUP;;SAP
+
+# TravelogixB2BUnit referred here as a B2BUnit
+INSERT_UPDATE B2BCustomer;uid[unique=true];customerId[unique=true];name;email[unique=true];loginPhoneNo;loginValidation(code);defaultB2BUnit(TravelogixB2BUnit.uid)[default=b2bcustomergroup]
+#;CnkB2BCustomer;admin;Admin User;cchchch@cnk.com;;ALL;CnkB2BUnit

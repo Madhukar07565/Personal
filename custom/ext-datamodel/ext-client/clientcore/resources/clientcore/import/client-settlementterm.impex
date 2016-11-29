@@ -1,0 +1,49 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd/MM/yyyy
+
+##################################### ClientSettlement #######################################
+#INSERT_UPDATE ClientSettlement;entityType;
+INSERT_UPDATE ClientSettlement;code[unique=true];$catalogVersion;companyMarket(uid);commercialType(code);commercial(uid);supplierSettlementPeriodicity(day,month,year);interestApplicable;interestPercentage;interestpercentageBasis;settlementtermId;remarks
+;111;;NewMarket;PAYABLE;11;;true;21;;3543;Good
+;121;;NewMarket;RECEIVABLE;21;;true;21;;4321;Good
+
+##################################### CommercialPayable #######################################
+#INSERT_UPDATE CommercialPayable;paymentType;
+INSERT_UPDATE CommercialPayable;uid[unique=true];standardCommercial;otherCommercial;standardCommercialHead(uid);otherCommercialHead(uid);commercialSettlementType(code);serviceTax(uid);productDetails;initialAmount;settlementSchedule(code);balanceDetails(uid)
+;11;true;false;StdCom_1;;COMMISSIONABLE;SerTax_1,SerTax_2;;13;TRAVELDATE;BalDet_1,BalDet_2
+#;21;true;false;;OthCom_1;COMMISSIONABLE;SerTax_1,SerTax_2;;14;TRAVELDATE;BalDet_1,BalDet_2
+
+
+##################################### CommercialReceivable #######################################
+INSERT_UPDATE CommercialReceivable;uid[unique=true];settlementSchedule(code);productDetails;standardCommercial;otherCommercial;standardCommercialHead(uid);otherCommercialHead(uid);
+;21;TRAVELDATE;;false;true;;OthCom_1
+
+##################################### StandardCommercialHead #######################################
+INSERT_UPDATE StandardCommercialHead;uid[unique=true];standardCommercialType(code)
+;StdCom_1;NON_COMMISSIONABLE
+;StdCom_2;COMMISSIONABLE
+
+##################################### OtherCommercialHead #######################################
+INSERT_UPDATE OtherCommercialHead;uid[unique=true];otherCommercialType(code)
+;OthCom_1;OVERRIDING_COMMERCIAL
+;OthCom_2;LOOK_TO_BOOK
+
+##################################### BalanceDetails #######################################
+INSERT_UPDATE BalanceDetails;uid[unique=true];balanceAmount;payInDays
+;BalDet_1;200;3
+;BalDet_2;250;5
+
+##################################### ServiceTax #######################################
+INSERT_UPDATE ServiceTax;uid[unique=true];fromDate[dateformat=$dateformat];toDate[dateformat=$dateformat];percentage
+;SerTax_1;20/04/2015;28/09/2015;21
+;SerTax_2;29/08/2015;28/01/2016;28
+
+##################################### ProductDetails #######################################
+INSERT_UPDATE ProductDetails;uid[unique=true];productCategory;productSubCategory
+
+##################################### Trigger #######################################
+#INSERT_UPDATE Trigger;day[unique=true];month[unique=true];year[unique=true];active[unique=true];
+#;-2;-1;-1;false;
+

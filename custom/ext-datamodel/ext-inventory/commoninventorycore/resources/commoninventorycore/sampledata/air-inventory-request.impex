@@ -1,0 +1,28 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+
+INSERT_UPDATE AirAssociateInventory;inventoryFor(code)[unique=true];productCategories(code,$catalogVersion);productCategorySubType(code,$catalogVersion)
+;COMBINATION;;C006ST001;
+							 
+INSERT_UPDATE AirInventoryDetail;code[unique=true];$catalogVersion[unique=true];origin(Airport.code);destination(Airport.code);sectorType(SectorType.code);flightType(flightType.code);flightNumber[unique=true];departureDate[dateformat=dd-MM-yyyy hh:mm:ss];arrivalDate[dateformat=dd-MM-yyyy hh:mm:ss];cabinClass(code);requestedQuantity;inventoryAssociation(inventoryFor(code))
+;0001;;DEL;IXL;FLIGHT;DIRECT;194;10-02-2015 6:40:00;13-02-2015 7:55:00;ECONOMY;5;COMBINATION
+;0002;;IXL;DEL;FLIGHT;DIRECT;193;12-02-2015 10:30:00;13-02-2015 11:50:00;PREMIER;5;COMBINATION
+;0003;;DEL;IXL;FLIGHT;DIRECT;194;13-02-2015 6:40:00;14-02-2015 7:55:00;BUSINESS;5;COMBINATION
+;0004;;IXL;DEL;FLIGHT;DIRECT;193;14-02-2015 10:30:00;15-02-2015 11:50:00;ECONOMY;5;COMBINATION
+
+INSERT_UPDATE AirInventoryGrid;gridId[unique=true];inventoryDetails(code,$catalogVersion)
+;1;0001,0002
+;2;0003,0004
+
+INSERT_UPDATE InitialInvReqSupplierDetail;supplierName;emailId[unique=true];faxNum;sendToSupplier[default=FALSE];supplierCode;supplierType(SupplierType.code)
+;Jet Airways;supplier@jetairways.com;22244566;TRUE;1009;ENABLER
+;Emirates;supplier@emirates.com;222466566;TRUE;1990;SOURCE
+
+INSERT_UPDATE VersionDetail;version[unique=true];versionDate[dateformat=$dateformat];versionRemark
+;1.1;13-02-2015
+
+INSERT_UPDATE AirlineInventoryRequest;code[unique=true];$catalogVersion[unique=true];journeyType(code);visibleToSupplier[default=false];status(code);productCategorySubType(code,$catalogVersion);currency(isocode);companyDetails(uid);supplierDetails(InitialInvReqSupplierDetail.emailId);versionDetails(version);inventoryDetails(gridId)
+;14568;;RETURN;;SAVED_IN_SYSTEM;C001ST001;INR;E000;supplier@jetairways.com;1.1;1,2
+;14570;;RETURN;;SAVED_IN_SYSTEM;C001ST001;INR;E000;supplier@emirates.com;1.1;1,2

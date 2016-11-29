@@ -1,0 +1,99 @@
+<!--Layover 22H45M-->
+<com.cnk.travelogix.common.facades.product.data.flight.FlightData>
+  <id>flightData2.2</id>
+  <flightNumber>A380</flightNumber>
+  <cabinClass>Economy</cabinClass>
+  <numberOfStops>1 stop</numberOfStops>
+  <displayNumberOfStops>1 stop</displayNumberOfStops>
+  <airlineIATA>
+    <airlineName>IndiGo</airlineName>
+    <accountingCode>8G</accountingCode>
+    <airlinePrefix>203</airlinePrefix>
+  </airlineIATA>
+  <departureTime>2016-07-31 01:45:00.00 UTC</departureTime>
+  <arrivalTime>2016-07-31 05:40:00.00 UTC</arrivalTime>
+  <duration>3h 5m 1 stop</duration>
+  <displayDuration>3h 5m</displayDuration>
+  <fromSection>
+    <city>Delhi</city>
+    <airport>Delhi International Airport</airport>
+    <terminal>1B</terminal>
+  </fromSection>
+  <toSection>
+    <city>Mumbai</city>
+    <airport>Mumbai International Airport</airport>
+    <terminal>3A</terminal>
+  </toSection>
+  <fareSummary>
+
+      <com.cnk.travelogix.common.facades.product.data.flight.FareSummaryData>
+        <listPrice>5880</listPrice>
+        <type>fly</type>
+	    <webPrice>5150</webPrice>
+	    <currency>currency</currency>
+	    <pointEarn>60</pointEarn>
+      </com.cnk.travelogix.common.facades.product.data.flight.FareSummaryData>
+
+       <com.cnk.travelogix.common.facades.product.data.flight.FareSummaryData>
+        <listPrice>5980</listPrice>
+        <type>fly + bag</type>
+	    <webPrice>5250</webPrice>
+	    <currency>currency</currency>
+	    <pointEarn>100</pointEarn>
+      </com.cnk.travelogix.common.facades.product.data.flight.FareSummaryData>
+  </fareSummary>
+  <fareDetail>
+
+      <com.cnk.travelogix.common.facades.product.data.flight.FareDetailData>
+        <currency>currency</currency>
+	    <baseFare>3770</baseFare>
+	    <fuelSurcharge>650</fuelSurcharge>
+	    <jnTax>80</jnTax>
+	    <psgrSvcFee>350</psgrSvcFee>
+	    <serviceTax>300</serviceTax>
+      </com.cnk.travelogix.common.facades.product.data.flight.FareDetailData>
+
+       <com.cnk.travelogix.common.facades.product.data.flight.FareDetailData>
+        <currency>currency</currency>
+	    <baseFare>3770</baseFare>
+	    <fuelSurcharge>650</fuelSurcharge>
+	    <jnTax>80</jnTax>
+	    <psgrSvcFee>350</psgrSvcFee>
+	    <serviceTax>300</serviceTax>
+      </com.cnk.travelogix.common.facades.product.data.flight.FareDetailData>
+  </fareDetail>
+  <flightDetails>
+    <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+      <cabinClass>Economy</cabinClass>
+      <fromSection>
+        <city>Delhi</city>
+        <airport>Delhi International Airport</airport>
+        <terminal>1B</terminal>
+      </fromSection>
+      <toSection>
+        <city>Ahmedabad</city>
+        <airport>Ahmedabad International Airport</airport>
+        <terminal>2A</terminal><!--Ahilya Bai Holkar-->
+      </toSection>
+      <departureTime>2016-07-31 01:45:00.00 UTC</departureTime>
+	  <arrivalTime>2016-07-31 02:40:00.00 UTC</arrivalTime>
+	  <duration>55m Nonstop</duration>
+    </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+    <com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+      <cabinClass>Economy</cabinClass>
+      <fromSection>
+        <city>Ahmedabad</city>
+        <airport>Ahmedabad International Airport</airport>
+        <terminal>2A</terminal><!--Ahilya Bai Holkar-->
+      </fromSection>
+      <toSection>
+        <city>Mumbai</city>
+        <airport>Mumbai International Airport</airport>
+        <terminal>3A</terminal>
+      </toSection>
+      <departureTime>2016-07-31 04:40:00.00 UTC</departureTime>
+       <arrivalTime>2016-07-31 05:40:00.00 UTC</arrivalTime>
+      <duration>1h Nonstop</duration>
+    </com.cnk.travelogix.common.facades.product.data.flight.FlightDetailData>
+  </flightDetails>
+</com.cnk.travelogix.common.facades.product.data.flight.FlightData>

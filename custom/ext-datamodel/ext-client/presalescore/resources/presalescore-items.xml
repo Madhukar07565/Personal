@@ -1,0 +1,1012 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+		<collectiontype code="ServicingLocationCollection"
+			elementtype="ServicingLocation" autocreate="true" generate="false" />
+		<collectiontype elementtype="ContactPersonType" code="ContactPersonTypeList"
+			generate="false" autocreate="true" type="list" />
+		<collectiontype elementtype="ApprovalWorkFlow" code="ApprovalWorkFlowList"
+			generate="false" autocreate="true" type="list" />
+
+	</collectiontypes>
+
+	<enumtypes>
+		<enumtype code="DepartmentType" autocreate="true" generate="true">
+			<value code="PRODUCTS" />
+			<value code="OPERATIONS" />
+			<value code="ACCOUNTS" />
+			<value code="IT" />
+			<value code="MARKETING" />
+		</enumtype>
+
+		<!-- <enumtype code="Role" autocreate="true" generate="true" dynamic="true"> 
+			<value code="PRODUCT_CREATOR" /> <value code="PRODUCT_APPROVER" /> <value 
+			code="CALL_CENTRE_AGENT" /> </enumtype> -->
+
+		<enumtype code="QuestionTitle" autocreate="true" generate="false"
+			dynamic="true">
+			<value code="TRACK_RECORD" />
+			<value code="REFFERAL" />
+		</enumtype>
+		<!-- <enumtype code="Status" autocreate="true" generate="false"> <value 
+			code="ACTIVE" /> <value code="INACTIVE" /> <value code="PENDING" /> <value 
+			code="APPROVED" /> <value code="DISBURSED" /> <value code="PAYMENT_REALISED" 
+			/> <value code="PAYMENT_NOT_REALISED" /> </enumtype> -->
+		<enumtype code="ReasonType" autocreate="true" generate="false">
+			<value code="HOTEL_IS_SHUT_DOWN" />
+			<value code="CLOSED_DUE_TO_RENOVATION" />
+		</enumtype>
+		<enumtype code="DocumentType" autocreate="true" generate="false"
+			dynamic="true">
+			<value code="HANDOVER_DOCUMENTS"></value>
+			<value code="DOCUMENT_FROM_CUSTOMER"></value>
+			<value code="NICE_TRIP_COMMUNICATION"></value>
+			<value code="QUALIFICATION_PROPOSAL"></value>
+		</enumtype>
+		<enumtype code="DocumentCategory" autocreate="true" generate="false"
+			dynamic="true">
+			<value code="RFP"></value>
+			<value code="RFI"></value>
+		</enumtype>
+
+		<enumtype code="CorporateType" autocreate="true" generate="false"
+			dynamic="true">
+			<value code="MNC"></value>
+			<value code="SME"></value>
+		</enumtype>
+
+		<enumtype code="ServicingLocation" autocreate="true"
+			generate="false" dynamic="true">
+			<value code="GOBAL"></value>
+			<value code="PAN_INDIA"></value>
+			<value code="REGIONAL"></value>
+		</enumtype>
+
+		<enumtype code="ClientProduct" autocreate="true" generate="false"
+			dynamic="true">
+			<value code="BULK_PHARMA"></value>
+			<value code="RETAIL_PHARMA"></value>
+		</enumtype>
+
+
+		<enumtype code="CurrentServiceProvider" autocreate="true"
+			generate="false" dynamic="true">
+			<value code="CLEAR_TRIP"></value>
+			<value code="YATRA"></value>
+			<value code="AKBAR_TRAVEL"></value>
+			<value code="MAKE_MY_TRIP"></value>
+		</enumtype>
+
+		<enumtype code="ContactPersonType" autocreate="true"
+			generate="false" dynamic="true">
+			<value code="INFLUENCER"></value>
+			<value code="DECISION_MAKER"></value>
+		</enumtype>
+
+		<enumtype code="TaskStatus" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="OPEN" />
+			<value code="INPROGRESS" />
+			<value code="PENDING" />
+			<value code="CLOSE" />
+		</enumtype>
+
+	</enumtypes>
+
+	<relations>
+		<relation code="ChecklistTOChecklistDetails" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="checklist" type="Checklist"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="checklistDetails" type="ChecklistDetails"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<!-- <relation code="ProspectToServicingLocation" autocreate="true" generate="false" 
+			localized="false"> <sourceElement qualifier="prospect" type="Prospect" cardinality="one"> 
+			<modifiers /> </sourceElement> <targetElement qualifier="servicingLocations" 
+			type="ServicingLocation" cardinality="many"> <modifiers /> </targetElement> 
+			</relation> -->
+		<relation code="LeadToQuestionInformation" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="lead" type="Lead"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="leadinfoQuestions" type="QuestionInformation"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="ProspectToPresalesAddress" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="prospect" type="Prospect"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="prospectAddress" type="PresalesAddress"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="ProspectToBusinessInformation" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="prospect" type="Prospect"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="prospectBuisnessInfo" type="BusinessInformation"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="LeadToCompetitor" autocreate="true" generate="false"
+			localized="false">
+			<sourceElement qualifier="lead" type="Lead"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="leadCompetitors" type="Competitor"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="LeadToPartner" autocreate="true" generate="false"
+			localized="false">
+			<sourceElement qualifier="lead" type="Lead"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="currentPartners" type="Partner"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="ProspectToLead" autocreate="true" generate="false"
+			localized="false">
+			<sourceElement qualifier="prospect" type="Prospect"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="prospectLeads" type="Lead"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="AssuredBusinessToAssuredBusinessTargetProductVolume"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="assuredBusiness" type="AssuredBusiness"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="targetProductvolumes"
+				type="AssuredBusinessTargetProductVolume" cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="CompetitorToCommercialTerms" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="competitor" type="Competitor"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="commertialTerms" type="CommercialTerms"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="PartnerToCommercialTerms" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="partner" type="Partner"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="commertialTerms" type="CommercialTerms"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="PartnerToContractDocuments" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="partner" type="Partner"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="uploadContracts" type="ContractDocuments"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="ProfitAndLossToPandLTragetProductVolume"
+			autocreate="true" generate="false" localized="false">
+			<sourceElement qualifier="profitAndLoss" type="ProfitAndLoss"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="targetProductVolumes" type="PandLTragetProductVolume"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="ProfitAndLossToMedia" autocreate="true"
+			generate="false" localized="false">
+			<sourceElement qualifier="profitAndLoss" type="ProfitAndLoss"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="uploads" type="Media"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="LeadMediaToMedia" autocreate="true" generate="false"
+			localized="false">
+			<sourceElement qualifier="leadMedia" type="LeadMedia"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="documentUploads" type="Media"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+		<relation code="LeadToLeadMedia" autocreate="true" generate="false"
+			localized="false">
+			<sourceElement qualifier="lead" type="Lead"
+				cardinality="one">
+				<modifiers />
+			</sourceElement>
+			<targetElement qualifier="leadUploads" type="LeadMedia"
+				cardinality="many">
+				<modifiers />
+			</targetElement>
+		</relation>
+	</relations>
+
+	<itemtypes>
+
+		<typegroup name="ClientSetup">
+
+			<itemtype code="Checklist" generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.presales.jalo.Checklist" extends="GenericItem">
+				<description>Represents Presales Checklist</description>
+				<deployment table="checklist" typecode="24034" />
+				<attributes>
+					<attribute type="Employee" qualifier="lockedBy">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="title" type="QuestionTitle">
+						<persistence type="property" />
+						<description>Title.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="implementationChecklistId" type="java.lang.String">
+						<persistence type="property" />
+						<description>Implementation Checklist Id.</description>
+						<modifiers unique="true" />
+					</attribute>
+					<attribute qualifier="onlineDate" type="java.util.Date">
+						<persistence type="property" />
+						<description>Go live Date.</description>
+						<modifiers optional="false" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ChecklistDetails" generate="true" extends="GenericItem"
+				autocreate="true" jaloclass="com.cnk.travelogix.presales.jalo.ChecklistDetails">
+				<description>Represents Presales Checklist Details</description>
+				<deployment table="checklistdetails" typecode="21502" />
+				<attributes>
+					<!-- this can be uncommented after Task master data is created -->
+					<!-- <attribute qualifier="task" type="Task"> <persistence type="property" 
+						/> <description>Task.</description> <modifiers /> </attribute> -->
+					<attribute qualifier="department" type="DepartmentType">
+						<persistence type="property" />
+						<description>Implementation Checklist To Department.</description>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="role" type="Role">
+						<persistence type="property" />
+						<description>Implementation Checklist To Role.</description>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="resource" type="StaffInformation">
+						<persistence type="property" />
+						<description>Implementation Checklist To UserName.</description>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="taskDueDate" type="java.util.Date">
+						<persistence type="property" />
+						<description>Task Due Date.</description>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="actualCompletionDate" type="java.util.Date">
+						<persistence type="property" />
+						<description>Actual Completion Date.</description>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="status" type="TaskStatus">
+						<persistence type="property" />
+						<description>Status.</description>
+						<modifiers optional="false" />
+					</attribute>
+					<attribute qualifier="remarks" type="java.lang.String">
+						<persistence type="property" />
+						<description>Remarks.</description>
+						<modifiers />
+					</attribute>
+					<attribute qualifier="checklistMedia" type="Media">
+						<persistence type="property" />
+						<description>Checklist Media.</description>
+						<modifiers />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="PreSales">
+			<itemtype code="Prospect" generate="true"
+				jaloclass="com.cnk.travelogix.presales.jalo.Prospect" autocreate="true"
+				extends="TravelogixB2BUnit">
+				<description>Defines prospect of presales</description>
+				<deployment table="prospect" typecode="21503" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="prospectId">
+						<description>ID for Prospect</description>
+						<modifiers optional="false" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<!-- This attribute will be uncommented once Corporate master is created -->
+					<attribute type="CorporateType" qualifier="corporateType">
+						<description>CorporateType for Prospect</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<!-- <attribute type="ClientCategory" qualifier="clientCategory"> <description>ClientCategory 
+						for Prospect</description> <modifiers optional="true" /> <persistence type="property" 
+						/> </attribute> -->
+					<attribute type="ClientType" qualifier="clientType">
+						<description>ClientType for Prospect</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="numberOfBranches">
+						<description>NumberOfBranches for Prospect</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ServicingLocationCollection" qualifier="servicingLocations">
+						<description>NumberOfBranches for Prospect</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="PresalesAddress"
+				jaloclass="com.cnk.travelogix.presales.jalo.PresalesAddress"
+				extends="Address" autocreate="true" generate="true">
+				<description>Represents Address for Presales </description>
+				<attributes>
+					<attribute qualifier="webSiteUrl" type="java.lang.String">
+						<description>WebSiteUrl for Address</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="officialEmailId" type="java.lang.String">
+						<description>OfficialEmailId for Address</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="servingLocation" type="ServicingLocation">
+						<description>servicing location</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Lead" extends="TravelogixB2BUnit"
+				jaloclass="com.cnk.travelogix.presales.jalo.Lead" generate="true"
+				autocreate="true">
+				<description>Represents Lead of presales</description>
+				<deployment table="lead" typecode="21504" />
+				<attributes>
+					<attribute type="StaffInformation" qualifier="staffDetails">
+						<description>StaffDetails for Lead</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ServicingLocation" qualifier="servicingLocation">
+						<description>service Location for Lead</description>
+						<persistence type="property" />
+						<modifiers optional="true" />
+					</attribute>
+					<attribute type="CompanyAdditionalDetails" qualifier="companyDetails">
+						<description>Additional details of Company</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="LeadStatus" qualifier="leadStatus">
+						<description>LeadStatus for Lead</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ApprovalWorkFlowList" qualifier="approvalWorkFlow">
+						<description>Approval Work Flow for Lead</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ProfitAndLoss" qualifier="profitAndLoss">
+						<description>Profit And Loss for Lead</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Checklist" qualifier="checklist">
+						<description>Lead to Checklist association</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AssuredBusiness" qualifier="assuredBusiness">
+						<description>Lead to AssuredBusiness association</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CompanyAdditionalDetails" extends="GenericItem"
+				autocreate="true" generate="true"
+				jaloclass="com.cnk.travelogix.presales.jalo.CompanyAdditionalDetails">
+				<description>Defines additional details of company </description>
+				<deployment table="companyadditionaldetail" typecode="21505" />
+				<attributes>
+					<attribute qualifier="registrationNumber" type="java.lang.String">
+						<description>RegistrationNumber of Company</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="establishedIn" type="java.util.Date">
+						<description>Established Date of Company</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="hasOwnGuestHouse" type="java.lang.Boolean">
+						<description>OwnGuestHouse of the lead</description>
+						<modifiers optional="true" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="ownGuestHouseRemarks" type="java.lang.String">
+						<description>OwnGuestHouse Remarks </description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="dealsWithSupplier" type="java.lang.Boolean">
+						<description>DealsWithSupplier for CompanyAdditionalDetails</description>
+						<modifiers optional="true" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="dealsWithSupplierRemarks" type="java.lang.String">
+						<description>Deals With Supplier Remarks</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="ownsCar" type="java.lang.Boolean">
+						<description>OwnsCar</description>
+						<modifiers optional="true" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="companyAnnualTurnOverAmount" type="java.lang.Long">
+						<description>Company Annual TurnOver Amount</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="currency" type="Currency">
+						<description>Currency for CompanyAdditionalDetails</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="employeeStrength" type="java.lang.Integer">
+						<description>Strength of employees in company</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="QuestionInformation" autocreate="true"
+				generate="true" extends="GenericItem"
+				jaloclass="com.cnk.travelogix.presales.jalo.QuestionInformation">
+				<description>Information related to Questions</description>
+				<deployment table="questioninformation" typecode="21506" />
+				<attributes>
+					<attribute qualifier="title" type="QuestionTitle">
+						<description>Defines title of Question</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="description" type="localized:java.lang.String">
+						<description>description for Question</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="question" type="Question">
+						<description>Defines Question</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Question" jaloclass="com.cnk.travelogix.presales.jalo.Question"
+				autocreate="true" generate="true" extends="GenericItem">
+				<description>Represents Question</description>
+				<deployment table="question" typecode="21507" />
+				<attributes>
+					<attribute qualifier="id" type="java.lang.String">
+						<description>Represents question id </description>
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="que" type="localized:java.lang.String">
+						<description>Represents question definition </description>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="StaffInformation" generate="false"
+				autocreate="false">
+				<attributes>
+					<attribute type="ContactPersonTypeList" qualifier="contactPersonType">
+						<description>Contact Person Type </description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="influencer" type="java.lang.Boolean">
+						<description>Person is Influencer </description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="decisionMaker" type="java.lang.Boolean">
+						<description>Decision Maker Person </description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="LeadStatus" generate="true" autocreate="true"
+				extends="GenericItem" jaloclass="com.cnk.travelogix.presales.jalo.LeadStatus">
+				<description>Represents Lead status</description>
+				<deployment table="leadstatus" typecode="21508" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="code">
+						<description>unique id for Lead Status</description>
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ReasonType" qualifier="leadReason">
+						<description>Defines ReasonType </description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="leadStatus" type="Status">
+						<description>Defines status </description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="remarks" type="java.lang.String">
+						<description>Remarks </description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Competitor" extends="AbstractCommonMasterType"
+				generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.presales.jalo.Competitor">
+				<description>Represents current competitor</description>
+				<deployment table="competitor" typecode="21509" />
+			</itemtype>
+
+			<itemtype code="AssuredBusiness" extends="GenericItem"
+				generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.presales.jalo.AssuredBusiness">
+				<description>Represents Assured Business </description>
+				<deployment table="assuredbusiness" typecode="21510" />
+				<attributes>
+					<attribute type="Currency" qualifier="currency">
+						<description>currency type of AssuredBusiness</description>
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.math.BigDecimal" qualifier="totalTravelExpectedSales">
+						<description>totalTravelExpectedSales for AssuredBusiness</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="assuredBusinessId">
+						<description>Id for assured business</description>
+						<modifiers optional="false" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="market" type="Market">
+						<description>Market</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ClientSubCategory" qualifier="clientSubCategory">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ClientCategory" qualifier="clientCategory">
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="clientType" type="ClientType">
+						<description>ClientType</description>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="clientName">
+						<modifiers unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="TypeOfAssociation" qualifier="typeOfAssociation">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="parentAssociation">
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="transactional" type="java.lang.Boolean">
+						<modifiers optional="true" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="clientCommercials" type="java.lang.Boolean">
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute qualifier="settlement" type="java.lang.Boolean">
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="noOfLevels">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.integer" qualifier="hierarchy">
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="PointOfServiceTypeEnum" qualifier="pointOfSale">
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="targetProductWiseSales">
+						<modifiers optional="true" />
+						<defaultvalue>Boolean.TRUE</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="targetTotalSales">
+						<modifiers optional="true" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.math.BigDecimal" qualifier="targetSalesforAllProducts">
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.math.BigDecimal" qualifier="targetSales">
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="AdvanceParameter" qualifier="advanceParameter">
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="validFrom">
+						<persistence type="property" />
+						<modifiers unique="true" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="validTo">
+						<persistence type="property" />
+						<modifiers optional="true" unique="true" />
+					</attribute>
+					<attribute type="Employee" qualifier="lockedBy">
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Language" qualifier="language">
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<!-- <itemtype code="BusinessInformation" extends="GenericItem" generate="true" 
+				autocreate="true" jaloclass="com.cnk.travelogix.presales.jalo.BusinessInformation"> 
+				<description>Represents Business Informations</description> <deployment table="businessinformation" 
+				typecode="21511" /> <attributes> <attribute type="IndustrySector" qualifier="industry"> 
+				<description>industry for BusinessInformation</description> <modifiers optional="true" 
+				/> <persistence type="property" /> </attribute> <attribute type="IndustrySector" 
+				qualifier="sector"> <description>sector for BusinessInformation</description> 
+				<modifiers optional="true" /> <persistence type="property"></persistence> 
+				</attribute> <attribute type="ClientProduct" qualifier="product"> <description>product 
+				for BusinessInformation</description> <persistence type="property"></persistence> 
+				</attribute> </attributes> </itemtype> -->
+
+			<itemtype code="AbstractTargetProductVolume" extends="GenericItem"
+				generate="true" autocreate="true" abstract="true"
+				jaloclass="com.cnk.travelogix.presales.jalo.AbstractTargetProductVolume">
+				<description>Represents Target Product Volume</description>
+				<deployment table="targetproductvolume" typecode="21512" />
+				<attributes>
+					<attribute type="Category" qualifier="productCategory">
+						<description>Product Category for TargetProductVolume</description>
+						<modifiers optional="true" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ProductCategorySubType" qualifier="productCategorySubType">
+						<description>ProductCategorySubType for TargetProductVolume</description>
+						<modifiers optional="true" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ClientProduct" qualifier="product">
+						<description>Defines Product or Service</description>
+						<modifiers optional="true" unique="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="java.math.BigDecimal" qualifier="expectedSales">
+						<description>Expected sales for TargetProductVolume</description>
+						<modifiers optional="false" unique="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AssuredBusinessTargetProductVolume"
+				generate="true" autocreate="true" extends="AbstractTargetProductVolume"
+				jaloclass="com.cnk.travelogix.presales.jalo.AssuredBusinessTargetProductVolume">
+				<description>Represents Target Product Volume for Assured Business </description>
+			</itemtype>
+
+			<itemtype code="PandLTragetProductVolume" generate="true"
+				autocreate="true" extends="AbstractTargetProductVolume"
+				jaloclass="com.cnk.travelogix.presales.jalo.PandLTragetProductVolume">
+				<description>Represents Target Product Volume for Profit and Loss </description>
+				<attributes>
+					<attribute type="java.math.BigDecimal" qualifier="expectedIncome">
+						<description>ExpectedIncome of TragetProductVolume in profit and loss</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Integer" qualifier="versionId">
+						<description>Version Id</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ProfitAndLoss" extends="GenericItem"
+				generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.presales.jalo.ProfitAndLoss">
+				<description>Represents Profit and loss</description>
+				<deployment table="profitandloss" typecode="21513" />
+				<attributes>
+					<attribute type="Currency" qualifier="currency">
+						<description>Currency type Profit And Loss</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type=" java.lang.String" qualifier="totalTravelExpectedSales">
+						<description>TotalTravel ExpectedSales for ProfitAndLoss</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="totalTravelExpectedIncome">
+						<description>TotalTravel ExpectedIncome for ProfitAndLoss</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Partner" extends="GenericItem" generate="true"
+				autocreate="true" jaloclass="com.cnk.travelogix.presales.jalo.Partner">
+				<description>Represents current Partners</description>
+				<deployment table="partner" typecode="21514" />
+				<attributes>
+					<attribute type="CurrentServiceProvider" qualifier="currentServiceProvider">
+						<description>Current Service Provider for Partner</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="contractSince">
+						<description>contract From Date</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="contractValidityDate">
+						<description>contract to Date</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="terminateReason">
+						<description>Terminate Reason of a Partner</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="CommercialTerms" extends="GenericItem"
+				generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.presales.jalo.CommercialTerms">
+				<description>Represents commercial Terms </description>
+				<deployment table="commercialterms" typecode="21515" />
+				<attributes>
+					<attribute type="Category" qualifier="productCategory">
+						<description>Product Category</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ProductCategorySubType" qualifier="productCategorySubType">
+						<description>Product Category SubType</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="ClientProduct" qualifier="product">
+						<description>Product or service</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CommercialHead" qualifier="commercialHead">
+						<description>CommercialHead of Commercial Terms</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CommercialType" qualifier="commercialType">
+						<description>CommercialType for CommercialTerms</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="FixedCommercialValue" qualifier="commercialValue">
+						<description>Commercial Value details</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ContractDocuments" extends="Media" generate="true"
+				autocreate="true" jaloclass="com.cnk.travelogix.presales.jalo.ContractDocuments">
+				<description>Represent Contract Documents</description>
+				<attributes>
+					<attribute type="java.util.Date" qualifier="contractFrom">
+						<description>Contract From Date</description>
+						<modifiers optional="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+					<attribute type="java.util.Date" qualifier="contractTo">
+						<description>Contract To Date</description>
+						<modifiers optional="true" />
+						<persistence type="property"></persistence>
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="LeadMedia" extends="GenericItem" generate="true"
+				autocreate="true" jaloclass="com.cnk.travelogix.presales.jalo.LeadMedia">
+				<description>Represents Documents Of Lead</description>
+				<deployment table="leadmedia" typecode="21537" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="documentUid">
+						<description>Id of Document</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DocumentType" qualifier="documentType">
+						<description>Document Type for Lead Media</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="DocumentCategory" qualifier="documentCategory">
+						<description>Document Category for LeadMedia</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="documentDescription">
+						<description>Document Description for LeadMedia</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.util.Date" qualifier="documentSignedOn">
+						<description>Document Signed On Date</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="AdvanceParameter" extends="GenericItem"
+				generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.presales.jalo.AdvanceParameter">
+				<description>Represents commercial Terms </description>
+				<deployment table="advanceParameter" typecode="21557" />
+				<attributes>
+					<attribute type="Continent" qualifier="continent">
+						<description>Continent</description>
+						<modifiers optional="true" unique="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="CountryList" qualifier="country">
+						<description>Country</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+
+					<attribute type="java.lang.Boolean" qualifier="include">
+						<description>Country</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.Boolean" qualifier="exclude">
+						<description>Country</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="ApprovalWorkFlow" extends="GenericItem"
+				generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.presales.jalo.ApprovalWorkFlow">
+				<description>Represents Approval WorkF low </description>
+				<deployment table="approvalworkflow" typecode="23041" />
+				<attributes>
+					<attribute type="java.lang.Integer" qualifier="level">
+						<description>level of approver</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="Role" qualifier="role">
+						<description>Role of Approver</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="name">
+						<description>name of approver</description>
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+
+			<itemtype code="Role" generate="true" autocreate="true"
+				jaloclass="com.cnk.travelogix.presales.jalo.Role" extends="AbstractCommonMasterType">
+				<description>Represents PreSales Role</description>
+				<deployment table="role" typecode="23068" />
+				<attributes>
+				</attributes>
+			</itemtype>
+
+		</typegroup>
+	</itemtypes>
+</items>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such ~ Confidential Information and shall use it only in accordance with the ~ terms 
+	of the license agreement you entered into with SAP Hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:annotation-config />
+	<aop:aspectj-autoproxy />
+
+	<bean id="jaxbContext" class="javax.xml.bind.JAXBContext" factory-method="newInstance">
+		<constructor-arg type="java.lang.String" value="com.coxandkings.integ.suppl.air:com.coxandkings.integ.suppl.acco" />
+	</bean>
+
+	<!-- 
+	<bean id="jaxbMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="packagesToScan">
+			<list>
+				<value>com.coxandkings.integ.suppl.air</value>
+				<value>com.coxandkings.integ.suppl.acco</value>
+			</list>
+		</property>
+	</bean>
+ 	-->
+
+	<bean id="profilingInterceptor" class="com.cnk.travelogix.suppliers.interceptors.ProfilingInterceptor" />
+
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+		<property name="requestFactory" ref="bufferingClientHttpRequestFactory" />
+		<property name="interceptors" ref="interceptors" />
+	</bean>
+	<bean id="bufferingClientHttpRequestFactory" class="org.springframework.http.client.BufferingClientHttpRequestFactory">
+		<constructor-arg ref="simpleClientHttpRequestFactory" />
+	</bean>
+	<bean id="simpleClientHttpRequestFactory" class="org.springframework.http.client.SimpleClientHttpRequestFactory" />
+
+	<bean id="loggingInterceptor" class="com.cnk.travelogix.suppliers.interceptors.LoggingInterceptor" />
+	<util:list id="interceptors" list-class="java.util.ArrayList">
+		<ref bean="loggingInterceptor" />
+	</util:list>
+
+	<bean id="supplierClient" class="com.cnk.travelogix.suppliers.client.impl.SupplierClientImpl" />
+	<bean id="supplierAirService" class="com.cnk.travelogix.suppliers.air.service.impl.SupplierAirServiceImpl" />
+	<bean id="supplierAccoService" class="com.cnk.travelogix.suppliers.acco.service.impl.SupplierAccoServiceImpl" />
+
+	<bean id="airLowFareSearchConverter" class="com.cnk.travelogix.suppliers.air.converter.AirLowFareSearchConverter" />
+	<bean id="airListBookingsConverter" class="com.cnk.travelogix.suppliers.air.converter.AirListBookingsConverter" />
+	<bean id="airDemandTicketConverter" class="com.cnk.travelogix.suppliers.air.converter.AirDemandTicketConverter" />
+	<bean id="airPriceConverter" class="com.cnk.travelogix.suppliers.air.converter.AirPriceConverter" />
+	<bean id="airRePriceConverter" class="com.cnk.travelogix.suppliers.air.converter.AirRePriceConverter" />
+	<bean id="airSellConverter" class="com.cnk.travelogix.suppliers.air.converter.AirSellConverter" />
+	<bean id="airRetrievePNRConverter" class="com.cnk.travelogix.suppliers.air.converter.AirRetrievePNRConverter" />
+	<bean id="airSeatMapConverter" class="com.cnk.travelogix.suppliers.air.converter.AirSeatMapConverter" />
+	<bean id="airAvailConverter" class="com.cnk.travelogix.suppliers.air.converter.AirAvailConverter" />
+	<bean id="airBookConverter" class="com.cnk.travelogix.suppliers.air.converter.AirBookConverter" />
+	<bean id="airCancelConverter" class="com.cnk.travelogix.suppliers.air.converter.AirCancelConverter" />
+	<bean id="airRulesConverter" class="com.cnk.travelogix.suppliers.air.converter.AirRulesConverter" />
+	<bean id="airSplitPNRConverter" class="com.cnk.travelogix.suppliers.air.converter.AirSplitPNRConverter" />
+	<bean id="airUpdatePNRConverter" class="com.cnk.travelogix.suppliers.air.converter.AirUpdatePNRConverter" />
+	<bean id="airGetPNRFromQueue" class="com.cnk.travelogix.suppliers.air.converter.GetPNRFromQueueConverter" />
+	<bean id="airRemoveMessageQueueConverter" class="com.cnk.travelogix.suppliers.air.converter.AirRemoveMessageQueueConverter" />
+	<bean id="airPushSSRConverter" class="com.cnk.travelogix.suppliers.air.converter.AirPushSSRConverter" />
+	<bean id="airPushSeatConverter" class="com.cnk.travelogix.suppliers.air.converter.AirPushSeatConverter" />
+	<bean id="airGetSSRConverter" class="com.cnk.travelogix.suppliers.air.converter.AirGetSSRConverter" />
+
+	<bean id="getDetailsConverter" class="com.cnk.travelogix.suppliers.acco.converter.GetDetailsConverter"></bean>
+	<bean id="rePricingConverter" class="com.cnk.travelogix.suppliers.acco.converter.RePricingConverter"></bean>
+	<bean id="availabilityAndPriceConverter" class="com.cnk.travelogix.suppliers.acco.converter.AvailabilityAndPriceConverter" />
+	<bean id="addPassengerConverter" class="com.cnk.travelogix.suppliers.acco.converter.AddPassengerConverter" />
+	<bean id="updatePassengerConverter" class="com.cnk.travelogix.suppliers.acco.converter.UpdatePassengerConverter" />
+	<bean id="cancelPassengerConverter" class="com.cnk.travelogix.suppliers.acco.converter.CancelPassengerConverter" />
+	<bean id="hotelCancelConverter" class="com.cnk.travelogix.suppliers.acco.converter.HotelCancelConverter" />
+	<bean id="retrieveBookingConverter" class="com.cnk.travelogix.suppliers.acco.converter.RetrieveBookingConverter" />
+	<bean id="retrieveBookingListConverter" class="com.cnk.travelogix.suppliers.acco.converter.RetrieveBookingListConverter" />
+	<bean id="onRequestBookingUpdateConverter" class="com.cnk.travelogix.suppliers.acco.converter.OnRequestBookingUpdateConverter" />
+	<bean id="cancelRoomConverter" class="com.cnk.travelogix.suppliers.acco.converter.CancelRoomConverter" />
+	<bean id="getPoliciesConverter" class="com.cnk.travelogix.suppliers.acco.converter.GetPoliciesConverter" />
+	<bean id="accoCreateBookingConverter" class="com.cnk.travelogix.suppliers.acco.converter.AccoCreateBookingConverter " />
+	<bean id="addRoomConverter" class="com.cnk.travelogix.suppliers.acco.converter.AddRoomConverter" />
+	<bean id="updateRoomConverter" class="com.cnk.travelogix.suppliers.acco.converter.UpdateRoomConverter" />
+	<bean id="changePeriodOfStayConverter" class="com.cnk.travelogix.suppliers.acco.converter.ChangePeriodOfStayConverter" />
+	<bean id="ancillaryBookingConverter" class="com.cnk.travelogix.suppliers.acco.converter.AncillaryBookingConverter" />
+
+	<bean id="supplierUtils" class="com.cnk.travelogix.suppliers.util.SupplierUtils" />
+
+	<bean id="checkFileStatusService" class="com.cnk.travelogix.suppliers.service.impl.CheckFileStatusServiceImpl " />
+	<bean id="supplierCityMappingService" class="com.cnk.travelogix.suppliers.service.impl.SupplierCityMappingServiceImpl" />
+	<bean id="supplierCountryMappingService" class="com.cnk.travelogix.suppliers.service.impl.SupplierCountryMappingServiceImpl" />
+	<bean id="supplierProductMappingService" class="com.cnk.travelogix.suppliers.service.impl.SupplierProductMappingServiceImpl" />
+	<bean id="supplierHotelCityMappingService" class="com.cnk.travelogix.suppliers.service.impl.SupplierHotelCityMappingServiceImpl" />
+
+	<bean id="checkFileStatusJob" class="com.cnk.travelogix.suppliers.cronjob.CheckFileStatusJob" parent="abstractJobPerformable" />
+	<bean id="supplierCityMappingCronjob" class="com.cnk.travelogix.suppliers.cronjob.SupplierCityMappingCronjob" parent="abstractJobPerformable" />
+	<bean id="supplierCountryMappingCronjob" class="com.cnk.travelogix.suppliers.cronjob.SupplierCountryMappingCronjob" parent="abstractJobPerformable" />
+	<bean id="supplierProductMappingCronjob" class="com.cnk.travelogix.suppliers.cronjob.SupplierProductMappingCronjob" parent="abstractJobPerformable" />
+	<bean id="supplierHotelCityMappingCronjob" class="com.cnk.travelogix.suppliers.cronjob.SupplierHotelCityMappingCronjob" parent="abstractJobPerformable" />
+
+	<bean id="checkFileStatusEventListener" class="com.cnk.travelogix.suppliers.events.CheckFileStatusEventListener" parent="abstractSiteEventListener">
+		<property name="businessProcessService" ref="businessProcessService" />
+		<property name="modelService" ref="modelService" />
+		<property name="baseSiteService" ref="baseSiteService" />
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="commonI18NService" ref="commonI18NService" />
+		<property name="userService" ref="userService" />
+		<property name="clusterService" ref="clusterService" />
+	</bean>
+
+	<bean id="checkFileStatusProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/suppliersprocess/process/checkFileStatus-process.xml" />
+	</bean>
+
+	<bean id="generateCheckFileStatusEmail" class="de.hybris.platform.acceleratorservices.process.email.actions.GenerateEmailAction" parent="abstractAction">
+		<property name="modelService" ref="modelService" />
+		<property name="cmsEmailPageService" ref="cmsEmailPageService" />
+		<property name="frontendTemplateName" value="CheckFileStatusEmailTemplate" />
+		<property name="contextResolutionStrategy" ref="b2bProcessContextResolutionStrategy" />
+		<property name="emailGenerationService" ref="emailGenerationService" />
+	</bean>
+	<bean id="supplierCityMappingListener" class="com.cnk.travelogix.suppliers.events.SupplierCityMappingListener">
+		<property name="supplierCityMappingService" ref="supplierCityMappingService"/>
+		<property name="clusterService" ref="clusterService"/>
+		<property name="tenantService" ref="tenantService"/>
+	</bean>
+	
+	<bean id="supplierCountryMappingListener" class="com.cnk.travelogix.suppliers.events.SupplierCountryMappingListener">
+		<property name="supplierCountryMappingService" ref="supplierCountryMappingService"/>
+		<property name="clusterService" ref="clusterService"/>
+		<property name="tenantService" ref="tenantService"/>
+	</bean>
+	
+	<bean id="supplierHotelCityMappingListener.java" class="com.cnk.travelogix.suppliers.events.SupplierHotelCityMappingListener">
+		<property name="supplierHotelCityMappingService" ref="supplierHotelCityMappingService"/>
+		<property name="clusterService" ref="clusterService"/>
+		<property name="tenantService" ref="tenantService"/>
+	</bean>
+	
+	<bean id="supplierProductMappingListener" class="com.cnk.travelogix.suppliers.events.SupplierProductMappingListener">
+		<property name="supplierProductMappingService" ref="supplierProductMappingService"/>
+		<property name="clusterService" ref="clusterService"/>
+		<property name="tenantService" ref="tenantService"/>
+	</bean>
+
+</beans>

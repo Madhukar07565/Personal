@@ -1,0 +1,2 @@
+#;accoRateDef;adultAge;childAge;childRate;dayOfWeek;maxPaxOccupancy;mealPlan;minNights;minPaxOccupancy;noOfAdults;noOfChild;payOnArrival;proRata;rate;rateDefinedFor;rateFor;roomCategory;stayDuration
+B2B:3:PER_ROOM:STANDALONE:MID_SEASON:76589:1853;5:15;6:10;5:15;MONDAY;7;AP;2;0;5;3;true;true;;PER_NIGHT;HOTEL;DELUXE;4

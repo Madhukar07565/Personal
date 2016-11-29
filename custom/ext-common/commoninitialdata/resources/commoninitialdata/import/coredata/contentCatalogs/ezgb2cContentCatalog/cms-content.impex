@@ -1,0 +1,1031 @@
+#
+# Import the CMS content for the site
+#
+$contentCatalog=ezgb2cContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$siteResource=jar:com.cnk.travelogix.common.initialdata.constants.CommonInitialDataConstants&/commoninitialdata/import/coredata/contentCatalogs/$contentCatalog
+$media=media(code, $contentCV)
+$pageType=pageType(code)
+# Import config properties into impex macros
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor] ; pk[unique=true]
+$jarResourceCms=$config-jarResourceCmsValue                                                                
+
+# Create PageTemplates                                                                                     
+# These define the layout for pages                                                                        
+# "FrontendTemplateName" is used to define the JSP that should be used to render the page for pages with multiple possible layouts.
+# "RestrictedPageTypes" is used to restrict templates to page types                                        
+INSERT_UPDATE PageTemplate ; $contentCV[unique=true] ; uid[unique=true]               ; name                                    ; frontendTemplateName                                        ; restrictedPageTypes(code) ; active[default=true]
+                           ;                         ; HomePage2Template              ; EZG Home Page Template                  ; layout/homeLayout2Page                                      ; CategoryPage,ContentPage  
+                           ;                         ; CartPage2Template              ; EZG Cart Page Template                  ; /WEB-INF/views/responsive/pages/ezg/cart/shoppingCart       ; CategoryPage,ContentPage  
+                           ;                         ; BookingSummaryPage2Template    ; EZG booking summary Page Template       ; /WEB-INF/views/responsive/pages/ezg/cart/bookingSummaryPage ; CategoryPage,ContentPage  
+                           ;                         ; BookingListPage2Template       ; EZG booking list Page Template          ; ezg/cart/bookingList                                        ; ContentPage               
+                           ;                         ; CompleteAccPageTemplate        ; Confirm Password Page Template          ; pages/ezg/account/completeAccPage                           ; ContentPage               
+                           ;                         ; SignupPageTemplate             ; Sing-up Page Template                   ; pages/ezg/account/signupPage                                ; ContentPage               
+##added by aizijie start   
+                           ;                         ; EZGSearchResultPageTemplate    ; EZG Search Result Page Template         ; ezg/search/searchResultPage                                 ; ContentPage               
+                           ;                         ; EZGProductDetailPageTemplate   ; EZG Product Detail Page Template        ; ezg/product/productDetailPage                               ; ProductPage               
+##added by aizijie end     
+                           ;                         ; EzgB2CWishlistTemplate         ; Wishlist Page Template                  ; ezg/account/wishlistPage                                    ; ContentPage               
+                           ;                         ; EzgB2CWalletTemplate           ; Wallet Page Template                    ; ezg/account/walletPage                                      ; ContentPage               
+                           ;                         ; EzgB2CSettingsTemplate         ; Settings Page Template                  ; ezg/account/settingsPage                                    ; ContentPage               
+### Added by Alex start ###                           
+                           ;                         ; EzgB2CDashboardTemplate        ; Dashboard Page Template                 ; ezg/account/dashboardPage                                   ; ContentPage               
+                           ;                         ; EzgB2CDashboardEditTemplate    ; Dashboard Edit Page Template            ; ezg/account/dashboardPage_edit                              ; ContentPage               
+                           ;                         ; EzgB2CResetPasswordTemplate    ; Reset Password Page Template            ; ezg/account/resetPasswordPage                               ; ContentPage               
+### Added by Alex end ###                           
+##added by panhui          
+                           ;                         ; AmendCancelAllProductsTemplate ; EZG amend/cancel products Page Template ; ezg/cart/amendCancelAllproducts                             ; ContentPage               
+
+# Add Velocity templates that are in the CMS Cockpit. These give a better layout for editing pages
+# The FileLoaderValueTranslator loads a File into a String property. The templates could also be inserted in-line in this file.
+UPDATE PageTemplate ; $contentCV[unique=true] ; uid[unique=true] ; velocityTemplate[translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+#;;HomePage2Template      ;$jarResourceCms/structure-view/structure_landingPage1Template.vm
+
+# Create ContentSlotNames
+# Each PageTemplate has a number of ContentSlotNames, with a list of valid components for the slot.
+# There are a standard set of slots and a number of specific slots for each template.
+# Standard slots are SiteLogo, HeaderLinks, MiniCart and NavigationBar (that all appear in the Header), and the Footer. 
+
+
+
+# Home Page Templates
+INSERT_UPDATE ContentSlotName ; name[unique=true] ; template(uid,$contentCV)[unique=true][default='HomePage2Template'] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; EzgTopHeader      ;                                                                    ;                           ; wide               
+                              ; EzgNav            ;                                                                    ;                           ; navigation         
+                              ; EzgFooter         ;                                                                    ;                           ; footer             
+                              ; EzgFooterDetails  ;                                                                    ;                           ; wide               
+                              ; EzgPanels         ;                                                                    ;                           ; wide               
+                              ; EzgAccountOverlay ;                                                                    ;                           ; wide               
+
+# Cart Page Templates         
+INSERT_UPDATE ContentSlotName ; name[unique=true] ; template(uid,$contentCV)[unique=true][default='CartPage2Template'] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; EzgTopHeader      ;                                                                    ;                           ; wide               
+                              ; EzgNav            ;                                                                    ;                           ; navigation         
+                              ; EzgFooter         ;                                                                    ;                           ; footer             
+                              ; EzgFooterDetails  ;                                                                    ;                           ; wide               
+                              ; EzgPanels         ;                                                                    ;                           ; wide               
+                              ; EzgAccountOverlay ;                                                                    ;                           ; wide               
+
+# booking summary Page Templates
+INSERT_UPDATE ContentSlotName ; name[unique=true] ; template(uid,$contentCV)[unique=true][default='BookingSummaryPage2Template'] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; EzgTopHeader      ;                                                                              ;                           ; wide               
+                              ; EzgTopNav         ;                                                                              ;                           ; navigation         
+                              ; EzgFooter         ;                                                                              ;                           ; footer             
+                              ; EzgFooterDetails  ;                                                                              ;                           ; wide               
+                              ; EzgPanels         ;                                                                              ;                           ; wide               
+                              ; EzgAccountOverlay ;                                                                              ;                           ; wide               
+
+# booking list Page Templates 
+INSERT_UPDATE ContentSlotName ; name[unique=true]  ; template(uid,$contentCV)[unique=true][default='BookingListPage2Template'] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; EzgTopHeader       ;                                                                           ;                           ; wide               
+                              ; EzgTopNav          ;                                                                           ;                           ; navigation         
+                              ; BookingListContent ;                                                                           ;                           ; wide               
+                              ; EzgFooter          ;                                                                           ;                           ; footer             
+                              ; EzgFooterDetails   ;                                                                           ;                           ; wide               
+                              ; EzgPanels          ;                                                                           ;                           ; wide               
+                              ; EzgAccountOverlay  ;                                                                           ;                           ; wide               
+
+### ConfirmPassword Page Template
+INSERT_UPDATE ContentSlotName ; name[unique=true] ; template(uid,$contentCV)[unique=true][default='CompleteAccPageTemplate'] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; EzgTopHeader      ;                                                                          ;                           ; wide               
+                              ; MesContent        ;                                                                          ;                           ; wide               
+                              ; PwdContent        ;                                                                          ;                           ; wide               
+                              ; EzgFooter         ;                                                                          ;                           ; footer             
+                              ; EzgFooterDetails  ;                                                                          ;                           ; wide               
+
+### Sign-up Page Template     
+INSERT_UPDATE ContentSlotName ; name[unique=true] ; template(uid,$contentCV)[unique=true][default='SignupPageTemplate'] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; EzgTopHeader      ;                                                                     ;                           ; wide               
+                              ; Section1          ;                                                                     ;                           ; wide               
+                              ; Section2          ;                                                                     ;                           ; wide               
+                              ; Section3          ;                                                                     ;                           ; wide               
+                              ; Section4          ;                                                                     ;                           ; wide               
+                              ; Section5          ;                                                                     ;                           ; wide               
+                              ; Section6          ;                                                                     ;                           ; wide               
+#;SectionPop;;;wide           
+
+##EZG Search Result Page ##added by aizijie
+INSERT_UPDATE ContentSlotName ; name[unique=true] ; template(uid,$contentCV)[unique=true][default='EZGSearchResultPageTemplate'] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; EzgTopHeader      ;                                                                              ;                           ; wide               
+                              ; EzgTopNav         ;                                                                              ;                           ; navigation         
+                              ; Section1          ;                                                                              ;                           ; wide               
+                              ; Section2A         ;                                                                              ;                           ; narrow             
+                              ; Section2B         ;                                                                              ;                           ; narrow             
+                              ; EzgFooter         ;                                                                              ;                           ; footer             
+                              ; EzgFooterDetails  ;                                                                              ;                           ; wide
+               				  ; EzgPanels         ;                                                                              ;                           ; wide                   
+                              ; EzgAccountOverlay ;                                                                              ;                           ; wide               
+
+INSERT_UPDATE ContentSlotName ; name[unique=true] ; template(uid,$contentCV)[unique=true][default='EZGProductDetailPageTemplate'] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; EzgTopHeader      ;                                                                               ;                           ; wide               
+                              ; EzgTopNav         ;                                                                               ;                           ; navigation         
+                              ; Section1          ;                                                                               ;                           ; wide               
+                              ; Section2A         ;                                                                               ;                           ; narrow             
+                              ; Section2B         ;                                                                               ;                           ; narrow             
+                              ; Section2C         ;                                                                               ;                           ; narrow             
+                              ; Section3A         ;                                                                               ;                           ; narrow             
+                              ; Section3B         ;                                                                               ;                           ; narrow             
+                              ; Section4          ;                                                                               ;                           ; wide               
+                              ; EzgFooter         ;                                                                               ;                           ; footer             
+                              ; EzgFooterDetails  ;                                                                               ;                           ; wide               
+                              ; EzgPanels         ;                                                                               ;                           ; wide               
+                              ; EzgAccountOverlay ;                                                                               ;                           ; wide               
+
+### Wishlist Page Template    
+INSERT_UPDATE ContentSlotName ; name[unique=true] ; template(uid,$contentCV)[unique=true][default='EzgB2CWishlistTemplate'] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; EzgTopHeader      ;                                                                         ;                           ; wide               
+                              ; EzgNav            ;                                                                         ;                           ; navigation         
+                              ; Search            ;                                                                         ;                           ; searchbox          
+                              ; Section1          ;                                                                         ;                           ; wide               
+                              ; Section2          ;                                                                         ;                           ; wide               
+                              ; EzgFooter         ;                                                                         ;                           ; footer             
+                              ; EzgFooterDetails  ;                                                                         ;                           ; wide               
+
+### Wallet Page Template      
+INSERT_UPDATE ContentSlotName ; name[unique=true] ; template(uid,$contentCV)[unique=true][default='EzgB2CWalletTemplate'] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; EzgTopHeader      ;                                                                       ;                           ; wide               
+                              ; EzgNav            ;                                                                       ;                           ; navigation         
+                              ; Section1          ;                                                                       ;                           ; wide               
+                              ; Section2A         ;                                                                       ;                           ; narrow             
+                              ; Section2B         ;                                                                       ;                           ; narrow             
+                              ; Section2C         ;                                                                       ;                           ; narrow             
+                              ; EzgFooter         ;                                                                       ;                           ; footer             
+                              ; EzgFooterDetails  ;                                                                       ;                           ; wide               
+
+### Settings Page Template    
+INSERT_UPDATE ContentSlotName ; name[unique=true] ; template(uid,$contentCV)[unique=true][default='EzgB2CSettingsTemplate'] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; EzgTopHeader      ;                                                                         ;                           ; wide               
+                              ; EzgNav            ;                                                                         ;                           ; navigation         
+                              ; Section1          ;                                                                         ;                           ; wide               
+                              ; Section2          ;                                                                         ;                           ; wide               
+                              ; Section3          ;                                                                         ;                           ; wide               
+                              ; Section4          ;                                                                         ;                           ; wide               
+                              ; Section5          ;                                                                         ;                           ; wide               
+                              ; EzgFooter         ;                                                                         ;                           ; footer             
+                              ; EzgFooterDetails  ;                                                                         ;                           ; wide               
+
+### Added by Alex start ###   
+### Dashboard Page Template   
+INSERT_UPDATE ContentSlotName ; name[unique=true] ; template(uid,$contentCV)[unique=true][default='EzgB2CDashboardTemplate'] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; EzgTopHeader      ;                                                                          ;                           ; wide               
+                              ; EzgNav            ;                                                                          ;                           ; navigation         
+                              ; EzgFooter         ;                                                                          ;                           ; footer             
+                              ; EzgFooterDetails  ;                                                                          ;                           ; wide               
+### Dashboard Edit Page Template 
+INSERT_UPDATE ContentSlotName ; name[unique=true] ; template(uid,$contentCV)[unique=true][default='EzgB2CDashboardEditTemplate'] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; EzgTopHeader      ;                                                                              ;                           ; wide               
+                              ; EzgNav            ;                                                                              ;                           ; navigation         
+                              ; EzgFooter         ;                                                                              ;                           ; footer             
+                              ; EzgFooterDetails  ;                                                                              ;                           ; wide               
+### Reset Password Page Template 
+INSERT_UPDATE ContentSlotName ; name[unique=true] ; template(uid,$contentCV)[unique=true][default='EzgB2CResetPasswordTemplate'] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; EzgTopHeader      ;                                                                              ;                           ; wide               
+                              ; EzgFooter         ;                                                                              ;                           ; footer             
+                              ; EzgFooterDetails  ;                                                                              ;                           ; wide               
+### Added by Alex end ###     
+
+##Amend/Cancel all product Page
+INSERT_UPDATE ContentSlotName ; name[unique=true]                ; template(uid,$contentCV)[unique=true][default='AmendCancelAllProductsTemplate'] ; validComponentTypes(code) ; compTypeGroup(code)
+                              ; EzgTopHeader                     ;                                                                                 ;                           ; wide               
+                              ; EzgTopNav                        ;                                                                                 ;                           ; navigation         
+                              ; bookingDetailTopTable            ;                                                                                 ;                           ; wide               
+                              ; bookingDetailList                ;                                                                                 ;                           ; wide               
+                              ; bookingHistory                   ;                                                                                 ;                           ; wide               
+                              ; addBookingFlightAndHotelPopup    ;                                                                                 ;                           ; wide               
+                              ; addBookingFlightPopup            ;                                                                                 ;                           ; wide               
+                              ; addBookingHotelPopup             ;                                                                                 ;                           ; wide               
+                              ; cancelAllBookingPopup            ;                                                                                 ;                           ; wide               
+                              ; cancelBookingBikePopup           ;                                                                                 ;                           ; wide               
+                              ; cancelBookingBusPopup            ;                                                                                 ;                           ; wide               
+                              ; cancelBookingCarPopup            ;                                                                                 ;                           ; wide               
+                              ; cancelBookingCruisePopup         ;                                                                                 ;                           ; wide               
+                              ; cancelBookingFlightAndHotelPopup ;                                                                                 ;                           ; wide               
+                              ; cancelBookingFlightPopup         ;                                                                                 ;                           ; wide               
+                              ; cancelBookingHotelPopup          ;                                                                                 ;                           ; wide               
+                              ; cancelBookingSuperSaverPopup     ;                                                                                 ;                           ; wide               
+                              ; cancelBookingTrainPopup          ;                                                                                 ;                           ; wide               
+                              ; changeBookingFlightAndHotelPopup ;                                                                                 ;                           ; wide               
+                              ; changeBookingFlightPopup         ;                                                                                 ;                           ; wide               
+                              ; changeBookingHotelPopup          ;                                                                                 ;                           ; wide               
+                              ; confirmCancellationPopup         ;                                                                                 ;                           ; wide               
+                              ; modifySearchFlightPopup          ;                                                                                 ;                           ; wide               
+                              ; postReviewPopup                  ;                                                                                 ;                           ; wide               
+                              ; reviewHotelChangeInfoPopup       ;                                                                                 ;                           ; wide               
+                              ; searchHotelPopup                 ;                                                                                 ;                           ; wide               
+                              ; reviewConfirmCancelPopup         ;                                                                                 ;                           ; wide               
+                              ; selectSeatPopup                  ;                                                                                 ;                           ; wide               
+                              ; postFeedbackPopup                ;                                                                                 ;                           ; wide               
+                              ; bookingPolicyPopup               ;                                                                                 ;                           ; wide               
+                              ; paymentSchedulePopup             ;                                                                                 ;                           ; wide               
+                              ; EzgFooter                        ;                                                                                 ;                           ; footer             
+                              ; EzgFooterDetails                 ;                                                                                 ;                           ; wide               
+
+# Create Content Slots        
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]      ; name                                ; active ; cmsComponents(&componentRef)                                                                                                                                                       
+                          ;                         ; EzgTopHeaderSlot      ; EZG Top header Slot                 ; true   ; EzgLogoBannerComponent,HomePageSearchBoxComponent,LogInfoComponent,SectionPopSignupComponent,SectionPopLoginComponent,SectionPopForgetPwdComponent,SectionPopEnableAccountComponent
+#for homepage navigation  
+                          ;                         ; EzgNavSlot            ; EZG Navigation Slot for homepage    ; true   ; EzgHomepageNavigationBarComponent                                                                                                                                                  
+#for other page navigation except homepage
+                          ;                         ; EzgTopNavSlot         ; EZG Navigation Slot except homepage ; true   ; EzgOtherpageNavigationBarComponent                                                                                                                                                 
+                          ;                         ; EzgFooterSlot         ; EZG footer Slot                     ; true   ; EzgFooterComponent                                                                                                                                                                 
+                          ;                         ; EzgFooterDetailsSlot  ; EZG footer details Slot             ; true   ; EzgFooterDetailsComponent                                                                                                                                                          
+                          ;                         ; EzgPanelsSlot         ; EZG panels Slot                     ; true   ; EzgPanelsComponent                                                                                                                                                                 
+                          ;                         ; EzgAccountOverlaySlot ; EZG account overlay Slot            ; true   
+#;;EzgTopNavSlot;Navigation Top Slot;true;EzgTopNavComponent
+
+# Bind Content Slots to Page Templates
+
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]            ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true][default='HomePage2Template'] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
+                                     ;                         ; EzgTopHeader-HomePage2      ; EzgTopHeader          ;                                                                        ; EzgTopHeaderSlot                         ; true          
+                                     ;                         ; EzgNav-HomePage2            ; EzgNav                ;                                                                        ; EzgNavSlot                               ; true          
+                                     ;                         ; EzgFooter-HomePage2         ; EzgFooter             ;                                                                        ; EzgFooterSlot                            ; true          
+                                     ;                         ; EzgFooterDetails-HomePage2  ; EzgFooterDetails      ;                                                                        ; EzgFooterDetailsSlot                     ; true          
+                                     ;                         ; EzgPanels-HomePage2         ; EzgPanels             ;                                                                        ; EzgPanelsSlot                            ; true          
+                                     ;                         ; EzgAccountOverlay-HomePage2 ; EzgAccountOverlay     ;                                                                        ; EzgAccountOverlaySlot                    ; true          
+
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]            ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true][default='CartPage2Template'] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
+                                     ;                         ; EzgTopHeader-CartPage2      ; EzgTopHeader          ;                                                                        ; EzgTopHeaderSlot                         ; true          
+                                     ;                         ; EzgNav-CartPage2            ; EzgNav                ;                                                                        ; EzgTopNavSlot                            ; true          
+                                     ;                         ; EzgFooter-CartPage2         ; EzgFooter             ;                                                                        ; EzgFooterSlot                            ; true          
+                                     ;                         ; EzgFooterDetails-CartPage2  ; EzgFooterDetails      ;                                                                        ; EzgFooterDetailsSlot                     ; true          
+                                     ;                         ; EzgPanels-CartPage2         ; EzgPanels             ;                                                                        ; EzgPanelsSlot                            ; true          
+                                     ;                         ; EzgAccountOverlay-CartPage2 ; EzgAccountOverlay     ;                                                                        ; EzgAccountOverlaySlot                    ; true          
+
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]                      ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true][default='BookingSummaryPage2Template'] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
+                                     ;                         ; EzgTopHeader-BookingSummaryPage2      ; EzgTopHeader          ;                                                                                  ; EzgTopHeaderSlot                         ; true          
+                                     ;                         ; EzgNav-BookingSummaryPage2            ; EzgNav                ;                                                                                  ; EzgTopNavSlot                            ; true          
+                                     ;                         ; EzgFooter-BookingSummaryPage2         ; EzgFooter             ;                                                                                  ; EzgFooterSlot                            ; true          
+                                     ;                         ; EzgFooterDetails-BookingSummaryPage2  ; EzgFooterDetails      ;                                                                                  ; EzgFooterDetailsSlot                     ; true          
+                                     ;                         ; EzgPanels-BookingSummaryPage2         ; EzgPanels             ;                                                                                  ; EzgPanelsSlot                            ; true          
+                                     ;                         ; EzgAccountOverlay-BookingSummaryPage2 ; EzgAccountOverlay     ;                                                                                  ; EzgAccountOverlaySlot                    ; true          
+
+### EZG Booking list Page Template   
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]                  ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true][default='BookingListPage2Template'] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
+                                     ;                         ; EzgTopHeader-BookingListPage2     ; EzgTopHeader          ;                                                                               ; EzgTopHeaderSlot                         ; true          
+                                     ;                         ; EzgNav-BookingListPage2           ; EzgNav                ;                                                                               ; EzgTopNavSlot                            ; true          
+                                     ;                         ; EzgFooter-BookingListPage2        ; EzgFooter             ;                                                                               ; EzgFooterSlot                            ; true          
+                                     ;                         ; EzgFooterDetails-BookingListPage2 ; EzgFooterDetails      ;                                                                               ; EzgFooterDetailsSlot                     ; true          
+
+### CompleteAccPageTemplate          
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]                       ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true][default='CompleteAccPageTemplate'] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
+                                     ;                         ; EzgTopHeader-ezgb2cCompleteAccPage     ; EzgTopHeader          ;                                                                              ; EzgTopHeaderSlot                         ; true          
+                                     ;                         ; EzgFooter-ezgb2cCompleteAccPage        ; EzgFooter             ;                                                                              ; EzgFooterSlot                            ; true          
+                                     ;                         ; EzgFooterDetails-ezgb2cCompleteAccPage ; EzgFooterDetails      ;                                                                              ; EzgFooterDetailsSlot                     ; true          
+
+### SignupPageTemplate               
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]              ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true][default='SignupPageTemplate'] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
+                                     ;                         ; EzgTopHeader-ezgb2cSignupPage ; EzgTopHeader          ;                                                                         ; EzgTopHeaderSlot                         ; true          
+
+##added by aizijie start             
+### EZG Search Result Page Template  
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]                      ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true][default='EZGSearchResultPageTemplate'] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
+                                     ;                         ; EzgTopHeader-EZGSearchResultPage      ; EzgTopHeader          ;                                                                                  ; EzgTopHeaderSlot                         ; true          
+                                     ;                         ; EzgTopNav-EZGSearchResultPage         ; EzgTopNav             ;                                                                                  ; EzgTopNavSlot                            ; true          
+                                     ;                         ; EzgFooter-EZGSearchResultPage         ; EzgFooter             ;                                                                                  ; EzgFooterSlot                            ; true          
+                                     ;                         ; EzgFooterDetails-EZGSearchResultPage  ; EzgFooterDetails      ;                                                                                  ; EzgFooterDetailsSlot                     ; true
+                                     ;                         ; EzgPanels-EZGSearchResultPage         ; EzgPanels             ;                                                                                  ; EzgPanelsSlot                            ; true           
+                                     ;                         ; EzgAccountOverlay-EZGSearchResultPage ; EzgAccountOverlay     ;                                                                                  ; EzgAccountOverlaySlot                    ; true          
+
+### EZG Product Detail Page Template 
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]                       ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true][default='EZGProductDetailPageTemplate'] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
+                                     ;                         ; EzgTopHeader-EZGProductDetailPage      ; EzgTopHeader          ;                                                                                   ; EzgTopHeaderSlot                         ; true          
+                                     ;                         ; EzgTopNav-EZGProductDetailPage         ; EzgTopNav             ;                                                                                   ; EzgTopNavSlot                            ; true          
+                                     ;                         ; EzgFooter-EZGProductDetailPage         ; EzgFooter             ;                                                                                   ; EzgFooterSlot                            ; true          
+                                     ;                         ; EzgFooterDetails-EZGProductDetailPage  ; EzgFooterDetails      ;                                                                                   ; EzgFooterDetailsSlot                     ; true          
+                                     ;                         ; EzgPanels-EZGProductDetailPage         ; EzgPanels             ;                                                                                   ; EzgPanelsSlot                            ; true          
+                                     ;                         ; EzgAccountOverlay-EZGProductDetailPage ; EzgAccountOverlay     ;                                                                                   ; EzgAccountOverlaySlot                    ; true          
+
+##added by aizijie start end         
+
+
+### EzgB2CWishlistTemplate           
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]                ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true][default='EzgB2CWishlistTemplate'] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
+                                     ;                         ; EzgTopHeader-ezgb2cWishlist     ; EzgTopHeader          ;                                                                             ; EzgTopHeaderSlot                         ; true          
+                                     ;                         ; EzgNav-ezgb2cWishlist           ; EzgNav                ;                                                                             ; EzgTopNavSlot                            ; true          
+                                     ;                         ; EzgFooter-ezgb2cWishlist        ; EzgFooter             ;                                                                             ; EzgFooterSlot                            ; true          
+                                     ;                         ; EzgFooterDetails-ezgb2cWishlist ; EzgFooterDetails      ;                                                                             ; EzgFooterDetailsSlot                     ; true          
+
+### EzgB2CWalletTemplate             
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]              ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true][default='EzgB2CWalletTemplate'] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
+                                     ;                         ; EzgTopHeader-ezgb2cWallet     ; EzgTopHeader          ;                                                                           ; EzgTopHeaderSlot                         ; true          
+                                     ;                         ; EzgNav-ezgb2cWallet           ; EzgNav                ;                                                                           ; EzgTopNavSlot                            ; true          
+                                     ;                         ; EzgFooter-ezgb2cWallet        ; EzgFooter             ;                                                                           ; EzgFooterSlot                            ; true          
+                                     ;                         ; EzgFooterDetails-ezgb2cWallet ; EzgFooterDetails      ;                                                                           ; EzgFooterDetailsSlot                     ; true          
+
+
+### EzgB2CSettingsTemplate           
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]                ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true][default='EzgB2CSettingsTemplate'] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
+                                     ;                         ; EzgTopHeader-ezgb2cSettings     ; EzgTopHeader          ;                                                                             ; EzgTopHeaderSlot                         ; true          
+                                     ;                         ; EzgNav-ezgb2cSettings           ; EzgNav                ;                                                                             ; EzgTopNavSlot                            ; true          
+                                     ;                         ; EzgFooter-ezgb2cSettings        ; EzgFooter             ;                                                                             ; EzgFooterSlot                            ; true          
+                                     ;                         ; EzgFooterDetails-ezgb2cSettings ; EzgFooterDetails      ;                                                                             ; EzgFooterDetailsSlot                     ; true          
+
+### Added by Alex start ###          
+### EzgB2CDashboardTemplate          
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]                 ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true][default='EzgB2CDashboardTemplate'] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
+                                     ;                         ; EzgTopHeader-ezgb2cDashboard     ; EzgTopHeader          ;                                                                              ; EzgTopHeaderSlot                         ; true          
+                                     ;                         ; EzgNav-ezgb2cDashboard           ; EzgNav                ;                                                                              ; EzgTopNavSlot                            ; true          
+                                     ;                         ; EzgFooter-ezgb2cDashboard        ; EzgFooter             ;                                                                              ; EzgFooterSlot                            ; true          
+                                     ;                         ; EzgFooterDetails-ezgb2cDashboard ; EzgFooterDetails      ;                                                                              ; EzgFooterDetailsSlot                     ; true          
+### EzgB2CDashboardEditTemplate                                    
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]                     ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true][default='EzgB2CDashboardEditTemplate'] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
+                                     ;                         ; EzgTopHeader-ezgb2cEditDashboard     ; EzgTopHeader          ;                                                                                  ; EzgTopHeaderSlot                         ; true          
+                                     ;                         ; EzgNav-ezgb2cEditDashboard           ; EzgNav                ;                                                                                  ; EzgTopNavSlot                            ; true          
+                                     ;                         ; EzgFooter-ezgb2cEditDashboard        ; EzgFooter             ;                                                                                  ; EzgFooterSlot                            ; true          
+                                     ;                         ; EzgFooterDetails-ezgb2cEditDashboard ; EzgFooterDetails      ;                                                                                  ; EzgFooterDetailsSlot                     ; true          
+### EzgB2CResetPasswordTemplate                                    
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]                             ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true][default='EzgB2CResetPasswordTemplate'] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
+                                     ;                         ; EzgTopHeader-EzgB2CResetPasswordTemplate     ; EzgTopHeader          ;                                                                                  ; EzgTopHeaderSlot                         ; true          
+                                     ;                         ; EzgFooter-EzgB2CResetPasswordTemplate        ; EzgFooter             ;                                                                                  ; EzgFooterSlot                            ; true          
+                                     ;                         ; EzgFooterDetails-EzgB2CResetPasswordTemplate ; EzgFooterDetails      ;                                                                                  ; EzgFooterDetailsSlot                     ; true          
+### Added by Alex end ###            
+
+### EzgAmendCancelAllProductsTemplate
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]                              ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true][default='AmendCancelAllProductsTemplate'] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite
+                                     ;                         ; EzgTopHeader-ezgb2cAmendCancelAllProducts     ; EzgTopHeader          ;                                                                                     ; EzgTopHeaderSlot                         ; true          
+                                     ;                         ; EzgNav-ezgb2cAmendCancelAllProducts           ; EzgNav                ;                                                                                     ; EzgTopNavSlot                            ; true          
+                                     ;                         ; EzgFooter-ezgb2cAmendCancelAllProducts        ; EzgFooter             ;                                                                                     ; EzgFooterSlot                            ; true          
+                                     ;                         ; EzgFooterDetails-ezgb2cAmendCancelAllProducts ; EzgFooterDetails      ;                                                                                     ; EzgFooterDetailsSlot                     ; true          
+# Create Content Pages               
+
+# Site-wide Homepage                 
+INSERT_UPDATE ContentPage ; $contentCV[unique=true] ; uid[unique=true]                        ; name                                          ; masterTemplate(uid,$contentCV) ; label                                   ; defaultPage[default='true'] ; approvalStatus(code)[default='approved'] ; homepage[default='false']
+                          ;                         ; ezgb2chomepage                          ; EZG B2C Homepage                              ; HomePage2Template              ; ezgb2chomepage                          ; true                        ;                                          ; true                     
+                          ;                         ; ezgb2ccartpage                          ; EZG B2C Cartpage                              ; CartPage2Template              ; cart                                    ; false                       ;                                          ; false                    
+                          ;                         ; ezgb2cbookingsummarypage                ; EZG B2C booking summary page                  ; BookingSummaryPage2Template    ; ezgb2cbookingsummarypage                ; false                       ;                                          ; false                    
+                          ;                         ; ezgb2cbookinglistpage                   ; EZG B2C booking list page                     ; BookingListPage2Template       ; ezgb2cbookinglistpage                   ; false                       ;                                          ; false                    
+                          ;                         ; CompleteAccPage                         ; CompleteAccPage                               ; CompleteAccPageTemplate        ; completeAccPage                         ; false                       ;                                          ; false                    
+                          ;                         ; SignupPage                              ; SignupPage                                    ; SignupPageTemplate             ; signupPage                              ; false                       ;                                          ; false                    
+                          ;                         ; ezgHotelSearchResultPage                ; EZG Hotel Search Result Page                  ; EZGSearchResultPageTemplate    ; ezgHotelSearchResultPage                ;                             ;                                          ; false                    
+                          ;                         ; ezgFlightHotelOnewaySearchResultPage    ; EZG Flight Hotel Oneway Search Result Page    ; EZGSearchResultPageTemplate    ; ezgFlightHotelOnewaySearchResultPage    ;                             ;                                          ;                          
+                          ;                         ; ezgFlightHotelTwowaySearchResultPage    ; EZG Flight Hotel Twoway Search Result Page    ; EZGSearchResultPageTemplate    ; ezgFlightHotelTwowaySearchResultPage    ;                             ;                                          ;                          
+                          ;                         ; ezgFlightHotelMulticitySearchResultPage ; EZG Flight Hotel Multicity Search Result Page ; EZGSearchResultPageTemplate    ; ezgFlightHotelMulticitySearchResultPage ;                             ;                                          ;                          
+                          ;                         ; ezgb2cWishlistPage                      ; ezgb2c Wishlist Page                          ; EzgB2CWishlistTemplate         ; ezgb2cWishlistPage                      
+                          ;                         ; ezgb2cWalletPage                        ; ezgb2c Wallet Page                            ; EzgB2CWalletTemplate           ; ezgb2cWalletPage                        
+                          ;                         ; ezgb2cSettingsPage                      ; ezgb2c Settings Page                          ; EzgB2CSettingsTemplate         ; ezgb2cSettingsPage                      
+### Added by Alex start ###
+                          ;                         ; ezgb2cDashboardPage                     ; ezgb2c Dashboard Page                         ; EzgB2CDashboardTemplate        ; ezgb2cDashboardPage                     
+                          ;                         ; ezgb2cDashboardEditPage                 ; ezgb2c Dashboard Edit Page                    ; EzgB2CDashboardEditTemplate    ; ezgb2cDashboardEditPage                 
+                          ;                         ; ezgb2cResetPasswordPage                 ; ezgb2c Reset Password Page                    ; EzgB2CResetPasswordTemplate    ; ezgb2cResetPasswordPage                 
+### Added by Alex end ### 
+                          ;                         ; ezgb2cAmendCancelAllProductsPage        ; ezgb2c Amend/cancel all products Page         ; AmendCancelAllProductsTemplate ; ezgb2cAmendCancelAllProductsPage        
+
+##added by anming start   
+                          ;                         ; ezgFlightOnewaySearchResultPage         ; EZG Flight  Oneway Search Result Page         ; EZGSearchResultPageTemplate    ; ezgFlightOnewaySearchResultPage         ;                             ;                                          ;                          
+                          ;                         ; ezgFlightTwowaySearchResultPage         ; EZG Flight  Twoway Search Result Page         ; EZGSearchResultPageTemplate    ; ezgFlightTwowaySearchResultPage         ;                             ;                                          ;                          
+                          ;                         ; ezgFlightMulticitySearchResultPage      ; EZG Flight  Multicity Search Result Page      ; EZGSearchResultPageTemplate    ; ezgFlightMulticitySearchResultPage      ;                             ;                                          ;                          
+##added by Felix start
+						  ;							; ezgFlightMulticityIntlSearchResultPage  ; EZG Flight  Multicity Intl Search Result Page ; EZGSearchResultPageTemplate    ; ezgFlightMulticityIntlSearchResultPage  ;							   ;										  ;
+##added by Felix end
+##added by anming end     
+
+##added by aizijie start  
+# Product Details Page    
+INSERT_UPDATE ProductPage ; $contentCV[unique=true] ; uid[unique=true]    ; name                   ; masterTemplate(uid,$contentCV) ; defaultPage ; approvalStatus(code)[default='approved']
+                          ;                         ; ezgHotelDetailsPage ; EZG Hotel Details page ; EZGProductDetailPageTemplate   ; true        ;                                         
+##added by aizijie end    
+
+
+# Preview Image for use in the CMS Cockpit for special ContentPages
+INSERT_UPDATE Media ; $contentCV[unique=true] ; code[unique=true] ; mime ; realfilename ; @media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite=true]
+#;;ContentPageModel__function_preview;text/gif;ContentPageModel__function_preview.gif;$jarResourceCms/preview-images/ContentPageModel__function_preview.gif
+
+
+###### Homepage     
+
+# ContentSlot       
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]                            ; name                                                ; active ; cmsComponents(&componentRef)           ;  ;  ;  
+#;;EzgTopHeaderSlot-ezgb2chomepage;Top header Slot for EZG b2c Homepage;true;EzgTopHeaderComponent;;;
+#;;EzgNavSlot-ezgb2chomepage;Navigation Slot for EZG b2c Homepage;true;EzgNavComponent;;;
+#;;EzgFooterSlot-ezgb2chomepage;EzgFooterSlot for EZG b2c Homepage;true;EzgFooterComponent;;;
+#;;EzgFooterDetailsSlot-ezgb2chomepage;EzgFooterDetails Slot for EZG b2c Homepage;true;EzgFooterDetailsComponent;;;
+#;;EzgPanelsSlot-ezgb2chomepage;EzgPanelsSlot for EZG b2c Homepage;true;EzgPanelsComponent;;;
+#;;EzgAccountOverlaySlot-ezgb2chomepage;EzgAccountOverlaySlot for EZG b2c Homepage;true;EzgAccountOverlayComponent;;;
+
+                          ;                         ; GlobalSearchSlot-ezgb2chomepage             ; GlobalSearch Slot for EZG b2c Homepage              ; true   ; GlobalSearchComponent                  ;  ;  ;  
+                          ;                         ; BannerSlot-ezgb2chomepage                   ; Banner Slot for EZG b2c Homepage                    ; true   ; EzgHomepageBgRotatingImagesComponent   ;  ;  ;  
+                          ;                         ; DealSlot-ezgb2chomepage                     ; Deal Slot for EZG b2c Homepage                      ; true   ; DealComponent                          ;  ;  ;  
+                          ;                         ; PopularRoutesFlightSlot-ezgb2chomepage      ; PopularRoutesFlight Slot for EZG b2c Homepage       ; true   ; PopularRoutesFlightComponent           ;  ;  ;  
+                          ;                         ; PopularRoutesFlightHotelSlot-ezgb2chomepage ; PopularRoutesFlightHotel Slot for EZG b2c Homepage  ; true   ; PopularRoutesFlightHotelComponent      ;  ;  ;  
+#                          ;                         ; DiscoverHolidaySlot-ezgb2chomepage          ; DiscoverHoliday Slot for EZG b2c Homepage           ; true   ; DiscoverHolidayComponent               ;  ;  ;  
+#                          ;                         ; TravellerTypeSlot-ezgb2chomepage            ; TravellerType Slot for EZG b2c Homepage             ; true   ; TravellerTypeComponent                 ;  ;  ;  
+#                         ;                         ; NotSureSlot-ezgb2chomepage                  ; NotSure Slot for EZG b2c Homepage                   ; true   ; NotSureComponent                       ;  ;  ;  
+#                          ;                         ; AdvertisementSlot-ezgb2chomepage            ; Advertisement Slot for EZG b2c Homepage             ; true   ; AdvertisementComponent                 ;  ;  ;  
+                          ;                         ; NavigationFlightAndHotelSlot-ezgb2chomepage ; Navigation-FlightAndHotel Slot for EZG b2c Homepage ; true   ; SearchFlightHotelCommonSearchComponent ;  ;  ;  
+                          ;                         ; NavigationFlightSlot-ezgb2chomepage         ; Navigation-Flight Slot for EZG b2c Homepage         ; true   ; SearchFlightCommonSearchComponent      ;  ;  ;  
+                          ;                         ; NavigationHotelSlot-ezgb2chomepage          ; Navigation-Hotel Slot for EZG b2c Homepage          ; true   ; HotelSearchItemsComponent              ;  ;  ;  
+                          ;                         ; HotelSearchBoxSlot-ezgb2chomepage           ; Hotel search box for EZG b2c Homepage               ; true   ; HotelSearchBoxComponent                ;  ;  ;  
+                          ;                         ; SearchBoxToSlot-ezgb2chomepage              ; Search Box To Slot for ezgb2chomepage               ; true   ; FlightToSearchBoxComponent             ;  ;  ;  
+                          ;                         ; SearchBoxFromSlot-ezgb2chomepage            ; Search Box From Slot for ezgb2chomepage             ; true   ; FlightFromSearchBoxComponent           ;  ;  ;  
+                          ;                         ; FooterContactDetailSlot-ezgb2chomepage      ; Footer Contact Detail Slot for ezgb2chomepage       ; true   ; EzgHomepageFooterContactComponent      ;  ;  ;  
+
+
+# ContentSlotForPage      
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                            ; position[unique=true]       ; page(uid,$contentCV)[unique=true][default='ezgb2chomepage'] ; contentSlot(uid,$contentCV)[unique=true]    ;  ;  ;  
+                                 ;                         ; EzgTopHeaderSlot                            ; EzgTopHeader                ;                                                             ; EzgTopHeaderSlot                            ;  ;  ;  
+                                 ;                         ; EzgNavSlot                                  ; EzgNav                      ;                                                             ; EzgNavSlot                                  ;  ;  ;  
+                                 ;                         ; EzgFooterSlot                               ; EzgFooter                   ;                                                             ; EzgFooterSlot                               ;  ;  ;  
+                                 ;                         ; EzgFooterDetailsSlot                        ; EzgFooterDetails            ;                                                             ; EzgFooterDetailsSlot                        ;  ;  ;  
+                                 ;                         ; EzgPanelsSlot                               ; EzgPanels                   ;                                                             ; EzgPanelsSlot                               ;  ;  ;  
+#;;EzgAccountOverlaySlot-ezgb2chomepage;EzgAccountOverlay;;EzgAccountOverlaySlot-ezgb2chomepage;;;
+
+                                 ;                         ; GlobalSearchSlot-ezgb2chomepage             ; GlobalSearch                ;                                                             ; GlobalSearchSlot-ezgb2chomepage             ;  ;  ;  
+                                 ;                         ; BannerSlot-ezgb2chomepage                   ; Banner                      ;                                                             ; BannerSlot-ezgb2chomepage                   ;  ;  ;  
+                                 ;                         ; DealSlot-ezgb2chomepage                     ; Deal                        ;                                                             ; DealSlot-ezgb2chomepage                     ;  ;  ;  
+                                 ;                         ; PopularRoutesFlightSlot-ezgb2chomepage      ; PopularRoutesFlight         ;                                                             ; PopularRoutesFlightSlot-ezgb2chomepage      ;  ;  ;  
+                                 ;                         ; PopularRoutesFlightHotelSlot-ezgb2chomepage ; PopularRoutesFlightHotel    ;                                                             ; PopularRoutesFlightHotelSlot-ezgb2chomepage ;  ;  ;  
+                                 ;                         ; DiscoverHolidaySlot-ezgb2chomepage          ; DiscoverHoliday             ;                                                             ; DiscoverHolidaySlot-ezgb2chomepage          ;  ;  ;  
+                                 ;                         ; TravellerTypeSlot-ezgb2chomepage            ; TravellerType               ;                                                             ; TravellerTypeSlot-ezgb2chomepage            ;  ;  ;  
+                                 ;                         ; NotSureSlot-ezgb2chomepage                  ; NotSure                     ;                                                             ; NotSureSlot-ezgb2chomepage                  ;  ;  ;  
+                                 ;                         ; AdvertisementSlot-ezgb2chomepage            ; Advertisement               ;                                                             ; AdvertisementSlot-ezgb2chomepage            ;  ;  ;  
+                                 ;                         ; NavigationFlightAndHotelSlot-ezgb2chomepage ; NavigationFlightAndHotel    ;                                                             ; NavigationFlightAndHotelSlot-ezgb2chomepage ;  ;  ;  
+                                 ;                         ; NavigationFlightSlot-ezgb2chomepage         ; NavigationFlightSearch      ;                                                             ; NavigationFlightSlot-ezgb2chomepage         ;  ;  ;  
+                                 ;                         ; NavigationHotelSlot-ezgb2chomepage          ; NavigationHotelSearch       ;                                                             ; NavigationHotelSlot-ezgb2chomepage          ;  ;  ;  
+                                 ;                         ; HotelSearchBoxSlot-ezgb2chomepage           ; TopSearchBox                ;                                                             ; HotelSearchBoxSlot-ezgb2chomepage           ;  ;  ;  
+                                 ;                         ; SearchBoxToSlot-ezgb2chomepage              ; FlightSearchToSection       ;                                                             ; SearchBoxToSlot-ezgb2chomepage              ;  ;  ;  
+                                 ;                         ; SearchBoxFromSlot-ezgb2chomepage            ; FlightSearchFromSection     ;                                                             ; SearchBoxFromSlot-ezgb2chomepage            ;  ;  ;  
+                                 ;                         ; FooterContactDetailSlot-ezgb2chomepage      ; HomepageFooterContactDetail ;                                                             ; FooterContactDetailSlot-ezgb2chomepage      
+INSERT_UPDATE JspIncludeComponent ; $contentCV[unique=true] ; uid[unique=true]                             ; name                                                 ; page                                                                                  ; actions(uid,$contentCV) ; &componentRef                               
+#                                  ;                         ; EzgTopHeaderComponent                        ; EZG Top Header Component                             ; /WEB-INF/views/responsive/pages/ezg/header/top.jsp                                    ;                         ; EzgTopHeaderComponent                       
+                                  ;                         ; EzgNavComponent                              ; EZG nav Component                                    ; /WEB-INF/views/responsive/pages/ezg/header/nav.jsp                                    ;                         ; EzgNavComponent                             
+                                  ;                         ; EzgFooterComponent                           ; EZG footer Component                                 ; /WEB-INF/views/responsive/pages/ezg/footer/footer.jsp                                 ;                         ; EzgFooterComponent                          
+                                  ;                         ; EzgFooterDetailsComponent                    ; EZG footer details Component                         ; /WEB-INF/views/responsive/pages/ezg/footer/footerDetails.jsp                          ;                         ; EzgFooterDetailsComponent                   
+
+                                  ;                         ; EzgPanelsComponent                           ; EZG panels Component                                 ; /WEB-INF/views/responsive/pages/ezg/panel/panels.jsp                                  ;                         ; EzgPanelsComponent                          
+                                  ;                         ; EzgPanelsMiniCartComponent                   ; EZG panels mini cart Component                       ; /WEB-INF/views/responsive/pages/ezg/panel/minicart.jsp                                ;                         ; EzgPanelsMiniCartComponent                  
+
+                                  ;                         ; EzgAccountOverlayComponent                   ; EZG account overlay Component                        ; /WEB-INF/views/responsive/pages/ezg/account/accountOverlay.jsp                        ;                         ; EzgAccountOverlayComponent                  
+
+                                  ;                         ; GlobalSearchComponent                        ; EZG GlobalSearch Component                           ; /WEB-INF/views/responsive/pages/ezg/header/globalSearch.jsp                           ;                         ; GlobalSearchComponent                       
+#                                 ;                         ; BannerComponent                              ; EZG banner Component                                 ; /WEB-INF/views/responsive/pages/ezg/home/banner.jsp                                   ;                         ; BannerComponent                             
+                                  ;                         ; DealComponent                                ; EZG deal Component                                   ; /WEB-INF/views/responsive/pages/ezg/home/deal.jsp                                     ;                         ; DealComponent                               
+                                  ;                         ; PopularRoutesFlightComponent                 ; EZG PopularRoutesFlight Component                    ; /WEB-INF/views/responsive/pages/ezg/home/popularRoutes_flight.jsp                     ;                         ; PopularRoutesFlightComponent                
+                                  ;                         ; PopularRoutesFlightHotelComponent            ; EZG PopularRoutesFlight hotel Component              ; /WEB-INF/views/responsive/pages/ezg/home/popularRoutes_flight_hotel.jsp               ;                         ; PopularRoutesFlightHotelComponent           
+                                  ;                         ; DiscoverHolidayComponent                     ; EZG DiscoverHoliday Component                        ; /WEB-INF/views/responsive/pages/ezg/home/discoverHoliday.jsp                          ;                         ; DiscoverHolidayComponent                    
+                                  ;                         ; TravellerTypeComponent                       ; EZG TravellerType Component                          ; /WEB-INF/views/responsive/pages/ezg/home/travelerType.jsp                             ;                         ; TravellerTypeComponent                      
+                                  ;                         ; NotSureComponent                             ; EZG not sure Component                               ; /WEB-INF/views/responsive/pages/ezg/home/notSure.jsp                                  ;                         ; NotSureComponent                            
+                                  ;                         ; AdvertisementComponent                       ; EZG Advertisement Component                          ; /WEB-INF/views/responsive/pages/ezg/home/advertisement.jsp                            ;                         ; AdvertisementComponent                      
+
+                                  ;                         ; CartContentComponent                         ; EZG cart Component                                   ; /WEB-INF/views/responsive/pages/ezg/cart/cartContent.jsp                              ;                         ; CartContentComponent                        
+                                  ;                         ; EzgTopNavComponent                           ; EZG top nav Component                                ; /WEB-INF/views/responsive/pages/ezg/header/topNav.jsp                                 ;                         ; EzgTopNavComponent                          
+                                  ;                         ; BookingSummaryContentComponent               ; EZG booking summary Component                        ; /WEB-INF/views/responsive/pages/ezg/cart/bookingSummaryContent.jsp                    ;                         ; BookingSummaryContentComponent              
+                                  ;                         ; BookingListContentComponent                  ; EZG booking list Component                           ; /WEB-INF/views/responsive/pages/ezg/cart/bookingListContent.jsp                       ;                         ; BookingListContentComponent                 
+                                  ;                         ; SearchFlightHotelCommonSearchComponent       ; Common Search flight hotel component                 ; /WEB-INF/views/responsive/pages/ezg/search/flightandhotel/flightandhotelSearch.jsp    ;                         ; SearchFlightHotelCommonSearchComponent      
+                                  ;                         ; Section1FlightHotelCommonSearchComponent     ; Common Section1 flight hotel component               ; /WEB-INF/views/responsive/pages/ezg/search/flightandhotel/flightandhotelSection1.jsp  ;                         ; Section1FlightHotelCommonSearchComponent    
+                                  ;                         ; Section2AFlightHotelCommonSearchComponent    ; Common Section2A flight hotel component              ; /WEB-INF/views/responsive/pages/ezg/search/flightandhotel/flightandhotelSection2A.jsp ;                         ; Section2AFlightHotelCommonSearchComponent   
+                                  ;                         ; Section2BFlightHotelOnewaySearchComponent    ; Oneway Component for Section2B                       ; /WEB-INF/views/responsive/pages/ezg/search/flightandhotel/onewaySection2B.jsp         ;                         ; Section2BFlightHotelOnewaySearchComponent   
+                                  ;                         ; Section2BFlightHotelTwowaySearchComponent    ; Twoway Component for Section2B                       ; /WEB-INF/views/responsive/pages/ezg/search/flightandhotel/twowaySection2B.jsp         ;                         ; Section2BFlightHotelTwowaySearchComponent   
+                                  ;                         ; Section2BFlightHotelMulticitySearchComponent ; Multicity Component for Section2B                    ; /WEB-INF/views/responsive/pages/ezg/search/flightandhotel/multicitySection2B.jsp      ;                         ; Section2BFlightHotelMulticitySearchComponent
+                                  ;                         ; MesContentComponent                          ; Message Content Component                            ; /WEB-INF/views/responsive/pages/ezg/account/mesContentSection.jsp                     ;                         ; MesContentComponent                         
+                                  ;                         ; PwdContentComponent                          ; Password Content Component                           ; /WEB-INF/views/responsive/pages/ezg/account/pwdContentSection.jsp                     ;                         ; PwdContentComponent                         
+                                  ;                         ; Section1SignupComponent                      ; Section1 Content Component                           ; /WEB-INF/views/responsive/pages/ezg/account/section1-signup.jsp                       ;                         ; Section1SignupComponent                     
+                                  ;                         ; Section2SignupComponent                      ; Section2 Content Component                           ; /WEB-INF/views/responsive/pages/ezg/account/section2-signup.jsp                       ;                         ; Section2SignupComponent                     
+                                  ;                         ; Section3SignupComponent                      ; Section3 Content Component                           ; /WEB-INF/views/responsive/pages/ezg/account/section3-signup.jsp                       ;                         ; Section3SignupComponent                     
+                                  ;                         ; Section4SignupComponent                      ; Section4 Content Component                           ; /WEB-INF/views/responsive/pages/ezg/account/section4-signup.jsp                       ;                         ; Section4SignupComponent                     
+                                  ;                         ; Section5SignupComponent                      ; Section5 Content Component                           ; /WEB-INF/views/responsive/pages/ezg/account/section5-signup.jsp                       ;                         ; Section5SignupComponent                     
+                                  ;                         ; Section6SignupComponent                      ; Section6 Content Component                           ; /WEB-INF/views/responsive/pages/ezg/account/section6-signup.jsp                       ;                         ; Section6SignupComponent                     
+                                  ;                         ; SectionPopSignupComponent                    ; SectionPop Signup Component                          ; /WEB-INF/views/responsive/pages/ezg/account/popup_register.jsp                        ;                         ; SectionPopSignupComponent                   
+                                  ;                         ; SectionPopLoginComponent                     ; SectionPop Login Component                           ; /WEB-INF/views/responsive/pages/ezg/account/popup_login.jsp                           ;                         ; SectionPopLoginComponent                    
+                                  ;                         ; SectionPopForgetPwdComponent                 ; SectionPop ForgetPwd Component                       ; /WEB-INF/views/responsive/pages/ezg/account/popup_forgetPwd.jsp                       ;                         ; SectionPopForgetPwdComponent                
+                                  ;                         ; SectionPopEnableAccountComponent             ; SectionPop EnableAccount Component                   ; /WEB-INF/views/responsive/pages/ezg/account/popup_enableAccount.jsp                   ;                         ; SectionPopEnableAccountComponent            
+
+##added by anming start           
+                                  ;                         ; SearchFlightCommonSearchComponent            ; Common Search flight  component                      ; /WEB-INF/views/responsive/pages/ezg/search/flight/flightSearch.jsp                    ;                         ; SearchFlightCommonSearchComponent           
+                                  ;                         ; Section1FlightCommonSearchComponent          ; Common Section1 flight  component                    ; /WEB-INF/views/responsive/pages/ezg/search/flight/flightSection1.jsp                  ;                         ; Section1FlightCommonSearchComponent         
+                                  ;                         ; Section2AFlightCommonSearchComponent         ; Common Section2A flight  component                   ; /WEB-INF/views/responsive/pages/ezg/search/flight/flightSection2A.jsp                 ;                         ; Section2AFlightCommonSearchComponent        
+                                  ;                         ; Section2BFlightOnewaySearchComponent         ; Oneway Component for flight Section2B                ; /WEB-INF/views/responsive/pages/ezg/search/flight/flightOnewaySection2B.jsp           ;                         ; Section2BFlightOnewaySearchComponent        
+                                  ;                         ; Section2BFlightTwowaySearchComponent         ; Twoway Component for flight Section2B                ; /WEB-INF/views/responsive/pages/ezg/search/flight/flightTwowaySection2B.jsp           ;                         ; Section2BFlightTwowaySearchComponent        
+                                  ;                         ; Section2BFlightMulticitySearchComponent      ; Multicity Component for flight Section2B             ; /WEB-INF/views/responsive/pages/ezg/search/flight/flightMulticitySection2B.jsp        ;                         ; Section2BFlightMulticitySearchComponent     
+##added by Felix start
+								  ;    						; Section2BFlightMulticityIntlSearchComponent  ; Multicity Intl Component for flight Section2B		  ; /WEB-INF/views/responsive/pages/ezg/search/flight/flightMultiInternational2B.jsp      ;                         ; Section2BFlightMulticityIntlSearchComponent    	
+##added by Felix end
+##added by anming end             
+
+##added by aizijie start          
+
+##hotel search page component     
+                                  ;                         ; HotelSearchTitleComponent                    ; Search Hotel Title  Component                        ; /WEB-INF/views/responsive/pages/ezg/hotel/hotelSearchSectionTitle.jsp                 ;                         ; HotelSearchTitleComponent                   
+                                  ;                         ; HotelSearchItemsComponent                    ; Search Hotel Items Component                         ; /WEB-INF/views/responsive/pages/ezg/hotel/hotelSearchSection.jsp                      ;                         ; HotelSearchItemsComponent                   
+                                  ;                         ; HotelSearchPageFacetSComponent               ; Hotel Search Facet Component                         ; /WEB-INF/views/responsive/pages/ezg/hotel/hotelSearchPageFacetSection.jsp             ;                         ; HotelSearchPageFacetSComponent              
+                                  ;                         ; HotelSearchResultComponent                   ; Hotel Search Result Component                        ; /WEB-INF/views/responsive/pages/ezg/hotel/hotelSearchResultSection.jsp                ;                         ; HotelSearchResultComponent                  
+
+##hotel detail page cpmponent     
+                                  ;                         ; HotelDetailBreadcrumbComponent               ; Hotel Detail Page Breadcrumb Component               ; /WEB-INF/views/responsive/pages/ezg/hotel/hotelDetailBreadcrumb.jsp                   ;                         ; HotelDetailBreadcrumbComponent              
+                                  ;                         ; HotelDetailImageRotationComponent            ; Hotel Detail Page Image Rotation Component           ; /WEB-INF/views/responsive/pages/ezg/hotel/hotelDetailImageRotation.jsp                ;                         ; HotelDetailImageRotationComponent           
+                                  ;                         ; HotelDetailSimpleInfoComponent               ; Hotel Detail Page Simple Info Component              ; /WEB-INF/views/responsive/pages/ezg/hotel/hotelDetailSimpleInfo.jsp                   ;                         ; HotelDetailSimpleInfoComponent              
+                                  ;                         ; HotelDetailPriceComponent                    ; Hotel Detail Page Price Component                    ; /WEB-INF/views/responsive/pages/ezg/hotel/hotelDetailPrice.jsp                        ;                         ; HotelDetailPriceComponent                   
+                                  ;                         ; HotelDetailOverriewComponent                 ; Hotel Detail Page Overriew Component                 ; /WEB-INF/views/responsive/pages/ezg/hotel/hotelDetailOverriew.jsp                     ;                         ; HotelDetailOverriewComponent                
+                                  ;                         ; HotelDetailNearbyComponent                   ; Hotel Detail Page Nearby Componet                    ; /WEB-INF/views/responsive/pages/ezg/hotel/hotelDetailNearby.jsp                       ;                         ; HotelDetailNearbyComponent                  
+                                  ;                         ; HotelDetailRoomInfoComponent                 ; Hotel Detail Room Infp Component                     ; /WEB-INF/views/responsive/pages/ezg/hotel/hotelDetailRoomInfo.jsp                     ;                         ; HotelDetailRoomInfoComponent                
+
+
+
+##added by aizijie end            
+                                  ;                         ; TravellerDetailsComponent                    ; Traveller Details Component                          ; /WEB-INF/views/responsive/pages/ezg/checkout/travellerDetails.jsp                     ;                         ; TravellerDetailsComponent                   
+                                  ;                         ; UploadDocsComponent                          ; Upload docs Component                                ; /WEB-INF/views/responsive/pages/ezg/checkout/uploadDocs.jsp                           ;                         ; UploadDocsComponent                         
+                                  ;                         ; TermsAndGuidelinesComponent                  ; Terms And Guidelines Component                       ; /WEB-INF/views/responsive/pages/ezg/checkout/termsAndGuidelines.jsp                   ;                         ; TermsAndGuidelinesComponent                 
+                                  ;                         ; CartReviewComponent                          ; Cart review Component                                ; /WEB-INF/views/responsive/pages/ezg/checkout/cartReview.jsp                           ;                         ; CartReviewComponent                         
+                                  ;                         ; PaymentComponent                             ; Payment Component                                    ; /WEB-INF/views/responsive/pages/ezg/checkout/payment.jsp                              ;                         ; PaymentComponent                            
+## amend/cancel product page component ## add by panhui
+                                  ;                         ; bookingDetailTopTableComponent               ; EZG booking detail top table Component               ; /WEB-INF/views/responsive/pages/ezg/cart/bookingDetailTopTable.jsp                    ;                         ; BookingDetailTopTableComponent              
+                                  ;                         ; bookingDetailListComponent                   ; EZG booking detail List Component                    ; /WEB-INF/views/responsive/pages/ezg/cart/bookingDetailList.jsp                        ;                         ; BookingDetailListComponent                  
+                                  ;                         ; bookingHistoryComponent                      ; EZG booking history Component                        ; /WEB-INF/views/responsive/pages/ezg/cart/bookingHistory.jsp                           ;                         ; BookingHistoryComponent                     
+                                  ;                         ; addBookingFlightAndHotelPopupComponent       ; EZG add booking flight and hotel pop up Component    ; /WEB-INF/views/responsive/pages/ezg/cart/addBookingFlightAndHotelPopup.jsp            ;                         ; AddBookingFlightAndHotelPopupComponent      
+                                  ;                         ; addBookingFlightPopupComponent               ; EZG add booking flight pop up Component              ; /WEB-INF/views/responsive/pages/ezg/cart/addBookingFlightPopup.jsp                    ;                         ; AddBookingFlightPopupComponent              
+                                  ;                         ; addBookingHotelPopupComponent                ; EZG add booking hotel pop up Component               ; /WEB-INF/views/responsive/pages/ezg/cart/addBookingHotelPopup.jsp                     ;                         ; AddBookingHotelPopupComponent               
+                                  ;                         ; cancelAllBookingPopupComponent               ; EZG cancel all booking pop up Component              ; /WEB-INF/views/responsive/pages/ezg/cart/cancelAllBookingPopup.jsp                    ;                         ; CancelAllBookingPopupComponent              
+                                  ;                         ; cancelBookingBikeComponent                   ; EZG cancel booking bike pop up Component             ; /WEB-INF/views/responsive/pages/ezg/cart/cancelBookingBikePopup.jsp                   ;                         ; CancelBookingBikeComponent                  
+                                  ;                         ; cancelBookingBusPopupComponent               ; EZG cancel booking bus pop up Component              ; /WEB-INF/views/responsive/pages/ezg/cart/cancelBookingBusPopup.jsp                    ;                         ; CancelBookingBusPopupComponent              
+                                  ;                         ; cancelBookingCarPopupComponent               ; EZG cancel booking car pop up Component              ; /WEB-INF/views/responsive/pages/ezg/cart/cancelBookingCarPopup.jsp                    ;                         ; CancelBookingCarPopupComponent              
+                                  ;                         ; cancelBookingCruisePopupComponent            ; EZG cancel booking cruise popup Component            ; /WEB-INF/views/responsive/pages/ezg/cart/cancelBookingCruisePopup.jsp                 ;                         ; CancelBookingCruisePopupComponent           
+                                  ;                         ; cancelBookingFlightAndHotelPopupComponent    ; EZG cancel booking flight and hotel pop up Component ; /WEB-INF/views/responsive/pages/ezg/cart/cancelBookingFlightAndHotelPopup.jsp         ;                         ; CancelBookingFlightAndHotelPopupComponent   
+                                  ;                         ; cancelBookingFlightPopupComponent            ; EZG cancel booking flight pop up Component           ; /WEB-INF/views/responsive/pages/ezg/cart/cancelBookingFlightPopup.jsp                 ;                         ; CancelBookingFlightPopupComponent           
+                                  ;                         ; cancelBookingHotelPopupComponent             ; EZG cancel booking hotel pop up Component            ; /WEB-INF/views/responsive/pages/ezg/cart/cancelBookingHotelPopup.jsp                  ;                         ; CancelBookingHotelPopupComponent            
+                                  ;                         ; cancelBookingSuperSaverPopupComponent        ; EZG cancel booking super saver popup Component       ; /WEB-INF/views/responsive/pages/ezg/cart/cancelBookingSuperSaverPopup.jsp             ;                         ; CancelBookingSuperSaverPopupComponent       
+                                  ;                         ; cancelBookingTrainPopupComponent             ; EZG cancel booking train pop up Component            ; /WEB-INF/views/responsive/pages/ezg/cart/cancelBookingTrainPopup.jsp                  ;                         ; CancelBookingTrainPopupComponent            
+                                  ;                         ; changeBookingFlightAndHotelPopupComponent    ; EZG change booking flight and hotel pop up Component ; /WEB-INF/views/responsive/pages/ezg/cart/changeBookingFlightAndHotelPopup.jsp         ;                         ; ChangeBookingFlightAndHotelPopupComponent   
+                                  ;                         ; changeBookingFlightPopupComponent            ; EZG change booking flight pop up Component           ; /WEB-INF/views/responsive/pages/ezg/cart/changeBookingFlightPopup.jsp                 ;                         ; ChangeBookingFlightPopupComponent           
+                                  ;                         ; changeBookingHotelPopupComponent             ; EZG change booking hotel pop up Component            ; /WEB-INF/views/responsive/pages/ezg/cart/changeBookingHotelPopup.jsp                  ;                         ; ChangeBookingHotelPopupComponent            
+                                  ;                         ; confirmCancellationPopupComponent            ; EZG confirm cancel lation pop up Component           ; /WEB-INF/views/responsive/pages/ezg/cart/confirmCancellationPopup.jsp                 ;                         ; ConfirmCancellationPopupComponent           
+                                  ;                         ; modifySearchFlightPopupComponent             ; EZG modify search flight pop up Component            ; /WEB-INF/views/responsive/pages/ezg/cart/modifySearchFlightPopup.jsp                  ;                         ; ModifySearchFlightPopupComponent            
+                                  ;                         ; postReviewPopupComponent                     ; EZG post review pop up Component                     ; /WEB-INF/views/responsive/pages/ezg/cart/postReviewPopup.jsp                          ;                         ; PostReviewPopupComponent                    
+                                  ;                         ; reviewHotelChangeInfoPopupComponent          ; EZG review hotel change info pop up Component        ; /WEB-INF/views/responsive/pages/ezg/cart/reviewHotelChangeInfoPopup.jsp               ;                         ; ReviewHotelChangeInfoPopupComponent         
+                                  ;                         ; searchHotelPopupComponent                    ; EZG search hotel pop up Component                    ; /WEB-INF/views/responsive/pages/ezg/cart/searchHotelPopup.jsp                         ;                         ; SearchHotelPopupComponent                   
+                                  ;                         ; reviewConfirmCancelPopupComponent            ; EZG review confirm cancel pop up Component           ; /WEB-INF/views/responsive/pages/ezg/cart/reviewConfirmCancelPopup.jsp                 ;                         ; ReviewConfirmCancelPopupComponent           
+                                  ;                         ; selectSeatPopupComponent                     ; EZG select seat pop up Component                     ; /WEB-INF/views/responsive/pages/ezg/cart/selectSeatPopup.jsp                          ;                         ; SelectSeatPopupComponent                    
+                                  ;                         ; postFeedbackPopupComponent                   ; EZG post feed back pop up Component                  ; /WEB-INF/views/responsive/pages/ezg/cart/postFeedbackPopup.jsp                        ;                         ; PostFeedbackPopupComponent                  
+                                  ;                         ; bookingPolicyPopupComponent                  ; EZG booking policy pop up Component                  ; /WEB-INF/views/responsive/pages/ezg/cart/bookingPolicyPopup.jsp                       ;                         ; BookingPolicyPopupComponent                 
+                                  ;                         ; paymentSchedulePopupComponent                ; EZG payment schedule pop up Component                ; /WEB-INF/views/responsive/pages/ezg/cart/paymentSchedule.jsp                          ;                         ; PaymentSchedulePopupComponent               
+                                  ;                         ; LogInfoComponent                             ; EZG Log info component                               ; /WEB-INF/views/responsive/pages/ezg/account/loginfo.jsp                               ;                         ; LogInfoComponent                            
+
+
+
+
+
+
+
+
+
+
+###### Cartpage                   
+# ContentSlot                     
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]                      ; name                                           ; active ; cmsComponents(&componentRef) ;  ;  ;  
+#;;EzgTopHeaderSlot-ezgb2ccartpage;Top header Slot for EZG b2c Cartpage;true;EzgTopHeaderComponent;;;
+#;;EzgTopNavSlot-ezgb2ccartpage;Navigation Slot for EZG b2c Cartpage;true;EzgTopNavComponent;;;
+#;;EzgFooterSlot-ezgb2ccartpage;EzgFooterSlot for EZG b2c Cartpage;true;EzgFooterComponent;;;
+#;;EzgFooterDetailsSlot-ezgb2ccartpage;EzgFooterDetails Slot for EZG b2c Cartpage;true;EzgFooterDetailsComponent;;;
+#;;EzgPanelsSlot-ezgb2ccartpage;EzgPanelsSlot for EZG b2c Cartpage;true;EzgPanelsComponent;;;
+#;;EzgAccountOverlaySlot-ezgb2ccartpage;EzgAccountOverlaySlot for EZG b2c Cartpage;true;EzgAccountOverlayComponent;;;
+
+                          ;                         ; CartContentSlot-ezgb2ccartpage        ; Cart Content Slot for EZG b2c cartpage         ; true   ; CartContentComponent         ;  ;  ;  
+
+                          ;                         ; TravellerDetailsSlot-ezgb2ccartpage   ; TravellerDetails Slot for EZG b2c cartpage     ; true   ; TravellerDetailsComponent    ;  ;  ;  
+                          ;                         ; UploadDocsSlot-ezgb2ccartpage         ; upload docs Slot for EZG b2c cartpage          ; true   ; UploadDocsComponent          ;  ;  ;  
+                          ;                         ; TermsAndGuidelinesSlot-ezgb2ccartpage ; Terms and guidelines Slot for EZG b2c cartpage ; true   ; TermsAndGuidelinesComponent  ;  ;  ;  
+                          ;                         ; CartReviewSlot-ezgb2ccartpage         ; Cart review Slot for EZG b2c cartpage          ; true   ; CartReviewComponent          ;  ;  ;  
+                          ;                         ; PaymentSlot-ezgb2ccartpage            ; payment Slot for EZG b2c cartpage              ; true   ; PaymentComponent             ;  ;  ;  
+
+# ContentSlotForPage      
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                      ; position[unique=true] ; page(uid,$contentCV)[unique=true][default='ezgb2ccartpage'] ; contentSlot(uid,$contentCV)[unique=true] ;  ;  ;  
+                                 ;                         ; EzgTopHeaderSlot                      ; EzgTopHeader          ;                                                             ; EzgTopHeaderSlot                         ;  ;  ;  
+                                 ;                         ; EzgTopNavSlot                         ; EzgNav                ;                                                             ; EzgTopNavSlot                            ;  ;  ;  
+                                 ;                         ; EzgFooterSlot                         ; EzgFooter             ;                                                             ; EzgFooterSlot                            ;  ;  ;  
+                                 ;                         ; EzgFooterDetailsSlot                  ; EzgFooterDetails      ;                                                             ; EzgFooterDetailsSlot                     ;  ;  ;  
+                                 ;                         ; EzgPanelsSlot                         ; EzgPanels             ;                                                             ; EzgPanelsSlot                            ;  ;  ;  
+#;;EzgAccountOverlaySlot-ezgb2ccartpage;EzgAccountOverlay;;EzgAccountOverlaySlot-ezgb2ccartpage;;;
+
+                                 ;                         ; CartContentSlot-ezgb2ccartpage        ; CartContent           ;                                                             ; CartContentSlot-ezgb2ccartpage           ;  ;  ;  
+                                 ;                         ; TravellerDetailsSlot-ezgb2ccartpage   ; TravellerDetails      ;                                                             ; TravellerDetailsSlot-ezgb2ccartpage      ;  ;  ;  
+                                 ;                         ; UploadDocsSlot-ezgb2ccartpage         ; UploadDocs            ;                                                             ; UploadDocsSlot-ezgb2ccartpage            ;  ;  ;  
+                                 ;                         ; TermsAndGuidelinesSlot-ezgb2ccartpage ; TermsAndGuidelines    ;                                                             ; TermsAndGuidelinesSlot-ezgb2ccartpage    ;  ;  ;  
+                                 ;                         ; CartReviewSlot-ezgb2ccartpage         ; CartReview            ;                                                             ; CartReviewSlot-ezgb2ccartpage            ;  ;  ;  
+                                 ;                         ; PaymentSlot-ezgb2ccartpage            ; Payment               ;                                                             ; PaymentSlot-ezgb2ccartpage               ;  ;  ;  
+
+
+
+###### booking summary page      
+# ContentSlot                    
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]                                   ; name                                                          ; active ; cmsComponents(&componentRef)   ;  ;  ;  
+#;;EzgTopHeaderSlot-ezgb2cbookingsummarypage;Top header Slot for EZG b2c booking summary page;true;EzgTopHeaderComponent;;;
+#;;EzgNavSlot-ezgb2cbookingsummarypage;Navigation Slot for EZG b2c booking summary page;true;EzgTopNavComponent;;;
+#;;EzgFooterSlot-ezgb2cbookingsummarypage;EzgFooterSlot for EZG b2c booking summary page;true;EzgFooterComponent;;;
+#;;EzgFooterDetailsSlot-ezgb2cbookingsummarypage;EzgFooterDetails Slot for EZG b2c booking summary page;true;EzgFooterDetailsComponent;;;
+#;;EzgPanelsSlot-ezgb2cbookingsummarypage;EzgPanelsSlot for EZG b2c booking summary page;true;EzgPanelsComponent;;;
+#;;EzgAccountOverlaySlot-ezgb2cbookingsummarypage;EzgAccountOverlaySlot for EZG b2c booking summary page;true;EzgAccountOverlayComponent;;;
+
+                          ;                         ; BookingSummaryContentSlot-ezgb2cbookingsummarypage ; Booking summary Content Slot for EZG b2c booking summary page ; true   ; BookingSummaryContentComponent ;  ;  ;  
+
+# ContentSlotForPage      
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                                   ; position[unique=true] ; page(uid,$contentCV)[unique=true][default='ezgb2cbookingsummarypage'] ; contentSlot(uid,$contentCV)[unique=true]           ;  ;  ;  
+                                 ;                         ; EzgTopHeaderSlot                                   ; EzgTopHeader          ;                                                                       ; EzgTopHeaderSlot                                   ;  ;  ;  
+                                 ;                         ; EzgTopNavSlot                                      ; EzgNav                ;                                                                       ; EzgTopNavSlot                                      ;  ;  ;  
+                                 ;                         ; EzgFooterSlot                                      ; EzgFooter             ;                                                                       ; EzgFooterSlot                                      ;  ;  ;  
+                                 ;                         ; EzgFooterDetailsSlot                               ; EzgFooterDetails      ;                                                                       ; EzgFooterDetailsSlot                               ;  ;  ;  
+                                 ;                         ; EzgPanelsSlot                                      ; EzgPanels             ;                                                                       ; EzgPanelsSlot                                      ;  ;  ;  
+#;;EzgAccountOverlaySlot-ezgb2cbookingsummarypage;EzgAccountOverlay;;EzgAccountOverlaySlot-ezgb2cbookingsummarypage;;;
+
+                                 ;                         ; BookingSummaryContentSlot-ezgb2cbookingsummarypage ; BookingSummaryContent ;                                                                       ; BookingSummaryContentSlot-ezgb2cbookingsummarypage ;  ;  ;  
+
+###### booking list page         
+# ContentSlot                    
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]                             ; name                                                    ; active ; cmsComponents(&componentRef)
+                          ;                         ; BookingListContentSlot-ezgb2cbookinglistpage ; Booking list Content Slot for EZG b2c booking list page ; true   ; BookingListContentComponent 
+
+# ContentSlotForPage      
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                             ; position[unique=true] ; page(uid,$contentCV)[unique=true][default='ezgb2cbookinglistpage'] ; contentSlot(uid,$contentCV)[unique=true]    
+                                 ;                         ; BookingListContentSlot-ezgb2cbookinglistpage ; BookingListContent    ;                                                                    ; BookingListContentSlot-ezgb2cbookinglistpage
+
+###### amend/cancel product page 
+# ContentSlot                    
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]                                                          ; name                                                                                       ; active ; cmsComponents(&componentRef)             
+                          ;                         ; BookingDetailTopTableContentSlot-ezgAmendCancelAllproductsPage            ; Booking Detail Top Table Content Slot for EZG amend/cancel all products Page               ; true   ; BookingDetailTopTableComponent           
+                          ;                         ; BookingDetailListContentSlot-ezgAmendCancelAllproductsPage                ; Booking Detail list ContentSlot for EZG amend/cancel all products Page                     ; true   ; BookingDetailListComponent               
+                          ;                         ; BookingHistoryContentSlot-ezgAmendCancelAllproductsPage                   ; Booking History Content Slot for EZG amend/cancel all products Page                        ; true   ; BookingHistoryComponent                  
+                          ;                         ; AddBookingFlightAndHotelPopupContentSlot-ezgAmendCancelAllproductsPage    ; Add Booking Flight And Hotel pop up Content Slot for EZG amend/cancel all products Page    ; true   ; AddBookingFlightAndHotelPopupComponent   
+                          ;                         ; AddBookingFlightPopupContentSlot-ezgAmendCancelAllproductsPage            ; Add Booking Flight pop up Content Slot for EZG amend/cancel all products Page              ; true   ; AddBookingFlightPopupComponent           
+                          ;                         ; AddBookingHotelPopupContentSlot-ezgAmendCancelAllproductsPage             ; Add Booking hotel pop up Content Slot for EZG amend/cancel all products Page               ; true   ; AddBookingHotelPopupComponent            
+                          ;                         ; CancelAllBookingPopupContentSlot-ezgAmendCancelAllproductsPage            ; Cancel all booking Content Slot for EZG amend/cancel all products Page                     ; true   ; CancelAllBookingPopupComponent           
+                          ;                         ; CancelBookingBikePopupContentSlot-ezgAmendCancelAllproductsPage           ; Cancel booking bike pop up Content Slot for EZG amend/cancel all products Page             ; true   ; CancelBookingBikeComponent               
+                          ;                         ; CancelBookingBusPopupContentSlot-ezgAmendCancelAllproductsPage            ; Cancel booking bus pop up Content Slot for EZG amend/cancel all products Page              ; true   ; CancelBookingBusPopupComponent           
+                          ;                         ; CancelBookingCarPopupContentSlot-ezgAmendCancelAllproductsPage            ; Cancel booking car pop up Content Slot for EZG amend/cancel all products Page              ; true   ; cancelBookingCarPopupComponent           
+                          ;                         ; CancelBookingCruisePopupContentSlot-ezgAmendCancelAllproductsPage         ; Cancel booking cruise pop up Content Slot for EZG amend/cancel all products Page           ; true   ; CancelBookingCruisePopupComponent        
+                          ;                         ; CancelBookingFlightAndHotelPopupContentSlot-ezgAmendCancelAllproductsPage ; Cancel booking flight and hotel pop up Content Slot for EZG amend/cancel all products Page ; true   ; CancelBookingFlightAndHotelPopupComponent
+                          ;                         ; CancelBookingFlightPopupContentSlot-ezgAmendCancelAllproductsPage         ; Cancel booking flight pop up Content Slot for EZG amend/cancel all products Page           ; true   ; CancelBookingFlightPopupComponent        
+                          ;                         ; CancelBookingHotelPopupContentSlot-ezgAmendCancelAllproductsPage          ; Cancel booking hotel pop up Content Slot for EZG amend/cancel all products Page            ; true   ; CancelBookingHotelPopupComponent         
+                          ;                         ; CancelBookingSuperSaverPopupContentSlot-ezgAmendCancelAllproductsPage     ; Cancel booking super saver pop up Content Slot for EZG amend/cancel all products Page      ; true   ; CancelBookingSuperSaverPopupComponent    
+                          ;                         ; CancelBookingTrainPopupContentSlot-ezgAmendCancelAllproductsPage          ; Cancel booking train pop up Content Slot for EZG amend/cancel all products Page            ; true   ; CancelBookingTrainPopupComponent         
+                          ;                         ; ChangeBookingFlightAndHotelPopupContentSlot-ezgAmendCancelAllproductsPage ; Change booking flight and hotel pop up Content Slot for EZG amend/cancel all products Page ; true   ; ChangeBookingFlightAndHotelPopupComponent
+                          ;                         ; ChangeBookingFlightPopupContentSlot-ezgAmendCancelAllproductsPage         ; Change booking flight pop up Content Slot for EZG amend/cancel all products Page           ; true   ; ChangeBookingFlightPopupComponent        
+                          ;                         ; ChangeBookingHotelPopupContentSlot-ezgAmendCancelAllproductsPage          ; Change booking hotel pop up Content Slot for EZG amend/cancel all products Page            ; true   ; ChangeBookingHotelPopupComponent         
+                          ;                         ; ConfirmCancellationPopupContentSlot-ezgAmendCancelAllproductsPage         ; Confirm cancel lation pop up Content Slot for EZG amend/cancel all products Page           ; true   ; ConfirmCancellationPopupComponent        
+                          ;                         ; ModifySearchFlightPopupContentSlot-ezgAmendCancelAllproductsPage          ; Modify search flight pop up Content Slot for EZG amend/cancel all products Page            ; true   ; ModifySearchFlightPopupComponent         
+                          ;                         ; PostReviewPopupContentSlot-ezgAmendCancelAllproductsPage                  ; Post review pop up Content Slot for EZG amend/cancel all products Page                     ; true   ; PostReviewPopupComponent                 
+                          ;                         ; ReviewHotelChangeInfoPopupContentSlot-ezgAmendCancelAllproductsPage       ; Review hotel change info pop up Content Slot for EZG amend/cancel all products Page        ; true   ; ReviewHotelChangeInfoPopupComponent      
+                          ;                         ; SearchHotelPopupContentSlot-ezgAmendCancelAllproductsPage                 ; Search hotel pop up Content Slot for EZG amend/cancel all products Page                    ; true   ; SearchHotelPopupComponent                
+                          ;                         ; ReviewConfirmCancelPopupContentSlot-ezgAmendCancelAllproductsPage         ; Review confirm cancel pop up Content Slot for EZG amend/cancel all products Page           ; true   ; ReviewConfirmCancelPopupComponent        
+                          ;                         ; SelectSeatPopupContentSlot-ezgAmendCancelAllproductsPage                  ; Select seat pop up content slot for  EZG amend/cancel all products Page                    ; true   ; SelectSeatPopupComponent                 
+                          ;                         ; PostFeedbackPopupContentSlot-ezgAmendCancelAllproductsPage                ; Select post feedback pop up content slot for  EZG amend/cancel all products Page           ; true   ; PostFeedbackPopupComponent               
+                          ;                         ; BookingPolicyPopupContentSlot-ezgAmendCancelAllproductsPage               ; Select booking policy pop up content slot for  EZG amend/cancel all products Page          ; true   ; BookingPolicyPopupComponent              
+                          ;                         ; PaymentSchedulePopupContentSlot-ezgAmendCancelAllproductsPage             ; Select payment schedule pop up content slot for  EZG amend/cancel all products Page        ; true   ; PaymentSchedulePopupComponent            
+
+# ContentSlotForPage      
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                                                          ; position[unique=true]            ; page(uid,$contentCV)[unique=true][default='ezgb2cAmendCancelAllProductsPage'] ; contentSlot(uid,$contentCV)[unique=true]                                 
+                                 ;                         ; BookingDetailTopTableContentSlot-ezgAmendCancelAllproductsPage            ; bookingDetailTopTable            ;                                                                               ; BookingDetailTopTableContentSlot-ezgAmendCancelAllproductsPage           
+                                 ;                         ; BookingDetailListContentSlot-ezgAmendCancelAllproductsPage                ; bookingDetailList                ;                                                                               ; BookingDetailListContentSlot-ezgAmendCancelAllproductsPage               
+                                 ;                         ; BookingHistoryContentSlot-ezgAmendCancelAllproductsPage                   ; bookingHistory                   ;                                                                               ; BookingHistoryContentSlot-ezgAmendCancelAllproductsPage                  
+                                 ;                         ; AddBookingFlightAndHotelPopupContentSlot-ezgAmendCancelAllproductsPage    ; addBookingFlightAndHotelPopup    ;                                                                               ; AddBookingFlightAndHotelPopupContentSlot-ezgAmendCancelAllproductsPage   
+                                 ;                         ; AddBookingFlightPopupContentSlot-ezgAmendCancelAllproductsPage            ; addBookingFlightPopup            ;                                                                               ; AddBookingFlightPopupContentSlot-ezgAmendCancelAllproductsPage           
+                                 ;                         ; AddBookingHotelPopupContentSlot-ezgAmendCancelAllproductsPage             ; addBookingHotelPopup             ;                                                                               ; AddBookingHotelPopupContentSlot-ezgAmendCancelAllproductsPage            
+                                 ;                         ; CancelAllBookingPopupContentSlot-ezgAmendCancelAllproductsPage            ; cancelAllBookingPopup            ;                                                                               ; CancelAllBookingPopupContentSlot-ezgAmendCancelAllproductsPage           
+                                 ;                         ; CancelBookingBikePopupContentSlot-ezgAmendCancelAllproductsPage           ; cancelBookingBikePopup           ;                                                                               ; CancelBookingBikePopupContentSlot-ezgAmendCancelAllproductsPage          
+                                 ;                         ; CancelBookingBusPopupContentSlot-ezgAmendCancelAllproductsPage            ; cancelBookingBusPopup            ;                                                                               ; CancelBookingBusPopupContentSlot-ezgAmendCancelAllproductsPage           
+                                 ;                         ; CancelBookingCarPopupContentSlot-ezgAmendCancelAllproductsPage            ; cancelBookingCarPopup            ;                                                                               ; CancelBookingCarPopupContentSlot-ezgAmendCancelAllproductsPage           
+                                 ;                         ; CancelBookingCruisePopupContentSlot-ezgAmendCancelAllproductsPage         ; cancelBookingCruisePopup         ;                                                                               ; CancelBookingCruisePopupContentSlot-ezgAmendCancelAllproductsPage        
+                                 ;                         ; CancelBookingFlightAndHotelPopupContentSlot-ezgAmendCancelAllproductsPage ; cancelBookingFlightAndHotelPopup ;                                                                               ; CancelBookingFlightAndHotelPopupContentSlot-ezgAmendCancelAllproductsPage
+                                 ;                         ; CancelBookingFlightPopupContentSlot-ezgAmendCancelAllproductsPage         ; cancelBookingFlightPopup         ;                                                                               ; CancelBookingFlightPopupContentSlot-ezgAmendCancelAllproductsPage        
+                                 ;                         ; CancelBookingHotelPopupContentSlot-ezgAmendCancelAllproductsPage          ; cancelBookingHotelPopup          ;                                                                               ; CancelBookingHotelPopupContentSlot-ezgAmendCancelAllproductsPage         
+                                 ;                         ; CancelBookingSuperSaverPopupContentSlot-ezgAmendCancelAllproductsPage     ; cancelBookingSuperSaverPopup     ;                                                                               ; CancelBookingSuperSaverPopupContentSlot-ezgAmendCancelAllproductsPage    
+                                 ;                         ; CancelBookingTrainPopupContentSlot-ezgAmendCancelAllproductsPage          ; cancelBookingTrainPopup          ;                                                                               ; CancelBookingTrainPopupContentSlot-ezgAmendCancelAllproductsPage         
+                                 ;                         ; ChangeBookingFlightAndHotelPopupContentSlot-ezgAmendCancelAllproductsPage ; changeBookingFlightAndHotelPopup ;                                                                               ; ChangeBookingFlightAndHotelPopupContentSlot-ezgAmendCancelAllproductsPage
+                                 ;                         ; ChangeBookingFlightPopupContentSlot-ezgAmendCancelAllproductsPage         ; changeBookingFlightPopup         ;                                                                               ; ChangeBookingFlightPopupContentSlot-ezgAmendCancelAllproductsPage        
+                                 ;                         ; ChangeBookingHotelPopupContentSlot-ezgAmendCancelAllproductsPage          ; changeBookingHotelPopup          ;                                                                               ; ChangeBookingHotelPopupContentSlot-ezgAmendCancelAllproductsPage         
+                                 ;                         ; ConfirmCancellationPopupContentSlot-ezgAmendCancelAllproductsPage         ; confirmCancellationPopup         ;                                                                               ; ConfirmCancellationPopupContentSlot-ezgAmendCancelAllproductsPage        
+                                 ;                         ; ModifySearchFlightPopupContentSlot-ezgAmendCancelAllproductsPage          ; modifySearchFlightPopup          ;                                                                               ; ModifySearchFlightPopupContentSlot-ezgAmendCancelAllproductsPage         
+                                 ;                         ; PostReviewPopupContentSlot-ezgAmendCancelAllproductsPage                  ; postReviewPopup                  ;                                                                               ; PostReviewPopupContentSlot-ezgAmendCancelAllproductsPage                 
+                                 ;                         ; ReviewHotelChangeInfoPopupContentSlot-ezgAmendCancelAllproductsPage       ; reviewHotelChangeInfoPopup       ;                                                                               ; ReviewHotelChangeInfoPopupContentSlot-ezgAmendCancelAllproductsPage      
+                                 ;                         ; SearchHotelPopupContentSlot-ezgAmendCancelAllproductsPage                 ; searchHotelPopup                 ;                                                                               ; SearchHotelPopupContentSlot-ezgAmendCancelAllproductsPage                
+                                 ;                         ; ReviewConfirmCancelPopupContentSlot-ezgAmendCancelAllproductsPage         ; reviewConfirmCancelPopup         ;                                                                               ; ReviewConfirmCancelPopupContentSlot-ezgAmendCancelAllproductsPage        
+                                 ;                         ; SelectSeatPopupContentSlot-ezgAmendCancelAllproductsPage                  ; selectSeatPopup                  ;                                                                               ; SelectSeatPopupContentSlot-ezgAmendCancelAllproductsPage                 
+                                 ;                         ; PostFeedbackPopupContentSlot-ezgAmendCancelAllproductsPage                ; postFeedbackPopup                ;                                                                               ; PostFeedbackPopupContentSlot-ezgAmendCancelAllproductsPage               
+                                 ;                         ; BookingPolicyPopupContentSlot-ezgAmendCancelAllproductsPage               ; bookingPolicyPopup               ;                                                                               ; BookingPolicyPopupContentSlot-ezgAmendCancelAllproductsPage              
+                                 ;                         ; PaymentSchedulePopupContentSlot-ezgAmendCancelAllproductsPage             ; paymentSchedulePopup             ;                                                                               ; PaymentSchedulePopupContentSlot-ezgAmendCancelAllproductsPage            
+###### CompleteAccPage           
+# ContentSlot                    
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]                     ; name                     ; active ; cmsComponents(&componentRef)
+                          ;                         ; MesContentSlot-ezgb2cCompleteAccPage ; Confirming Message Slot  ; true   ; MesContentComponent         
+                          ;                         ; PwdContentSlot-ezgb2cCompleteAccPage ; Confirming Password Slot ; true   ; PwdContentComponent         
+# ContentSlotForPage      
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                 ; position[unique=true] ; page(uid,$contentCV)[unique=true][default='CompleteAccPage'] ; contentSlot(uid,$contentCV)[unique=true]
+                                 ;                         ; MesContent-ezgb2cCompleteAccPage ; MesContent            ;                                                              ; MesContentSlot-ezgb2cCompleteAccPage    
+                                 ;                         ; PwdContent-ezgb2cCompleteAccPage ; PwdContent            ;                                                              ; PwdContentSlot-ezgb2cCompleteAccPage    
+
+
+###### SignupPage                
+# ContentSlot                    
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]          ; name          ; active ; cmsComponents(&componentRef)
+                          ;                         ; Section1-ezgb2cSignupPage ; Section1 Slot ; true   ; Section1SignupComponent     
+                          ;                         ; Section2-ezgb2cSignupPage ; Section2 Slot ; true   ; Section2SignupComponent     
+                          ;                         ; Section3-ezgb2cSignupPage ; Section3 Slot ; true   ; Section3SignupComponent     
+                          ;                         ; Section4-ezgb2cSignupPage ; Section4 Slot ; true   ; Section4SignupComponent     
+                          ;                         ; Section5-ezgb2cSignupPage ; Section5 Slot ; true   ; Section5SignupComponent     
+                          ;                         ; Section6-ezgb2cSignupPage ; Section6 Slot ; true   ; Section6SignupComponent     
+#;;SectionPop-ezgb2cSignupPage                      ;SectionPop Slot            ;true             ;SectionPopSignupComponent
+# ContentSlotForPage      
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]          ; position[unique=true] ; page(uid,$contentCV)[unique=true][default='SignupPage'] ; contentSlot(uid,$contentCV)[unique=true]
+                                 ;                         ; Section1-ezgb2cSignupPage ; Section1              ;                                                         ; Section1-ezgb2cSignupPage               
+                                 ;                         ; Section2-ezgb2cSignupPage ; Section2              ;                                                         ; Section2-ezgb2cSignupPage               
+                                 ;                         ; Section3-ezgb2cSignupPage ; Section3              ;                                                         ; Section3-ezgb2cSignupPage               
+                                 ;                         ; Section4-ezgb2cSignupPage ; Section4              ;                                                         ; Section4-ezgb2cSignupPage               
+                                 ;                         ; Section5-ezgb2cSignupPage ; Section5              ;                                                         ; Section5-ezgb2cSignupPage               
+                                 ;                         ; Section6-ezgb2cSignupPage ; Section6              ;                                                         ; Section6-ezgb2cSignupPage               
+#;;SectionPop-ezgb2cSignupPage                      ;SectionPop                 ;;SectionPop-ezgb2cSignupPage
+
+###### Flight and Flight + hotel - common
+# ContentSlot                    
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]                                           ; name                                                         ; active ; cmsComponents(&componentRef)             
+                          ;                         ; SearchSlot-ezgb2cFlightHotelCommonSearchResultPage         ; Search Slot for ezgb2cFlightHotelCommonSearchResultPage      ; true   ; SearchFlightHotelCommonSearchComponent   
+                          ;                         ; Section1Slot-ezgb2cFlightHotelCommonSearchResultPage       ; Section1 Slot for ezgb2cFlightHotelCommonSearchResultPage    ; true   ; Section1FlightHotelCommonSearchComponent 
+                          ;                         ; Section2ASlot-ezgb2cFlightHotelCommonSearchResultPage      ; Section2A Slot for ezgb2cFlightHotelCommonSearchResultPage   ; true   ; Section2AFlightHotelCommonSearchComponent
+
+                          ;                         ; SearchSlot-ezgb2cFlightCommonSearchResultPage              ; Search Slot for ezgb2cFlightCommonSearchResultPage           ; true   ; SearchFlightCommonSearchComponent        
+                          ;                         ; Section1Slot-ezgb2cFlightCommonSearchResultPage            ; Section1 Slot for ezgb2cFlightCommonSearchResultPage         ; true   ; Section1FlightCommonSearchComponent      
+                          ;                         ; Section2ASlot-ezgb2cFlightCommonSearchResultPage           ; Section2A Slot for ezgb2cFlightCommonSearchResultPage        ; true   ; Section2AFlightCommonSearchComponent     
+                          ;                         ; FooterContactDetailSlot-ezgb2cFlightCommonSearchResultPage ; Footer Contact Detail for ezgb2cFlightCommonSearchResultPage ; true   ;                                          
+
+###### Flight and Flight + hotel - oneway
+# ContentSlot             
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]                                              ; name                                                         ; active ; cmsComponents(&componentRef)             
+                          ;                         ; Section2BSlot-ezgb2cFlightHotelOnewaySearchResultPage         ; Section2B Slot for ezgb2cFlightHotelOnewaySearchResultPage   ; true   ; Section2BFlightHotelOnewaySearchComponent
+                          ;                         ; Section2BSlot-ezgb2cFlightOnewaySearchResultPage              ; Section2B Slot for ezgb2cFlightOnewaySearchResultPage        ; true   ; Section2BFlightOnewaySearchComponent     
+                          ;                         ; SearchBoxFromSlot-ezgb2cFlightOnewaySearchResultPage          ; Search Box From Slot for ezgb2cFlightOnewaySearchResultPage  ; true   ; FlightFromSearchBoxComponent             
+                          ;                         ; SearchBoxToSlot-ezgb2cFlightOnewaySearchResultPage            ; Search Box To Slot for ezgb2cFlightOnewaySearchResultPage    ; true   ; FlightToSearchBoxComponent               
+                          ;                         ; FooterOneContactDetailSlot-ezgb2cFlightCommonSearchResultPage ; Footer Contact Detail for ezgb2cFlightCommonSearchResultPage ; true   ; EzgFlightOneWayFooterContactComponent    
+# ContentSlotForPage      
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                                  ; position[unique=true] ; page(uid,$contentCV)[unique=true][default='ezgFlightHotelOnewaySearchResultPage'] ; contentSlot(uid,$contentCV)[unique=true]             
+                                 ;                         ; Search-ezgb2cFlightHotelOnewaySearchResultPage    ; Search                ;                                                                                   ; SearchSlot-ezgb2cFlightHotelCommonSearchResultPage   
+                                 ;                         ; Section1-ezgb2cFlightHotelOnewaySearchResultPage  ; Section1              ;                                                                                   ; Section1Slot-ezgb2cFlightHotelCommonSearchResultPage 
+                                 ;                         ; Section2A-ezgb2cFlightHotelOnewaySearchResultPage ; Section2A             ;                                                                                   ; Section2ASlot-ezgb2cFlightHotelCommonSearchResultPage
+                                 ;                         ; Section2B-ezgb2cFlightHotelOnewaySearchResultPage ; Section2B             ;                                                                                   ; Section2BSlot-ezgb2cFlightHotelOnewaySearchResultPage
+
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                                              ; position[unique=true]           ; page(uid,$contentCV)[unique=true][default='ezgFlightOnewaySearchResultPage'] ; contentSlot(uid,$contentCV)[unique=true]                     
+                                 ;                         ; Search-ezgb2cFlightOnewaySearchResultPage                     ; Search                          ;                                                                              ; SearchSlot-ezgb2cFlightCommonSearchResultPage                
+                                 ;                         ; Section1-ezgb2cFlightOnewaySearchResultPage                   ; Section1                        ;                                                                              ; Section1Slot-ezgb2cFlightCommonSearchResultPage              
+                                 ;                         ; Section2A-ezgb2cFlightOnewaySearchResultPage                  ; Section2A                       ;                                                                              ; Section2ASlot-ezgb2cFlightCommonSearchResultPage             
+                                 ;                         ; Section2B-ezgb2cFlightOnewaySearchResultPage                  ; Section2B                       ;                                                                              ; Section2BSlot-ezgb2cFlightOnewaySearchResultPage             
+                                 ;                         ; SearchBoxFrom-ezgb2cFlightOnewaySearchResultPage              ; FlightSearchFromSection         ;                                                                              ; SearchBoxFromSlot-ezgb2cFlightOnewaySearchResultPage         
+                                 ;                         ; SearchBoxTo-ezgb2cFlightOnewaySearchResultPage                ; FlightSearchToSection           ;                                                                              ; SearchBoxToSlot-ezgb2cFlightOnewaySearchResultPage           
+                                 ;                         ; FooterOneContactDetailSlot-ezgb2cFlightCommonSearchResultPage ; FlightOneWayFooterContactDetail ;                                                                              ; FooterOneContactDetailSlot-ezgb2cFlightCommonSearchResultPage
+###### Flight and Flight + hotel - twoway
+# ContentSlot                    
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]                                              ; name                                                                      ; active ; cmsComponents(&componentRef)             
+                          ;                         ; Section2BSlot-ezgb2cFlightHotelTwowaySearchResultPage         ; Section2B Slot for ezgb2cFlightHotelTwowaySearchResultPage                ; true   ; Section2BFlightHotelTwowaySearchComponent
+                          ;                         ; Section2BSlot-ezgb2cFlightTwowaySearchResultPage              ; Section2B Slot for ezgb2cFlightTwowaySearchResultPage                     ; true   ; Section2BFlightTwowaySearchComponent     
+                          ;                         ; FooterTwoContactDetailSlot-ezgb2cFlightCommonSearchResultPage ; Footer Two Way Contact Detail Slot for ezgb2cFlightCommonSearchResultPage ; true   ; EzgFlightTwoWayFooterContactComponent    
+                          ;                         ; SearchBoxFromSlot-ezgb2cFlightTwowaySearchResultPage          ; Search Box From Slot for ezgb2cFlightTwowaySearchResultPage               ; true   ; FlightFromSearchBoxComponent             
+                          ;                         ; SearchBoxToSlot-ezgb2cFlightTwowaySearchResultPage            ; Search Box To Slot for ezgb2cFlightTwowaySearchResultPage                 ; true   ; FlightToSearchBoxComponent               
+
+# ContentSlotForPage      
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                                  ; position[unique=true] ; page(uid,$contentCV)[unique=true][default='ezgFlightHotelTwowaySearchResultPage'] ; contentSlot(uid,$contentCV)[unique=true]             
+                                 ;                         ; Search-ezgb2cFlightHotelTwowaySearchResultPage    ; Search                ;                                                                                   ; SearchSlot-ezgb2cFlightHotelCommonSearchResultPage   
+                                 ;                         ; Section1-ezgb2cFlightHotelTwowaySearchResultPage  ; Section1              ;                                                                                   ; Section1Slot-ezgb2cFlightHotelCommonSearchResultPage 
+                                 ;                         ; Section2A-ezgb2cFlightHotelTwowaySearchResultPage ; Section2A             ;                                                                                   ; Section2ASlot-ezgb2cFlightHotelCommonSearchResultPage
+                                 ;                         ; Section2B-ezgb2cFlightHotelTwowaySearchResultPage ; Section2B             ;                                                                                   ; Section2BSlot-ezgb2cFlightHotelTwowaySearchResultPage
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                                              ; position[unique=true]           ; page(uid,$contentCV)[unique=true][default='ezgFlightTwowaySearchResultPage'] ; contentSlot(uid,$contentCV)[unique=true]                     
+                                 ;                         ; Search-ezgb2cFlightTwowaySearchResultPage                     ; Search                          ;                                                                              ; SearchSlot-ezgb2cFlightCommonSearchResultPage                
+                                 ;                         ; Section1-ezgb2cFlightTwowaySearchResultPage                   ; Section1                        ;                                                                              ; Section1Slot-ezgb2cFlightCommonSearchResultPage              
+                                 ;                         ; Section2A-ezgb2cFlightTwowaySearchResultPage                  ; Section2A                       ;                                                                              ; Section2ASlot-ezgb2cFlightCommonSearchResultPage             
+                                 ;                         ; Section2B-ezgb2cFlightTwowaySearchResultPage                  ; Section2B                       ;                                                                              ; Section2BSlot-ezgb2cFlightTwowaySearchResultPage             
+                                 ;                         ; FooterTwoContactDetailSlot-ezgb2cFlightCommonSearchResultPage ; FlightTwoWayFooterContactDetail ;                                                                              ; FooterTwoContactDetailSlot-ezgb2cFlightCommonSearchResultPage
+                                 ;                         ; SearchBoxFromSlot-ezgb2cFlightTwowaySearchResultPage          ; FlightSearchFromSection         ;                                                                              ; SearchBoxFromSlot-ezgb2cFlightTwowaySearchResultPage         
+                                 ;                         ; SearchBoxToSlot-ezgb2cFlightTwowaySearchResultPage            ; FlightSearchToSection           ;                                                                              ; SearchBoxToSlot-ezgb2cFlightTwowaySearchResultPage           
+###### Flight and Flight + hotel - multicity
+# ContentSlot                    
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]                                                   ; name                                                                           ; active ; cmsComponents(&componentRef)                
+                          ;                         ; Section2BSlot-ezgb2cFlightHotelMulticitySearchResultPage           ; Section2B Slot for ezgb2cFlightHotelMulticitySearchResultPage                  ; true   ; Section2BFlightHotelMulticitySearchComponent
+                          ;                         ; Section2BSlot-ezgb2cFlightMulticitySearchResultPage                ; Section2B Slot for ezgb2cFlightMulticitySearchResultPage                       ; true   ; Section2BFlightMulticitySearchComponent     
+                          ;                         ; SearchBoxFromSlot-ezgb2cFlightMulticitySearchResultPage            ; Search Box From Slot for ezgb2cFlightMulticitySearchResultPage                 ; true   ; FlightFromSearchBoxComponent                
+                          ;                         ; SearchBoxToSlot-ezgb2cFlightMulticitySearchResultPage              ; Search Box To Slot for ezgb2cFlightMulticitySearchResultPage                   ; true   ; FlightToSearchBoxComponent                  
+                          ;                         ; FooterMultiContactDetailSlot-ezgb2cFlightMulticitySearchResultPage ; Footer Multi Way Contact Detail Slot for ezgb2cFlightMulticitySearchResultPage ; true   ; EzgFlightMultiWayFooterContactComponent     
+# ContentSlotForPage      
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                                     ; position[unique=true] ; page(uid,$contentCV)[unique=true][default='ezgFlightHotelMulticitySearchResultPage'] ; contentSlot(uid,$contentCV)[unique=true]                
+                                 ;                         ; Search-ezgb2cFlightHotelMulticitySearchResultPage    ; Search                ;                                                                                      ; SearchSlot-ezgb2cFlightHotelCommonSearchResultPage      
+                                 ;                         ; Section1-ezgb2cFlightHotelMulticitySearchResultPage  ; Section1              ;                                                                                      ; Section1Slot-ezgb2cFlightHotelCommonSearchResultPage    
+                                 ;                         ; Section2A-ezgb2cFlightHotelMulticitySearchResultPage ; Section2A             ;                                                                                      ; Section2ASlot-ezgb2cFlightHotelCommonSearchResultPage   
+                                 ;                         ; Section2B-ezgb2cFlightHotelMulticitySearchResultPage ; Section2B             ;                                                                                      ; Section2BSlot-ezgb2cFlightHotelMulticitySearchResultPage
+
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                                                   ; position[unique=true]             ; page(uid,$contentCV)[unique=true][default='ezgFlightMulticitySearchResultPage'] ; contentSlot(uid,$contentCV)[unique=true]                          
+                                 ;                         ; Search-ezgb2cFlightMulticitySearchResultPage                       ; Search                            ;                                                                                 ; SearchSlot-ezgb2cFlightCommonSearchResultPage                     
+                                 ;                         ; Section1-ezgb2cFlightMulticitySearchResultPage                     ; Section1                          ;                                                                                 ; Section1Slot-ezgb2cFlightCommonSearchResultPage                   
+                                 ;                         ; Section2A-ezgb2cFlightMulticitySearchResultPage                    ; Section2A                         ;                                                                                 ; Section2ASlot-ezgb2cFlightCommonSearchResultPage                  
+                                 ;                         ; Section2B-ezgb2cFlightMulticitySearchResultPage                    ; Section2B                         ;                                                                                 ; Section2BSlot-ezgb2cFlightMulticitySearchResultPage               
+                                 ;                         ; SearchBoxFromSlot-ezgb2cFlightMulticitySearchResultPage            ; FlightSearchFromSection           ;                                                                                 ; SearchBoxFromSlot-ezgb2cFlightMulticitySearchResultPage           
+                                 ;                         ; SearchBoxToSlot-ezgb2cFlightMulticitySearchResultPage              ; FlightSearchToSection             ;                                                                                 ; SearchBoxToSlot-ezgb2cFlightMulticitySearchResultPage             
+                                 ;                         ; FooterMultiContactDetailSlot-ezgb2cFlightMulticitySearchResultPage ; FlightMultiWayFooterContactDetail ;                                                                                 ; FooterMultiContactDetailSlot-ezgb2cFlightMulticitySearchResultPage
+##added by Felix for Flight - multicity international start
+# ContentSlot   
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]                                                       ; name                                                                                    ; active ; cmsComponents(&componentRef)                
+                          ;                         ; Section2BSlot-ezgb2cFlightMulticityIntlSearchResultPage                ; Section2B Slot for ezgb2cFlightMulticityIntlSearchResultPage                       	   ; true   ; Section2BFlightMulticityIntlSearchComponent
+                          ;                         ; SearchBoxFromSlot-ezgb2cFlightMulticityIntlSearchResultPage            ; Search Box From Slot for ezgb2cFlightMulticityIntlSearchResultPage                      ; true   ; FlightFromSearchBoxComponent                
+                          ;                         ; SearchBoxToSlot-ezgb2cFlightMulticityIntlSearchResultPage              ; Search Box To Slot for ezgb2cFlightMulticityIntlSearchResultPage                        ; true   ; FlightToSearchBoxComponent                  
+                          ;                         ; FooterOneContactDetailSlot-ezgb2cFlightMulticityIntlSearchResultPage ; Footer MultiCity Intl Contact Detail Slot for ezgb2cFlightMulticityIntlSearchResultPage ; true   ; EzgFlightOneWayFooterContactComponent     
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                                                       ; position[unique=true]             ; page(uid,$contentCV)[unique=true][default='ezgFlightMulticityIntlSearchResultPage'] ; contentSlot(uid,$contentCV)[unique=true]                          
+                                 ;                         ; Search-ezgb2cFlightMulticityIntlSearchResultPage                       ; Search                            ;                                                                                 	  ; SearchSlot-ezgb2cFlightCommonSearchResultPage                     
+                                 ;                         ; Section1-ezgb2cFlightMulticityIntlSearchResultPage                     ; Section1                          ;                                                                                     ; Section1Slot-ezgb2cFlightCommonSearchResultPage                   
+                                 ;                         ; Section2A-ezgb2cFlightMulticityIntlSearchResultPage                    ; Section2A                         ;                                                                                     ; Section2ASlot-ezgb2cFlightCommonSearchResultPage                  
+                                 ;                         ; Section2B-ezgb2cFlightMulticityIntlSearchResultPage                    ; Section2B                         ;                                                                                     ; Section2BSlot-ezgb2cFlightMulticityIntlSearchResultPage               
+                                 ;                         ; SearchBoxFromSlot-ezgb2cFlightMulticityIntlSearchResultPage            ; FlightSearchFromSection           ;                                                                                     ; SearchBoxFromSlot-ezgb2cFlightMulticityIntlSearchResultPage           
+                                 ;                         ; SearchBoxToSlot-ezgb2cFlightMulticityIntlSearchResultPage              ; FlightSearchToSection             ;                                                                                     ; SearchBoxToSlot-ezgb2cFlightMulticityIntlSearchResultPage             
+                                 ;                         ; FooterOneContactDetail-ezgb2cFlightMulticityIntlSearchResultPage       ; FlightMulticityIntlFooterContactDetail ;                                                                               	; FooterOneContactDetailSlot-ezgb2cFlightMulticityIntlSearchResultPage
+
+##added by Felix end
+##added by aizijie start         
+##ezgHotelSearchResultPage       
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                                ; position[unique=true]    ; page(uid,$contentCV)[unique=true][default='ezgHotelSearchResultPage'] ; contentSlot(uid,$contentCV)[unique=true]        
+                                 ;                         ; Search-EZGHotelSearchResultPage                 ; Search                   ;                                                                       ; SearchSlot-EZGHotelSearchResultPage             
+                                 ;                         ; Section1-EZGHotelSearchResultPage               ; Section1                 ;                                                                       ; Section1Slot-EZGHotelSearchResultPage           
+                                 ;                         ; Section2A-EZGHotelSearchResultPage              ; Section2A                ;                                                                       ; Section2ASlot-EZGHotelSearchResultPage          
+                                 ;                         ; Section2B-EZGHotelSearchResultPage              ; Section2B                ;                                                                       ; Section2BSlot-EZGHotelSearchResultPage          
+                                 ;                         ; TopSearchBox-EZGHotelSearchResultPage           ; TopSearchBox             ;                                                                       ; TopSearchBoxSlot-EZGHotelSearchResultPage       
+                                 ;                         ; HotelNameSearchBox-EZGHotelSearchResultPage     ; hotelNameSearchBox       ;                                                                       ; HotelNameSearchBox-EZGHotelSearchResultPage     
+                                 ;                         ; HotelLocationSearchBox-EZGHotelSearchResultPage ; hotelLocationSearchBox   ;                                                                       ; HotelLocationSearchBox-EZGHotelSearchResultPage 
+                                 
+                                 ;                         ; FooterContactDetail-EZGHotelSearchResultPage    ; HotelFooterContactDetail ;                                                                       ; FooterContactDetailSlot-EZGHotelSearchResultPage
+
+
+
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]                                 ; name                                                    ; active ; cmsComponents(&componentRef)   
+                          ;                         ; SearchSlot-EZGHotelSearchResultPage              ; Search Slot for EZGHotelSearchResultPage                ; true   ; HotelSearchItemsComponent      
+                          ;                         ; Section1Slot-EZGHotelSearchResultPage            ; Section1 Slot for EZGHotelSearchResultPage              ; true   ; HotelSearchTitleComponent      
+                          ;                         ; Section2ASlot-EZGHotelSearchResultPage           ; Section2A Slot for EZGHotelSearchResultPage             ; true   ; HotelSearchPageFacetSComponent 
+                          ;                         ; Section2BSlot-EZGHotelSearchResultPage           ; Section2B Slot for EZGHotelSearchResultPage             ; true   ; HotelSearchResultComponent     
+                          ;                         ; TopSearchBoxSlot-EZGHotelSearchResultPage        ; Top SearchBox Slot for EZGHotelSearchResultPage         ; true   ; HotelSearchBoxComponent        
+                          ;                         ; HotelNameSearchBox-EZGHotelSearchResultPage      ; Hotel Name SearchBox Slot for EZGHotelSearchResultPage  ; true   ; HotelNameSearchBoxComponent    
+                          ;                         ; HotelLocationSearchBox-EZGHotelSearchResultPage  ; Top SearchBox Slot for EZGHotelSearchResultPage         ; true   ; HotelLocationSearchBoxComponent
+                          ;                         ; FooterContactDetailSlot-EZGHotelSearchResultPage ; Footer Contact Detail Slot for EZGHotelSearchResultPage ; true   ; EzgHotelFooterContactComponent 
+
+##ezgHotelDetailResultPage
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                       ; position[unique=true]    ; page(uid,$contentCV)[unique=true][default='ezgHotelDetailsPage'] ; contentSlot(uid,$contentCV)[unique=true]  
+                                 ;                         ; Section1-EZGHotelDetailPage            ; Section1                 ;                                                                  ; Section1Slot-EZGHotelDetailPage           
+                                 ;                         ; Section2A-EZGHotelDetailPage           ; Section2A                ;                                                                  ; Section2ASlot-EZGHotelDetailPage          
+                                 ;                         ; Section2B-EZGHotelDetailPage           ; Section2B                ;                                                                  ; Section2BSlot-EZGHotelDetailPage          
+                                 ;                         ; Section2C-EZGHotelDetailPage           ; Section2C                ;                                                                  ; Section2CSlot-EZGHotelDetailPage          
+                                 ;                         ; Section3A-EZGHotelDetailPage           ; Section3A                ;                                                                  ; Section3ASlot-EZGHotelDetailPage          
+                                 ;                         ; Section3B-EZGHotelDetailPage           ; Section3B                ;                                                                  ; Section3BSlot-EZGHotelDetailPage          
+                                 ;                         ; Section4-EZGHotelDetailPage            ; Section4                 ;                                                                  ; Section4Slot-EZGHotelDetailPage           
+                                 ;                         ; FooterContactDetail-EZGHotelDetailPage ; HotelFooterContactDetail ;                                                                  ; FooterContactDetailSlot-EZGHotelDetailPage
+
+
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]                           ; name                                              ; active ; cmsComponents(&componentRef)     
+                          ;                         ; Section1Slot-EZGHotelDetailPage            ; Section1 Slot for EZGHotelDetailPage              ; true   ; HotelDetailBreadcrumbComponent   
+                          ;                         ; Section2ASlot-EZGHotelDetailPage           ; Section2A Slot for EZGHotelDetailPage             ; true   ; HotelDetailImageRotationComponent
+                          ;                         ; Section2BSlot-EZGHotelDetailPage           ; Section2B Slot for EZGHotelDetailPage             ; true   ; HotelDetailSimpleInfoComponent   
+                          ;                         ; Section2CSlot-EZGHotelDetailPage           ; Section2C Slot for EZGHotelDetailPage             ; true   ; HotelDetailPriceComponent        
+                          ;                         ; Section3ASlot-EZGHotelDetailPage           ; Section3A Slot for EZGHotelDetailPage             ; true   ; HotelDetailOverriewComponent     
+                          ;                         ; Section3BSlot-EZGHotelDetailPage           ; Section3B Slot for EZGHotelDetailPage             ; true   ; HotelDetailNearbyComponent       
+                          ;                         ; Section4Slot-EZGHotelDetailPage            ; Section4 Slot for EZGHotelDetailPage              ; true   ; HotelDetailRoomInfoComponent     
+                          ;                         ; FooterContactDetailSlot-EZGHotelDetailPage ; Footer Contact Detail Slot for EZGHotelDetailPage ; true   ; EzgHotelFooterContactComponent   
+
+##added by aizijie end    
+
+### Added by Alex start ###
+### ezgb2cDashboardPage   
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]                           ; name                                            ; active ; cmsComponents(&componentRef)              
+                          ;                         ; LeftNavTopSlot-ezgb2cDashboardPage         ; LeftNavTop Slot for ezgb2cDashboardPage         ; true   ; EzgB2CDashboardLeftNavTopComponent        
+                          ;                         ; LeftNavBottomSlot-ezgb2cDashboardPage      ; LeftNavBottom Slot for ezgb2cDashboardPage      ; true   ; EzgB2CDashboardLeftNavBottomComponent     
+                          ;                         ; RightContentTopSlot-ezgb2cDashboardPage    ; RightContentTop Slot for ezgb2cDashboardPage    ; true   ; EzgB2CDashboardRightContentTopComponent   
+                          ;                         ; RightContentBottomSlot-ezgb2cDashboardPage ; RightContentBottom Slot for ezgb2cDashboardPage ; true   ; EzgB2CDashboardRightContentBottomComponent
+                          
+### ezgb2cDashboardEditPage   
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]                               ; name                                                ; active ; cmsComponents(&componentRef)                  
+                          ;                         ; LeftNavTopSlot-ezgb2cDashboardEditPage         ; LeftNavTop Slot for ezgb2cDashboardEditPage         ; true   ; EzgB2CDashboardEditLeftNavTopComponent        
+                          ;                         ; RightContentTopSlot-ezgb2cDashboardEditPage    ; RightContentTop Slot for ezgb2cDashboardEditPage    ; true   ; EzgB2CDashboardEditRightContentTopComponent   
+                          ;                         ; RightContentBottomSlot-ezgb2cDashboardEditPage ; RightContentBottom Slot for ezgb2cDashboardEditPage ; true   ; EzgB2CDashboardEditRightContentBottomComponent
+### Added by Alex end ### 
+
+### ezgb2cWishlistPage    
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]                ; name                                 ; active ; cmsComponents(&componentRef)  
+                          ;                         ; Section1Slot-ezgb2cWishlistPage ; Section1 Slot for wishlistPage       ; true   ; EzgB2CSearchWishlistComponent 
+                          ;                         ; Section2Slot-ezgb2cWishlistPage ; Section2 Slot for wishlistPage       ; true   ; EzgB2CWishlistDetailsComponent
+### ezgb2cWalletPage      
+                          ;                         ; Section1Slot-ezgb2cWalletPage   ; Section1 Slot for walletPage         ; true   ; EzgB2CWalletTabComponent      
+                          ;                         ; Section2ASlot-ezgb2cWalletPage  ; Section2A Slot for walletPage        ; true   ; EzgB2CWalletCardsComponent    
+                          ;                         ; Section2BSlot-ezgb2cWalletPage  ; Section2B Slot for walletPage        ; true   ; EzgB2CWalletVouchersComponent 
+                          ;                         ; Section2CSlot-ezgb2cWalletPage  ; Section2C Slot for walletPage        ; true   ; EzgB2CWalletBalanceComponent  
+### ezgb2cSettingsPage    
+                          ;                         ; Section1Slot-ezgb2cSettingsPage ; Section1 Slot for ezgb2cSettingsPage ; true   ; EzgB2CProfileSettingsComponent
+                          ;                         ; Section2Slot-ezgb2cSettingsPage ; Section2 Slot for ezgb2cSettingsPage ; true   ; EzgB2CPreferencesComponent    
+                          ;                         ; Section3Slot-ezgb2cSettingsPage ; Section3 Slot for ezgb2cSettingsPage ; true   ; EzgB2CTravelersComponent      
+                          ;                         ; Section4Slot-ezgb2cSettingsPage ; Section4 Slot for ezgb2cSettingsPage ; true   ; EzgB2CFareAlertsComponent     
+                          ;                         ; Section5Slot-ezgb2cSettingsPage ; Section5 Slot for ezgb2cSettingsPage ; true   ; EzgB2CSaveDiscardComponent    
+
+### ezgb2cWishlistPage    
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]            ; position[unique=true] ; page(uid,$contentCV)[unique=true][default='ezgb2cWishlistPage'] ; contentSlot(uid,$contentCV)[unique=true]
+                                 ;                         ; Section1-ezgb2cWishlistPage ; Section1              ;                                                                 ; Section1Slot-ezgb2cWishlistPage         
+                                 ;                         ; Section2-ezgb2cWishlistPage ; Section2              ;                                                                 ; Section2Slot-ezgb2cWishlistPage         
+
+### ezgb2cWalletPage             
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]           ; position[unique=true] ; page(uid,$contentCV)[unique=true][default='ezgb2cWalletPage'] ; contentSlot(uid,$contentCV)[unique=true]
+                                 ;                         ; Section1-ezgb2cWalletPage  ; Section1              ;                                                               ; Section1Slot-ezgb2cWalletPage           
+                                 ;                         ; Section2A-ezgb2cWalletPage ; Section2A             ;                                                               ; Section2ASlot-ezgb2cWalletPage          
+                                 ;                         ; Section2B-ezgb2cWalletPage ; Section2B             ;                                                               ; Section2BSlot-ezgb2cWalletPage          
+                                 ;                         ; Section2C-ezgb2cWalletPage ; Section2C             ;                                                               ; Section2CSlot-ezgb2cWalletPage          
+
+### ezgb2cSettingsPage           
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]            ; position[unique=true] ; page(uid,$contentCV)[unique=true][default='ezgb2cSettingsPage'] ; contentSlot(uid,$contentCV)[unique=true]
+                                 ;                         ; Section1-ezgb2cSettingsPage ; Section1              ;                                                                 ; Section1Slot-ezgb2cSettingsPage         
+                                 ;                         ; Section2-ezgb2cSettingsPage ; Section2              ;                                                                 ; Section2Slot-ezgb2cSettingsPage         
+                                 ;                         ; Section3-ezgb2cSettingsPage ; Section3              ;                                                                 ; Section3Slot-ezgb2cSettingsPage         
+                                 ;                         ; Section4-ezgb2cSettingsPage ; Section4              ;                                                                 ; Section4Slot-ezgb2cSettingsPage         
+                                 ;                         ; Section5-ezgb2cSettingsPage ; Section5              ;                                                                 ; Section5Slot-ezgb2cSettingsPage         
+
+### Added by Alex start ###      
+### ezgb2cDashboardPage          
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                       ; position[unique=true] ; page(uid,$contentCV)[unique=true][default='ezgb2cDashboardPage'] ; contentSlot(uid,$contentCV)[unique=true]  
+                                 ;                         ; LeftNavTop-ezgb2cDashboardPage         ; LeftNavTop            ;                                                                  ; LeftNavTopSlot-ezgb2cDashboardPage        
+                                 ;                         ; LeftNavBottom-ezgb2cDashboardPage      ; LeftNavBottom         ;                                                                  ; LeftNavBottomSlot-ezgb2cDashboardPage     
+                                 ;                         ; RightContentTop-ezgb2cDashboardPage    ; RightContentTop       ;                                                                  ; RightContentTopSlot-ezgb2cDashboardPage   
+                                 ;                         ; RightContentBottom-ezgb2cDashboardPage ; RightContentBottom    ;                                                                  ; RightContentBottomSlot-ezgb2cDashboardPage
+### ezgb2cDashboardEditPage                                    
+INSERT_UPDATE ContentSlotForPage ; $contentCV[unique=true] ; uid[unique=true]                           ; position[unique=true] ; page(uid,$contentCV)[unique=true][default='ezgb2cDashboardEditPage'] ; contentSlot(uid,$contentCV)[unique=true]      
+                                 ;                         ; LeftNavTop-ezgb2cDashboardEditPage         ; LeftNavTop            ;                                                                      ; LeftNavTopSlot-ezgb2cDashboardEditPage        
+                                 ;                         ; RightContentTop-ezgb2cDashboardEditPage    ; RightContentTop       ;                                                                      ; RightContentTopSlot-ezgb2cDashboardEditPage   
+                                 ;                         ; RightContentBottom-ezgb2cDashboardEditPage ; RightContentBottom    ;                                                                      ; RightContentBottomSlot-ezgb2cDashboardEditPage
+### Added by Alex end ###        
+
+INSERT_UPDATE JspIncludeComponent ; $contentCV[unique=true] ; uid[unique=true]               ; name                                ; page                                                            ; actions(uid,$contentCV) ; &componentRef                 
+### ezgb2cWishlistPage            
+                                  ;                         ; EzgB2CSearchWishlistComponent  ; Search Wishlist Component           ; /WEB-INF/views/responsive/pages/ezg/account/searchWishlist.jsp  ;                         ; EzgB2CSearchWishlistComponent 
+                                  ;                         ; EzgB2CWishlistDetailsComponent ; Wishlist Component                  ; /WEB-INF/views/responsive/pages/ezg/account/wishlistdetails.jsp ;                         ; EzgB2CWishlistDetailsComponent
+### ezgb2cWalletPage              
+                                  ;                         ; EzgB2CWalletTabComponent       ; Tab Navigation Component            ; /WEB-INF/views/responsive/pages/ezg/account/walletTabNav.jsp    ;                         ; EzgB2CWalletTabComponent      
+                                  ;                         ; EzgB2CWalletCardsComponent     ; Cards Component                     ; /WEB-INF/views/responsive/pages/ezg/account/walletCards.jsp     ;                         ; EzgB2CWalletCardsComponent    
+                                  ;                         ; EzgB2CWalletVouchersComponent  ; Vouchers Component                  ; /WEB-INF/views/responsive/pages/ezg/account/walletVouchers.jsp  ;                         ; EzgB2CWalletVouchersComponent 
+                                  ;                         ; EzgB2CWalletBalanceComponent   ; Available Balance Component         ; /WEB-INF/views/responsive/pages/ezg/account/walletBalance.jsp   ;                         ; EzgB2CWalletBalanceComponent  
+### ezgb2cSettingsPage            
+                                  ;                         ; EzgB2CProfileSettingsComponent ; Profile Settings Component          ; /WEB-INF/views/responsive/pages/ezg/account/profileSettings.jsp ;                         ; EzgB2CProfileSettingsComponent
+                                  ;                         ; EzgB2CPreferencesComponent     ; Preferences Component               ; /WEB-INF/views/responsive/pages/ezg/account/preferences.jsp     ;                         ; EzgB2CPreferencesComponent    
+                                  ;                         ; EzgB2CTravelersComponent       ; Travelers Component                 ; /WEB-INF/views/responsive/pages/ezg/account/travelers.jsp       ;                         ; EzgB2CTravelersComponent      
+                                  ;                         ; EzgB2CFareAlertsComponent      ; Manage Flight Fare Alerts Component ; /WEB-INF/views/responsive/pages/ezg/account/fareAlerts.jsp      ;                         ; EzgB2CFareAlertsComponent     
+                                  ;                         ; EzgB2CSaveDiscardComponent     ; Save Discard Settings Component     ; /WEB-INF/views/responsive/pages/ezg/account/saveSettings.jsp    ;                         ; EzgB2CSaveDiscardComponent    
+
+### Added by Alex start ###       
+### ezgb2cDashboardPage           
+INSERT_UPDATE JspIncludeComponent ; $contentCV[unique=true] ; uid[unique=true]                               ; name                                  ; page                                                                              ; actions(uid,$contentCV) ; &componentRef                                 
+                                  ;                         ; EzgB2CDashboardLeftNavTopComponent             ; Dashboard Left Top Component          ; /WEB-INF/views/responsive/pages/ezg/account/leftNavTop_dashboard.jsp              ;                         ; EzgB2CDashboardLeftNavTopComponent            
+                                  ;                         ; EzgB2CDashboardLeftNavBottomComponent          ; Dashboard Left Bottom Component       ; /WEB-INF/views/responsive/pages/ezg/account/leftNavBottom_dashboard.jsp           ;                         ; EzgB2CDashboardLeftNavBottomComponent         
+                                  ;                         ; EzgB2CDashboardRightContentTopComponent        ; Dashboard Right Top Component         ; /WEB-INF/views/responsive/pages/ezg/account/rightContentTop_dashboard.jsp         ;                         ; EzgB2CDashboardRightContentTopComponent       
+                                  ;                         ; EzgB2CDashboardRightContentBottomComponent     ; Dashboard Right BottomComponent       ; /WEB-INF/views/responsive/pages/ezg/account/rightContentBottom_dashboard.jsp      ;                         ; EzgB2CDashboardRightContentBottomComponent    
+                                  ;                         ; EzgB2CDashboardEditLeftNavTopComponent         ; Dashboard Edit Left Component         ; /WEB-INF/views/responsive/pages/ezg/account/leftNavTop_dashboard_edit.jsp         ;                         ; EzgB2CDashboardEditLeftNavTopComponent        
+                                  ;                         ; EzgB2CDashboardEditRightContentTopComponent    ; Dashboard Edit Right Top Component    ; /WEB-INF/views/responsive/pages/ezg/account/rightContentTop_dashboard_edit.jsp    ;                         ; EzgB2CDashboardEditRightContentTopComponent   
+                                  ;                         ; EzgB2CDashboardEditRightContentBottomComponent ; Dashboard Edit Right Bottom Component ; /WEB-INF/views/responsive/pages/ezg/account/rightContentBottom_dashboard_edit.jsp ;                         ; EzgB2CDashboardEditRightContentBottomComponent
+### Added by Alex end ###         
+
+###added by aizijie for customize search box component 
+# CMS SearchBox Components        
+INSERT_UPDATE EzgSearchBoxComponent ; $contentCV[unique=true] ; uid[unique=true]                ; name                           ; &componentRef                   ; displayLandMark[default=false] ; displayArea[default=false] ; displayChain[default=false] ; displayCity[default=true] ; displaySuggestions[default=true] ; displayProducts[default=false] ; showSearchIcon[default=false] ; maxSuggestions ; cssStyle                        ; searchPlaceholder ; $pageType ;  
+                                    ;                         ; HotelSearchBoxComponent         ; Ezg Search Box                 ; HotelSearchBoxComponent         ; true                           ; true                       ; true                        ;                           ;                                  ;                                ;                               ; 3              ; w100pcnt                        ;                   ; HOTELPAGE 
+                                    ;                         ; HomePageSearchBoxComponent      ; Ezg Homepage Search Box        ; HomePageSearchBoxComponent      ; true                           ; true                       ; true                        ;                           ;                                  ;                                ; true                          ; 3              ;                                 ;                   ; HOMEPAGE  
+                                    ;                         ; HotelNameSearchBoxComponent     ; Ezg Hotel Page Search Name     ; HotelNameSearchBoxComponent     ;                                ;                            ;                             ; false                     ;                                  ;                                ; true                          ; 3              ; noBdr depInputWidth fL w100pcnt ;                   ; HOTELPAGE 
+                                    ;                         ; HotelLocationSearchBoxComponent ; Ezg Hotel Page Search Location ; HotelLocationSearchBoxComponent ;                                ;                            ;                             ;                           ;                                  ;                                ; true                          ; 3              ; noBdr depInputWidth fL w100pcnt ;                   ; HOTELPAGE 
+                                    ;                         ; FlightFromSearchBoxComponent    ; Ezg Flight Page From Secction  ; FlightFromSearchBoxComponent    ;                                ;                            ;                             ;                           ; false                            ;                                ;                               ; 3              ; w100pcnt                        ;                   ; FLIGHTPAGE
+                                    ;                         ; FlightToSearchBoxComponent      ; Ezg Flight Page To Section     ; FlightToSearchBoxComponent      ;                                ;                            ;                             ;                           ; false                            ;                                ;                               ; 3              ; w100pcnt                        ;                   ; FLIGHTPAGE
+
+# SimpleBannerComponent             
+INSERT_UPDATE EzgLogoBannerComponent ; $contentCV[unique=true] ; uid[unique=true]       ; name                             ; $media ; isoText       ; callNumber         ; tollFree                 ; searchWidget[default=true] ; url                                               ; &componentRef         
+                                     ;                         ; EzgLogoBannerComponent ; Ezg Logo Simple Banner Component ; logo   ; ISO:9001:2008 ; Call:09867 565 900 ; Toll free :1800 209 0800 ;                            ; https://localhost:9002/b2cstorefront/ezginb2c/en/ ; EzgLogoBannerComponent
+
+INSERT_UPDATE EzgBgGroundBannerComponent ; $contentCV[unique=true] ; uid[unique=true]   ; name                     ; title                ; content                                            ; $media            ; &componentRef     
+                                         ;                         ; Bg1BannerComponent ; Back ground Image Banner ; your travle,you way! ; Discover holidays by people like you and customize ; bannerbluesky     ; Bg1BannerComponent
+                                         ;                         ; Bg2BannerComponent ; Back ground Image Banner ; your travle,you way! ; Discover holidays by people like you and customize ; bannermountain2   ; Bg2BannerComponent
+                                         ;                         ; Bg3BannerComponent ; Back ground Image Banner ; your travle,you way! ; Discover holidays by people like you and customize ; bannerriver       ; Bg3BannerComponent
+                                         ;                         ; Bg4BannerComponent ; Back ground Image Banner ; your travle,you way! ; Discover holidays by people like you and customize ; bannermountaineer ; Bg4BannerComponent
+
+INSERT_UPDATE EzgRotatingImagesComponent ; $contentCV[unique=true] ; uid[unique=true]                     ; name                                   ; banners(&componentRef)                                   ; tabSize ; &componentRef                       
+                                         ;                         ; EzgHomepageBgRotatingImagesComponent ; Ezg Homepage Rotating Images Component ; Bg1BannerComponent,Bg2BannerComponent,Bg3BannerComponent ; 3       ; EzgHomepageBgRotatingImagesComponent
+
+INSERT_UPDATE Media ; code[unique=true] ; @media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite=true] ; realfilename         ; altText ; mime[default='image/png'] ; $contentCV[unique=true] ; folder(qualifier)[default=images] ;  
+                    ; logo              ; $siteResource/images/home/logo.png                                                          ; logo.png             ; "View"  ;                           
+                    ; bannerbluesky     ; $siteResource/images/home/banner1.jpg                                                       ; banner1.jpg          ; "View"  ;                           
+                    ; bannermountain1   ; $siteResource/images/home/mountain_GIF_rev.gif                                              ; mountain_GIF_rev.gif ; "View"  ;                           
+                    ; bannermountain2   ; $siteResource/images/home/mountain_GIF.gif                                                  ; mountain_GIF.gif     ; "View"  ;                           
+                    ; bannermountaineer ; $siteResource/images/home/mountaineer2.gif                                                  ; mountaineer2.gif     ; "View"  ;                           
+                    ; bannerriver       ; $siteResource/images/home/river_rafting2.jpg                                                ; river_rafting2.jpg   ; "View"  ;                           
+                                         
+INSERT_UPDATE EzgNavigationNodeComponent ; $contentCV[unique=true] ; uid[unique=true]         ; name                 ; value                ; defaultSel[default=false] ; orderNumber ; &componentRef           
+                                         ;                         ; FlightNode               ; Flights              ; flight               ; true                      ; 1           ; FlightNode              
+                                         ;                         ; HotelNode                ; Hotels               ; hotel                ;                           ; 2           ; HotelNode               
+                                         ;                         ; FlightAndHotelNode       ; Flights + Hotels     ; flightandhotel       ;                           ; 3           ; FlightAndHotelNode      
+                                         ;                         ; HolidaysNode             ; Holidays             ; holiday              ;                           ; 4           ; HolidaysNode            
+                                         ;                         ; ActivitiyNode            ; Activities           ; activity             ;                           ; 5           ; ActivitiyNode           
+                                         ;                         ; BusNode                  ; Bus                  ; bus                  ;                           ; 6           ; BusNode                 
+                                         ;                         ; CarNode                  ; Car                  ; car                  ;                           ; 7           ; CarNode                 
+                                         ;                         ; RailNode                 ; Rail                 ; rail                 ;                           ; 8           ; RailNode                
+                                         ;                         ; CruiseNode               ; Cruise               ; cruise               ;                           ; 9           ; CruiseNode              
+                                         ;                         ; FlightAndHoletAndCarNode ; Flight + Hotel + Car ; flightandhotelandcar ;                           ; 10          ; FlightAndHoletAndCarNode
+                                         ;                         ; ForexNode                ; Forex                ; forex                ;                           ; 11          ; ForexNode               
+                                         ;                         ; InsuranceNode            ; Insurance            ; insurance            ;                           ; 12          ; InsuranceNode           
+                                         ;                         ; VisaNode                 ; Visa                 ; visa                 ;                           ; 13          ; VisaNode                
+INSERT_UPDATE EzgNavigationBarComponent ; $contentCV[unique=true] ; uid[unique=true]                   ; name                                   ; showSize ; isForHomePage[default=false] ; ezgNavigationNodeComponents(&componentRef)                                                                                                                       ; &componentRef                     
+                                        ;                         ; EzgHomepageNavigationBarComponent  ; Ezg Homepage Navigation Bar Component  ; 5        ; true                         ; FlightNode,HotelNode,FlightAndHotelNode,HolidaysNode,ActivitiyNode,BusNode,CarNode,RailNode,CruiseNode,FlightAndHoletAndCarNode,ForexNode,InsuranceNode,VisaNode ; EzgHomepageNavigationBarComponent 
+                                        ;                         ; EzgOtherpageNavigationBarComponent ; Ezg Otherpage Navigation Bar Component ; 5        ;                              ; FlightNode,HotelNode,FlightAndHotelNode,HolidaysNode,ActivitiyNode,BusNode,CarNode,RailNode,CruiseNode,FlightAndHoletAndCarNode,ForexNode,InsuranceNode,VisaNode ; EzgOtherpageNavigationBarComponent
+                                        
+INSERT_UPDATE EzgFooterContactDetailComponent ; $contentCV[unique=true] ; uid[unique=true]                        ; name                                  ; shopping[default=true] ; view[default=true] ; select[default=true] ; compare[default=true] ; wishlist[default=true] ; &componentRef                          
+                                              ;                         ; EzgHomepageFooterContactComponent       ; Ezg Homepage Footer Contact Component ;                        ;                    ; false                ; false                 ;                        ; EzgHomepageFooterContactComponent      
+                                              ;                         ; EzgHotelFooterContactComponent          ; Ezg Homepage Footer Contact Component ;                        ;                    ; false                ;                       ;                        ; EzgHotelFooterContactComponent         
+                                              ;                         ; EzgFlightOneWayFooterContactComponent   ; Ezg Homepage Footer Contact Component ;                        ;                    ; false                ; false                 ;                        ; EzgFlightOneWayFooterContactComponent  
+                                              ;                         ; EzgFlightTwoWayFooterContactComponent   ; Ezg Homepage Footer Contact Component ;                        ;                    ;                      ; false                 ;                        ; EzgFlightTwoWayFooterContactComponent  
+                                              ;                         ; EzgFlightMultiWayFooterContactComponent ; Ezg Homepage Footer Contact Component ;                        ;                    ;                      ; false                 ;                        ; EzgFlightMultiWayFooterContactComponent
+##added by Felix start
+#                                              ;                         ; EzgFlightMultiWayIntlFooterContactComponent ; Ezg Homepage Footer Contact Component ;                    ;                    ; flase                ; false                 ;                        ; EzgFlightMultiWayIntlFooterContactComponent									
+##added by Felix end                                           

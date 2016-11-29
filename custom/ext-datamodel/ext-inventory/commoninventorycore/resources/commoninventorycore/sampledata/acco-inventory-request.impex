@@ -1,0 +1,28 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$dateformat=dd-MM-yyyy
+
+INSERT_UPDATE AccoAssociateInventory;inventoryFor(code)[unique=true];productCategories(code,$catalogVersion);productCategorySubType(code,$catalogVersion)
+;COMBINATION;;C006ST001;
+	
+INSERT_UPDATE InventoryRoomInfo;roomCategory(code)[unique=true];roomType(code)[unique=true];noOfRoomRequested;supplierReferenceNumber;rateCode;rateType(code);inventoryAssociation(inventoryFor(code));requestedQuantity;
+;STANDARD;SINGLE_ROOM;10;;;;COMBINATION;10
+;STANDARD;DOUBLE_ROOM;10;;;;COMBINATION;10
+
+INSERT_UPDATE AccoInventoryDetail;code[unique=true];$catalogVersion[unique=true];city(isocode);travelChain(code);hotelCategory(code);currency(isocode);remark;products(code,$catalogVersion);departureDate[dateformat=$dateformat];arrivalDate[dateformat=$dateformat];inventoryRoomInfos(roomCategory(code),roomType(code))
+;0009;;BDQ;161;FOUR;INR;;87762;14-02-2015;20-02-2015;STANDARD:SINGLE_ROOM,STANDARD:DOUBLE_ROOM
+
+INSERT_UPDATE AccoInventoryGrid;gridId[unique=true];inventoryDetails(code,$catalogVersion)
+;1;0009
+
+INSERT_UPDATE InitialInvReqSupplierDetail;supplierName;emailId[unique=true];faxNum;sendToSupplier[default=FALSE];supplierCode;supplierType(SupplierType.code)
+;Jet Airways;supplier@jetairways.com;22244566;TRUE;1009;ENABLER
+;Emirates;supplier@emirates.com;222466566;TRUE;1990;SOURCE
+
+INSERT_UPDATE VersionDetail;version[unique=true];versionDate[dateformat=$dateformat];versionRemark
+;1.2;14-02-2015
+
+INSERT_UPDATE AccommodationInventoryRequest;code[unique=true];$catalogVersion[unique=true];visibleToSupplier[default=false];status(code);productCategorySubType(code,$catalogVersion);currency(isocode);companyDetails(uid);supplierDetails(emailId);versionDetails(version);inventoryDetails(gridId)
+;14667;;;SAVED_IN_SYSTEM;C002ST001;INR;E000;supplier@jetairways.com;1.2;1
+;14668;;;SAVED_IN_SYSTEM;C002ST001;INR;E000;supplier@emirates.com;1.2;1

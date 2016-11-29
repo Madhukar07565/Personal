@@ -1,0 +1,144 @@
+<acc:AccoInterfaceRQ  xmlns:acc="http://www.coxandkings.com/integ/suppl/accointerface" xmlns:acco="http://www.coxandkings.com/integ/suppl/acco" xmlns:com="http://www.coxandkings.com/integ/suppl/common" xmlns:ns="http://www.opentravel.org/OTA/2003/05">
+	 <acco:RequestHeader>
+		<!--Optional:-->
+		<com:UserID>1</com:UserID>
+		<com:SessionID>2</com:SessionID>
+		<com:TransactionID>3</com:TransactionID>
+		<!--Optional:-->
+		<com:SupplierCredentialsList>
+		   <!--1 or more repetitions:-->
+		   <com:SupplierCredentials>
+			  <com:SupplierID>AOT</com:SupplierID>
+			  <com:Credentials>
+				<com:Credential name="AgentID" isEncrypted="false">EZEGOO</com:Credential>
+				<com:Credential name="Password" isEncrypted="false">chambers1</com:Credential>
+			  </com:Credentials>
+		   </com:SupplierCredentials>		   
+            <com:SupplierCredentials>
+                <com:SupplierID>JACOB</com:SupplierID>
+                <com:Credentials>
+                    <!--1 to 5 repetitions:-->
+                    <com:Credential  	name="LICENCEKEY" isEncrypted="false">E322B0A6-156E-4BA7-9A03-CD51E8992EBD</com:Credential>
+                </com:Credentials>
+            </com:SupplierCredentials>
+		</com:SupplierCredentialsList>
+	 </acco:RequestHeader>
+	 <acc:RequestBody>
+		<acco:OTA_HotelResModifyRQWrapper>
+		   <acco:SupplierID>AOT</acco:SupplierID>
+		   <acco:Sequence>1</acco:Sequence>
+		   	<ns:OTA_HotelResModifyRQ Version='1.0' ResStatus="Modify">
+				<ns:UniqueID Type="14" ID="AIEFAO4288"/>
+				<ns:HotelResModifies>
+					<ns:HotelResModify ResStatus="RQ">
+						<ns:RoomStays>
+							<ns:RoomStay>
+								<ns:GuestCounts>
+								   <ns:GuestCount ResGuestRPH="1" AgeQualifyingCode="10" Count="1" />
+								   <ns:GuestCount ResGuestRPH="2" AgeQualifyingCode="8" Age="3" Count="1" />
+								</ns:GuestCounts>
+								<ns:TimeSpan Start="2016-07-22" End="2016-07-24"/>
+								<ns:TPA_Extensions>
+									<acco:Opt>MELACMGMMEL3BRMI</acco:Opt>
+								</ns:TPA_Extensions>														 
+								<ns:Comments>
+									<ns:Comment>
+										<ns:Text>
+											This is Test Room.
+										</ns:Text>
+									</ns:Comment>
+								</ns:Comments><!-- 
+								<ns:ServiceRPHs>
+									<ns:ServiceRPH RPH="1"/>
+								</ns:ServiceRPHs> -->
+							</ns:RoomStay>
+						</ns:RoomStays>
+						<ns:ResGuests>
+							<ns:ResGuest ResGuestRPH="1">
+								<ns:Profiles>
+									<ns:ProfileInfo>
+										<ns:Profile>
+											<ns:Customer>
+												<ns:PersonName>													
+													<ns:NamePrefix>Master</ns:NamePrefix>
+													<ns:GivenName>Guest1</ns:GivenName>
+													<ns:Surname>Child1</ns:Surname>
+												</ns:PersonName>
+											</ns:Customer>
+										</ns:Profile>
+									</ns:ProfileInfo>
+								</ns:Profiles>
+							</ns:ResGuest>
+							<ns:ResGuest ResGuestRPH="2">
+								<ns:Profiles>
+									<ns:ProfileInfo>
+										<ns:Profile>
+											<ns:Customer>
+												<ns:PersonName>													
+													<ns:NamePrefix>Mr.</ns:NamePrefix>
+													<ns:GivenName>Guest3</ns:GivenName>
+													<ns:Surname>Surname3</ns:Surname>
+												</ns:PersonName>
+											</ns:Customer>
+										</ns:Profile>
+									</ns:ProfileInfo>
+								</ns:Profiles>
+							</ns:ResGuest>
+						</ns:ResGuests><!-- 
+						<ns:Services>
+							<ns:Service ServiceRPH="1" Quantity="2" ID="1"/>
+							<ns:Service ServiceRPH="2" Quantity="3" ID="2"/>
+						</ns:Services> -->
+					</ns:HotelResModify>
+				</ns:HotelResModifies>
+			</ns:OTA_HotelResModifyRQ>	
+		</acco:OTA_HotelResModifyRQWrapper>
+		<acco:OTA_HotelResModifyRQWrapper>
+		   <acco:SupplierID>JACOB</acco:SupplierID>
+		   <acco:Sequence>2</acco:Sequence>
+		       <ns:OTA_HotelResModifyRQ Version="1.0" ResStatus="Modify" TransactionIdentifier="Test1234567">
+					<ns:UniqueID  	Type="14" ID="JCJA2135028"/>
+					<!-- Booking ID -->
+					<ns:HotelResModifies>
+						<ns:HotelResModify>
+							<ns:UniqueID  	Type="10" ID="6026"/>
+							<!--ServiceID -->
+							<ns:UniqueID  	Type="16" ID="1182993"/>
+							<!--BookedServiceID -->
+							<ns:RoomStays>
+								<ns:RoomStay>
+									<ns:RoomTypes>
+										<ns:RoomType  	RoomID="34253">
+											<!--OptionID-->
+										</ns:RoomType>
+									</ns:RoomTypes>
+									<ns:RatePlans>
+										<ns:RatePlan  	RatePlanCode="721620"/>
+									</ns:RatePlans>
+									<ns:TimeSpan  	Start="2016-07-03" End="2016-07-05"/>
+								</ns:RoomStay>
+							</ns:RoomStays>
+							<ns:ResGuests>
+								<ns:ResGuest  	AgeQualifyingCode="10">
+									<ns:Profiles>
+										<ns:ProfileInfo>
+											<ns:Profile>
+												<ns:Customer>
+													<ns:PersonName>
+														<ns:GivenName>Joseph</ns:GivenName>
+														<ns:Surname>Smith</ns:Surname>
+														<ns:NameTitle>Mr</ns:NameTitle>
+													</ns:PersonName>
+													<ns:Email>joseph@test.cc.co</ns:Email>
+												</ns:Customer>
+											</ns:Profile>
+										</ns:ProfileInfo>
+									</ns:Profiles>
+								</ns:ResGuest>
+							</ns:ResGuests>
+						</ns:HotelResModify>
+					</ns:HotelResModifies>
+				</ns:OTA_HotelResModifyRQ>    
+		</acco:OTA_HotelResModifyRQWrapper>
+	 </acc:RequestBody>
+  </acc:AccoInterfaceRQ>

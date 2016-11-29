@@ -1,0 +1,656 @@
+<com.cnk.travelogix.common.facades.product.data.hotel.HotelData>
+	<id>hotel_001</id>
+	<chain>Lemon</chain>
+	<brand>Hotel 81 Princess Singapore</brand>
+	<address>21 Lorong 12 Geylang, Singapore</address>
+	<hotelRating>2</hotelRating>
+	<popularity>5563</popularity>
+	<webPrice>678</webPrice>
+	<recommended>2363</recommended>
+	<marker>
+	<latitude>38.916417</latitude>
+	<longitude>121.541395</longitude>
+	</marker>
+	<travellerType>
+		<string>honeymooner</string>
+		<string>luxury traveller</string>
+	</travellerType>
+	<accommodationType>Casino</accommodationType>
+	<location>South Singapore</location>
+	<noOfRooms>323</noOfRooms>
+	<noOfFloors>58</noOfFloors>
+	<checkInTime>14:00 hr</checkInTime>
+	<checkOutTime>14:00 hr</checkOutTime>
+	<currentAttentions>5</currentAttentions>
+	<overview></overview>
+	<showPrice>
+		<currency>RS</currency>
+		<avgPrice>3000</avgPrice>
+		<totalPrice>6000</totalPrice>
+		<avgPriceAfterDisCount>2700</avgPriceAfterDisCount>
+		<totalPriceAfterDisCount>3400</totalPriceAfterDisCount>
+	</showPrice>
+	<reviews>
+		<numReviews>150</numReviews>
+		<ranking>2.5/3 Excellent</ranking>
+		<tripAdvisorRates>
+			<com.cnk.travelogix.common.facades.product.data.hotel.TripAdvRatingData>
+				<rateName>Overall ratings</rateName>>
+				<rating>3</rating>
+			</com.cnk.travelogix.common.facades.product.data.hotel.TripAdvRatingData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.TripAdvRatingData>
+				<rateName>Location</rateName>>
+				<rating>3</rating>
+			</com.cnk.travelogix.common.facades.product.data.hotel.TripAdvRatingData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.TripAdvRatingData>
+				<rateName>Rooms</rateName>>
+				<rating>3</rating>
+			</com.cnk.travelogix.common.facades.product.data.hotel.TripAdvRatingData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.TripAdvRatingData>
+				<rateName>Service</rateName>>
+				<rating>3</rating>
+			</com.cnk.travelogix.common.facades.product.data.hotel.TripAdvRatingData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.TripAdvRatingData>
+				<rateName>Value</rateName>>
+				<rating>3</rating>
+			</com.cnk.travelogix.common.facades.product.data.hotel.TripAdvRatingData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.TripAdvRatingData>
+				<rateName>Cleanliness</rateName>>
+				<rating>3</rating>
+			</com.cnk.travelogix.common.facades.product.data.hotel.TripAdvRatingData>
+		</tripAdvisorRates>
+		<reviewContent>
+			<com.cnk.travelogix.common.facades.product.data.hotel.ReviewContentData>
+				<title>Good overnight stay</title>
+				<author>Derek272</author>
+				<reviewDate>Oct 24, 2014</reviewDate>
+				<content>Stayed here overnight in April with my children, and had a
+					good experience. We were travelling back from Italy by train, and
+					just needed a decent place to stay overnight, and this ticked the
+					boxes.Room was good and quiet. Breakfast was a reasonable choice,
+					and hotel is walking distance to the train station. Interesting
+					area nearby, with a variety of places to eat. Good experience, and
+					at that time a bonus for smokers, as you can have a drink in part
+					of the bar, and have a cigarette with it without having to go
+					outside.
+				</content>
+			</com.cnk.travelogix.common.facades.product.data.hotel.ReviewContentData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.ReviewContentData>
+				<title>Value For Money</title>
+				<author>Rajesh</author>
+				<reviewDate>Oct 24, 2014</reviewDate>
+				<content>Overall Excellent Hotel For Budget Travelers ! Close
+					Proximity With New Delhi Railway Station and other important
+					sightseeing points. Staff is friendly and very helpful !
+					Recommended For Stay in Delhi !
+				</content>
+			</com.cnk.travelogix.common.facades.product.data.hotel.ReviewContentData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.ReviewContentData>
+				<title>Most convenient</title>
+				<author>Nitin</author>
+				<reviewDate>Oct 24, 2014</reviewDate>
+				<content>The Hotel is located nearby terminal 3, a few minutes
+					drive. The staff are helpful and cooperative. Room service is good
+					and timely. The rooms and bathrooms are nice and clean. And the
+					rates are affordable. I would definitely stay here again
+				</content>
+			</com.cnk.travelogix.common.facades.product.data.hotel.ReviewContentData>
+		</reviewContent>
+
+	</reviews>
+	<hotelPictureUrl>
+		<string>/diy/hotel_1.jpg</string>
+		<string>/diy/princess_hotel.jpg</string>
+		<string>/diy/dorsett_hotel.jpg</string>
+	</hotelPictureUrl>
+	<rooms>
+		<com.cnk.travelogix.common.facades.product.data.hotel.RoomData>
+			<roomType>Standard Double Room</roomType>
+			<roomOffer>
+				<title>Book now and avail 10% discount !</title>
+				<promoCode>BE5796392</promoCode>
+				<content>So cheap</content>
+			</roomOffer>
+			<roomOccupacy>Max occupancy 2 adults &amp; 2 children</roomOccupacy>
+			<pictures>
+				<string>/diy/princess_hotel.jpg</string>
+				<string>/diy/dorsett_hotel.jpg</string>
+			</pictures>
+			<description></description>
+			<roomAmenities>
+				<com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+					<name>Air conditioning</name>
+				</com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+				<com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+					<name>pool</name>
+				</com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+				<com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+					<name>gym</name>
+				</com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+			</roomAmenities>
+			<roomDetails>
+				<com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData>
+					<roomId>room_1</roomId>
+					<description></description>
+					<numLeft>3</numLeft>
+					<option>With breakfast</option>
+					<freeCancelation>true</freeCancelation>
+			<payAtHotel>true</payAtHotel>
+					<showPrice>
+						<currency>RS</currency>
+						<avgPrice>3000</avgPrice>
+						<totalPrice>6000</totalPrice>
+						<avgPriceAfterDisCount>2700</avgPriceAfterDisCount>
+						<totalPriceAfterDisCount>5800</totalPriceAfterDisCount>
+					</showPrice>
+					<price>
+						<currency>IQD</currency>
+						<listPrice>4500</listPrice>
+						<webPrice>3000</webPrice>
+						<unit></unit>
+					</price>
+					<priceCalendar>
+						<priceEntries>
+							<com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+								<date>2016-08-27 13:39:45CST</date>
+								<price>
+									<currency>IQD</currency>
+									<listPrice>5000</listPrice>
+									<webPrice>4000</webPrice>
+									<unit>Average / Night</unit>
+									<otherInfo>
+										<string>Pay at hotel</string>
+										<string>FREE Cancellation</string>
+									</otherInfo>
+								</price>
+							</com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+						</priceEntries>
+					</priceCalendar>
+				</com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData>
+				<com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData>
+					<roomId>room_2</roomId>
+					<description></description>
+					<option>With meals</option>
+					<showPrice>
+						<currency>RS</currency>
+						<avgPrice>4000</avgPrice>
+						<totalPrice>6000</totalPrice>
+						<avgPriceAfterDisCount>2700</avgPriceAfterDisCount>
+						<totalPriceAfterDisCount>5800</totalPriceAfterDisCount>
+					</showPrice>
+					<price>
+						<currency>IQD</currency>
+						<listPrice>4500</listPrice>
+						<webPrice>4000</webPrice>
+						<unit></unit>
+					</price>
+					<numLeft>3</numLeft>
+					<priceCalendar>
+						<priceEntries>
+							<com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+								<date>2016-08-27 13:39:45CST</date>
+								<price>
+									<currency>IQD</currency>
+									<listPrice>4000</listPrice>
+									<webPrice>3000</webPrice>
+									<unit>Average / Night</unit>
+									<otherInfo>
+										<string>Pay at hotel</string>
+										<string>FREE Cancellation</string>
+									</otherInfo>
+								</price>
+							</com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+							<com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+								<date>2016-08-27 13:39:45CST</date>
+								<price>
+									<currency>IQD</currency>
+									<listPrice>5000</listPrice>
+									<webPrice>4000</webPrice>
+									<unit>Average / Night</unit>
+									<otherInfo>
+										<string>Pay at hotel</string>
+										<string>FREE Cancellation</string>
+									</otherInfo>
+								</price>
+							</com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+						</priceEntries>
+					</priceCalendar>
+				</com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData>
+			</roomDetails>
+		</com.cnk.travelogix.common.facades.product.data.hotel.RoomData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.RoomData>
+			<roomType>Standard Double Room</roomType>
+			<roomOffer>
+				<title>Book now and avail 10% discount !</title>
+				<promoCode>BE5796392</promoCode>
+				<content>So cheap</content>
+			</roomOffer>
+			<roomOccupacy>Max occupancy 2 adults &amp; 2 children</roomOccupacy>
+			<pictures>
+				<string>/diy/princess_hotel.jpg</string>
+				<string>/diy/dorsett_hotel.jpg</string>
+			</pictures>
+			<description></description>
+			<roomAmenities>
+				<com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+					<name>Air conditioning</name>
+				</com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+				<com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+					<name>High speed Internet</name>
+				</com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+				<com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+					<name>Childcare</name>
+				</com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+			</roomAmenities>
+			<roomDetails>
+				<com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData>
+					<roomId>room_11</roomId>
+					<description></description>
+					<numLeft>3</numLeft>
+					<option>With breakfast</option>
+					<price>
+						<currency>IQD</currency>
+						<listPrice>4500</listPrice>
+						<webPrice>4200</webPrice>
+						<unit></unit>
+					</price>
+					<showPrice>
+						<currency>RS</currency>
+						<avgPrice>3000</avgPrice>
+						<totalPrice>6000</totalPrice>
+						<avgPriceAfterDisCount>2700</avgPriceAfterDisCount>
+						<totalPriceAfterDisCount>5800</totalPriceAfterDisCount>
+					</showPrice>
+					<priceCalendar>
+						<priceEntries>
+							<com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+								<date>2016-08-27 13:39:45CST</date>
+								<price>
+									<currency>IQD</currency>
+									<listPrice>4000</listPrice>
+									<webPrice>3000</webPrice>
+									<unit>Average / Night</unit>
+									<otherInfo>
+									</otherInfo>
+								</price>
+							</com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+							<com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+								<date>2016-08-27 13:39:45CST</date>
+								<price>
+									<currency>IQD</currency>
+									<listPrice>5000</listPrice>
+									<webPrice>4000</webPrice>
+									<unit>Average / Night</unit>
+									<otherInfo>
+										<string>Pay at hotel</string>
+										<string>FREE Cancellation</string>
+									</otherInfo>
+								</price>
+							</com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+						</priceEntries>
+					</priceCalendar>
+				</com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData>
+				<com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData>
+					<roomId>room_12</roomId>
+					<description></description>
+					<option>With meals</option>
+					<numLeft>3</numLeft>
+					<showPrice>
+						<currency>RS</currency>
+						<avgPrice>3000</avgPrice>
+						<totalPrice>6000</totalPrice>
+						<avgPriceAfterDisCount>2700</avgPriceAfterDisCount>
+						<totalPriceAfterDisCount>5800</totalPriceAfterDisCount>
+					</showPrice>
+					<priceCalendar>
+						<priceEntries>
+							<com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+								<date>2016-08-27 13:39:45CST</date>
+								<price>
+									<currency>IQD</currency>
+									<listPrice>4000</listPrice>
+									<webPrice>3000</webPrice>
+									<unit>Average / Night</unit>
+									<otherInfo>
+									</otherInfo>
+								</price>
+							</com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+							<com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+								<date>2016-08-27 13:39:45CST</date>
+								<price>
+									<currency>IQD</currency>
+									<listPrice>5000</listPrice>
+									<webPrice>4000</webPrice>
+									<unit>Average / Night</unit>
+									<otherInfo>
+										<string>Pay at hotel</string>
+										<string>FREE Cancellation</string>
+									</otherInfo>
+								</price>
+							</com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+						</priceEntries>
+					</priceCalendar>
+				</com.cnk.travelogix.common.facades.product.data.hotel.RoomDetailData>
+			</roomDetails>
+		</com.cnk.travelogix.common.facades.product.data.hotel.RoomData>
+	</rooms>
+	<facilities>
+		<facilitydetails>
+			<!-- <com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+				<name>Air conditioner</name>
+				<icon></icon>
+			</com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData> -->
+			<com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+				<name>Bar</name>
+				<icon></icon>
+			</com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+				<name>Free WiFi</name>
+				<icon></icon>
+			</com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+				<name>Gym</name>
+				<icon></icon>
+			</com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+				<name>Swimming pool</name>
+				<icon></icon>
+			</com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+				<name>Restaurant</name>
+				<icon></icon>
+			</com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+				<name>24 hour room service</name>
+				<icon></icon>
+			</com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+				<name>Laundry</name>
+				<icon></icon>
+			</com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+				<name>Business centre</name>
+				<icon></icon>
+			</com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+				<name>Coffee shop</name>
+				<icon></icon>
+			</com.cnk.travelogix.common.facades.product.data.hotel.FacilityDetailData>
+		</facilitydetails>
+		<hotelAmenities>
+			<com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+				<name>Elevators</name>
+			</com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+				<name>Night club</name>
+			</com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+				<name>Parking</name>
+			</com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+				<name>Concierge</name>
+			</com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+				<name>Laundry</name>
+			</com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+		</hotelAmenities>
+		<otherAmenities>
+			<com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+				<name>Front desk</name>
+			</com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+				<name>Hair dryers</name>
+			</com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+		</otherAmenities>
+		<businessService>
+			<com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+				<name>Conference suite</name>
+			</com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+				<name>Meeting rooms</name>
+			</com.cnk.travelogix.common.facades.product.data.hotel.AmentyData>
+		</businessService>
+		<otherDescriptions>
+			<com.cnk.travelogix.common.facades.product.data.hotel.DescriptionData>
+				<title>Location</title>
+				<description></description>
+			</com.cnk.travelogix.common.facades.product.data.hotel.DescriptionData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.DescriptionData>
+				<title>Hotel features</title>
+				<description></description>
+			</com.cnk.travelogix.common.facades.product.data.hotel.DescriptionData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.DescriptionData>
+				<title>Guest Rooms</title>
+				<description></description>
+			</com.cnk.travelogix.common.facades.product.data.hotel.DescriptionData>
+		</otherDescriptions>
+	</facilities>
+	<landmarksNearby>
+		<com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+			<name>International Airport</name>
+			<distance>8 km</distance>
+			<description>8 km from the international airport</description>
+		<!-- 	<com.cnk.travelogix.common.facades.product.data.hotel.HotelMarkerData>
+				<latitude>38.916417</latitude>
+				<longitude>121.541395</longitude>
+			</com.cnk.travelogix.common.facades.product.data.hotel.HotelMarkerData> -->
+		</com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+			<name>City Bazaar</name>
+			<distance>3 km</distance>
+			<description>3 km from City Bazaar</description>
+			<!-- <com.cnk.travelogix.common.facades.product.data.hotel.HotelMarkerData>
+				<latitude>38.916417</latitude>
+				<longitude>121.541395</longitude>
+			</com.cnk.travelogix.common.facades.product.data.hotel.HotelMarkerData> -->
+		</com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+			<name>Mustafa Centre</name>
+			<distance>1 km</distance>
+			<description>5-minute walk from Mustafa Centre, a shoppers paradise
+			</description>
+		</com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+			<name>Times Square</name>
+			<distance>0.5 km</distance>
+			<description>5 minute walk from Times Square</description>
+			<!-- <com.cnk.travelogix.common.facades.product.data.hotel.HotelMarkerData>
+				<latitude>38.916417</latitude>
+				<longitude>121.541395</longitude>
+			</com.cnk.travelogix.common.facades.product.data.hotel.HotelMarkerData> -->
+		</com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+			<name>International Airport</name>
+			<distance>8 km</distance>
+			<description>8km walk from International Airport</description>
+			<!-- <com.cnk.travelogix.common.facades.product.data.hotel.HotelMarkerData>
+				<latitude>38.916417</latitude>
+				<longitude>121.541395</longitude>
+			</com.cnk.travelogix.common.facades.product.data.hotel.HotelMarkerData> -->
+		</com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+			<name>City Bazaar</name>
+			<distance>3 km</distance>
+			<description>3 km from City Bazaar</description>
+			<!-- <com.cnk.travelogix.common.facades.product.data.hotel.HotelMarkerData>
+				<latitude>38.916417</latitude>
+				<longitude>121.541395</longitude>
+			</com.cnk.travelogix.common.facades.product.data.hotel.HotelMarkerData> -->
+		</com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+			<name>Mustafa Centre</name>
+			<distance>1 km</distance>
+			<description>10-minute trek from Mount Altis</description>
+			<!-- <com.cnk.travelogix.common.facades.product.data.hotel.HotelMarkerData>
+				<latitude>38.916417</latitude>
+				<longitude>121.541395</longitude>
+			</com.cnk.travelogix.common.facades.product.data.hotel.HotelMarkerData> -->
+		</com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+			<name>Times Square</name>
+			<distance>0.5 km</distance>
+			<description>2 minute bus ride from City centre</description>
+			<!-- <com.cnk.travelogix.common.facades.product.data.hotel.HotelMarkerData>
+				<latitude>38.916417</latitude>
+				<longitude>121.541395</longitude>
+			</com.cnk.travelogix.common.facades.product.data.hotel.HotelMarkerData> -->
+		</com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+	</landmarksNearby>
+	<inAndAround>
+		<com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+			<name>International Airport</name>
+			<distance>8 km</distance>
+			<description>8 km from the international airport</description>
+		</com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+			<name>City Bazaar</name>
+			<distance>3 km</distance>
+			<description>3 km from City Bazaar</description>
+		</com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+			<name>Mustafa Centre</name>
+			<distance>1 km</distance>
+			<description>5-minute walk from Mustafa Centre, a shoppers paradise
+			</description>
+		</com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+			<name>Times Square</name>
+			<distance>0.5 km</distance>
+			<description>5 minute walk from Times Square</description>
+		</com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+			<name>International Airport</name>
+			<distance>8 km</distance>
+			<description>8km walk from International Airport</description>
+		</com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+			<name>City Bazaar</name>
+			<distance>3 km</distance>
+			<description>3 km from City Bazaar</description>
+		</com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+			<name>Mustafa Centre</name>
+			<distance>1 km</distance>
+			<description>10-minute trek from Mount Altis</description>
+		</com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+			<name>Times Square</name>
+			<distance>0.5 km</distance>
+			<description>2 minute bus ride from City centre</description>
+		</com.cnk.travelogix.common.facades.product.data.hotel.LandmarkData>
+	</inAndAround>
+	<priceCalendar>
+		<priceEntries>
+			<com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+				<date>2016-08-27 13:39:45CST</date>
+				<price>
+					<currency>IQD</currency>
+					<listPrice>4000</listPrice>
+					<webPrice>3000</webPrice>
+					<unit>Average / Night</unit>
+					<otherInfo>
+						<string>Pay at hotel</string>
+						<string>FREE Cancellation</string>
+					</otherInfo>
+				</price>
+			</com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+			<com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+				<date>2016-08-27 13:39:45CST</date>
+				<price>
+					<currency>IQD</currency>
+					<listPrice>5000</listPrice>
+					<webPrice>4000</webPrice>
+					<unit>Average / Night</unit>
+					<otherInfo>
+						<string>Pay at hotel</string>
+						<string>FREE Cancellation</string>
+					</otherInfo>
+				</price>
+			</com.cnk.travelogix.common.facades.product.data.hotel.PriceCalendarEntryData>
+		</priceEntries>
+	</priceCalendar>
+	<offers>
+		<com.cnk.travelogix.common.facades.product.data.hotel.OfferData>
+			<title></title>
+			<promoCode>Promo code: YU8789</promoCode>
+			<content>Stayed here overnight in April with my children, and had a
+				good experience. We were travelling back from Italy by train, and
+				just needed a decent place to stay overnight, and this ticked the
+				boxes.Room was good and quiet. Breakfast was a reasonable choice,
+				and hotel is walking distance to the train station. Interesting area
+				nearby, with a variety of places to eat. Good experience, and at
+				that time a bonus for smokers, as you can have a drink in part of
+				the bar, and have a cigarette with it without having to go outside.
+			</content>
+		</com.cnk.travelogix.common.facades.product.data.hotel.OfferData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.OfferData>
+			<title></title>
+			<promoCode>Promo code: YU8789</promoCode>
+			<content>Stayed here overnight in April with my children, and had a
+				good experience. We were travelling back from Italy by train, and
+				just needed a decent place to stay overnight, and this ticked the
+				boxes.Room was good and quiet. Breakfast was a reasonable choice,
+				and hotel is walking distance to the train station. Interesting area
+				nearby, with a variety of places to eat. Good experience, and at
+				that time a bonus for smokers, as you can have a drink in part of
+				the bar, and have a cigarette with it without having to go outside.
+			</content>
+		</com.cnk.travelogix.common.facades.product.data.hotel.OfferData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.OfferData>
+			<title></title>
+			<promoCode>Promo code: YU8789</promoCode>
+			<content>Stayed here overnight in April with my children, and had a
+				good experience. We were travelling back from Italy by train, and
+				just needed a decent place to stay overnight, and this ticked the
+				boxes.Room was good and quiet. Breakfast was a reasonable choice,
+				and hotel is walking distance to the train station. Interesting area
+				nearby, with a variety of places to eat. Good experience, and at
+				that time a bonus for smokers, as you can have a drink in part of
+				the bar, and have a cigarette with it without having to go outside.
+			</content>
+		</com.cnk.travelogix.common.facades.product.data.hotel.OfferData>
+	</offers>
+	<bookingPolicies>
+		<com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+			<title>Cancellation policy</title>
+			<content>xoxoxoxo xooxxooxoxx oxoxoo xoxoxxoxoxoxoxxoxoxooxoxoxo
+				xxoxoxoxoxoxoxo xoxoxoxoxoxoxoxo xoxoxoxoxox oxoxoooxx oxoxoxoxo
+				oxxooxoxxox oxooxoxoxxoxoxoxoxxoxoxoox oxoxoxxoxoxox oxoxoxoxoxo
+				xoxoxoxoxo xoxoxoxox oxoxoxoxooox
+			</content>
+		</com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+			<title>Amendment policy</title>
+			<content>xoxoxoxo xooxxooxoxx oxoxoo xoxoxxoxoxoxoxxoxoxooxoxoxo
+				xxoxoxoxoxoxoxo xoxoxoxoxoxoxoxo xoxoxoxoxox oxoxoooxx oxoxoxoxo
+				oxxooxoxxox oxooxoxoxxoxoxoxoxxoxoxoox oxoxoxxoxoxox oxoxoxoxoxo
+				xoxoxoxoxo xoxoxoxox oxoxoxoxooox
+			</content>
+		</com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+			<title>Tax information</title>
+			<content>xoxoxoxo xooxxooxoxx oxoxoo xoxoxxoxoxoxoxxoxoxooxoxoxo
+				xxoxoxoxoxoxoxo xoxoxoxoxoxoxoxo xoxoxoxoxox oxoxoooxx oxoxoxoxo
+				oxxooxoxxox oxooxoxoxxoxoxoxoxxoxoxoox oxoxoxxoxoxox oxoxoxoxoxo
+				xoxoxoxoxo xoxoxoxox oxoxoxoxooox
+			</content>
+		</com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+			<title>Child policy</title>
+			<content>xoxoxoxo xooxxooxoxx oxoxoo xoxoxxoxoxoxoxxoxoxooxoxoxo
+				xxoxoxoxoxoxoxo xoxoxoxoxoxoxoxo xoxoxoxoxox oxoxoooxx oxoxoxoxo
+				oxxooxoxxox oxooxoxoxxoxoxoxoxxoxoxoox oxoxoxxoxoxox oxoxoxoxoxo
+				xoxoxoxoxo xoxoxoxox oxoxoxoxooox
+			</content>
+		</com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+		<com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+			<title>Important information</title>
+			<content>xoxoxoxo xooxxooxoxx oxoxoo xoxoxxoxoxoxoxxoxoxooxoxoxo
+				xxoxoxoxoxoxoxo xoxoxoxoxoxoxoxo xoxoxoxoxox oxoxoooxx oxoxoxoxo
+				oxxooxoxxox oxooxoxoxxoxoxoxoxxoxoxoox oxoxoxxoxoxox oxoxoxoxoxo
+				xoxoxoxoxo xoxoxoxox oxoxoxoxooox
+			</content>
+		</com.cnk.travelogix.common.facades.product.data.hotel.BookingPolicyData>
+	</bookingPolicies>
+</com.cnk.travelogix.common.facades.product.data.hotel.HotelData>
+

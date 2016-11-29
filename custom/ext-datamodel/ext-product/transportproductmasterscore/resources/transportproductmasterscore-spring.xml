@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ~ [y] hybris Platform ~ ~ Copyright (c) 2000-2016 SAP SE ~ All rights 
+	reserved. ~ ~ This software is the confidential and proprietary information 
+	of SAP ~ Hybris ("Confidential Information"). You shall not disclose such 
+	~ Confidential Information and shall use it only in accordance with the ~ 
+	terms of the license agreement you entered into with SAP Hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+	<bean id="transportProductSetup"
+		class="com.cnk.travelogix.product.transport.masters.core.setup.TransportProductSetup"
+		parent="abstractCoreSystemSetup">
+	</bean>
+
+	<alias name="defaultRouteIdService" alias="routeIdService" />
+	<bean id="defaultRouteIdService"
+		class="com.cnk.travelogix.product.transport.masters.core.services.impl.DefaultRouteIdService">
+		<property name="keyGenerator" ref="routeIdKeyGenerator" />
+	</bean>
+
+	<bean id="flightProductPrepareInterceptor"
+		class="com.cnk.travelogix.product.transport.masters.core.interceptors.FlightProductPrepareInterceptor">
+		<property name="catalogService" ref="catalogService" />
+		<property name="keyGenerator" ref="defaultFlightCommonProductIDGenerator" />
+	</bean>
+
+	<bean id="flightProductPrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="flightProductPrepareInterceptor" />
+		<property name="typeCode" value="FlightProduct" />
+	</bean>
+
+
+	<bean id="airRoutePrepareInterceptor"
+		class="com.cnk.travelogix.product.transport.masters.core.interceptors.AirRoutePrepareInterceptor">
+		<property name="routeIdService" ref="routeIdService" />
+	</bean>
+
+	<bean id="airRoutePrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="airRoutePrepareInterceptor" />
+		<property name="typeCode" value="AirRoute" />
+	</bean>
+
+	<bean id="flightProductValidateInterceptor"
+		class="com.cnk.travelogix.product.transport.masters.core.interceptors.FlightProductValidateInterceptor">
+		<property name="flightProductService" ref="flightProductService" />
+	</bean>
+
+	<bean id="flightProductValidateInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="flightProductValidateInterceptor" />
+		<property name="typeCode" value="FlightProduct" />
+	</bean>
+
+	<bean id="routeConnectionValidateInterceptor"
+		class="com.cnk.travelogix.product.transport.masters.core.interceptors.RouteConnectionValidateInterceptor" />
+
+	<bean id="routeConnectionValidateInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="routeConnectionValidateInterceptor" />
+		<property name="typeCode" value="RouteConnection" />
+	</bean>
+
+	<bean id="airRouteValidateInterceptor"
+		class="com.cnk.travelogix.product.transport.masters.core.interceptors.AirRouteValidateInterceptor" />
+
+	<bean id="airRouteValidateInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="airRouteValidateInterceptor" />
+		<property name="typeCode" value="AirRoute" />
+	</bean>
+
+	<bean id="airLineDetailsPrepareInterceptor"
+		class="com.cnk.travelogix.product.transport.masters.core.interceptors.AirLineDetailsPrepareInterceptor">
+	</bean>
+
+	<bean id="airLineDetailsPrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="airLineDetailsPrepareInterceptor" />
+		<property name="typeCode" value="AirLineDetails" />
+	</bean>
+
+	<bean id="airLineDetailsValidateInterceptor"
+		class="com.cnk.travelogix.product.transport.masters.core.interceptors.AirLineDetailsValidateInterceptor" />
+
+	<bean id="airLineDetailsValidateInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="airLineDetailsValidateInterceptor" />
+		<property name="typeCode" value="AirLineDetails" />
+	</bean>
+
+	<bean id="routeIdKeyGenerator"
+		class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+		init-method="init" scope="tenant">
+		<property name="key" value="route_id" />
+		<property name="digits" value="4" />
+		<property name="start" value="0007" />
+		<property name="numeric" value="true" />
+	</bean>
+
+	<bean id="routeConnectionPrepareInterceptor"
+		class="com.cnk.travelogix.product.transport.masters.core.interceptors.RouteConnectionPrepareInterceptor">
+	</bean>
+
+	<bean id="routeConnectionPrepareInterceptorMapping"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping"
+		scope="tenant">
+		<property name="interceptor" ref="routeConnectionPrepareInterceptor" />
+		<property name="typeCode" value="RouteConnection" />
+	</bean>
+	<alias name="defaultFlightProductDao" alias="flightProductDao" />
+	<bean id="defaultFlightProductDao"
+		class="com.cnk.travelogix.product.transport.masters.core.daos.impl.DefaultFlightProductDao">
+		<property name="flexibleSearchService" ref="flexibleSearchService" />
+		<property name="modelService" ref="modelService" />
+	</bean>
+	<alias name="defaultFlightProductService" alias="flightProductService" />
+	<bean id="defaultFlightProductService"
+		class="com.cnk.travelogix.product.transport.masters.core.services.impl.DefaultFlightProductService">
+		<property name="flightProductDao" ref="flightProductDao" />
+	</bean>
+<bean id="defaultFlightCommonProductIDGenerator"
+	      class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator"
+	      init-method="init" scope="tenant">
+		<property name="key" value="${keygen.flight.commonproduct.id.name}"/>
+		<property name="digits" value="${keygen.flight.commonproduct.id.digits}"/>
+		<property name="start" value="${keygen.flight.commonproduct.id.start}"/>
+		<property name="type" value="${keygen.flight.commonproduct.id.type}" />
+		<property name="template" value="${keygen.flight.commonproduct.id.template}"/>
+	</bean>
+
+</beans>

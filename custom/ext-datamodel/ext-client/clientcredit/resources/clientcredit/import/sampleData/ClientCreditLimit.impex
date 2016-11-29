@@ -1,0 +1,68 @@
+$productCatalog=EZ-IN
+$productCatalogName=ezeego1-IN
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$productCategorySubType=productCategorySubType(code,$catalogVersion)
+$dateformat=dd-MM-yyyy
+$media=@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+$siteResource=jar:com.cnk.travelogix.presales.masters.core.setup.PresalesSystemSetup&\presalescore\import\sampledata\images
+$lang=en
+
+
+INSERT_UPDATE Media;code[unique=true];$media;mime[default='image\jpg'];$catalogVersion;folder(qualifier);&mediaRef
+;Lobby;$siteResource\Lobby.pdf;;;images;LobbyRef
+
+
+INSERT_UPDATE SecurityDeposit;validFrom[unique=true][dateformat=$dateformat];validTo[unique=true][dateformat=$dateformat];amount[unique=true];currency(isocode);creditLimit
+                             ;21-03-2016                                    ;22-07-2017                                  ;10000              ;TMT               ;10000
+
+INSERT_UPDATE Bank;code[unique=true];name[lang=$lang]
+                   ;BANK1213;HDFC Bank
+
+
+INSERT_UPDATE Barter;barterAmount[unique=true];minimumProductValue[unique=true];currency(isocode);validFrom[dateformat=$dateformat];validTo[dateformat=$dateformat]
+;10000;20000;TMT;22-03-2016;23-07-2017
+
+
+
+INSERT_UPDATE BankInformation;bankName(code)[unique=true];branchName(code)[unique=true];contactNumber[unique=true]
+                             ;BANK1213      ;anderi    ;9999999999
+							 
+INSERT_UPDATE ThresholdInformation;thresholdIn(Absolute.code)[unique=true];thresholdValue[unique=true]
+                                  ;PERCENTAGE                ;10000
+
+INSERT_UPDATE CreditLimitInfo;amount(Absolute.code)[unique=true];creditLimit[unique=true];currency(isocode)
+                             ;AMOUNT               ;10000          ;INR
+                            
+
+INSERT_UPDATE CreditCard;creditCardNumber[unique=true];cardholderName[unique=true];ccExpiryDate[dateformat=$dateformat][unique=true];continent(isocode);country(Country.isocode);bankInformation(BankInformation.bankName(code),BankInformation.branchName(code),BankInformation.contactNumber)[unique=true];thresholdInfo(ThresholdInformation.thresholdIn(Absolute.code),ThresholdInformation.thresholdValue)[unique=true];creditLimitInfo(amount(Absolute.code),creditLimit)[unique=true]
+                        ;4444333322221111             ;ksp                        ;01-04-2020                                       ;AF                ;IN                      ;BANK1213:anderi:9999999999                                                                                                 ;PERCENTAGE:10000                                                                                               ; AMOUNT:10000
+						
+						
+INSERT_UPDATE BankGuarantee;bgRefNumber[unique=true];bgIssueDate[dateformat=$dateformat][unique=true];bgExpiryDate[dateformat=$dateformat][unique=true];bgClaimPeriod;bgAmount;bankInformation(BankInformation.bankName(code),BankInformation.branchName(code),BankInformation.contactNumber)[unique=true];currency(isocode);thresholdInfo(ThresholdInformation.thresholdIn(Absolute.code),ThresholdInformation.thresholdValue)[unique=true];creditLimitInfo(amount(Absolute.code),creditLimit)[unique=true]
+                           ;1234                   ;01-07-2016  ;09-09-2016  ;5            ;100000  ;BANK1213:anderi:9999999999                                                                                                 ;INR     ;PERCENTAGE:10000                                                                                               ;AMOUNT:10000
+						   
+						   
+INSERT_UPDATE Employee;name;uid[unique=true]
+                      ;Rodelf Watson;rodalf@taj.com
+					  
+
+
+#INSERT_UPDATE ProductInformationforCredit;clientBranch
+INSERT_UPDATE ProductInformationforCredit;category(Category.code,$catalogVersion)[unique=true];productCategorySubType(code)[unique=true];productName[unique=true];productNameSubType[unique=true];thresholdInfo(ThresholdInformation.thresholdIn(Absolute.code),ThresholdInformation.thresholdValue)[unique=true];creditLimitInfo(CreditLimitInfo.amount(Absolute.code),CreditLimitInfo.creditLimit)[unique=true];employeeName(Employee.uid)[unique=true]
+                                         ;C001                                               ;                          ;                    ;                                       ;PERCENTAGE:10000                                                                                               ;AMOUNT:10000                                                   ;rodalf@taj.com
+
+INSERT_UPDATE KycInformation;pan[unique=true];&kycId;vatNo;tdsNo
+                            ;IAssss2TA;IAssss2TA;VAT1234;TDS345
+	
+INSERT_UPDATE TravelogixB2BUnit;uid[unique=true, allownull=true];name;locName[lang=$lang];language(isocode);clientCategory(code);clientSubCategory(code);companyType(code);telephone;modeOfRegistration(code);kycInformation(pan);clientCreditLimit(ClientCreditDetails.clientTransactionOn(code),ClientCreditDetails.creditType(code),ClientCreditDetails.modeOfSecurity(code))
+                          ;CnkB2B;Global Tours         ;Global Tours            ;en               ;ALLIANCE_PARTNERS   ;BANKS                  ;PUBLIC         ;9987654321 ;DIRECT                  ;IAssss2TA          ;CREDIT:SECURED:SECURITY_DEPOSIT
+
+#INSERT_UPDATE TravelogixB2BUnitType;companyMarkets(uid)[unique=true];trnslCurrency(isocode);language(isocode);distributionChannel(uid);clientCreditLimit(ClientCreditDetails.clientTransactionOn(code),ClientCreditDetails.creditType(code),ClientCreditDetails.modeOfSecurity(code))
+#                                  ;IND                             ;INR                   ;en               ;Branch               ;CREDIT:SECURED:SECURITY_DEPOSIT							   
+INSERT_UPDATE TravelogixClientType;companyMarkets(uid)[unique=true];trnslCurrency(isocode);language(isocode);distributionChannel(uid);clientCreditLimit(ClientCreditDetails.clientTransactionOn(code),ClientCreditDetails.creditType(code),ClientCreditDetails.modeOfSecurity(code))
+                                   ;IND                             ;INR                   ;en               ;Branch               ;CREDIT:SECURED:SECURITY_DEPOSIT							   
+
+								   
+	
+INSERT_UPDATE ClientCreditDetails;clientTransactionOn(code)[unique=true];creditType(code)[unique=true];isLimitedUnsecuredCredit;modeOfSecurity(code)[unique=true];isCreditLimitBybranchOrProduct;barter(Barter.barterAmount,Barter.minimumProductValue)[unique=true];remark;clientCreditMedia(Media.code)[unique=true];creditCardInfo(CreditCard.creditCardNumber,CreditCard.cardholderName,CreditCard.ccExpiryDate[dateformat=$dateformat])[unique=true];bankGuaranteeInfo(BankGuarantee.bgRefNumber,BankGuarantee.bgIssueDate[dateformat=$dateformat],BankGuarantee.bgExpiryDate[dateformat=$dateformat]);securityDeposit(SecurityDeposit.validFrom[dateformat=$dateformat],SecurityDeposit.validTo[dateformat=$dateformat],SecurityDeposit.amount);productInfo(ProductInformationforCredit.category(Category.code,$catalogVersion))
+                                 ;CREDIT                   ;SECURED         ;true                    ;SECURITY_DEPOSIT    ;true                           ;10000:20000                                       ;good                  ;Lobby                                     ;4444333322221111:ksp:01-04-2020                                                                                                   ;1234:01-07-2016:09-09-2016                                                                                                                                   ;21-03-2016:22-07-2017:10000                                                                                                                            ;C001                                                                                       
